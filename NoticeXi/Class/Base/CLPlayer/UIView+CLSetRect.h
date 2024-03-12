@@ -216,4 +216,6 @@
  设置左上以及右下圆角
  */
 - (void)setTopleftAndbottomRightCorner:(CGFloat) conner;
+
+- (void)setTopRightAndbottomLeftCorner:(CGFloat) conner;
 @end

@@ -311,6 +311,17 @@
     self.layer.mask = maskLayer;
 }
 
+- (void)setTopRightAndbottomLeftCorner:(CGFloat) conner{
+    UIBezierPath *maskPath;
+    maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                     byRoundingCorners:(UIRectCornerTopRight| UIRectCornerBottomLeft)
+                                           cornerRadii:CGSizeMake(conner, conner)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.layer.mask = maskLayer;
+}
+
 - (void)setAllCorner:(CGFloat) conner {
     UIBezierPath *maskPath;
     maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds

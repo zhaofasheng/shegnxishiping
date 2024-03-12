@@ -66,30 +66,31 @@
         self.changePriceBtn.hidden = YES;
         self.buyButton.hidden = NO;
         self.markL.text = @"";
-        _freeImageView.hidden = YES;
+        _freeLabel.hidden = YES;
         if (goodModel.is_experience.boolValue) {
-            self.freeImageView.hidden = NO;
             self.freeLabel.text = [NSString stringWithFormat:@"免费试聊%d次",goodModel.experience_times.intValue];
         }
+        _titleL.frame = CGRectMake(85, 25, self.backView.frame.size.width-85-35, 22);
+        self.iconImageView.frame = CGRectMake(15, 24, 60, 60);
+        self.priceL.frame = CGRectMake(85, CGRectGetMaxY(_titleL.frame)+10, self.priceL.frame.size.width, self.priceL.frame.size.height);
     }else{
         _buyButton.hidden = YES;
         self.changePriceBtn.hidden = NO;
     }
 }
 
-- (UIImageView *)freeImageView{
-    if (!_freeImageView) {
-        _freeImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-108-15, 5, 108, 43)];
-        _freeImageView.image = UIImageNamed(@"freeTimes_img");
-        [self.contentView addSubview:_freeImageView];
-        
-        self.freeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 7,108, 18)];
-        self.freeLabel.font = THRETEENTEXTFONTSIZE;
-        self.freeLabel.textAlignment = NSTextAlignmentCenter;
-        self.freeLabel.textColor = [UIColor colorWithHexString:@"#25262E"];
-        [_freeImageView addSubview:self.freeLabel];
+- (UILabel *)freeLabel{
+    if (!_freeLabel) {
+     
+        _freeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-90, 0,90, 20)];
+        _freeLabel.font = ELEVENTEXTFONTSIZE;
+        [_freeLabel setTopRightAndbottomLeftCorner:10];
+        _freeLabel.textAlignment = NSTextAlignmentCenter;
+        _freeLabel.backgroundColor = [UIColor colorWithHexString:@"#D8F361"];
+        _freeLabel.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [self.backView addSubview:_freeLabel];
     }
-    return _freeImageView;
+    return _freeLabel;
 }
 
 - (void)buyClick{
@@ -100,11 +101,10 @@
 
 - (UIButton *)buyButton{
     if(!_buyButton){
-        _buyButton = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-30-60-15, 71, 60, 24)];
-        _buyButton.layer.cornerRadius = 12;
-        _buyButton.layer.masksToBounds = YES;
+        _buyButton = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-30-60-15, 38, 60, 32)];
+        [_buyButton setAllCorner:16];
         _buyButton.backgroundColor = [UIColor colorWithHexString:@"#FF68A3"];
-        [_buyButton setTitle:@"下单" forState:UIControlStateNormal];
+        [_buyButton setTitle:@"通话" forState:UIControlStateNormal];
         [_buyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _buyButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
         [self.backView addSubview:_buyButton];

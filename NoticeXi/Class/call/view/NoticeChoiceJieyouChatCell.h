@@ -21,7 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *titleL;
 @property (nonatomic, strong) UIButton *buyButton;
 @property (nonatomic, strong) UIView *backView;
-@property (nonatomic, strong) UIImageView *freeImageView;
 @property (nonatomic, strong) UILabel *freeLabel;
 @property (nonatomic, copy) void(^buyGoodsBlock)(NoticeGoodsModel *buyGood);
 @end
