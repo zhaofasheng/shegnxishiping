@@ -274,7 +274,7 @@
     }
     NoticeShopXiaDanTostaView *sureView = [[NoticeShopXiaDanTostaView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
     sureView.titleL.text = titleStr;
-    sureView.titleL.frame = CGRectMake(0, 15, 280, GET_STRHEIGHT(sureView.titleL.text, 16, sureView.titleL.frame.size.width)+10);
+    sureView.titleL.frame = CGRectMake(10, 15, 260, GET_STRHEIGHT(sureView.titleL.text, 16, sureView.titleL.frame.size.width-20)+10);
     sureView.contentL.text = markStr;
     sureView.contentL.frame = CGRectMake(48,CGRectGetMaxY(sureView.titleL.frame)+5, 280-48, 108);
     sureView.sureXdBlock = ^(NSInteger index) {

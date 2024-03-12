@@ -32,8 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *storyView;
 @property (nonatomic, strong) UIView *tagsView;
 
-@property (nonatomic, strong) UIImageView *intoImage1;
-@property (nonatomic, strong) UIImageView *intoImage2;
 
 @property (nonatomic, assign) NSInteger goodsNum;
 

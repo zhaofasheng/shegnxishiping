@@ -52,8 +52,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"HASSUPPLYSHOPNOTICE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"outLoginClearDataNOTICATION" object:nil];
-    [self  getStatusRequest];
-    
+
+
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     self.menuView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
 }
@@ -62,6 +62,7 @@
     [super viewWillAppear:animated];
 
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
 }
 
 
@@ -73,6 +74,8 @@
         self.needAutoShowSupply = NO;
         [self myShopTap];
     }
+    
+    [self  getStatusRequest];
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForMenuView:(WMMenuView *)menuView{

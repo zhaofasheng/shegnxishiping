@@ -77,10 +77,7 @@
         markL1.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         [self.photoView addSubview:markL1];
         
-        self.intoImage1 = [[UIImageView  alloc] initWithFrame:CGRectMake(self.photoView.frame.size.width-15-16, (38.75-16)/2, 16, 16)];
-        self.intoImage1.image = UIImageNamed(@"cellnextbutton");
-        [self.photoView addSubview:self.intoImage1];
-        self.intoImage1.userInteractionEnabled = YES;
+   
         
         UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoClick)];
         [self.photoView addGestureRecognizer:photoTap];
@@ -96,10 +93,7 @@
         markL2.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         [self.voiceView addSubview:markL2];
         
-        self.intoImage2 = [[UIImageView  alloc] initWithFrame:CGRectMake(self.photoView.frame.size.width-15-16, (38.75-16)/2, 16, 16)];
-        self.intoImage2.image = UIImageNamed(@"cellnextbutton");
-        [self.voiceView addSubview:self.intoImage2];
-        self.intoImage2.userInteractionEnabled = YES;
+
         
         UIImageView *voiceBoImg = [[UIImageView alloc] initWithFrame:CGRectMake(self.photoView.frame.size.width-15-16-24, (38.75-24)/2, 24, 24)];
         voiceBoImg.image = UIImageNamed(@"sxplayshops_img");
@@ -141,10 +135,6 @@
         UITapGestureRecognizer *tagsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tagsClick)];
         [self.tagsView addGestureRecognizer:tagsTap];
         self.tagsView.userInteractionEnabled = YES;
-        
-      
-        
-  
 
     }
     return self;
@@ -154,6 +144,7 @@
     if (!_photoImageView) {
         _photoImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(self.photoView.frame.size.width-15-16-24, (38.75-24)/2, 24, 24)];
         [self.photoView addSubview:_photoImageView];
+        [self.photoView bringSubviewToFront:_photoImageView];
         _photoImageView.userInteractionEnabled = YES;
         [_photoImageView setAllCorner:2];
         _photoImageView.hidden = YES;
@@ -227,17 +218,18 @@
 
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
+
     self.shopNameL.text = shopModel.myShopM.shop_name;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:shopModel.myShopM.shop_avatar_url]];
     
     if(shopModel.myShopM.introduce_len.intValue){
-        _intoImage2.hidden = NO;
+        self.nodataView2.markL.text = @"";
+        self.nodataView2.markImageView.image = UIImageNamed(@"cellnextbutton");
         self.playImageV.hidden = NO;
-        _nodataView2.hidden = YES;
     }else{
-        self.nodataView2.hidden = NO;
         self.playImageV.hidden = YES;
-        self.intoImage2.hidden = NO;
+        self.nodataView2.markImageView.image = UIImageNamed(@"sxeditshopinfo_img");
+        self.nodataView2.markL.text = @"未设置";
     }
     
     if (shopModel.myShopM.tale && shopModel.myShopM.tale.length) {
@@ -252,19 +244,18 @@
         self.nodataView4.markL.text = shopModel.myShopM.tagString;
         self.nodataView4.markImageView.image = UIImageNamed(@"cellnextbutton");
     }else{
-        self.nodataView3.markImageView.image = UIImageNamed(@"sxeditshopinfo_img");
-        self.nodataView3.markL.text = @"未设置";
+        self.nodataView4.markImageView.image = UIImageNamed(@"sxeditshopinfo_img");
+        self.nodataView4.markL.text = @"未设置";
     }
     
     if (shopModel.myShopM.photowallArr.count) {
         self.photoImageView.hidden = NO;
-        self.intoImage1.hidden = NO;
-        _nodataView1.hidden = YES;
+        self.nodataView1.markL.text = @"";
+        self.nodataView1.markImageView.image = UIImageNamed(@"cellnextbutton");
         [self.photoImageView sd_setImageWithURL:[NSURL URLWithString:[shopModel.myShopM.photowallArr[0] photo_url]]];
     }else{
-        self.nodataView1.hidden = NO;
-        _photoImageView.hidden = YES;
-        self.intoImage1.hidden = YES;
+        self.nodataView1.markImageView.image = UIImageNamed(@"sxeditshopinfo_img");
+        self.nodataView1.markL.text = @"未添加";
     }
     
     NSString *str1 = shopModel.myShopM.order_num.intValue?shopModel.myShopM.order_num:@"0";
@@ -291,6 +282,7 @@
         _nodataView1 = [[SXNoDataDefaultShopInfoView  alloc] initWithFrame:CGRectMake(80, 0, self.photoView.frame.size.width-80-15, self.photoView.frame.size.height)];
         _nodataView1.markL.text = @"未添加";
         [self.photoView addSubview:_nodataView1];
+        [self.photoView sendSubviewToBack:_nodataView1];
     }
     return _nodataView1;
 }
@@ -300,6 +292,7 @@
         _nodataView2 = [[SXNoDataDefaultShopInfoView  alloc] initWithFrame:CGRectMake(80, 0, self.photoView.frame.size.width-80-15, self.photoView.frame.size.height)];
         _nodataView2.markL.text = @"未设置";
         [self.voiceView addSubview:_nodataView2];
+        [self.voiceView sendSubviewToBack:_nodataView2];
     }
     return _nodataView2;
 }

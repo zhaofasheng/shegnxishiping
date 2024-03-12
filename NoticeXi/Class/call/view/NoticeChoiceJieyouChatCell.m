@@ -55,7 +55,7 @@
 
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:goodModel.goods_img_url]];
     
-    self.markL.text = goodModel.is_experience.boolValue?@"每位顾客可体验3次" : @"固定时长 自定义价格";
+    self.markL.text = goodModel.is_experience.boolValue?@"每位顾客可体验3次" : @"固定时长 | 自定义价格";
     self.titleL.text = goodModel.goods_name;
     
     NSString *str1 = [NSString stringWithFormat:@"%@",goodModel.price];
@@ -65,7 +65,7 @@
     if (self.isUserLookShop) {
         self.changePriceBtn.hidden = YES;
         self.buyButton.hidden = NO;
-        
+        self.markL.text = @"";
         _freeImageView.hidden = YES;
         if (goodModel.is_experience.boolValue) {
             self.freeImageView.hidden = NO;

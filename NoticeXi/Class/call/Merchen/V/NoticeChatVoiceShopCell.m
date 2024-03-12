@@ -64,9 +64,9 @@
     self.priceL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@鲸币/分钟",goodModel.price] setSize:12 setLengthString:@"鲸币/分钟" beginSize:goodModel.price.length];
     self.changePriceBtn.hidden = goodModel.is_experience.boolValue?YES:NO;
     if (goodModel.is_experience.boolValue) {
-        self.markL.text = @"可选服务 每位顾客可体验3次";
+        self.markL.text = @"可选服务 | 每位顾客可体验3次";
     }else{
-        self.markL.text = @"必选服务 固定时长 自定义价格";
+        self.markL.text = @"必选服务 | 固定时长 | 自定义价格";
     }
     self.titleL.text = goodModel.goods_name;
 }

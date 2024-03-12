@@ -255,7 +255,7 @@
                 }
                 
                 self.iconImageView.image = UIImageNamed(@"selfisbuy_img");
-                NSString *str = [NSString stringWithFormat:@"聊天时长最多%@分钟，超时自动结束通话\n\n·通话期间请勿离开此页面，通话可能会中断\n\n·禁止政治敏感、色情暴力等内容，违规将封号处理",self.chatInfoModel.goods_duration];
+                NSString *str = [NSString stringWithFormat:@"·聊天时长最多%@分钟，超时自动结束通话\n\n·通话期间请勿离开此页面，通话可能会中断\n\n·禁止政治敏感、色情暴力等内容，违规将封号处理",self.chatInfoModel.goods_duration];
                 CGFloat height = GET_STRHEIGHT(str, 12, DR_SCREEN_WIDTH-90);
                 self.noticeL.frame = CGRectMake(15,(106-height)/2, DR_SCREEN_WIDTH-90, height);
                 self.noticeL.text = str;
@@ -314,7 +314,7 @@
 - (void)endCall{
     
     __weak typeof(self) weakSelf = self;
-     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定结束通话吗？" message:nil sureBtn:@"再想想" cancleBtn:@"结束" right:YES];
+    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:self.chatInfoModel.is_experience.boolValue? @"确定结束通话吗？" : @"提前结束通话，费用不退回，确定结束吗？" message:nil sureBtn:@"再想想" cancleBtn:@"结束" right:YES];
     alerView.resultIndex = ^(NSInteger index) {
         if (index == 2) {
             if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){

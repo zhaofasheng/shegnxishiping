@@ -289,7 +289,6 @@
             //服务过的订单
             if (indexPath.row == 2) {
                 if (!self.shopModel) {
-                  
                     cell.subL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@单",@"0"] setSize:12 setLengthString:@"单" beginSize:1];
                 }else{
                     if (!self.shopModel.myShopM.order_num.intValue) {
@@ -297,13 +296,15 @@
                     }
                     cell.subL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@单",self.shopModel.myShopM.order_num] setSize:12 setLengthString:@"单" beginSize:self.shopModel.myShopM.order_num.length];
                 }
-      
             }
             if (indexPath.row == 3) {
-                if (!self.wallectM.buy_order_num.intValue) {
-                    self.wallectM.buy_order_num = @"0";
+                NSString *str = @"0";
+                if (!self.wallectM.buy_order_num.intValue || !self.wallectM) {
+                    str = @"0";
+                }else{
+                    str = self.wallectM.buy_order_num;
                 }
-                cell.subL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@单",self.wallectM.buy_order_num] setSize:12 setLengthString:@"单" beginSize:self.wallectM.buy_order_num.length];
+                cell.subL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@单",str] setSize:12 setLengthString:@"单" beginSize:str.length];
             }
         }
     }else{
@@ -347,4 +348,5 @@
     NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
     [self.navigationController pushViewController:ctl animated:YES];
 }
+
 @end

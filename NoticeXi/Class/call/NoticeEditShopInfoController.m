@@ -40,7 +40,7 @@
     
     self.introHeight = 128;
     
-    self.navBarView.titleL.text = @"编辑名片";
+    self.navBarView.titleL.text = @"编辑资料";
     
     if (!self.backView) {
         [self refreshBackView];
@@ -63,7 +63,7 @@
 
 - (void)getShopRequest{
     [self showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/ByUser" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/ByUser" Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if(success){
             self.shopModel = [NoticeMyShopModel mj_objectWithKeyValues:dict[@"data"]];
             [self.tableView reloadData];

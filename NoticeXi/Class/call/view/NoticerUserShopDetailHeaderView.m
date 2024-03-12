@@ -207,7 +207,12 @@
     }else{
         self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+self.contentView.frame.size.height+15);
     }
-    self.yhImageView.hidden = _contentView.hidden;
+    if (_contentView) {
+        self.yhImageView.hidden = _contentView.hidden;
+    }else{
+        self.yhImageView.hidden = YES;
+    }
+    
 }
 
 - (void)setGoodsNum:(NSInteger)goodsNum{

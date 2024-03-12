@@ -49,7 +49,7 @@
 - (void)setIsAudioCalling:(BOOL)isAudioCalling{
     _isAudioCalling = isAudioCalling;
     if(isAudioCalling){
-        _titleL.text = @"店铺有新的订单(语音通话)来了";
+        _titleL.text = @"店铺有新的订单来了";
     }
 }
 
