@@ -208,16 +208,16 @@
         [self.button4 setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
         
         if (self.jubaoM.report_status.intValue==7) {
-            self.button1.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.button1.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [self.button1 setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         }else if (self.jubaoM.report_status.intValue==2 || self.jubaoM.report_status.intValue==5){
-            self.button2.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.button2.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [self.button2 setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         }else if (self.jubaoM.report_status.intValue==3 || self.jubaoM.report_status.intValue==6){
-            self.button3.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.button3.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [self.button3 setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         }else if (self.jubaoM.report_status.intValue==4){
-            self.button4.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.button4.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [self.button4 setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         }
     }

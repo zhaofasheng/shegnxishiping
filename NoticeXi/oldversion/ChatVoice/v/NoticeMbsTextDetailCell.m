@@ -55,7 +55,7 @@
         
 //        self.moreButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.labelBackView.frame.size.height-45, DR_SCREEN_WIDTH-40, 45)];
 //        [self.moreButton setTitle:@"查看全文" forState:UIControlStateNormal];
-//        [self.moreButton setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+//        [self.moreButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
 //        self.moreButton.titleLabel.font = THRETEENTEXTFONTSIZE;
 //        [self.labelBackView addSubview:self.moreButton];
 //        [self.moreButton addTarget:self action:@selector(moreClick) forControlEvents:UIControlEventTouchUpInside];
@@ -85,7 +85,7 @@
         [_iconImageView addGestureRecognizer:iconTap];
         
         self.careButton = [[UIButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-52)/2, CGRectGetMaxY(_mbView.frame)-16,52, 20)];
-        self.careButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.careButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.careButton setTitle:[NoticeTools getLocalStrWith:@"minee.xs"] forState:UIControlStateNormal];
         self.careButton.titleLabel.font = [UIFont systemFontOfSize:11];
         [self.careButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
@@ -288,7 +288,7 @@
                 self.careButton.backgroundColor = [UIColor colorWithHexString:@"#5C5F66"];
                 [self.careButton setTitle:[NoticeTools getLocalStrWith:@"intro.yilike"] forState:UIControlStateNormal];
             }else{
-                self.careButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                self.careButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 [self.careButton setTitle:[NoticeTools getLocalStrWith:@"minee.xs"] forState:UIControlStateNormal];
             }
         }
@@ -330,7 +330,7 @@
                 [self.careButton setTitle:[NoticeTools getLocalStrWith:@"intro.yilike"] forState:UIControlStateNormal];
                 [nav.topViewController showToastWithText:[NoticeTools getLocalStrWith:@"xs.xssus"]];
             }else{
-                self.careButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                self.careButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 [self.careButton setTitle:[NoticeTools getLocalStrWith:@"minee.xs"] forState:UIControlStateNormal];
             }
         }
@@ -404,7 +404,7 @@
             self.careButton.backgroundColor = [UIColor colorWithHexString:@"#5C5F66"];
             [self.careButton setTitle:[NoticeTools getLocalStrWith:@"intro.yilike"] forState:UIControlStateNormal];
         }else{
-            self.careButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.careButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [self.careButton setTitle:[NoticeTools getLocalStrWith:@"minee.xs"] forState:UIControlStateNormal];
         }
     }

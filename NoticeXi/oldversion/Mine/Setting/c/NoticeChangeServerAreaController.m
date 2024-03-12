@@ -61,7 +61,7 @@
 
     [_oldBtn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
     _oldBtn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
-    button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [button setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     _oldBtn = button;
     
@@ -99,25 +99,25 @@
             NoticeNoticenterModel *noticeM = [NoticeNoticenterModel mj_objectWithKeyValues:dict[@"data"]];
             if (!noticeM.bucket_id.integerValue) {
                 UIButton *button = self->_buttonArr[0];
-                button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 [button setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
                 self->_oldBtn = button;
                 self.oldIndex = 0;
             }else if (noticeM.bucket_id.integerValue == 1){
                 UIButton *button = self->_buttonArr[1];
-                button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 [button setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
                 self->_oldBtn = button;
                 self.oldIndex = 1;
             }else if (noticeM.bucket_id.integerValue == 2){
                 UIButton *button = self->_buttonArr[2];
-                button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 [button setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
                 self->_oldBtn = button;
                 self.oldIndex = 2;
             }else if (noticeM.bucket_id.integerValue == 3){
                 UIButton *button = self->_buttonArr[3];
-                button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 [button setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
                 self->_oldBtn = button;
                 self.oldIndex = 3;

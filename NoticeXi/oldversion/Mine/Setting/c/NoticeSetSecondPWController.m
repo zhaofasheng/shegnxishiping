@@ -125,7 +125,7 @@
     self.pwButton = [[UIButton alloc] initWithFrame:CGRectMake(62, pwBackImageView.frame.size.height-30-40, 168, 40)];
     self.pwButton.layer.cornerRadius = 20;
     self.pwButton.layer.masksToBounds = YES;
-    self.pwButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.pwButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [self.pwButton setTitle:self.isCheck?[NoticeTools getLocalStrWith:@"pw.in"]: [NoticeTools getLocalStrWith:@"sure.comgir"] forState:UIControlStateNormal];
     [self.pwButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     self.pwButton.titleLabel.font = XGTwentyBoldFontSize;

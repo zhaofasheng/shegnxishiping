@@ -59,7 +59,7 @@
         self.titleSizeNormal = 16;
         self.titleSizeSelected = 16;
         self.progressViewBottomSpace = 0;
-        self.progressColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.progressColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.titleColorNormal = [[UIColor colorWithHexString:@"#25262E"] colorWithAlphaComponent:0.7];
         self.titleColorSelected = [UIColor colorWithHexString:@"#25262E"];
     }

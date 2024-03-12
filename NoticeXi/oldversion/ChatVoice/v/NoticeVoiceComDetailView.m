@@ -288,7 +288,7 @@
         UILabel *tapL = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, DR_SCREEN_WIDTH-70, 40)];
         tapL.text = [NoticeTools chinese:@"查看播客详情 >" english:@"More >" japan:@"もっと >"];
         tapL.font = FIFTHTEENTEXTFONTSIZE;
-        tapL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        tapL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [footV addSubview:tapL];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(detailT)];

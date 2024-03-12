@@ -35,7 +35,7 @@
     [clearButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     [clearButton setTitle:[NoticeTools getLocalStrWith:@"cace.qk"] forState:UIControlStateNormal];
     clearButton.titleLabel.font = XGEightBoldFontSize;
-    clearButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    clearButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     clearButton.layer.cornerRadius = 25;
     clearButton.layer.masksToBounds = YES;
     [clearButton addTarget:self action:@selector(clearAllClick) forControlEvents:UIControlEventTouchUpInside];

@@ -75,7 +75,7 @@
     }
     
     if (self.phoneView.text.length <= 4 && self.phoneView.text.length > 0){
-        self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }else{
         [self.nextButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];

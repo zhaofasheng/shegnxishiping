@@ -12,9 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SXMineSetCell : BaseCell
 @property (nonatomic, strong) UILabel *titleL;
+@property (nonatomic, strong) UIImageView *subImageV;
 @property (nonatomic, strong) UIImageView *titleImageView;
 @property (nonatomic, strong) UIView *backView;
-@property (nonatomic, strong) UIImageView *subImageV;
+
 @property (nonatomic, strong) UILabel *subL;
 @end
 

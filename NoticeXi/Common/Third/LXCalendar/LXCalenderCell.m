@@ -24,7 +24,7 @@
         self.label.font = SIXTEENTEXTFONTSIZE;
         self.label.backgroundColor = [[UIColor colorWithHexString:@"#EBECF0"] colorWithAlphaComponent:0];
         self.label.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
-        self.label.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+        self.label.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
         
         
         self.imageView.hidden = YES;

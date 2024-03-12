@@ -149,7 +149,7 @@
         _hotL.font = TWOTEXTFONTSIZE;
         _hotL.textAlignment = NSTextAlignmentCenter;
         _hotL.text = [NoticeTools chinese:@"官方推荐" english:@"Recommended" japan:@"おすすめ"];
-        _hotL.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _hotL.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         _hotL.layer.cornerRadius = 2;
         _hotL.layer.masksToBounds = YES;
         [self.contentView addSubview:_hotL];

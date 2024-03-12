@@ -58,7 +58,7 @@
         
         self.voicePlayView = [[UIView alloc] initWithFrame:CGRectMake(10, 50, self.backView.frame.size.width-50, 32)];
         [self.voicePlayView setAllCorner:16];
-        self.voicePlayView.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.voicePlayView.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.voicePlayView.userInteractionEnabled = YES;
         [self.backView addSubview:self.voicePlayView];
         
@@ -288,7 +288,7 @@
     self.markL.hidden = YES;
     if (voiceM.isTop) {
         self.markL.hidden = NO;
-        self.markL.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.markL.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.markL.text = [NoticeTools chinese:@"声昔pick" english:@"pick" japan:@"入選"];
         self.markL.frame = CGRectMake(0, 0, GET_STRWIDTH(self.markL.text, 10, 16)+8, 16);
     }

@@ -157,7 +157,7 @@
         _hotL.font = TWOTEXTFONTSIZE;
         _hotL.textAlignment = NSTextAlignmentCenter;
         _hotL.text = [NoticeTools chinese:@"官方pick" english:@"Pick" japan:@"入選"];
-        _hotL.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _hotL.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         _hotL.layer.cornerRadius = 2;
         _hotL.layer.masksToBounds = YES;
         [self.backImageView addSubview:_hotL];

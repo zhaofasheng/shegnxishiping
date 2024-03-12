@@ -38,7 +38,7 @@
         [self.contentView addSubview:self.whiteView];
         
         self.voiceView = [[UIView alloc] initWithFrame:CGRectMake(8, 8, 120, 32)];
-        self.voiceView.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.voiceView.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.voiceView.layer.cornerRadius = 16;
         self.voiceView.layer.masksToBounds = YES;
         [self.whiteView addSubview:self.voiceView];

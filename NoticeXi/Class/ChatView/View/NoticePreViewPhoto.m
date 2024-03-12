@@ -104,7 +104,7 @@
     [self.cirButton addTarget:self action:@selector(cirClick) forControlEvents:UIControlEventTouchUpInside];
     
     self.sendButton = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-86, 7, 66, 36)];
-    self.sendButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.sendButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [self.sendButton setAllCorner:4];
     self.sendButton.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
     [self.sendButton setTitle:@"发送" forState:UIControlStateNormal];

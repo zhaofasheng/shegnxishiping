@@ -164,7 +164,7 @@
         
         self.hasL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
     }else{
-        self.hasL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.hasL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.pyImageView.image = UIImageNamed(@"Image_luynewztw");
         self.hasL.text = [NoticeTools getLocalStrWith:@"py.wantPy"];
     }
@@ -504,7 +504,7 @@
         [_buttonView addSubview:self.pyImageView];
         
         self.hasL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.pyImageView.frame)+3, 0, 50, 54)];
-        self.hasL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.hasL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.hasL.font = XGTWOBoldFontSize;
         self.hasL.text = [NoticeTools getLocalStrWith:@"py.wantPy"];
         [_buttonView addSubview:self.hasL];

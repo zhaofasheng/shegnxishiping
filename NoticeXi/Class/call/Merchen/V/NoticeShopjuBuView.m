@@ -90,9 +90,9 @@
     _oldBtn.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     [_oldBtn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
     
-    button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [sureBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+    [sureBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     
     _oldBtn = button;
 }

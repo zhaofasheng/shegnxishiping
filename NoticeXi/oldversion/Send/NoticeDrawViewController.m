@@ -159,7 +159,7 @@
     [switch1 addTarget:self action:@selector(changeVale:) forControlEvents:UIControlEventTouchUpInside];
     switch1.selectedTitleColor = [UIColor colorWithHexString:@"#FFFFFF"];
     switch1.titleColor = [UIColor colorWithHexString:@"#8A8F99"];
-    switch1.trackerColor = [UIColor colorWithHexString:@"#00ABE4"];
+    switch1.trackerColor = [UIColor colorWithHexString:@"#1FC7FF"];
     switch1.backgroundColor = [UIColor colorWithHexString:@"#383A42"];
     [self.view addSubview:switch1];
     switch1.hidden = YES;
@@ -237,7 +237,7 @@
     
     if (hasUndo) {
         self.hasDraws = YES;
-        self.sendBtn.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.sendBtn.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.beforeBtn setImage:UIImageNamed(@"Image_drawbefore_b") forState:UIControlStateNormal];
     }else{
         self.hasDraws = NO;

@@ -29,7 +29,7 @@
 
     switch1.selectedTitleColor = [UIColor colorWithHexString:@"#FFFFFF"];
     switch1.titleColor = [[UIColor colorWithHexString:@"#25262E"] colorWithAlphaComponent:1];
-    switch1.trackerColor = [UIColor colorWithHexString:@"#00ABE4"];
+    switch1.trackerColor = [UIColor colorWithHexString:@"#1FC7FF"];
     _switchButton = switch1;
     [self.menuView addSubview:_switchButton];
 }

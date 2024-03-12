@@ -333,7 +333,7 @@
         self.playButton.frame = CGRectMake(frame.size.width-frame.size.height/4-(frame.size.height-20)/2-10, (frame.size.height-20)/2, 20, 20);
         self.timeL.frame = CGRectMake(frame.size.height/2-11, (frame.size.height-14)/2, GET_STRWIDTH(@"00:110", 14, 14), 14);
         self.timeL.textAlignment = NSTextAlignmentLeft;
-        self.slieView.trackTintColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.slieView.trackTintColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.slieView.layer.borderWidth = 0;
     }else{
         self.playButton.frame = CGRectMake(frame.size.height/4, (frame.size.height-20)/2, 20, 20);
@@ -362,11 +362,11 @@
         self.timeL.frame = CGRectMake(frame.size.width-frame.size.height/2-GET_STRWIDTH(@"00:11", 14, 14), (frame.size.height-14)/2, GET_STRWIDTH(@"00:101", 14, 14), 14);
         self.slieView.progressTintColor = [UIColor colorWithHexString:@"#FFFFFF"];
         self.slieView.layer.borderWidth = 1;
-        self.backgroundColor = [[UIColor colorWithHexString:@"#00ABE4"] colorWithAlphaComponent:0.1];
-        self.slieView.layer.borderColor = [[UIColor colorWithHexString:@"#00ABE4"] colorWithAlphaComponent:1].CGColor;
+        self.backgroundColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.1];
+        self.slieView.layer.borderColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:1].CGColor;
         
-        self.slieView.trackTintColor = [[UIColor colorWithHexString:@"#00ABE4"] colorWithAlphaComponent:0.1];
-        self.timeL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.slieView.trackTintColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.1];
+        self.timeL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.layer.cornerRadius = 4;
         self.slieView.layer.cornerRadius = 4;
     }

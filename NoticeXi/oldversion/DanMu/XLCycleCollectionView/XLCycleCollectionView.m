@@ -57,7 +57,7 @@ static CGFloat ScrollInterval = 3.0f;
     } else {
         // Fallback on earlier versions
     }
-    self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [self addSubview:self.pageControl];
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:ScrollInterval target:self selector:@selector(showNext) userInfo:nil repeats:true];

@@ -262,7 +262,7 @@
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:chatModel.fromUserM.avatar_url] placeholderImage:[UIImage imageNamed:@"Image_jynohe"]];
     self.nickNameL.text = chatModel.fromUserM.mass_nick_name;
     
-    self.contentV.backgroundColor = [UIColor colorWithHexString:chatModel.isSelf?@"#00ABE4":@"#F7F8FC"];
+    self.contentV.backgroundColor = [UIColor colorWithHexString:chatModel.isSelf?@"#1FC7FF":@"#F7F8FC"];
     self.contentL.textColor = [UIColor colorWithHexString:chatModel.isSelf?@"#FFFFFF":@"#25262E"];
     
     [self showTextMsg];

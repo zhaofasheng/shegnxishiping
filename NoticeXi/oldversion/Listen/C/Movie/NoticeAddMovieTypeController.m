@@ -56,7 +56,7 @@
     [self.view addSubview:self.numL];
     
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(70, CGRectGetMaxY(self.numL.frame)+70, DR_SCREEN_WIDTH-140, 50)];
-    btn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     btn.layer.cornerRadius = 25;
     btn.layer.masksToBounds = YES;
     [btn setTitle:[NoticeTools getLocalStrWith:@"groupManager.save"] forState:UIControlStateNormal];

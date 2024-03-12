@@ -79,7 +79,7 @@
     if (!_addTagsL) {
         _addTagsL = [[UILabel  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-180, 0, 160, 37)];
         _addTagsL.font = FOURTHTEENTEXTFONTSIZE;
-        _addTagsL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _addTagsL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         _addTagsL.textAlignment = NSTextAlignmentRight;
         _addTagsL.userInteractionEnabled = YES;
         _addTagsL.text = @"添加标签";
@@ -130,7 +130,7 @@
             if (self.shopModel.myShopM.tagsTextArr.count == 10) {
                 self.addTagsL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
             }else{
-                self.addTagsL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+                self.addTagsL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
             }
         }
         

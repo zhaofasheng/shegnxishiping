@@ -169,10 +169,10 @@
     if (self.isLikeEachOther || self.isSendWhite) {
         [self.funBtn setTitle:[NoticeTools getLocalStrWith:@"xs.sendhe"] forState:UIControlStateNormal];
         self.funBtn.titleLabel.font = ELEVENTEXTFONTSIZE;
-        [self.funBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [self.funBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         self.funBtn.layer.cornerRadius = 12;
         self.funBtn.layer.masksToBounds = YES;
-        self.funBtn.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+        self.funBtn.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
         self.funBtn.layer.borderWidth = 1;
     }else{
         if (self.type == 1) {

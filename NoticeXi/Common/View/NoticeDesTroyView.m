@@ -100,7 +100,7 @@
         self.sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         self.sureBtn.frame = CGRectMake(contentView.frame.size.width/2,contentView.frame.size.height-44,contentView.frame.size.width/2, 44);
         [self.sureBtn setTitle:[NoticeTools getLocalStrWith:@"main.sure"] forState:UIControlStateNormal];
-        [self.sureBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [self.sureBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         self.sureBtn.tag = 2;
         self.sureBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
         [self.sureBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -209,7 +209,7 @@
         self.sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         self.sureBtn.frame = CGRectMake(contentView.frame.size.width/2,contentView.frame.size.height-44,contentView.frame.size.width/2, 44);
         [self.sureBtn setTitle:[NoticeTools getLocalStrWith:@"accunt.surezx"] forState:UIControlStateNormal];
-        [self.sureBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [self.sureBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         self.sureBtn.tag = 2;
         self.sureBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
         [self.sureBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];

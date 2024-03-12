@@ -21,7 +21,7 @@
         [self.contentView addSubview:backView];
         
         self.titleL = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, 60, 60)];
-        self.titleL.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.titleL.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.titleL.numberOfLines = 2;
         self.titleL.layer.cornerRadius = 5;
         self.titleL.layer.masksToBounds = YES;

@@ -84,7 +84,7 @@
         self.textView.hidden = YES;
         
         self.topicField = [[UITextField alloc] initWithFrame:CGRectMake(5,0,DR_SCREEN_WIDTH-20-64-5, 36)];
-        self.topicField.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.topicField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.topicField.font = FOURTHTEENTEXTFONTSIZE;
         self.topicField.textColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];
         self.topicField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -142,7 +142,7 @@
     UITextField *_field = (UITextField *)sender;
 
     if (_field.text.length) {
-        [self.sendBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [self.sendBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     }else{
         [self.sendBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     }

@@ -71,7 +71,7 @@
         _atAllView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 40)];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 30, 30)];
         [label setAllCorner:15];
-        label.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        label.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         label.font = EIGHTEENTEXTFONTSIZE;
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor whiteColor];
@@ -254,14 +254,14 @@
         [_tableView registerClass:NoticeAtPersonCell.class forCellReuseIdentifier:@"cell"];
         SCIndexViewConfiguration *configuration = [SCIndexViewConfiguration configuration];
         configuration.indicatorHeight = 30;
-        configuration.indicatorTextColor = [UIColor colorWithHexString:@"#00ABE4"];
+        configuration.indicatorTextColor = [UIColor colorWithHexString:@"#1FC7FF"];
         configuration.indexItemTextColor =  [UIColor colorWithHexString:@"#A1A7B3"];
         configuration.indexItemSelectedBackgroundColor = [UIColor whiteColor];
         configuration.indexItemsSpace = 3;
         configuration.indexItemSelectedTextFont = THRETEENTEXTFONTSIZE;
         configuration.indexItemTextFont = ELEVENTEXTFONTSIZE;
         configuration.indicatorTextFont = XGSIXBoldFontSize;
-        configuration.indexItemSelectedTextColor = [UIColor colorWithHexString:@"#00ABE4"];
+        configuration.indexItemSelectedTextColor = [UIColor colorWithHexString:@"#1FC7FF"];
         _tableView.sc_indexViewConfiguration = configuration;
         _tableView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:self.tableView];

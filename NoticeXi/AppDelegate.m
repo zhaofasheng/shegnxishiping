@@ -180,11 +180,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     }
 }
 
-//主动退出登录
-- (void)changeRootNactionVC{
-
-}
-
 - (LGAudioPlayer *)audioPlayer
 {
     if (!_audioPlayer) {

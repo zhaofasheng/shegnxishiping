@@ -62,7 +62,7 @@
         self.navBarView.rightButton.frame = CGRectMake(DR_SCREEN_WIDTH-15-72, STATUS_BAR_HEIGHT, 72, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
         self.navBarView.rightButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
         [self.navBarView.rightButton setTitle:[NoticeTools getLocalStrWith:@"py.mainofhe"] forState:UIControlStateNormal];
-        [self.navBarView.rightButton setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [self.navBarView.rightButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         
         [self.navBarView.rightButton addTarget:self action:@selector(centerIntClick) forControlEvents:UIControlEventTouchUpInside];
     }

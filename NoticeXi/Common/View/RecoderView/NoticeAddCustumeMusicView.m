@@ -53,7 +53,7 @@
         if (self.isFromeCenter) {
             label1.text = [NoticeTools getLocalStrWith:@"songList.up"];
         }else{
-            label1.attributedText = [DDHAttributedMode setSizeAndColorString:@"上传歌曲 如何上传?" setColor:[[UIColor colorWithHexString:@"#00ABE4"] colorWithAlphaComponent:1] setSize:11 setLengthString:@"如何上传?" beginSize:5];
+            label1.attributedText = [DDHAttributedMode setSizeAndColorString:@"上传歌曲 如何上传?" setColor:[[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:1] setSize:11 setLengthString:@"如何上传?" beginSize:5];
             label1.userInteractionEnabled = YES;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(howClick)];
             [label1 addGestureRecognizer:tap];
@@ -71,7 +71,7 @@
         self.inputField = [[UITextField alloc] initWithFrame:CGRectMake(10,2,backV.frame.size.width-20, 36)];
         self.inputField.font = FOURTHTEENTEXTFONTSIZE;
         self.inputField.textColor = [UIColor colorWithHexString:@"#25262E"];
-        self.inputField.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.inputField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [backV addSubview:self.inputField];
         self.inputField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[NoticeTools getLocalStrWith:@"songList.copy"] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[[UIColor colorWithHexString:@"#A1A7B3"] colorWithAlphaComponent:1]}];
         self.inputField.delegate = self;

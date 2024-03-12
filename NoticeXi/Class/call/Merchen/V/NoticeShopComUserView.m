@@ -105,19 +105,19 @@
     self.badL.textColor = [UIColor colorWithHexString:@"#25262E"];
     
     if(tapV.tag == 0){
-        self.goodView.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.goodView.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.goodL.textColor = [UIColor whiteColor];
         self.score = @"1";
     }else if (tapV.tag == 1){
-        self.nomerView.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.nomerView.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.nomerL.textColor = [UIColor whiteColor];
         self.score = @"2";
     }else{
-        self.badView.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.badView.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.badL.textColor = [UIColor whiteColor];
         self.score = @"3";
     }
-    self.comButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.comButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [self.comButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 

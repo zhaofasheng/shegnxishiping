@@ -158,9 +158,9 @@
     self.noBtn.layer.cornerRadius = 14;
     self.noBtn.backgroundColor = [UIColor whiteColor];
     self.noBtn.layer.borderWidth = 1;
-    self.noBtn.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+    self.noBtn.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
     [self.noBtn setTitle:@"移出白名单" forState:UIControlStateNormal];
-    [self.noBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+    [self.noBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:userM.avatar_url]];
     self.nickNameL.text = userM.nick_name;
 }

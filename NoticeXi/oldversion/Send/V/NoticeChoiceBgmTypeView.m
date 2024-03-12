@@ -77,7 +77,7 @@
         self.howButton.hidden = YES;
         
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(20, self.keyView.frame.size.height-20-BOTTOM_HEIGHT-40, DR_SCREEN_WIDTH-40, 40)];
-        button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         button.layer.cornerRadius = 8;
         button.layer.masksToBounds = YES;
         [button setTitle:[NoticeTools getLocalStrWith:@"luy.addBGN"] forState:UIControlStateNormal];
@@ -206,7 +206,7 @@
         self.inputField = [[UITextField alloc] initWithFrame:CGRectMake(10,2,backV.frame.size.width-20, 36)];
         self.inputField.font = FOURTHTEENTEXTFONTSIZE;
         self.inputField.textColor = [UIColor colorWithHexString:@"#25262E"];
-        self.inputField.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.inputField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [backV addSubview:self.inputField];
         self.inputField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[NoticeTools getLocalStrWith:@"songList.copy"] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[[UIColor colorWithHexString:@"#A1A7B3"] colorWithAlphaComponent:1]}];
         self.inputField.delegate = self;

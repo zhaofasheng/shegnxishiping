@@ -107,8 +107,8 @@
 - (void)setIsChoice:(BOOL)isChoice{
     _isChoice = isChoice;
 
-    self.titleL.textColor = [UIColor colorWithHexString:isChoice?@"#00ABE4":@"#25262E"];
-    self.numberL.textColor = [UIColor colorWithHexString:isChoice?@"#00ABE4":@"#5C5F66"];
+    self.titleL.textColor = [UIColor colorWithHexString:isChoice?@"#1FC7FF":@"#25262E"];
+    self.numberL.textColor = [UIColor colorWithHexString:isChoice?@"#1FC7FF":@"#5C5F66"];
 }
 
 - (void)awakeFromNib {

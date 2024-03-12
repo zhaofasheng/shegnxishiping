@@ -85,9 +85,9 @@
     
     for (UILabel *label in self.labelArr) {
         if (label.tag == tapV.tag) {
-            label.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            label.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             label.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
-            label.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+            label.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
         }else{
             label.backgroundColor = self.backView.backgroundColor;
             label.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
@@ -133,9 +133,9 @@
                 self.sameImageView.hidden = NO;
                 self.sameImageView.frame = CGRectMake(label.frame.origin.x-13, label.frame.origin.y-10, 26, 26);
             }else{
-                label.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                label.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 label.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
-                label.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+                label.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
             }
        
         }else{

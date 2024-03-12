@@ -226,21 +226,21 @@
     [self.timeButton3 setTitle:self.day forState:UIControlStateNormal];
     if (btn.tag == 0) {
         [self.yearBbn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.yearBbn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.yearBbn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.monBtn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.monBtn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.dayBtn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.dayBtn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     }else if(btn.tag == 1){
         [self.monBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.monBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.monBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.yearBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.yearBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.dayBtn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.dayBtn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     }else{
         [self.dayBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.dayBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.dayBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.monBtn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.monBtn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.yearBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
@@ -287,12 +287,12 @@
         self.buttonView1.hidden = NO;
         self.buttonView2.hidden = YES;
         [self.voiceBbn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.voiceBbn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.voiceBbn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.textBtn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.textBtn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     }else{
         [self.textBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.textBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.textBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.voiceBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.voiceBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         self.buttonView1.hidden = YES;
@@ -307,21 +307,21 @@
     }
     if (btn.tag == 0) {
         [self.shareBbn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.shareBbn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.shareBbn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.noshareBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.noshareBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.noshareBbn1 setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.noshareBbn1.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     }else if(btn.tag == 1){
         [self.noshareBbn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.noshareBbn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.noshareBbn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.shareBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.shareBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.noshareBbn1 setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.noshareBbn1.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     }else{
         [self.noshareBbn1 setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.noshareBbn1.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.noshareBbn1.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.shareBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.shareBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.noshareBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
@@ -333,7 +333,7 @@
     self.statusType = btn.tag;
     if (btn.tag == 0) {
         [self.kxBbn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.kxBbn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.kxBbn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.sqBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.sqBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.pdBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
@@ -342,7 +342,7 @@
         self.ngBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     }else if(btn.tag == 1){
         [self.sqBbn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.sqBbn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.sqBbn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.kxBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.kxBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.pdBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
@@ -351,7 +351,7 @@
         self.ngBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     }else if(btn.tag == 2){
         [self.pdBbn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.pdBbn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.pdBbn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.sqBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.sqBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.kxBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
@@ -360,7 +360,7 @@
         self.ngBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     }else{
         [self.ngBbn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.ngBbn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.ngBbn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.sqBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
         self.sqBbn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.pdBbn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];

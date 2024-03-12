@@ -128,7 +128,7 @@
     _textView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     _textView.delegate = self;
     _textView.textColor = [UIColor colorWithHexString:@"#25262E"];
-    _textView.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+    _textView.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [_tableView addSubview:_textView];
     [_tableView addSubview:_plaL];
     self.phassetArr = [NSMutableArray new];
@@ -423,7 +423,7 @@
     if (self.textView.text.length && self.nameField.text.length) {
         _plaL.text = @"";
         _sendBtn.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
-        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }else{
         _plaL.text = self.plaStr;
         _sendBtn.textColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];
@@ -505,7 +505,7 @@
     if (textView.text.length && self.nameField.text.length) {
         _plaL.text = @"";
         _sendBtn.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
-        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }else{
         _plaL.text = self.plaStr;
         _sendBtn.textColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];

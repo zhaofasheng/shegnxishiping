@@ -19,6 +19,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeTitleAndImageCell : BaseCell
+@property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UILabel *mainL;
 @property (nonatomic, strong) UILabel *subL;
 @property (nonatomic, strong) UIImageView *subImageV;

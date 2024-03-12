@@ -22,7 +22,7 @@
 
         self.mainL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame)+30, DR_SCREEN_WIDTH, 30)];
         self.mainL.font = XGTwentyTwoBoldFontSize;
-        self.mainL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.mainL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.mainL.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.mainL];
         

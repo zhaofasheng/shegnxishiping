@@ -70,7 +70,7 @@
     self.nameField = [[UITextView alloc] initWithFrame:CGRectMake(5, 40, DR_SCREEN_WIDTH-30, 30)];
     self.nameField.text = self.induce;
     self.nameField.backgroundColor = backView.backgroundColor;
-    self.nameField.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.nameField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
     self.nameField.text = self.induce;
 
     
@@ -104,7 +104,7 @@
     btn.titleLabel.font = XGTwentyBoldFontSize;
     btn.layer.cornerRadius = 20;
     btn.layer.masksToBounds = YES;
-    btn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [btn addTarget:self action:@selector(fifinshClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     self.finishBtn = btn;

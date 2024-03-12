@@ -59,7 +59,7 @@
 
     // Default appearance, you can reset these after this method
     // 默认的外观，你可以在这个方法后重置
-    self.oKButtonTitleColorNormal   = [UIColor colorWithHexString:@"#00ABE4"];
+    self.oKButtonTitleColorNormal   = [UIColor colorWithHexString:@"#1FC7FF"];
     self.oKButtonTitleColorDisabled = [UIColor colorWithHexString:@"#8A8F99"];
     
     self.navigationBar.barTintColor = [UIColor whiteColor];
@@ -303,7 +303,7 @@
     self.presetName = AVAssetExportPresetMediumQuality;
     self.maxCropVideoDuration = 30;
     
-    self.iconThemeColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.iconThemeColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [self configDefaultBtnTitle];
     
     CGFloat cropViewWH = MIN(self.view.tz_width, self.view.tz_height) / 3 * 2;

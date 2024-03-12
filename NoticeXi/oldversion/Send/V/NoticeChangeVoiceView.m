@@ -83,7 +83,7 @@
         [self.keyView addSubview:self.collectionView];
         
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.collectionView.frame), DR_SCREEN_WIDTH-40, 40)];
-        button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         button.layer.cornerRadius = 8;
         button.layer.masksToBounds = YES;
         [button setTitle:[NoticeTools getLocalStrWith:@"photo.next"] forState:UIControlStateNormal];
@@ -101,7 +101,7 @@
         NSString *str1 = [NoticeTools getLocalStrWith:@"luy.levlemark"];
         NSString *str2 = [NoticeTools getLocalStrWith:@"luy.levelonline"];
         NSString *allStr = [NSString stringWithFormat:@"*%@%@",str1,str2];
-        self.upLeveL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:str2 beginSize:str1.length+1];
+        self.upLeveL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:str2 beginSize:str1.length+1];
         [self.keyView addSubview:self.upLeveL];
         
         if ([[[NoticeSaveModel getUserInfo] level] intValue] > 0) {

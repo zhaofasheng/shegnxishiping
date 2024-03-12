@@ -106,10 +106,10 @@
             [self.addZjBtn setTitleColor:[UIColor colorWithHexString:@"#737780"] forState:UIControlStateNormal];
             NoticeZjModel *zjM = self.voiceM.albumArr[0];
             NSString *allStr = [NSString stringWithFormat:@"%@ %@",[NoticeTools getLocalStrWith:@"each.hasjoinGroup"],zjM.album_name];
-            self.addL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:[self.voiceM.albumArr[0] album_name] beginSize:4];
+            self.addL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:[self.voiceM.albumArr[0] album_name] beginSize:4];
         }else{
             self.addL.text = [NoticeTools getLocalStrWith:@"nojoin.zj"];
-            self.addZjBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.addZjBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [self.addZjBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         }
     }
@@ -131,7 +131,7 @@
         _addZjBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
         _addZjBtn.layer.cornerRadius = 18;
         _addZjBtn.layer.masksToBounds = YES;
-        _addZjBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _addZjBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [_addZjBtn addTarget:self action:@selector(addZjClick) forControlEvents:UIControlEventTouchUpInside];
         
         self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50, DR_SCREEN_WIDTH, 50+BOTTOM_HEIGHT)];
@@ -198,10 +198,10 @@
             NoticeZjModel *zjM = weakSelf.voiceM.albumArr[0];
             zjM.voice_num = [NSString stringWithFormat:@"%d",zjM.voice_num.intValue+1];
             NSString *allStr = [NSString stringWithFormat:@"%@ %@",[NoticeTools getLocalStrWith:@"each.hasjoinGroup"],zjM.album_name];
-            weakSelf.addL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:[weakSelf.voiceM.albumArr[0] album_name] beginSize:4];
+            weakSelf.addL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:[weakSelf.voiceM.albumArr[0] album_name] beginSize:4];
         }else{
             weakSelf.addL.text = [NoticeTools getLocalStrWith:@"nojoin.zj"];
-            weakSelf.addZjBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            weakSelf.addZjBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [weakSelf.addZjBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         }
     };
@@ -215,10 +215,10 @@
         [self.addZjBtn setTitleColor:[UIColor colorWithHexString:@"#737780"] forState:UIControlStateNormal];
         NoticeZjModel *zjM = self.voiceM.albumArr[0];
         NSString *allStr = [NSString stringWithFormat:@"%@ %@",[NoticeTools getLocalStrWith:@"each.hasjoinGroup"],zjM.album_name];
-        self.addL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:[self.voiceM.albumArr[0] album_name] beginSize:4];
+        self.addL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:[self.voiceM.albumArr[0] album_name] beginSize:4];
     }else{
         self.addL.text = [NoticeTools getLocalStrWith:@"nojoin.zj"];
-        self.addZjBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.addZjBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.addZjBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     }
 }

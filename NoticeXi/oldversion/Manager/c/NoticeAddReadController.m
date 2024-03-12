@@ -52,7 +52,7 @@
     [self.choiceImageView addGestureRecognizer:tap];
     
     UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-243)/2,self.view.frame.size.height-BOTTOM_HEIGHT-50-30-NAVIGATION_BAR_HEIGHT, 243, 50)];
-    addBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    addBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     addBtn.layer.cornerRadius = 25;
     addBtn.layer.masksToBounds = YES;
     [addBtn setTitle:@"添加定时任务" forState:UIControlStateNormal];

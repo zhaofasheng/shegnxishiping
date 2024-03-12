@@ -33,7 +33,7 @@
         _nickNameL.textAlignment = NSTextAlignmentCenter;
         
         self.careButton = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_nickNameL.frame)+10, 50, 20)];
-        self.careButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.careButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.careButton setTitle:[NoticeTools getLocalStrWith:@"minee.xs"] forState:UIControlStateNormal];
         self.careButton.titleLabel.font = TWOTEXTFONTSIZE;
         [self.careButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
@@ -53,7 +53,7 @@
 - (void)setCareM:(NoticeFriendAcdModel *)careM{
     _careM = careM;
    
-    self.careButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.careButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [self.careButton setTitle:[NoticeTools getLocalStrWith:@"minee.xs"] forState:UIControlStateNormal];
     self.nickNameL.text = careM.nick_name;
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:[NoticeTools hasChinese:careM.avatar_url]] placeholderImage:[UIImage imageNamed:@"Image_jynohe"] options:SDWebImageAvoidDecodeImage];
@@ -78,7 +78,7 @@
                     self.careButton.backgroundColor = [UIColor colorWithHexString:@"#5C5F66"];
                     [self.careButton setTitle:[NoticeTools getLocalStrWith:@"intro.yilike"] forState:UIControlStateNormal];
                 }else{
-                    self.careButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                    self.careButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                     [self.careButton setTitle:[NoticeTools getLocalStrWith:@"minee.xs"] forState:UIControlStateNormal];
                 }
             }
@@ -99,7 +99,7 @@
                 [self.careButton setTitle:[NoticeTools getLocalStrWith:@"intro.yilike"] forState:UIControlStateNormal];
                 [nav.topViewController showToastWithText:[NoticeTools getLocalStrWith:@"xs.xssus"]];
             }else{
-                self.careButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                self.careButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 [self.careButton setTitle:[NoticeTools getLocalStrWith:@"minee.xs"] forState:UIControlStateNormal];
             }
         }

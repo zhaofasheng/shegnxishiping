@@ -226,7 +226,7 @@
     [cancelBtn setTitle:[NoticeTools getLocalStrWith:@"py.send"] forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     cancelBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
-    cancelBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    cancelBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     cancelBtn.layer.cornerRadius = 20;
     cancelBtn.layer.masksToBounds = YES;
     [contentView addSubview:cancelBtn];

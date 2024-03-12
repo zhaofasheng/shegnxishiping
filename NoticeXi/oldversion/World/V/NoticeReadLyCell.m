@@ -211,7 +211,7 @@
                 self.liuyan.like_num = [NSString stringWithFormat:@"%d",self.liuyan.like_num.intValue+1];
             }
             self.numL.text = self.liuyan.like_num.intValue?self.liuyan.like_num:@"";
-            self.numL.textColor = self.liuyan.is_zan.intValue?[UIColor colorWithHexString:@"#00ABE4"]:[UIColor colorWithHexString:@"#5C5F66"];
+            self.numL.textColor = self.liuyan.is_zan.intValue?[UIColor colorWithHexString:@"#1FC7FF"]:[UIColor colorWithHexString:@"#5C5F66"];
             self.likeImageView.image = self.liuyan.is_zan.intValue?UIImageNamed(@"Image_likeDMy"):UIImageNamed(@"Image_nodianzan");
         }
     } fail:^(NSError * _Nullable error) {

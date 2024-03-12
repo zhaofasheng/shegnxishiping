@@ -45,7 +45,7 @@
         UIButton *sendBtn = [[UIButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-240)/2,165,240,50)];
         sendBtn.layer.cornerRadius = 25;
         sendBtn.layer.masksToBounds = YES;
-        sendBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        sendBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [sendBtn setTitle:[NoticeTools getLocalStrWith:@"groupfm.finish"] forState:UIControlStateNormal];
         [sendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         sendBtn.titleLabel.font = EIGHTEENTEXTFONTSIZE;

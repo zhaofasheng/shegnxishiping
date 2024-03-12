@@ -21,7 +21,7 @@
         
         self.subL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mainL.frame)+7, self.frame.size.width, 11)];
         self.subL.textAlignment = NSTextAlignmentCenter;
-        self.subL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.subL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self addSubview:self.subL];
         self.subL.font = ELEVENTEXTFONTSIZE;
     }

@@ -64,7 +64,7 @@
         [self.contentBackView addGestureRecognizer:tap];
         
         self.contentView = [[UITextView alloc] initWithFrame:CGRectMake(15,5, DR_SCREEN_WIDTH-40-30, 36-16)];
-        self.contentView.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.contentView.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.contentView.backgroundColor = [self.contentBackView.backgroundColor colorWithAlphaComponent:0];
         self.contentView.delegate = self;
         self.contentView.font = FOURTHTEENTEXTFONTSIZE;
@@ -162,7 +162,7 @@
 - (void)textViewDidChangeSelection:(UITextView *)textView{
     if (textView.text.length) {
         _plaL.text = @"";
-        [_sendButton setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [_sendButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     }else{
         [_sendButton setTitleColor:[UIColor colorWithHexString:@"#A1A7B3"] forState:UIControlStateNormal];
         _plaL.text = self.plaStr;

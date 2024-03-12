@@ -33,7 +33,7 @@
         self.backView.backgroundColor = [UIColor whiteColor];
         
         UIButton *sendBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-15-65, 15, 65, 24)];
-        sendBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        sendBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         sendBtn.layer.cornerRadius = 12;
         sendBtn.layer.masksToBounds = YES;
         [sendBtn setTitle:[NoticeTools getLocalStrWith:@"cao.resend"] forState:UIControlStateNormal];

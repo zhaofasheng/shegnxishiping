@@ -123,7 +123,7 @@
         self.rePlay = YES;
         
         self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-66-20, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-28)/2, 66, 28)];
-        self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         self.nextButton.layer.cornerRadius = 14;
         self.nextButton.layer.masksToBounds = YES;
@@ -222,7 +222,7 @@
             [[NoticeTools getTopViewController] hideHUD];
             weakSelf.noNext = NO;
             weakSelf.hasEditEd = YES;
-            weakSelf.nextButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            weakSelf.nextButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [weakSelf.nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         };
     }

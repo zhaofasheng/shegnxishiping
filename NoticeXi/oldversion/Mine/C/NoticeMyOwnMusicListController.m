@@ -53,7 +53,7 @@
             UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT+5, DR_SCREEN_WIDTH-40, 40)];
             addBtn.layer.cornerRadius = 8;
             addBtn.layer.masksToBounds = YES;
-            addBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            addBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [addBtn setTitle:[NoticeTools getLocalStrWith:@"gedan.add"] forState:UIControlStateNormal];
             [addBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
             [self.view addSubview:addBtn];

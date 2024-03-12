@@ -462,7 +462,7 @@
     
     if (textView.text.length) {
         _plaL.text = @"";
-        [self.sendButton setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [self.sendButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     }else{
         if (self.isRead) {
             [self.sendButton setTitleColor:[UIColor colorWithHexString:@"#A1A7B3"] forState:UIControlStateNormal];

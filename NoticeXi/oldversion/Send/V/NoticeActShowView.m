@@ -17,7 +17,7 @@
         testActivityIndicator.center = self.center;//只能设置中心，不能设置大小
         [self addSubview:testActivityIndicator];
         self.actView = testActivityIndicator;
-        testActivityIndicator.color = [UIColor colorWithHexString:@"#00ABE4"];
+        testActivityIndicator.color = [UIColor colorWithHexString:@"#1FC7FF"];
         
         self.titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.actView.frame)+20, DR_SCREEN_WIDTH, 50)];
         self.titleL.textColor = [UIColor whiteColor];

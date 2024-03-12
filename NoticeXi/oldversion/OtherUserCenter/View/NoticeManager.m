@@ -61,7 +61,7 @@
             UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(13.5+149*i, self.tostView.frame.size.height-53,149,53)];
             btn.titleLabel.font = THRETEENTEXTFONTSIZE;
             if (i == 0) {
-                [btn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
             }else{
                 [btn setTitleColor:[UIColor colorWithHexString:@"#A1A7B3"] forState:UIControlStateNormal];
             }

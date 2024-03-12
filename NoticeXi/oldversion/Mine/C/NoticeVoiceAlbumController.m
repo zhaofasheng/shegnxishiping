@@ -33,7 +33,7 @@
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.tableView.frame), DR_SCREEN_WIDTH-30, 40)];
     addButton.layer.cornerRadius = 20;
     addButton.layer.masksToBounds = YES;
-    addButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [addButton setTitle:self.isVoiceAlbum? [NoticeTools chinese:@"新建心情专辑" english:@"Add an album" japan:@"アルバムを追加"]:[NoticeTools chinese:@"新建对话专辑" english:@"Add a chat album" japan:@"チャットアルバムの追加"] forState:UIControlStateNormal];
     addButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
     [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

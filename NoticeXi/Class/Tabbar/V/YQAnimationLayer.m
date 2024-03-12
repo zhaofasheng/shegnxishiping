@@ -114,7 +114,7 @@
     
     CAShapeLayer *heartpathLayer = [CAShapeLayer layer];
     heartpathLayer.path = heartLine.CGPath;
-    heartpathLayer.strokeColor = [[UIColor colorWithHexString:@"#00ABE4"] CGColor];
+    heartpathLayer.strokeColor = [[UIColor colorWithHexString:@"#1FC7FF"] CGColor];
     heartpathLayer.fillColor = nil;
     heartpathLayer.lineWidth = 1.0f;
     heartpathLayer.lineJoin = kCALineJoinRound;
@@ -130,7 +130,7 @@
     [heartRightLine addQuadCurveToPoint:CGPointMake((rect.size.width/2), rect.size.height-spaceWidth*6) controlPoint:CGPointMake(rect.size.width - spaceWidth, rect.size.height*0.3)];
     CAShapeLayer *heartRightLayer = [CAShapeLayer layer];
     heartRightLayer.path = heartRightLine.CGPath;
-    heartRightLayer.strokeColor = [[UIColor colorWithHexString:@"#00ABE4"] CGColor];
+    heartRightLayer.strokeColor = [[UIColor colorWithHexString:@"#1FC7FF"] CGColor];
     heartRightLayer.fillColor = nil;
     heartRightLayer.lineJoin = kCALineJoinRound;
     [animationLayer addSublayer:heartRightLayer];

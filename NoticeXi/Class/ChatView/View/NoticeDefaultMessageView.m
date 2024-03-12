@@ -25,7 +25,7 @@
         [self addSubview:_contentView];
         
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(20, _contentView.frame.size.height-44-BOTTOM_HEIGHT, DR_SCREEN_WIDTH-40, 40)];
-        button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [button setTitle:[NoticeTools chinese:@"编辑" english:@"Edit" japan:@"変更"] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         button.titleLabel.font = SIXTEENTEXTFONTSIZE;
@@ -43,7 +43,7 @@
             if ( i == 1) {
                 self.voiceBtn = btn;
                 [btn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-                btn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             }else{
                 self.imgBtn = btn;
             }
@@ -81,12 +81,12 @@
         [self.voiceBtn setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
         self.voiceBtn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.imgBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.imgBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.imgBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }else{
         [self.imgBtn setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
         self.imgBtn.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.voiceBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.voiceBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.voiceBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }
 }
 

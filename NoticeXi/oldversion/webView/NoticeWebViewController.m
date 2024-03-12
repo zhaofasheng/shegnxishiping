@@ -436,7 +436,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0,GET_STRWIDTH([NoticeTools getLocalStrWith:@"yl.saytozuozhe"], 16, 66), 66)];
         label.font = SIXTEENTEXTFONTSIZE;
         label.text = [NoticeTools getLocalStrWith:@"yl.saytozuozhe"];
-        label.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        label.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [_stayView addSubview:label];
         
         UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(label.frame)+6, 0,GET_STRWIDTH([NoticeTools getLocalStrWith:@"yl.luyanjin"], 12, 66), 66)];

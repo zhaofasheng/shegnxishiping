@@ -92,7 +92,7 @@
         [sureBtn setTitle:[NoticeTools getLocalStrWith:@"main.sure"] forState:UIControlStateNormal];
         [sureBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         sureBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
-        sureBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        sureBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         sureBtn.layer.cornerRadius = 8;
         sureBtn.layer.masksToBounds = YES;
         [self.keyView addSubview:sureBtn];

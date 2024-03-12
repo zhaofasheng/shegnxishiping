@@ -378,7 +378,7 @@
                 self.pyCommentM.zaned_num = [NSString stringWithFormat:@"%d",self.pyCommentM.zaned_num.intValue+1];
                 self.likeImageView.image = self.pyCommentM.zan_id.intValue?UIImageNamed(@"Image_bbslike_y"):UIImageNamed(@"Image_bbslike_b");
                 self.likeNum.text = [NSString stringWithFormat:@"%d",self.pyCommentM.zaned_num.intValue];
-                self.likeNum.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+                self.likeNum.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
             }
         } fail:^(NSError * _Nullable error) {
             [nav.topViewController hideHUD];
@@ -405,11 +405,11 @@
     
     self.likeImageView.image = pyCommentM.zan_id.intValue?UIImageNamed(@"Image_bbslike_y"):UIImageNamed(@"Image_bbslike_b");
     self.likeNum.text = [NSString stringWithFormat:@"%d",pyCommentM.zaned_num.intValue];
-    self.likeNum.textColor = [UIColor colorWithHexString:pyCommentM.zan_id.integerValue? @"#00ABE4":@"#8A8F99"];
+    self.likeNum.textColor = [UIColor colorWithHexString:pyCommentM.zan_id.integerValue? @"#1FC7FF":@"#8A8F99"];
     
     self.replyBtn.frame = CGRectMake(DR_SCREEN_WIDTH-22-50, self.nickNameL.frame.origin.y, 50, 20);
     [self.replyBtn setTitle:[NoticeTools getLocalType] == 1?@"Reply":@"回复" forState:UIControlStateNormal];
-    [self.replyBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+    [self.replyBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     self.replyBtn.hidden = YES;
     
     self.likeImageView.frame = CGRectMake(DR_SCREEN_WIDTH-24-37,self.timeL.frame.origin.y-3.5,24,24);

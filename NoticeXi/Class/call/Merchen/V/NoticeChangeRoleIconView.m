@@ -118,7 +118,7 @@
         self.url = roleM1.role_img_url;
         self.choiceImage1.image = UIImageNamed(@"Image_choiceadd_b");
         self.choiceImage2.image = UIImageNamed(@"Image_shoprole");
-        self.sureButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.sureButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.sureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
 }
@@ -131,7 +131,7 @@
         self.url = roleM1.role_img_url;
         self.choiceImage2.image = UIImageNamed(@"Image_choiceadd_b");
         self.choiceImage1.image = UIImageNamed(@"Image_shoprole");
-        self.sureButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.sureButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.sureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
 }

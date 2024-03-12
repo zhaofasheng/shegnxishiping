@@ -16,7 +16,7 @@
         self.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         
         self.nameView = [[UIView alloc] initWithFrame:CGRectMake(41, 0, 0, 20)];
-        self.nameView.backgroundColor = [[UIColor colorWithHexString:@"#00ABE4"] colorWithAlphaComponent:0.2];
+        self.nameView.backgroundColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.2];
         self.nameView.layer.cornerRadius = 10;
         self.nameView.layer.masksToBounds = YES;
         
@@ -28,7 +28,7 @@
         
         self.nameL = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 0,20)];
         self.nameL.font = ELEVENTEXTFONTSIZE;
-        self.nameL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.nameL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.nameView addSubview:self.nameL];
         
         self.statusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 20, 20)];

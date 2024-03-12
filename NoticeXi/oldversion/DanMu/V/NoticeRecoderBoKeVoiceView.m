@@ -164,7 +164,7 @@
         [bgmBtn addTarget:self action:@selector(bgmClick) forControlEvents:UIControlEventTouchUpInside];
         
         self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-66-20, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-28)/2, 66, 28)];
-        self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.nextButton.layer.cornerRadius = 14;
         self.nextButton.layer.masksToBounds = YES;
         self.nextButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;

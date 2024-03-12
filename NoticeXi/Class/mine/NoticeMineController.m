@@ -22,6 +22,7 @@
 #import "NoticeBuyOrderListController.h"
 #import "SXHasBuyOrderListController.h"
 #import "SXShopCheckController.h"
+#import "SXSettingController.h"
 @interface NoticeMineController ()
 @property (nonatomic, strong) NoticeNewCenterNavView *navView;
 @property (nonatomic, strong) SXUserCenterHeader *headerView;
@@ -41,6 +42,7 @@
 @property (nonatomic, strong) NoticeCureentShopStatusModel *applyModel;//申请状态
 @property (nonatomic, assign) BOOL needAutoShowSupply;
 @property (nonatomic, strong) SXSpulyShopView *supplyView;
+@property (nonatomic, assign) BOOL needFirst;
 @end
 
 @implementation NoticeMineController
@@ -144,7 +146,12 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
+    
+    if (self.needFirst) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GPTPFIRSTNOTICE" object:nil];
+        self.needFirst = NO;
+    }
+    
     if (self.needAutoShowSupply) {
         self.needAutoShowSupply = NO;
         [self myShopTap];
@@ -233,7 +240,12 @@
             [NoticeComTools connectXiaoer];
           
         }else if (indexPath.row == 2){
-            [NoticeSaveModel outLoginClearData];
+            SXSettingController *ctl = [[SXSettingController alloc] init];
+            __weak typeof(self) weakSelf = self;
+            ctl.needFirstBlock = ^(BOOL needFirst) {
+                weakSelf.needFirst = needFirst;
+            };
+            [self.navigationController pushViewController:ctl animated:YES];
         }
     }
 }

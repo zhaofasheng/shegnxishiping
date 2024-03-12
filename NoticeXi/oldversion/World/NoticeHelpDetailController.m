@@ -177,7 +177,7 @@
         _buttonFootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 50)];
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(50, 0, 200, 50)];
         [button setTitle:[NoticeTools chinese:@"查看求助帖详情>" english:@"Read More >" japan:@"ポストを見る>"] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         button.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
         [button addTarget:self action:@selector(detailClick) forControlEvents:UIControlEventTouchUpInside];
         [_buttonFootView addSubview:button];

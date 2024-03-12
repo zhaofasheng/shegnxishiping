@@ -263,7 +263,7 @@
         [_downButton addTarget:self action:@selector(downClick) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_downButton];
         _downButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
-        [_downButton setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [_downButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     }
     return _downButton;
 }

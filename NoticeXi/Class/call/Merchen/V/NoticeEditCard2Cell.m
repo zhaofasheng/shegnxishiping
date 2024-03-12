@@ -52,7 +52,7 @@
         
         UIButton *reBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.voicePlayView.frame)+8,0, 16+28, 36)];
         [reBtn setTitle:@"重录" forState:UIControlStateNormal];
-        [reBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [reBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         reBtn.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
         reBtn.backgroundColor = self.backgroundColor;
         [self.contentView addSubview:reBtn];

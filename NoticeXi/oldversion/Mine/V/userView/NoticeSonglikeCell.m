@@ -36,7 +36,7 @@
         label.font = ELEVENTEXTFONTSIZE;
         label.text = [NoticeTools chinese:@"看看Ta" english:@"View" japan:@"見る"];
         label.textAlignment = NSTextAlignmentCenter;
-        label.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        label.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         label.layer.cornerRadius = 12;
         label.layer.masksToBounds = YES;
         [self.contentView addSubview:label];

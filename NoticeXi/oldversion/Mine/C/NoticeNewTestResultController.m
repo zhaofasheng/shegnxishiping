@@ -66,11 +66,11 @@
         UIButton *reSetBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-20-48, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-24)/2, 48, 24)];
         [reSetBtn setTitle:[NoticeTools getLocalStrWith:@"t.update"] forState:UIControlStateNormal];
         reSetBtn.titleLabel.font = ELEVENTEXTFONTSIZE;
-        [reSetBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [reSetBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         reSetBtn.layer.cornerRadius = 12;
         reSetBtn.layer.masksToBounds = YES;
         reSetBtn.layer.borderWidth = 1;
-        reSetBtn.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+        reSetBtn.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
         [self.view addSubview:reSetBtn];
         [reSetBtn addTarget:self action:@selector(reClick) forControlEvents:UIControlEventTouchUpInside];
     }else{

@@ -345,7 +345,7 @@
         _footView.actionButton.titleLabel.font = EIGHTEENTEXTFONTSIZE;
         [_footView.actionButton setTitle:[NoticeTools getLocalStrWith:@"zj.howadd"] forState:UIControlStateNormal];
         _footView.actionButton.frame = CGRectMake((DR_SCREEN_WIDTH-240)/2,CGRectGetMaxY(_footView.titleL.frame)+20, 240, 56);
-        _footView.actionButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _footView.actionButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [_footView.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_footView.actionButton addTarget:self action:@selector(knowTap) forControlEvents:UIControlEventTouchUpInside];
 

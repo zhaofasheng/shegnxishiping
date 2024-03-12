@@ -94,7 +94,7 @@
     }
     if(_field.text.length){
         [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.sureBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.sureBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }else{
         [self.sureBtn setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
         self.sureBtn.backgroundColor = [UIColor colorWithHexString:@"#8A8F99"];

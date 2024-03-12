@@ -52,7 +52,7 @@
     UILabel *backLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, STATUS_BAR_HEIGHT, 70, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
     backLabel.userInteractionEnabled = YES;
     backLabel.font = SIXTEENTEXTFONTSIZE;
-    backLabel.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+    backLabel.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
     backLabel.text = [NoticeTools getLocalStrWith:@"main.cancel"];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backTap)];
     [backLabel addGestureRecognizer:tap];

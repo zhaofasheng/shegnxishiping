@@ -45,7 +45,7 @@
     self.addButton.layer.cornerRadius = 20;
     self.addButton.layer.masksToBounds = YES;
     if(self.choiceArr.count){
-        self.addButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.addButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     }else{
         self.addButton.backgroundColor = [UIColor colorWithHexString:@"#8A8F99"];
@@ -146,7 +146,7 @@
                 }
         
                 if(weakSelf.choiceArr.count){
-                    weakSelf.addButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                    weakSelf.addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                     [weakSelf.addButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
                 }else{
                     weakSelf.addButton.backgroundColor = [UIColor colorWithHexString:@"#8A8F99"];

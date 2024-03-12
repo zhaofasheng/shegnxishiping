@@ -217,7 +217,7 @@
                 self.noShopView.suppleyButton.hidden = NO;
                 [self.noShopView.suppleyButton setTitle:@"申请开通店铺" forState:UIControlStateNormal];
                 [self.noShopView.suppleyButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
-                self.noShopView.suppleyButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                self.noShopView.suppleyButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 [self refresTitle:@"我的店铺" imageName:@"eyes_imgno"];
             }else if (self.applyModel.status == 4) {
                 [self getwallect];
@@ -327,7 +327,7 @@
         }else if (self.shopModel.myShopM.operate_status.integerValue == 1){
             [self refresTitle:@"我的店铺休息中" imageName:@"eyes_imgno"];
             [self.shopStatusView.startGetOrderBtn setTitle:@"开始营业" forState:UIControlStateNormal];
-            self.shopStatusView.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#1FE4FB"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#00ABE4"].CGColor];
+            self.shopStatusView.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#1FE4FB"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#1FC7FF"].CGColor];
         }
     }
     

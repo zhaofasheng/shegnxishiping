@@ -598,7 +598,7 @@
     self.playerView.voiceUrl = locaPath;
     self.musicId = musicId;
     [_sendBtn setTitleColor:[[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1] forState:UIControlStateNormal];
-    _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
 
 }
 
@@ -1220,7 +1220,7 @@
     [backBtn addTarget:self action:@selector(backToPageAction) forControlEvents:UIControlEventTouchUpInside];
     if (self.isEditVoice) {
         [_sendBtn setTitleColor:[[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1] forState:UIControlStateNormal];
-        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }
     [self.view addSubview:backBtn];
     

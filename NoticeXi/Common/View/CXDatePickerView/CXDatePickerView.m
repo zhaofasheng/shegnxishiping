@@ -338,7 +338,7 @@ typedef void(^doneZeroDayBlock)(NSInteger days,NSInteger hours,NSInteger minutes
     UIButton *confirmButton = [[UIButton alloc] initWithFrame:confirmButtonFrame];
     self.confirmButton = confirmButton;
     [confirmButton setTitle:[NoticeTools getLocalStrWith:@"main.sure"] forState:UIControlStateNormal];
-    [confirmButton setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+    [confirmButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     [confirmButton addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
     confirmButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [_headerView addSubview:confirmButton];

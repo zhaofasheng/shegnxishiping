@@ -49,7 +49,7 @@
     if (self.userId && !self.fromUserCenter) {
         UIButton *centerBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-90, STATUS_BAR_HEIGHT, 70, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
         [centerBtn setTitle:[NoticeTools getLocalStrWith:@"py.mainofhe"] forState:UIControlStateNormal];
-        [centerBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [centerBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         centerBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
         [centerBtn addTarget:self action:@selector(userCenterClick) forControlEvents:UIControlEventTouchUpInside];
         self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);

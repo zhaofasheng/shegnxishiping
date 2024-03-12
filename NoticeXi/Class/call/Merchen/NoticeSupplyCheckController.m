@@ -109,7 +109,7 @@
             weakSelf.type = type;
             weakSelf.nickname = name;
             weakSelf.avatAvurl = iconUrl;
-            weakSelf.nextButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            weakSelf.nextButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [weakSelf.nextButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
             self.choiceImage1.image = UIImageNamed(@"Image_choicesh");
             self.choiceImage2.image = UIImageNamed(@"Image_nochoicesh");
@@ -133,7 +133,7 @@
                     weakSelf.nickname = model.identity_name;
                     weakSelf.avatAvurl = model.identity_img_url;
                     
-                    weakSelf.nextButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                    weakSelf.nextButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                     [weakSelf.nextButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
                 }
             } fail:^(NSError * _Nullable error) {

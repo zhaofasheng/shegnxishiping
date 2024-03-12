@@ -46,7 +46,7 @@
     [reSetBtn addTarget:self action:@selector(resetClick) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *sureBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(reSetBtn.frame)+15, reSetBtn.frame.origin.y,DR_SCREEN_WIDTH-40-15-reSetBtn.frame.size.width, 45)];
-    sureBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    sureBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     sureBtn.layer.cornerRadius = 45/2;
     sureBtn.layer.masksToBounds = YES;
     [sureBtn setTitle:[NoticeTools getLocalStrWith:@"main.sure"] forState:UIControlStateNormal];

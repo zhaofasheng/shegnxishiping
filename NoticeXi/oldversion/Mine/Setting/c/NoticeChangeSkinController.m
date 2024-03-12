@@ -116,7 +116,7 @@
     UIButton *sureBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-55, STATUS_BAR_HEIGHT,50, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
     [sureBtn setTitle:[NoticeTools getLocalStrWith:@"songList.use"] forState:UIControlStateNormal];
     sureBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
-    [sureBtn setTitleColor:[[UIColor colorWithHexString:@"#00ABE4"] colorWithAlphaComponent:0.8] forState:UIControlStateNormal];
+    [sureBtn setTitleColor:[[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.8] forState:UIControlStateNormal];
     [navView addSubview:sureBtn];
     [sureBtn addTarget:self action:@selector(useClick) forControlEvents:UIControlEventTouchUpInside];
     self.sureBtn = sureBtn;

@@ -509,7 +509,7 @@
             [currentSelectedPersonItems addObject:person];//这里可以判断去重...（根据自己需求情况而定）
 
             //将人的名字转化为NSTextAttachment
-            [[YYTextAttachmentManager getInstance] transformTextWithTextView:weakSelf.contentView tickedPersonItems:currentSelectedPersonItems atAllPersons:nil canRepeat:NO needBack:weakSelf.needBack color:[UIColor colorWithHexString:@"#00ABE4"] attributes:attributes completeBlock:^(NSMutableAttributedString *mutableAttributedString, NSRange selectedRange) {
+            [[YYTextAttachmentManager getInstance] transformTextWithTextView:weakSelf.contentView tickedPersonItems:currentSelectedPersonItems atAllPersons:nil canRepeat:NO needBack:weakSelf.needBack color:[UIColor colorWithHexString:@"#1FC7FF"] attributes:attributes completeBlock:^(NSMutableAttributedString *mutableAttributedString, NSRange selectedRange) {
                 weakSelf.needBack = NO;
                 weakSelf.contentView.attributedText = mutableAttributedString;
                 weakSelf.contentView.selectedRange = selectedRange;

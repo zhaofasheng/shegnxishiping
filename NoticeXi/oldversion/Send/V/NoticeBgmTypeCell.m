@@ -38,7 +38,7 @@
         self.useButton = [[UIButton alloc] initWithFrame:CGRectMake((backView.frame.size.width-68-36)/2+68, CGRectGetMaxY(self.nameL.frame)+12, 36, 20)];
         self.useButton.layer.cornerRadius = 2;
         self.useButton.layer.masksToBounds = YES;
-        self.useButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.useButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.useButton.titleLabel.font = ELEVENTEXTFONTSIZE;
         [self.useButton setTitle:[NoticeTools getLocalStrWith:@"songList.use"] forState:UIControlStateNormal];
         [self.useButton addTarget:self action:@selector(useClick) forControlEvents:UIControlEventTouchUpInside];
@@ -52,7 +52,7 @@
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.bgmM.image_url]];
     self.nameL.text = model.bgmM.tips;
     
-    self.nameL.textColor = model.isSelect?[UIColor colorWithHexString:@"#00ABE4"]:[UIColor colorWithHexString:@"#25262E"];
+    self.nameL.textColor = model.isSelect?[UIColor colorWithHexString:@"#1FC7FF"]:[UIColor colorWithHexString:@"#25262E"];
     self.playBtn.image = UIImageNamed(model.isPlaying?@"Image_ztzdyyy":@"Image_bfzdyyy");
 }
 

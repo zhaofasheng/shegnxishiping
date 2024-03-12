@@ -47,7 +47,7 @@
         _cancelL.text = [NoticeTools getLocalStrWith:@"read.send"];
         _cancelL.layer.cornerRadius = 30;
         _cancelL.layer.masksToBounds = YES;
-        _cancelL.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _cancelL.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         _cancelL.userInteractionEnabled = YES;
         [self addSubview:_cancelL];
         

@@ -37,7 +37,7 @@
     [self.view addSubview:backView];
     
     UIButton *dhBtn = [[UIButton alloc] initWithFrame:CGRectMake(20,5,(DR_SCREEN_WIDTH-55)/3, 40)];
-    dhBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    dhBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     dhBtn.layer.cornerRadius = 8;
     dhBtn.layer.masksToBounds = YES;
     [dhBtn setTitle:[NoticeTools getLocalStrWith:@"search.text"] forState:UIControlStateNormal];
@@ -47,7 +47,7 @@
     [backView addSubview:dhBtn];
     
     UIButton *goTbBtn = [[UIButton alloc] initWithFrame:CGRectMake(20+(DR_SCREEN_WIDTH-55)/3+15,5,(DR_SCREEN_WIDTH-55)/3*2, 40)];
-    goTbBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    goTbBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     goTbBtn.layer.cornerRadius = 8;
     goTbBtn.layer.masksToBounds = YES;
     [goTbBtn setTitle:@"点击发送语音" forState:UIControlStateNormal];

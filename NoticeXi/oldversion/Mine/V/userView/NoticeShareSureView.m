@@ -76,7 +76,7 @@
         
         UIButton *sureBtn = [[UIButton alloc] initWithFrame:CGRectMake(280/2,190, 280/2, 41)];
         [sureBtn setTitle:[NoticeTools getLocalStrWith:@"py.share"] forState:UIControlStateNormal];
-        [sureBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [sureBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         sureBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
         [self.keyView addSubview:sureBtn];
         [sureBtn addTarget:self action:@selector(sureClick) forControlEvents:UIControlEventTouchUpInside];

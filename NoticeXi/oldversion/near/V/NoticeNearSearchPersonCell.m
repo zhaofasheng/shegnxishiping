@@ -57,7 +57,7 @@
         _choiceL.font = SIXTEENTEXTFONTSIZE;
         _choiceL.text = [NoticeTools getLocalStrWith:@"bz.yx"];
         _choiceL.textAlignment = NSTextAlignmentCenter;
-        _choiceL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _choiceL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.contentView addSubview:_choiceL];
     }
     return _choiceL;
@@ -100,14 +100,14 @@
             self.markImage.hidden = NO;
             self.markImage.image = UIImageNamed([NoticeTools isWhiteTheme]?@"Image_guanfang_b":@"Image_guanfang_y");
         }
-        [_beizhuBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [_beizhuBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         _beizhuBtn.titleLabel.font = ELEVENTEXTFONTSIZE;
         
         _beizhuBtn.frame = CGRectMake(DR_SCREEN_WIDTH-20-81, 41/2, 81, 24);
         _beizhuBtn.layer.cornerRadius = 12;
         _beizhuBtn.layer.masksToBounds = YES;
         _beizhuBtn.layer.borderWidth = 1;
-        _beizhuBtn.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+        _beizhuBtn.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
     }
     else{
         self.markImage.hidden = YES;
@@ -214,11 +214,11 @@
         _sendWhiteBtn.layer.cornerRadius = 12;
         _sendWhiteBtn.layer.masksToBounds = YES;
         [_sendWhiteBtn setTitle:[NoticeTools getLocalStrWith:@"xs.sendhe"] forState:UIControlStateNormal];
-        [_sendWhiteBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [_sendWhiteBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         _sendWhiteBtn.titleLabel.font = ELEVENTEXTFONTSIZE;
         [self.contentView addSubview:_sendWhiteBtn];
         _sendWhiteBtn.layer.borderWidth = 1;
-        _sendWhiteBtn.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+        _sendWhiteBtn.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
         [_sendWhiteBtn addTarget:self action:@selector(sendClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _sendWhiteBtn;

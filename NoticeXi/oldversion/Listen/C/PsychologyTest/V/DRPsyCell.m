@@ -118,7 +118,7 @@
         UIButton *btn = _buttonArr[i];
         if (psyM.choiceTag <= 3 && psyM.choiceTag >= 0) {
             if (btn.tag == psyM.choiceTag) {
-                btn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+                btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
                 label.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
             }else{
                 label.textColor = [UIColor colorWithHexString:@"#A1A7B3"];

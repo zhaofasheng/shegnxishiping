@@ -96,9 +96,6 @@
 		A4E9649A2A69142100AE022E /* FDanmakuView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95A8C2A69141A00AE022E /* FDanmakuView.m */; };
 		A4E9649B2A69142100AE022E /* WaveHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4E95A8D2A69141A00AE022E /* WaveHeader.cpp */; };
 		A4E9649C2A69142100AE022E /* NoticeTimerTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95A8F2A69141A00AE022E /* NoticeTimerTools.m */; };
-		A4E9649D2A69142100AE022E /* AxcAE_TabBarBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95A912A69141A00AE022E /* AxcAE_TabBarBadge.m */; };
-		A4E9649E2A69142100AE022E /* AxcAE_TabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95A932A69141A00AE022E /* AxcAE_TabBar.m */; };
-		A4E9649F2A69142100AE022E /* AxcAE_TabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95A962A69141A00AE022E /* AxcAE_TabBarItem.m */; };
 		A4E964A02A69142100AE022E /* ADBannerAutoPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95A992A69141A00AE022E /* ADBannerAutoPlayView.m */; };
 		A4E964A12A69142100AE022E /* bannerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95A9C2A69141A00AE022E /* bannerViewCell.m */; };
 		A4E964A22A69142100AE022E /* bannerTimerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95A9E2A69141A00AE022E /* bannerTimerTool.m */; };
@@ -1296,6 +1293,8 @@
 		ED4752A19A8FCE52C09D6FBA /* libPods-NoticeXi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0825C7A307206BC0F78C701F /* libPods-NoticeXi.a */; };
 		FE1A48112B3D4475004E6239 /* novoice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE1A48102B3D4475004E6239 /* novoice.mp3 */; };
 		FE1A48172B467D6F004E6239 /* NoticeManagerUserAction.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A48162B467D6F004E6239 /* NoticeManagerUserAction.m */; };
+		FE2B934B2BA053F9002698AF /* SXSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2B934A2BA053F9002698AF /* SXSettingController.m */; };
+		FE2B934E2BA05550002698AF /* SXSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2B934D2BA05550002698AF /* SXSetCell.m */; };
 		FE35EA852B6237E500524991 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE35EA842B6237E500524991 /* VideoToolbox.framework */; };
 		FE35EA872B6237F100524991 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE35EA862B6237F100524991 /* QuartzCore.framework */; };
 		FE35EA892B6237FB00524991 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE35EA882B6237FB00524991 /* OpenGLES.framework */; };
@@ -1332,6 +1331,10 @@
 		FE53B4A52B6A1E4400CF5BF5 /* com_download_pause@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE53B4A42B6A1E4400CF5BF5 /* com_download_pause@3x.png */; };
 		FE53B4A72B6A1E5900CF5BF5 /* com_download_error@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE53B4A62B6A1E5900CF5BF5 /* com_download_error@3x.png */; };
 		FE53B4AA2B6A351E00CF5BF5 /* testData.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE53B4A92B6A351E00CF5BF5 /* testData.plist */; };
+		FE6686492BA06F06006DBDF2 /* SXTitleAndSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6686482BA06F06006DBDF2 /* SXTitleAndSwitchCell.m */; };
+		FE66867E2BA082FE006DBDF2 /* AxcAE_TabBarBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6686772BA082FE006DBDF2 /* AxcAE_TabBarBadge.m */; };
+		FE66867F2BA082FE006DBDF2 /* AxcAE_TabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6686792BA082FE006DBDF2 /* AxcAE_TabBar.m */; };
+		FE6686802BA082FE006DBDF2 /* AxcAE_TabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FE66867C2BA082FE006DBDF2 /* AxcAE_TabBarItem.m */; };
 		FE6CF93E2B84553A005EE663 /* SXVideosModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF93D2B84553A005EE663 /* SXVideosModel.m */; };
 		FE6CF9422B847491005EE663 /* SXTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9412B847491005EE663 /* SXTools.m */; };
 		FE6CF9452B848538005EE663 /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9442B848538005EE663 /* CHTCollectionViewWaterfallLayout.m */; };
@@ -1640,13 +1643,6 @@
 		A4E95A8D2A69141A00AE022E /* WaveHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WaveHeader.cpp; sourceTree = "<group>"; };
 		A4E95A8E2A69141A00AE022E /* SoundTouchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundTouchOperation.h; sourceTree = "<group>"; };
 		A4E95A8F2A69141A00AE022E /* NoticeTimerTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeTimerTools.m; sourceTree = "<group>"; };
-		A4E95A912A69141A00AE022E /* AxcAE_TabBarBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxcAE_TabBarBadge.m; sourceTree = "<group>"; };
-		A4E95A922A69141A00AE022E /* AxcAE_TabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxcAE_TabBarItem.h; sourceTree = "<group>"; };
-		A4E95A932A69141A00AE022E /* AxcAE_TabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxcAE_TabBar.m; sourceTree = "<group>"; };
-		A4E95A942A69141A00AE022E /* AxcAE_TabBarDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxcAE_TabBarDefine.h; sourceTree = "<group>"; };
-		A4E95A952A69141A00AE022E /* AxcAE_TabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxcAE_TabBar.h; sourceTree = "<group>"; };
-		A4E95A962A69141A00AE022E /* AxcAE_TabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxcAE_TabBarItem.m; sourceTree = "<group>"; };
-		A4E95A972A69141A00AE022E /* AxcAE_TabBarBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxcAE_TabBarBadge.h; sourceTree = "<group>"; };
 		A4E95A992A69141A00AE022E /* ADBannerAutoPlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADBannerAutoPlayView.m; sourceTree = "<group>"; };
 		A4E95A9A2A69141A00AE022E /* bannerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bannerViewCell.h; sourceTree = "<group>"; };
 		A4E95A9B2A69141A00AE022E /* bannerTimerTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bannerTimerTool.h; sourceTree = "<group>"; };
@@ -3896,6 +3892,10 @@
 		FE1A48102B3D4475004E6239 /* novoice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = novoice.mp3; sourceTree = "<group>"; };
 		FE1A48152B467D6F004E6239 /* NoticeManagerUserAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeManagerUserAction.h; sourceTree = "<group>"; };
 		FE1A48162B467D6F004E6239 /* NoticeManagerUserAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeManagerUserAction.m; sourceTree = "<group>"; };
+		FE2B93492BA053F8002698AF /* SXSettingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSettingController.h; sourceTree = "<group>"; };
+		FE2B934A2BA053F9002698AF /* SXSettingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXSettingController.m; sourceTree = "<group>"; };
+		FE2B934C2BA05550002698AF /* SXSetCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSetCell.h; sourceTree = "<group>"; };
+		FE2B934D2BA05550002698AF /* SXSetCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXSetCell.m; sourceTree = "<group>"; };
 		FE35EA842B6237E500524991 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		FE35EA862B6237F100524991 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE35EA882B6237FB00524991 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -3958,6 +3958,15 @@
 		FE53B4A62B6A1E5900CF5BF5 /* com_download_error@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "com_download_error@3x.png"; sourceTree = "<group>"; };
 		FE53B4A82B6A282800CF5BF5 /* NoticeVideoDown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeVideoDown.h; sourceTree = "<group>"; };
 		FE53B4A92B6A351E00CF5BF5 /* testData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = testData.plist; sourceTree = "<group>"; };
+		FE6686472BA06F06006DBDF2 /* SXTitleAndSwitchCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXTitleAndSwitchCell.h; sourceTree = "<group>"; };
+		FE6686482BA06F06006DBDF2 /* SXTitleAndSwitchCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXTitleAndSwitchCell.m; sourceTree = "<group>"; };
+		FE6686772BA082FE006DBDF2 /* AxcAE_TabBarBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxcAE_TabBarBadge.m; sourceTree = "<group>"; };
+		FE6686782BA082FE006DBDF2 /* AxcAE_TabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxcAE_TabBarItem.h; sourceTree = "<group>"; };
+		FE6686792BA082FE006DBDF2 /* AxcAE_TabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxcAE_TabBar.m; sourceTree = "<group>"; };
+		FE66867A2BA082FE006DBDF2 /* AxcAE_TabBarDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxcAE_TabBarDefine.h; sourceTree = "<group>"; };
+		FE66867B2BA082FE006DBDF2 /* AxcAE_TabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxcAE_TabBar.h; sourceTree = "<group>"; };
+		FE66867C2BA082FE006DBDF2 /* AxcAE_TabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxcAE_TabBarItem.m; sourceTree = "<group>"; };
+		FE66867D2BA082FE006DBDF2 /* AxcAE_TabBarBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxcAE_TabBarBadge.h; sourceTree = "<group>"; };
 		FE6CF93C2B84553A005EE663 /* SXVideosModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideosModel.h; sourceTree = "<group>"; };
 		FE6CF93D2B84553A005EE663 /* SXVideosModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideosModel.m; sourceTree = "<group>"; };
 		FE6CF9402B847491005EE663 /* SXTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXTools.h; sourceTree = "<group>"; };
@@ -4447,7 +4456,6 @@
 				A4E962E02A69141E00AE022E /* applePay */,
 				FE6CF93F2B847474005EE663 /* 视频版本新封装 */,
 				FEBCADE32B8443770048F5A1 /* 文字滚动 */,
-				A4E95A902A69141A00AE022E /* AxcAE_TabBar */,
 				A43BB0452ADF79C1006F4571 /* leftView */,
 				A48E62022A7C919C00C06969 /* 图片裁剪 */,
 				A4E95A852A69141A00AE022E /* 弹幕 */,
@@ -4488,20 +4496,6 @@
 				A4E95A8D2A69141A00AE022E /* WaveHeader.cpp */,
 			);
 			path = "弹幕";
-			sourceTree = "<group>";
-		};
-		A4E95A902A69141A00AE022E /* AxcAE_TabBar */ = {
-			isa = PBXGroup;
-			children = (
-				A4E95A952A69141A00AE022E /* AxcAE_TabBar.h */,
-				A4E95A932A69141A00AE022E /* AxcAE_TabBar.m */,
-				A4E95A972A69141A00AE022E /* AxcAE_TabBarBadge.h */,
-				A4E95A912A69141A00AE022E /* AxcAE_TabBarBadge.m */,
-				A4E95A942A69141A00AE022E /* AxcAE_TabBarDefine.h */,
-				A4E95A922A69141A00AE022E /* AxcAE_TabBarItem.h */,
-				A4E95A962A69141A00AE022E /* AxcAE_TabBarItem.m */,
-			);
-			path = AxcAE_TabBar;
 			sourceTree = "<group>";
 		};
 		A4E95A982A69141A00AE022E /* ADBannerScroll */ = {
@@ -6429,6 +6423,7 @@
 		A4E95F742A69141C00AE022E /* m */ = {
 			isa = PBXGroup;
 			children = (
+				FE6686762BA082FE006DBDF2 /* AxcAE_TabBar */,
 				A4E95F762A69141C00AE022E /* NoticeYunXin.h */,
 				A4E95F752A69141C00AE022E /* NoticeYunXin.m */,
 			);
@@ -6990,8 +6985,6 @@
 			children = (
 				A4E960F22A69141D00AE022E /* NoticeNewUserModel.h */,
 				A4E960F52A69141D00AE022E /* NoticeNewUserModel.m */,
-				A4E960F62A69141D00AE022E /* NoticeNoticenterModel.h */,
-				A4E960F32A69141D00AE022E /* NoticeNoticenterModel.m */,
 				A4E960F12A69141D00AE022E /* NoticeSkinModel.h */,
 				A4E960F42A69141D00AE022E /* NoticeSkinModel.m */,
 			);
@@ -7013,8 +7006,6 @@
 				A4E960FE2A69141D00AE022E /* NoticeCaoGaoController.m */,
 				A4E9612F2A69141D00AE022E /* NoticeCaogaoVoiceController.h */,
 				A4E9610E2A69141D00AE022E /* NoticeCaogaoVoiceController.m */,
-				A4E961182A69141D00AE022E /* NoticeChangePhoneViewController.h */,
-				A4E960FC2A69141D00AE022E /* NoticeChangePhoneViewController.m */,
 				A4E961002A69141D00AE022E /* NoticeChangeServerAreaController.h */,
 				A4E961142A69141D00AE022E /* NoticeChangeServerAreaController.m */,
 				A4E9612B2A69141D00AE022E /* NoticeChangeSkinController.h */,
@@ -7023,12 +7014,8 @@
 				A4E9612A2A69141D00AE022E /* NoticeChangeSkinListController.m */,
 				A4E961052A69141D00AE022E /* NoticeChatStyleSetController.h */,
 				A4E9611F2A69141D00AE022E /* NoticeChatStyleSetController.m */,
-				A4E9612C2A69141D00AE022E /* NoticeCountSafeViewController.h */,
-				A4E961102A69141D00AE022E /* NoticeCountSafeViewController.m */,
 				A4E961152A69141D00AE022E /* NoticeFAQViewController.h */,
 				A4E960FF2A69141D00AE022E /* NoticeFAQViewController.m */,
-				A4E960FB2A69141D00AE022E /* NoticeHasLinkPhoneController.h */,
-				A4E961192A69141D00AE022E /* NoticeHasLinkPhoneController.m */,
 				A4E961242A69141D00AE022E /* NoticeLangusetViewController.h */,
 				A4E9610C2A69141D00AE022E /* NoticeLangusetViewController.m */,
 				A4E961212A69141D00AE022E /* NoticeListenPriSetController.h */,
@@ -7131,7 +7118,6 @@
 			isa = PBXGroup;
 			children = (
 				A4E9616E2A69141D00AE022E /* About */,
-				A4E9618E2A69141D00AE022E /* info */,
 				A4E961692A69141D00AE022E /* NoticeAllMBSController.h */,
 				A4E9619F2A69141D00AE022E /* NoticeAllMBSController.m */,
 				A4E961A02A69141D00AE022E /* NoticeCarePeopleController.h */,
@@ -7201,21 +7187,6 @@
 				A4E961852A69141D00AE022E /* YGLoadingView.m */,
 			);
 			path = About;
-			sourceTree = "<group>";
-		};
-		A4E9618E2A69141D00AE022E /* info */ = {
-			isa = PBXGroup;
-			children = (
-				A4E9618F2A69141D00AE022E /* NoticeChangeIconViewController.h */,
-				A4E961932A69141D00AE022E /* NoticeChangeIconViewController.m */,
-				A4E961922A69141D00AE022E /* NoticeChangeIntroduceViewController.h */,
-				A4E961952A69141D00AE022E /* NoticeChangeIntroduceViewController.m */,
-				A4E961942A69141D00AE022E /* NoticeChangeNameViewController.h */,
-				A4E961902A69141D00AE022E /* NoticeChangeNameViewController.m */,
-				A4E961962A69141D00AE022E /* NoticeEditViewController.h */,
-				A4E961912A69141D00AE022E /* NoticeEditViewController.m */,
-			);
-			path = info;
 			sourceTree = "<group>";
 		};
 		A4E961A52A69141D00AE022E /* V */ = {
@@ -8329,6 +8300,20 @@
 			path = imgages;
 			sourceTree = "<group>";
 		};
+		FE6686762BA082FE006DBDF2 /* AxcAE_TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				FE6686772BA082FE006DBDF2 /* AxcAE_TabBarBadge.m */,
+				FE6686782BA082FE006DBDF2 /* AxcAE_TabBarItem.h */,
+				FE6686792BA082FE006DBDF2 /* AxcAE_TabBar.m */,
+				FE66867A2BA082FE006DBDF2 /* AxcAE_TabBarDefine.h */,
+				FE66867B2BA082FE006DBDF2 /* AxcAE_TabBar.h */,
+				FE66867C2BA082FE006DBDF2 /* AxcAE_TabBarItem.m */,
+				FE66867D2BA082FE006DBDF2 /* AxcAE_TabBarBadge.h */,
+			);
+			path = AxcAE_TabBar;
+			sourceTree = "<group>";
+		};
 		FE6CF93B2B84550D005EE663 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -8364,6 +8349,10 @@
 				FE6CF9502B85EB64005EE663 /* SXMineSetCell.m */,
 				FE9C40B82B9FECD5008C3A22 /* SXUserCenterHeaderView.h */,
 				FE9C40B92B9FECD5008C3A22 /* SXUserCenterHeaderView.m */,
+				FE2B934C2BA05550002698AF /* SXSetCell.h */,
+				FE2B934D2BA05550002698AF /* SXSetCell.m */,
+				FE6686472BA06F06006DBDF2 /* SXTitleAndSwitchCell.h */,
+				FE6686482BA06F06006DBDF2 /* SXTitleAndSwitchCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -8420,6 +8409,8 @@
 		FE6CF9682B86EA44005EE663 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				A4E960F62A69141D00AE022E /* NoticeNoticenterModel.h */,
+				A4E960F32A69141D00AE022E /* NoticeNoticenterModel.m */,
 				FE6CF9692B86EA59005EE663 /* SXUserModel.h */,
 				FE6CF96A2B86EA59005EE663 /* SXUserModel.m */,
 			);
@@ -8537,6 +8528,22 @@
 				FEBCADCD2B83615C0048F5A1 /* NoticeMineController.m */,
 				A4E961A22A69141D00AE022E /* NoticeUserInfoCenterController.h */,
 				A4E9618B2A69141D00AE022E /* NoticeUserInfoCenterController.m */,
+				FE2B93492BA053F8002698AF /* SXSettingController.h */,
+				FE2B934A2BA053F9002698AF /* SXSettingController.m */,
+				A4E9618F2A69141D00AE022E /* NoticeChangeIconViewController.h */,
+				A4E961932A69141D00AE022E /* NoticeChangeIconViewController.m */,
+				A4E961922A69141D00AE022E /* NoticeChangeIntroduceViewController.h */,
+				A4E961952A69141D00AE022E /* NoticeChangeIntroduceViewController.m */,
+				A4E961942A69141D00AE022E /* NoticeChangeNameViewController.h */,
+				A4E961902A69141D00AE022E /* NoticeChangeNameViewController.m */,
+				A4E961962A69141D00AE022E /* NoticeEditViewController.h */,
+				A4E961912A69141D00AE022E /* NoticeEditViewController.m */,
+				A4E9612C2A69141D00AE022E /* NoticeCountSafeViewController.h */,
+				A4E961102A69141D00AE022E /* NoticeCountSafeViewController.m */,
+				A4E960FB2A69141D00AE022E /* NoticeHasLinkPhoneController.h */,
+				A4E961192A69141D00AE022E /* NoticeHasLinkPhoneController.m */,
+				A4E961182A69141D00AE022E /* NoticeChangePhoneViewController.h */,
+				A4E960FC2A69141D00AE022E /* NoticeChangePhoneViewController.m */,
 			);
 			path = mine;
 			sourceTree = "<group>";
@@ -9096,6 +9103,7 @@
 				A4E967C62A69142500AE022E /* NoticeDepartureController.m in Sources */,
 				A4E969992A69142800AE022E /* CLGCDTimerManager.m in Sources */,
 				A4E967A22A69142500AE022E /* NoticeCardInfoModel.m in Sources */,
+				FE6686802BA082FE006DBDF2 /* AxcAE_TabBarItem.m in Sources */,
 				A4E965E12A69142200AE022E /* NoticeGetUserSig.swift in Sources */,
 				A4E968492A69142500AE022E /* NoticememoryFootView.m in Sources */,
 				A4E9650E2A69142200AE022E /* JXCategoryBaseView.m in Sources */,
@@ -9260,6 +9268,7 @@
 				A4E965622A69142200AE022E /* SCImageView.m in Sources */,
 				A4E9690C2A69142700AE022E /* NoticrBBSManagerController.m in Sources */,
 				A4E967992A69142400AE022E /* LHEditTextView.m in Sources */,
+				FE2B934B2BA053F9002698AF /* SXSettingController.m in Sources */,
 				FE53B4942B6A031000CF5BF5 /* HWNetworkReachabilityManager.m in Sources */,
 				FEE562ED2B8CA1FD0004CC11 /* TZVideoEditedPreviewController.m in Sources */,
 				A4E967CA2A69142500AE022E /* NoticeStatus.m in Sources */,
@@ -9349,6 +9358,7 @@
 				A4E9655C2A69142200AE022E /* NoticeSharePersonCell.m in Sources */,
 				A4E968192A69142500AE022E /* NoticeEditViewController.m in Sources */,
 				A4E968142A69142500AE022E /* NoticeSeasonViewController.m in Sources */,
+				FE6686492BA06F06006DBDF2 /* SXTitleAndSwitchCell.m in Sources */,
 				A4E964A72A69142100AE022E /* CoreAnimationEffect.m in Sources */,
 				A4E9648F2A69142100AE022E /* MBProgressHUD+Extension.m in Sources */,
 				A4E968CB2A69142600AE022E /* NoticeChangeRecoderModel.m in Sources */,
@@ -9403,6 +9413,7 @@
 				A4D06C142A9450CB00CB6EAD /* NoticeAddEmtioTools.m in Sources */,
 				A4E9664C2A69142300AE022E /* NoticeAddMovieTypeController.m in Sources */,
 				A4E9667A2A69142300AE022E /* NoticeTcController.m in Sources */,
+				FE66867F2BA082FE006DBDF2 /* AxcAE_TabBar.m in Sources */,
 				FE9C40AB2B9B0B6E008C3A22 /* SXEdcutionTypeCell.m in Sources */,
 				A4E9675C2A69142400AE022E /* RBCustomDatePickerView.m in Sources */,
 				A4E966682A69142300AE022E /* NoticePeolpleDrawController.m in Sources */,
@@ -9459,6 +9470,7 @@
 				A4E968552A69142600AE022E /* NoticeMusicLikeShowCell.m in Sources */,
 				A4E9652A2A69142200AE022E /* DRNetWorking.m in Sources */,
 				A4E9666F2A69142300AE022E /* NoticeCollectionDrawModel.m in Sources */,
+				FE66867E2BA082FE006DBDF2 /* AxcAE_TabBarBadge.m in Sources */,
 				FEFAB1BD2B8C6626009EE42C /* SXTosatView.m in Sources */,
 				A4E966172A69142300AE022E /* NoticeDanMuTypeChoiceView.m in Sources */,
 				A4E967502A69142400AE022E /* NoticeUserTopiceListController.m in Sources */,
@@ -9691,7 +9703,6 @@
 				A4E968F22A69142700AE022E /* NoticeShopRecodCell.swift in Sources */,
 				A4E969862A69142700AE022E /* NoticeTostWhtieVoiceView.m in Sources */,
 				A4E964902A69142100AE022E /* UITextField+LXPToolbar.m in Sources */,
-				A4E9649F2A69142100AE022E /* AxcAE_TabBarItem.m in Sources */,
 				A4E965342A69142200AE022E /* NoticeShengWangTools.m in Sources */,
 				A4E967F32A69142500AE022E /* NoticeVoiceListSubModel.m in Sources */,
 				A4E9670C2A69142400AE022E /* NoticeWelComeView.m in Sources */,
@@ -9892,7 +9903,6 @@
 				A4E967EC2A69142500AE022E /* NoticeSmallSkinCell.m in Sources */,
 				A4E965FE2A69142300AE022E /* NoticeMyFriends.m in Sources */,
 				FEE562EE2B8CA1FD0004CC11 /* TZVideoCropController.m in Sources */,
-				A4E9649D2A69142100AE022E /* AxcAE_TabBarBadge.m in Sources */,
 				A4E966572A69142300AE022E /* ZFSDateFormatUtil.m in Sources */,
 				A4E967FE2A69142500AE022E /* NoticeSmallArrModel.m in Sources */,
 				A4E968762A69142600AE022E /* NoticeTextZJContentView.m in Sources */,
@@ -10118,6 +10128,7 @@
 				A4E966232A69142300AE022E /* NoticeWebViewController.m in Sources */,
 				A4E9675E2A69142400AE022E /* NoticeUserQuestionModel.m in Sources */,
 				A4E965F62A69142300AE022E /* NoticeChatToKfController.m in Sources */,
+				FE2B934E2BA05550002698AF /* SXSetCell.m in Sources */,
 				A4E967FF2A69142500AE022E /* NoticeHasCenterData.m in Sources */,
 				A4E965EB2A69142200AE022E /* NoticeClipImage.m in Sources */,
 				A4E966C02A69142300AE022E /* NoticeRightNowCell.m in Sources */,
@@ -10138,7 +10149,6 @@
 				A4E965F72A69142300AE022E /* NoticeShareVoiceModel.m in Sources */,
 				A4E967CE2A69142500AE022E /* NoticeNewUserModel.m in Sources */,
 				A4E965D62A69142200AE022E /* UINavigationController+DoitAnimation.m in Sources */,
-				A4E9649E2A69142100AE022E /* AxcAE_TabBar.m in Sources */,
 				A4E965D12A69142200AE022E /* NoticeScroEmtionView.m in Sources */,
 				FEE562FA2B8CA1FD0004CC11 /* NoticePhotoListMarkView.m in Sources */,
 				A4E9665D2A69142300AE022E /* NoticeBookTopController.m in Sources */,

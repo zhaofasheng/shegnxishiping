@@ -85,7 +85,7 @@
         self.numL.frame = CGRectMake(15, CGRectGetMaxY(self.backImageView.frame),DR_SCREEN_WIDTH-70-40, 49);
         self.numL.text = model.is_taketed.boolValue?[NSString stringWithFormat:@"%@%@",[NoticeTools chinese:@"即将发布" english:@"Posting" japan:@"もうすぐ投稿"],model.taketed_atStr]:[NSString stringWithFormat:@"%@%@",[NoticeTools getLocalStrWith:@"em.sentat"],model.taketed_atStr];
         if(model.is_taketed.boolValue){
-            self.numL.textColor = [UIColor colorWithHexString:model.is_taketed.boolValue? @"#00ABE4":@"#8A8F99"];
+            self.numL.textColor = [UIColor colorWithHexString:model.is_taketed.boolValue? @"#1FC7FF":@"#8A8F99"];
         }
         self.moreBtn.hidden = NO;
     }

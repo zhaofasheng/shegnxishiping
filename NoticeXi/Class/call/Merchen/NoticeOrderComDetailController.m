@@ -80,7 +80,7 @@
         _comButton.layer.cornerRadius = 20;
         _comButton.layer.masksToBounds = YES;
         [_comButton setTitle:@"添加对买家的印象" forState:UIControlStateNormal];
-        _comButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _comButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [_comButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _comButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
         [self.view addSubview:_comButton];

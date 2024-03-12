@@ -85,7 +85,7 @@
     UIButton *btn11 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn11.frame = CGRectMake(DR_SCREEN_WIDTH-50-5, STATUS_BAR_HEIGHT, 70, 50);
     [btn11 setTitle:[NoticeTools getLocalStrWith:@"push.ce9"] forState:UIControlStateNormal];
-    [btn11 setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+    [btn11 setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     btn11.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
     [btn11 addTarget:self action:@selector(newsClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *itme1 = [[UIBarButtonItem alloc] initWithCustomView:btn11];
@@ -93,7 +93,7 @@
     UIButton *btn12 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn12.frame = CGRectMake(DR_SCREEN_WIDTH-50-5, STATUS_BAR_HEIGHT, 60, 50);
     [btn12 setTitle:@"定时" forState:UIControlStateNormal];
-    [btn12 setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+    [btn12 setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     btn12.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
     [btn12 addTarget:self action:@selector(dsClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *itme2 = [[UIBarButtonItem alloc] initWithCustomView:btn12];

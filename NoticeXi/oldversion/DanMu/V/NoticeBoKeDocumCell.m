@@ -45,7 +45,7 @@
         [self.backView addSubview:self.titleL];
         
         self.rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-15-66, 13, 66, 24)];
-        self.rightBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.rightBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.rightBtn.layer.cornerRadius = 12;
         self.rightBtn.layer.masksToBounds = YES;
         [self.rightBtn setTitle:[NoticeTools chinese:@"重新投稿" english:@"Repost" japan:@"再投稿"] forState:UIControlStateNormal];
@@ -103,7 +103,7 @@
         self.rightBtn.hidden = YES;
         if (model.podcast_type.intValue == 1) {
             self.markL.text = [NoticeTools chinese:@"审核中" english:@"Reviewing" japan:@"レビュー中"];
-            self.markL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.markL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         }else{
             self.rightBtn.hidden = NO;
             self.rightBtn.backgroundColor = [UIColor whiteColor];

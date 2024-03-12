@@ -93,7 +93,7 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 #define WHITEDarkCOLOR @"#999999"//文字颜色
 #define XGGrayDeepColor  RGBA(126, 134, 121, 1)
 #define WHITELINECOLOR @"#EDEDED"//线条颜色
-#define WHITEMAINCOLOR @"#00ABE4"//按钮主题是
+#define WHITEMAINCOLOR @"#1FC7FF"//按钮主题是
 #define WHITEBUTTONGRAYCOLOR @"#E4E4E4"//按钮灰色
 #define WHITELISTHEADERVIEW @"#F7F7F7"//列表背景颜色
 #define WHITRECODERCOLOR @"#F3F3F3"//录音背景颜色

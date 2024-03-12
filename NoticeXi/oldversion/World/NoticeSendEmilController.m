@@ -154,12 +154,12 @@
             NSString *colorStr = [NoticeTools getLocalStrWith:@"recoder.golv"];
             NSString *beginStr = [NoticeTools chinese:@"升级至Lv1，可使用整月音频打包下载功能" english:@"Upgrade to download by the month" japan:@"プロユーザーは月単位でダウンロード可能"];
             NSString *allStr = [NSString stringWithFormat:@"%@ %@",beginStr,colorStr];
-            self.upLeavelL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:colorStr beginSize:allStr.length-colorStr.length];
+            self.upLeavelL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:colorStr beginSize:allStr.length-colorStr.length];
         }else{
             NSString *colorStr = [NoticeTools chinese:@"去使用" english:@"Go" japan:@"行く"];
             NSString *beginStr = [NoticeTools chinese:@"一键打包下载" english:@"Download" japan:@"ダウンロード"];
             NSString *allStr = [NSString stringWithFormat:@"%@ %@",beginStr,colorStr];
-            self.upLeavelL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:colorStr beginSize:allStr.length-colorStr.length];
+            self.upLeavelL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:colorStr beginSize:allStr.length-colorStr.length];
         }
     }
 }
@@ -240,7 +240,7 @@
 - (void)refreshButton{
     if (!self.canChoiceDate) {
         if (self.phoneView.text.length) {
-            self.downButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.downButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [self.downButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         }else{
             self.downButton.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];
@@ -248,7 +248,7 @@
         }
     }else{
         if (self.hasChoiceEndTime && self.hasChoiceStartTime && self.phoneView.text.length) {
-            self.downButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.downButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [self.downButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         }else{
             self.downButton.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];

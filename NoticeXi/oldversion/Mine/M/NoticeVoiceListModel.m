@@ -113,9 +113,9 @@
             //设置label的attributedText
             NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:self.showText attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.0],NSParagraphStyleAttributeName:paraStyle}];
             if ([NoticeTools getLocalType] == 1) {
-                [attStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#00ABE4"]} range:NSMakeRange(self.showText.length-4, 4)];
+                [attStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#1FC7FF"]} range:NSMakeRange(self.showText.length-4, 4)];
             }else{
-                [attStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#00ABE4"]} range:NSMakeRange(self.showText.length-2, 2)];
+                [attStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#1FC7FF"]} range:NSMakeRange(self.showText.length-2, 2)];
             }
             
             self.fiveAttTextStr = attStr;

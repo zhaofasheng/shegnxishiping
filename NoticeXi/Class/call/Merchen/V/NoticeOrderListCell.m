@@ -48,7 +48,7 @@
         [backView addSubview:self.priceL];
         
         self.payL = [[UILabel alloc] initWithFrame:CGRectMake(backView.frame.size.width-10-120, 73, 120, 20)];
-        self.payL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.payL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.payL.font = TWOTEXTFONTSIZE;
         self.payL.textAlignment = NSTextAlignmentRight;
         [backView addSubview:self.payL];

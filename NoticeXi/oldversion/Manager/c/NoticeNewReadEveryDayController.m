@@ -26,7 +26,7 @@
     self.dataArr = [[NSMutableArray alloc] init];
     
     UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-243)/2, CGRectGetMaxY(self.tableView.frame), 243, 50)];
-    addBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    addBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     addBtn.layer.cornerRadius = 25;
     addBtn.layer.masksToBounds = YES;
     [addBtn setTitle:@"添加定时任务" forState:UIControlStateNormal];

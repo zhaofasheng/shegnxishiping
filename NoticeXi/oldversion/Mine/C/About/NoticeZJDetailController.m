@@ -707,7 +707,7 @@
             _footView.actionButton.hidden = YES;
         }
         _footView.actionButton.frame = CGRectMake((DR_SCREEN_WIDTH-240)/2,CGRectGetMaxY(_footView.titleL.frame)+20, 240, 56);
-        _footView.actionButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _footView.actionButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [_footView.actionButton setTitle:[NoticeTools getLocalStrWith:@"yl.addmoods"] forState:UIControlStateNormal];
         [_footView.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _footView.actionButton.titleLabel.font = EIGHTEENTEXTFONTSIZE;

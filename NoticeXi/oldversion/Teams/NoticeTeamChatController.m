@@ -200,7 +200,7 @@
             [_footView addSubview:button];
             if(i == 0){
                 self.deleteButton = button;
-                self.deleteButton.backgroundColor = [UIColor colorWithHexString:self.chatM.hasManage?@"#A1A7B3":@"#00ABE4"];
+                self.deleteButton.backgroundColor = [UIColor colorWithHexString:self.chatM.hasManage?@"#A1A7B3":@"#1FC7FF"];
                 [self.deleteButton setTitle:self.chatM.hasManage?@"已删除":@"删除消息" forState:UIControlStateNormal];
             }else{
                 button.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
@@ -1225,7 +1225,7 @@
         [_newsessageView addSubview:_newmessageL];
         _newmessageL.textColor = [UIColor whiteColor];
         
-        _newsessageView.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _newsessageView.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(newReadTap)];
         [_newsessageView addGestureRecognizer:tap];

@@ -40,7 +40,7 @@
         UIButton *useBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-86, 18, 36, 20)];
         useBtn.layer.cornerRadius = 4;
         useBtn.layer.masksToBounds = YES;
-        useBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        useBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [useBtn setTitle:[NoticeTools getLocalStrWith:@"songList.use"] forState:UIControlStateNormal];
         [useBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         useBtn.titleLabel.font = [UIFont systemFontOfSize:10];
@@ -159,8 +159,8 @@
     
     if (musicModel.status != 0) {
         //Image_bfzdyyy
-        self.songNameL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
-        self.nameL.textColor = [[UIColor colorWithHexString:@"#00ABE4"] colorWithAlphaComponent:0.6];
+        self.songNameL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+        self.nameL.textColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.6];
         self.iconImageView.image = UIImageNamed(@"Image_playcusicon");
     }else{
         self.songNameL.textColor = [UIColor colorWithHexString:self.isSend?@"#25262E":@"#25262E"];

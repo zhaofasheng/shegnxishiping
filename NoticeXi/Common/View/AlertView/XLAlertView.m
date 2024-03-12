@@ -173,7 +173,7 @@
             self.sureBtn = [UIButton buttonWithType:UIButtonTypeSystem];
             self.sureBtn.frame = CGRectMake(CGRectGetMaxX(self.verLineView.frame), CGRectGetMaxY(self.lineView.frame)+5, (AlertW-1)/2+1, 40);
             [self.sureBtn setTitle:sureTitle forState:UIControlStateNormal];
-            [self.sureBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+            [self.sureBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
             self.sureBtn.tag = 1;
             [self.sureBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
             [self.alertView addSubview:self.sureBtn];

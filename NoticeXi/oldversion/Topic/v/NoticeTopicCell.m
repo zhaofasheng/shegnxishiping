@@ -52,7 +52,7 @@
     
     NSRange rang = [topicM.topic_name rangeOfString:topicM.keyTitle];
     if (rang.length) {
-        _mainL.attributedText = [DDHAttributedMode setColorString:topicM.topic_name setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:topicM.keyTitle beginSize:rang.location];
+        _mainL.attributedText = [DDHAttributedMode setColorString:topicM.topic_name setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:topicM.keyTitle beginSize:rang.location];
     }else{
         _mainL.text = topicM.topic_name;
     }

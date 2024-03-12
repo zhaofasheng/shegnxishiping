@@ -50,7 +50,7 @@
     [self.moreButton addSubview:line];
 
     self.topicField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0,DR_SCREEN_WIDTH-67-20-10, 32)];
-    self.topicField.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.topicField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
     self.topicField.font = FOURTHTEENTEXTFONTSIZE;
     self.topicField.textColor = [[UIColor colorWithHexString:@"#25262E"] colorWithAlphaComponent:1];
     self.topicField.clearButtonMode = UITextFieldViewModeWhileEditing;

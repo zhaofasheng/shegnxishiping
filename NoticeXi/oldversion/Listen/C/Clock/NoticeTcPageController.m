@@ -148,7 +148,7 @@
         [pyBtn setTitle:[NoticeTools getLocalStrWith:@"py.movetomyline"] forState:UIControlStateNormal];
         [pyBtn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
     }else{
-        [pyBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [pyBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         [pyBtn setTitle:[NoticeTools getLocalType]?[NoticeTools getLocalStrWith:@"py.py"]:@"  我来配音" forState:UIControlStateNormal];
     }
     
@@ -397,7 +397,7 @@
             if (self.dataArr.count) {
                 if (self.tcModel.is_dubbed.boolValue) {
                     [self.pyButton setTitle:[NoticeTools getLocalStrWith:@"py.movetomyline"] forState:UIControlStateNormal];
-                    [self.pyButton setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+                    [self.pyButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
                 }else{
                     [self.pyButton setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
                     [self.pyButton setTitle:[NoticeTools getLocalStrWith:@"py.mecomepy"] forState:UIControlStateNormal];
@@ -420,7 +420,7 @@
                     }
                 }
             }else{
-                [self.pyButton setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+                [self.pyButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
                 self.tcModel.is_dubbed = @"0";
                 [self.pyButton setTitle:[NoticeTools getLocalType]?[NoticeTools getLocalStrWith:@"py.py"]:@"  我来配音" forState:UIControlStateNormal];
             }
@@ -709,7 +709,7 @@
         if (![NoticeTools isManager]) {
             self.tcModel.is_dubbed = @"0";
             [self.pyButton setTitle:[NoticeTools getLocalType]?[NoticeTools getLocalStrWith:@"py.py"]:@"  我來配音" forState:UIControlStateNormal];
-            [self.pyButton setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+            [self.pyButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         }
     }
 }

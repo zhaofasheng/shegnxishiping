@@ -22,7 +22,7 @@
         self.numberL.textAlignment = NSTextAlignmentCenter;
         self.numberL.textColor = [UIColor colorWithHexString:@"#25262E"];
         [self.contentView addSubview:self.numberL];
-        self.numberL.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.numberL.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.numberL setAllCorner:4];
     
     }

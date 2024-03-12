@@ -42,12 +42,12 @@
     [self addChildViewControllers];
 
     //退出登录监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSelectForOutLogin) name:@"outLoginClearDataNOTICATION" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSelectForOutLogin) name:@"GPTPFIRSTNOTICE" object:nil];
 }
 
 
 - (void)changeSelectForOutLogin{
-    [[NoticeTools getTopViewController].navigationController popToRootViewControllerAnimated:YES];
+ 
     [self axcAE_TabBar:self.axcTabBar selectIndex:0];
 }
 

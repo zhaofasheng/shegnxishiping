@@ -86,7 +86,7 @@
             kfL.font = [UIFont systemFontOfSize:14];
             [self.view addSubview:kfL];
             kfL.textAlignment = NSTextAlignmentCenter;
-            kfL.attributedText = [DDHAttributedMode setColorString:@"对订单有疑惑，点这里「声昔客服小二」" setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:@"「声昔客服小二」" beginSize:10];
+            kfL.attributedText = [DDHAttributedMode setColorString:@"对订单有疑惑，点这里「声昔客服小二」" setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:@"「声昔客服小二」" beginSize:10];
             kfL.userInteractionEnabled = YES;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(kefutap)];
             [kfL addGestureRecognizer:tap];

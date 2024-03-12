@@ -53,7 +53,7 @@
     self.tableView.rowHeight = 85;
     
     UIButton *sayBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.tableView.frame), DR_SCREEN_WIDTH-30, 44)];
-    sayBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    sayBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     sayBtn.layer.cornerRadius = 22;
     sayBtn.layer.masksToBounds = YES;
     [sayBtn setTitle:[NoticeTools getLocalStrWith:@"more.saytoself"] forState:UIControlStateNormal];

@@ -63,7 +63,7 @@
         
         self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(10,0,self.contentBackView.frame.size.width-37-10, 48)];
         self.nameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[NoticeTools getLocalStrWith:@"zj.inputname"] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#A1A7B3"]}];
-        self.nameField.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.nameField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.nameField.delegate = self;
         self.nameField.font =SIXTEENTEXTFONTSIZE;
         self.nameField.textColor = [UIColor colorWithHexString:@"#25262E"];
@@ -149,7 +149,7 @@
     UITextField *_field = (UITextField *)sender;
     self.numL.text = [NSString stringWithFormat:@"%ld",_field.text.length];
     self.markL.hidden = _field.text.length>20?NO:YES;
-    self.sendButton.textColor = [UIColor colorWithHexString:_field.text.length?@"#00ABE4":@"#A1A7B3"];
+    self.sendButton.textColor = [UIColor colorWithHexString:_field.text.length?@"#1FC7FF":@"#A1A7B3"];
 }
 
 - (void)sendClick{

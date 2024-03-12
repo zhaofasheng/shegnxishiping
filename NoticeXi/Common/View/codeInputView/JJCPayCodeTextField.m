@@ -187,7 +187,7 @@ static NSString *const reuseId = @"JJCPayCodeTextFieldCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     JJCPayCodeTextFieldCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    cell.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     cell.indePath = indexPath;
     cell.cellNum  = self.dataArrayM.count;
     cell.cellType = (NSInteger)self.textFieldType;

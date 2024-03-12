@@ -95,7 +95,7 @@
     NoticePageNoCell *merchentCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     merchentCell.numberL.text = self.dataArr[indexPath.row];
     if((self.dataArr.count - indexPath.row) == self.currentPage){
-        merchentCell.numberL.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        merchentCell.numberL.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         merchentCell.numberL.textColor = [UIColor whiteColor];
     }else{
         merchentCell.numberL.backgroundColor = [UIColor colorWithHexString:@"F0F1F5"];

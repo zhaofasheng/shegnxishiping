@@ -63,7 +63,7 @@
         nextBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
         nextBtn.layer.cornerRadius = 8;
         nextBtn.layer.masksToBounds = YES;
-        nextBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        nextBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self addSubview:nextBtn];
         [nextBtn addTarget:self action:@selector(nextClick) forControlEvents:UIControlEventTouchUpInside];
         

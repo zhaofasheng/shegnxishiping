@@ -94,7 +94,7 @@
 
 - (void)textFieldDidChange:(id) sender {
     if (self.phoneView.text.length && self.codeView.text.length) {
-        self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.nextButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     }else{
         self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];

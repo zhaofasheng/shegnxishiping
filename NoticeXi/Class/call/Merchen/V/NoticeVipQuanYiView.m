@@ -215,12 +215,12 @@
     }
     
     if([NoticeTools getLocalType] == 1){
-        self.titleL.attributedText = [DDHAttributedMode setColorString:[NSString stringWithFormat:@"%@ Gift",numLimit] setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:numLimit beginSize:0];
+        self.titleL.attributedText = [DDHAttributedMode setColorString:[NSString stringWithFormat:@"%@ Gift",numLimit] setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:numLimit beginSize:0];
     }else if ([NoticeTools getLocalType] == 2){
-        self.titleL.attributedText = [DDHAttributedMode setColorString:[NSString stringWithFormat:@"%@ 特典",numLimit] setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:numLimit beginSize:0];
+        self.titleL.attributedText = [DDHAttributedMode setColorString:[NSString stringWithFormat:@"%@ 特典",numLimit] setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:numLimit beginSize:0];
     }else{
         NSString *str = [NSString stringWithFormat:@"已解锁 %@项 权益",numLimit];
-        self.titleL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:@"0项" beginSize:4];
+        self.titleL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:@"0项" beginSize:4];
     }
 }
 

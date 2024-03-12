@@ -45,14 +45,14 @@
     [self.tableView registerClass:NoticeAtPersonCell.class forCellReuseIdentifier:@"cell"];
     SCIndexViewConfiguration *configuration = [SCIndexViewConfiguration configuration];
     configuration.indicatorHeight = 30;
-    configuration.indicatorTextColor = [UIColor colorWithHexString:@"#00ABE4"];
+    configuration.indicatorTextColor = [UIColor colorWithHexString:@"#1FC7FF"];
     configuration.indexItemTextColor =  [UIColor colorWithHexString:@"#A1A7B3"];
     configuration.indexItemSelectedBackgroundColor = [UIColor whiteColor];
     configuration.indexItemsSpace = 3;
     configuration.indexItemSelectedTextFont = THRETEENTEXTFONTSIZE;
     configuration.indexItemTextFont = ELEVENTEXTFONTSIZE;
     configuration.indicatorTextFont = XGSIXBoldFontSize;
-    configuration.indexItemSelectedTextColor = [UIColor colorWithHexString:@"#00ABE4"];
+    configuration.indexItemSelectedTextColor = [UIColor colorWithHexString:@"#1FC7FF"];
     self.tableView.sc_indexViewConfiguration = configuration;
     [self.tableView registerClass:[NoticeHeaderView class] forHeaderFooterViewReuseIdentifier:@"headerView"];
     
@@ -107,7 +107,7 @@
             self.navBarView.rightButton.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];
             [self.navBarView.rightButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
         }else{
-            self.navBarView.rightButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            self.navBarView.rightButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
             [self.navBarView.rightButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         }
         [self.tableView reloadData];

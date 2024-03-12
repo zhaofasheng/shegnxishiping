@@ -297,7 +297,7 @@
             self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor];
         }else if (self.shopModel.myShopM.operate_status.integerValue == 1){
             [self.workButton setTitle:@"开始营业" forState:UIControlStateNormal];
-            self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#1FE4FB"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#00ABE4"].CGColor];
+            self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#1FE4FB"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#1FC7FF"].CGColor];
         }
     }
     

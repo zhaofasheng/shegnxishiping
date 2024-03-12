@@ -656,7 +656,7 @@
         }else{
             self.choiceLabel.text = [NoticeTools getLocalStrWith:@"mineme.shaixuan"];
         }
-        self.choiceLabel.textColor = [UIColor colorWithHexString:typeNum? @"#00ABE4":@"#5C5F66"];
+        self.choiceLabel.textColor = [UIColor colorWithHexString:typeNum? @"#1FC7FF":@"#5C5F66"];
     };
     [self.navigationController pushViewController:ctl animated:YES];
 }

@@ -348,7 +348,7 @@
         }
         if (weakSelf.choiceArr.count) {
             [weakSelf.sendButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-            weakSelf.sendButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+            weakSelf.sendButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         }else{
             [weakSelf.sendButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
             weakSelf.sendButton.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];

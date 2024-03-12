@@ -32,7 +32,7 @@
     self.navBarView.titleL.text = [NoticeTools getLocalStrWith:@"listen.nearby"];
 
     UIButton *dhBtn = [[UIButton alloc] initWithFrame:CGRectMake(20,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-40-10,DR_SCREEN_WIDTH-40, 40)];
-    dhBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    dhBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     dhBtn.layer.cornerRadius = 8;
     dhBtn.layer.masksToBounds = YES;
     [dhBtn setTitle:[[NoticeTools getLocalStrWith:[NoticeTools getLocalStrWith:@"qu.zhoubianxz"]] substringToIndex:[[NoticeTools getLocalStrWith:@"qu.zhoubianxz"] length]-1] forState:UIControlStateNormal];

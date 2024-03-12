@@ -187,7 +187,7 @@
     NSString *str1 = [NSString stringWithFormat:@"%@",imgArr1[btn.tag]];
     [btn setImage:UIImageNamed(str1) forState:UIControlStateNormal];
     
-    NSArray *arr = @[@"#FFFFFF",@"#00ABE4",@"#20D077",@"#E6C14D",@"#E69191"];
+    NSArray *arr = @[@"#FFFFFF",@"#1FC7FF",@"#20D077",@"#E6C14D",@"#E69191"];
     if (btn.tag == 5) {
         [self.colorMenu showMenu:YES];
         return;

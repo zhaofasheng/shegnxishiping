@@ -28,7 +28,7 @@
         [backView addSubview:self.contentL];
         
         UIButton *readButton = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-40-66-6, 6, 66, 24)];
-        readButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        readButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         readButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
         readButton.layer.cornerRadius = 3;
         readButton.layer.masksToBounds = YES;

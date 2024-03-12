@@ -155,7 +155,7 @@
         
         UITextView *nameField = [[UITextView alloc] initWithFrame:CGRectMake(10, 40+120*i, inputBackView.frame.size.width-20, 80)];
         nameField.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        nameField.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+        nameField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
         nameField.delegate = self;
         nameField.backgroundColor = inputBackView.backgroundColor;
         nameField.font =FIFTHTEENTEXTFONTSIZE;
@@ -225,7 +225,7 @@
     
     self.timeL = [[UILabel alloc] initWithFrame:CGRectMake(10+60,0, DR_SCREEN_WIDTH-40-70-10, 50)];
     self.timeL.font = FOURTHTEENTEXTFONTSIZE;
-    self.timeL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.timeL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [self.changeTimeView addSubview:self.timeL];
     self.timeL.text = [NoticeTools chinese: @"请选择发布时间" english:@"Select Time" japan:@"時間選択"];
     self.timeL.textAlignment = NSTextAlignmentRight;
@@ -398,7 +398,7 @@
         button2.layer.cornerRadius = 20;
         button2.layer.masksToBounds = YES;
         button2.layer.borderWidth = 0;
-        button2.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+        button2.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
         [self.view addSubview:button2];
         
         UIButton *button3 = [[UIButton alloc] initWithFrame:CGRectMake(15, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-20-40, 112, 40)];
@@ -411,7 +411,7 @@
         button3.layer.cornerRadius = 20;
         button3.layer.masksToBounds = YES;
         button3.layer.borderWidth = 0;
-        button3.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+        button3.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
         [self.view addSubview:button3];
         self.sourceBtn.hidden = YES;
         
@@ -585,7 +585,7 @@
     if (self.isJuBao) {
         self.sourceBtn.hidden = NO;
         if (self.bokeModel.role.intValue == 2) {
-            [self.whiteBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+            [self.whiteBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
             self.whiteBtn.layer.borderWidth = 1;
             [self.whiteBtn setTitle:@"移出黑名单" forState:UIControlStateNormal];
             self.whiteBtn.backgroundColor = [UIColor whiteColor];
@@ -620,7 +620,7 @@
     }
     
     if (self.bokeModel.role.intValue == 1) {
-        [self.whiteBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [self.whiteBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
         self.whiteBtn.layer.borderWidth = 1;
         [self.whiteBtn setTitle:@"移出白名单" forState:UIControlStateNormal];
         self.whiteBtn.backgroundColor = [UIColor whiteColor];
@@ -1262,7 +1262,7 @@
 
 - (void)refreshSendButton{
     if (self.cutsumeImg && self.nameField1.text.length && self.nameField2.text.length && self.hasVoice) {
-        self.sendBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.sendBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [self.sendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         self.canSend = YES;
     }else{

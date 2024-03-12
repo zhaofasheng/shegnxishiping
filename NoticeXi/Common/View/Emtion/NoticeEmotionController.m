@@ -41,7 +41,7 @@
         weakSelf.moveBtn.alpha = num?10:5;
         [weakSelf.deleteBtn setTitleColor:[UIColor colorWithHexString:num?@"#EE4B4E": @"#DB6E6E"] forState:UIControlStateNormal];
         [weakSelf.moveBtn setTitleColor:num? [UIColor colorWithHexString:@"#25262E"]:[UIColor colorWithHexString:@"#A1A7B3"] forState:UIControlStateNormal];
-        [weakSelf.managerBtn setTitleColor:[UIColor colorWithHexString:weakSelf.num? @"#00ABE4":@"#A1A7B3"] forState:UIControlStateNormal];
+        [weakSelf.managerBtn setTitleColor:[UIColor colorWithHexString:weakSelf.num? @"#1FC7FF":@"#A1A7B3"] forState:UIControlStateNormal];
     };
     self.emotionView.backgroundColor = self.view.backgroundColor;
     self.emotionView.collectionView.backgroundColor = self.view.backgroundColor;
@@ -68,7 +68,7 @@
 - (void)managerClick{
     self.isChoice = !self.isChoice;
     [self.managerBtn setTitle:self.isChoice? ([NoticeTools getLocalType]?@"Done":@"  完成"):([NoticeTools getLocalType]?@" Edit": @"  管理") forState:UIControlStateNormal];
-    [self.managerBtn setTitleColor:[UIColor colorWithHexString:(self.num && self.isChoice)? @"#00ABE4":@"#25262E"] forState:UIControlStateNormal];
+    [self.managerBtn setTitleColor:[UIColor colorWithHexString:(self.num && self.isChoice)? @"#1FC7FF":@"#25262E"] forState:UIControlStateNormal];
     self.emotionView.isBeginChoice = self.isChoice;
     self.navigationItem.title = self.isChoice?[NSString stringWithFormat:@"%@(%ld)",[NoticeTools getLocalStrWith:@"emtion.choice"],self.num]:[NoticeTools getLocalStrWith:@"emtion.title"];
     self.emotionView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-NAVIGATION_BAR_HEIGHT-(self.isChoice?50:0));

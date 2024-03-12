@@ -68,7 +68,7 @@
         _finishBtn.enabled = NO;
     }
     if (self.isEditAblum) {
-        [_finishBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+        [_finishBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
     }
 
     self.selectType = self.zjmodel.addType;
@@ -79,14 +79,14 @@
     
     UISwitch* switchButton = [[UISwitch alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-18-44,16,44,24)];
     _switchButton = switchButton;
-    _switchButton.onTintColor = [UIColor colorWithHexString:@"#00ABE4"];
+    _switchButton.onTintColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [switchButton addTarget:self action:@selector(changeOnVale:) forControlEvents:UIControlEventValueChanged];
     [switchButton setOn:self.zjmodel.album_type.intValue == 1?YES:NO];
     switchButton.transform = CGAffineTransformMakeScale(0.75, 0.75);
     
     self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(86,0,DR_SCREEN_WIDTH-86-20-40, 55)];
     self.nameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[NoticeTools getLocalStrWith:@"zj.inputname"] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#5C5F66"]}];
-    self.nameField.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.nameField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
     self.nameField.font = FOURTHTEENTEXTFONTSIZE;
     self.nameField.text = self.zjmodel.album_name;
     self.nameField.delegate = self;
@@ -118,7 +118,7 @@
         cell.subL.textColor = [UIColor colorWithHexString:@"#DB6E6E"];
     }
     cell.subL.text = [NSString stringWithFormat:@"%ld",_field.text.length];
-    [_finishBtn setTitleColor:[UIColor colorWithHexString:_field.text.length?@"#00ABE4": @"#5C5F66"] forState:UIControlStateNormal];
+    [_finishBtn setTitleColor:[UIColor colorWithHexString:_field.text.length?@"#1FC7FF": @"#5C5F66"] forState:UIControlStateNormal];
 }
 
 - (void)changeOnVale:(UISwitch *)switchbutton{

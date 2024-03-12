@@ -48,7 +48,7 @@
             self.nickNameL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor redColor] setLengthString:@"(未读)" beginSize:0];
         }else if(questionM.sign.intValue){//已标记
             NSString *str = [NSString stringWithFormat:@"(已标记)%@",questionM.userM.nick_name];
-            self.nickNameL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:@"(已标记)" beginSize:0];
+            self.nickNameL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:@"(已标记)" beginSize:0];
         }
     }
 }

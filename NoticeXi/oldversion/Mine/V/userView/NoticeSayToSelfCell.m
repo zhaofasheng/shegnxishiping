@@ -129,8 +129,8 @@
     if(self.isDiaLog){
         AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         if (sayModel.isPlaying) {
-            _timeL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
-            _dateL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+            _timeL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+            _dateL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         }else{
             _timeL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
             _dateL.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
@@ -145,8 +145,8 @@
         }
     }else{
         if (sayModel.isPlaying) {
-            _timeL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
-            _dateL.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+            _timeL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+            _dateL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         }else{
             _timeL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
             _dateL.textColor = [UIColor colorWithHexString:@"#25262E"];

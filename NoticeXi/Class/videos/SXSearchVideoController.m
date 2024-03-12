@@ -44,7 +44,7 @@
     [self refreshHistory];
     
     self.topicField = [[UITextField alloc] initWithFrame:CGRectMake(40, 0,DR_SCREEN_WIDTH-15-40-65, 36)];
-    self.topicField.tintColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.topicField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
     self.topicField.font = FOURTHTEENTEXTFONTSIZE;
     self.topicField.textColor = [[UIColor colorWithHexString:@"#14151A"] colorWithAlphaComponent:1];
     self.topicField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"输入搜索内容" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[[UIColor colorWithHexString:@"#8A8F99"] colorWithAlphaComponent:1]}];

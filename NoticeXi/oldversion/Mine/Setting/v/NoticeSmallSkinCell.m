@@ -25,7 +25,7 @@
         self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, self.backImageView.frame.size.width, self.backImageView.frame.size.height)];
         self.lineView.layer.cornerRadius = 4;
         self.lineView.layer.masksToBounds = YES;
-        self.lineView.layer.borderColor = [UIColor colorWithHexString:@"#00ABE4"].CGColor;
+        self.lineView.layer.borderColor = [UIColor colorWithHexString:@"#1FC7FF"].CGColor;
         self.lineView.layer.borderWidth = 1;
         self.lineView.hidden = YES;
         [self.contentView addSubview:self.lineView];

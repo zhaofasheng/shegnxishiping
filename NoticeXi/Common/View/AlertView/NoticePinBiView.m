@@ -684,7 +684,7 @@
             btn.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
             if (i == 0) {
                 _pinbBtn = btn;
-                [btn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
             }else{
                 _cancelBtn = btn;
                 [btn setTitleColor:[UIColor colorWithHexString:@"#5C5F66"] forState:UIControlStateNormal];
@@ -869,7 +869,7 @@
         btn.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
         [btn setTitle:[NoticeTools getLocalStrWith:@"chat.close"] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(closeClick) forControlEvents:UIControlEventTouchUpInside];
-        btn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [btn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         [self.markView addSubview:btn];
     }
@@ -1143,7 +1143,7 @@
 
 - (void)choiceTypeClick:(UIButton *)btn{
     self.type = btn.tag;
-    btn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [btn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     for (UIButton *button in _buttonArr) {
         if (button.tag != self.type) {
@@ -1348,7 +1348,7 @@
 - (void)choiceGroupClick:(UIButton *)btn{
     self.type = btn.tag;
     
-    btn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [btn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     for (UIButton *button in _buttonArr) {
         if (button.tag != self.type) {
@@ -1356,7 +1356,7 @@
             button.backgroundColor = [UIColor colorWithHexString:@"#292B33"];
         }
     }
-    [_pinbBtn setTitleColor:[UIColor colorWithHexString:@"#00ABE4"] forState:UIControlStateNormal];
+    [_pinbBtn setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
 }
 
 - (void)surethOrCancelClick:(UIButton *)btn{

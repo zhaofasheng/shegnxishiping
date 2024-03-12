@@ -42,7 +42,7 @@
     //线宽
     path.lineWidth = self.width > 0?self.width: KHWCircleLineWidth;
     //颜色
-    [[UIColor colorWithHexString:@"#00ABE4"] set];
+    [[UIColor colorWithHexString:@"#1FC7FF"] set];
     //拐角
     path.lineCapStyle = kCGLineCapRound;
     path.lineJoinStyle = kCGLineJoinRound;

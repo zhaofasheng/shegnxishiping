@@ -305,9 +305,9 @@
     //创建一个颜色空间
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     //设置开始颜色
-    const CGFloat *startColorComponents = CGColorGetComponents([[UIColor colorWithHexString:@"#00ABE4"] CGColor]);
+    const CGFloat *startColorComponents = CGColorGetComponents([[UIColor colorWithHexString:@"#1FC7FF"] CGColor]);
     //设置结束颜色
-    const CGFloat *endColorComponents = CGColorGetComponents([[UIColor colorWithHexString:@"#00ABE4"] CGColor]);
+    const CGFloat *endColorComponents = CGColorGetComponents([[UIColor colorWithHexString:@"#1FC7FF"] CGColor]);
     //颜色分量的强度值数组
     CGFloat components[8] = {startColorComponents[0], startColorComponents[1], startColorComponents[2], startColorComponents[3], endColorComponents[0], endColorComponents[1], endColorComponents[2], endColorComponents[3]
     };

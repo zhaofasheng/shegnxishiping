@@ -380,7 +380,7 @@
     if (self.isNiMing ) {
         [button setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         [button setTitle:[NoticeTools getLocalStrWith:@"recoder.nimingOn"] forState:UIControlStateNormal];
-        button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         button.layer.borderWidth = 0;
     }else{
         [button setTitleColor:[UIColor colorWithHexString:@"#8A8F99"] forState:UIControlStateNormal];
@@ -734,7 +734,7 @@
         }else{//录制中就是暂停录音
             NSString *str = [NSString stringWithFormat:@"%@%lds",[NoticeTools getLocalStrWith:@"recoder.shegnxiatime"],(self.isLongTime?300:120)-_currentRecodTime];
             NSString *str1 = [NSString stringWithFormat:@"%lds",(self.isLongTime?300:120)-_currentRecodTime];
-            self.markL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:str1 beginSize:4];
+            self.markL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:str1 beginSize:4];
             [self pauseRecoder];
         }
     }else{
@@ -908,7 +908,7 @@
     if ((self.isPy?120 : (self.isLongTime?300 : 120)) - _currentRecodTime <= 10) {
         NSString *str = [NSString stringWithFormat:@"%@%lds",[NoticeTools getLocalStrWith:@"recoder.shegnxiatime"],(self.isLongTime?300:120)-_currentRecodTime];
         NSString *str1 = [NSString stringWithFormat:@"%lds",(self.isLongTime?300:120)-_currentRecodTime];
-        self.markL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#00ABE4"] setLengthString:str1 beginSize:4];
+        self.markL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#1FC7FF"] setLengthString:str1 beginSize:4];
     }
 }
 

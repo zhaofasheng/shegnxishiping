@@ -322,7 +322,7 @@
     
     if (!self.isTuijian) {
         _rightBtn.alpha = 1;//
-        _rightBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _rightBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }else{
         _rightBtn.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
         _rightBtn.alpha = 0.5;
@@ -514,7 +514,7 @@
  
     if (self.locaPath && self.timeLen.intValue) {
         _rightBtn.alpha = 1;//
-        _rightBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        _rightBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }else{
         _rightBtn.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
         _rightBtn.alpha = 0.5;

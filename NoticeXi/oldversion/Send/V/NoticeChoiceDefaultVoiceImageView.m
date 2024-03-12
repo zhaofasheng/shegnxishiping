@@ -74,7 +74,7 @@
         [self addGestureRecognizer:self.panGesture];
 
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(20,self.contentView.frame.size.height-BOTTOM_HEIGHT-54, DR_SCREEN_WIDTH-40, 44)];
-        button.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        button.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [button setAllCorner:22];
         [button setTitle:[NoticeTools getLocalStrWith:@"xl.suresure"] forState:UIControlStateNormal];
         button.titleLabel.font = SIXTEENTEXTFONTSIZE;

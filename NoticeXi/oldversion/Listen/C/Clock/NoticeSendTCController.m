@@ -72,7 +72,7 @@
     self.requestBtn.layer.masksToBounds = YES;
     self.requestBtn.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
     [self.requestBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-    self.requestBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+    self.requestBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     [self.tagView addSubview:self.requestBtn];
     self.requestBtn.tag = 2;
     [self.requestBtn addTarget:self action:@selector(choiceTag:) forControlEvents:UIControlEventTouchUpInside];
@@ -171,12 +171,12 @@
         [self.refreshBtn setTitleColor:[UIColor colorWithHexString:@"#8A8F99"] forState:UIControlStateNormal];
         self.refreshBtn.backgroundColor = [[UIColor colorWithHexString:@"#1D1E24"] colorWithAlphaComponent:0];
         [self.requestBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.requestBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.requestBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }else{
         [self.requestBtn setTitleColor:[UIColor colorWithHexString:@"#8A8F99"] forState:UIControlStateNormal];
         self.requestBtn.backgroundColor = [[UIColor colorWithHexString:@"#1D1E24"] colorWithAlphaComponent:0];
         [self.refreshBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        self.refreshBtn.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.refreshBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }
 }
 
@@ -368,7 +368,7 @@
 - (void)textViewDidChangeSelection:(UITextView *)textView{
     if (textView.text.length) {
         _plaL.text = @"";
-        self.sendBtn.textColor = [UIColor colorWithHexString:@"#00ABE4"];
+        self.sendBtn.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
     }else{
        _plaL.text = [NoticeTools isSimpleLau]?[NoticeTools getLocalStrWith:@"py.inpttc"]:@"請輸入臺詞";
         self.sendBtn.textColor = [UIColor colorWithHexString:@"#A1A7B3"];

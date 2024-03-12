@@ -39,7 +39,7 @@
         self.contentL.numberOfLines = 0;
         
         UIButton *readButton = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-20-66, CGRectGetMaxY(backView.frame)+8, 66, 24)];
-        readButton.backgroundColor = [UIColor colorWithHexString:@"#00ABE4"];
+        readButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         readButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
         readButton.layer.cornerRadius = 3;
         readButton.layer.masksToBounds = YES;
