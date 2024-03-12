@@ -1,0 +1,6 @@
+module Pods_NoticeXi {
+  umbrella header "Pods-NoticeXi-umbrella.h"
+
+  export *
+  module * { export * }
+}

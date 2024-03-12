@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-NoticeXi/Pods-NoticeXi-frameworks.sh
+${PODS_ROOT}/TXIMSDK_Plus_iOS/ImSDK_Plus.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/TXLiteAVSDK_TRTC/TRTC/TXSoundTouch.framework/TXSoundTouch
+${PODS_XCFRAMEWORKS_BUILD_DIR}/TXLiteAVSDK_TRTC/TRTC/TXFFmpeg.framework/TXFFmpeg
