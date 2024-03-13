@@ -112,38 +112,18 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
 
-    
-    CGRect frame = textView.frame;
-    float height;
-    if ([text isEqual:@""]) {
-        
-        if (![textView.text isEqualToString:@""]) {
-            
-            height = [self heightForTextView:textView WithText:[textView.text substringToIndex:[textView.text length] - 1]];
-            
-        }else{
-            
-            height = [self heightForTextView:textView WithText:textView.text];
-        }
-    }else{
-        
-        height = [self heightForTextView:textView WithText:[NSString stringWithFormat:@"%@%@",textView.text,text]];
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
     }
-    if (height > 100) {
-        height = 100;
-    }
-    
-    frame.size.height = height;
-    [UIView animateWithDuration:0.5 animations:^{
-        textView.frame = frame;
-    } completion:nil];
-    
+
     return YES;
 }
 
 - (void)refreshViewHeight{
     [self textViewDidChangeSelection:self.contentView];
 }
+
+
 
 - (void)textViewDidChangeSelection:(UITextView *)textView{
  
@@ -166,6 +146,19 @@
         NSString *allStr = [NSString stringWithFormat:@"%lu/%ld",textView.text.length,self.num];
         self.numL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#25262E"] setLengthString:[NSString stringWithFormat:@"%ld",textView.text.length] beginSize:0];
     }
+    
+    CGRect frame = textView.frame;
+    float height;
+    height = [self heightForTextView:textView WithText:textView.text];
+    if (height > 100) {
+        height = 100;
+    }
+    
+    frame.size.height = height;
+    [UIView animateWithDuration:0.5 animations:^{
+        textView.frame = frame;
+    } completion:nil];
+    
 }
 
 - (float)heightForTextView: (UITextView *)textView WithText: (NSString *) strText{

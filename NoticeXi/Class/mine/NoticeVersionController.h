@@ -6,11 +6,11 @@
 //  Copyright © 2021 zhaoxiaoer. All rights reserved.
 //
 
-#import "NoticeBaseListController.h"
+#import "NoticeBaseCellController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NoticeVersionController : NoticeBaseListController
+@interface NoticeVersionController : NoticeBaseCellController
 @property (nonatomic, assign) BOOL hasNewVersion;
 @property (nonatomic, strong) NSString *versionName;
 @end

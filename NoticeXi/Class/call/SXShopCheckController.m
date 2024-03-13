@@ -15,6 +15,7 @@
 #import "SXShopCheckWaitEdcView.h"
 #import "SXZiGeCheckView.h"
 #import "SXWorkCheckView.h"
+
 @interface SXShopCheckController ()
 
 @property (nonatomic, strong) SXShopCheckWaitEdcView *waitOrSuccessView;
@@ -22,6 +23,9 @@
 @property (nonatomic, strong) UIButton *xieyBtn;
 @property (nonatomic, strong) SXZiGeCheckView *zigeWaitOrSuccessView;
 @property (nonatomic, strong) SXWorkCheckView *workWaitOrSuccessView;
+
+@property (nonatomic, strong) SXVerifyShopModel *verifyModel;
+@property (nonatomic, assign) BOOL hasGetData;
 @end
 
 @implementation SXShopCheckController
@@ -51,6 +55,12 @@
     [addBtn addTarget:self action:@selector(xieyiClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
     self.xieyBtn = addBtn;
+    
+    if (((self.shopModel.verifyModel.verify_status.intValue != 4) && (self.shopModel.verifyModel.verify_status.intValue > 0)) || self.shopModel.is_submit_authentication.intValue == 1) {//认证通过或者提交过审核
+        self.type = 9;
+        [self requestStatus];
+    }
+
 }
 
 - (void)xieyiClick{//
@@ -61,28 +71,32 @@
 
 - (void)refresUI{
     
-    if (self.type == 1 || self.type == 2) {
+    if (self.type == 1 || self.type == 2) {//学历认证了
         self.tableView.tableHeaderView = self.waitOrSuccessView;
+        self.waitOrSuccessView.verifyM = self.verifyModel;
         if (self.type == 2) {
             self.waitOrSuccessView.statusL1.textColor = [UIColor colorWithHexString:@"#14151A"];
             self.waitOrSuccessView.statusL2.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         }
     }
     
-    if (self.type == 3 || self.type == 4) {
+    if (self.type == 3 || self.type == 4) {//资格认证了
         self.tableView.tableHeaderView = self.zigeWaitOrSuccessView;
+        self.zigeWaitOrSuccessView.verifyM = self.verifyModel;
         if (self.type == 4) {
             self.zigeWaitOrSuccessView.statusL1.textColor = [UIColor colorWithHexString:@"#14151A"];
             self.zigeWaitOrSuccessView.statusL2.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         }
     }
-    if (self.type == 1 || self.type == 3) {
+    
+    if (self.type == 1 || self.type == 3) {//认证审核中
         self.backView.hidden = NO;
+        self.workWaitOrSuccessView.verifyM = self.verifyModel;
         [self.navBarView.backButton setImage: UIImageNamed(@"sxwhitebackpopo_img") forState:UIControlStateNormal];
         self.navBarView.titleL.textColor = [UIColor whiteColor];
     }
     
-    if (self.type == 5) {
+    if (self.type == 5) {//职业认证了
         self.tableView.tableHeaderView = self.workWaitOrSuccessView;
     }
 
@@ -90,6 +104,50 @@
         self.xieyBtn.hidden = YES;
     }
     [self.tableView reloadData];
+}
+
+- (void)requestStatus{
+    [self showHUD];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/authenticationInfo" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (success) {
+            self.verifyModel = [SXVerifyShopModel mj_objectWithKeyValues:dict[@"data"]];
+            if (self.verifyModel.verify_status.intValue == 4 || self.verifyModel.verify_status.intValue < 2) {//审核通过或者未提交认证信息
+                self.type = 0;
+            }else{
+                if (self.verifyModel.verify_status.intValue == 2) {//待审核
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYSHOP" object:nil];
+                    if (self.verifyModel.authentication_type.intValue == 1) {//学历认证
+                        self.type = 1;
+                        self.waitOrSuccessView.verifyM = self.verifyModel;
+                    }else if (self.verifyModel.authentication_type.intValue == 3){
+                        self.zigeWaitOrSuccessView.verifyM = self.verifyModel;
+                        self.type = 3;
+                    }
+                }else if (self.verifyModel.verify_status.intValue == 3){//审核通过
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYSHOP" object:nil];
+                    if (self.verifyModel.authentication_type.intValue == 1) {//学历认证
+                        self.waitOrSuccessView.verifyM = self.verifyModel;
+                        self.type = 2;
+                    }else if (self.verifyModel.authentication_type.intValue == 3){
+                        self.zigeWaitOrSuccessView.verifyM = self.verifyModel;
+                        self.type = 4;
+                    }else if (self.verifyModel.authentication_type.intValue == 3){
+                        self.workWaitOrSuccessView.verifyM = self.verifyModel;
+                        self.type = 5;
+                    }
+                }
+            }
+            [self refresUI];
+            [self.tableView reloadData];
+        }else{
+            self.type = 0;
+        }
+        [self.tableView reloadData];
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
 }
 
 - (UIView *)backView{
@@ -126,26 +184,30 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         SXEducationController *ctl = [[SXEducationController alloc] init];
+        ctl.verifyModel = self.verifyModel;
+        ctl.shopId = self.shopModel.shopId;
         __weak typeof(self) weakSelf = self;
         ctl.upsuccessBlock = ^(NSInteger type) {
-            weakSelf.type = type;
-            [weakSelf refresUI];
+ 
+            [weakSelf requestStatus];
         };
         [self.navigationController pushViewController:ctl animated:YES];
     }else if (indexPath.row == 1){
         SXWorkCheckController *ctl = [[SXWorkCheckController alloc] init];
+        ctl.verifyModel = self.verifyModel;
+        ctl.shopId = self.shopModel.shopId;
         __weak typeof(self) weakSelf = self;
         ctl.upsuccessBlock = ^(NSInteger type) {
-            weakSelf.type = type;
-            [weakSelf refresUI];
+            [weakSelf requestStatus];
         };
         [self.navigationController pushViewController:ctl animated:YES];
     }else{
         SXZiGeCheckController *ctl = [[SXZiGeCheckController alloc] init];
+        ctl.verifyModel = self.verifyModel;
+        ctl.shopId = self.shopModel.shopId;
         __weak typeof(self) weakSelf = self;
         ctl.upsuccessBlock = ^(NSInteger type) {
-            weakSelf.type = type;
-            [weakSelf refresUI];
+            [weakSelf requestStatus];
         };
         [self.navigationController pushViewController:ctl animated:YES];
     }

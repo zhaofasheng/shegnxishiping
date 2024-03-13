@@ -236,6 +236,7 @@ class NoticeShopSRHeadeerView: UIView {
                             self!.markL?.text = ""
                             NoticeQiaojjieTools.show(withTitle: "申请已提交，24小时内到账，请注意查收")
                         }
+                        NotificationCenter.default.post(name: NSNotification.Name("REFRESHMYWALLECT"), object: nil, userInfo:nil)
                     }, fail: {(error) in
                         NoticeOcToSwift.topViewController().hideHUD()
                     })

@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SXVerifyShopModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXZiGeCheckView : UIView
 @property (nonatomic, strong) UILabel *statusL1;
 @property (nonatomic, strong) UILabel *statusL2;
-
+@property (nonatomic, strong) SXVerifyShopModel *verifyM;
 @property (nonatomic, strong) UILabel *nameL;
 @property (nonatomic, strong) UILabel *numL;
 @property (nonatomic, strong) UILabel *zyL;

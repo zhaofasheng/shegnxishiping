@@ -127,6 +127,8 @@
 
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequest) name:@"REFRESHMYWALLECT" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequestForCheck) name:@"REFRESHMYSHOP" object:nil];
+    
     [self getShopRequest];
     
     UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT,50, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
@@ -154,7 +156,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+- (void)getShopRequestForCheck{
+    self.shopModel.myShopM.is_submit_authentication = @"1";
+    [self getShopRequest];
+}
 //获取店铺信息和状态
 - (void)getShopRequest{
     [self showHUD];

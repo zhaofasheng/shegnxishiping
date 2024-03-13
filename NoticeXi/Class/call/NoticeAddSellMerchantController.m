@@ -66,11 +66,24 @@
     
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
+            
+            [self.choiceArr removeAllObjects];
             for (NSDictionary *dic in dict[@"data"][@"goods_list"]) {
                 NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];
                 goods.choice = goods.is_selling.boolValue? @"1" : @"0";
-      
+                
+                if(goods.choice.boolValue){
+                    [self.choiceArr addObject:goods];
+                }
+                
                 [self.voiceArr addObject:goods];
+            }
+            if(self.choiceArr.count){
+                self.addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+                [self.addButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
+            }else{
+                self.addButton.backgroundColor = [UIColor colorWithHexString:@"#8A8F99"];
+                [self.addButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
             }
             [self.tableView reloadData];
         }

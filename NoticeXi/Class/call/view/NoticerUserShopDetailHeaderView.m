@@ -39,21 +39,21 @@
         self.checkL = [[UILabel  alloc] initWithFrame:CGRectMake(20, 69, DR_SCREEN_WIDTH-150, 18)];
         self.checkL.font = THRETEENTEXTFONTSIZE;
         self.checkL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        self.checkL.text = @"深圳大学社会学在读";
+      
         [self addSubview:self.checkL];
         
-        self.goodsNumL = [[UILabel  alloc] initWithFrame:CGRectMake(20, 107, GET_STRWIDTH(@"咨询服务 2", 12, 19)+30, 19)];
+        self.goodsNumL = [[UILabel  alloc] initWithFrame:CGRectMake(20, 107+15, GET_STRWIDTH(@"咨询服务 2", 12, 19)+30, 19)];
         self.goodsNumL.font = TWOTEXTFONTSIZE;
         self.goodsNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         self.goodsNumL.text = @"咨询服务 0";
         [self addSubview:self.goodsNumL];
         
-        self.searvNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.goodsNumL.frame), 107, GET_STRWIDTH(@"被咨询 999", 12, 19)+47, 19)];
+        self.searvNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.goodsNumL.frame), self.goodsNumL.frame.origin.y, GET_STRWIDTH(@"被咨询 999", 12, 19)+47, 19)];
         self.searvNumL.font = TWOTEXTFONTSIZE;
         self.searvNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self addSubview:self.searvNumL];
         
-        self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.searvNumL.frame), 107, GET_STRWIDTH(@"评价 9999", 12, 19)+10, 19)];
+        self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.searvNumL.frame), self.goodsNumL.frame.origin.y, GET_STRWIDTH(@"评价 9999", 12, 19)+10, 19)];
         self.comNumL.font = TWOTEXTFONTSIZE;
         self.comNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self addSubview:self.comNumL];
@@ -92,7 +92,7 @@
         
         [self addSubview:self.contentView];
         
-        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(30, 146, 24, 18)];
+        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(30, 146+15, 24, 18)];
         imageV.image = UIImageNamed(@"introYinhao_img");
         self.yhImageView = imageV;
         self.yhImageView.hidden = YES;
@@ -138,6 +138,18 @@
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
 
+    SXVerifyShopModel *verifyModel = shopModel.verifyModel;
+    if (verifyModel.authentication_type.intValue  > 0) {
+        if (verifyModel.authentication_type.intValue == 1) {//学历
+            self.checkL.text = [NSString stringWithFormat:@"%@ %@%@",verifyModel.school_name,verifyModel.speciality_name,verifyModel.education_optionName];
+        }else if (verifyModel.authentication_type.intValue == 2){
+            self.checkL.text = [NSString stringWithFormat:@"%@ %@",verifyModel.industry_name,verifyModel.position_name];
+        }else if (verifyModel.authentication_type.intValue == 4){
+            self.checkL.text = [NSString stringWithFormat:@"%@",verifyModel.credentials_name];
+        }
+        self.checkL.frame = CGRectMake(20, 69, DR_SCREEN_WIDTH-125, GET_STRHEIGHT(self.checkL.text, 13, DR_SCREEN_WIDTH-125));
+    }
+    
     self.shopNameL.text = shopModel.shop_name;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:shopModel.shop_avatar_url]];
     
@@ -164,7 +176,7 @@
         CGFloat taleHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tale isJiacu:NO];
         
         self.contentView.hidden = NO;
-        self.contentView.frame = CGRectMake(15, 156, DR_SCREEN_WIDTH-30, tagHeight+taleHeight+60);
+        self.contentView.frame = CGRectMake(15, 156+15, DR_SCREEN_WIDTH-30, tagHeight+taleHeight+60);
         
         self.tagsL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, tagHeight);
         self.tagsL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tagString];
@@ -181,7 +193,7 @@
             CGFloat tagHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tagString isJiacu:NO];
             
             self.contentView.hidden = NO;
-            self.contentView.frame = CGRectMake(15, 156, DR_SCREEN_WIDTH-30, tagHeight+30);
+            self.contentView.frame = CGRectMake(15, 156+15, DR_SCREEN_WIDTH-30, tagHeight+30);
             
             self.tagsL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, tagHeight);
             self.tagsL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tagString];
@@ -192,7 +204,7 @@
             CGFloat taleHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tale isJiacu:NO];
             
             self.contentView.hidden = NO;
-            self.contentView.frame = CGRectMake(15, 156, DR_SCREEN_WIDTH-30, taleHeight+30);
+            self.contentView.frame = CGRectMake(15, 156+15, DR_SCREEN_WIDTH-30, taleHeight+30);
             
             self.lineView.hidden = YES;
             
@@ -203,16 +215,16 @@
     
     
     if (_contentView.hidden) {
-        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156);
+        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+15);
     }else{
-        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+self.contentView.frame.size.height+15);
+        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+self.contentView.frame.size.height+15+15);
     }
-    if (_contentView) {
-        self.yhImageView.hidden = _contentView.hidden;
+
+    if ((shopModel.tale && shopModel.tale.length) || shopModel.tagsTextArr.count){
+        self.yhImageView.hidden = NO;
     }else{
         self.yhImageView.hidden = YES;
     }
-    
 }
 
 - (void)setGoodsNum:(NSInteger)goodsNum{

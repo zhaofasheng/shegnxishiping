@@ -25,7 +25,7 @@
 @property (nonatomic, strong) SXChoiceEdcutionView *eduChoiceView;
 @property (nonatomic, strong) UITextField *schoolTextField;
 @property (nonatomic, strong) UITextField *zyTextField;
-
+@property (nonatomic, strong) NSString *edcStringType;
 @property (nonatomic, strong) UITextField *nameTextField;
 @property (nonatomic, strong) UITextField *numTextField;
 @end
@@ -244,6 +244,8 @@
     [addBtn addTarget:self action:@selector(upClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
     
+    [self hasImageView];
+    
     //监听键盘将要升起的通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     //监听键盘回收的通知
@@ -288,51 +290,6 @@
 - (void)choiceEdc{
     self.eduChoiceView.currenEdc = self.edcString;
     [self.eduChoiceView show];
-}
-
-//提交
-- (void)upClick{
-    
-    if (self.upsuccessBlock) {
-        self.upsuccessBlock(1);
-    }
-    [self.navigationController popViewControllerAnimated:YES];
-    return;
-    
-    if (!self.zmImage) {
-        [self showToastWithText:@"请上传身份证正反面照片"];
-        return;
-    }
-    if (!self.nameTextField.text.length) {
-        [self showToastWithText:@"请输入真实姓名"];
-        return;
-    }
-    if (!self.numTextField.text.length) {
-        [self showToastWithText:@"请输入身份证号"];
-        return;
-    }
-    if (![HWToolBox isIdentityCardNumber:self.numTextField.text]) {
-        [self showToastWithText:@"请输入正确的身份证号码"];
-        return;
-    }
-    if (!self.edcString) {
-        [self showToastWithText:@"请选择学历"];
-        return;
-    }
-    if (!self.schoolTextField.text.length) {
-        [self showToastWithText:@"请输入学校全名"];
-        return;
-    }
-    if (!self.zyTextField.text.length) {
-        [self showToastWithText:@"请输入专业名称"];
-        return;
-    }
-    if (!self.zhengshuImage) {
-        [self showToastWithText:@"请上传 校园卡、学生证、录取通知书、毕业证(任选其一)"];
-        return;
-    }
-    
-    //下面就可以执行上传
 }
 
 - (void)backClick{
@@ -381,9 +338,20 @@
         weakSelf.upSFbtn.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
         [weakSelf.upSFbtn setTitle:@"查看图片" forState:UIControlStateNormal];
     };
+    ctl.verifyModel = self.verifyModel;
+    ctl.shopId = self.shopId;
     ctl.zmImage = self.zmImage;
     ctl.fmImage = self.fmImage;
     [self.navigationController pushViewController:ctl animated:YES];
+}
+
+- (void)hasImageView{
+    if (self.verifyModel.front_photo_url.length > 10 && self.verifyModel.back_photo_url.length > 10) {
+        self.upSFbtn.layer.borderWidth = 0;
+        [self.upSFbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.upSFbtn.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
+        [self.upSFbtn setTitle:@"查看图片" forState:UIControlStateNormal];
+    }
 }
 
 - (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
@@ -446,14 +414,106 @@
     }
 }
 
+
+//提交
+- (void)upClick{
+    
+    
+    if (!self.zmImage && !(self.verifyModel.front_photo_url.length > 10)) {
+        [self showToastWithText:@"请上传身份证正反面照片"];
+        return;
+    }
+    if (!self.nameTextField.text.length) {
+        [self showToastWithText:@"请输入真实姓名"];
+        return;
+    }
+    if (!self.numTextField.text.length) {
+        [self showToastWithText:@"请输入身份证号"];
+        return;
+    }
+    if (![HWToolBox isIdentityCardNumber:self.numTextField.text]) {
+        [self showToastWithText:@"请输入正确的身份证号码"];
+        return;
+    }
+    if (!self.edcString) {
+        [self showToastWithText:@"请选择学历"];
+        return;
+    }
+    if (!self.schoolTextField.text.length) {
+        [self showToastWithText:@"请输入学校全名"];
+        return;
+    }
+    if (!self.zyTextField.text.length) {
+        [self showToastWithText:@"请输入专业名称"];
+        return;
+    }
+    if (!self.zhengshuImage) {
+        [self showToastWithText:@"请上传 校园卡、学生证、录取通知书、毕业证(任选其一)"];
+        return;
+    }
+    
+    //下面就可以执行上传
+    [self upLoadfm:self.zhengshuImage path:[NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],arc4random()%999999999678999]];
+}
+
+
+- (void)upLoadfm:(UIImage *)fimage path:(NSString *)path{
+    
+    if (!path) {
+        [YZC_AlertView showViewWithTitleMessage:@"文件不存在"];
+        return;
+    }
+    //获取七牛token
+    NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:@"90" forKey:@"resourceType"];
+    [parm setObject:pathMd5 forKey:@"resourceContent"];
+
+    [[XGUploadDateManager sharedManager] uploadImageWithImage:fimage parm:parm progressHandler:^(CGFloat progress) {
+        
+    } complectionHandler:^(NSError *error, NSString *errorMessage,NSString *bucketId, BOOL sussess) {
+        if (sussess) {
+            [self upAllData:errorMessage];
+        }else{
+            [self showToastWithText:errorMessage];
+            [self hideHUD];
+        }
+    }];
+}
+
+- (void)upAllData:(NSString *)imageUrl{
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:@"1" forKey:@"authentication_type"];
+    [parm setObject:self.nameTextField.text forKey:@"real_name"];
+    [parm setObject:self.numTextField.text forKey:@"cert_no"];
+    [parm setObject:self.edcStringType forKey:@"education_option"];
+    [parm setObject:self.schoolTextField.text forKey:@"school_name"];
+    [parm setObject:self.zyTextField.text forKey:@"speciality_name"];
+    [parm setObject:imageUrl forKey:@"education_img_url"];
+    [parm setObject:@"2" forKey:@"action"];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (self.upsuccessBlock) {
+            self.upsuccessBlock(1);
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYSHOP" object:nil];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
+}
+
 - (SXChoiceEdcutionView *)eduChoiceView{
     if (!_eduChoiceView) {
         _eduChoiceView = [[SXChoiceEdcutionView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
         __weak typeof(self) weakSelf = self;
-        _eduChoiceView.edcBlock = ^(NSString * _Nonnull edc) {
+        _eduChoiceView.edcBlock = ^(NSString * _Nonnull edc,NSInteger edcType) {
             weakSelf.edcL.text = edc;
             weakSelf.edcL.font = XGFifthBoldFontSize;
             weakSelf.edcString = edc;
+            weakSelf.edcStringType = [NSString stringWithFormat:@"%ld",edcType];
             weakSelf.edcL.textColor = [UIColor colorWithHexString:@"#14151A"];
         };
     }

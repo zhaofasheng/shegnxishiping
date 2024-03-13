@@ -1352,6 +1352,7 @@
 		FE6CF9782B88A358005EE663 /* SXDownVideoheaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9772B88A358005EE663 /* SXDownVideoheaderView.m */; };
 		FE6CF97B2B88A450005EE663 /* SXPlayChcahVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF97A2B88A450005EE663 /* SXPlayChcahVideoController.m */; };
 		FE6CF97E2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF97D2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.m */; };
+		FE7440352BA17A00007EE4A6 /* SXVerifyShopModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */; };
 		FE8B48772B8EDEAC004C3965 /* SXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */; };
 		FE953C802B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C7F2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m */; };
 		FE953C832B68D3420098F0A2 /* NoticeDownloadVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C822B68D3420098F0A2 /* NoticeDownloadVoiceCell.m */; };
@@ -4000,6 +4001,8 @@
 		FE6CF97A2B88A450005EE663 /* SXPlayChcahVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlayChcahVideoController.m; sourceTree = "<group>"; };
 		FE6CF97C2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlaySaveVideoBaseController.h; sourceTree = "<group>"; };
 		FE6CF97D2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlaySaveVideoBaseController.m; sourceTree = "<group>"; };
+		FE7440332BA17A00007EE4A6 /* SXVerifyShopModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVerifyShopModel.h; sourceTree = "<group>"; };
+		FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVerifyShopModel.m; sourceTree = "<group>"; };
 		FE8B48752B8EDEAC004C3965 /* SXWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXWebViewController.h; sourceTree = "<group>"; };
 		FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXWebViewController.m; sourceTree = "<group>"; };
 		FE953C7E2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeVoiceDownLoadController.h; sourceTree = "<group>"; };
@@ -7014,8 +7017,6 @@
 				A4E9612A2A69141D00AE022E /* NoticeChangeSkinListController.m */,
 				A4E961052A69141D00AE022E /* NoticeChatStyleSetController.h */,
 				A4E9611F2A69141D00AE022E /* NoticeChatStyleSetController.m */,
-				A4E961152A69141D00AE022E /* NoticeFAQViewController.h */,
-				A4E960FF2A69141D00AE022E /* NoticeFAQViewController.m */,
 				A4E961242A69141D00AE022E /* NoticeLangusetViewController.h */,
 				A4E9610C2A69141D00AE022E /* NoticeLangusetViewController.m */,
 				A4E961212A69141D00AE022E /* NoticeListenPriSetController.h */,
@@ -7024,8 +7025,6 @@
 				A4E961232A69141D00AE022E /* NoticeMBSViewController.m */,
 				A4E961172A69141D00AE022E /* NoticeMoveBookSonPrivayController.h */,
 				A4E960FD2A69141D00AE022E /* NoticeMoveBookSonPrivayController.m */,
-				A4E961042A69141D00AE022E /* NoticeNewMarkViewController.h */,
-				A4E961202A69141D00AE022E /* NoticeNewMarkViewController.m */,
 				A4E961222A69141D00AE022E /* NoticeNewPrivacySetController.h */,
 				A4E961022A69141D00AE022E /* NoticeNewPrivacySetController.m */,
 				A4E9610F2A69141D00AE022E /* NoticeNewUserOrderController.h */,
@@ -7042,8 +7041,6 @@
 				A4E9610D2A69141D00AE022E /* NoticeSettingViewController.m */,
 				A4E961072A69141D00AE022E /* NoticeUserListController.h */,
 				A4E9611D2A69141D00AE022E /* NoticeUserListController.m */,
-				A4E961292A69141D00AE022E /* NoticeVersionController.h */,
-				A4E961132A69141D00AE022E /* NoticeVersionController.m */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -8450,6 +8447,15 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		FE7440322BA179E9007EE4A6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FE7440332BA17A00007EE4A6 /* SXVerifyShopModel.h */,
+				FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		FEBCADC62B835FF60048F5A1 /* oldversion */ = {
 			isa = PBXGroup;
 			children = (
@@ -8544,6 +8550,12 @@
 				A4E961192A69141D00AE022E /* NoticeHasLinkPhoneController.m */,
 				A4E961182A69141D00AE022E /* NoticeChangePhoneViewController.h */,
 				A4E960FC2A69141D00AE022E /* NoticeChangePhoneViewController.m */,
+				A4E961042A69141D00AE022E /* NoticeNewMarkViewController.h */,
+				A4E961202A69141D00AE022E /* NoticeNewMarkViewController.m */,
+				A4E961292A69141D00AE022E /* NoticeVersionController.h */,
+				A4E961132A69141D00AE022E /* NoticeVersionController.m */,
+				A4E961152A69141D00AE022E /* NoticeFAQViewController.h */,
+				A4E960FF2A69141D00AE022E /* NoticeFAQViewController.m */,
 			);
 			path = mine;
 			sourceTree = "<group>";
@@ -8551,6 +8563,7 @@
 		FEBCADCE2B83615F0048F5A1 /* call */ = {
 			isa = PBXGroup;
 			children = (
+				FE7440322BA179E9007EE4A6 /* Model */,
 				FEBF80C72B5123ED0086A94B /* NoticeShopRuleController.h */,
 				FEBF80C82B5123ED0086A94B /* NoticeShopRuleController.m */,
 				FEB61C132B4E337000B128FA /* NoticeOtherShopCardController.h */,
@@ -9387,6 +9400,7 @@
 				A4E966B22A69142300AE022E /* DRPsychologyViewController.m in Sources */,
 				A4E966CB2A69142300AE022E /* NoticeImageViewController.m in Sources */,
 				A4E968FD2A69142700AE022E /* NoticeShopDetailHeaderView.swift in Sources */,
+				FE7440352BA17A00007EE4A6 /* SXVerifyShopModel.m in Sources */,
 				A4E965292A69142200AE022E /* SelVideoSlider.m in Sources */,
 				FE9C3FB12B90708F008C3A22 /* SXBuySearisSuccessView.m in Sources */,
 				A4E966092A69142300AE022E /* NoticeListenViewController.m in Sources */,

@@ -59,6 +59,7 @@ class NoticeChangeShopNameView: UIView {
         self.textFild?.backgroundColor = backView.backgroundColor
         self.textFild?.font = UIFont.systemFont(ofSize: 18)
         self.textFild?.textColor = UIColor.init(hexString: "#25262E")
+        self.textFild?.setupToolbarToDismissRightButton()
         backView.addSubview(self.textFild!)
         self.textFild?.attributedPlaceholder = DDHAttributedMode.setSizeAndColorString("请输入店铺名称", setColor: UIColor.init(hexString: "#A1A7B3"), setSize: 13, setLengthString: "请输入店铺名称", beginSize: 0)
         self.textFild?.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -77,8 +78,16 @@ class NoticeChangeShopNameView: UIView {
         self.contentView?.addSubview(getButton)
         getButton.addTarget(self, action: #selector(suplyClick), for: .touchUpInside)
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillhide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         // 注册键盘即将出现通知
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
+    @objc func keyboardWillhide(){
+        self.removeFromSuperview()
     }
     
     /// 监听键盘即将出现事件
@@ -110,7 +119,6 @@ class NoticeChangeShopNameView: UIView {
     
     @objc public func closeClick(){
         self.textFild?.resignFirstResponder()
-        self.removeFromSuperview()
     }
     
     @objc public func showView(){

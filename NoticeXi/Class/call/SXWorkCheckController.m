@@ -239,6 +239,16 @@
     //监听键盘回收的通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+    [self hasImageView];
+}
+
+- (void)hasImageView{
+    if (self.verifyModel.front_photo_url.length > 10 && self.verifyModel.back_photo_url.length > 10) {
+        self.upSFbtn.layer.borderWidth = 0;
+        [self.upSFbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.upSFbtn.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
+        [self.upSFbtn setTitle:@"查看图片" forState:UIControlStateNormal];
+    }
 }
 
 -(void)keyboardWillShow:(NSNotification*)note{
@@ -276,16 +286,11 @@
         return;
     }
     
-    if (self.upsuccessBlock) {
-        self.upsuccessBlock(5);
-    }
-    [self.navigationController popViewControllerAnimated:YES];
-    return;
-    
-    if (!self.zmImage) {
+    if (!self.zmImage && !(self.verifyModel.front_photo_url.length > 10)) {
         [self showToastWithText:@"请上传身份证正反面照片"];
         return;
     }
+    
     if (!self.nameTextField.text.length) {
         [self showToastWithText:@"请输入真实姓名"];
         return;
@@ -310,6 +315,25 @@
 
     
     //下面就可以执行上传
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:@"2" forKey:@"authentication_type"];
+    [parm setObject:self.nameTextField.text forKey:@"real_name"];
+    [parm setObject:self.numTextField.text forKey:@"cert_no"];
+    [parm setObject:self.schoolTextField.text forKey:@"industry_name"];
+    [parm setObject:self.zyTextField.text forKey:@"position_name"];
+    [parm setObject:@"2" forKey:@"action"];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (self.upsuccessBlock) {
+            self.upsuccessBlock(5);
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYSHOP" object:nil];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
 }
 
 - (void)backClick{
@@ -347,6 +371,8 @@
 - (void)upIdentImgClick{
     __weak typeof(self) weakSelf = self;
     SXUpIdentyController *ctl = [[SXUpIdentyController alloc] init];
+    ctl.verifyModel = self.verifyModel;
+    ctl.shopId = self.shopId;
     ctl.imgBlock = ^(UIImage * _Nonnull zImage, UIImage * _Nonnull fImage) {
         weakSelf.zmImage = zImage;
         weakSelf.fmImage = fImage;

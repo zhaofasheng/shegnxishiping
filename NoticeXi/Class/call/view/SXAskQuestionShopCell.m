@@ -45,7 +45,7 @@
         self.nickNameL.text = @"用户昵称";
         
         self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(5, 152, self.backView.frame.size.width-10, 54)];
-        self.contentL.font = TWOTEXTFONTSIZE;
+        self.contentL.font = THRETEENTEXTFONTSIZE;
         self.contentL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         self.contentL.numberOfLines = 0;
         [self.backView addSubview:self.contentL];
@@ -87,6 +87,28 @@
         NSString *allStr = [NSString stringWithFormat:@"%@鲸币",shopM.goodsM.price];
         NSString *money = shopM.goodsM.price;
         self.moneyL.attributedText = [DDHAttributedMode setString:allStr setSize:12 setLengthString:@"鲸币" beginSize:money.length];
+    }
+    
+    if (shopM.tale) {
+        CGFloat height = GET_STRHEIGHT(shopM.tale, 13, self.backView.frame.size.width-10);
+        if (height > 54) {
+            height = 54;
+        }
+        self.contentL.frame = CGRectMake(5, 152, self.backView.frame.size.width-10, height);
+        self.contentL.text = shopM.tale;
+    }
+  
+    if (shopM.verifyModel.authentication_type.intValue > 0) {
+        self.tagView.hidden = NO;
+        if (shopM.verifyModel.authentication_type.intValue == 1) {
+            self.tagL.text = [NSString stringWithFormat:@"%@ %@%@",shopM.verifyModel.school_name,shopM.verifyModel.speciality_name,shopM.verifyModel.education_optionName];
+        }else if (shopM.verifyModel.authentication_type.intValue == 2){
+            self.tagL.text = [NSString stringWithFormat:@"%@%@",shopM.verifyModel.industry_name,shopM.verifyModel.position_name];
+        }else if (shopM.verifyModel.authentication_type.intValue == 3){
+            self.tagL.text = shopM.verifyModel.credentials_name;
+        }
+    }else{
+        self.tagView.hidden = YES;
     }
 }
 

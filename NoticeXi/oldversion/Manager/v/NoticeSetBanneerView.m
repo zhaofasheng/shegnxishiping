@@ -167,7 +167,7 @@
     
     [nav.topViewController showHUD];
     
-    NSString *pathMd5 =[NSString stringWithFormat:@"%@_%@.jpg",[NoticeTools timeDataAppointFormatterWithTime:[NoticeTools getNowTimeTimestamp].integerValue appointStr:@"yyyyMMdd_HHmmss"],[NoticeTools getFileMD5WithPath:path]];//音频本地路径转换为md5字符串
+    NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];//音频本地路径转换为md5字符串
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:@"130" forKey:@"resourceType"];
     [parm setObject:pathMd5 forKey:@"resourceContent"];
@@ -188,7 +188,7 @@
 
 - (void)upContentImage:(NSString *)bannerUrl{
     NSString *path = [NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],arc4random()%999999999678999];
-    NSString *pathMd5 =[NSString stringWithFormat:@"%@_%@.jpg",[NoticeTools timeDataAppointFormatterWithTime:[NoticeTools getNowTimeTimestamp].integerValue appointStr:@"yyyyMMdd_HHmmss"],[NoticeTools getFileMD5WithPath:path]];//音频本地路径转换为md5字符串
+    NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];//音频本地路径转换为md5字符串
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:@"130" forKey:@"resourceType"];
     [parm setObject:pathMd5 forKey:@"resourceContent"];

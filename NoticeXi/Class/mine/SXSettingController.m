@@ -8,12 +8,14 @@
 
 #import "SXSettingController.h"
 #import "SXSetCell.h"
-#import "NoticeEditViewController.h"
+#import "SXTitleAndSwitchCell.h"
 #import "NoticeEditViewController.h"
 #import "AppDelegate+Notification.h"
 #import "NoticeCountSafeViewController.h"
-
-@interface SXSettingController ()
+#import "NoticeNewMarkViewController.h"
+#import "NoticeVersionController.h"
+#import "NoticeFAQViewController.h"
+@interface SXSettingController ()<SXSwitchChoiceDelegate>
 
 @property (nonatomic, strong) NSArray *section0titleArr;
 
@@ -32,6 +34,7 @@
 
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
     [self.tableView registerClass:[SXSetCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[SXTitleAndSwitchCell class] forCellReuseIdentifier:@"cell1"];
     self.tableView.rowHeight = 52;
     
     self.section0titleArr = @[@"个人资料",@"帐号安全",@"消息通知"];
@@ -46,7 +49,7 @@
     [btn setAllCorner:25];
     [btn addTarget:self action:@selector(outLoginClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
-    [btn setTitle:@"退出帐号" forState:UIControlStateNormal];
+    [btn setTitle:@"退出帐号" forState:UIControlStateNormal];//
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -58,6 +61,20 @@
         if (indexPath.row == 1) {
             //
             NoticeCountSafeViewController *ctl = [[NoticeCountSafeViewController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+        }
+        if (indexPath.row == 2) {
+            NoticeNewMarkViewController *ctl = [[NoticeNewMarkViewController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+        }
+    }
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            NoticeVersionController *ctl = [[NoticeVersionController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+        }
+        if (indexPath.row == 1) {
+            NoticeFAQViewController *ctl = [[NoticeFAQViewController alloc] init];
             [self.navigationController pushViewController:ctl animated:YES];
         }
     }
@@ -105,15 +122,25 @@
         return self.section0titleArr.count;
     }else if (section == 1){
         return self.section1titleArr.count;
+    }else if (section == 2){
+        return 1;
     }
     return self.section2titleArr.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 2) {
+        SXTitleAndSwitchCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+        cell1.delegate = self;
+        cell1.mainL.text = @"允许蜂窝网络下载";
+        [cell1.backView setAllCorner:10];
+        cell1.switchButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:HWDownloadAllowsCellularAccessKey];
+        return cell1;
+    }
     SXSetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
 
     [cell.backView setCornerOnTop:0];
@@ -141,6 +168,25 @@
         }
     }
     return cell;
+}
+
+#pragma SwitchChoiceDelegate
+- (void)choiceTag:(NSInteger)tag withIsOn:(BOOL)isOn section:(NSInteger)section{
+
+    if (isOn) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:YES forKey:HWDownloadAllowsCellularAccessKey];
+        [self showToastWithText:@"已开启蜂窝网络下载"];
+    }else{
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:NO forKey:HWDownloadAllowsCellularAccessKey];
+        [self showToastWithText:@"已关闭蜂窝网络下载"];
+    }
+    
+    //
+    [[NSNotificationCenter defaultCenter] postNotificationName:HWDownloadAllowsCellularAccessChangeNotification object:nil];
+    [self.tableView reloadData];
+  
 }
 
 

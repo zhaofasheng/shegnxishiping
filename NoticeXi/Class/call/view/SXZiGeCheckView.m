@@ -89,5 +89,21 @@
     }
     return self;
 }
-
+- (void)setVerifyM:(SXVerifyShopModel *)verifyM{
+    _verifyM = verifyM;
+    self.nameL.text = verifyM.real_name;
+    self.numL.text = verifyM.cert_no;
+    self.zyL.text = verifyM.credentials_name;
+    [self.zmImageView sd_setImageWithURL:[NSURL URLWithString:verifyM.front_photo_url]];
+    [self.fmImageView sd_setImageWithURL:[NSURL URLWithString:verifyM.back_photo_url]];
+    [self.zgImageView sd_setImageWithURL:[NSURL URLWithString:verifyM.credentials_img_url]];
+    
+    if (verifyM.verify_status.intValue == 3) {
+        self.statusL1.text = @"“资格证认证”已通过";
+        self.statusL2.text = @"相关认证会展示在店铺中";
+    }else{
+        self.statusL1.text = @"“资格证认证”审核中";
+        self.statusL2.text = @"认证还在人工审核中，请耐心等待";
+    }
+}
 @end

@@ -9,6 +9,8 @@
 #import "NoticeFAQViewController.h"
 #import "NoticeWebViewController.h"
 #import "AFHTTPSessionManager.h"
+#import "SXSetCell.h"
+#import "NoticeXieYiViewController.h"
 @interface NoticeFAQViewController ()
 
 @end
@@ -17,17 +19,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.rowHeight = 56;
-    self.navBarView.titleL.text = [NoticeTools getLocalStrWith:@"aboutsx.title"];
-    [self.tableView registerClass:[NoticeTitleAndImageCell class] forCellReuseIdentifier:@"cell"];
+    self.tableView.rowHeight = 52;
+    self.navBarView.titleL.text = @"关于声昔";
+    [self.tableView registerClass:[SXSetCell class] forCellReuseIdentifier:@"cell"];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        NoticeWebViewController * webctl = [[NoticeWebViewController alloc] init];
-        NoticeWeb *web = [[NoticeWeb alloc] init];
-        web.html_id = @"28";
-        webctl.web = web;
+        NoticeXieYiViewController * webctl = [[NoticeXieYiViewController alloc] init];
         [self.navigationController pushViewController:webctl animated:YES];
         return;
     }
@@ -45,15 +44,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NoticeTitleAndImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.line.hidden = indexPath.row == 2?YES:NO;
+    SXSetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    [cell.backView setCornerOnTop:0];
+    [cell.backView setCornerOnBottom:0];
+    
+
     if (indexPath.row == 0) {
-        cell.mainL.text = [NoticeTools getLocalStrWith:@"aboutsx.fax"];
+        [cell.backView setCornerOnTop:8];
+        cell.titleL.text = @"用户协议";
     }
     else if(indexPath.row == 1){
-        cell.mainL.text = [NoticeTools getLocalType]?@"Privacy":@"隐私政策";
+        cell.titleL.text = @"隐私政策";
     }else{
-        cell.mainL.text = [NoticeTools getLocalStrWith:@"aboutsx.go"];
+        [cell.backView setCornerOnBottom:8];
+        cell.titleL.text = @"去评分";
     }
     return cell;
 }

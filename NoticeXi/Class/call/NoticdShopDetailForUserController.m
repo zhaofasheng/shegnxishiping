@@ -202,7 +202,7 @@
 //获取店铺信息
 - (void)getShopRequest{
     [self showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopInfo/%@?type=2",self.shopModel.shopId] Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopInfo/%@",self.shopModel.shopId] Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if(success){
             self.shopDetailM = [NoticeMyShopModel mj_objectWithKeyValues:dict[@"data"]];
             self.shopModel = self.shopDetailM.myShopM;

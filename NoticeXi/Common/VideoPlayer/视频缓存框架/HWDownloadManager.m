@@ -367,7 +367,7 @@
 #pragma mark - HWDownloadAllowsCellularAccessChangeNotification
 - (void)downloadAllowsCellularAccessChange:(NSNotification *)notification
 {
-    _allowsCellularAccess = [notification.object boolValue];
+    _allowsCellularAccess = [[NSUserDefaults standardUserDefaults] boolForKey:HWDownloadAllowsCellularAccessKey];
     
     [self allowsCellularAccessOrNetworkingReachabilityDidChangeAction];
 }

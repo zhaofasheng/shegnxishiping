@@ -64,9 +64,17 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jingbiTap)];
         [self.jinbiView addGestureRecognizer:tap];
         
-        [self requestUserInfo];
+
+        self.checkL = [[UILabel  alloc] initWithFrame:CGRectMake(_nickNameL.frame.origin.x, 81, DR_SCREEN_WIDTH-102-10, 17)];
+        self.checkL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        self.checkL.font = TWOTEXTFONTSIZE;
+        [self addSubview:self.checkL];
     }
     return self;
+}
+
+- (void)refresh{
+    [self requestUserInfo];
 }
 
 - (void)jingbiTap{
@@ -97,7 +105,19 @@
     }];
 }
 
-
+- (void)setVerifyModel:(SXVerifyShopModel *)verifyModel{
+    _verifyModel = verifyModel;
+    if (verifyModel.verify_status.intValue == 3) {
+        if (verifyModel.authentication_type.intValue == 1) {//学历
+            self.checkL.text = [NSString stringWithFormat:@"已实名 | %@ %@ %@",verifyModel.school_name,verifyModel.speciality_name,verifyModel.education_optionName];
+        }else if (verifyModel.authentication_type.intValue == 2){
+            self.checkL.text = [NSString stringWithFormat:@"已实名 | %@ %@",verifyModel.industry_name,verifyModel.position_name];
+        }else if (verifyModel.authentication_type.intValue == 4){
+            self.checkL.text = [NSString stringWithFormat:@"已实名 | %@",verifyModel.credentials_name];
+        }
+    }
+   
+}
 
 - (void)setUserM:(NoticeUserInfoModel *)userM{
     _userM = userM;

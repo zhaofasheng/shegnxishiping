@@ -89,7 +89,7 @@
         return;
     }
     [self showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             for (NSDictionary *dic in dict[@"data"][@"goods_list"]) {
                 NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];

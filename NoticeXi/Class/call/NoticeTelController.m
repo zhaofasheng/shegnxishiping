@@ -60,7 +60,7 @@
 //定义每一个cell的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
   
-    return CGSizeMake((DR_SCREEN_WIDTH-30)/2,251);
+    return CGSizeMake((DR_SCREEN_WIDTH-30)/2,(self.isFree?218:251));
 }
 
 // 定义每个Section的四边间距

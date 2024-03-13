@@ -11,6 +11,7 @@
 #import "NoticeHasServeredController.h"
 #import "NoticeJieYouGoodsComController.h"
 #import "NoticeEditShopInfoController.h"
+#import "SXShopCheckController.h"
 @implementation NoticeShopDetailHeader
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -42,15 +43,19 @@
         self.checkL.font = THRETEENTEXTFONTSIZE;
         self.checkL.textColor = [UIColor colorWithHexString:@"#14151A"];
         self.checkL.text = @"点击添加认证…";
+        self.checkL.numberOfLines = 0;
         [self addSubview:self.checkL];
+        self.checkL.userInteractionEnabled = YES;
+        UITapGestureRecognizer *checkTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkShopTap)];
+        [self.checkL addGestureRecognizer:checkTap];
         
-        self.goodsNumL = [[UILabel  alloc] initWithFrame:CGRectMake(20, 107, GET_STRWIDTH(@"咨询服务 2", 12, 19)+30, 19)];
+        self.goodsNumL = [[UILabel  alloc] initWithFrame:CGRectMake(20, 117, GET_STRWIDTH(@"咨询服务 2", 12, 19)+30, 19)];
         self.goodsNumL.font = TWOTEXTFONTSIZE;
         self.goodsNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         self.goodsNumL.text = @"咨询服务 0";
         [self addSubview:self.goodsNumL];
         
-        self.searvNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.goodsNumL.frame), 107, GET_STRWIDTH(@"被咨询 999", 12, 19)+47, 19)];
+        self.searvNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.goodsNumL.frame), 117, GET_STRWIDTH(@"被咨询 999", 12, 19)+47, 19)];
         self.searvNumL.font = TWOTEXTFONTSIZE;
         self.searvNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self addSubview:self.searvNumL];
@@ -58,7 +63,7 @@
         UITapGestureRecognizer *searstap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(searTap)];
         [self.searvNumL addGestureRecognizer:searstap];
         
-        self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.searvNumL.frame), 107, GET_STRWIDTH(@"评价 9999", 12, 19)+10, 19)];
+        self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.searvNumL.frame), 117, GET_STRWIDTH(@"评价 9999", 12, 19)+10, 19)];
         self.comNumL.font = TWOTEXTFONTSIZE;
         self.comNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self addSubview:self.comNumL];
@@ -66,7 +71,7 @@
         UITapGestureRecognizer *comtap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentTap)];
         [self.comNumL addGestureRecognizer:comtap];
         
-        self.photoView = [[UIView  alloc] initWithFrame:CGRectMake(15, 156, DR_SCREEN_WIDTH-30, 38.75)];
+        self.photoView = [[UIView  alloc] initWithFrame:CGRectMake(15, 166, DR_SCREEN_WIDTH-30, 38.75)];
         self.photoView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
         [self.photoView setCornerOnTop:10];
         [self addSubview:self.photoView];
@@ -138,6 +143,17 @@
 
     }
     return self;
+}
+
+- (void)checkShopTap{
+    if (!self.shopModel) {
+        return;
+    }
+    
+    SXShopCheckController *ctl = [[SXShopCheckController alloc] init];
+    ctl.shopModel = self.shopModel.myShopM;
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+
 }
 
 - (UIImageView *)photoImageView{
@@ -218,6 +234,19 @@
 
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
+    
+    SXVerifyShopModel *verifyModel = shopModel.myShopM.verifyModel;
+    if (verifyModel.verify_status.intValue == 3) {
+        if (verifyModel.authentication_type.intValue == 1) {//学历
+            self.checkL.text = [NSString stringWithFormat:@"%@ %@%@",verifyModel.school_name,verifyModel.speciality_name,verifyModel.education_optionName];
+        }else if (verifyModel.authentication_type.intValue == 2){
+            self.checkL.text = [NSString stringWithFormat:@"%@ %@",verifyModel.industry_name,verifyModel.position_name];
+        }else if (verifyModel.authentication_type.intValue == 4){
+            self.checkL.text = [NSString stringWithFormat:@"%@",verifyModel.credentials_name];
+        }
+        self.checkL.frame = CGRectMake(20, 69, DR_SCREEN_WIDTH-125, GET_STRHEIGHT(self.checkL.text, 13, DR_SCREEN_WIDTH-125));
+    }
+    
 
     self.shopNameL.text = shopModel.myShopM.shop_name;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:shopModel.myShopM.shop_avatar_url]];
@@ -254,6 +283,7 @@
         self.nodataView1.markImageView.image = UIImageNamed(@"cellnextbutton");
         [self.photoImageView sd_setImageWithURL:[NSURL URLWithString:[shopModel.myShopM.photowallArr[0] photo_url]]];
     }else{
+        _photoImageView.hidden = YES;
         self.nodataView1.markImageView.image = UIImageNamed(@"sxeditshopinfo_img");
         self.nodataView1.markL.text = @"未添加";
     }

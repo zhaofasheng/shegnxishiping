@@ -384,7 +384,7 @@
     self.bookImage = image;
    
     [self.tableView reloadData];
-    self.imgPath =[NSString stringWithFormat:@"%@_%@.jpg",[NoticeTools timeDataAppointFormatterWithTime:[NoticeTools getNowTimeTimestamp].integerValue appointStr:@"yyyyMMdd_HHmmss"],[NoticeTools getFileMD5WithPath:path]];//音频本地路径转换为md5字符串
+    self.imgPath =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];//音频本地路径转换为md5字符串
     
     
 }

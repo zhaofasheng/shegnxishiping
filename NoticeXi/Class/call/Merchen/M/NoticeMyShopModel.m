@@ -44,6 +44,11 @@
     }
 }
 
+- (void)setAuthentication_info:(NSDictionary *)authentication_info{
+    _authentication_info = authentication_info;
+    self.verifyModel = [SXVerifyShopModel mj_objectWithKeyValues:authentication_info];
+}
+
 - (void)setTale:(NSString *)tale{
     _tale = tale;
     self.taleAtstr = [NoticeTools getStringWithLineHight:4 string:tale];

@@ -1030,7 +1030,7 @@
     
     [self showHUD];
     self.sendBtn.enabled = NO;
-    NSString *pathMd5 =[NSString stringWithFormat:@"%@_%@.jpg",[NoticeTools timeDataAppointFormatterWithTime:[NoticeTools getNowTimeTimestamp].integerValue appointStr:@"yyyyMMdd_HHmmss"],[NoticeTools getFileMD5WithPath:path]];
+    NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:@"80" forKey:@"resourceType"];
     [parm setObject:pathMd5 forKey:@"resourceContent"];

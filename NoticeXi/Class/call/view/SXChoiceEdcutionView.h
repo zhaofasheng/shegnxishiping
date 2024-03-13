@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
 @property (nonatomic, strong) NSString *currenEdc;
-@property (nonatomic,copy) void(^edcBlock)(NSString *edc);
+@property (nonatomic,copy) void(^edcBlock)(NSString *edc,NSInteger type);
 
 - (void)closeClick;
 - (void)show;

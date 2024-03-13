@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<SXSwitchChoiceDelegate>delegate;
 @property (nonatomic, strong) MySwitch *mySwitch;
 @property (nonatomic, strong) UIView *backView;
+
 @end
 
 NS_ASSUME_NONNULL_END

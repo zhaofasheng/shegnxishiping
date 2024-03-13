@@ -577,7 +577,7 @@
     }
 
     [self.tableView reloadData];
-    NSString *iamgeP = [NSString stringWithFormat:@"%@_%@.jpg",[NoticeTools timeDataAppointFormatterWithTime:[NoticeTools getNowTimeTimestamp].integerValue appointStr:@"yyyyMMdd_HHmmss"],[NoticeTools getFileMD5WithPath:path]];
+    NSString *iamgeP = [NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];
     
     NSMutableDictionary *parm1 = [[NSMutableDictionary alloc] init];
     [parm1 setObject:@"18" forKey:@"resourceType"];

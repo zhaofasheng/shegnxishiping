@@ -432,6 +432,9 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 }
 
 - (void)getSize{
+    if (self.isPlayLocalVideo) {
+        return;
+    }
     AVURLAsset *asset = [AVURLAsset URLAssetWithURL:self.playerConfiguration.sourceUrl options:nil];// url：网络视频的连接
     NSArray *arr = [asset tracksWithMediaType:AVMediaTypeVideo];// 项目中是明确媒体类型为视频，其他没试过
 

@@ -59,7 +59,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.edcBlock) {
-        self.edcBlock(self.dataArr[indexPath.row]);
+        self.edcBlock(self.dataArr[indexPath.row],indexPath.row+1);
     }
     [self closeClick];
 }

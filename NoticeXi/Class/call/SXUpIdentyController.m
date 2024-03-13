@@ -16,7 +16,9 @@
 @property (nonatomic, strong) FSCustomButton *fBtn;
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
-
+@property (nonatomic, strong) NSString *zmImageString;
+@property (nonatomic, strong) NSString *fmImageString;
+@property (nonatomic, strong) NSString *bucketId;
 @property (nonatomic, assign) BOOL isZM;
 @end
 
@@ -68,8 +70,8 @@
                 self.zImageView.image = self.zmImage;
                 [self.zBtn setTitle:@"点击更换图片" forState:UIControlStateNormal];
             }else{
-                self.zImageView.image = UIImageNamed(@"sxidentyzm_img");
-                [self.zBtn setTitle:@"点击上传人像面" forState:UIControlStateNormal];
+                [self.zImageView sd_setImageWithURL:[NSURL URLWithString:self.verifyModel.front_photo_url] placeholderImage:UIImageNamed(@"sxidentyzm_img")];
+                [self.zBtn setTitle:self.verifyModel.front_photo_url.length > 10 ? @"点击更换图片" : @"点击上传人像面" forState:UIControlStateNormal];
             }
         }else{
             self.fImageView = imageView;
@@ -78,8 +80,8 @@
                 self.fImageView.image = self.fmImage;
                 [self.fBtn setTitle:@"点击更换图片" forState:UIControlStateNormal];
             }else{
-                self.fImageView.image = UIImageNamed(@"sxidentyfm_img");
-                [self.fBtn setTitle:@"点击上传国徽面" forState:UIControlStateNormal];
+                [self.fImageView sd_setImageWithURL:[NSURL URLWithString:self.verifyModel.back_photo_url] placeholderImage:UIImageNamed(@"sxidentyfm_img")];
+                [self.fBtn setTitle:self.verifyModel.back_photo_url.length > 10?@"点击更换图片" : @"点击上传国徽面" forState:UIControlStateNormal];
             }
         }
     }
@@ -184,9 +186,91 @@
         [self showToastWithText:@"请上传身份证反面照"];
         return;
     }
-    if (self.imgBlock) {
-        self.imgBlock(self.zmImage, self.fmImage);
-    }
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self upLoadzm:self.zmImage path:[NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],arc4random()%999999999678999]];
+   
+    
+  
 }
+
+
+- (void)upLoadzm:(UIImage *)zimage path:(NSString *)path{
+    
+    if (!path) {
+        [YZC_AlertView showViewWithTitleMessage:@"文件不存在"];
+        return;
+    }
+    
+    [self showHUD];
+    //获取七牛token
+    NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:@"90" forKey:@"resourceType"];
+    [parm setObject:pathMd5 forKey:@"resourceContent"];
+
+    [[XGUploadDateManager sharedManager] uploadImageWithImage:zimage parm:parm progressHandler:^(CGFloat progress) {
+        
+    } complectionHandler:^(NSError *error, NSString *errorMessage,NSString *bucketId, BOOL sussess) {
+        if (sussess) {
+    
+            self.zmImageString = errorMessage;
+            [self upLoadfm:self.fmImage path:[NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],arc4random()%999999999678999]];
+           
+        }else{
+            [self showToastWithText:errorMessage];
+            [self hideHUD];
+        }
+    }];
+}
+
+- (void)upLoadfm:(UIImage *)fimage path:(NSString *)path{
+    
+    if (!path) {
+        [YZC_AlertView showViewWithTitleMessage:@"文件不存在"];
+        return;
+    }
+    //获取七牛token
+    NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:@"90" forKey:@"resourceType"];
+    [parm setObject:pathMd5 forKey:@"resourceContent"];
+
+    [[XGUploadDateManager sharedManager] uploadImageWithImage:fimage parm:parm progressHandler:^(CGFloat progress) {
+        
+    } complectionHandler:^(NSError *error, NSString *errorMessage,NSString *bucketId, BOOL sussess) {
+        if (sussess) {
+            self.fmImageString = errorMessage;
+            [self upAllData];
+        }else{
+            [self showToastWithText:errorMessage];
+            [self hideHUD];
+        }
+    }];
+}
+
+- (void)upAllData{
+    if (!self.fmImageString || !self.zmImageString) {
+        [self hideHUD];
+        return;
+    }
+    
+ 
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.fmImageString forKey:@"back_photo_url"];
+    [parm setObject:self.zmImageString forKey:@"front_photo_url"];
+    [parm setObject:@"1" forKey:@"action"];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (self.imgBlock) {
+            self.imgBlock(self.zmImage, self.fmImage);
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYSHOP" object:nil];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
+}
+
 @end

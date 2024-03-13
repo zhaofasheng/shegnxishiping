@@ -44,11 +44,7 @@
             self.web = [NoticeWeb mj_objectWithKeyValues:dict[@"data"]];
             self.navBarView.titleL.text = self.web.html_title;
             //修改背景颜色
-            if ([NoticeTools isWhiteTheme]) {
-                [self.webView evaluateJavaScript:@"document.body.style.backgroundColor=\"#FFFFFF\"" completionHandler:nil];
-            }else{
-                [self.webView evaluateJavaScript:@"document.body.style.backgroundColor=\"#181828\"" completionHandler:nil];
-            }
+            [self.webView evaluateJavaScript:@"document.body.style.backgroundColor=\"#FFFFFF\"" completionHandler:nil];
             [self.webView loadHTMLString:self.web.html_content baseURL:nil];
         }
     } fail:^(NSError *error) {

@@ -215,6 +215,17 @@
     //监听键盘回收的通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+    [self hasImageView];
+    
+}
+
+- (void)hasImageView{
+    if (self.verifyModel.front_photo_url.length > 10 && self.verifyModel.back_photo_url.length > 10) {
+        self.upSFbtn.layer.borderWidth = 0;
+        [self.upSFbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.upSFbtn.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
+        [self.upSFbtn setTitle:@"查看图片" forState:UIControlStateNormal];
+    }
 }
 
 -(void)keyboardWillShow:(NSNotification*)note{
@@ -253,13 +264,7 @@
 //提交
 - (void)upClick{
     
-    if (self.upsuccessBlock) {
-        self.upsuccessBlock(3);
-    }
-    [self.navigationController popViewControllerAnimated:YES];
-    return;
-    
-    if (!self.zmImage) {
+    if (!self.zmImage && !(self.verifyModel.front_photo_url.length > 10)) {
         [self showToastWithText:@"请上传身份证正反面照片"];
         return;
     }
@@ -286,6 +291,56 @@
     }
     
     //下面就可以执行上传
+    [self upLoadfm:self.zhengshuImage path:[NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],arc4random()%999999999678999]];
+}
+
+
+- (void)upLoadfm:(UIImage *)fimage path:(NSString *)path{
+    
+    if (!path) {
+        [YZC_AlertView showViewWithTitleMessage:@"文件不存在"];
+        return;
+    }
+    
+    //获取七牛token
+    NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:@"90" forKey:@"resourceType"];
+    [parm setObject:pathMd5 forKey:@"resourceContent"];
+
+    [[XGUploadDateManager sharedManager] uploadImageWithImage:fimage parm:parm progressHandler:^(CGFloat progress) {
+        
+    } complectionHandler:^(NSError *error, NSString *errorMessage,NSString *bucketId, BOOL sussess) {
+        if (sussess) {
+            [self upAllData:errorMessage];
+        }else{
+            [self showToastWithText:errorMessage];
+            [self hideHUD];
+        }
+    }];
+}
+
+- (void)upAllData:(NSString *)imageUrl{
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:@"3" forKey:@"authentication_type"];
+    [parm setObject:self.nameTextField.text forKey:@"real_name"];
+    [parm setObject:self.numTextField.text forKey:@"cert_no"];
+    [parm setObject:self.zyTextField.text forKey:@"credentials_name"];
+    [parm setObject:imageUrl forKey:@"credentials_img_url"];
+    [parm setObject:@"2" forKey:@"action"];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (self.upsuccessBlock) {
+            self.upsuccessBlock(3);
+        }
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYSHOP" object:nil];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
 }
 
 - (void)backClick{
@@ -320,6 +375,8 @@
 - (void)upIdentImgClick{
     __weak typeof(self) weakSelf = self;
     SXUpIdentyController *ctl = [[SXUpIdentyController alloc] init];
+    ctl.verifyModel = self.verifyModel;
+    ctl.shopId = self.shopId;
     ctl.imgBlock = ^(UIImage * _Nonnull zImage, UIImage * _Nonnull fImage) {
         weakSelf.zmImage = zImage;
         weakSelf.fmImage = fImage;

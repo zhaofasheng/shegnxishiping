@@ -65,16 +65,19 @@
     
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-243)/2,DR_SCREEN_HEIGHT-74-56, 243, 56)];
     if (self.hasNewVersion) {
-        [btn setBackgroundImage:UIImageNamed(@"Image_reinstall") forState:UIControlStateNormal];
+        [btn setTitle:@"去更新" forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
+        btn.titleLabel.font = XGEightBoldFontSize;
+        btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [btn addTarget:self action:@selector(reInstall) forControlEvents:UIControlEventTouchUpInside];
     }else{
-        [btn setTitle:[NoticeTools getLocalStrWith:@"version.mark"] forState:UIControlStateNormal];
+        [btn setTitle:@"你已是最新版本" forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
         btn.titleLabel.font = XGEightBoldFontSize;
         btn.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];
-        btn.layer.cornerRadius = 28;
-        btn.layer.masksToBounds = YES;
+        
     }
+    [btn setAllCorner:28];
     [self.view addSubview:btn];
 }
 

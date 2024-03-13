@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SXVerifyShopModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXShopCheckWaitEdcView : UIView
-
+@property (nonatomic, strong) SXVerifyShopModel *verifyM;
 @property (nonatomic, strong) UILabel *statusL1;
 @property (nonatomic, strong) UILabel *statusL2;
 

@@ -427,8 +427,24 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 
 //微信支付相关
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options{
+    [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
+        DRLog(@"result = %@",resultDic);
+        // 解析 auth code
+        NSString *result = resultDic[@"result"];
+        NSString *authCode = nil;
+        if (result.length>0) {
+            NSArray *resultArr = [result componentsSeparatedByString:@"&"];
+            for (NSString *subResult in resultArr) {
+                if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
+                    authCode = [subResult substringFromIndex:10];
+                    break;
+                }
+            }
+        }
+        DRLog(@"授权结果 authCode = %@", authCode?:@"");
+    }];
     //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
-        return  [WXApi handleOpenURL:url delegate:self];
+    return  [WXApi handleOpenURL:url delegate:self];
 }
 
 - (void)onResp:(BaseResp *)resp{

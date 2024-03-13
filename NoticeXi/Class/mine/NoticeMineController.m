@@ -23,6 +23,7 @@
 #import "SXHasBuyOrderListController.h"
 #import "SXShopCheckController.h"
 #import "SXSettingController.h"
+#import "NoticeStaySys.h"
 @interface NoticeMineController ()
 @property (nonatomic, strong) NoticeNewCenterNavView *navView;
 @property (nonatomic, strong) SXUserCenterHeader *headerView;
@@ -74,16 +75,45 @@
     self.tableView.tableFooterView = footV;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"HASSUPPLYSHOPNOTICE" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequestForCheck) name:@"REFRESHMYSHOP" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getwallect) name:@"REFRESHMYWALLECT" object:nil];
+    
+    
+    
+    
     [self getwallect];
     [self getStatusRequest];
+}
+
+- (void)redCirRequest{
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.5.4+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict1, BOOL success1) {
+        if (success1) {
+            if ([dict1[@"data"] isEqual:[NSNull null]]) {
+                return ;
+            }
+            
+            NoticeStaySys *stay1 = [NoticeStaySys mj_objectWithKeyValues:dict1[@"data"]];
+            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.chatpriM.num.intValue + stay1.sysM.num.intValue];
+            self.navView.allNumL.hidden = allRedNum.intValue?NO:YES;
+            CGFloat strWidth = GET_STRWIDTH(allRedNum, 9, 14);
+            if (allRedNum.intValue < 10) {
+                strWidth = 14;
+            }else{
+                strWidth = strWidth+6;
+            }
+            self.navView.allNumL.text = allRedNum;
+            self.navView.allNumL.frame = CGRectMake(DR_SCREEN_WIDTH-20-24+17, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-24)/2-4, strWidth, 14);
+        }
+    } fail:^(NSError *error) {
+    }];
+ 
 }
 
 - (void)getwallect{
     if (![NoticeTools getuserId]) {
         return;
     }
+    
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"wallet" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if(success){
             NoticeMyWallectModel *wallectM = [NoticeMyWallectModel mj_objectWithKeyValues:dict[@"data"]];
@@ -101,12 +131,17 @@
     [self getShopRequest];
 }
 
+- (void)getShopRequestForCheck{
+    self.shopModel.myShopM.is_submit_authentication = @"1";
+    [self getShopRequest];
+}
+
 //获取店铺信息和状态
 - (void)getShopRequest{
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/ByUser" Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if(success){
             self.shopModel = [NoticeMyShopModel mj_objectWithKeyValues:dict[@"data"]];
-           
+            self.headerView.verifyModel = self.shopModel.myShopM.verifyModel;
             [self.tableView reloadData];
         }
     } fail:^(NSError * _Nullable error) {
@@ -146,16 +181,13 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    if (self.needFirst) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GPTPFIRSTNOTICE" object:nil];
-        self.needFirst = NO;
-    }
-    
+
     if (self.needAutoShowSupply) {
         self.needAutoShowSupply = NO;
         [self myShopTap];
     }
+    [self redCirRequest];
+    [self.headerView refresh];
 }
 
 - (void)myShopTap{
@@ -209,8 +241,12 @@
                 return;
             }
             if (self.applyModel.status == 6) {//有店铺了
-                SXShopCheckController *ctl = [[SXShopCheckController alloc] init];
-                [self.navigationController pushViewController:ctl animated:YES];
+                if (self.shopModel) {
+                    SXShopCheckController *ctl = [[SXShopCheckController alloc] init];
+                    ctl.shopModel = self.shopModel.myShopM;
+                    [self.navigationController pushViewController:ctl animated:YES];
+                }
+              
             }else if(self.applyModel.status == 4){//待审核
                 self.supplyView.canSupply = NO;
                 [self.supplyView showSupplyView];

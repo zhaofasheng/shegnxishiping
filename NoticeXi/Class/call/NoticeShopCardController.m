@@ -98,7 +98,7 @@
     
     [self.tableView registerClass:[NoticeShopDetailSection class] forHeaderFooterViewReuseIdentifier:@"headerView"];
     
-    self.headerView = [[NoticeShopDetailHeader  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH,320)];
+    self.headerView = [[NoticeShopDetailHeader  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH,330)];
     __weak typeof(self) weakSelf = self;
     self.headerView.refreshShopModel = ^(BOOL refresh) {
         if (weakSelf.refreshShopModel) {
@@ -148,7 +148,7 @@
         self.goodssellArr = [[NSMutableArray alloc] init];
     }
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoods/byUser" Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoods/byUser" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             for (NSDictionary *dic in dict[@"data"][@"goodsList"]) {
                 NoticeGoodsModel *model = [NoticeGoodsModel mj_objectWithKeyValues:dic];
@@ -208,7 +208,7 @@
         return;
     }
     [self showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             for (NSDictionary *dic in dict[@"data"][@"goods_list"]) {
                 NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];

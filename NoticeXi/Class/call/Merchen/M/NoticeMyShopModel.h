@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "NoticeGoodsModel.h"
 #import "NoticeShopDataIdModel.h"
+#import "SXVerifyShopModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeMyShopModel : NSObject
@@ -68,6 +69,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *tagsArr;//标签数组
 @property (nonatomic, strong) NSMutableArray *tagsTextArr;//标签数组
 @property (nonatomic, strong) NSString *tagString;//所有标签整合在一起的文案
+
+@property (nonatomic, strong) NSString *is_certified;//是否认证通过 1是0否
+@property (nonatomic, strong) NSString *is_submit_authentication;//是否提交过认证审核 1是0否
+@property (nonatomic, strong) NSDictionary *authentication_info;//认证信息
+@property (nonatomic, strong) SXVerifyShopModel *verifyModel;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

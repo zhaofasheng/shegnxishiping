@@ -51,7 +51,6 @@
             UILabel *titleL1 = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+5, 52+32*i,contentView.frame.size.width-15-titWidth-20, 32)];
             titleL1.font = FOURTHTEENTEXTFONTSIZE;
             titleL1.textColor = [UIColor colorWithHexString:@"#8A8F99"];
-            titleL1.text = @"认证的信息展示";
             [contentView addSubview:titleL1];
             titleL1.textAlignment = NSTextAlignmentRight;
             
@@ -69,7 +68,8 @@
             
             if (i < 3) {
                 UIImageView *imageView = [[UIImageView  alloc] initWithFrame:CGRectZero];
-                imageView.backgroundColor = [UIColor blueColor];
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.clipsToBounds = YES;
                 if (i == 0) {
                     imageView.frame = CGRectMake(15, 242, imageWidth, imageHeight);
                     self.zmImageView = imageView;
@@ -93,6 +93,26 @@
         self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 97+contentView.frame.size.height);
     }
     return self;
+}
+
+- (void)setVerifyM:(SXVerifyShopModel *)verifyM{
+    _verifyM = verifyM;
+    self.nameL.text = verifyM.real_name;
+    self.numL.text = verifyM.cert_no;
+    self.edcL.text = verifyM.education_optionName;
+    self.schoolL.text = verifyM.school_name;
+    self.zyL.text = verifyM.speciality_name;
+    [self.zmImageView sd_setImageWithURL:[NSURL URLWithString:verifyM.front_photo_url]];
+    [self.fmImageView sd_setImageWithURL:[NSURL URLWithString:verifyM.back_photo_url]];
+    [self.zgImageView sd_setImageWithURL:[NSURL URLWithString:verifyM.education_img_url]];
+    
+    if (verifyM.verify_status.intValue == 3) {
+        self.statusL1.text = @"“学历认证”已通过";
+        self.statusL2.text = @"相关认证会展示在店铺中";
+    }else{
+        self.statusL1.text = @"“学历认证”审核中";
+        self.statusL2.text = @"认证还在人工审核中，请耐心等待";
+    }
 }
 
 @end

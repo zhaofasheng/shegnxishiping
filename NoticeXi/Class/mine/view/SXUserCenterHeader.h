@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SXVerifyShopModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXUserCenterHeader : UIView
@@ -15,11 +15,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *nickNameL;
 @property (nonatomic, strong) UILabel *titleL;
+@property (nonatomic, strong) UILabel *checkL;
 @property (nonatomic, strong) FSCustomButton *freuView;
 @property (nonatomic, strong) UIView *jinbiView;
 
 @property (nonatomic, strong) UIImageView *titleImageView;
 @property (nonatomic, strong) UILabel *moneyL;
+
+@property (nonatomic, strong) SXVerifyShopModel *verifyModel;
+
+- (void)refresh;
 @end
 
 NS_ASSUME_NONNULL_END
