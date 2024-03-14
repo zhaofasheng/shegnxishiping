@@ -216,8 +216,26 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     [self hasImageView];
-    
+    [self refreshData];
 }
+
+- (void)refreshData{
+    if (self.isCheckFail || self.isUpdate) {
+        self.nameTextField.text = self.verifyModel.real_name;
+        self.numTextField.text = self.verifyModel.cert_no;
+        self.zyTextField.text = self.verifyModel.credentials_name;
+        [self.zhengshuImageView sd_setImageWithURL:[NSURL URLWithString:self.verifyModel.credentials_img_url] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            if (image) {
+                self.zhengshuBtn.hidden = YES;
+                self.zhengshuImage = image;
+                self.zhengshuImageView.image = image;
+                self.zhengshuImageView.hidden = NO;
+            }
+        
+        }];
+    }
+}
+
 
 - (void)hasImageView{
     if (self.verifyModel.front_photo_url.length > 10 && self.verifyModel.back_photo_url.length > 10) {
@@ -291,7 +309,7 @@
     }
     
     //下面就可以执行上传
-    [self upLoadfm:self.zhengshuImage path:[NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],arc4random()%999999999678999]];
+    [self upLoadfm:self.zhengshuImage path:[NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],arc4random()%9999678999]];
 }
 
 
@@ -303,7 +321,7 @@
     }
     
     //获取七牛token
-    NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];
+    NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%99999678999,[NoticeTools getFileMD5WithPath:path]];
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:@"90" forKey:@"resourceType"];
     [parm setObject:pathMd5 forKey:@"resourceContent"];

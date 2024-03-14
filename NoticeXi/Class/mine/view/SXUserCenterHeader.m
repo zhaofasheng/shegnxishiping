@@ -98,7 +98,6 @@
               [NoticeSaveModel saveToken:userIn.token];
             }
             [NoticeSaveModel saveUserInfo:userIn];
-
         }
     } fail:^(NSError *error) {
      
@@ -107,12 +106,13 @@
 
 - (void)setVerifyModel:(SXVerifyShopModel *)verifyModel{
     _verifyModel = verifyModel;
+    self.checkL.text = @"";
     if (verifyModel.verify_status.intValue == 3) {
         if (verifyModel.authentication_type.intValue == 1) {//学历
             self.checkL.text = [NSString stringWithFormat:@"已实名 | %@ %@ %@",verifyModel.school_name,verifyModel.speciality_name,verifyModel.education_optionName];
         }else if (verifyModel.authentication_type.intValue == 2){
             self.checkL.text = [NSString stringWithFormat:@"已实名 | %@ %@",verifyModel.industry_name,verifyModel.position_name];
-        }else if (verifyModel.authentication_type.intValue == 4){
+        }else if (verifyModel.authentication_type.intValue == 3){
             self.checkL.text = [NSString stringWithFormat:@"已实名 | %@",verifyModel.credentials_name];
         }
     }

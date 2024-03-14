@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *nickNameL;
 @property (nonatomic, strong) UILabel *contentL;
 @property (nonatomic, strong) UIImageView *iconImageView;
+@property (nonatomic, strong) UIImageView *markImageView;
 @property (nonatomic, strong) NoticeMyShopModel *shopM;
 @end
 

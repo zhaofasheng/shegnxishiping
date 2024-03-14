@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) void(^upsuccessBlock)(NSInteger type);
 @property (nonatomic, strong) SXVerifyShopModel *verifyModel;
 @property (nonatomic, strong) NSString *shopId;
+@property (nonatomic, assign) BOOL isUpdate;
+@property (nonatomic, assign) BOOL isCheckFail;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -39,7 +39,7 @@
         self.checkL = [[UILabel  alloc] initWithFrame:CGRectMake(20, 69, DR_SCREEN_WIDTH-150, 18)];
         self.checkL.font = THRETEENTEXTFONTSIZE;
         self.checkL.textColor = [UIColor colorWithHexString:@"#14151A"];
-      
+        self.checkL.numberOfLines = 0;
         [self addSubview:self.checkL];
         
         self.goodsNumL = [[UILabel  alloc] initWithFrame:CGRectMake(20, 107+15, GET_STRWIDTH(@"咨询服务 2", 12, 19)+30, 19)];
@@ -63,6 +63,10 @@
                 
         self.isReplay = YES;
         
+        self.markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+        self.markImageView.image = UIImageNamed(@"sxrenztub_img");
+        [self addSubview:self.markImageView];
+        self.markImageView.hidden = YES;
     }
     return self;
 }
@@ -137,17 +141,22 @@
 
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
-
+    
+    self.markImageView.hidden = YES;
+    
     SXVerifyShopModel *verifyModel = shopModel.verifyModel;
     if (verifyModel.authentication_type.intValue  > 0) {
         if (verifyModel.authentication_type.intValue == 1) {//学历
             self.checkL.text = [NSString stringWithFormat:@"%@ %@%@",verifyModel.school_name,verifyModel.speciality_name,verifyModel.education_optionName];
         }else if (verifyModel.authentication_type.intValue == 2){
             self.checkL.text = [NSString stringWithFormat:@"%@ %@",verifyModel.industry_name,verifyModel.position_name];
-        }else if (verifyModel.authentication_type.intValue == 4){
+        }else if (verifyModel.authentication_type.intValue == 3){
             self.checkL.text = [NSString stringWithFormat:@"%@",verifyModel.credentials_name];
         }
         self.checkL.frame = CGRectMake(20, 69, DR_SCREEN_WIDTH-125, GET_STRHEIGHT(self.checkL.text, 13, DR_SCREEN_WIDTH-125));
+        self.markImageView.hidden = NO;
+        
+       self.markImageView.frame = CGRectMake(20+GET_STRWIDTH(shopModel.shop_name, 21, 28), 33+4, 20, 20);
     }
     
     self.shopNameL.text = shopModel.shop_name;
@@ -155,7 +164,12 @@
     
     if (shopModel.operate_status.intValue == 3) {
         self.workIngView.hidden = NO;
-        self.workIngView.frame = CGRectMake(20+10+GET_STRWIDTH(shopModel.shop_name, 21, 28), 33, 57, 28);
+        if (self.markImageView.hidden) {
+            self.workIngView.frame = CGRectMake(20+10+GET_STRWIDTH(shopModel.shop_name, 21, 28), 33, 57, 28);
+        }else{
+            self.workIngView.frame = CGRectMake(CGRectGetMaxX(self.markImageView.frame)+5, 33, 57, 28);
+        }
+        
     }else{
         _workIngView.hidden = YES;
     }
@@ -235,7 +249,7 @@
     self.goodsNumL.attributedText = [DDHAttributedMode setSizeAndColorString:allStr setColor:[UIColor colorWithHexString:@"#5C5F66"] setSize:16 setLengthString:str1 beginSize:allStr.length-str1.length];
 }
 
-- (UIView *)workIngView{
+- (UIView *)workIngView{//sxrenztub_img
     if (!_workIngView) {
         _workIngView = [[UIView  alloc] initWithFrame:CGRectMake(0, 33, 57, 28)];
         

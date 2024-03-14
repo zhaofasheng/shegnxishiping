@@ -207,7 +207,6 @@
     
     _plaL = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, 200, 14)];
     _plaL.text = @"请完整输入以上承诺声明内容";
- 
     _plaL.font = FOURTHTEENTEXTFONTSIZE;
     _plaL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
     [imView addSubview:_plaL];
@@ -224,7 +223,6 @@
     [self.zhengshuBtn addTarget:self action:@selector(upyuanjianImgClick) forControlEvents:UIControlEventTouchUpInside];
     
   
-    
     UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.tableView.frame)+5, DR_SCREEN_WIDTH-40, 40)];
     addBtn.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
     [addBtn setAllCorner:20];
@@ -240,6 +238,16 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     [self hasImageView];
+    [self refreshData];
+}
+
+- (void)refreshData{
+    if (self.isCheckFail || self.isUpdate) {
+        self.nameTextField.text = self.verifyModel.real_name;
+        self.numTextField.text = self.verifyModel.cert_no;
+        self.schoolTextField.text = self.verifyModel.industry_name;
+        self.zyTextField.text = self.verifyModel.position_name;
+    }
 }
 
 - (void)hasImageView{

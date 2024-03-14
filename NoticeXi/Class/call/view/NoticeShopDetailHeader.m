@@ -241,7 +241,7 @@
             self.checkL.text = [NSString stringWithFormat:@"%@ %@%@",verifyModel.school_name,verifyModel.speciality_name,verifyModel.education_optionName];
         }else if (verifyModel.authentication_type.intValue == 2){
             self.checkL.text = [NSString stringWithFormat:@"%@ %@",verifyModel.industry_name,verifyModel.position_name];
-        }else if (verifyModel.authentication_type.intValue == 4){
+        }else if (verifyModel.authentication_type.intValue == 3){
             self.checkL.text = [NSString stringWithFormat:@"%@",verifyModel.credentials_name];
         }
         self.checkL.frame = CGRectMake(20, 69, DR_SCREEN_WIDTH-125, GET_STRHEIGHT(self.checkL.text, 13, DR_SCREEN_WIDTH-125));

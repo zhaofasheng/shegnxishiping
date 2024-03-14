@@ -69,6 +69,10 @@
         [self.callView addSubview:self.moneyL];
         
     
+        self.markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)-20, CGRectGetMaxY(_iconImageView.frame)-20, 20, 20)];
+        self.markImageView.image = UIImageNamed(@"sxrenztub_img");
+        [self.backView addSubview:self.markImageView];
+        self.markImageView.hidden = YES;
     }
     return self;
 }
@@ -107,7 +111,9 @@
         }else if (shopM.verifyModel.authentication_type.intValue == 3){
             self.tagL.text = shopM.verifyModel.credentials_name;
         }
+        self.markImageView.hidden = NO;
     }else{
+        self.markImageView.hidden = YES;
         self.tagView.hidden = YES;
     }
 }

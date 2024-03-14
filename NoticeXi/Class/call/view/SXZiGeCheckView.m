@@ -65,7 +65,6 @@
             }
             
             UIImageView *imageView = [[UIImageView  alloc] initWithFrame:CGRectZero];
-            imageView.backgroundColor = [UIColor blueColor];
             if (i == 0) {
                 imageView.frame = CGRectMake(15, 178, imageWidth, imageHeight);
                 self.zmImageView = imageView;

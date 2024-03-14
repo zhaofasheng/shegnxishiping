@@ -21,7 +21,7 @@
         
         self.statusL2 = [[UILabel  alloc] initWithFrame:CGRectMake(15, 52, DR_SCREEN_WIDTH-20, 20)];
         self.statusL2.font = FOURTHTEENTEXTFONTSIZE;
-        self.statusL2.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        self.statusL2.textColor = [UIColor whiteColor];
         self.statusL2.text = @"相关认证会展示在店铺中";
         [self addSubview:self.statusL2];
         

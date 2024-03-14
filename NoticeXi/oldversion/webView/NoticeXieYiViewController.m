@@ -9,6 +9,7 @@
 #import "NoticeXieYiViewController.h"
 #import <WebKit/WebKit.h>
 #import "NoticeWeb.h"
+
 @interface NoticeXieYiViewController ()<WKNavigationDelegate,WKUIDelegate>
 @property (strong, nonatomic) WKWebView *webView;
 @property (nonatomic, strong) NoticeWeb *web;

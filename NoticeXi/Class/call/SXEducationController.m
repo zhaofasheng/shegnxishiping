@@ -251,6 +251,30 @@
     //监听键盘回收的通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+    [self refreshData];
+}
+
+- (void)refreshData{
+    if (self.isCheckFail || self.isUpdate) {
+        self.nameTextField.text = self.verifyModel.real_name;
+        self.numTextField.text = self.verifyModel.cert_no;
+        self.edcL.text = self.verifyModel.education_option.intValue == 1?@"本科在读":self.verifyModel.education_optionName;
+        self.edcString = self.edcL.text;
+        self.edcStringType = self.verifyModel.education_option;
+        self.schoolTextField.text = self.verifyModel.school_name;
+        self.zyTextField.text = self.verifyModel.speciality_name;
+        self.edcL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        self.edcL.font = XGFifthBoldFontSize;
+        [self.zhengshuImageView sd_setImageWithURL:[NSURL URLWithString:self.verifyModel.education_img_url] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            if (image) {
+                self.zhengshuBtn.hidden = YES;
+                self.zhengshuImage = image;
+                self.zhengshuImageView.image = image;
+                self.zhengshuImageView.hidden = NO;
+            }
+        
+        }];
+    }
 }
 
 -(void)keyboardWillShow:(NSNotification*)note{
@@ -511,10 +535,11 @@
         __weak typeof(self) weakSelf = self;
         _eduChoiceView.edcBlock = ^(NSString * _Nonnull edc,NSInteger edcType) {
             weakSelf.edcL.text = edc;
-            weakSelf.edcL.font = XGFifthBoldFontSize;
+
             weakSelf.edcString = edc;
             weakSelf.edcStringType = [NSString stringWithFormat:@"%ld",edcType];
             weakSelf.edcL.textColor = [UIColor colorWithHexString:@"#14151A"];
+            weakSelf.edcL.font = XGFifthBoldFontSize;
         };
     }
     return _eduChoiceView;

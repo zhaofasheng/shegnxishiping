@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIView *workIngView;
 
+@property (nonatomic, strong) UIImageView *markImageView;
 
 @property (nonatomic, strong) UIImageView *yhImageView;
 

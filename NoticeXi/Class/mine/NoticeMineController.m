@@ -77,10 +77,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"HASSUPPLYSHOPNOTICE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequestForCheck) name:@"REFRESHMYSHOP" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getwallect) name:@"REFRESHMYWALLECT" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginEd) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     
     [self getwallect];
     [self getStatusRequest];
+}
+
+- (void)loginEd{
+    [self getwallect];
+    [self getStatusRequest];
+    [self redCirRequest];
+
 }
 
 - (void)redCirRequest{
@@ -91,7 +98,7 @@
             }
             
             NoticeStaySys *stay1 = [NoticeStaySys mj_objectWithKeyValues:dict1[@"data"]];
-            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.chatpriM.num.intValue + stay1.sysM.num.intValue];
+            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.char_priM.num.intValue + stay1.sysM.num.intValue];
             self.navView.allNumL.hidden = allRedNum.intValue?NO:YES;
             CGFloat strWidth = GET_STRWIDTH(allRedNum, 9, 14);
             if (allRedNum.intValue < 10) {
