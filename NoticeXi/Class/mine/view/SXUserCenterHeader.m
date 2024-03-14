@@ -9,6 +9,7 @@
 #import "SXUserCenterHeader.h"
 #import "NoticeShopMyWallectController.h"
 #import "NoticeMyWallectModel.h"
+#import "NoticeUserInfoCenterController.h"
 @implementation SXUserCenterHeader
 
 
@@ -21,6 +22,8 @@
         [_iconImageView setAllCorner:72/2];
         [self addSubview:_iconImageView];
         _iconImageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapp = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userCenter)];
+        [_iconImageView addGestureRecognizer:tapp];
         
         //昵称
         _nickNameL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)+10,21,DR_SCREEN_WIDTH-105, 28)];
@@ -71,6 +74,11 @@
         [self addSubview:self.checkL];
     }
     return self;
+}
+
+- (void)userCenter{
+    NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)refresh{

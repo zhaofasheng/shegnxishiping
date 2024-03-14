@@ -11,6 +11,7 @@
 #import "AFHTTPSessionManager.h"
 #import "SXSetCell.h"
 #import "NoticeXieYiViewController.h"
+#import "SXWebViewController.h"
 @interface NoticeFAQViewController ()
 
 @end
@@ -31,9 +32,8 @@
         return;
     }
     if (indexPath.row == 1) {
-        NoticeWebViewController * webctl = [[NoticeWebViewController alloc] init];
-        webctl.type = @"1";
-        webctl.isAboutSX = YES;
+        SXWebViewController * webctl = [[SXWebViewController alloc] init];
+        webctl.url = @"http://priapi.byebyetext.com/privacy.html";
         [self.navigationController pushViewController:webctl animated:YES];
         return;
     }

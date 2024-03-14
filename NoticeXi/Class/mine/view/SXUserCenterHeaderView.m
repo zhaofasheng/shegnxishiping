@@ -7,7 +7,7 @@
 //
 
 #import "SXUserCenterHeaderView.h"
-
+#import "NoticeUserInfoCenterController.h"
 @implementation SXUserCenterHeaderView
 
 
@@ -26,6 +26,8 @@
         //头像
         _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(35,45, 241, 241)];
         [self addSubview:_iconImageView];
+        _iconImageView.userInteractionEnabled = YES;
+
         
         //昵称
         _nickNameL = [[UILabel alloc] initWithFrame:CGRectMake(35,328,DR_SCREEN_WIDTH-35, 30)];
@@ -51,6 +53,8 @@
     }
     return self;
 }
+
+
 
 - (void)setUserM:(NoticeUserInfoModel *)userM{
     _userM = userM;

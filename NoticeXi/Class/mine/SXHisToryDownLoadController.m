@@ -7,7 +7,7 @@
 //
 
 #import "SXHisToryDownLoadController.h"
-
+#import "SXHistoryModel.h"
 @interface SXHisToryDownLoadController ()<UITextFieldDelegate>
 @property (nonatomic, strong) UITextField *topicField;
 @end
@@ -68,14 +68,101 @@
 }
 
 - (void)fifinshClick{
+    [self.topicField resignFirstResponder];
+    if (!self.isTuikuan) {
+        
+        [self showHUD];
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"user/historyDataDownload/info" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            [self hideHUD];
+            if (success) {
+                
+                SXHistoryModel *model = [SXHistoryModel mj_objectWithKeyValues:dict[@"data"]];
+            
+                if (model.isRepeated.boolValue) {
+                    __weak typeof(self) weakSelf = self;
+                    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"你已提交过邮箱了，要再次提交吗？" message:self.topicField.text sureBtn:@"再想想" cancleBtn:@"提交" right:YES];
+                    alerView.resultIndex = ^(NSInteger index) {
+                        if (index == 2) {
+                            [weakSelf upEmail];
+                        }
+                    };
+                    [alerView showXLAlertView];
+                }else{
+                    [self upEmail];
+                }
+              
+            }
+            
+        } fail:^(NSError * _Nullable error) {
+            [self hideHUD];
+        }];
+        
+        return;
+    }
+    [self showHUD];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"user/refund/info" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (success) {
+            
+            SXHistoryModel *model = [SXHistoryModel mj_objectWithKeyValues:dict[@"data"]];
+            
+            if (!model.isUpgraded.boolValue) {
+                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"你未使用过「在线升级」，不支持退款" message:nil cancleBtn:@"知道了"];
+                [alerView showXLAlertView];
+                return;
+            }
+            
+            if (model.isRepeated.boolValue) {
+                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"你的账号已申请过退款，不可再次申请" message:nil cancleBtn:@"知道了"];
+                [alerView showXLAlertView];
+                return;
+            }
+            [self getStatus];
+        }
+        
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
+    
+}
+
+- (void)upEmail{
+    [self showHUD];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.topicField.text forKey:@"email"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"user/historyDataDownload" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            [self showToastWithText:@"邮箱提交成功"];
+        }
+        [self showHUD];
+    } fail:^(NSError * _Nullable error) {
+        [self showHUD];
+    }];
+}
+
+- (void)getStatus{
     __weak typeof(self) weakSelf = self;
-    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:self.isTuikuan?@"请再次核实支付宝账号":@"请再次核实邮箱地址" message:self.topicField.text sureBtn:@"再想想" cancleBtn:@"确认" right:YES];
+    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:self.isTuikuan?@"请核实支付宝账号":@"请核实邮箱地址" message:self.topicField.text sureBtn:@"再想想" cancleBtn:@"确认" right:YES];
     alerView.resultIndex = ^(NSInteger index) {
         if (index == 2) {
-           
+            [weakSelf backMoney];
         }
     };
     [alerView showXLAlertView];
+}
+
+- (void)backMoney{
+    [self showHUD];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.topicField.text forKey:@"refund_account"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"user/refund" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            [self showToastWithText:@"申请成功，请耐心等待以及留意到账提醒"];
+        }
+        [self showHUD];
+    } fail:^(NSError * _Nullable error) {
+        [self showHUD];
+    }];
 }
 
 @end

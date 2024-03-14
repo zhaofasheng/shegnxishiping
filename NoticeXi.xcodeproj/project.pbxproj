@@ -1355,6 +1355,7 @@
 		FE7440352BA17A00007EE4A6 /* SXVerifyShopModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */; };
 		FE7440382BA2A595007EE4A6 /* SXBuyVideoOrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440372BA2A595007EE4A6 /* SXBuyVideoOrderList.m */; };
 		FE74403B2BA2C4E1007EE4A6 /* SXHisToryDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE74403A2BA2C4E1007EE4A6 /* SXHisToryDownLoadController.m */; };
+		FE74403E2BA31CF2007EE4A6 /* SXHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE74403D2BA31CF2007EE4A6 /* SXHistoryModel.m */; };
 		FE8B48772B8EDEAC004C3965 /* SXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */; };
 		FE953C802B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C7F2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m */; };
 		FE953C832B68D3420098F0A2 /* NoticeDownloadVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C822B68D3420098F0A2 /* NoticeDownloadVoiceCell.m */; };
@@ -4009,6 +4010,8 @@
 		FE7440372BA2A595007EE4A6 /* SXBuyVideoOrderList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuyVideoOrderList.m; sourceTree = "<group>"; };
 		FE7440392BA2C4E1007EE4A6 /* SXHisToryDownLoadController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHisToryDownLoadController.h; sourceTree = "<group>"; };
 		FE74403A2BA2C4E1007EE4A6 /* SXHisToryDownLoadController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHisToryDownLoadController.m; sourceTree = "<group>"; };
+		FE74403C2BA31CF2007EE4A6 /* SXHistoryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHistoryModel.h; sourceTree = "<group>"; };
+		FE74403D2BA31CF2007EE4A6 /* SXHistoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHistoryModel.m; sourceTree = "<group>"; };
 		FE8B48752B8EDEAC004C3965 /* SXWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXWebViewController.h; sourceTree = "<group>"; };
 		FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXWebViewController.m; sourceTree = "<group>"; };
 		FE953C7E2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeVoiceDownLoadController.h; sourceTree = "<group>"; };
@@ -8418,6 +8421,8 @@
 				A4E960F32A69141D00AE022E /* NoticeNoticenterModel.m */,
 				FE6CF9692B86EA59005EE663 /* SXUserModel.h */,
 				FE6CF96A2B86EA59005EE663 /* SXUserModel.m */,
+				FE74403C2BA31CF2007EE4A6 /* SXHistoryModel.h */,
+				FE74403D2BA31CF2007EE4A6 /* SXHistoryModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -9178,6 +9183,7 @@
 				A4E967582A69142400AE022E /* NoticeTopicCell.m in Sources */,
 				A4E966702A69142300AE022E /* NoticeDrawList.m in Sources */,
 				A4E967FA2A69142500AE022E /* NoticeVoiceListModel.m in Sources */,
+				FE74403E2BA31CF2007EE4A6 /* SXHistoryModel.m in Sources */,
 				A4E9663B2A69142300AE022E /* NoticeHotSongController.m in Sources */,
 				A4E9676D2A69142400AE022E /* NoticeAddReadController.m in Sources */,
 				A4E966112A69142300AE022E /* NoticeBoKeDocumCell.m in Sources */,

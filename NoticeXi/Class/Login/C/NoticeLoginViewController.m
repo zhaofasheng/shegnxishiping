@@ -20,6 +20,7 @@
 #import "NoticeSaveLoginStory.h"
 #import "NoticeLoginHelpController.h"
 #import "JVERIFICATIONService.h"
+#import "SXWebViewController.h"
 #import "SXHistoryLoginView.h"
 @interface NoticeLoginViewController ()<ASAuthorizationControllerDelegate,ASAuthorizationControllerPresentationContextProviding>
 @property (nonatomic, strong) NoticeCustumeNavView *timeLnavBarViews;//是否需要自定义导航栏
@@ -307,16 +308,14 @@ API_AVAILABLE(ios(13.0)){
 }
 
 - (void)xieyiTap{
-    
 
     NoticeXieYiViewController * webctl = [[NoticeXieYiViewController alloc] init];
     [self.navigationController pushViewController:webctl animated:YES];
 }
 
 - (void)yinsiTap{
-    NoticeWebViewController * webctl = [[NoticeWebViewController alloc] init];
-    webctl.type = @"1";
-    webctl.isAboutSX = YES;
+    SXWebViewController * webctl = [[SXWebViewController alloc] init];
+    webctl.url = @"http://priapi.byebyetext.com/privacy.html";
     [self.navigationController pushViewController:webctl animated:YES];
 }
 

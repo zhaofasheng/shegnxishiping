@@ -64,7 +64,7 @@
     self.numL.textColor = [UIColor colorWithHexString:@"#14151A"];
     self.numL.font = TWOTEXTFONTSIZE;
 
-    NSString *allStr = [NSString stringWithFormat:@"%lu/%@",(unsigned long)self.induce.length,self.isBoKeIntro?@"80":@"20"];
+    NSString *allStr = [NSString stringWithFormat:@"%lu/%@",(unsigned long)self.induce.length,self.isBoKeIntro?@"80":@"30"];
     self.numL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#A1A7B3"] setLengthString:@"20" beginSize:allStr.length-2];
     [self.view addSubview:self.numL];
     
@@ -107,8 +107,8 @@
     if (!self.nameField.text.length) {
         return;
     }
-    if (self.nameField.text.length > 20) {
-        [self showToastWithText:[NoticeTools getLocalStrWith:@"intro.tosat"]];
+    if (self.nameField.text.length > 30) {
+        [self showToastWithText:@"简介不能超过30个字哦"];
         return;
     }
 
@@ -117,7 +117,7 @@
     
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
 
-    [parm setObject:self.nameField.text.length > 20? [self.nameField.text substringToIndex:20] :self.nameField.text forKey:@"selfIntro"];
+    [parm setObject:self.nameField.text.length > 30? [self.nameField.text substringToIndex:30] :self.nameField.text forKey:@"selfIntro"];
     [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"users/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:nil parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
         [self hideHUD];
         if (success) {
@@ -176,8 +176,8 @@
         _plaL.text = @"请输入你的文字简介哦～";
     }
     
-    if (textView.text.length > 20) {
-        self.numL.attributedText = [DDHAttributedMode setColorString:[NSString stringWithFormat:@"%lu/%@",textView.text.length,self.isBoKeIntro?@"80":@"20"] setColor:[UIColor redColor] setLengthString:[NSString stringWithFormat:@"%lu",textView.text.length] beginSize:0];
+    if (textView.text.length > 30) {
+        self.numL.attributedText = [DDHAttributedMode setColorString:[NSString stringWithFormat:@"%lu/%@",textView.text.length,self.isBoKeIntro?@"80":@"30"] setColor:[UIColor redColor] setLengthString:[NSString stringWithFormat:@"%lu",textView.text.length] beginSize:0];
         self.saveButton.backgroundColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.5];
     }else{
         if (textView.text.length) {
@@ -185,8 +185,8 @@
         }else{
             self.saveButton.backgroundColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.5];
         }
-        NSString *allStr = [NSString stringWithFormat:@"%lu/%@",textView.text.length,self.isBoKeIntro?@"80":@"20"];
-        self.numL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#A1A7B3"] setLengthString:@"20" beginSize:allStr.length-2];
+        NSString *allStr = [NSString stringWithFormat:@"%lu/%@",textView.text.length,self.isBoKeIntro?@"80":@"30"];
+        self.numL.attributedText = [DDHAttributedMode setColorString:allStr setColor:[UIColor colorWithHexString:@"#A1A7B3"] setLengthString:@"30" beginSize:allStr.length-2];
     }
 }
 
