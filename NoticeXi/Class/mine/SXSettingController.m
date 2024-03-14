@@ -15,6 +15,7 @@
 #import "NoticeNewMarkViewController.h"
 #import "NoticeVersionController.h"
 #import "NoticeFAQViewController.h"
+#import "SXHisToryDownLoadController.h"
 @interface SXSettingController ()<SXSwitchChoiceDelegate>
 
 @property (nonatomic, strong) NSArray *section0titleArr;
@@ -77,6 +78,11 @@
             NoticeFAQViewController *ctl = [[NoticeFAQViewController alloc] init];
             [self.navigationController pushViewController:ctl animated:YES];
         }
+    }
+    if (indexPath.section == 3) {
+        SXHisToryDownLoadController *ctl = [[SXHisToryDownLoadController alloc] init];
+        ctl.isTuikuan = indexPath.row == 0?NO:YES;
+        [self.navigationController pushViewController:ctl animated:YES];
     }
 }
 

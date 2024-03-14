@@ -233,7 +233,7 @@
     
     _mbView.hidden = [NoticeTools isWhiteTheme]?YES:NO;
     _nickNameL.text = stay.with_user_name;
-    _nickNameL.frame =  CGRectMake(CGRectGetMaxX(_iconImageView.frame)+10, 15,GET_STRWIDTH(stay.with_user_name, 16, 21), 21);
+    _nickNameL.frame =  CGRectMake(CGRectGetMaxX(_iconImageView.frame)+10, 15,DR_SCREEN_WIDTH-CGRectGetMaxX(_iconImageView.frame)-10-50, 21);
  
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:stay.with_user_avatar_url]
      placeholderImage:[UIImage imageNamed:@"Image_jynohe"]
