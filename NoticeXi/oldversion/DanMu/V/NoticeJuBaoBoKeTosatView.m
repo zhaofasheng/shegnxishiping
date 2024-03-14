@@ -109,16 +109,6 @@
 
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-    }
-
-    return YES;
-}
-
 - (void)refreshViewHeight{
     [self textViewDidChangeSelection:self.contentView];
 }

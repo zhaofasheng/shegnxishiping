@@ -208,15 +208,15 @@
         downM.nickName = @"无名";
         downM.userId = @"0";
     }
-
+//
     [[HWDownloadManager shareManager] startDownloadTask:downM];
     
     if ([[HWNetworkReachabilityManager shareManager] networkReachabilityStatus] == AFNetworkReachabilityStatusReachableViaWWAN){
         if ([[NSUserDefaults standardUserDefaults] boolForKey:HWDownloadAllowsCellularAccessKey]) {
-            XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"当前正使用蜂窝网络下载，如需关闭，可到【我的】-【设置】里面关闭" message:nil cancleBtn:@"好的，知道了"];
+            XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"当前正使用流量下载，如需关闭，可到【我的】-【设置】里面关闭" message:nil cancleBtn:@"好的，知道了"];
             [alerView showXLAlertView];
         }else{
-            XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"当前禁止蜂窝网络下载，已加进缓存队列，如需开启下载，可到【我的】-【设置】里面开启" message:nil cancleBtn:@"好的，知道了"];
+            XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"当前禁止流量下载，已加进缓存队列，如需开启下载，可到【我的】-【设置】里面开启" message:nil cancleBtn:@"好的，知道了"];
             [alerView showXLAlertView];
         }
     

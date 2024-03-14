@@ -76,7 +76,8 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
             
             //监听耳机的插拔
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeChange:) name:AVAudioSessionRouteChangeNotification object:[AVAudioSession sharedInstance]];
-            
+            //来了语音通话
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pausePlay) name:@"HASGETSHOPVOICECHANTTOTICE" object:nil];
             if (@available(iOS 11.0, *)) {
                 // 检测到当前设备录屏状态发生变化
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenCaptureStatusChanged:) name:UIScreenCapturedDidChangeNotification object:nil];
@@ -337,6 +338,11 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         }
         
     });
+}
+
+//来了语音通话
+- (void)pausePlay{
+    [self _pauseVideo];
 }
 
 /** 应用进入后台 */

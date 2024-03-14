@@ -6,11 +6,11 @@
 //  Copyright © 2018年 zhaoxiaoer. All rights reserved.
 //
 
-#import "NoticeBaseListController.h"
+#import "NoticeBaseCellController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NoticeSysViewController : NoticeBaseListController
+@interface NoticeSysViewController : NoticeBaseCellController
 
 @end
 

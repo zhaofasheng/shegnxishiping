@@ -52,7 +52,7 @@
     [super viewDidLoad];
     self.navBarView.hidden = YES;
     
-    self.section0titleArr = @[@"订单",@"已购课程",@"我的店铺",@"店铺认证"];
+    self.section0titleArr = @[@"课程订单",@"已购课程",@"我的店铺",@"店铺认证"];
     self.section1titleArr = @[@"我的店铺",@"店铺认证",@"服务过的订单",@"买过的订单"];
     self.section2titleArr = @[@"缓存",@"联系客服",@"设置"];
     
@@ -77,8 +77,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"HASSUPPLYSHOPNOTICE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequestForCheck) name:@"REFRESHMYSHOP" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getwallect) name:@"REFRESHMYWALLECT" object:nil];
-    
-    
     
     
     [self getwallect];

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SXBuySearisSuccessController : NoticeBaseCellController
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic, strong) SXWeiXinPayModel *payStatusModel;
+@property (nonatomic, assign) BOOL isFromList;
 @end
 
 NS_ASSUME_NONNULL_END

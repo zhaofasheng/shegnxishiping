@@ -61,7 +61,7 @@
     _goodModel = goodModel;
     self.choiceImageView.image = UIImageNamed(goodModel.choice.boolValue?@"Image_choicesh":@"Image_nochoicesh");
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:goodModel.goods_img_url]];
-    self.priceL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@鲸币/分钟",goodModel.price] setSize:12 setLengthString:@"鲸币/分钟" beginSize:goodModel.price.length];
+    self.priceL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@鲸币/%@分钟",goodModel.price,goodModel.duration] setSize:12 setLengthString:[NSString stringWithFormat:@"鲸币/%@分钟",goodModel.duration] beginSize:goodModel.price.length];
     self.changePriceBtn.hidden = goodModel.is_experience.boolValue?YES:NO;
     if (goodModel.is_experience.boolValue) {
         self.markL.text = @"可选服务 | 每位顾客可体验3次";

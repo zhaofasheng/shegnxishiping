@@ -9,6 +9,7 @@
 #import "SXBuySearisSuccessController.h"
 #import "SXBuySearisSuccessView.h"
 #import "SXPayVideoListController.h"
+#import "SXPayVideoListController.h"
 @interface SXBuySearisSuccessController ()
 @property (nonatomic, strong) SXBuySearisSuccessView *headerView;
 @end
@@ -41,6 +42,14 @@
 }
 
 - (void)lookClick{
+    if (self.isFromList) {
+        SXPayVideoListController *ctl = [[SXPayVideoListController alloc] init];
+  
+        ctl.paySearModel = self.paySearModel;
+
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
     __block UIViewController *pushVC;
     __weak typeof(self) weakSelf = self;
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

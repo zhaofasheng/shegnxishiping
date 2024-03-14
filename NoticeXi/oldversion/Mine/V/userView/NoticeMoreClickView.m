@@ -104,9 +104,22 @@
     [self.movieTableView reloadData];
 }
 
+- (void)setIsVideo:(BOOL)isVideo{
+    _isVideo = isVideo;
+    if (self.isPayVideo) {
+        self.imgArr = @[@"sxjubaovideo_img"];
+        self.titleArr = @[@"举报"];
+    }else{
+        self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img"];
+        self.titleArr = @[@"举报",@"缓存"];
+    }
+
+    [self.movieTableView reloadData];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self removeFromSuperview];
-    if(tableView == self.funTableView){
+    if(tableView == self.funTableView || self.isVideo){
         if(self.clickIndexBlock){
             self.clickIndexBlock(indexPath.row);
         }
@@ -182,6 +195,9 @@
     if(tableView == self.funTableView){
         return self.buttonNameArr.count;
     }
+    if (self.isVideo) {
+        return self.titleArr.count;
+    }
     return self.isShare? 4: 1;
 }
 
@@ -198,7 +214,7 @@
         return cell1;
     }
     NoticeUserShareCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (self.isShare) {
+    if (self.isShare || self.isVideo) {
         cell.moreL.hidden = YES;
         cell.nameL.text = self.titleArr[indexPath.row];
         cell.iconImageView.image = UIImageNamed(self.imgArr[indexPath.row]);

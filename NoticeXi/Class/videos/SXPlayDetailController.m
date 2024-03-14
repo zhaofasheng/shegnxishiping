@@ -16,6 +16,8 @@
 #import "SelVideoPlayer.h"
 #import "SelPlayerConfiguration.h"
 #import "NoticeVoiceDownLoadController.h"
+#import "NoticeMoreClickView.h"
+#import "NoticeXi-Swift.h"
 @interface SXPlayDetailController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) SXPlayDetailListController *listVC;
@@ -121,18 +123,29 @@
     };
     
     _player.downVideoBlock = ^(BOOL download) {
-
-        [SXTools getDownloadModelAndDownWithVideoModel:weakSelf.currentPlayModel successBlcok:^(BOOL success) {
-            if (success) {
-                SXTosatView *tosatView = [[SXTosatView  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-217)/2,(DR_SCREEN_HEIGHT-54)/2-100, 217, 54)];
-                tosatView.lookSaveListBlock = ^(BOOL look) {
-                    weakSelf.isNotPop = YES;
-                    NoticeVoiceDownLoadController *ctl = [[NoticeVoiceDownLoadController alloc] init];
-                    [weakSelf.navigationController pushViewController:ctl animated:YES];
-                };
-                [tosatView showSXToast];
+        NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+        moreView.isVideo = YES;
+        moreView.clickIndexBlock = ^(NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                [SXTools getDownloadModelAndDownWithVideoModel:weakSelf.currentPlayModel successBlcok:^(BOOL success) {
+                    if (success) {
+                        SXTosatView *tosatView = [[SXTosatView  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-217)/2,(DR_SCREEN_HEIGHT-54)/2-100, 217, 54)];
+                        tosatView.lookSaveListBlock = ^(BOOL look) {
+                            weakSelf.isNotPop = YES;
+                            NoticeVoiceDownLoadController *ctl = [[NoticeVoiceDownLoadController alloc] init];
+                            [weakSelf.navigationController pushViewController:ctl animated:YES];
+                        };
+                        [tosatView showSXToast];
+                    }
+                }];
+            }else{
+                NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
+                juBaoView.reouceId = weakSelf.currentPlayModel.vid;
+                juBaoView.reouceType = @"148";
+                [juBaoView showView];
             }
-        }];
+        };
+        [moreView showTost];
     };
         
     [self.view addSubview:self.player];

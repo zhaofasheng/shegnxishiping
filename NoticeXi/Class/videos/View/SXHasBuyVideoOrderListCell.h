@@ -7,10 +7,11 @@
 //
 
 #import "BaseCell.h"
-
+#import "SXBuyVideoOrderList.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXHasBuyVideoOrderListCell : BaseCell
+@property (nonatomic, strong) SXBuyVideoOrderList *orderListM;
 @property (nonatomic, strong) UILabel *titleL;
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) UILabel *markL;

@@ -21,11 +21,7 @@
         self.backgroundColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];
         
         self.userInteractionEnabled = YES;
-        
-        self.iconMarkView = [[UIImageView alloc] initWithFrame:CGRectMake(13, 16, 40, 40)];
-        [self.contentView addSubview:self.iconMarkView];
-        self.iconMarkView.layer.cornerRadius = self.iconMarkView.frame.size.height/2;
-        self.iconMarkView.layer.masksToBounds = YES;
+
         //头像
         _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15,18,36, 36)];
         _iconImageView.layer.cornerRadius = 18;
@@ -46,9 +42,6 @@
         _nickNameL.textColor = [UIColor colorWithHexString:@"#25262E"];
         [self.contentView addSubview:_nickNameL];
         
-        self.lelveImageView = [[NoticeLelveImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_nickNameL.frame)+2, 15, 46, 21)];
-        [self.contentView addSubview:self.lelveImageView];
-        self.lelveImageView.hidden = YES;
         
         //时间
         _timeL = [[UILabel alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-10-140,14,140, 16)];
@@ -76,9 +69,6 @@
         _line = line;
         [self.contentView addSubview:line];
         
-//        _subImageV = [[UIImageView alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-12-20, CGRectGetMaxY(_timeL.frame)+3, 20, 20)];
-//        _subImageV.image = UIImageNamed(@"Image_vocieclicknew");
-//        [self.contentView addSubview:_subImageV];
         
         self.whoBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-10-80, 20, 80, 30)];
         _whoBtn.layer.cornerRadius = 5;
@@ -203,31 +193,48 @@
     }
 }
 
+- (void)setSysMessage:(NoticeMessage *)sysMessage{
+    _sysMessage = sysMessage;
+    if (!self.isSys || !sysMessage) {
+        return;
+    }
+    self.iconImageView.image = UIImageNamed(@"sxmsgsys_img");
+    self.markImage.hidden = NO;
+    self.markImage.image = UIImageNamed(@"Image_guanfang_b");
+    
+    _nickNameL.text = @"系统消息";
+    _timeL.text = sysMessage.created_at;
+    _infoL.text = [NSString stringWithFormat:@"[%@]：%@",sysMessage.category_name,sysMessage.content];
+}
+
+- (void)setNoReadSysNum:(NSString *)noReadSysNum{
+    _noReadSysNum = noReadSysNum;
+    if (!self.isSys) {
+        return;
+    }
+    _numL.text = _noReadSysNum;
+    _numL.frame = CGRectMake(DR_SCREEN_WIDTH-((GET_STRWIDTH(_noReadSysNum, 9, 14)+5)>14?(GET_STRWIDTH(_noReadSysNum, 9, 14)+5):14)-15, CGRectGetMaxY(_timeL.frame)+5, ((GET_STRWIDTH(_noReadSysNum, 9, 14)+5)>14?(GET_STRWIDTH(_noReadSysNum, 9, 14)+5):14), 14);
+    _numL.hidden = !_noReadSysNum.intValue;
+}
 
 - (void)setStay:(NoticeStaySys *)stay{
     _stay = stay;
 
+    if (self.isSys) {
+        return;
+    }
     
     _failButton.hidden = YES;
-    
+    self.markImage.hidden = YES;
     if ([stay.with_user_id isEqualToString:@"1"] || stay.with_user_id.intValue == 684699 || stay.with_user_id.intValue == 1125) {
         self.markImage.hidden = NO;
         self.markImage.image = UIImageNamed(@"Image_guanfang_b");
-    }else{
-        self.markImage.hidden = NO;
-        self.markImage.image = UIImageNamed(stay.smalllevelImgName);
     }
     
     _mbView.hidden = [NoticeTools isWhiteTheme]?YES:NO;
     _nickNameL.text = stay.with_user_name;
     _nickNameL.frame =  CGRectMake(CGRectGetMaxX(_iconImageView.frame)+10, 15,GET_STRWIDTH(stay.with_user_name, 16, 21), 21);
-    self.lelveImageView.hidden = YES;
-    
-    if (stay.with_user_level.intValue) {
-        self.iconMarkView.hidden = NO;
-        
-    }
-    self.iconMarkView.image = UIImageNamed(_stay.levelImgIconName);
+ 
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:stay.with_user_avatar_url]
      placeholderImage:[UIImage imageNamed:@"Image_jynohe"]
               options:SDWebImageAvoidDecodeImage];
@@ -235,9 +242,7 @@
     _timeL.text = stay.updated_at;
     _numL.text = stay.un_read_num;
 
-
-    DRLog(@"%@===",stay.last_resource_type);
-    
+                                                                                                               
     NSString *str = nil;
     if (stay.last_resource_type.intValue == 1) {
         str = @"[语音]";

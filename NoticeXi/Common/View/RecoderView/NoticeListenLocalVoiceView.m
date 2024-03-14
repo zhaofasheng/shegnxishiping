@@ -55,18 +55,8 @@
         [backImageView addSubview:self.playBtn];
         [self.playBtn addTarget:self action:@selector(playClick) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, self.keyView.frame.size.height-50-35, (DR_SCREEN_WIDTH-60)/2, 35)];
-        [cancelBtn setTitle:[NoticeTools getLocalStrWith:@"em.rerecoder"] forState:UIControlStateNormal];
-        [cancelBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        cancelBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
-        cancelBtn.layer.cornerRadius = 8;
-        cancelBtn.layer.masksToBounds = YES;
-        cancelBtn.layer.borderColor = [UIColor colorWithHexString:@"#FFFFFF"].CGColor;
-        cancelBtn.layer.borderWidth = 1;
-        [self.keyView addSubview:cancelBtn];
-        [cancelBtn addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton *sureBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(cancelBtn.frame)+20, self.keyView.frame.size.height-50-35, (DR_SCREEN_WIDTH-60)/2, 35)];
+   
+        UIButton *sureBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, self.keyView.frame.size.height-50-35, DR_SCREEN_WIDTH-40, 35)];
         [sureBtn setTitle:[NoticeTools getLocalStrWith:@"read.send"] forState:UIControlStateNormal];
         [sureBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         sureBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;

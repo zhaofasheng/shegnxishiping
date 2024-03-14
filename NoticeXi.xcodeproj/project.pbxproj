@@ -1353,6 +1353,7 @@
 		FE6CF97B2B88A450005EE663 /* SXPlayChcahVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF97A2B88A450005EE663 /* SXPlayChcahVideoController.m */; };
 		FE6CF97E2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF97D2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.m */; };
 		FE7440352BA17A00007EE4A6 /* SXVerifyShopModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */; };
+		FE7440382BA2A595007EE4A6 /* SXBuyVideoOrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440372BA2A595007EE4A6 /* SXBuyVideoOrderList.m */; };
 		FE8B48772B8EDEAC004C3965 /* SXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */; };
 		FE953C802B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C7F2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m */; };
 		FE953C832B68D3420098F0A2 /* NoticeDownloadVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C822B68D3420098F0A2 /* NoticeDownloadVoiceCell.m */; };
@@ -4003,6 +4004,8 @@
 		FE6CF97D2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlaySaveVideoBaseController.m; sourceTree = "<group>"; };
 		FE7440332BA17A00007EE4A6 /* SXVerifyShopModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVerifyShopModel.h; sourceTree = "<group>"; };
 		FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVerifyShopModel.m; sourceTree = "<group>"; };
+		FE7440362BA2A595007EE4A6 /* SXBuyVideoOrderList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuyVideoOrderList.h; sourceTree = "<group>"; };
+		FE7440372BA2A595007EE4A6 /* SXBuyVideoOrderList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuyVideoOrderList.m; sourceTree = "<group>"; };
 		FE8B48752B8EDEAC004C3965 /* SXWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXWebViewController.h; sourceTree = "<group>"; };
 		FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXWebViewController.m; sourceTree = "<group>"; };
 		FE953C7E2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeVoiceDownLoadController.h; sourceTree = "<group>"; };
@@ -5545,6 +5548,8 @@
 				A4E95D1D2A69141B00AE022E /* NoticeSCViewController.m */,
 				A4E95D432A69141B00AE022E /* NoticeSearchSendListController.h */,
 				A4E95D1E2A69141B00AE022E /* NoticeSearchSendListController.m */,
+				A4E960B12A69141D00AE022E /* NoticeSysViewController.h */,
+				A4E960B92A69141D00AE022E /* NoticeSysViewController.m */,
 				A4E95D222A69141B00AE022E /* View */,
 			);
 			path = ChatView;
@@ -6873,8 +6878,6 @@
 				A4E960B02A69141D00AE022E /* NoticeQiaoqiaoController.m */,
 				A4E960BD2A69141D00AE022E /* NoticeReadBookController.h */,
 				A4E960B62A69141D00AE022E /* NoticeReadBookController.m */,
-				A4E960B12A69141D00AE022E /* NoticeSysViewController.h */,
-				A4E960B92A69141D00AE022E /* NoticeSysViewController.m */,
 				A4E960BE2A69141D00AE022E /* NoticeVoiceChatAndDepartController.h */,
 				A4E960B72A69141D00AE022E /* NoticeVoiceChatAndDepartController.m */,
 				A4E960B32A69141D00AE022E /* NoticeVoiceCommentNewsController.h */,
@@ -8322,6 +8325,8 @@
 				FEE563032B8DC4560004CC11 /* SXSearchModel.m */,
 				FEE2DD172B90574D008AAB53 /* SXSearisVideoListModel.h */,
 				FEE2DD182B90574D008AAB53 /* SXSearisVideoListModel.m */,
+				FE7440362BA2A595007EE4A6 /* SXBuyVideoOrderList.h */,
+				FE7440372BA2A595007EE4A6 /* SXBuyVideoOrderList.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -9173,6 +9178,7 @@
 				A4E966112A69142300AE022E /* NoticeBoKeDocumCell.m in Sources */,
 				A4E965F42A69142300AE022E /* NoticeShareLineChatView.m in Sources */,
 				FE48C1472B48E40F0069D1A6 /* NoticeShop3DListCell.m in Sources */,
+				FE7440382BA2A595007EE4A6 /* SXBuyVideoOrderList.m in Sources */,
 				A4E9687C2A69142600AE022E /* NoticeTextZJDetailCell.m in Sources */,
 				A4E967792A69142400AE022E /* NoticeQuestionBaseController.m in Sources */,
 				A4E968A32A69142600AE022E /* NoticeSearchPersonViewController.m in Sources */,

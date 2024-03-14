@@ -730,7 +730,6 @@
 //            }
         }
 
-
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];

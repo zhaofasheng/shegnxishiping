@@ -8,6 +8,7 @@
 
 #import "SXHasBuyOrderListController.h"
 #import "SXHasBuyVideoOrderListCell.h"
+#import "SXBuySearisSuccessController.h"
 @interface SXHasBuyOrderListController ()
 
 @end
@@ -18,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navBarView.titleL.text = @"订单";
+    self.navBarView.titleL.text = @"课程订单";
     
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);
     [self.tableView registerClass:[SXHasBuyVideoOrderListCell class] forCellReuseIdentifier:@"cell"];
@@ -28,6 +29,18 @@
     [self request];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    SXBuyVideoOrderList *model = self.dataArr[indexPath.row];
+    SXWeiXinPayModel *payStatusM = [[SXWeiXinPayModel alloc] init];
+    payStatusM.sn = model.sn;
+    payStatusM.pay_time = model.pay_time;
+    payStatusM.pay_status = model.pay_status;
+    SXBuySearisSuccessController *ctl = [[SXBuySearisSuccessController alloc] init];
+    ctl.paySearModel = model.paySearModel;
+    ctl.payStatusModel = payStatusM;
+    ctl.isFromList = YES;
+    [self.navigationController pushViewController:ctl animated:YES];
+}
 
 - (void)createRefesh{
     
@@ -55,7 +68,7 @@
     
     NSString *url = @"";
     
-    url = [NSString stringWithFormat:@"user/video/series?pageNo=%ld",self.pageNo];
+    url = [NSString stringWithFormat:@"series/order/list?pageNo=%ld",self.pageNo];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
@@ -67,7 +80,10 @@
                 [self.dataArr removeAllObjects];
                 self.isDown = NO;
             }
-            
+            for (NSDictionary *dic in dict[@"data"]) {
+                SXBuyVideoOrderList *model = [SXBuyVideoOrderList mj_objectWithKeyValues:dic];
+                [self.dataArr addObject:model];
+            }
     
          
             if (self.dataArr.count) {
@@ -87,12 +103,12 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;self.dataArr.count;
+    return self.dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXHasBuyVideoOrderListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
- 
+    cell.orderListM = self.dataArr[indexPath.row];
     return cell;
 }
 

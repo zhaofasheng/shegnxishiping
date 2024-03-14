@@ -19,6 +19,8 @@
 #import "SelVideoPlayer.h"
 #import "SelPlayerConfiguration.h"
 
+#import "NoticeMoreClickView.h"
+#import "NoticeXi-Swift.h"
 @interface SXPayVideoPlayDetailBaseController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) JXCategoryTitleView *categoryView;
 @property (nonatomic, strong) JXPagerListRefreshView *pagerView;
@@ -190,6 +192,19 @@
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
 
+    _player.downVideoBlock = ^(BOOL download) {
+        NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+        moreView.isPayVideo = YES;
+        moreView.isVideo = YES;
+        moreView.clickIndexBlock = ^(NSInteger buttonIndex) {
+            NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
+            juBaoView.reouceId = weakSelf.currentPlayModel.videoId;
+            juBaoView.reouceType = @"148";
+            [juBaoView showView];
+        };
+        [moreView showTost];
+    };
+    
     [self.view addSubview:self.player];
     
     [self refresUI];

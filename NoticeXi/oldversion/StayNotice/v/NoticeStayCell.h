@@ -10,11 +10,10 @@
 #import "NoticeStaySys.h"
 #import "NoticeManagerGroupReplyModel.h"
 #import "NoticeMoveMemberModel.h"
-#import "NoticeLelveImageView.h"
+#import "NoticeMessage.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeStayCell : BaseCell
-@property (nonatomic, strong) NoticeLelveImageView *lelveImageView;
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UIImageView *iconMarkView;
 @property (nonatomic, strong) UIImageView *markImage;
@@ -27,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL canTap;
 @property (nonatomic, assign) BOOL isHUIS;
 @property (nonatomic, assign) BOOL isSL;
+@property (nonatomic, assign) BOOL isSys;
 @property (nonatomic, assign) BOOL needTm;
 @property (nonatomic, strong) UIView *mbView;
 
@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NoticeMoveMemberModel *moveModel;
 @property (nonatomic, copy) void(^longtapBlock)(NoticeStaySys *stay);
 @property (nonatomic, strong) UIButton *failButton;
+
+@property (nonatomic, strong) NSString *noReadSysNum;
+@property (nonatomic, strong) NoticeMessage *sysMessage;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -22,7 +22,6 @@
         _orderNumL = [[UILabel alloc] initWithFrame:CGRectMake(10,11,backView.frame.size.width-10-100, 17)];
         _orderNumL.font = TWOTEXTFONTSIZE;
         _orderNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
-        _orderNumL.text = @"订单编号：20220609000012";
         [backView addSubview:_orderNumL];
         
         _markL = [[UILabel alloc] initWithFrame:CGRectMake(backView.frame.size.width-110,10,100, 20)];
@@ -42,7 +41,6 @@
         _titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [backView addSubview:_titleL];
         
-
         _numL = [[UILabel alloc] initWithFrame:CGRectMake(76,74,backView.frame.size.width-10-100, 17)];
         _numL.font = TWOTEXTFONTSIZE;
         _numL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
@@ -57,6 +55,21 @@
     return self;
 }
 
+- (void)setOrderListM:(SXBuyVideoOrderList *)orderListM{
+    _orderListM = orderListM;
+    self.orderNumL.text = [NSString stringWithFormat:@"订单编号：%@",orderListM.sn];
+    if (orderListM.pay_status.intValue == 2) {
+        self.markL.text = @"交易成功";
+        _markL.textColor = [UIColor colorWithHexString:@"#14151A"];
+    }else{
+        self.markL.text = @"交易失败";
+        _markL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+    }
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:orderListM.paySearModel.simple_cover_url]];
+    self.titleL.text = orderListM.paySearModel.series_name;
+    _numL.text = [NSString stringWithFormat:@"共%@课时",orderListM.paySearModel.episodes];
+    _moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",orderListM.paySearModel.price] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

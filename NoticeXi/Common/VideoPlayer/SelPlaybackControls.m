@@ -88,7 +88,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
 }
 
 - (void)refreshBottomFrame{
-    if (self.isPlayLocalVideo || self.isPay) {
+    if (self.isPlayLocalVideo) {
         self.downloadBtn.hidden = YES;
     }else{
         self.downloadBtn.hidden = NO;

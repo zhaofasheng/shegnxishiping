@@ -136,7 +136,7 @@
     if (indexPath.section == 2) {
         SXTitleAndSwitchCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
         cell1.delegate = self;
-        cell1.mainL.text = @"允许蜂窝网络下载";
+        cell1.mainL.text = @"是否允许流量下载";
         [cell1.backView setAllCorner:10];
         cell1.switchButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:HWDownloadAllowsCellularAccessKey];
         return cell1;

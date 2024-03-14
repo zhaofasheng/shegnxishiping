@@ -12,6 +12,7 @@
 #import "NoticeSCViewController.h"
 #import "NoticeTestViewController.h"
 #import "NoticeReTestViewController.h"
+#import "NoticeSysViewController.h"
 
 @interface NoticeSCListViewController ()
 
@@ -20,9 +21,9 @@
 @property (nonatomic, strong) MJRefreshNormalHeader *refreshHeader;
 @property (nonatomic, strong) NoticeStaySys *chatToModel;
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
-
+@property (nonatomic, strong) NoticeMessage *sysMessage;
 @property (nonatomic, strong) UILabel *messageNumL;
-
+@property (nonatomic, strong) NSString *sysNoReadNum;
 @end
 
 @implementation NoticeSCListViewController
@@ -48,17 +49,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArr = [NSMutableArray new];
-    self.view.backgroundColor = [[UIColor colorWithHexString:@"#F7F8FC"] colorWithAlphaComponent:1];
-    
-    [self.navBarView.backButton setImage:UIImageNamed(@"Image_blackBack") forState:UIControlStateNormal];
-    self.navBarView.titleL.textColor = [UIColor colorWithHexString:@"#25262E"];
-    self.navBarView.titleL.text = [NoticeTools getLocalStrWith:@"message.chat"];
+    self.view.backgroundColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];
+
+    self.navBarView.titleL.text = @"消息";
     [self.navBarView.rightButton setImage:UIImageNamed(@"img_clearmsg") forState:UIControlStateNormal];
     [self.navBarView.rightButton addTarget:self action:@selector(clearClick) forControlEvents:UIControlEventTouchUpInside];
     self.tableView.backgroundColor = [self.view.backgroundColor colorWithAlphaComponent:1];
-    
-    self.navBarView.titleL.text = [NoticeTools getLocalStrWith:@"message.chat"];
-    self.tableView.frame = CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);
+
     self.tableView.rowHeight = 70;
     [self.tableView registerClass:[NoticeStayCell class] forCellReuseIdentifier:@"cell1"];
     [self createRefesh];
@@ -70,9 +67,43 @@
 
 }
 
+
+- (void)request{
+    NSString *url = nil;
+    
+    url = [NSString stringWithFormat:@"messages/%@/1",[[NoticeSaveModel getUserInfo]user_id]];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.0.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+        
+     
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return ;
+            }
+        
+            NSMutableArray *arr = [[NSMutableArray alloc] init];
+            for (NSDictionary *dic in dict[@"data"]) {
+                if (arr.count) {
+                    break;
+                }
+                NoticeMessage *model = [NoticeMessage mj_objectWithKeyValues:dic];
+                [arr addObject:model];
+            }
+            
+            if (arr.count) {
+                self.sysMessage = arr[0];
+            }
+            [self.tableView reloadData];
+        }
+        
+    } fail:^(NSError *error) {
+    }];
+}
+
+
 - (void)clearClick{
     __weak typeof(self) weakSelf = self;
-     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:[NoticeTools chinese:@"确定清除所有交流未读消息吗？" english:@"Clear all unreads?" japan:@"未読メッセージをクリアしますか？"] message:nil sureBtn:[NoticeTools getLocalStrWith:@"groupManager.rethink"] cancleBtn:[NoticeTools getLocalStrWith:@"sure.comgir"] right:YES];
+     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定清除所有未读消息吗?" message:nil sureBtn:@"再想想" cancleBtn:@"确定" right:YES];
     alerView.resultIndex = ^(NSInteger index) {
         if (index == 2) {
             [weakSelf showHUD];
@@ -83,6 +114,15 @@
                 [weakSelf refreshNoUnread];
             } fail:^(NSError * _Nullable error) {
                 [weakSelf hideHUD];
+            }];
+            
+            [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"messages/%@",[NoticeTools getuserId]] Accept:@"application/vnd.shengxi.v5.4.9+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+                if (success) {
+                    self.sysNoReadNum = @"0";
+                    [self.tableView reloadData];
+                }
+            } fail:^(NSError * _Nullable error) {
+                
             }];
         }
     };
@@ -120,17 +160,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NoticeStayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-    cell.contentView.tag = 2000+indexPath.row;
-    cell.canTap = YES;
-    cell.isSL = YES;
-    cell.stay = self.dataArr[indexPath.row];
-    cell.line.hidden = indexPath.row == self.dataArr.count-1?YES:NO;
+    cell.isSys = indexPath.section == 0? YES: NO;
+    if (indexPath.section == 1) {
+        cell.contentView.tag = 2000+indexPath.row;
+        cell.canTap = YES;
+        cell.isSL = YES;
+        cell.stay = self.dataArr[indexPath.row];
+        cell.line.hidden = indexPath.row == self.dataArr.count-1?YES:NO;
+    }else{
+        cell.sysMessage = self.sysMessage;
+        cell.noReadSysNum = self.sysNoReadNum;
+    }
 
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (indexPath.section == 0) {
+        NoticeSysViewController *ctl = [[NoticeSysViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
     NoticeStaySys *model = self.dataArr[indexPath.row];
     self.chatToModel = model;
     CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
@@ -150,7 +200,9 @@
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (indexPath.section == 0) {
+        return nil;
+    }
     __weak typeof(self) weakSelf = self;
     NoticeStaySys *stay = self.dataArr[indexPath.row];
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -178,9 +230,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (section == 0) {
+        return 1;
+    }
     return self.dataArr.count;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
 
 - (void)createRefesh{
     
@@ -205,6 +263,7 @@
     
     NSString *url = nil;
     if (self.isDown) {
+        [self request];
         url = [NSString stringWithFormat:@"chats/users/%@/2",[[NoticeSaveModel getUserInfo] user_id]];
     }else{
         if (self.lastId) {
@@ -246,7 +305,6 @@
                 self.tableView.tableFooterView = nil;
             }else{
             
-                self.defaultL.text =[NoticeTools getLocalType]?@"Friends bring joy in life": @"生活的乐趣，一半儿是来自朋友。";
                 self.tableView.tableFooterView = self.defaultL;
             }
             
@@ -263,6 +321,21 @@
 
 - (void)sxClick{
     [NoticeComTools connectXiaoer];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.5.4+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return ;
+            }
+            NoticeStaySys *stay = [NoticeStaySys mj_objectWithKeyValues:dict[@"data"]];
+            self.sysNoReadNum = stay.sysM.num;
+            [self.tableView reloadData];
+        }
+    } fail:^(NSError *error) {
+    }];
 }
 
 @end
