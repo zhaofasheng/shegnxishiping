@@ -17,7 +17,9 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     SelVideoPlayerStatePause,      // 暂停播放
 };
 
-@interface SelVideoPlayer()<SelPlaybackControlsDelegate>
+@interface SelVideoPlayer()<SelPlaybackControlsDelegate,AVPictureInPictureControllerDelegate>
+
+
 
 /** 非全屏状态下播放器 superview */
 @property (nonatomic, strong) UIView *originalSuperview;
@@ -206,7 +208,8 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 /** 播放视频 */
 - (void)_playVideo
 {
-    
+    AVAudioSession*session=[AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     UIScreen *screen =[UIScreen mainScreen];
    
     if (screen.isCaptured && self.isPay) {//用户正在录屏
@@ -340,6 +343,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     });
 }
 
+
 //来了语音通话
 - (void)pausePlay{
     [self _pauseVideo];
@@ -348,12 +352,27 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 /** 应用进入后台 */
 - (void)appDidEnterBackground:(NSNotification *)notify
 {
-    [self _pauseVideo];
+    //判断当前是否为画中画
+    //关闭画中画
+  
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (!appdel.pipVC.isPictureInPictureActive) {//禁止自动开启画中画
+        appdel.pipVC = nil;
+        [self _pauseVideo];
+    }
 }
 
 /** 应用进入前台 */
 - (void)appDidEnterPlayground:(NSNotification *)notify
 {
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (!appdel.pipVC) {
+        //1.判断是否支持画中画功能
+        if ([AVPictureInPictureController isPictureInPictureSupported]) {
+            appdel.pipVC = [[AVPictureInPictureController alloc] initWithPlayerLayer:self.playerLayer];
+            appdel.pipVC.delegate = self;
+        }
+    }
     [self _playVideo];
     [self.playbackControls _playerShowOrHidePlaybackControls];
 }
@@ -401,8 +420,44 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     if (_playerConfiguration.shouldAutoPlay) {
         [self _playVideo];
     }
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdel.pipVC) {
+        appdel.pipVC = nil;
+    }
+    if (!appdel.pipVC) {
+        //1.判断是否支持画中画功能
+        if ([AVPictureInPictureController isPictureInPictureSupported]) {
+            appdel.pipVC = [[AVPictureInPictureController alloc] initWithPlayerLayer:self.playerLayer];
+            appdel.pipVC.delegate = self;
+        }
+    }
 }
 
+// 即将开启画中画
+- (void)pictureInPictureControllerWillStartPictureInPicture:(AVPictureInPictureController *)pictureInPictureController{
+    DRLog(@"即将开启画中画");
+}
+// 已经开启画中画
+- (void)pictureInPictureControllerDidStartPictureInPicture:(AVPictureInPictureController *)pictureInPictureController{
+    DRLog(@"已经开启画中画");
+}
+// 开启画中画失败
+- (void)pictureInPictureController:(AVPictureInPictureController *)pictureInPictureController failedToStartPictureInPictureWithError:(NSError *)error{
+    DRLog(@"开启画中画失败");
+}
+// 即将关闭画中画
+- (void)pictureInPictureControllerWillStopPictureInPicture:(AVPictureInPictureController *)pictureInPictureController{
+    DRLog(@"即将关闭画中画");
+}
+// 已经关闭画中画
+- (void)pictureInPictureControllerDidStopPictureInPicture:(AVPictureInPictureController *)pictureInPictureController{
+    DRLog(@"已经关闭画中画");
+    [self _playVideo];
+}
+// 关闭画中画且恢复播放界面
+- (void)pictureInPictureController:(AVPictureInPictureController *)pictureInPictureController restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL restored))completionHandler{
+    DRLog(@"关闭画中画且恢复播放界面");
+}
 
 /** 添加播放器控制面板 */
 - (void)_setupPlayControls
@@ -485,8 +540,6 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 - (void)createTimer {
     __weak typeof(self) weakSelf = self;
 
-   
-    
     self.timeObserve = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(1, 1) queue:nil usingBlock:^(CMTime time){
         
         AVPlayerItem *currentItem = weakSelf.playerItem;
@@ -731,6 +784,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 
 //点击下载
 - (void)downloadAction{
+
     if (self.downVideoBlock) {
         self.downVideoBlock(YES);
     }

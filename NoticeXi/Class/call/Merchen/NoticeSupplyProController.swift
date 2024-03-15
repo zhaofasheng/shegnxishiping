@@ -44,21 +44,20 @@ class NoticeSupplyProController: NoticeBaseCellController {
         self.startBtn?.setTitleColor(UIColor.init(hexString: "#FFFFFF"), for: .normal)
         self.startBtn?.addTarget(self, action: #selector(nextClick), for: .touchUpInside)
         
-        self.getL = UILabel.init(frame: CGRect(x: 0, y: self.startBtn!.frame.size.height+self.startBtn!.frame.origin.y, width: NoticeSwiftFile.screenWidth, height: 40))
-        self.getL?.font = UIFont.systemFont(ofSize: 14)
-        self.getL?.textColor = UIColor.init(hexString: "#8A8F99")
-        self.getL?.attributedText = DDHAttributedMode.setColorString("*申请即同意《解忧杂货铺开店服务协议》", setColor: UIColor.init(hexString: "#0099E6"), setLengthString: "《解忧杂货铺开店服务协议》", beginSize: 6)
-        self.getL?.textAlignment = NSTextAlignment.center
-        view.addSubview(self.getL!)
-        self.getL?.isUserInteractionEnabled = true
+//        self.getL = UILabel.init(frame: CGRect(x: 0, y: self.startBtn!.frame.size.height+self.startBtn!.frame.origin.y, width: NoticeSwiftFile.screenWidth, height: 40))
+//        self.getL?.font = UIFont.systemFont(ofSize: 14)
+//        self.getL?.textColor = UIColor.init(hexString: "#8A8F99")
+//        self.getL?.attributedText = DDHAttributedMode.setColorString("*申请即同意《咨询开店服务协议》", setColor: UIColor.init(hexString: "#0099E6"), setLengthString: "《咨询开店服务协议》", beginSize: 6)
+//        self.getL?.textAlignment = NSTextAlignment.center
+//        view.addSubview(self.getL!)
+//        self.getL?.isUserInteractionEnabled = true
         
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(proTap))
         self.getL?.addGestureRecognizer(tap)
     }
     
     @objc func proTap(){
-        let tostView = NoticeProtocolView.init(frame: CGRect(x: 0, y: 0, width: NoticeSwiftFile.screenWidth, height: NoticeSwiftFile.screenHeight))
-        tostView.showTitle(title: "解忧杂货铺开店服务协议", content: "〈一〉在声昔，你发布的心情是公开的，可以设为私密；悄悄话和交流仅你和对方可见。\n〈二〉在声昔，我们更重视精神交流，为守护这一片精神净土，如果你看到发自拍、约/撩/骚扰这类内容，请积极举报，我们将按规处置。\n〈三〉在声昔，严禁发布政治敏感、色情暴力内容，违规将封号处理。\n〈一〉在声昔，你发布的心情是公开的，可以设为私密；悄悄话和交流仅你和对方可见。\n〈二〉在声昔，我们更重视精神交流，为守护这一片精神净土，如果你看到发自拍、约/撩/骚扰这类内容，请积极举报，我们将按规处置。\n〈三〉在声昔，严禁发布政治敏感、色情暴力内容，违规将封号处理。")
+
     }
     
     @objc func nextClick(){

@@ -99,7 +99,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
             
             self.topControlsBar.frame = CGRectMake(0, 0, self.frame.size.width, NAVIGATION_BAR_HEIGHT);
             self.backBtn.frame = CGRectMake(10,STATUS_BAR_HEIGHT,44,NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
-            if (!self.isPlayLocalVideo && !self.isPay) {
+            if (!self.isPlayLocalVideo) {
                 self.downloadBtn.frame = CGRectMake(DR_SCREEN_WIDTH-10-44, STATUS_BAR_HEIGHT, 44, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
             }
             if (self.isPay) {
@@ -109,7 +109,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
         }else{
             self.topControlsBar.frame = CGRectMake(0, 0, self.frame.size.width,NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
             self.backBtn.frame = CGRectMake(NAVIGATION_BAR_HEIGHT-5,0,44,self.topControlsBar.frame.size.height);
-            if (!self.isPlayLocalVideo && !self.isPay) {
+            if (!self.isPlayLocalVideo) {
                 self.downloadBtn.frame = CGRectMake(DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-44, 0, 44, self.topControlsBar.frame.size.height);
             }
             if (self.isPay) {
@@ -124,7 +124,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
         
         self.topControlsBar.frame = CGRectMake(0, 0, self.frame.size.width, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
         self.backBtn.frame = CGRectMake(10,0,44,self.topControlsBar.frame.size.height);
-        if (!self.isPlayLocalVideo && !self.isPay) {
+        if (!self.isPlayLocalVideo) {
             self.downloadBtn.frame = CGRectMake(DR_SCREEN_WIDTH-10-44, 0, 44, self.topControlsBar.frame.size.height);
         }
         self.fullScreenButton.frame = CGRectMake(_bottomControlsBar.frame.size.width-50, 0, 44, 44);
@@ -145,7 +145,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
     [self.lastPlayLocationLabel setCornerOnRight:16];
 
     if (!_wanPlayLabel.hidden) {
-        CGFloat width = GET_STRWIDTH(@"正在使用流量播放该视频 大小为1000M", 11, 20)+10;
+        CGFloat width = GET_STRWIDTH(@"正在使用流量播放该视频 大小为10000000M", 11, 20)+10;
         _wanPlayLabel.frame = CGRectMake((self.frame.size.width-width)/2, CGRectGetMaxY(self.topControlsBar.frame), width, 20);
         [_wanPlayLabel setAllCorner:10];
     }

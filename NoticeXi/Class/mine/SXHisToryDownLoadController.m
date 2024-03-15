@@ -132,7 +132,7 @@
     [parm setObject:self.topicField.text forKey:@"email"];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"user/historyDataDownload" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
-            [self showToastWithText:@"邮箱提交成功"];
+            [self showToastWithText:@"邮箱提交成功，后续系统会把您历史数据发送至您的邮箱"];
         }
         [self showHUD];
     } fail:^(NSError * _Nullable error) {

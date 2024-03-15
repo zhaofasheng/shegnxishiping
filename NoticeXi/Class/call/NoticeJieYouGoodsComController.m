@@ -69,7 +69,6 @@
                 self.tableView.tableFooterView = nil;
             }else{
                 self.tableView.tableFooterView = self.defaultL;
-                self.defaultL.text = @"欸 这里空空的";
             }
             [self.tableView reloadData];
         }

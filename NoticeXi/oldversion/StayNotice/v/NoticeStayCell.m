@@ -261,21 +261,6 @@
     _numL.frame = CGRectMake(DR_SCREEN_WIDTH-((GET_STRWIDTH(stay.un_read_num, 9, 14)+5)>14?(GET_STRWIDTH(stay.un_read_num, 9, 14)+5):14)-15, CGRectGetMaxY(_timeL.frame)+5, ((GET_STRWIDTH(stay.un_read_num, 9, 14)+5)>14?(GET_STRWIDTH(stay.un_read_num, 9, 14)+5):14), 14);
     _numL.hidden = !stay.un_read_num.intValue;
     
-    if (self.isSL) {
-        NSMutableArray *localArr = [NoticeTools getChatArrarychatId:stay.with_user_id];
-        if (localArr.count) {
-            self.failButton.hidden = NO;
-            NoticeChatSaveModel *saveM = localArr[localArr.count-1];
-            if (saveM.type.intValue == 1) {
-                _infoL.text = [NoticeTools getLocalStrWith:@"chat.voice"];
-            }else{
-                _infoL.text = [NoticeTools getLocalStrWith:@"chat.img"];
-            }
-        }else{
-            _failButton.hidden = YES;
-        }
-    }
-    
 
 }
 

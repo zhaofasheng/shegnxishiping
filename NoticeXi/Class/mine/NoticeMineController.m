@@ -193,6 +193,10 @@
     }
     [self redCirRequest];
     [self.headerView refresh];
+    
+    if (self.applyModel.status != 6) {
+        [self getStatusRequest];
+    }
 }
 
 - (void)myShopTap{
@@ -245,6 +249,7 @@
                 [self showToastWithText:@"正在获取店铺状态"];
                 return;
             }
+            
             if (self.applyModel.status == 6) {//有店铺了
                 if (self.shopModel) {
                     SXShopCheckController *ctl = [[SXShopCheckController alloc] init];

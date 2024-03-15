@@ -612,7 +612,7 @@
             for (NSDictionary *dic in dict[@"data"]) {
                 NoticeChats *model = [NoticeChats mj_objectWithKeyValues:dic];
                 
-                if (model.globText && model.globText.length) {
+                if (model.globText && model.globText.length && model.content_type.intValue != 2) {
                     model.contentText = model.globText;
                 }
                 
@@ -620,9 +620,7 @@
                     model.content_type = @"10";
                     model.contentText = @"请更新到最新版本";
                 }
-                if (([model.resource_type isEqualToString:@"4"] || [model.resource_type isEqualToString:@"1"]) && [[[NoticeSaveModel getUserInfo] user_id] isEqualToString:@"1"]) {
-                    model.dialog_content = model.dialog_content.length ? model.dialog_content : @"转文字失败";
-                }
+
                  
                 BOOL alerady = NO;
                 for (NoticeChats *olM in self.localdataArr) {//判断是否有重复数据

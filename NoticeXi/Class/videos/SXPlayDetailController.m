@@ -123,8 +123,10 @@
     };
     
     _player.downVideoBlock = ^(BOOL download) {
+        
         NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
         moreView.isVideo = YES;
+       
         moreView.clickIndexBlock = ^(NSInteger buttonIndex) {
             if (buttonIndex == 1) {
                 [SXTools getDownloadModelAndDownWithVideoModel:weakSelf.currentPlayModel successBlcok:^(BOOL success) {
@@ -138,11 +140,21 @@
                         [tosatView showSXToast];
                     }
                 }];
-            }else{
+            }else if(buttonIndex == 0){
                 NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
                 juBaoView.reouceId = weakSelf.currentPlayModel.vid;
                 juBaoView.reouceType = @"148";
                 [juBaoView showView];
+            }else if (buttonIndex == 2){
+                AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                //判断当前是否为画中画
+                if (appdel.pipVC.isPictureInPictureActive) {
+                    //关闭画中画
+                    [appdel.pipVC stopPictureInPicture];
+                } else {
+                    //开始画中画
+                    [appdel.pipVC startPictureInPicture];
+                }
             }
         };
         [moreView showTost];
@@ -245,8 +257,11 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    [_player _pauseVideo];
-    self.isPause = YES;
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (!appdel.pipVC.isPictureInPictureActive) {//正在画中画
+        [_player _pauseVideo];
+        self.isPause = YES;
+    }
 
     if (@available(iOS 13.0, *)) {
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDarkContent;

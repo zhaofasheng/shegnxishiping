@@ -10,6 +10,8 @@
 #import "SXPlayPayVideoDetailListCell.h"
 @interface SXPayVideoPlayDetailListController ()
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
+
+@property (nonatomic, strong) NSIndexPath *indexPath;
 @end
 
 @implementation SXPayVideoPlayDetailListController
@@ -31,11 +33,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     SXSearisVideoListModel *model = self.searisArr[indexPath.row];
-    if ([model.videoId isEqualToString:self.currentPlayModel.videoId]) {
+    if ([model.videoId isEqualToString:self.currentPlayModel.videoId]){
         return;
     }
     
     self.currentPlayModel = model;
+
     [self.tableView reloadData];
     if (self.choiceVideoBlock) {
         self.choiceVideoBlock(model);

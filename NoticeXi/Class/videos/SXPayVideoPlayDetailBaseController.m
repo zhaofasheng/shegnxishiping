@@ -72,7 +72,6 @@
     
     self.categoryView.listContainer = (id<JXCategoryViewListContainer>)self.pagerView.listContainerView;
     [self.categoryView reloadData];
-    
     [self.view bringSubviewToFront:self.player];
 }
 
@@ -193,14 +192,28 @@
     };
 
     _player.downVideoBlock = ^(BOOL download) {
+        
         NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
         moreView.isPayVideo = YES;
         moreView.isVideo = YES;
         moreView.clickIndexBlock = ^(NSInteger buttonIndex) {
-            NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
-            juBaoView.reouceId = weakSelf.currentPlayModel.videoId;
-            juBaoView.reouceType = @"148";
-            [juBaoView showView];
+            if (buttonIndex == 1) {
+                AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                //判断当前是否为画中画
+                if (appdel.pipVC.isPictureInPictureActive) {
+                    //关闭画中画
+                    [appdel.pipVC stopPictureInPicture];
+                } else {
+                    //开始画中画
+                    [appdel.pipVC startPictureInPicture];
+                }
+            }else{
+                NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
+                juBaoView.reouceId = weakSelf.currentPlayModel.videoId;
+                juBaoView.reouceType = @"148";
+                [juBaoView showView];
+            }
+           
         };
         [moreView showTost];
     };
@@ -283,7 +296,6 @@
 
 - (void)mainTableViewDidScroll:(UIScrollView *)scrollView{
     
-
     if (self.currentPlayModel.screen.intValue == 2) {
         CGFloat height = DR_SCREEN_WIDTH*4/3-scrollView.contentOffset.y;
         if (height > DR_SCREEN_WIDTH/16*9) {

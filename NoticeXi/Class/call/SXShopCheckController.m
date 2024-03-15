@@ -58,16 +58,14 @@
     [self.view addSubview:addBtn];
     self.xieyBtn = addBtn;
     
-    if ((self.shopModel.verifyModel.verify_status.intValue > 0) || self.shopModel.is_submit_authentication.intValue == 1) {//认证通过或者提交过审核
-        
-        if (self.shopModel.verifyModel.verify_status.intValue != 4) {
-            self.type = 9;
-        }
-        [self requestStatus];
-    }
 }
 
-- (void)xieyiClick{//
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self requestStatus];
+}
+
+- (void)xieyiClick{
     SXWebViewController * webctl = [[SXWebViewController alloc] init];
     webctl.url = @"http://priapi.byebyetext.com/authentication.html";
     [self.navigationController pushViewController:webctl animated:YES];
@@ -81,6 +79,8 @@
         if (self.type == 2) {
             self.waitOrSuccessView.statusL1.textColor = [UIColor colorWithHexString:@"#14151A"];
             self.waitOrSuccessView.statusL2.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        }else{
+            self.waitOrSuccessView.statusL2.textColor = [UIColor whiteColor];
         }
     }
     
@@ -90,6 +90,8 @@
         if (self.type == 4) {
             self.zigeWaitOrSuccessView.statusL1.textColor = [UIColor colorWithHexString:@"#14151A"];
             self.zigeWaitOrSuccessView.statusL2.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        }else{
+            self.zigeWaitOrSuccessView.statusL2.textColor = [UIColor whiteColor];
         }
     }
     

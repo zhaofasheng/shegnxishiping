@@ -177,6 +177,7 @@
             break;
         }
     }
+    
     if (hasSave) {
         [[NoticeTools getTopViewController] showToastWithText:@"当前视频已经缓存，无需重复缓存"];
         successBlock(NO);
@@ -192,7 +193,7 @@
     }
  
     HWDownloadModel *downM = [[HWDownloadModel alloc] init];
-    downM.url = videoModel.video_download_url;
+    downM.url = videoModel.video_url;
     downM.fileName = videoModel.title;
     downM.video_len = videoModel.video_len;
     downM.videoCover = videoModel.video_cover_url;

@@ -11,7 +11,7 @@
 #import "NoticeMyBookController.h"
 #import "BaseNavigationController.h"
 #import "NoticeTabbarController.h"
-
+#import <AVKit/AVKit.h>
 @implementation NoticeMoreClickView
 
 
@@ -107,11 +107,25 @@
 - (void)setIsVideo:(BOOL)isVideo{
     _isVideo = isVideo;
     if (self.isPayVideo) {
-        self.imgArr = @[@"sxjubaovideo_img"];
-        self.titleArr = @[@"举报"];
+        //1.判断是否支持画中画功能
+        if ([AVPictureInPictureController isPictureInPictureSupported]) {
+            self.imgArr = @[@"sxjubaovideo_img",@"sxpicinpic_img"];
+            self.titleArr = @[@"举报",@"窗口播放"];
+        }else{
+            self.imgArr = @[@"sxjubaovideo_img"];
+            self.titleArr = @[@"举报"];
+        }
+      
     }else{
-        self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img"];
-        self.titleArr = @[@"举报",@"缓存"];
+        //1.判断是否支持画中画功能
+        if ([AVPictureInPictureController isPictureInPictureSupported]) {
+            self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img",@"sxpicinpic_img"];
+            self.titleArr = @[@"举报",@"缓存",@"窗口播放"];
+        }else{
+            self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img"];
+            self.titleArr = @[@"举报",@"缓存"];
+        }
+
     }
 
     [self.movieTableView reloadData];

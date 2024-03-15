@@ -11,7 +11,10 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SelPlayerConfiguration.h"
 #import "SelPlaybackControls.h"
+
+
 @class SelPlayerConfiguration;
+
 @interface SelVideoPlayer : UIView
 
 /**

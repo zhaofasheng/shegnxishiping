@@ -13,7 +13,7 @@
 #import "NoticeFloatView.h"
 #import "STRIAPManager.h"
 #import "NoticeAudioChatTools.h" 
-
+#import <AVKit/AVKit.h>
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (nonatomic, strong) NoticeSocketManger *socketManager;
 @property (nonatomic, strong) NoticeAudioChatTools *audioChatTools;
@@ -57,5 +57,7 @@
 @property (nonatomic, copy) void (^ backgroundSessionCompletionHandler)(void);  // 后台所有下载任务完成回调
 //以下方法为播放心情时候信息流助手所用方法
 @property (nonatomic, strong) NoticeFloatView *floatView;
+
+@property(strong,nonatomic) AVPictureInPictureController *pipVC;
 @end
 

@@ -22,7 +22,7 @@ class NoticeShopListController: NoticeBaseCellController {
         self.navBarView.backButton.setImage(UIImage.init(named: "Image_blackBack"), for: .normal)
         self.view.backgroundColor = UIColor.init(hexString: "#F7F8FC")
         self.tableView.backgroundColor = self.view.backgroundColor
-        self.navBarView.titleL.text = "解忧杂货铺"
+        self.navBarView.titleL.text = "咨询"
         self.navBarView.titleL.textColor = UIColor.init(hexString: "#25262E");
         
         self.tableView.rowHeight = 255

@@ -262,7 +262,7 @@ class NoticeMyShopHeaderView: UIView {
     
     @objc func proTap(){
         let tostView = NoticeProtocolView.init(frame: CGRect(x: 0, y: 0, width: NoticeSwiftFile.screenWidth, height: NoticeSwiftFile.screenHeight))
-        tostView.showTitle(title: "解忧杂货铺", content: "·解忧杂货铺\n\n只要你想见我，我随时都在。我会一直在你身边你慢慢说，我慢慢听。通过自己的暖心技能来治愈小伙伴\n\n·鲸币是声昔APP的虚拟货币，可用于购买杂货铺里的虚拟服务商品。\n\n·店铺规则\n1.店铺需要手动「开始营业」「结束营业」。\n2.店主和顾客的身份都是匿名的。\n3.聊天记录不会保存\n4.店铺营业中，但连续3次以上不接单，将会自动结束营业。\n5.举报核实后，如属实或恶意举报，店铺或顾客会有相应的违规惩罚，具体以管理员通知为准。")
+        tostView.showTitle(title: "咨询", content: "·咨询\n\n只要你想见我，我随时都在。我会一直在你身边你慢慢说，我慢慢听。通过自己的暖心技能来治愈小伙伴\n\n·鲸币是声昔APP的虚拟货币，可用于购买杂货铺里的虚拟服务商品。\n\n·店铺规则\n1.店铺需要手动「开始营业」「结束营业」。\n2.店主和顾客的身份都是匿名的。\n3.聊天记录不会保存\n4.店铺营业中，但连续3次以上不接单，将会自动结束营业。\n5.举报核实后，如属实或恶意举报，店铺或顾客会有相应的违规惩罚，具体以管理员通知为准。")
     }
     
     @objc func eidtClick(){
