@@ -40,7 +40,13 @@
     }
     NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
     ctl.shopModel = self.dataArr[indexPath.row];
-    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
+                                                                    withSubType:kCATransitionFromLeft
+                                                                       duration:0.3f
+                                                                 timingFunction:kCAMediaTimingFunctionLinear
+                                                                           view:self.navigationController.view];
+    [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:NO];
 }
 
 //设置cell

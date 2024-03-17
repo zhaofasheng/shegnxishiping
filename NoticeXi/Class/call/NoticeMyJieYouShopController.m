@@ -220,7 +220,7 @@
     }
     
     if(!self.sellGoodsArr.count){
-        [self showToastWithText:@"请添加您要营业的商品"];
+        [self showToastWithText:@"请上滑页面到添加商品入口 添加您要营业的商品"];
         return;
     }
    

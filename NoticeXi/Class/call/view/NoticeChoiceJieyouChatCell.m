@@ -69,6 +69,7 @@
         _freeLabel.hidden = YES;
         if (goodModel.is_experience.boolValue) {
             self.freeLabel.text = [NSString stringWithFormat:@"免费试聊%d次",goodModel.experience_times.intValue];
+            self.freeLabel.hidden = NO;
         }
         _titleL.frame = CGRectMake(85, 25, self.backView.frame.size.width-85-35, 22);
         self.iconImageView.frame = CGRectMake(15, 24, 60, 60);

@@ -7,6 +7,7 @@
 //
 
 #import "SXPlayDetailController.h"
+
 #import "SXPlayDetailListController.h"
 #import "SXVideoHeaderDetailView.h"
 #import "JXCategoryView.h"
@@ -17,12 +18,15 @@
 #import "SelPlayerConfiguration.h"
 #import "NoticeVoiceDownLoadController.h"
 #import "NoticeMoreClickView.h"
+
 #import "NoticeXi-Swift.h"
+
 @interface SXPlayDetailController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) SXPlayDetailListController *listVC;
 
 @property (nonatomic, strong) JXCategoryTitleView *categoryView;
+
 @property (nonatomic, strong) JXPagerListRefreshView *pagerView;
 
 @property (nonatomic, strong) SelVideoPlayer *player;
@@ -30,7 +34,9 @@
 @property (nonatomic, strong) SXVideoHeaderDetailView *videoHeaderView;
 
 @property (nonatomic, assign) BOOL isNotPop;
+
 @property (nonatomic, assign) BOOL isPause;
+
 @end
 
 @implementation SXPlayDetailController

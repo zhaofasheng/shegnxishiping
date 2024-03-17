@@ -181,7 +181,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>是否允许保存图片到相册?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>用于发布声昔、上传头像等需要获取或添加图⽚的功能。</string>
+	<string>用于上传头像等需要获取或添加图⽚的功能。</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>授权Siri语音识别</string>
 	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
