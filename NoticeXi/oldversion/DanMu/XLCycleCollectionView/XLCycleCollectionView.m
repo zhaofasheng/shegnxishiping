@@ -84,7 +84,12 @@ static CGFloat ScrollInterval = 3.0f;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     static NSString* cellId = @"XLCycleCell";
     XLCycleCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
-    cell.model = self.titles[indexPath.row];
+    if (self.justImag) {
+        [cell.backImageView sd_setImageWithURL:[NSURL URLWithString:self.titles[indexPath.row]]];
+    }else{
+        cell.model = self.titles[indexPath.row];
+    }
+    
     return cell;
 }
 
@@ -121,6 +126,9 @@ static CGFloat ScrollInterval = 3.0f;
 #pragma mark Setter
 //设置数据时在第一个之前和最后一个之后分别插入数据
 - (void)setData:(NSArray<NSString *> *)data {
+    if (!data.count) {
+        return;
+    }
     self.titles = [NSMutableArray arrayWithArray:data];
     [self.titles addObject:data.firstObject];
     [self.titles insertObject:data.lastObject atIndex:0];
@@ -134,9 +142,12 @@ static CGFloat ScrollInterval = 3.0f;
     if(!bokeArr.count){
         return;
     }
-    self.titles = [NSMutableArray arrayWithArray:bokeArr];
-    [self.titles addObject:bokeArr.firstObject];
-    [self.titles insertObject:bokeArr.lastObject atIndex:0];
+    if (!self.justImag) {
+        self.titles = [NSMutableArray arrayWithArray:bokeArr];
+        [self.titles addObject:bokeArr.firstObject];
+        [self.titles insertObject:bokeArr.lastObject atIndex:0];
+    }
+ 
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.bounds.size.width, 0)];
     self.pageControl.numberOfPages = bokeArr.count;
 

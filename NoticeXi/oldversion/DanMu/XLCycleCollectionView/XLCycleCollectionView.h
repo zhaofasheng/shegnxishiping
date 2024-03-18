@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NoticeDanMuModel.h"
 @interface XLCycleCollectionView : UIView
-
+@property (nonatomic, assign) BOOL justImag;
 @property (nonatomic, strong) NSArray<NSString *> *data;
 @property (nonatomic, strong) NSMutableArray *bokeArr;
 @property (nonatomic, copy) void(^clickBokeBlock)(NoticeDanMuModel *bokeM);

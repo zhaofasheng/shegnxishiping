@@ -8,7 +8,7 @@
 
 #import "SXPayForVideosController.h"
 #import "SXPayForVideoCell.h"
-#import "SXPayVideoListController.h"
+#import "SXStudyBaseController.h"
 #import "SXHasBuyPayVideoController.h"
 #import "NoticeLoginViewController.h"
 @interface SXPayForVideosController ()
@@ -138,7 +138,7 @@
         [self.navigationController pushViewController:ctl animated:YES];
         return;
     }
-    SXPayVideoListController *ctl = [[SXPayVideoListController alloc] init];
+    SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
     SXPayForVideoModel *model = self.dataArr[indexPath.row];
     ctl.paySearModel = model;
     __weak typeof(self) weakSelf = self;

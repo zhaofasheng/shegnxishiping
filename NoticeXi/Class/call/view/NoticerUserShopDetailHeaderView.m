@@ -144,6 +144,12 @@
     
     self.markImageView.hidden = YES;
     
+    if (shopModel.introduce_len.intValue > 0) {
+        self.playImageV.hidden = NO;
+    }else{
+        self.playImageV.hidden = YES;
+    }
+    
     SXVerifyShopModel *verifyModel = shopModel.verifyModel;
     if (verifyModel.authentication_type.intValue  > 0) {
         if (verifyModel.authentication_type.intValue == 1) {//学历

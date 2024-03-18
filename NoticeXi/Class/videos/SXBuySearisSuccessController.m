@@ -8,8 +8,7 @@
 
 #import "SXBuySearisSuccessController.h"
 #import "SXBuySearisSuccessView.h"
-#import "SXPayVideoListController.h"
-#import "SXPayVideoListController.h"
+#import "SXStudyBaseController.h"
 @interface SXBuySearisSuccessController ()
 @property (nonatomic, strong) SXBuySearisSuccessView *headerView;
 @end
@@ -43,7 +42,7 @@
 
 - (void)lookClick{
     if (self.isFromList) {
-        SXPayVideoListController *ctl = [[SXPayVideoListController alloc] init];
+        SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
   
         ctl.paySearModel = self.paySearModel;
 
@@ -53,7 +52,7 @@
     __block UIViewController *pushVC;
     __weak typeof(self) weakSelf = self;
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[SXPayVideoListController class]]) {//返回到指定界面
+        if ([obj isKindOfClass:[SXStudyBaseController class]]) {//返回到指定界面
             pushVC = obj;
             [weakSelf.navigationController popToViewController:pushVC animated:YES];
             return ;

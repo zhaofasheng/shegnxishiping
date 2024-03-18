@@ -1356,6 +1356,9 @@
 		FE7440382BA2A595007EE4A6 /* SXBuyVideoOrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440372BA2A595007EE4A6 /* SXBuyVideoOrderList.m */; };
 		FE74403B2BA2C4E1007EE4A6 /* SXHisToryDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE74403A2BA2C4E1007EE4A6 /* SXHisToryDownLoadController.m */; };
 		FE74403E2BA31CF2007EE4A6 /* SXHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE74403D2BA31CF2007EE4A6 /* SXHistoryModel.m */; };
+		FE7440C82BA7D470007EE4A6 /* SXKchengIntroController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440C42BA7D46F007EE4A6 /* SXKchengIntroController.m */; };
+		FE7440C92BA7D470007EE4A6 /* SXStudyBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440C62BA7D470007EE4A6 /* SXStudyBaseController.m */; };
+		FE7440CA2BA7D470007EE4A6 /* SXPayVideoListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440C72BA7D470007EE4A6 /* SXPayVideoListController.m */; };
 		FE8B48772B8EDEAC004C3965 /* SXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */; };
 		FE953C802B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C7F2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m */; };
 		FE953C832B68D3420098F0A2 /* NoticeDownloadVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C822B68D3420098F0A2 /* NoticeDownloadVoiceCell.m */; };
@@ -1412,7 +1415,6 @@
 		FEBF80C62B50CD9E0086A94B /* NoticeShopDataIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBF80C52B50CD9E0086A94B /* NoticeShopDataIdModel.m */; };
 		FEBF80C92B5123ED0086A94B /* NoticeShopRuleController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBF80C82B5123ED0086A94B /* NoticeShopRuleController.m */; };
 		FEE2DD072B9018B7008AAB53 /* SXScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD062B9018B7008AAB53 /* SXScrollLabel.m */; };
-		FEE2DD0A2B905048008AAB53 /* SXPayVideoListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD092B905048008AAB53 /* SXPayVideoListController.m */; };
 		FEE2DD0D2B905115008AAB53 /* SXHasBuyPayVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD0C2B905115008AAB53 /* SXHasBuyPayVideoController.m */; };
 		FEE2DD102B90524F008AAB53 /* SXSearisHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD0F2B90524F008AAB53 /* SXSearisHeaderView.m */; };
 		FEE2DD132B90571D008AAB53 /* SXNoBuySearisListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD122B90571D008AAB53 /* SXNoBuySearisListCell.m */; };
@@ -3911,6 +3913,7 @@
 		FE35EA942B62386000524991 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FE35EAA42B62518D00524991 /* NoticeVideoCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeVideoCollectionViewCell.h; sourceTree = "<group>"; };
 		FE35EAA52B62518D00524991 /* NoticeVideoCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeVideoCollectionViewCell.m; sourceTree = "<group>"; };
+		FE466B862BA824F200A7376B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FE48C0F02B47CD130069D1A6 /* NoticePhoneChatView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticePhoneChatView.h; sourceTree = "<group>"; };
 		FE48C0F12B47CD130069D1A6 /* NoticePhoneChatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticePhoneChatView.m; sourceTree = "<group>"; };
 		FE48C1042B47FC9A0069D1A6 /* Notice3DshopListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notice3DshopListView.h; sourceTree = "<group>"; };
@@ -4012,6 +4015,12 @@
 		FE74403A2BA2C4E1007EE4A6 /* SXHisToryDownLoadController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHisToryDownLoadController.m; sourceTree = "<group>"; };
 		FE74403C2BA31CF2007EE4A6 /* SXHistoryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHistoryModel.h; sourceTree = "<group>"; };
 		FE74403D2BA31CF2007EE4A6 /* SXHistoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHistoryModel.m; sourceTree = "<group>"; };
+		FE7440C22BA7D46E007EE4A6 /* SXKchengIntroController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXKchengIntroController.h; sourceTree = "<group>"; };
+		FE7440C32BA7D46F007EE4A6 /* SXPayVideoListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXPayVideoListController.h; sourceTree = "<group>"; };
+		FE7440C42BA7D46F007EE4A6 /* SXKchengIntroController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXKchengIntroController.m; sourceTree = "<group>"; };
+		FE7440C52BA7D46F007EE4A6 /* SXStudyBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXStudyBaseController.h; sourceTree = "<group>"; };
+		FE7440C62BA7D470007EE4A6 /* SXStudyBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXStudyBaseController.m; sourceTree = "<group>"; };
+		FE7440C72BA7D470007EE4A6 /* SXPayVideoListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPayVideoListController.m; sourceTree = "<group>"; };
 		FE8B48752B8EDEAC004C3965 /* SXWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXWebViewController.h; sourceTree = "<group>"; };
 		FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXWebViewController.m; sourceTree = "<group>"; };
 		FE953C7E2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeVoiceDownLoadController.h; sourceTree = "<group>"; };
@@ -4124,8 +4133,6 @@
 		FEBF80C82B5123ED0086A94B /* NoticeShopRuleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeShopRuleController.m; sourceTree = "<group>"; };
 		FEE2DD052B9018B7008AAB53 /* SXScrollLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXScrollLabel.h; sourceTree = "<group>"; };
 		FEE2DD062B9018B7008AAB53 /* SXScrollLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXScrollLabel.m; sourceTree = "<group>"; };
-		FEE2DD082B905048008AAB53 /* SXPayVideoListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPayVideoListController.h; sourceTree = "<group>"; };
-		FEE2DD092B905048008AAB53 /* SXPayVideoListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPayVideoListController.m; sourceTree = "<group>"; };
 		FEE2DD0B2B905115008AAB53 /* SXHasBuyPayVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHasBuyPayVideoController.h; sourceTree = "<group>"; };
 		FEE2DD0C2B905115008AAB53 /* SXHasBuyPayVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHasBuyPayVideoController.m; sourceTree = "<group>"; };
 		FEE2DD0E2B90524F008AAB53 /* SXSearisHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSearisHeaderView.h; sourceTree = "<group>"; };
@@ -4406,6 +4413,7 @@
 				A4E964822A69141F00AE022E /* PrefixHeader.pch */,
 				A4E95A7F2A69141A00AE022E /* Assets.xcassets */,
 				A4E964832A69141F00AE022E /* Info.plist */,
+				FE466B862BA824F200A7376B /* PrivacyInfo.xcprivacy */,
 				A4E95A582A69141A00AE022E /* InfoPlist.strings */,
 				A4E95A802A69141A00AE022E /* LaunchScreen.storyboard */,
 				A4E95A552A69141A00AE022E /* LaunchScreen.strings */,
@@ -8502,10 +8510,14 @@
 				FE6CF93B2B84550D005EE663 /* model */,
 				FEBCADCA2B8361580048F5A1 /* NoticeVideosController.h */,
 				FEBCADC92B8361580048F5A1 /* NoticeVideosController.m */,
+				FE7440C22BA7D46E007EE4A6 /* SXKchengIntroController.h */,
+				FE7440C42BA7D46F007EE4A6 /* SXKchengIntroController.m */,
+				FE7440C32BA7D46F007EE4A6 /* SXPayVideoListController.h */,
+				FE7440C72BA7D470007EE4A6 /* SXPayVideoListController.m */,
+				FE7440C52BA7D46F007EE4A6 /* SXStudyBaseController.h */,
+				FE7440C62BA7D470007EE4A6 /* SXStudyBaseController.m */,
 				FE6CF9542B85F68D005EE663 /* SXPayForVideosController.h */,
 				FE6CF9552B85F68D005EE663 /* SXPayForVideosController.m */,
-				FEE2DD082B905048008AAB53 /* SXPayVideoListController.h */,
-				FEE2DD092B905048008AAB53 /* SXPayVideoListController.m */,
 				FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */,
 				FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */,
 				FE9C3FAC2B90700E008C3A22 /* SXBuySearisSuccessController.h */,
@@ -9051,6 +9063,7 @@
 				A4E966502A69142300AE022E /* ZFSPickerModel.m in Sources */,
 				A4E964D82A69142100AE022E /* WMProgressView.m in Sources */,
 				A4E964A12A69142100AE022E /* bannerViewCell.m in Sources */,
+				FE7440CA2BA7D470007EE4A6 /* SXPayVideoListController.m in Sources */,
 				A4E969982A69142800AE022E /* CLPlayerView.m in Sources */,
 				A4E965FC2A69142300AE022E /* NoticeWebFriendViewController.m in Sources */,
 				A4E968162A69142500AE022E /* NoticeUserInfoCenterController.m in Sources */,
@@ -9647,6 +9660,7 @@
 				A4E966552A69142300AE022E /* NoticeHotMovieCell.m in Sources */,
 				A4E967702A69142400AE022E /* NoticeSendSysMessageManagerController.m in Sources */,
 				A4E967142A69142400AE022E /* NoticeChats.m in Sources */,
+				FE7440C82BA7D470007EE4A6 /* SXKchengIntroController.m in Sources */,
 				A4E9675A2A69142400AE022E /* FDAlertView.m in Sources */,
 				FEE563162B8ED08A0004CC11 /* SXUserCenterCell.m in Sources */,
 				A4E966BB2A69142300AE022E /* DRPsyCell.m in Sources */,
@@ -9671,7 +9685,6 @@
 				A4E967BF2A69142500AE022E /* NoticeDepartureCell.m in Sources */,
 				A4E964B32A69142100AE022E /* YYPhotoGroupView.m in Sources */,
 				A4E9660B2A69142300AE022E /* NoticeSendBoKeController.m in Sources */,
-				FEE2DD0A2B905048008AAB53 /* SXPayVideoListController.m in Sources */,
 				A4E966452A69142300AE022E /* NoticeHandAddMovieController.m in Sources */,
 				A4E968EA2A69142600AE022E /* NoticeChangeShopNameView.swift in Sources */,
 				FE6CF9482B859C92005EE663 /* SXWeiXinPayModel.m in Sources */,
@@ -10301,6 +10314,7 @@
 				A4E966DF2A69142400AE022E /* NoticeTieTieModel.m in Sources */,
 				A4E967972A69142400AE022E /* NoticeManagerCiTiaoCell.m in Sources */,
 				A4E964F72A69142200AE022E /* JXCategoryIndicatorCell.m in Sources */,
+				FE7440C92BA7D470007EE4A6 /* SXStudyBaseController.m in Sources */,
 				A4E9694B2A69142700AE022E /* NoticeVoiceReadController.m in Sources */,
 				A4E968842A69142600AE022E /* NoticeSendTeamMsgTools.m in Sources */,
 				A4E966CD2A69142300AE022E /* NoticeTieTieSignController.m in Sources */,
@@ -10510,7 +10524,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 209;
+				CURRENT_PROJECT_VERSION = 220;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
@@ -10711,7 +10725,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 209;
+				CURRENT_PROJECT_VERSION = 220;
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = XD7545Y7QW;

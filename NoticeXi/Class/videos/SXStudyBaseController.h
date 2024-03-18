@@ -1,21 +1,20 @@
 //
-//  SXPayVideoListController.h
+//  SXStudyBaseController.h
 //  NoticeXi
 //
-//  Created by 赵小二 on 2024/2/29.
+//  Created by 赵小二 on 2024/3/17.
 //  Copyright © 2024 zhaoxiaoer. All rights reserved.
 //
 
-#import "NoticeBaseCellController.h"
+#import "NoticeBaseController.h"
 #import "SXPayForVideoModel.h"
-#import "JXPagerView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SXPayVideoListController : NoticeBaseCellController<JXPagerViewListViewDelegate>
+@interface SXStudyBaseController : NoticeBaseController
+
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic,copy) void(^buySuccessBlock)(NSString *searisID);
 
-- (void)refreshStatus;
 @end
 
 NS_ASSUME_NONNULL_END

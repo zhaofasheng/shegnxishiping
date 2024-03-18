@@ -10,23 +10,22 @@
 #import "SXSearisHeaderView.h"
 #import "SXHasBuySearisListCell.h"
 #import "SXNoBuySearisListCell.h"
-#import "SXBuySearisController.h"
+
 #import "SXPayVideoPlayDetailBaseController.h"
 
 @interface SXPayVideoListController ()
 @property (nonatomic, strong) SXSearisHeaderView *headerView;
 @property (nonatomic, strong) UIView *footView;
-@property (nonatomic, strong) UIImageView *priceBtn;
-@property (nonatomic, strong) UIButton *buyBtn;
-@property (nonatomic, strong) UIView *backView;
+
+
+@property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
+
 @end
 
 @implementation SXPayVideoListController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navBarView.titleL.text = @"课程目录";
     
     
     self.headerView = [[SXSearisHeaderView alloc] initWithFrame:CGRectZero];
@@ -43,7 +42,9 @@
         }
     };
     
-    [self.tableView reloadData];
+    self.navBarView.hidden = YES;
+
+    
     
     if (self.paySearModel.published_episodes.intValue < self.paySearModel.episodes.intValue) {
         self.tableView.tableFooterView = self.footView;
@@ -54,6 +55,8 @@
     [self.tableView registerClass:[SXNoBuySearisListCell class] forCellReuseIdentifier:@"noCell"];
     [self.tableView registerClass:[SXHasBuySearisListCell class] forCellReuseIdentifier:@"cell"];
 
+    [self refreshStatus];
+    
     [self request];
 }
 
@@ -138,36 +141,16 @@
 }
 
 - (void)refreshStatus{
-    if (!self.paySearModel.hasBuy) {
-        self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
-        [self noBuyView];
-    }else{
-        self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);
-        self.backView.hidden = YES;
-        [self.headerView refresUI];
-        [self.tableView reloadData];
-    }
+
+    [self.headerView refresUI];
+    self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-(self.paySearModel.is_bought.boolValue?0:TAB_BAR_HEIGHT));
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self refreshStatus];
-}
-
-- (void)buyClick{
-    SXBuySearisController *ctl = [[SXBuySearisController alloc] init];
-    ctl.paySearModel = self.paySearModel;
-    __weak typeof(self) weakSelf = self;
-    ctl.buySuccessBlock = ^(NSString * _Nonnull searisID) {
-        if ([searisID isEqualToString:weakSelf.paySearModel.seriesId]) {
-            weakSelf.paySearModel.is_bought = @"1";
-            [weakSelf refreshStatus];
-        }
-        if (weakSelf.buySuccessBlock) {
-            weakSelf.buySuccessBlock(searisID);
-        }
-    };
-    [self.navigationController pushViewController:ctl animated:YES];
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -206,59 +189,20 @@
 }
 
 
-//没有购买时候的底部UI
-- (void)noBuyView{
-    
-    UIView *backView = [[UIView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, TAB_BAR_HEIGHT)];
-    backView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:backView];
-    self.backView = backView;
-    
-    self.priceBtn = [[UIImageView  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-335)/2,5, 234, 40)];
-    self.priceBtn.image = UIImageNamed(@"sxpricebak_img");
-    [backView addSubview:self.priceBtn];
-    
-    NSString *price = [NSString stringWithFormat:@"¥%@",self.paySearModel.price];
-    NSString *oriprice = [NSString stringWithFormat:@"¥%@",self.paySearModel.original_price];
-    
-    CGFloat markWidth = GET_STRWIDTH(@"专属价", 15, 40);
-    CGFloat realPriceWidth = GET_STRWIDTH(price, 21, 40);
-    CGFloat oriPriceWidth = GET_STRWIDTH(oriprice, 14, 40);
-    CGFloat orSpace = (self.priceBtn.frame.size.width - markWidth-realPriceWidth-oriPriceWidth-2)/2;
-    
-    UILabel *markL = [[UILabel alloc] initWithFrame:CGRectMake(orSpace, 0, markWidth, 40)];
-    markL.font = FIFTHTEENTEXTFONTSIZE;
-    markL.textColor = [UIColor whiteColor];
-    markL.text = @"专属价";
-    markL.textAlignment = NSTextAlignmentCenter;
-    [self.priceBtn addSubview:markL];
-    
-    UILabel *realPriceL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(markL.frame)+2, 0, realPriceWidth, 40)];
-    realPriceL.font = SXNUMBERFONT(20);
-    realPriceL.textColor = [UIColor whiteColor];
-    realPriceL.text = price;
-    realPriceL.textAlignment = NSTextAlignmentCenter;
-    [self.priceBtn addSubview:realPriceL];
-    
-    UILabel *oripriceL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(realPriceL.frame), 0, oriPriceWidth, 40)];
-    oripriceL.font = SXNUMBERFONT(14);
-    oripriceL.textColor = [UIColor whiteColor];
-    oripriceL.text = oriprice;
-    oripriceL.textAlignment = NSTextAlignmentCenter;
-    [self.priceBtn addSubview:oripriceL];
-    
-    UIView *line = [[UIView  alloc] initWithFrame:CGRectMake(0, 39/2, oriPriceWidth, 1)];
-    line.backgroundColor = [UIColor whiteColor];
-    [oripriceL addSubview:line];
-    
-    self.buyBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-self.priceBtn.frame.origin.x-116, self.priceBtn.frame.origin.y, 116, 40)];
-    [self.buyBtn setBackgroundImage:UIImageNamed(@"sxbuyBtn_img") forState:UIControlStateNormal];
-    self.buyBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
-    [self.buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.buyBtn setTitle:@"立即报名" forState:UIControlStateNormal];
-    [backView addSubview:self.buyBtn];
-    [self.buyBtn addTarget:self action:@selector(buyClick) forControlEvents:UIControlEventTouchUpInside];
+- (UIView *)listView {
+    return self.view;
 }
 
+- (UIScrollView *)listScrollView {
+    return self.tableView;
+}
+
+- (void)listViewDidScrollCallback:(void (^)(UIScrollView *))callback {
+    self.scrollCallback = callback;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    !self.scrollCallback ?: self.scrollCallback(scrollView);
+}
 
 @end

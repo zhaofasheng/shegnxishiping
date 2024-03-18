@@ -134,9 +134,9 @@
         if (success) {
             [self showToastWithText:@"邮箱提交成功，后续系统会把您历史数据发送至您的邮箱"];
         }
-        [self showHUD];
+        [self hideHUD];
     } fail:^(NSError * _Nullable error) {
-        [self showHUD];
+        [self hideHUD];
     }];
 }
 
@@ -159,9 +159,9 @@
         if (success) {
             [self showToastWithText:@"申请成功，请耐心等待以及留意到账提醒"];
         }
-        [self showHUD];
+        [self hideHUD];
     } fail:^(NSError * _Nullable error) {
-        [self showHUD];
+        [self hideHUD];
     }];
 }
 

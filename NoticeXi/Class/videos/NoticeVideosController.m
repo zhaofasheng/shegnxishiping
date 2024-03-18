@@ -35,12 +35,12 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         weakSelf.pageNo = 1;
         [weakSelf request];
     }];
+    
     self.collectionView.mj_header = header;
     self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         weakSelf.isDown = NO;
         weakSelf.pageNo++;
         [weakSelf request];
-        
     }];
     
     UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-30, 36)];
@@ -61,7 +61,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     
     //谁在首页谁需要实现这个功能
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin) name:@"outLoginClearDataNOTICATION" object:nil];
-    
     [self request];
 }
 
@@ -111,6 +110,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             
             for (NSDictionary *dic in dict[@"data"]) {
                 SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
+                
                 [self.dataArr addObject:videoM];
             }
             [self.collectionView reloadData];

@@ -721,7 +721,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
         _scrollLabel.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.5];
         _scrollLabel.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
         __weak typeof(self) weakSelf = self;
-        _scrollLabel.text = @"[版权声明]本课程版权归作者所有，仅限学习，严禁任何形式的录制，传播和分享，一经发现，平台将依法保留追究权，情节严重者将承担法律责任";
+        _scrollLabel.text = @"                          [版权声明]本课程版权归作者所有，仅限学习，严禁任何形式的录制，传播和分享，一经发现，平台将依法保留追究权，情节严重者将承担法律责任                        ";
         _scrollLabel.scrollFinishBlcok = ^(BOOL finish) {
             weakSelf.scrollLabel.hidden = YES;
         };
