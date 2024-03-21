@@ -16,7 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) NSString *money;
 @property (nonatomic, strong) UILabel *moneyL;
-@property (nonatomic, copy) void(^surePayBlock)(BOOL pay);
+@property (nonatomic, copy) void(^surePayBlock)(BOOL isWeipay);
+@property (nonatomic, assign) BOOL isWeixinPay;
+@property (nonatomic, strong) UIImageView *weixinChoiceV;
+@property (nonatomic, strong) UIImageView *aliChoiceV;
 @end
 
 NS_ASSUME_NONNULL_END

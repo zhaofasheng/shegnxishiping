@@ -6,6 +6,8 @@
 #import "NoticeOpenTbModel.h"
 //微信SDK头文件
 #import "WXApi.h"
+
+#import <AlipaySDK/AlipaySDK.h>
 @interface STRIAPManager()<SKPaymentTransactionObserver,SKProductsRequestDelegate>{
    NSString           *_purchID;
    IAPCompletionHandle _handle;
@@ -338,6 +340,12 @@
     
     //发送请求到微信，等待微信返回onResp
     [WXApi sendReq:req];
+}
+
+- (void)startAliPay:(SXWeiXinPayModel *)payModel{
+    [[AlipaySDK defaultService] payOrder:payModel.alikey fromScheme:@"alisdkdemo" callback:^(NSDictionary *resultDic) {
+            
+    }];
 }
 
 @end

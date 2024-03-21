@@ -631,7 +631,6 @@
                 }
                 
                 if (!alerady) {
-                  
                     [self.nolmorLdataArr addObject:model];
                     [newArr addObject:model];
                 }

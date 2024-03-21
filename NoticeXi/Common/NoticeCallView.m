@@ -324,7 +324,6 @@
         }
     };
     [alerView showXLAlertView];
-
 }
 
 - (void)hasKillApp{

@@ -39,19 +39,47 @@
         [cancelTapView addGestureRecognizer:tap];
         [self addSubview:cancelTapView];
         
-        UIImageView *typeImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(20, 120, 24, 24)];
-        [self.contentView addSubview:typeImageV];
+        UIView *tap1V = [[UIView  alloc] initWithFrame:CGRectMake(0, 104, DR_SCREEN_WIDTH, 50)];
+        tap1V.userInteractionEnabled = YES;
+        [self.contentView addSubview:tap1V];
+        UITapGestureRecognizer *paytap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(weixinPay)];
+        [tap1V addGestureRecognizer:paytap1];
+        
+        UIImageView *typeImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(20,13, 24, 24)];
+        [tap1V addSubview:typeImageV];
         typeImageV.image = UIImageNamed(@"sxweixpay_img");
         
-        UILabel *typeL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(typeImageV.frame)+10,121,150, 22)];
+        UILabel *typeL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(typeImageV.frame)+10,13,150, 24)];
         typeL.font = SIXTEENTEXTFONTSIZE;
         typeL.text = @"微信支付";
         typeL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        [self.contentView addSubview:typeL];
+        [tap1V addSubview:typeL];
         
-        UIImageView *choiceImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-40, 121, 20, 20)];
-        [self.contentView addSubview:choiceImageV];
+        UIImageView *choiceImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-40, 15, 20, 20)];
+        [tap1V addSubview:choiceImageV];
         choiceImageV.image = UIImageNamed(@"sxpaysuccess_img");
+        self.weixinChoiceV = choiceImageV;
+        
+        UIView *tap2V = [[UIView  alloc] initWithFrame:CGRectMake(0, 154, DR_SCREEN_WIDTH, 50)];
+        tap2V.userInteractionEnabled = YES;
+        [self.contentView addSubview:tap2V];
+        UITapGestureRecognizer *paytap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(aliPay)];
+        [tap2V addGestureRecognizer:paytap2];
+        
+        UIImageView *typeImageV1 = [[UIImageView  alloc] initWithFrame:CGRectMake(20,13, 24, 24)];
+        [tap2V addSubview:typeImageV1];
+        typeImageV1.image = UIImageNamed(@"sxalipay_img");
+        
+        UILabel *typeL1 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(typeImageV.frame)+10,13,150, 24)];
+        typeL1.font = SIXTEENTEXTFONTSIZE;
+        typeL1.text = @"支付宝支付";
+        typeL1.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [tap2V addSubview:typeL1];
+        
+        UIImageView *choiceImageV1 = [[UIImageView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-40, 15, 20, 20)];
+        [tap2V addSubview:choiceImageV1];
+        choiceImageV1.image = UIImageNamed(@"sxnochoice_img");
+        self.aliChoiceV = choiceImageV1;
         
         UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(20,277,DR_SCREEN_WIDTH-40, 40)];
         [button setAllCorner:20];
@@ -61,8 +89,22 @@
         button.titleLabel.font = SIXTEENTEXTFONTSIZE;
         [self.contentView addSubview:button];
         [button addTarget:self action:@selector(payClick) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.isWeixinPay = YES;
     }
     return self;
+}
+
+- (void)weixinPay{
+    self.isWeixinPay = YES;
+    self.aliChoiceV.image = UIImageNamed(@"sxnochoice_img");
+    self.weixinChoiceV.image = UIImageNamed(@"sxpaysuccess_img");
+}
+
+- (void)aliPay{
+    self.isWeixinPay = NO;
+    self.weixinChoiceV.image = UIImageNamed(@"sxnochoice_img");
+    self.aliChoiceV.image = UIImageNamed(@"sxpaysuccess_img");
 }
 
 - (void)setMoney:(NSString *)money{
@@ -73,7 +115,7 @@
 - (void)payClick{
 
     if (self.surePayBlock) {
-        self.surePayBlock(YES);
+        self.surePayBlock(self.isWeixinPay);
     }
     self.contentView.frame = CGRectMake(0, DR_SCREEN_HEIGHT, DR_SCREEN_WIDTH, TAB_BAR_HEIGHT+277);
     [self removeFromSuperview];

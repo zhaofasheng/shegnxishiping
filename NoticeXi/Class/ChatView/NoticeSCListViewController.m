@@ -303,9 +303,6 @@
                 NoticeStaySys *lastM = self.dataArr[self.dataArr.count-1];
                 self.lastId = lastM.last_dialog_id;
                 self.tableView.tableFooterView = nil;
-            }else{
-            
-                self.tableView.tableFooterView = self.defaultL;
             }
             
             if (self.isDown) {

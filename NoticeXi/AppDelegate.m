@@ -130,13 +130,11 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 
 //退出登录相关
 - (void)outLogin{
-
     [(AppDelegate *)[UIApplication sharedApplication].delegate deleteAlias];
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [appdel.socketManager.timer invalidate];
     [appdel.socketManager.webSocket close];
     appdel.socketManager = nil;
-    
 }
 
 
@@ -443,6 +441,38 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         }
         DRLog(@"授权结果 authCode = %@", authCode?:@"");
     }];
+    
+    //跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给SDK
+    if ([url.host isEqualToString:@"safepay"]) {
+        
+        [[AlipaySDK defaultService]
+         processOrderWithPaymentResult:url
+         standbyCallback:^(NSDictionary *resultDic) {
+             
+             NSLog(@"AppDelegate result = %@", resultDic);
+             //status: 9000 支付成功
+             //        6001 取消支付
+             NSString *status = resultDic[@"resultStatus"];
+             int sta = (int)[status integerValue];
+             NSString *strMsg = nil;
+             switch (sta) {
+                 case 9000:
+                     strMsg = @"支付成功";
+                     [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
+                     break;
+                     
+                 default:
+                     strMsg = @"支付失败";
+                     [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
+                     break;
+             }
+            DRLog(@"支付宝支付%@",strMsg);
+            
+             
+         }];
+        return YES;
+    }
+    
     //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
     return  [WXApi handleOpenURL:url delegate:self];
 }

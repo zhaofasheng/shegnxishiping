@@ -159,7 +159,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 //每个section的item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return self.dataArr.count;
+    return self.dataArr.count+3;
 }
 
 //定义每一个cell的大小

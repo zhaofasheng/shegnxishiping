@@ -55,5 +55,7 @@ typedef void (^IAPCompletionHandle)(SIAPPurchType type,NSData *data);
 - (void)startPurchWithID:(NSString *)purchID money:(NSString *)money toUserId:(NSString *)userId userNum:(NSString *)userNum isNiming:(NSString *)isNiming completeHandle:(IAPCompletionHandle)handle;
 
 - (void)startWeixinPay:(SXWeiXinPayModel *)payModel;
+
+- (void)startAliPay:(SXWeiXinPayModel *)payModel;
 @end
 

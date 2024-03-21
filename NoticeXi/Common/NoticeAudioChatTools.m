@@ -249,6 +249,13 @@
 
 //拒绝
 - (void)repject:(BOOL)close{
+    if (!self.orderModel.room_id || !self.orderModel) {
+        if (close) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
+        }
+        [TUICallingAction reject];
+        return;
+    }
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:close?@"5": @"3" forKey:@"orderType"];
