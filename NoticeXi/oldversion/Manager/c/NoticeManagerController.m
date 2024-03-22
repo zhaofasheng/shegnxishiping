@@ -44,20 +44,12 @@
 @end
 
 @implementation NoticeManagerController
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
- 
-    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appdel.floatView.isPlaying) {
-        appdel.floatView.noRePlay = YES;
-        [appdel.floatView.audioPlayer stopPlaying];
-    }
-    appdel.floatView.hidden = YES;
 
-}
+
 - (instancetype)init {
     if (self = [super init]) {
-        self.titles = @[@"播客投稿",@"审核中心",@"首3条悄悄话",@"首3条交流",@"社团相关",[NoticeTools getLocalStrWith:@"minee.syy"],@"举报待处理",@"举报待调查",@"举报已处理",@"配音敏感词库",@"店铺请求",@"订单审核",@"banner",@"找回账号",@"用户反馈",@"温暖计划",@"已标记",@"新每日一阅"];
+       // 6.7.8  10 11 13
+        self.titles = @[@"举报待处理",@"举报待调查",@"举报已处理",@"店铺请求",@"订单审核",@"找回账号"];
         self.menuViewStyle = WMMenuViewStyleLine;
         self.menuViewLayoutMode = WMMenuViewLayoutModeCenter;
         self.progressViewIsNaughty = true;
@@ -71,15 +63,15 @@
         self.titleSizeSelected = 16;
         self.progressViewBottomSpace = 5;
         self.progressColor = [UIColor colorWithHexString:WHITEMAINCOLOR];
-        self.titleColorNormal = [UIColor colorWithHexString:@"#FFFFFF"];
-        self.titleColorSelected = [UIColor colorWithHexString:@"#FFFFFF"];
+        self.titleColorNormal = [UIColor colorWithHexString:@"#14151A"];
+        self.titleColorSelected = [UIColor blackColor];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = [NoticeTools getLocalStrWith:@"emtion.manager"];
     
     UIButton *btn11 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -115,11 +107,11 @@
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForMenuView:(WMMenuView *)menuView{
-    return CGRectMake(0,0, DR_SCREEN_WIDTH, 50);
+    return CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, 50);
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForContentView:(WMScrollView *)contentView{
-    return CGRectMake(0,58, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58);
+    return CGRectMake(0,58+NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58);
 }
 
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController{
@@ -136,69 +128,28 @@
 
 - (UIColor *)menuView:(WMMenuView *)menu titleColorForState:(WMMenuItemState)state atIndex:(NSInteger)index{
     switch (state) {
-        case WMMenuItemStateSelected: return [UIColor colorWithHexString:@"#FFFFFF"];
-        case WMMenuItemStateNormal: return [UIColor colorWithHexString:@"#FFFFFF"];
+        case WMMenuItemStateSelected: return [UIColor blackColor];
+        case WMMenuItemStateNormal: return [UIColor blackColor];
     }
 }
 
 - (__kindof UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index{
-    if (index == 0) {
-        return self.bokeVC;
-    }
-    else if (index == 1) {
-        return self.centerVC;
-    }
-    else if (index == 2) {
-        return self.replyVC;
-    }else if(index == 3){
-        return self.chatVC;
-    }else if(index == 4){
-        return self.teamVC;
-    }else if(index == 5){
-        return self.mbsVC;
-    }else if(index == 6){
+    if(index == 0){
         return self.waitWorkVC;
-    }else if(index == 7){
+    }else if(index == 1){
         return self.checkVC;
-    }else if(index == 8){
+    }else if(index == 2){
         return self.workedVC;
-    }else if(index == 10){
+    }else if(index == 3){
         return self.groupVC;
-    }else if(index == 11){
+    }else if(index == 4){
         return self.shopVC;
-    }else if(index == 12){
-        return self.bannerVC;
-    }else if(index == 13){
-        return self.changePhoneVC;
-    }else if(index == 9){
-        return self.warnVC;
-    }
-    else if(index == 14){
-        return self.questionVC;
-    }else if(index == 15){
-        return self.hotPlanVC;
-    }else if(index == 16){
-        return self.hotMarkVC;
     }else{
-        return self.readVC;
+        return self.changePhoneVC;
     }
 }
 
-- (NoticeManageBoKeBaseController *)bokeVC{
-    if (!_bokeVC) {
-        _bokeVC = [[NoticeManageBoKeBaseController alloc] init];
-        _bokeVC.managerCode = self.mangagerCode;
-    }
-    return _bokeVC;
-}
 
-- (NoticeQuestionBaseController *)questionVC{
-    if (!_questionVC) {
-        _questionVC = [[NoticeQuestionBaseController alloc] init];
-        _questionVC.managerCode = self.mangagerCode;
-    }
-    return _questionVC;
-}
 
 - (NoticeManagerChangePhoneController *)changePhoneVC{
     if (!_changePhoneVC) {
@@ -208,39 +159,6 @@
     return _changePhoneVC;
 }
 
-- (NoticeMangerVoiceController *)replyVC{
-    if (!_replyVC) {
-        _replyVC = [[NoticeMangerVoiceController alloc] init];
-        _replyVC.isNoChat = YES;
-        _replyVC.mangagerCode = self.mangagerCode;
-        _replyVC.isFull = YES;
-    }
-    return _replyVC;
-}
-- (NoticeMangerVoiceController *)chatVC{
-    if (!_chatVC) {
-        _chatVC = [[NoticeMangerVoiceController alloc] init];
-        _chatVC.mangagerCode = self.mangagerCode;
-        _chatVC.isFull = YES;
-    }
-    return _chatVC;
-}
-
-- (NoticeAboutGroupController *)teamVC{
-    if (!_teamVC) {
-        _teamVC = [[NoticeAboutGroupController alloc] init];
-        _teamVC.mangagerCode = self.mangagerCode;
-    }
-    return _teamVC;
-}
-
-- (NoticeManagerMBSController *)mbsVC{
-    if (!_mbsVC) {
-        _mbsVC = [[NoticeManagerMBSController alloc] init];
-        _mbsVC.mangagerCode = self.mangagerCode;
-    }
-    return _mbsVC;
-}
 
 - (NoticeManagerWaitWorkController *)waitWorkVC{
     if (!_waitWorkVC) {
@@ -269,21 +187,6 @@
     return _workedVC;
 }
 
-- (NoticeTcWarnWordController *)warnVC{
-    if (!_warnVC) {
-        _warnVC = [[NoticeTcWarnWordController alloc] init];
-    }
-    return _warnVC;
-}
-
-- (NoticeManagerCenterController *)centerVC{
-    if (!_centerVC) {
-        _centerVC = [[NoticeManagerCenterController alloc] init];
-        _centerVC.mangagerCode = self.mangagerCode;
-        _centerVC.type = @"2";
-    }
-    return _centerVC;
-}
 
 - (NoticeOrderJubaoBaseController *)shopVC{
     if (!_shopVC) {
@@ -301,36 +204,7 @@
     return _groupVC;
 }
 
-- (NoticeBannerController *)bannerVC{
-    if (!_bannerVC) {
-        _bannerVC = [[NoticeBannerController alloc] init];
-        _bannerVC.managerCode = self.mangagerCode;
-    }
-    return _bannerVC;
-}
 
-- (NoticeWorldVoiceListViewController *)hotPlanVC{
-    if (!_hotPlanVC) {
-        _hotPlanVC = [[NoticeWorldVoiceListViewController alloc] init];
-        _hotPlanVC.isHotLovePlan = YES;
-        _hotPlanVC.passWd = self.mangagerCode;
-    }
-    return _hotPlanVC;
-}
-- (NoticeWorldVoiceListViewController *)hotMarkVC{
-    if (!_hotMarkVC) {
-        _hotMarkVC = [[NoticeWorldVoiceListViewController alloc] init];
-        _hotMarkVC.isHotLovePlan = YES;
-        _hotMarkVC.isHotLovePlanMark = YES;
-        _hotMarkVC.passWd = self.mangagerCode;
-    }
-    return _hotMarkVC;
-}
-- (NoticeNewReadEveryDayController *)readVC{
-    if (!_readVC) {
-        _readVC = [[NoticeNewReadEveryDayController alloc] init];
-        _readVC.mangagerCode = self.mangagerCode;
-    }
-    return _readVC;
-}
+
+
 @end

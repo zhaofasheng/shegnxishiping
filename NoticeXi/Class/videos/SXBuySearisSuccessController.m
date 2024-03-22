@@ -40,6 +40,22 @@
     }
 }
 
+- (void)backClick{
+    if (!self.isFromList && self.payStatusModel.pay_status.intValue == 2) {
+        __block UIViewController *pushVC;
+        __weak typeof(self) weakSelf = self;
+        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[SXStudyBaseController class]]) {//返回到指定界面
+                pushVC = obj;
+                [weakSelf.navigationController popToViewController:pushVC animated:YES];
+                return ;
+            }
+        }];
+        return;
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)lookClick{
     if (self.isFromList) {
         SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];

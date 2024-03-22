@@ -36,6 +36,8 @@
     [super viewDidLoad];
     self.navBarView.titleL.text = @"店铺认证";
     
+    self.tableView.hidden = YES;
+    
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
     self.tableView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0];
     
@@ -152,13 +154,16 @@
                 }
             }
             [self refresUI];
+  
             [self.tableView reloadData];
         }else{
             self.type = 0;
         }
+        self.tableView.hidden = NO;
         [self.tableView reloadData];
     } fail:^(NSError * _Nullable error) {
         [self hideHUD];
+        self.tableView.hidden = NO;
     }];
 }
 

@@ -14,18 +14,18 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 @interface SXPlayDetailListController ()
 
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
-
 @property (nonatomic, assign) BOOL hascClick;//防止重复点击
+
 @end
 
 @implementation SXPlayDetailListController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navBarView.hidden = YES;
     self.collectionView.dataSource = self;
     self.collectionView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-STATUS_BAR_HEIGHT-(DR_SCREEN_WIDTH/16*9)-40);
-    
     [self.collectionView registerClass:[NoticeVideoCollectionViewCell class] forCellWithReuseIdentifier:DRMerchantCollectionViewCellID];
 
     
@@ -95,7 +95,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         if (self.choiceVideoBlock) {
             self.choiceVideoBlock(model);
         }
-        
         [self request];
     }
 }

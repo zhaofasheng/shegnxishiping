@@ -6,11 +6,11 @@
 //  Copyright © 2021 zhaoxiaoer. All rights reserved.
 //
 
-#import "BaseTableViewController.h"
+#import "NoticeBaseCellController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NoticeBannerController : BaseTableViewController
+@interface NoticeBannerController : NoticeBaseCellController
 @property (nonatomic, strong) NSString *managerCode;
 @end
 

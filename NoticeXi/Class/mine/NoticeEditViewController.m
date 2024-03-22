@@ -11,14 +11,14 @@
 #import "NoticeChangeNameViewController.h"
 #import "NoticeChangeIntroduceViewController.h"
 #import "NoticeManagerController.h"
-#import "NoticeManager.h"
+
 #import "SXSetCell.h"
-@interface NoticeEditViewController ()<NoticeManagerUserDelegate>
+@interface NoticeEditViewController ()
 
 @property (nonatomic, strong) NSArray *cellTitleArr;
 @property (nonatomic, strong) NoticeUserInfoModel *userInfo;
 @property (nonatomic, strong) UIImage *iconImage;
-@property (nonatomic, strong) NoticeManager *magager;
+
 @property (nonatomic, strong) UIImageView *iconImageView;
 @end
 
@@ -34,15 +34,6 @@
     self.tableView.rowHeight = 52;
     
  
-    if ([NoticeTools isManager]) {
-     
-        [self.navBarView.rightButton setTitle:@"管理" forState:UIControlStateNormal];
-        [self.navBarView.rightButton setTitleColor:[UIColor colorWithHexString:@"#1FC7FF"] forState:UIControlStateNormal];
-        self.navBarView.rightButton.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
-        [self.navBarView.rightButton addTarget:self action:@selector(managerClick) forControlEvents:UIControlEventTouchUpInside];
-      
-    }
-    
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 270)];
     headerView.backgroundColor = self.view.backgroundColor;
     headerView.userInteractionEnabled = YES;
@@ -69,30 +60,6 @@
 }
 
 
-- (void)managerClick{
-    
-    self.magager.type = @"管理员登陆";
-    [self.magager show];
-}
-
-- (void)sureManagerClick:(NSString *)code{
-    [self showHUD];
-    NSMutableDictionary *parm = [NSMutableDictionary new];
-    [parm setObject:code forKey:@"confirmPasswd"];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"admin/users/login" Accept:nil isPost:YES parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
-        [self hideHUD];
-        if (success) {
-            [self.magager removeFromSuperview];
-            NoticeManagerController *ctl = [[NoticeManagerController alloc] init];
-            ctl.mangagerCode = code;
-            [self.navigationController pushViewController:ctl animated:YES];
-        }else{
-            self.magager.markL.text = @"密码错误请重新输入";
-        }
-    } fail:^(NSError *error) {
-        [self hideHUD];
-    }];
-}
 
 - (void)iconTap{
     NoticeChangeIconViewController *ctl = [[NoticeChangeIconViewController alloc] init];
@@ -169,11 +136,5 @@
     }];
 }
 
-- (NoticeManager *)magager{
-    if (!_magager) {
-        _magager = [[NoticeManager alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-        _magager.delegate = self;
-    }
-    return _magager;
-}
+
 @end

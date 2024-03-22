@@ -7,8 +7,12 @@
 //
 
 #import "NoticeNewCenterNavView.h"
-
+#import "NoticeManager.h"
 #import "NoticeSCListViewController.h"
+#import "NoticeManagerController.h"
+@interface NoticeNewCenterNavView()<NoticeManagerUserDelegate>
+@property (nonatomic, strong) NoticeManager *magager;
+@end
 
 @implementation NoticeNewCenterNavView
 
@@ -31,10 +35,52 @@
         self.allNumL.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.allNumL];
         self.allNumL.hidden = YES;
+        
+        if ([NoticeTools isManager]) {
+            UIButton *manageBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-100,STATUS_BAR_HEIGHT, 50, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
+            [manageBtn setTitle:@"管理" forState:UIControlStateNormal];
+            [manageBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            manageBtn.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
+            [manageBtn addTarget:self action:@selector(managerClick) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:manageBtn];
+        }
     }
     return self;
 }
 
+- (void)managerClick{
+    
+    self.magager.type = @"管理员登陆";
+    [self.magager show];
+}
+
+
+- (void)sureManagerClick:(NSString *)code{
+    [[NoticeTools getTopViewController] showHUD];
+    NSMutableDictionary *parm = [NSMutableDictionary new];
+    [parm setObject:code forKey:@"confirmPasswd"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"admin/users/login" Accept:nil isPost:YES parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
+        [[NoticeTools getTopViewController] hideHUD];
+        if (success) {
+            [self.magager removeFromSuperview];
+            NoticeManagerController *ctl = [[NoticeManagerController alloc] init];
+            ctl.mangagerCode = code;
+            [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+        }else{
+            self.magager.markL.text = @"密码错误请重新输入";
+        }
+    } fail:^(NSError *error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
+}
+
+- (NoticeManager *)magager{
+    if (!_magager) {
+        _magager = [[NoticeManager alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+        _magager.delegate = self;
+    }
+    return _magager;
+}
 
 - (void)msgClick1{
     CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
