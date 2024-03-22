@@ -36,12 +36,30 @@
     if ([model.videoId isEqualToString:self.currentPlayModel.videoId]){
         return;
     }
-    
     self.currentPlayModel = model;
-
     [self.tableView reloadData];
     if (self.choiceVideoBlock) {
         self.choiceVideoBlock(model);
+    }
+    
+}
+
+- (void)playNext{
+    if (self.currentPlayModel) {
+        for (int i = 0; i < self.searisArr.count; i++) {
+            SXSearisVideoListModel *model = self.searisArr[i];
+            if ([model.videoId isEqualToString:self.currentPlayModel.videoId]) {
+                if (self.searisArr.count > (i+1)) {
+                    SXSearisVideoListModel *nextModel = self.searisArr[i+1];
+                    self.currentPlayModel = nextModel;
+                    [self.tableView reloadData];
+                    if (self.choiceVideoBlock) {
+                        self.choiceVideoBlock(nextModel);
+                    }
+                }
+                break;
+            }
+        }
     }
 }
 

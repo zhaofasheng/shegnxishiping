@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.headerView = [[SXBuySearisSuccessView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT)];
     self.tableView.tableHeaderView = self.headerView;
     self.headerView.paySearModel = self.paySearModel;
@@ -37,7 +38,6 @@
         [backView addSubview:button];
         [button addTarget:self action:@selector(lookClick) forControlEvents:UIControlEventTouchUpInside];
     }
- 
 }
 
 - (void)lookClick{

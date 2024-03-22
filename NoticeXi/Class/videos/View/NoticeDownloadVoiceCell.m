@@ -12,9 +12,12 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        
         self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
         
         self.voiceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 80, 54)];
+        self.voiceImageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.voiceImageView.clipsToBounds = YES;
         self.voiceImageView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
         [self.voiceImageView setAllCorner:4];
         [self.contentView addSubview:self.voiceImageView];

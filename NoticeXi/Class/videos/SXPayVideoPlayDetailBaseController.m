@@ -184,6 +184,8 @@
     _player.playDidEndBlock = ^(BOOL playDidEnd) {
         if (playDidEnd) {
             weakSelf.currentPlayModel.is_finished = @"1";
+            DRLog(@"播放完成");
+            [weakSelf.listVC playNext];
         }
     };
     

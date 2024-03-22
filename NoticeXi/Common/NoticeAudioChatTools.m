@@ -411,8 +411,6 @@
             self.repjectautoNextBlcok(YES);
         }
     }
-  
-    
 }
 
 /**

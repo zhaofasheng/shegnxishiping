@@ -67,6 +67,8 @@
             if (i < 2) {
                 UIImageView *imageView = [[UIImageView  alloc] initWithFrame:CGRectZero];
                 imageView.backgroundColor = [UIColor blueColor];
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.clipsToBounds = YES;
                 if (i == 0) {
                     imageView.frame = CGRectMake(15, 210, imageWidth, imageHeight);
                     self.zmImageView = imageView;

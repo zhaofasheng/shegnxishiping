@@ -80,6 +80,7 @@
             self.waitOrSuccessView.statusL1.textColor = [UIColor colorWithHexString:@"#14151A"];
             self.waitOrSuccessView.statusL2.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         }else{
+            self.waitOrSuccessView.statusL1.textColor = [UIColor whiteColor];
             self.waitOrSuccessView.statusL2.textColor = [UIColor whiteColor];
         }
     }
@@ -91,6 +92,7 @@
             self.zigeWaitOrSuccessView.statusL1.textColor = [UIColor colorWithHexString:@"#14151A"];
             self.zigeWaitOrSuccessView.statusL2.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         }else{
+            self.zigeWaitOrSuccessView.statusL1.textColor = [UIColor whiteColor];
             self.zigeWaitOrSuccessView.statusL2.textColor = [UIColor whiteColor];
         }
     }

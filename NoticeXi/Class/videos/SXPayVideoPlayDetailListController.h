@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *searisArr;
 @property (nonatomic, copy) void(^choiceVideoBlock)(SXSearisVideoListModel *videoModel);
 
+- (void)playNext;
 @end
 
 NS_ASSUME_NONNULL_END
