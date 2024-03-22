@@ -206,10 +206,14 @@
 //接听
 - (void)accept{
     
+    if (self.noReClick) {
+        return;
+    }
     __weak typeof(self) weakSelf = self;
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (granted) { // 有使用麦克风的权限
+                self.noReClick = YES;
                 [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopGoodsOrder/%@",weakSelf.orderModel.room_id] Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                     if(success){
                         [[TUICallEngine createInstance] setSelfInfo:@"店主" avatar:@"" succ:^{
@@ -219,10 +223,12 @@
                     }else{
                         [TUICallingAction reject];
                     }
+                    self.noReClick = NO;
                     [[NoticeTools getTopViewController] hideHUD];
                 } fail:^(NSError * _Nullable error) {
                     [TUICallingAction reject];
                     [[NoticeTools getTopViewController] hideHUD];
+                    self.noReClick = NO;
                 }];
             }else { // 没有麦克风权限
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:[NoticeTools getLocalStrWith:@"recoder.kaiqire"] message:@"有麦克风权限才可以语音通话功能哦~" sureBtn:[NoticeTools getLocalStrWith:@"recoder.kaiqi"] cancleBtn:[NoticeTools getLocalStrWith:@"main.cancel"] right:YES];

@@ -17,8 +17,8 @@
 static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCell";
 
 @interface NoticeVideosController ()
-@property (nonatomic, assign) NSInteger currentPlayTime;
 
+@property (nonatomic, assign) NSInteger currentPlayTime;
 
 @end
 
@@ -29,6 +29,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     self.navBarView.hidden = YES;
     
     [self.collectionView registerClass:[NoticeVideoCollectionViewCell class] forCellWithReuseIdentifier:DRMerchantCollectionViewCellID];
+    
     __weak typeof(self) weakSelf = self;
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         weakSelf.isDown = YES;

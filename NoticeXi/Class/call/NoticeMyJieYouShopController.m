@@ -160,11 +160,13 @@
     self.shopModel.myShopM.is_submit_authentication = @"1";
     [self getShopRequest];
 }
+
 //获取店铺信息和状态
 - (void)getShopRequest{
     [self showHUD];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/ByUser" Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if(success){
+            
             self.shopModel = [NoticeMyShopModel mj_objectWithKeyValues:dict[@"data"]];
            
             self.shopHeaderView.shopModel = self.shopModel;

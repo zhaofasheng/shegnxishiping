@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) BOOL autoCallNext;//自动拨打下一通通话
 @property (nonatomic,assign) BOOL autoCallNexting;//自动拨打下一通通话中
 
+@property (nonatomic,assign) BOOL noReClick;//防止重复点击
+
 - (void)callToUserId:(NSString *)userId roomId:(UInt32)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext;
 @property (nonatomic, strong) NoticeCallView * __nullable callingView;
 @end

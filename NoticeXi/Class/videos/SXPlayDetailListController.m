@@ -63,6 +63,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
                 SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:videoM];
             }
+            
             self.layout.dataList = self.dataArr;
             [self.collectionView reloadData];
         }
@@ -97,7 +98,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         
         [self request];
     }
-
 }
 
 
@@ -109,7 +109,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     if (self.dataArr.count > indexPath.row) {
         merchentCell.videoModel = self.dataArr[indexPath.row];
     }
-    
     return merchentCell;
 }
 
