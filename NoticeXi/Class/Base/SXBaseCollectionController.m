@@ -45,39 +45,20 @@
     return 0;
 }
 
-//定义每一个cell的大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-   
-    return CGSizeMake((DR_SCREEN_WIDTH-15)/2,0);
-}
-
-// 定义每个Section的四边间距
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(5, 5, 5,5);
-}
-
-
-#pragma mark - X间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 5;
-}
-
-#pragma mark - Y间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 5;
-}
-
-// 返回Section个数
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
 
 - (void)initCollectionView {
     //1.初始化layout
-    CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-
+    CYWWaterFallLayout *flowLayout = [[CYWWaterFallLayout alloc] init];
+    self.layout = flowLayout;
+    flowLayout.columnCount = 2;
+    flowLayout.itemWidth = (DR_SCREEN_WIDTH-15)/2;
+    flowLayout.minimumLineSpacing = 5;
+    flowLayout.minimumInteritemSpacing = 5;
+    flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
+    // 垂直方向滑动
+    flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     //2.初始化collectionView
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT -  NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT) collectionViewLayout:layout];
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT -  NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT) collectionViewLayout:flowLayout];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];

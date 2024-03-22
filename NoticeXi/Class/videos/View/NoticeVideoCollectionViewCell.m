@@ -67,7 +67,7 @@
     self.videoCoverImageView.frame = CGRectMake(0, 0, self.frame.size.width,(videoModel.screen.intValue == 2? self.frame.size.width*4/3 : self.frame.size.width*3/4));
     
     if (videoModel.title.length && videoModel.title) {
-        self.contentL.frame = CGRectMake(10, CGRectGetMaxY(self.videoCoverImageView.frame)+10, self.frame.size.width-18, videoModel.nomerHeight);
+        self.contentL.frame = CGRectMake(10, CGRectGetMaxY(self.videoCoverImageView.frame)+10, self.frame.size.width-15, videoModel.nomerHeight);
         self.contentL.text = videoModel.title;
         self.contentL.hidden = NO;
     }else{

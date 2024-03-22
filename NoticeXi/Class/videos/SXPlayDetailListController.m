@@ -63,7 +63,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
                 SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:videoM];
             }
-            
+            self.layout.dataList = self.dataArr;
             [self.collectionView reloadData];
         }
         self.hascClick = NO;
@@ -117,35 +117,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
     return self.dataArr.count;
-}
-
-//定义每一个cell的大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.dataArr.count > indexPath.row) {
-        return CGSizeMake((DR_SCREEN_WIDTH-15)/2,[SXTools getSXvideoListHeight:self.dataArr[indexPath.row]]);
-    }
-    return CGSizeMake((DR_SCREEN_WIDTH-15)/2,0);
-}
-
-// 定义每个Section的四边间距
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(5, 5, 5,5);
-}
-
-
-#pragma mark - X间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 5;
-}
-
-#pragma mark - Y间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 5;
-}
-
-// 返回Section个数
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
 }
 
 - (UIView *)listView {

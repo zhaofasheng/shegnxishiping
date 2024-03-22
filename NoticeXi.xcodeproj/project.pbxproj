@@ -1337,7 +1337,6 @@
 		FE6686802BA082FE006DBDF2 /* AxcAE_TabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FE66867C2BA082FE006DBDF2 /* AxcAE_TabBarItem.m */; };
 		FE6CF93E2B84553A005EE663 /* SXVideosModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF93D2B84553A005EE663 /* SXVideosModel.m */; };
 		FE6CF9422B847491005EE663 /* SXTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9412B847491005EE663 /* SXTools.m */; };
-		FE6CF9452B848538005EE663 /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9442B848538005EE663 /* CHTCollectionViewWaterfallLayout.m */; };
 		FE6CF9482B859C92005EE663 /* SXWeiXinPayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9472B859C92005EE663 /* SXWeiXinPayModel.m */; };
 		FE6CF94C2B85DB14005EE663 /* SXUserCenterHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF94B2B85DB14005EE663 /* SXUserCenterHeader.m */; };
 		FE6CF9512B85EB64005EE663 /* SXMineSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9502B85EB64005EE663 /* SXMineSetCell.m */; };
@@ -3978,8 +3977,6 @@
 		FE6CF93D2B84553A005EE663 /* SXVideosModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideosModel.m; sourceTree = "<group>"; };
 		FE6CF9402B847491005EE663 /* SXTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXTools.h; sourceTree = "<group>"; };
 		FE6CF9412B847491005EE663 /* SXTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXTools.m; sourceTree = "<group>"; };
-		FE6CF9432B848538005EE663 /* CHTCollectionViewWaterfallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTCollectionViewWaterfallLayout.h; sourceTree = "<group>"; };
-		FE6CF9442B848538005EE663 /* CHTCollectionViewWaterfallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTCollectionViewWaterfallLayout.m; sourceTree = "<group>"; };
 		FE6CF9462B859C92005EE663 /* SXWeiXinPayModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXWeiXinPayModel.h; sourceTree = "<group>"; };
 		FE6CF9472B859C92005EE663 /* SXWeiXinPayModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXWeiXinPayModel.m; sourceTree = "<group>"; };
 		FE6CF94A2B85DB14005EE663 /* SXUserCenterHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXUserCenterHeader.h; sourceTree = "<group>"; };
@@ -6358,8 +6355,6 @@
 		A4E95F2A2A69141C00AE022E /* V */ = {
 			isa = PBXGroup;
 			children = (
-				A4E95F432A69141C00AE022E /* CYWWaterFallLayout.h */,
-				A4E95F642A69141C00AE022E /* CYWWaterFallLayout.m */,
 				A4E95F612A69141C00AE022E /* NoticeAdMainCell.h */,
 				A4E95F472A69141C00AE022E /* NoticeAdMainCell.m */,
 				A4E95F2C2A69141C00AE022E /* NoticeArcPlayView.h */,
@@ -8376,14 +8371,14 @@
 		FE6CF9612B86D9E8005EE663 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A4E95F432A69141C00AE022E /* CYWWaterFallLayout.h */,
+				A4E95F642A69141C00AE022E /* CYWWaterFallLayout.m */,
 				FE953C812B68D3420098F0A2 /* NoticeDownloadVoiceCell.h */,
 				FE953C822B68D3420098F0A2 /* NoticeDownloadVoiceCell.m */,
 				FE6CF9622B86DA02005EE663 /* SXPayForVideoCell.h */,
 				FE6CF9632B86DA02005EE663 /* SXPayForVideoCell.m */,
 				FE35EAA42B62518D00524991 /* NoticeVideoCollectionViewCell.h */,
 				FE35EAA52B62518D00524991 /* NoticeVideoCollectionViewCell.m */,
-				FE6CF9432B848538005EE663 /* CHTCollectionViewWaterfallLayout.h */,
-				FE6CF9442B848538005EE663 /* CHTCollectionViewWaterfallLayout.m */,
 				FE6CF9762B88A358005EE663 /* SXDownVideoheaderView.h */,
 				FE6CF9772B88A358005EE663 /* SXDownVideoheaderView.m */,
 				FEFAB1B82B8C3444009EE42C /* SXVideoHeaderDetailView.h */,
@@ -10146,7 +10141,6 @@
 				A4E9678C2A69142400AE022E /* NoticeSysNewsManagerController.m in Sources */,
 				FEE563132B8EC9F30004CC11 /* SXVideoUserCenterView.m in Sources */,
 				A4E9685D2A69142600AE022E /* NoticePhotoCell.m in Sources */,
-				FE6CF9452B848538005EE663 /* CHTCollectionViewWaterfallLayout.m in Sources */,
 				A44FBFB82AFB2FE000D49DB5 /* NoticeChoiceDefaultVoiceImageView.m in Sources */,
 				A4E964FD2A69142200AE022E /* JXCategoryTitleImageCell.m in Sources */,
 				A4E964AE2A69142100AE022E /* NoticeOcToSwift.m in Sources */,

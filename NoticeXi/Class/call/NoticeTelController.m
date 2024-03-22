@@ -21,6 +21,12 @@
     self.navBarView.hidden = YES;
     self.useSystemeNav = YES;
     
+    self.layout.isFreeCall = self.isFree;
+    self.layout.itemWidth = (DR_SCREEN_WIDTH-30)/2;
+    self.layout.minimumLineSpacing = 10;
+    self.layout.minimumInteritemSpacing = 10;
+    self.layout.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
+    
     self.collectionView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
     [self.collectionView registerClass:[SXAskQuestionShopCell class] forCellWithReuseIdentifier:@"askCell"];
     
@@ -63,32 +69,6 @@
     return self.dataArr.count;
 }
 
-//定义每一个cell的大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-  
-    return CGSizeMake((DR_SCREEN_WIDTH-30)/2,(self.isFree?218:251));
-}
-
-// 定义每个Section的四边间距
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(5, 10, 5,10);
-}
-
-
-#pragma mark - X间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 10;
-}
-
-#pragma mark - Y间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 10;
-}
-
-// 返回Section个数
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
 
 - (void)request{
 
@@ -102,6 +82,8 @@
                 NoticeMyShopModel *shopM = [NoticeMyShopModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:shopM];
             }
+            
+            self.layout.telList = self.dataArr;
             [self.collectionView reloadData];
      
         }

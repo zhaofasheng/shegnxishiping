@@ -7,14 +7,15 @@
 //
 
 #import "NoticeBaseController.h"
-#import "CHTCollectionViewWaterfallLayout.h"
+#import "CYWWaterFallLayout.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SXBaseCollectionController : NoticeBaseController<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout>
+@interface SXBaseCollectionController : NoticeBaseController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, assign) BOOL isDown;
 @property (nonatomic, assign) NSInteger pageNo;
 @property (nonatomic, strong) NSMutableArray *dataArr;
+@property (nonatomic, strong) CYWWaterFallLayout *layout;
 @end
 
 NS_ASSUME_NONNULL_END
