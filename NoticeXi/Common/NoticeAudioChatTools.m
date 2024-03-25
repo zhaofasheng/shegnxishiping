@@ -223,7 +223,7 @@
                     }else{
                         [TUICallingAction reject];
                     }
-                    self.noReClick = NO;
+                    
                     [[NoticeTools getTopViewController] hideHUD];
                 } fail:^(NSError * _Nullable error) {
                     [TUICallingAction reject];
@@ -286,7 +286,7 @@
 
 //获取等待的订单
 - (void)getOrder{
-
+    self.noReClick = NO;
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoodsOrder/select?type=2" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             DRLog(@"当前进行中等待中的订单%@",dict);

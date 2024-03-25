@@ -8,8 +8,11 @@
 
 #import "NoticeChangeShopIconController.h"
 #import "YYImageCoder.h"
+
 @interface NoticeChangeShopIconController ()<TZImagePickerControllerDelegate>
+
 @property (strong, nonatomic)  UIImageView *headeimageView;
+
 @end
 
 @implementation NoticeChangeShopIconController
@@ -52,6 +55,7 @@
 
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto{
+    
     UIImage *choiceImage = photos[0];
     PHAsset *asset = assets[0];
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
@@ -73,6 +77,7 @@
         [YZC_AlertView showViewWithTitleMessage:@"文件不存在"];
         return;
     }
+    
     //获取七牛token
     NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];

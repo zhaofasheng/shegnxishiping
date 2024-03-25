@@ -1,0 +1,243 @@
+//
+//  SXPlayFullListController.m
+//  NoticeXi
+//
+//  Created by 赵小二 on 2024/3/23.
+//  Copyright © 2024 zhaoxiaoer. All rights reserved.
+//
+
+#import "SXPlayFullListController.h"
+#import "SXFullPlayCell.h"
+
+#import "DDVideoPlayerManager.h"
+#import "SDImageCache.h"
+#import "TTCCom.h"
+@interface SXPlayFullListController ()<ZFManagerPlayerDelegate>
+@property (nonatomic, strong) UIView *fatherView;
+//这个是播放视频的管理器
+@property (nonatomic, strong) DDVideoPlayerManager *videoPlayerManager;
+//这个是预加载视频的管理器
+@property (nonatomic, strong) DDVideoPlayerManager *preloadVideoPlayerManager;
+
+@end
+
+@implementation SXPlayFullListController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT);
+    self.tableView.pagingEnabled = YES;
+    self.tableView.estimatedRowHeight = SCREEN_HEIGHT;
+    self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.rowHeight = DR_SCREEN_HEIGHT;
+    [self.tableView registerClass:[SXFullPlayCell class] forCellReuseIdentifier:@"cell"];
+
+    
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    
+    [self playIndex:self.currentPlayIndex];
+    if(self.modelArray.count > (self.currentPlayIndex + 1)) {
+        [self preLoadIndex:self.currentPlayIndex + 1];
+    }
+    
+    [self.view bringSubviewToFront:self.navBarView];
+    [self.navBarView.backButton setImage:UIImageNamed(@"backwhties") forState:UIControlStateNormal];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.modelArray.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    SXFullPlayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.videoModel = self.modelArray[indexPath.row];
+    __weak typeof(self) weakSelf = self;
+    cell.showComBlock = ^(BOOL show) {
+   
+        if (show) {
+            weakSelf.videoPlayerManager.playerView.controlView.slider.hidden = YES;
+        }else{
+            weakSelf.videoPlayerManager.playerView.controlView.slider.hidden = NO;
+        }
+    };
+    
+    cell.fullBlock = ^(BOOL show) {
+        if (show) {
+            [weakSelf.videoPlayerManager.playerView fullPlay];
+        }
+    };
+    
+    cell.fatherBlock = ^(CGRect bounds) {
+        weakSelf.videoPlayerManager.playerView.frame = bounds;
+    };
+    return cell;
+}
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSInteger currentIndex = round(self.tableView.contentOffset.y / SCREEN_HEIGHT);
+    if(self.currentPlayIndex != currentIndex) {
+        if(self.currentPlayIndex > currentIndex) {
+            [self preLoadIndex:currentIndex-1];
+        } else if(self.currentPlayIndex < currentIndex) {
+            [self preLoadIndex:currentIndex+1];
+        }
+        self.currentPlayIndex = currentIndex;
+        [self playIndex:self.currentPlayIndex];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    CGFloat currentIndex = self.tableView.contentOffset.y / SCREEN_HEIGHT;
+    if(fabs(currentIndex - self.currentPlayIndex)>1) {
+        [self.videoPlayerManager resetPlayer];
+        [self.preloadVideoPlayerManager resetPlayer];
+    }
+}
+
+
+- (void)playIndex:(NSInteger)currentIndex {
+    SXFullPlayCell *currentCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:currentIndex inSection:0]];
+    
+    NSString *artist = nil;
+    NSString *title = nil;
+    NSString *cover_url = nil;
+    NSURL *videoURL = nil;
+    NSURL *originVideoURL = nil;
+    BOOL useDownAndPlay = NO;
+    AVLayerVideoGravity videoGravity = AVLayerVideoGravityResizeAspect;
+    
+    //关注,推荐
+    SXVideosModel *currentPlaySmallVideoModel = self.modelArray[currentIndex];
+    
+    title = currentPlaySmallVideoModel.title;
+    cover_url = currentPlaySmallVideoModel.video_cover_url;
+    videoURL = [NSURL URLWithString:currentPlaySmallVideoModel.video_url];
+    originVideoURL = [NSURL URLWithString:currentPlaySmallVideoModel.video_url];
+    useDownAndPlay = YES;
+    if(currentPlaySmallVideoModel.screen.intValue == 2) {
+        videoGravity = AVLayerVideoGravityResizeAspectFill;
+    } else {
+        videoGravity = AVLayerVideoGravityResizeAspect;
+    }
+    self.videoPlayerManager = nil;
+    
+    self.fatherView = currentCell.playerFatherView;
+    self.videoPlayerManager.playerModel.screen = currentPlaySmallVideoModel.screen.intValue==1?NO:YES;
+    self.videoPlayerManager.playerModel.seekTime = currentPlaySmallVideoModel.seekTime;
+    self.videoPlayerManager.playerModel.videoGravity = videoGravity;
+    self.videoPlayerManager.playerModel.fatherView       = self.fatherView;
+    self.videoPlayerManager.playerModel.title            = title;
+    self.videoPlayerManager.playerModel.artist = artist;
+    //self.videoPlayerManager.playerModel.placeholderImageURLString = cover_url;
+    self.videoPlayerManager.playerModel.videoURL         = videoURL;
+    self.videoPlayerManager.originVideoURL = originVideoURL;
+    self.videoPlayerManager.playerModel.useDownAndPlay = YES;
+    //如果设备存储空间不足200M,那么不要边下边播
+    if([self deviceFreeMemorySize] < 200) {
+        self.videoPlayerManager.playerModel.useDownAndPlay = NO;
+    }
+    [self.videoPlayerManager resetToPlayNewVideo];
+}
+
+- (CGFloat)deviceFreeMemorySize {
+    /// 总大小
+    float totalsize = 0.0;
+    /// 剩余大小
+    float freesize = 0.0;
+    /// 是否登录
+    NSError *error = nil;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error: &error];
+    if (dictionary)
+    {
+        NSNumber *_free = [dictionary objectForKey:NSFileSystemFreeSize];
+        freesize = [_free unsignedLongLongValue]*1.0/(1024);
+        
+        NSNumber *_total = [dictionary objectForKey:NSFileSystemSize];
+        totalsize = [_total unsignedLongLongValue]*1.0/(1024);
+    } else
+    {
+        DRLog(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]);
+    }
+    return freesize/1024.0;
+}
+
+
+//预加载
+- (void)preLoadIndex:(NSInteger)index {
+    [self.preloadVideoPlayerManager resetPlayer];
+    if(self.modelArray.count <= index || [self deviceFreeMemorySize] < 200  || index<0) {
+        return;
+    }
+    NSString *artist = nil;
+    NSString *title = nil;
+    NSString *cover_url = nil;
+    NSURL *videoURL = nil;
+    NSURL *originVideoURL = nil;
+    BOOL useDownAndPlay = NO;
+    
+    //关注,推荐
+    SXVideosModel *currentPlaySmallVideoModel = self.modelArray[index];
+    title = currentPlaySmallVideoModel.title;
+    cover_url = currentPlaySmallVideoModel.video_cover_url;
+    videoURL = [NSURL URLWithString:currentPlaySmallVideoModel.video_url];
+    originVideoURL = [NSURL URLWithString:currentPlaySmallVideoModel.video_url];
+    useDownAndPlay = YES;
+    
+    self.preloadVideoPlayerManager.playerModel.seekTime = currentPlaySmallVideoModel.seekTime;
+    self.preloadVideoPlayerManager.playerModel.title            = title;
+    self.preloadVideoPlayerManager.playerModel.artist = artist;
+   // self.preloadVideoPlayerManager.playerModel.placeholderImageURLString = cover_url;
+    self.preloadVideoPlayerManager.playerModel.videoURL         = videoURL;
+    self.preloadVideoPlayerManager.originVideoURL = originVideoURL;
+    self.preloadVideoPlayerManager.playerModel.useDownAndPlay = YES;
+    self.preloadVideoPlayerManager.playerModel.isAutoPlay = NO;
+    [self.preloadVideoPlayerManager resetToPlayNewVideo];
+}
+
+- (void)backClick{
+    [self.videoPlayerManager resetPlayer];
+    [self.preloadVideoPlayerManager resetPlayer];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.videoPlayerManager autoPause];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.videoPlayerManager autoPlay];
+    
+}
+
+- (void)zfManager_playerCurrentSliderValue:(NSInteger)value playerModel:(ZFPlayerModel *)model{
+    if (self.currentPlayIndex < self.modelArray.count) {
+        SXVideosModel *currentM = self.modelArray[self.currentPlayIndex];
+        currentM.seekTime = value;
+    }
+}
+
+#pragma mark - LazyLoad
+
+- (DDVideoPlayerManager *)videoPlayerManager {
+    if(!_videoPlayerManager) {
+        _videoPlayerManager = [[DDVideoPlayerManager alloc] init];
+        _videoPlayerManager.managerDelegate = self;
+    }
+    return _videoPlayerManager;
+}
+
+- (DDVideoPlayerManager *)preloadVideoPlayerManager {
+    if(!_preloadVideoPlayerManager) {
+        _preloadVideoPlayerManager = [[DDVideoPlayerManager alloc] init];
+    }
+    return _preloadVideoPlayerManager;
+}
+@end

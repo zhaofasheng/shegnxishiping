@@ -17,7 +17,8 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor colorWithHexString:@"#333333"];
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hasKillApp) name:@"APPWASKILLED" object:nil];
+    
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-90)/2, NAVIGATION_BAR_HEIGHT+60, 90, 90)];
         imageView.layer.cornerRadius = 45;
         imageView.layer.masksToBounds = YES;
@@ -44,6 +45,12 @@
       
     }
     return self;
+}
+
+- (void)hasKillApp{
+    if(self.endOpenBlock){
+        self.endOpenBlock(YES);
+    }
 }
 
 - (void)setIsAudioCalling:(BOOL)isAudioCalling{

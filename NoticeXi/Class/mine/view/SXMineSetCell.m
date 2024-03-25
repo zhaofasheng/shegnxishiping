@@ -23,7 +23,7 @@
         
         _titleL = [[UILabel alloc] initWithFrame:CGRectMake(48,22,self.backView.frame.size.width-48-100, 21)];
         _titleL.font = XGFifthBoldFontSize;
-        _titleL.textColor = [UIColor colorWithHexString:@"#25262E"];
+        _titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self.backView addSubview:_titleL];
         
         UIImageView *intoImgView = [[UIImageView  alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-15-20, 22, 20, 20)];

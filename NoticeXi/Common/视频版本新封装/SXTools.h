@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "SXVideosModel.h"
 NS_ASSUME_NONNULL_BEGIN
-
+typedef void(^MyImageBlock)(UIImage * _Nullable image);
 typedef void (^downSuccessBlock)(BOOL success);
 
 @interface SXTools : NSObject
-
++(void)getScreenshotWithUrlAsyn:(NSURL *)url completion:(MyImageBlock)handler;
 + (CGFloat)getSXvideoListHeight:(SXVideosModel *)videoModel;
 
 + (NSInteger)getCurrentPlayTime:(NSString *)vid;

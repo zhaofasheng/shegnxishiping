@@ -384,7 +384,6 @@
     if ([[HWNetworkReachabilityManager shareManager] networkReachabilityStatus] == AFNetworkReachabilityStatusNotReachable) {
         // 无网络，暂停正在下载任务
         [self pauseDownloadingTaskWithAll:YES];
-        [[NoticeTools getTopViewController] showToastWithText:@"网络中断，下载已暂停"];
     }else {
         if ([self networkingAllowsDownloadTask]) {
             // 开启等待任务

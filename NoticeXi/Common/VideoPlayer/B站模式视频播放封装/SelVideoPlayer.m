@@ -8,7 +8,8 @@
 
 #import "SelVideoPlayer.h"
 #import <MediaPlayer/MPVolumeView.h>
-
+#import "KTVHCDataUnitPool.h"
+#import "KTVHTTPCache.h"
 /** 播放器的播放状态 */
 typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     SelVideoPlayerStateFailed,     // 播放失败
@@ -401,16 +402,30 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 /** 创建播放器 以及控制面板*/
 - (void)_setupPlayer
 {
-    
+    [self startServer];
     // *后台播放代码
     AVAudioSession*session=[AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+
+    [self.player cancelPendingPrerolls];
+    self.player = nil;
+    self.playerItem = nil;
     
-    self.playerItem = [AVPlayerItem playerItemWithURL:_playerConfiguration.sourceUrl];
+    NSURL * proxyURL = [KTVHTTPCache proxyURLWithOriginalURL:_playerConfiguration.sourceUrl];
+    AVURLAsset *urlAeest = [AVURLAsset assetWithURL:proxyURL];
+    
+    self.playerItem = [AVPlayerItem playerItemWithAsset:urlAeest];
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     [self _setVideoGravity:_playerConfiguration.videoGravity];
     self.backgroundColor = [UIColor blackColor];
+    
+    // 增加下面这行可以解决iOS10兼容性问题了
+    if ([self.player respondsToSelector:@selector(automaticallyWaitsToMinimizeStalling)]) {
+        if (@available(iOS 10.0, *)) {
+            self.player.automaticallyWaitsToMinimizeStalling = NO;
+        }
+    }
     
     [self configureVolume];
     
@@ -432,6 +447,24 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         }
     }
 }
+
+//开启本地服务器配置
+-(void)startServer{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSError *error;
+        [KTVHTTPCache proxyStart:&error];
+        if (error) {
+            DRLog(@"开启服务失败");
+        }else{
+            DRLog(@"开启服务成功");
+        }
+    });
+    
+    long GB = 2;
+    [KTVHTTPCache cacheSetMaxCacheLength:1024 * 1024 * 1024 * GB];
+}
+
 
 // 即将开启画中画
 - (void)pictureInPictureControllerWillStartPictureInPicture:(AVPictureInPictureController *)pictureInPictureController{

@@ -10,6 +10,25 @@
 
 
 @implementation SXTools
++(void)getScreenshotWithUrlAsyn:(NSURL *)url completion:(MyImageBlock)handler{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
+        AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+        generator.appliesPreferredTrackTransform = YES;
+        CMTime time = CMTimeMakeWithSeconds(0, 30);
+        [generator generateCGImagesAsynchronouslyForTimes:@[[NSValue valueWithCMTime:time]] completionHandler:^(CMTime requestedTime, CGImageRef  _Nullable image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError * _Nullable error) {
+           UIImage *thumb = nil;
+            if (error) {
+                DRLog(@"获取视频第一帧错误 %@===%@",error,image);
+            }else{
+                thumb = [[UIImage alloc] initWithCGImage:image];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handler(thumb);
+            });
+        }];
+    });
+}
 
 + (CGFloat)getSXvideoListHeight:(SXVideosModel *)videoModel{
     

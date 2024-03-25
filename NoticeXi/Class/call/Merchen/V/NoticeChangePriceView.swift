@@ -46,7 +46,7 @@ class NoticeChangePriceView: UIView, UITextFieldDelegate{
         let subTitleL = UILabel.init(frame: CGRect(x: NoticeSwiftFile.screenWidth-20-NoticeSwiftFile.getSwiftTextWidth(str: "鲸币/分钟", height: 22, font: 16), y: 65+15, width:NoticeSwiftFile.getSwiftTextWidth(str: "鲸币/分钟", height: 22, font: 16), height: 20))
         subTitleL.font = UIFont.systemFont(ofSize: 16)
         subTitleL.textColor = UIColor.init(hexString: "#25262E")
-        subTitleL.text = "鲸币/分钟"
+        subTitleL.text = "鲸币"
         subTitleL.textAlignment = NSTextAlignment.center
         self.contentView?.addSubview(subTitleL)
 

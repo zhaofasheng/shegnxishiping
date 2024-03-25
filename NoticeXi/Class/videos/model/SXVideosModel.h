@@ -31,7 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *video_cover_url;//视频封面
 @property (nonatomic, strong) NSDictionary *user_info;//用户信息
 @property (nonatomic, strong) SXUserModel  *userModel;
-
+/** 从xx秒开始播放视频(默认0) */
+@property (nonatomic, assign) NSInteger    seekTime;
 
 @end
 
