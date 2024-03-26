@@ -124,12 +124,12 @@
         [self hideHUD];
         [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.creatfail"]];
     }];
-
 }
 
 - (void)sureBuyAli{
-    if (![WXApi isWXAppInstalled]) {
-        [self showToastWithText:@"手机没有安装微信，无法使用微信支付"];
+    // 调用canOpenURL方法判断设备是否安装了支付宝
+    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay://"]]) {
+        [self showToastWithText:@"手机没有安装支付宝，无法使用支付宝支付"];
         return;
     }
     

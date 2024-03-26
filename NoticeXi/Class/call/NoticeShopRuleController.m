@@ -8,14 +8,19 @@
 
 #import "NoticeShopRuleController.h"
 #import "NoticeOpenTbModel.h"
+
 @interface NoticeShopRuleController ()
+
 @property (nonatomic, strong) UIView *tabHeadView;
+
 @end
 
 @implementation NoticeShopRuleController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = [UIColor whiteColor];
     
@@ -49,8 +54,6 @@
     } fail:^(NSError * _Nullable error) {
         [self hideHUD];
     }];
-    
-
 }
 
 

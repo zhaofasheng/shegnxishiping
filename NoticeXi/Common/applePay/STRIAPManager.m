@@ -343,7 +343,7 @@
 }
 
 - (void)startAliPay:(SXWeiXinPayModel *)payModel{
-    [[AlipaySDK defaultService] payOrder:payModel.alikey fromScheme:@"alisdkdemo" callback:^(NSDictionary *resultDic) {
+    [[AlipaySDK defaultService] payOrder:payModel.alikey fromScheme:@"shengxi" callback:^(NSDictionary *resultDic) {
             
     }];
 }

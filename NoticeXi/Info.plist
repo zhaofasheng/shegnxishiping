@@ -91,23 +91,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>snssdk1128</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
 				<string>bilibili</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>kwai</string>
 			</array>
 		</dict>
 	</array>
@@ -117,6 +101,9 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>snssdk1128</string>
+		<string>kwai</string>
+		<string>alipay</string>
 		<string>wechat</string>
 		<string>weixin</string>
 		<string>mqqapi</string>

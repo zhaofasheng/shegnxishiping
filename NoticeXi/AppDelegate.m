@@ -63,6 +63,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [UIApplication sharedApplication].statusBarHidden = NO;
     
     [NoticeSaveModel setUUIDIFNO];
+    
     [self regreiteShare];
 
     [NoticeTools setLangue];//设置默认语言
