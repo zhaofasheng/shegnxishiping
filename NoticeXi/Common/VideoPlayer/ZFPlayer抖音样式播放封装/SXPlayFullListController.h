@@ -12,13 +12,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SXPlayFullListController : NoticeBaseCellController
+@interface SXPlayFullListController : NoticeBaseCellController<UINavigationControllerDelegate>
 @property (nonatomic, assign) NSUInteger page;
 @property (nonatomic, strong) NSMutableArray *modelArray;
 @property (nonatomic, assign) NSInteger currentPlayIndex;
 @property (nonatomic) BOOL hasMore;
 
 @property (nonatomic, assign) NSInteger rid;
+
+@property (nonatomic, strong) UIView *startView;
+@property (nonatomic, strong) UIImage *startImage;
+@property (nonatomic, copy) void(^popbackBlock)(void);
 @end
 
 NS_ASSUME_NONNULL_END

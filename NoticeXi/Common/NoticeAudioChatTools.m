@@ -23,7 +23,7 @@
 - (void)callToUserId:(NSString *)userId roomId:(UInt32)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext{
     //设置屏幕常亮
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-    [[TUICallEngine createInstance] setSelfInfo:@"买家" avatar:@"" succ:^{
+    [[TUICallEngine createInstance] setSelfInfo:@"" avatar:@"" succ:^{
         
     } fail:^(int code, NSString * _Nullable errMsg) {
         
@@ -264,6 +264,7 @@
         return;
     }
     
+    [TUICallingAction reject];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:close?@"5": @"3" forKey:@"orderType"];

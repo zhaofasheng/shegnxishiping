@@ -31,12 +31,12 @@
 
 @implementation TCCommentsPopView
 
-+ (instancetype)commentsPopViewWithFrame:(CGRect)frame commentBackView:(UIView *)commentBackView {
-    TCCommentsPopView *view = [[TCCommentsPopView alloc] initWithFrame:frame commentBackView:commentBackView];
++ (instancetype)commentsPopViewWithFrame:(CGRect)frame commentBackView:(UIView *)commentBackView withScale:(CGFloat)widthtoheight{
+    TCCommentsPopView *view = [[TCCommentsPopView alloc] initWithFrame:frame commentBackView:commentBackView withScale:widthtoheight];
     return view;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame commentBackView:(UIView *)commentBackView {
+- (instancetype)initWithFrame:(CGRect)frame commentBackView:(UIView *)commentBackView withScale:(CGFloat)widthtoheight{
     self = [super initWithFrame:frame];
     if (self) {
         self.isDragScrollView = NO;
@@ -49,8 +49,11 @@
         [self addGestureRecognizer:tapGestureRecognizer];
         
         self.container  = commentBackView;
-        self.container.frame = CGRectMake(0, frame.size.height, frame.size.width, DR_SCREEN_HEIGHT - DR_SCREEN_WIDTH * 3 / 4);
+        self.container.frame = CGRectMake(0, frame.size.height, frame.size.width, DR_SCREEN_HEIGHT - DR_SCREEN_WIDTH * widthtoheight);
         [self addSubview:self.container];
+        
+        [self.container setCornerOnTop:20];
+        
         //添加拖拽手势
         self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
         [self.container addGestureRecognizer:self.panGestureRecognizer];
@@ -70,6 +73,9 @@
 }
 
 - (void)show {
+    if (self.showComBlock) {
+        self.showComBlock(YES);
+    }
     [UIView animateWithDuration:0.15f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseOut
@@ -141,10 +147,8 @@
     if(gestureRecognizer == self.panGestureRecognizer) {
         if ([otherGestureRecognizer isKindOfClass:NSClassFromString(@"UIScrollViewPanGestureRecognizer")] || [otherGestureRecognizer isKindOfClass:NSClassFromString(@"UIPanGestureRecognizer")] ) {
             if([otherGestureRecognizer.view isKindOfClass:[UIScrollView class]] ) {
-
                 return YES;
             }
-            
         }
     }
     return NO;

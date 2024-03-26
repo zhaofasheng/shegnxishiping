@@ -209,12 +209,22 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self.videoPlayerManager autoPause];
+    
+    if (@available(iOS 13.0, *)) {
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDarkContent;
+    } else {
+        // Fallback on earlier versions
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.videoPlayerManager autoPlay];
-    
+    if (@available(iOS 13.0, *)) {
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    } else {
+        // Fallback on earlier versions
+    }
 }
 
 - (void)zfManager_playerCurrentSliderValue:(NSInteger)value playerModel:(ZFPlayerModel *)model{

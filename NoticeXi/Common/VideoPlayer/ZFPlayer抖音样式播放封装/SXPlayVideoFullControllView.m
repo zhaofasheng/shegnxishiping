@@ -37,25 +37,14 @@
 
         [self addSubview:self.slider];
         
-        CGFloat height = TAB_BAR_HEIGHT;
-        [self.slider mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.mas_left).with.offset(0);
-            make.right.equalTo(self.mas_right).with.offset(0);
-            make.bottom.equalTo(self.mas_bottom).with.offset(-height);
-            make.height.mas_equalTo(16 * 1);
-        }];
+        self.slider.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, 16);
         
         self.slider.sliderBtn.hidden = NO;
         [self.slider setThumbImage:[UIImage imageNamed:@"ic_slider_thumb_30x30_"] forState:UIControlStateHighlighted];
         
         CGFloat width = GET_STRWIDTH(@"00:00:00/00:00:00", 11, 20);
-        [self.fastLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.mas_equalTo(self.mas_centerX);
-            make.height.mas_equalTo(20);
-            make.width.mas_equalTo(width);
-            make.bottom.equalTo(self.mas_bottom).with.offset(-height-20);
-        }];
-        
+  
+        self.fastLabel.frame = CGRectMake((DR_SCREEN_WIDTH-width)/2, self.slider.frame.origin.y-20, width, 20);
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playOrPauseTap)];
         [self addGestureRecognizer:tap];
         self.userInteractionEnabled = YES;
@@ -67,11 +56,14 @@
     if (isFull) {
         self.backBtn.hidden = NO;
         self.backBtn.frame = CGRectMake(NAVIGATION_BAR_HEIGHT-5,0,44,NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
+        self.slider.frame = CGRectMake(NAVIGATION_BAR_HEIGHT-5, self.frame.size.height-10-16, self.frame.size.width-NAVIGATION_BAR_HEIGHT*2-10, 16);
     }else{
         _backBtn.hidden = YES;
+        self.slider.frame = CGRectMake(0, self.frame.size.height-TAB_BAR_HEIGHT, self.frame.size.width, 16);
     }
-   self.playImageView.frame = CGRectMake((self.frame.size.width-64)/2, (self.frame.size.height-64)/2, 64, 64);
-   
+    self.fastLabel.frame = CGRectMake((self.frame.size.width-self.fastLabel.frame.size.width)/2, self.slider.frame.origin.y-20, self.fastLabel.frame.size.width, 20);
+    self.playImageView.frame = CGRectMake((self.frame.size.width-64)/2, (self.frame.size.height-64)/2, 64, 64);
+    
 }
 
 - (UILabel *)fastLabel{

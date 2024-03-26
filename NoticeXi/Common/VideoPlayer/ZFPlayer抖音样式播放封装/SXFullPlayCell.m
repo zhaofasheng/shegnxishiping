@@ -11,7 +11,7 @@
 #import "TCCommentsPopView.h"
 #import "MyCommentView.h"
 @interface SXFullPlayCell()<MyCommentViewDelegate>
-
+@property (nonatomic, assign) CGFloat widthtoheight;//小屏幕时候的宽高比
 @property (nonatomic, strong) TCCommentsPopView *popView;
 @end
 
@@ -58,11 +58,14 @@
     
     self.comButton.hidden = NO;
     
-    if (videoModel.screen.intValue == 1) {
+    self.fullButton.hidden = YES;
+    if (self.videoModel.screen.intValue == 1) {
+        self.widthtoheight = 0.5625;
         self.fullButton.hidden = NO;
     }else{
-        _fullButton.hidden = YES;
+        self.widthtoheight = 0.75;
     }
+    
 }
 
 - (void)fullClick{
@@ -102,7 +105,7 @@
     self.coverImageView.hidden = YES;
     MyCommentView *commentView = [[MyCommentView alloc]init];
     commentView.delegate = self;
-    self.popView = [TCCommentsPopView commentsPopViewWithFrame:[UIScreen mainScreen].bounds commentBackView:commentView];
+    self.popView = [TCCommentsPopView commentsPopViewWithFrame:[UIScreen mainScreen].bounds commentBackView:commentView withScale:self.widthtoheight];
     [self.popView showToView:[NoticeTools getTopViewController].view];
     
     __weak typeof(self) weakSelf = self;
@@ -123,6 +126,17 @@
                 }
                 weakSelf.coverImageView.hidden = NO;
             }];
+        }else{
+            [UIView animateWithDuration:0.15f
+                                  delay:0.0f
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
+                weakSelf.playerFatherView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH*self.widthtoheight);
+                if (weakSelf.fatherBlock) {
+                    weakSelf.fatherBlock(weakSelf.playerFatherView.bounds);
+                }
+            }completion:^(BOOL finished) {
+            }];
         }
     };
     
@@ -137,9 +151,9 @@
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-        self.playerFatherView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH*3/4);
-        if (self.fatherBlock) {
-            self.fatherBlock(self.playerFatherView.bounds);
+        weakSelf.playerFatherView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH*self.widthtoheight);
+        if (weakSelf.fatherBlock) {
+            weakSelf.fatherBlock(weakSelf.playerFatherView.bounds);
         }
     }completion:^(BOOL finished) {
         
