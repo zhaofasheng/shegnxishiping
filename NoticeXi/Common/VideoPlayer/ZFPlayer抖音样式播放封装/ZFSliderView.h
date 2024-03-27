@@ -49,6 +49,8 @@
 /** 缓存进度 */
 @property (nonatomic, assign) float bufferValue;
 
+@property (nonatomic, assign) BOOL isLoading;
+
 /** 是否允许点击，默认是YES */
 @property (nonatomic, assign) BOOL allowTapped;
 

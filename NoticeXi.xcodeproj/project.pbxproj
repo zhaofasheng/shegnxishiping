@@ -1366,7 +1366,6 @@
 		FE44F2132BB29FAB004ECF11 /* MyCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1972BB29FAA004ECF11 /* MyCommentCell.m */; };
 		FE44F2142BB29FAB004ECF11 /* ZFSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1982BB29FAA004ECF11 /* ZFSliderView.m */; };
 		FE44F2152BB29FAB004ECF11 /* ZFPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1992BB29FAA004ECF11 /* ZFPlayerView.m */; };
-		FE44F2162BB29FAB004ECF11 /* SXPlayFullListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F19A2BB29FAA004ECF11 /* SXPlayFullListController.m */; };
 		FE44F2172BB29FAB004ECF11 /* DDVideoPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F19C2BB29FAA004ECF11 /* DDVideoPlayerManager.m */; };
 		FE44F2182BB29FAB004ECF11 /* ZFDouYinPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1A02BB29FAA004ECF11 /* ZFDouYinPlayerControlView.m */; };
 		FE44F2192BB29FAB004ECF11 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1A32BB29FAA004ECF11 /* NSDate+Helper.m */; };
@@ -1392,6 +1391,12 @@
 		FE44F22D2BB29FAB004ECF11 /* UIViewController+PlayerRotation.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1CC2BB29FAA004ECF11 /* UIViewController+PlayerRotation.m */; };
 		FE44F22E2BB29FAB004ECF11 /* SelPlayerConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1CF2BB29FAA004ECF11 /* SelPlayerConfiguration.m */; };
 		FE44F22F2BB29FAB004ECF11 /* SelVideoSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1D22BB29FAA004ECF11 /* SelVideoSlider.m */; };
+		FE44F2322BB2C8E0004ECF11 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FE466B862BA824F200A7376B /* PrivacyInfo.xcprivacy */; };
+		FE44F29F2BB43392004ECF11 /* SXPlayFullListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F29E2BB43392004ECF11 /* SXPlayFullListController.m */; };
+		FE44F2A92BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F2A12BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m */; };
+		FE44F2AA2BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F2A22BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m */; };
+		FE44F2AB2BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F2A32BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m */; };
+		FE44F2AC2BB4339E004ECF11 /* TTCTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F2A42BB4339E004ECF11 /* TTCTransitionDelegate.m */; };
 		FE48C0F22B47CD130069D1A6 /* NoticePhoneChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE48C0F12B47CD130069D1A6 /* NoticePhoneChatView.m */; };
 		FE48C1062B47FC9B0069D1A6 /* Notice3DshopListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE48C1052B47FC9B0069D1A6 /* Notice3DshopListView.m */; };
 		FE48C13E2B4805630069D1A6 /* YoungSphere.m in Sources */ = {isa = PBXBuildFile; fileRef = FE48C13D2B4805630069D1A6 /* YoungSphere.m */; };
@@ -4100,7 +4105,6 @@
 		FE44F18E2BB29FAA004ECF11 /* ZFPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlayerView.h; sourceTree = "<group>"; };
 		FE44F18F2BB29FAA004ECF11 /* DDVideoPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDVideoPlayerManager.h; sourceTree = "<group>"; };
 		FE44F1902BB29FAA004ECF11 /* SXPlayVideoFullControllView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPlayVideoFullControllView.m; sourceTree = "<group>"; };
-		FE44F1912BB29FAA004ECF11 /* SXPlayFullListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXPlayFullListController.h; sourceTree = "<group>"; };
 		FE44F1922BB29FAA004ECF11 /* UIView+ZFFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZFFrame.h"; sourceTree = "<group>"; };
 		FE44F1932BB29FAA004ECF11 /* TCCommentsPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommentsPopView.h; sourceTree = "<group>"; };
 		FE44F1942BB29FAA004ECF11 /* ZFPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlayerModel.h; sourceTree = "<group>"; };
@@ -4109,7 +4113,6 @@
 		FE44F1972BB29FAA004ECF11 /* MyCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCommentCell.m; sourceTree = "<group>"; };
 		FE44F1982BB29FAA004ECF11 /* ZFSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSliderView.m; sourceTree = "<group>"; };
 		FE44F1992BB29FAA004ECF11 /* ZFPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFPlayerView.m; sourceTree = "<group>"; };
-		FE44F19A2BB29FAA004ECF11 /* SXPlayFullListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPlayFullListController.m; sourceTree = "<group>"; };
 		FE44F19B2BB29FAA004ECF11 /* SXPlayVideoFullControllView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXPlayVideoFullControllView.h; sourceTree = "<group>"; };
 		FE44F19C2BB29FAA004ECF11 /* DDVideoPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDVideoPlayerManager.m; sourceTree = "<group>"; };
 		FE44F19E2BB29FAA004ECF11 /* ZFPlayerControlViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlayerControlViewDelegate.h; sourceTree = "<group>"; };
@@ -4162,6 +4165,16 @@
 		FE44F1D02BB29FAA004ECF11 /* SelVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelVideoPlayer.h; sourceTree = "<group>"; };
 		FE44F1D12BB29FAA004ECF11 /* SXDragChangeValueView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXDragChangeValueView.h; sourceTree = "<group>"; };
 		FE44F1D22BB29FAA004ECF11 /* SelVideoSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelVideoSlider.m; sourceTree = "<group>"; };
+		FE44F29D2BB43391004ECF11 /* SXPlayFullListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXPlayFullListController.h; sourceTree = "<group>"; };
+		FE44F29E2BB43392004ECF11 /* SXPlayFullListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPlayFullListController.m; sourceTree = "<group>"; };
+		FE44F2A12BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSmallVideoDismissOrPopAniTrans.m; sourceTree = "<group>"; };
+		FE44F2A22BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSmallVideoPresentOrPushAniTrans.m; sourceTree = "<group>"; };
+		FE44F2A32BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TTCTransitionAnimator.m"; sourceTree = "<group>"; };
+		FE44F2A42BB4339E004ECF11 /* TTCTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCTransitionDelegate.m; sourceTree = "<group>"; };
+		FE44F2A52BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSmallVideoDismissOrPopAniTrans.h; sourceTree = "<group>"; };
+		FE44F2A62BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSmallVideoPresentOrPushAniTrans.h; sourceTree = "<group>"; };
+		FE44F2A72BB4339E004ECF11 /* TTCTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCTransitionDelegate.h; sourceTree = "<group>"; };
+		FE44F2A82BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TTCTransitionAnimator.h"; sourceTree = "<group>"; };
 		FE466B862BA824F200A7376B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FE48C0F02B47CD130069D1A6 /* NoticePhoneChatView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticePhoneChatView.h; sourceTree = "<group>"; };
 		FE48C0F12B47CD130069D1A6 /* NoticePhoneChatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticePhoneChatView.m; sourceTree = "<group>"; };
@@ -8461,6 +8474,7 @@
 		FE44F0FF2BB29FAA004ECF11 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				FE44F2A02BB4339E004ECF11 /* 抖音转场动画 */,
 				FE44F1002BB29FAA004ECF11 /* KTVHTTPCache */,
 				FE44F16B2BB29FAA004ECF11 /* 视频缓存框架 */,
 				FE44F1862BB29FAA004ECF11 /* ZFPlayer抖音样式播放封装 */,
@@ -8710,6 +8724,8 @@
 		FE44F1862BB29FAA004ECF11 /* ZFPlayer抖音样式播放封装 */ = {
 			isa = PBXGroup;
 			children = (
+				FE44F29D2BB43391004ECF11 /* SXPlayFullListController.h */,
+				FE44F29E2BB43392004ECF11 /* SXPlayFullListController.m */,
 				FE44F18F2BB29FAA004ECF11 /* DDVideoPlayerManager.h */,
 				FE44F19C2BB29FAA004ECF11 /* DDVideoPlayerManager.m */,
 				FE44F18C2BB29FAA004ECF11 /* MyCommentCell.h */,
@@ -8718,8 +8734,6 @@
 				FE44F1952BB29FAA004ECF11 /* MyCommentView.m */,
 				FE44F1962BB29FAA004ECF11 /* SXFullPlayCell.h */,
 				FE44F18D2BB29FAA004ECF11 /* SXFullPlayCell.m */,
-				FE44F1912BB29FAA004ECF11 /* SXPlayFullListController.h */,
-				FE44F19A2BB29FAA004ECF11 /* SXPlayFullListController.m */,
 				FE44F19B2BB29FAA004ECF11 /* SXPlayVideoFullControllView.h */,
 				FE44F1902BB29FAA004ECF11 /* SXPlayVideoFullControllView.m */,
 				FE44F1932BB29FAA004ECF11 /* TCCommentsPopView.h */,
@@ -8814,6 +8828,21 @@
 				FE44F1CC2BB29FAA004ECF11 /* UIViewController+PlayerRotation.m */,
 			);
 			path = Configs;
+			sourceTree = "<group>";
+		};
+		FE44F2A02BB4339E004ECF11 /* 抖音转场动画 */ = {
+			isa = PBXGroup;
+			children = (
+				FE44F2A52BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.h */,
+				FE44F2A12BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m */,
+				FE44F2A62BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.h */,
+				FE44F2A22BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m */,
+				FE44F2A72BB4339E004ECF11 /* TTCTransitionDelegate.h */,
+				FE44F2A42BB4339E004ECF11 /* TTCTransitionDelegate.m */,
+				FE44F2A82BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.h */,
+				FE44F2A32BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m */,
+			);
+			path = "抖音转场动画";
 			sourceTree = "<group>";
 		};
 		FE6686762BA082FE006DBDF2 /* AxcAE_TabBar */ = {
@@ -9376,6 +9405,7 @@
 				A4E965402A69142200AE022E /* mainuse.svga in Resources */,
 				A4E965822A69142200AE022E /* ele_sunnyBirdInvertedImage4.png in Resources */,
 				A4E966872A69142300AE022E /* Image_kongleader12.png in Resources */,
+				FE44F2322BB2C8E0004ECF11 /* PrivacyInfo.xcprivacy in Resources */,
 				A4E968682A69142600AE022E /* wenzizhuanjibc.png in Resources */,
 				A4E965782A69142200AE022E /* ele_sunnyBird6.png in Resources */,
 				A4E968622A69142600AE022E /* taozhizj.jpg in Resources */,
@@ -9559,6 +9589,7 @@
 				A4E967172A69142400AE022E /* NoticeReplyVoiceCell.m in Sources */,
 				A4E967B42A69142500AE022E /* NoticeVoiceCommentNewsController.m in Sources */,
 				A4E967D12A69142500AE022E /* NoticeMoveBookSonPrivayController.m in Sources */,
+				FE44F29F2BB43392004ECF11 /* SXPlayFullListController.m in Sources */,
 				A4E965552A69142200AE022E /* NoticeOTOModel.m in Sources */,
 				A4E968CF2A69142600AE022E /* NoticeOpenTbModel.m in Sources */,
 				A4E967B22A69142500AE022E /* NoticeVoiceChatAndDepartController.m in Sources */,
@@ -9896,6 +9927,7 @@
 				FE9C40B12B9B27CC008C3A22 /* SXZiGeCheckView.m in Sources */,
 				A4E968CD2A69142600AE022E /* NoticeShopCommentModel.m in Sources */,
 				A4E9671D2A69142400AE022E /* NoticeVoiceComDetailView.m in Sources */,
+				FE44F2AB2BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m in Sources */,
 				A4E965532A69142200AE022E /* NoticeAudioJoinToAudioModel.m in Sources */,
 				A4E966282A69142300AE022E /* NoticeBook.m in Sources */,
 				A4354C372A9EDB3800454D23 /* NoticeVipCenterController.m in Sources */,
@@ -10425,6 +10457,7 @@
 				A4E967A02A69142500AE022E /* NoticePiPeiFriendListViewController.m in Sources */,
 				A4E969732A69142700AE022E /* NoticeBgmHasChoiceShowView.m in Sources */,
 				A4E968E82A69142600AE022E /* NoticeJBChoiceView.swift in Sources */,
+				FE44F2A92BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m in Sources */,
 				A4E965062A69142200AE022E /* JXCategoryNumberCell.m in Sources */,
 				A4E968E62A69142600AE022E /* NoticeChangePriceView.swift in Sources */,
 				A4E965AB2A69142200AE022E /* NoticeBgmLineView.m in Sources */,
@@ -10592,6 +10625,7 @@
 				A4E965092A69142200AE022E /* JXCategoryFactory.m in Sources */,
 				A4E968562A69142600AE022E /* NoticeAboutView.m in Sources */,
 				A4E968DE2A69142600AE022E /* NoticeShopDetailCell.swift in Sources */,
+				FE44F2AA2BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m in Sources */,
 				A4E967902A69142400AE022E /* NoticeManagerImgList.m in Sources */,
 				A4E966E22A69142400AE022E /* NoticeHelpCommentCell.m in Sources */,
 				A4E9669E2A69142300AE022E /* NoticeClockButtonView.m in Sources */,
@@ -10817,6 +10851,7 @@
 				A46F54122AA972EA00A22D48 /* NoticeGetVipRecoderController.m in Sources */,
 				A4E969562A69142700AE022E /* NoticeVoiceStatusDetailModel.m in Sources */,
 				A4E9649C2A69142100AE022E /* NoticeTimerTools.m in Sources */,
+				FE44F2AC2BB4339E004ECF11 /* TTCTransitionDelegate.m in Sources */,
 				A4E9652C2A69142200AE022E /* DownloadAudioService.m in Sources */,
 				A4E9683D2A69142500AE022E /* NoticePhotoHeaderView.m in Sources */,
 				A4E965AD2A69142200AE022E /* NoticeBgmView.m in Sources */,
@@ -10840,7 +10875,6 @@
 				A4E966012A69142300AE022E /* NoticeAreaModel.m in Sources */,
 				A4E967252A69142400AE022E /* NoticeHowToUserViewController.m in Sources */,
 				A4E966312A69142300AE022E /* DrawLikeModel.m in Sources */,
-				FE44F2162BB29FAB004ECF11 /* SXPlayFullListController.m in Sources */,
 				A4E9684B2A69142600AE022E /* NoticeTitleAndImageCell.m in Sources */,
 				FE44F21F2BB29FAB004ECF11 /* UINavigationController+ZFPlayerRotation.m in Sources */,
 				FE44F2102BB29FAB004ECF11 /* SXFullPlayCell.m in Sources */,

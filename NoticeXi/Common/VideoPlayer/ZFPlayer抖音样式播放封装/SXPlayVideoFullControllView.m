@@ -25,8 +25,10 @@
             make.centerY.mas_equalTo(self.mas_centerY);
         }];
         
-        self.slider = [[ZFSliderView alloc] init];
-
+        self.activity.frame = CGRectMake((DR_SCREEN_WIDTH-45)/2, (DR_SCREEN_HEIGHT-45)/2, 45, 45);
+        [self addSubview:self.activity];
+        
+        self.slider = [[ZFSliderView alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, 16)];
         self.slider.delegate = self;
         self.slider.maximumTrackTintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         self.slider.minimumTrackTintColor = [UIColor whiteColor];
@@ -34,10 +36,8 @@
         self.slider.thumbSize = CGSizeMake(12 * 1, 12 * 1);
         self.slider.sliderHeight = 1;
         self.slider.isHideSliderBlock = YES;
-
         [self addSubview:self.slider];
         
-        self.slider.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, 16);
         
         self.slider.sliderBtn.hidden = NO;
         [self.slider setThumbImage:[UIImage imageNamed:@"ic_slider_thumb_30x30_"] forState:UIControlStateHighlighted];
@@ -63,7 +63,8 @@
     }
     self.fastLabel.frame = CGRectMake((self.frame.size.width-self.fastLabel.frame.size.width)/2, self.slider.frame.origin.y-20, self.fastLabel.frame.size.width, 20);
     self.playImageView.frame = CGRectMake((self.frame.size.width-64)/2, (self.frame.size.height-64)/2, 64, 64);
-    
+    self.activity.frame = CGRectMake((self.frame.size.width-45)/2, (self.frame.size.height-45)/2, 45, 45);
+
 }
 
 - (UILabel *)fastLabel{
@@ -135,5 +136,15 @@
     if ([self.delegate respondsToSelector:@selector(noFullplay)]) {
         [self.delegate noFullplay];
     }
+}
+
+- (MMMaterialDesignSpinner *)activity {
+    if (!_activity) {
+        _activity = [[MMMaterialDesignSpinner alloc] init];
+        _activity.lineWidth = 1;
+        _activity.duration  = 1;
+        _activity.tintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.9];
+    }
+    return _activity;
 }
 @end

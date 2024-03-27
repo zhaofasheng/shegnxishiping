@@ -9,6 +9,7 @@
 #import "SXKchengIntroController.h"
 
 @interface SXKchengIntroController ()
+
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
 @property (nonatomic, strong) UIImageView *introImageView;
 @end

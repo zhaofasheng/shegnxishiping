@@ -138,7 +138,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     appdel.socketManager = nil;
 }
 
-
 - (void)socketReConnect{
     NoticeSocketManger *socketManger = [[NoticeSocketManger alloc] init];
     [socketManger reConnect];
@@ -208,60 +207,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 
 
 - (void)mustExit{
-    
-    [[DRNetWorking shareInstance] requestNoTosat:[NSString stringWithFormat:@"apps/2/%@",[NoticeSaveModel getVersion]] Accept:nil parmaer:nil success:^(NSDictionary *dict, BOOL success) {
-       
-        if (success) {
-            if ([dict[@"data"] isEqual:[NSNull null]]) {
-                [self hsUpdateApp];
-                return ;
-            }
-            NSString *url = @"http://itunes.apple.com/cn/lookup?id=1358222995";
-            NoticeOTOModel *model = [NoticeOTOModel mj_objectWithKeyValues:dict[@"data"]];
-            if ([model.forced_update isEqualToString:@"1"]) {
-               
-                [[AFHTTPSessionManager manager] POST:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-                    NSArray *results = responseObject[@"results"];
-                    if (results && results.count > 0) {
-                        NSDictionary *response = results.firstObject;
-                        NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];// 软件的当前版本
-                        NSString *lastestVersion = response[@"version"];  //AppStore 上软件的最新版本
-                        if ([lastestVersion compare:currentVersion] == NSOrderedDescending) {
-                            NoticePinBiView *ppinV = [[NoticePinBiView alloc] initWithStopServer:6 dayNum:0];
-                            [ppinV showTostView];
-                        }
-                    }
-                } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                    
-                }];
-            }else if (model.stop_at.integerValue){
-                NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
-                if (model.stop_at.integerValue > currentTime) {
-                    NSInteger dayN = [NSString stringWithFormat:@"%.1f",(model.stop_at.integerValue - currentTime)/86400].integerValue;
-                    [[AFHTTPSessionManager manager] POST:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-                        NSArray *results = responseObject[@"results"];
-                        if (results && results.count > 0) {
-                            NSDictionary *response = results.firstObject;
-                            NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];// 软件的当前版本
-                            NSString *lastestVersion = response[@"version"];  // AppStore 上软件的最新版本
-                            if ([lastestVersion compare:currentVersion] == NSOrderedDescending) {
-                                NoticePinBiView *ppinV = [[NoticePinBiView alloc] initWithStopServer:7 dayNum:dayN+1];
-                                [ppinV showTostView];
-                            }
-                        }
-                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                    }];
-                }
-            }
-            else{
-                 [self hsUpdateApp];
-            }
-        }else{
-            [self hsUpdateApp];
-        }
-    } fail:^(NSError *error) {
-        [self hsUpdateApp];
-    }];
+    [self hsUpdateApp];
 }
 
 - (void)hsUpdateApp{

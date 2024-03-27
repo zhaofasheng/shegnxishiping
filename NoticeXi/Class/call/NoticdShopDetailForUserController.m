@@ -17,6 +17,9 @@
 #import "NoticeActShowView.h"
 #import "NoticeOtherShopCardController.h"
 #import "NoticeJieYouShopHeaderView.h"
+
+#import "TTCTransitionDelegate.h"
+
 @interface NoticdShopDetailForUserController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) NoticeMyShopModel *timeModel;
 @property (nonatomic, strong) NoticeMyShopModel *shopDetailM;
@@ -161,6 +164,10 @@
     [self.startView addSubview:self.workButton];
     [self.workButton addTarget:self action:@selector(startClick) forControlEvents:UIControlEventTouchUpInside];
 
+    if(self.delegate && [self.delegate respondsToSelector:@selector(detailIndex:)]) {
+       
+        self.ttcTransitionDelegate.smalCurPlayCell = [self.delegate detailIndex:self.currentPlayIndex];
+    }
 }
 
 - (void)backClick{

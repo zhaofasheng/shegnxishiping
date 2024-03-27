@@ -8,7 +8,7 @@
 
 #import "SXPlayFullListController.h"
 #import "SXFullPlayCell.h"
-
+#import "TTCTransitionDelegate.h"
 #import "DDVideoPlayerManager.h"
 #import "SDImageCache.h"
 #import "TTCCom.h"
@@ -19,12 +19,15 @@
 //这个是预加载视频的管理器
 @property (nonatomic, strong) DDVideoPlayerManager *preloadVideoPlayerManager;
 
+@property (nonatomic, assign) BOOL isFirstAlloc;
 @end
 
 @implementation SXPlayFullListController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.isFirstAlloc = YES;
     
     self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT);
     self.tableView.pagingEnabled = YES;
@@ -127,6 +130,8 @@
     self.videoPlayerManager = nil;
     
     self.fatherView = currentCell.playerFatherView;
+    self.videoPlayerManager.playerModel.isFirstAlloc = self.isFirstAlloc;
+    self.isFirstAlloc = NO;
     self.videoPlayerManager.playerModel.screen = currentPlaySmallVideoModel.screen.intValue==1?NO:YES;
     self.videoPlayerManager.playerModel.seekTime = currentPlaySmallVideoModel.seekTime;
     self.videoPlayerManager.playerModel.videoGravity = videoGravity;
@@ -142,6 +147,11 @@
         self.videoPlayerManager.playerModel.useDownAndPlay = NO;
     }
     [self.videoPlayerManager resetToPlayNewVideo];
+    
+    if(self.delegate && [self.delegate respondsToSelector:@selector(smallVideoPlayIndex:)]) {
+       
+        self.ttcTransitionDelegate.smalCurPlayCell = [self.delegate smallVideoPlayIndex:self.currentPlayIndex];
+    }
 }
 
 - (CGFloat)deviceFreeMemorySize {
@@ -170,10 +180,12 @@
 
 //预加载
 - (void)preLoadIndex:(NSInteger)index {
+    
     [self.preloadVideoPlayerManager resetPlayer];
     if(self.modelArray.count <= index || [self deviceFreeMemorySize] < 200  || index<0) {
         return;
     }
+    
     NSString *artist = nil;
     NSString *title = nil;
     NSString *cover_url = nil;
@@ -198,6 +210,7 @@
     self.preloadVideoPlayerManager.playerModel.useDownAndPlay = YES;
     self.preloadVideoPlayerManager.playerModel.isAutoPlay = NO;
     [self.preloadVideoPlayerManager resetToPlayNewVideo];
+    
 }
 
 - (void)backClick{

@@ -16,6 +16,7 @@
 #import "NoticeVersionController.h"
 #import "NoticeFAQViewController.h"
 #import "SXHisToryDownLoadController.h"
+#import "KTVHTTPCache.h"
 @interface SXSettingController ()<SXSwitchChoiceDelegate>
 
 @property (nonatomic, strong) NSArray *section0titleArr;
@@ -84,6 +85,11 @@
         ctl.isTuikuan = indexPath.row == 0?NO:YES;
         [self.navigationController pushViewController:ctl animated:YES];
     }
+    
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        [KTVHTTPCache cacheDeleteAllCaches];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)outLoginClick{
@@ -129,7 +135,7 @@
     }else if (section == 1){
         return self.section1titleArr.count;
     }else if (section == 2){
-        return 1;
+        return 2;
     }
     return self.section2titleArr.count;
 }
@@ -139,16 +145,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 2) {
+    if (indexPath.section == 2 && indexPath.row == 0) {
         SXTitleAndSwitchCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
         cell1.delegate = self;
         cell1.mainL.text = @"是否允许流量下载";
-        [cell1.backView setAllCorner:10];
+        [cell1.backView setCornerOnTop:10];
         cell1.switchButton.on = [[NSUserDefaults standardUserDefaults] boolForKey:HWDownloadAllowsCellularAccessKey];
         return cell1;
     }
     SXSetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-
+    cell.subImageV.hidden = NO;
     [cell.backView setCornerOnTop:0];
     [cell.backView setCornerOnBottom:0];
     if (indexPath.section == 0) {
@@ -165,7 +171,14 @@
         }else if(indexPath.row == self.section1titleArr.count-1){
             [cell.backView setCornerOnBottom:10];
         }
-    }else{
+    }else if(indexPath.section == 2 && indexPath.row == 1){
+        cell.titleL.text = @"清除系统缓存";
+        cell.subImageV.hidden = YES;
+        [cell.backView setCornerOnBottom:10];
+        cell.subL.text = [HWToolBox stringFromByteCount:[KTVHTTPCache cacheTotalCacheLength]];
+        cell.subL.frame = CGRectMake(DR_SCREEN_WIDTH-40-15-cell.subL.frame.size.width, 0, cell.subL.frame.size.width, cell.subL.frame.size.height);
+    }
+    else{
         cell.titleL.text = self.section2titleArr[indexPath.row];
         if (indexPath.row == 0) {
             [cell.backView setCornerOnTop:10];

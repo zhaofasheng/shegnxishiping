@@ -10,7 +10,10 @@
 #import "SXAskQuestionShopCell.h"
 #import "NoticdShopDetailForUserController.h"
 #import "NoticeLoginViewController.h"
-@interface NoticeTelController ()
+
+#import "UIViewController+TTCTransitionAnimator.h"
+#import "TTCTransitionDelegate.h"
+@interface NoticeTelController ()<shopDetailControllerDelegate>
 
 @end
 
@@ -46,13 +49,19 @@
     }
     NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
     ctl.shopModel = self.dataArr[indexPath.row];
-    CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
-                                                                    withSubType:kCATransitionFromLeft
-                                                                       duration:0.3f
-                                                                 timingFunction:kCAMediaTimingFunctionLinear
-                                                                           view:self.navigationController.view];
-    [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
-    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:NO];
+    ctl.delegate = self;
+    ctl.currentPlayIndex = indexPath.row;
+    ctl.ttcTransitionDelegate = [[TTCTransitionDelegate alloc] init];
+    ctl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ctl animated:YES];
+}
+
+#pragma mark - SmallVideoPlayControllerDelegate
+- (UIView *)detailIndex:(NSInteger)index {
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    return [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]].contentView;
+    
+    
 }
 
 //设置cell

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ZFSliderView.h"
-
+#import "MMMaterialDesignSpinner.h"
 @protocol SXControllerPlayDelegate <NSObject>
 @optional
 
@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIButton *backBtn;
 
 @property (nonatomic, weak) id<SXControllerPlayDelegate>      delegate;
+
+@property (nonatomic, strong) MMMaterialDesignSpinner *activity;
 
 - (void)refreshUI:(BOOL)isFull;
 @end

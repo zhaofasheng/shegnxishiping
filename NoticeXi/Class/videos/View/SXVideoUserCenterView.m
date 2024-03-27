@@ -46,6 +46,7 @@
 
 - (void)setUserModel:(SXUserModel *)userModel{
     _userModel = userModel;
+    
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:userModel.avatar_url] placeholderImage:UIImageNamed(@"noImage_jynohe")];
     
     self.backView.frame = CGRectMake(20, 232, DR_SCREEN_WIDTH-40, 50+20+userModel.introHeight);

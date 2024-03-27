@@ -63,6 +63,7 @@
 @property (nonatomic, strong) UIImage                *thumbImg;
 
 
+
 #pragma mark - UITableViewCell PlayerView
 
 /** palyer加到tableView */
@@ -102,6 +103,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
 - (instancetype)init {
     self = [super init];
     if (self) {
+      
         [self initializeThePlayer];
     }
     return self;
@@ -253,7 +255,9 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
         self.controlView = defaultControlView;
         self.controlView.delegate = self;
     }
+    self.isFirstAlloc = playerModel.isFirstAlloc;
     self.playerModel = playerModel;
+    
     self.screen = self.playerModel.screen;
 }
 
@@ -552,6 +556,8 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
             if([weakSelf.delegate respondsToSelector:@selector(zf_playerCurrentSliderValue:playerModel:)]) {
                 [weakSelf.delegate zf_playerCurrentSliderValue:currentTime playerModel:weakSelf.playerModel];
             }
+            
+            [weakSelf.controlView.activity stopAnimating];
         }
     }];
 }
@@ -600,6 +606,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
                 // 当缓冲好的时候
                 if (self.playerItem.playbackLikelyToKeepUp && self.state == ZFPlayerStateBuffering){
                     self.state = ZFPlayerStatePlaying;
+                    
                 }
             }
         }
@@ -826,11 +833,17 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
             break;
         case ZFPlayerStateBuffering:// 缓冲中
         {
+            if (self.isFirstAlloc) {
+                self.isFirstAlloc = NO;
+                [self.controlView.activity startAnimating];
+            }
+            
             [self.controlView.slider startAnimating];
         }
             break;
         case ZFPlayerStatePlaying:// 播放中
         {
+            
             [self.controlView.slider stopAnimating];
         }
             break;

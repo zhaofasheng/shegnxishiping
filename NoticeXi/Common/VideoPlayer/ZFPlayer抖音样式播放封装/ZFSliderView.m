@@ -23,7 +23,6 @@ static const CGFloat kAnimate = 0.3;
 
 @property (nonatomic, strong) UIView *loadingBarView;
 
-@property (nonatomic, assign) BOOL isLoading;
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 
@@ -38,6 +37,7 @@ static const CGFloat kAnimate = 0.3;
         self.allowTapped = YES;
         self.animate = YES;
         [self addSubViews];
+        [self layoutSubviews];
     }
     return self;
 }
@@ -264,6 +264,7 @@ static const CGFloat kAnimate = 0.3;
  *  Stops animation of the spinnner.
  */
 - (void)stopAnimating {
+
     self.isLoading = NO;
     self.bufferProgressView.hidden = NO;
     self.sliderProgressView.hidden = NO;

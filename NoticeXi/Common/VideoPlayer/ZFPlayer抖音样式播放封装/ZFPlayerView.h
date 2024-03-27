@@ -54,6 +54,8 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 
 @interface ZFPlayerView : UIView
 
+@property (nonatomic, assign) BOOL isFirstAlloc;
+
 @property (nonatomic, strong) SXPlayVideoFullControllView                 *controlView;
 
 @property (nonatomic, strong) ZFPlayerModel          *playerModel;

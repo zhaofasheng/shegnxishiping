@@ -6,7 +6,7 @@
 
 
 @interface ZFPlayerModel : NSObject
-
+@property (nonatomic, assign) BOOL isFirstAlloc;
 /** 进入后台是否自动暂停播放 */
 @property (nonatomic, assign) BOOL isAutoPauseWhenBackGround;
 

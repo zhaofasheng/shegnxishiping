@@ -9,14 +9,15 @@
 #import "NoticeVideosController.h"
 #import "NoticeVideoCollectionViewCell.h"
 #import "SXSearchVideoController.h"
-#import "SXPlayDetailController.h"
 #import "NoticeLoginViewController.h"
+#import "SXPlayFullListController.h"
 
-
+#import "UIViewController+TTCTransitionAnimator.h"
+#import "TTCTransitionDelegate.h"
 
 static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCell";
 
-@interface NoticeVideosController ()
+@interface NoticeVideosController ()<SmallVideoPlayControllerDelegate>
 
 @property (nonatomic, assign) NSInteger currentPlayTime;
 
@@ -135,15 +136,22 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         return;
     }
 
-    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
-    ctl.currentPlayModel = self.dataArr[indexPath.row];
-    CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
-                                                                    withSubType:kCATransitionFromLeft
-                                                                       duration:0.3f
-                                                                 timingFunction:kCAMediaTimingFunctionLinear
-                                                                           view:self.navigationController.view];
-    [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
-    [self.navigationController pushViewController:ctl animated:NO];
+    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
+    ctl.modelArray = self.dataArr;
+    ctl.currentPlayIndex = indexPath.row;
+    ctl.delegate = self;
+    ctl.ttcTransitionDelegate = [[TTCTransitionDelegate alloc] init];
+    ctl.hidesBottomBarWhenPushed = YES;
+
+    [self.navigationController pushViewController:ctl animated:YES];
+}
+
+#pragma mark - SmallVideoPlayControllerDelegate
+- (UIView *)smallVideoPlayIndex:(NSInteger)index {
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    return [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]].contentView;
+    
+    
 }
 
 //设置cell
@@ -160,6 +168,5 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     
     return self.dataArr.count;
 }
-
 
 @end

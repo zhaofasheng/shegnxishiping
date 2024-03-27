@@ -22,13 +22,15 @@
 @implementation AppDelegate (Notification)
 
 - (void)configurationJPushWithLaunchOptions:(NSDictionary *)launchOptions {
+    
     //【注册通知】通知回调代理（可选）
     JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
     if (@available(iOS 12.0, *)) {
-        entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound|JPAuthorizationOptionProvidesAppNotificationSettings;
+        entity.types = JPAuthorizationOptionAlert | JPAuthorizationOptionBadge | JPAuthorizationOptionSound | JPAuthorizationOptionProvidesAppNotificationSettings;
     } else {
         // Fallback on earlier versions
     }
+    
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
     
     
@@ -105,8 +107,7 @@
     UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
     content.badge = @(0);
     UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"clearBadge" content:content trigger:nil];
-    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-    }];
+    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {}];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {

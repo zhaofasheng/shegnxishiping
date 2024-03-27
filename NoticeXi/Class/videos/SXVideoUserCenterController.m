@@ -10,11 +10,14 @@
 #import "SXVideoUserCenterView.h"
 #import "SXWebViewController.h"
 #import "SXUserCenterCell.h"
+
 @interface SXVideoUserCenterController ()
+
 @property (nonatomic, strong) SXVideoUserCenterView *headerView;
 @property (nonatomic, strong) NSArray *section0imgArr;
 @property (nonatomic, strong) NSArray *section0titleArr;
 @property (nonatomic, strong) NSArray *urlArr;
+
 @end
 
 @implementation SXVideoUserCenterController
@@ -49,7 +52,6 @@
     if (indexPath.row == 0) {
         NSURL *url = [NSURL URLWithString:@"snssdk1128://user/profile/835266208345102"];
         if ([[UIApplication sharedApplication] canOpenURL:url]){
-            
             [[UIApplication sharedApplication]openURL:url options:@{} completionHandler:nil];
             return;
         }
@@ -67,14 +69,12 @@
     SXWebViewController * webctl = [[SXWebViewController alloc] init];
     webctl.url = self.urlArr[indexPath.row];
     [self.navigationController pushViewController:webctl animated:YES];
-    
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.section0imgArr.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXUserCenterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
@@ -101,7 +101,6 @@
             [self.tableView reloadData];
         }
     } fail:^(NSError * _Nullable error) {
-
     }];
 }
 
