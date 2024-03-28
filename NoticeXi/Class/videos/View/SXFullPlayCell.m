@@ -10,6 +10,7 @@
 #import "TTCCom.h"
 #import "TCCommentsPopView.h"
 #import "MyCommentView.h"
+#import "SXVideoUserCenterController.h"
 @interface SXFullPlayCell()<MyCommentViewDelegate>
 @property (nonatomic, assign) CGFloat widthtoheight;//小屏幕时候的宽高比
 @property (nonatomic, strong) TCCommentsPopView *popView;
@@ -66,6 +67,13 @@
         self.widthtoheight = 0.75;
     }
     
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.userModel.avatar_url]];
+}
+
+- (void)iconTap{
+    SXVideoUserCenterController *ctl = [[SXVideoUserCenterController alloc] init];
+    ctl.userModel = self.videoModel.userModel;
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)fullClick{
@@ -88,7 +96,7 @@
 
 - (UIButton *)comButton{
     if (!_comButton) {
-        _comButton = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-40, (DR_SCREEN_HEIGHT-40)/2, 40, 40)];
+        _comButton = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-40, (DR_SCREEN_HEIGHT-40)/2+80, 40, 40)];
         _comButton.titleLabel.font = THRETEENTEXTFONTSIZE;
         [_comButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_comButton setTitle:@"评论" forState:UIControlStateNormal];
@@ -96,6 +104,18 @@
         [self.contentView addSubview:_comButton];
     }
     return _comButton;
+}
+
+- (UIImageView *)iconImageView{
+    if (!_iconImageView) {
+        _iconImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-10-40, (DR_SCREEN_HEIGHT-40)/2, 40, 40)];
+        [_iconImageView setAllCorner:20];
+        [self.contentView addSubview:_iconImageView];
+        _iconImageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(iconTap)];
+        [_iconImageView addGestureRecognizer:tap];
+    }
+    return _iconImageView;
 }
 
 - (void)comClick{

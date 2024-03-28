@@ -60,8 +60,6 @@
 - (UIView *)detailIndex:(NSInteger)index {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
     return [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]].contentView;
-    
-    
 }
 
 //设置cell

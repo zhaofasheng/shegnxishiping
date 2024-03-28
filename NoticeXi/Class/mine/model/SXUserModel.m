@@ -14,9 +14,5 @@
     return @{@"userId":@"id"};
 }
 
-- (void)setUser_introduce:(NSString *)user_introduce{
-    _user_introduce = user_introduce;
-    self.introHeight = [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-40-32 string:user_introduce isJiacu:NO];
-    self.introAtt = [SXTools getStringWithLineHight:14 string:user_introduce];
-}
+
 @end

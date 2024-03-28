@@ -165,7 +165,6 @@
     [self.workButton addTarget:self action:@selector(startClick) forControlEvents:UIControlEventTouchUpInside];
 
     if(self.delegate && [self.delegate respondsToSelector:@selector(detailIndex:)]) {
-       
         self.ttcTransitionDelegate.smalCurPlayCell = [self.delegate detailIndex:self.currentPlayIndex];
     }
 }
@@ -176,7 +175,6 @@
 
 - (void)getTime{
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"adminConfig/1" Accept:@"application/vnd.shengxi.v5.4.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-       
         if (success) {
             self.timeModel = [NoticeMyShopModel mj_objectWithKeyValues:dict[@"data"]];
         }

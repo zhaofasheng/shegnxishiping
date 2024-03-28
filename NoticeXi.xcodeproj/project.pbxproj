@@ -8724,20 +8724,10 @@
 		FE44F1862BB29FAA004ECF11 /* ZFPlayer抖音样式播放封装 */ = {
 			isa = PBXGroup;
 			children = (
-				FE44F29D2BB43391004ECF11 /* SXPlayFullListController.h */,
-				FE44F29E2BB43392004ECF11 /* SXPlayFullListController.m */,
 				FE44F18F2BB29FAA004ECF11 /* DDVideoPlayerManager.h */,
 				FE44F19C2BB29FAA004ECF11 /* DDVideoPlayerManager.m */,
-				FE44F18C2BB29FAA004ECF11 /* MyCommentCell.h */,
-				FE44F1972BB29FAA004ECF11 /* MyCommentCell.m */,
-				FE44F1872BB29FAA004ECF11 /* MyCommentView.h */,
-				FE44F1952BB29FAA004ECF11 /* MyCommentView.m */,
-				FE44F1962BB29FAA004ECF11 /* SXFullPlayCell.h */,
-				FE44F18D2BB29FAA004ECF11 /* SXFullPlayCell.m */,
 				FE44F19B2BB29FAA004ECF11 /* SXPlayVideoFullControllView.h */,
 				FE44F1902BB29FAA004ECF11 /* SXPlayVideoFullControllView.m */,
-				FE44F1932BB29FAA004ECF11 /* TCCommentsPopView.h */,
-				FE44F1892BB29FAA004ECF11 /* TCCommentsPopView.m */,
 				FE44F1922BB29FAA004ECF11 /* UIView+ZFFrame.h */,
 				FE44F18A2BB29FAA004ECF11 /* UIView+ZFFrame.m */,
 				FE44F1942BB29FAA004ECF11 /* ZFPlayerModel.h */,
@@ -8907,6 +8897,14 @@
 		FE6CF9612B86D9E8005EE663 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FE44F1932BB29FAA004ECF11 /* TCCommentsPopView.h */,
+				FE44F1892BB29FAA004ECF11 /* TCCommentsPopView.m */,
+				FE44F18C2BB29FAA004ECF11 /* MyCommentCell.h */,
+				FE44F1972BB29FAA004ECF11 /* MyCommentCell.m */,
+				FE44F1872BB29FAA004ECF11 /* MyCommentView.h */,
+				FE44F1952BB29FAA004ECF11 /* MyCommentView.m */,
+				FE44F1962BB29FAA004ECF11 /* SXFullPlayCell.h */,
+				FE44F18D2BB29FAA004ECF11 /* SXFullPlayCell.m */,
 				A4E95F432A69141C00AE022E /* CYWWaterFallLayout.h */,
 				A4E95F642A69141C00AE022E /* CYWWaterFallLayout.m */,
 				FE953C812B68D3420098F0A2 /* NoticeDownloadVoiceCell.h */,
@@ -9041,6 +9039,8 @@
 				FE6CF93B2B84550D005EE663 /* model */,
 				FEBCADCA2B8361580048F5A1 /* NoticeVideosController.h */,
 				FEBCADC92B8361580048F5A1 /* NoticeVideosController.m */,
+				FE44F29D2BB43391004ECF11 /* SXPlayFullListController.h */,
+				FE44F29E2BB43392004ECF11 /* SXPlayFullListController.m */,
 				FE7440C22BA7D46E007EE4A6 /* SXKchengIntroController.h */,
 				FE7440C42BA7D46F007EE4A6 /* SXKchengIntroController.m */,
 				FE7440C32BA7D46F007EE4A6 /* SXPayVideoListController.h */,

@@ -18,8 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *is_official;//是否为官方号(1是0否)
 @property (nonatomic, strong) NSString *user_introduce;//视频作者的介绍
 
-@property (nonatomic, strong) NSMutableAttributedString *introAtt;
-@property (nonatomic, assign) CGFloat introHeight;
 @end
 
 NS_ASSUME_NONNULL_END

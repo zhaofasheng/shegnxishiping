@@ -187,7 +187,6 @@ static CGFloat itemMargin = 5;
         cell.cannotSelectLayerButton.hidden = YES;
     }
   
-    
     cell.showSelectBtn = YES;
     
     __weak typeof(self) weakSelf = self;

@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXFullPlayCell : BaseCell
-
+@property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) SXVideosModel *videoModel;
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) UIView *playerFatherView;

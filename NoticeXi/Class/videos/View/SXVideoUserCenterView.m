@@ -49,16 +49,16 @@
     
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:userModel.avatar_url] placeholderImage:UIImageNamed(@"noImage_jynohe")];
     
-    self.backView.frame = CGRectMake(20, 232, DR_SCREEN_WIDTH-40, 50+20+userModel.introHeight);
+    CGFloat height = GET_STRHEIGHT(userModel.user_introduce, 14, DR_SCREEN_WIDTH-40-30);
+    self.backView.frame = CGRectMake(20, 232, DR_SCREEN_WIDTH-40, 50+20+height);
     
     self.nickNameL.text = userModel.nick_name;
     self.nickNameL.frame = CGRectMake(16, 0, GET_STRWIDTH(userModel.nick_name, 21, 50), 50);
     self.markImageView.hidden = userModel.is_official.boolValue?NO:YES;
     self.markImageView.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame), 15, 20, 20);
     
-    self.contentL.frame = CGRectMake(16, 50, self.backView.frame.size.width, userModel.introHeight);
-    self.contentL.attributedText = userModel.introAtt;
-    
+    self.contentL.frame = CGRectMake(15, 50, self.backView.frame.size.width-30, height);
+    self.contentL.text = userModel.user_introduce;
     self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 232+self.backView.frame.size.height+30);
 }
 

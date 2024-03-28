@@ -137,13 +137,12 @@
     }
 }
 
-
 - (UIImagePickerController *)imagePickerController{
     if (_imagePickerController==nil) {
-        _imagePickerController=[[UIImagePickerController alloc]init];
+        _imagePickerController = [[UIImagePickerController alloc]init];
         _imagePickerController.delegate = (id)self;
-        _imagePickerController.sourceType=UIImagePickerControllerSourceTypeCamera;
-        _imagePickerController.cameraDevice=UIImagePickerControllerCameraDeviceRear;
+        _imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        _imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
         NSMutableArray *mediaTypes = [NSMutableArray array];
         [mediaTypes addObject:(NSString *)kUTTypeImage];
         _imagePickerController.mediaTypes= mediaTypes;
@@ -159,9 +158,9 @@
             [self showToastWithText:@"您没有开启相机权限哦~，您可以在手机系统设置开启"];
         } else{
             //判断是否支持相机
-              if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                  [self presentViewController:self.imagePickerController animated:YES completion:nil];
-              }
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                [self presentViewController:self.imagePickerController animated:YES completion:nil];
+            }
         }
     }else if (buttonIndex == 2){
         TZImagePickerController *imagePicker = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
@@ -171,8 +170,7 @@
         imagePicker.allowPickingVideo = false;
         imagePicker.allowPickingGif = false;
         imagePicker.modalPresentationStyle = UIModalPresentationFullScreen;
-        imagePicker.allowCrop = true;
-        imagePicker.cropRect = CGRectMake(0, DR_SCREEN_HEIGHT/2-DR_SCREEN_WIDTH/2, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH*210/345+30);
+        imagePicker.allowCrop = false;
         [self presentViewController:imagePicker animated:YES completion:nil];
     }
 }
@@ -188,9 +186,6 @@
     }
     
     [self upLoadzm:self.zmImage path:[NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],arc4random()%999999999678999]];
-   
-    
-  
 }
 
 
