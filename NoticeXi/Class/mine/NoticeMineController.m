@@ -79,7 +79,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getwallect) name:@"REFRESHMYWALLECT" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginEd) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     
-    [self getwallect];
+    
     [self getStatusRequest];
 }
 
@@ -186,7 +186,7 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
+    [self getwallect];
     if (self.needAutoShowSupply) {
         self.needAutoShowSupply = NO;
         [self myShopTap];

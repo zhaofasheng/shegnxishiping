@@ -154,6 +154,7 @@
         return cell1;
     }
     SXSetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    cell.subL.text = @"";
     cell.subImageV.hidden = NO;
     [cell.backView setCornerOnTop:0];
     [cell.backView setCornerOnBottom:0];

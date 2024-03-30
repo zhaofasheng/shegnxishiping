@@ -30,6 +30,9 @@
 @property (nonatomic, strong) AVPlayerItem *playerItem;
 /** 播放器item */
 @property (nonatomic, strong) AVPlayer *player;
+
+
+
 /** 播放器layer */
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
 /** 是否播放完毕 */

@@ -132,6 +132,7 @@
     
     self.fatherView = currentCell.playerFatherView;
     self.videoPlayerManager.playerModel.isFirstAlloc = self.isFirstAlloc;
+ 
     self.isFirstAlloc = NO;
     self.videoPlayerManager.playerModel.screen = currentPlaySmallVideoModel.screen.intValue==1?NO:YES;
     self.videoPlayerManager.playerModel.seekTime = currentPlaySmallVideoModel.seekTime;
@@ -245,6 +246,13 @@
     if (self.currentPlayIndex < self.modelArray.count) {
         SXVideosModel *currentM = self.modelArray[self.currentPlayIndex];
         currentM.seekTime = value;
+    }
+}
+
+- (void)zfManager_playerFinished:(ZFPlayerModel *)model{
+    if (self.currentPlayIndex < self.modelArray.count) {
+        SXVideosModel *currentM = self.modelArray[self.currentPlayIndex];
+        currentM.seekTime = 0;
     }
 }
 

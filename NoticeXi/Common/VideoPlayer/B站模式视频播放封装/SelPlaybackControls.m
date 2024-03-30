@@ -19,7 +19,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
 @property (nonatomic, assign) BOOL isActivityShowing;
 /** 重新加载是否显示 */
 @property (nonatomic, assign) BOOL isRetryShowing;
-
+@property (nonatomic, strong) UILabel *userIdL;
 /** 用来保存pan手势快进的总时长 */
 @property (nonatomic, assign) CGFloat sumTime;
 @property (nonatomic, strong) CAGradientLayer *gradientLayer1;
@@ -82,6 +82,10 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
         self.totalTimeLabel.frame = CGRectMake(_bottomControlsBar.frame.size.width-50-50-GET_STRWIDTH(self.totalTimeLabel.text, 11, 44), 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
 
     }
+    if (self.isPay) {
+        self.userIdL.hidden = NO;
+        self.userIdL.frame = CGRectMake(self.isFullScreen? (CGRectGetMaxX(self.totalTimeLabel.frame)-80) : (self.frame.size.width-90), self.frame.size.height-10-20, 80, 20);
+    }
     self.progress.frame = CGRectMake(CGRectGetMaxX(self.playTimeLabel.frame)+8, 20, self.totalTimeLabel.frame.origin.x-CGRectGetMaxX(self.playTimeLabel.frame)-16, 4);
     self.videoSlider.frame = self.progress.frame;
 
@@ -135,7 +139,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
             }
         }
     }
-    
+
     self.gradientLayer1.frame = self.topControlsBar.bounds;
     self.gradientLayer.frame = self.bottomControlsBar.bounds;
     
@@ -166,7 +170,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
     }else{
         self.bottomControlsBar.frame = CGRectMake(0, self.frame.size.height-44, self.frame.size.width, 44);
     }
-    
+
     self.activityIndicatorView.center = self.center;
     [self refreshBottomFrame];
 }
@@ -337,6 +341,8 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
 - (void)setupUI
 {
     self.backgroundColor = [UIColor clearColor];
+
+    [self addSubview:self.userIdL];
     [self addSubview:self.playButton];
     [self addSubview:self.bottomControlsBar];
     [self addSubview:self.activityIndicatorView];
@@ -355,6 +361,21 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
     [self addGesture];
     
     [self bringSubviewToFront:self.topControlsBar];
+}
+
+- (UILabel *)userIdL{
+    if (!_userIdL) {
+        
+        _userIdL = [[UILabel  alloc] initWithFrame:CGRectMake(self.frame.size.width-90, self.frame.size.height-10-20, 80, 20)];
+        _userIdL.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+        _userIdL.hidden = YES;
+        [_userIdL setAllCorner:2];
+        _userIdL.text = [[NoticeSaveModel getUserInfo] frequency_no];
+        _userIdL.font = ELEVENTEXTFONTSIZE;
+        _userIdL.textAlignment = NSTextAlignmentCenter;
+        _userIdL.textColor = [UIColor whiteColor];
+    }
+    return _userIdL;
 }
 
 /** 添加手势 */

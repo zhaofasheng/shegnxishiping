@@ -171,7 +171,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     }else{
         self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT);
     }
-
+    
     self.isFullScreen = YES;
     [self refreshUI];
 }
@@ -495,6 +495,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 /** 添加播放器控制面板 */
 - (void)_setupPlayControls
 {
+
     [self addSubview:self.playbackControls];
  
     if(self.isSetDefaultPlaytime){
@@ -759,8 +760,11 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 - (void)refreshUI{
     self.playerLayer.frame = self.bounds;
     self.playbackControls.frame = self.bounds;
+
     [self.playbackControls makeConstraints];
 }
+
+
     
 /** 释放播放器 */
 - (void)_deallocPlayer

@@ -347,6 +347,14 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     }
 }
 
+/** 重新播放 */
+- (void)_replayVideo
+{
+    self.playDidEnd = NO;
+    [_player seekToTime:CMTimeMake(0, 1) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+    [self autoPlay];
+}
+
 #pragma mark SXControllerPlayDelegate
 - (void)playOrPause{
     if (self.isPauseByUser) {
@@ -671,6 +679,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
  *  @param notification 通知
  */
 - (void)moviePlayDidEnd:(NSNotification *)notification {
+
     self.state = ZFPlayerStateStopped;
     if (self.isBottomVideo && !self.isFullScreen) { // 播放完了，如果是在小屏模式 && 在bottom位置，直接关闭播放器
         self.repeatToPlay = NO;
@@ -682,6 +691,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
             if([self.delegate respondsToSelector:@selector(zf_playerFinished:)]) {
                 [self.delegate zf_playerFinished:self.playerModel];
             }
+
         }
     }
 }

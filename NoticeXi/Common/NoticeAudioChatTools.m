@@ -133,7 +133,7 @@
                    fail:^(int code, NSString *msg) {
             DRLog(@"腾讯云登录失败: %d, error: %@", code, msg);
         }];
-  
+        
     }else{
         // 组件登录
         [TUILogin login:1400799902 //SDKAppID
@@ -209,6 +209,7 @@
     if (self.noReClick) {
         return;
     }
+    
     __weak typeof(self) weakSelf = self;
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{

@@ -9,12 +9,17 @@
 #import "SXSearchVideoController.h"
 #import "KMTagListView.h"
 #import "NoticeVideoCollectionViewCell.h"
-#import "SXPlayDetailController.h"
+#import "SXPlayFullListController.h"
 #import "NoticeLoginViewController.h"
 #import "SXSearchThinkCell.h"
 #import "SXSearchModel.h"
 #import "CYWWaterFallLayout.h"
-@interface SXSearchVideoController ()<UITextFieldDelegate,KMTagListViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+#import "SXPlayDetailController.h"
+#import "UIViewController+TTCTransitionAnimator.h"
+#import "TTCTransitionDelegate.h"
+
+@interface SXSearchVideoController ()<SmallVideoPlayControllerDelegate,UITextFieldDelegate,KMTagListViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+
 @property (nonatomic, strong) CYWWaterFallLayout *layout;
 @property (nonatomic, strong) UITextField *topicField;
 @property (nonatomic, strong) KMTagListView *labeView;
@@ -25,6 +30,7 @@
 @property (nonatomic, assign) BOOL hasNoCreateRefsh;
 @property (nonatomic, strong) SXSearchModel *defaultSearM;
 @property (nonatomic, strong) NSMutableArray *localArr;
+
 @end
 
 @implementation SXSearchVideoController
@@ -85,25 +91,30 @@
 
 
 - (void)refreshIfShowList{
+    
     if (self.localArr.count) {
         [self.tableView reloadData];
         self.tableView.tableHeaderView = nil;
     }else{
         self.tableView.tableHeaderView = self.searchHistoryArr.count? self.headerView : nil;
     }
+    
 }
 
 //键盘弹起
 - (void)keyboardDidShow{
+    
     self.tableView.hidden = NO;
     _collectionView.hidden = YES;
     self.tableView.tableFooterView = nil;
     [self refreshIfShowList];
+    
 }
 
 
 //刷新历史搜索记录
 - (void)refreshHistory{
+    
     if (self.searchHistoryArr.count) {
         if (self.labeView) {
             [self.labeView removeFromSuperview];
@@ -124,11 +135,12 @@
         self.tableView.tableHeaderView = self.headerView;
         [self.tableView reloadData];
     }
+    
 }
 
 - (void)textFieldDidChange:(id) sender {
+    
     UITextField *_field = (UITextField *)sender;
-   
     if (_field.text.length) {
         [self requestLoacal:_field.text];
         
@@ -139,6 +151,7 @@
             [self refreshHistory];
         }
     }
+    
 }
 
 
@@ -165,6 +178,7 @@
         [self showToastWithText:@"搜索不能带有纯空格文本~"];
         return YES;
     }
+    
     if (textField.text && textField.text.length) {
         [self searchWith:textField.text needSave:YES];
     }
@@ -210,7 +224,6 @@
             }
         }
  
-        
         if (!already) {
             if (self.searchHistoryArr.count == 10) {
                 [self.searchHistoryArr removeLastObject];
@@ -388,11 +401,23 @@
 
     SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
     ctl.currentPlayModel = self.dataArr[indexPath.row];
+    
+//    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
+//    ctl.modelArray = self.dataArr;
+//    ctl.currentPlayIndex = indexPath.row;
+//    ctl.delegate = self;
+//    ctl.ttcTransitionDelegate = [[TTCTransitionDelegate alloc] init];
+//    ctl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ctl animated:YES];
 }
 
 
+#pragma mark - SmallVideoPlayControllerDelegate
+- (UIView *)smallVideoPlayIndex:(NSInteger)index {
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    return [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]].contentView;
 
+}
 //设置cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     

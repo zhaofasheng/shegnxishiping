@@ -103,6 +103,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     /**
      *  向微信终端注册ID，这里的APPID一般建议写成宏,容易维护。@“测试demo”不需用管。这里的id是假的，需要改这里还有target里面的URL Type
      */
+    
     [WXApi registerApp:@"wx7204a9a3e7196dd7"];
 }
 

@@ -39,7 +39,7 @@
     [super viewDidLoad];
 
     
-    self.titles = @[@"课程目录",@"课程简介"];
+    self.titles = @[@"课程简介",@"课程目录"];
 
     _categoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0,0,DR_SCREEN_WIDTH,40)];
     self.categoryView.titles = self.titles;
@@ -117,7 +117,7 @@
 }
 
 - (id<JXPagerViewListViewDelegate>)pagerView:(JXPagerView *)pagerView initListAtIndex:(NSInteger)index {
-    if (index == 0) {
+    if (index == 1) {
         return self.videoVC;
     }else{
         return self.kcVC;
@@ -249,6 +249,7 @@
             [weakSelf refreshStatus];
             weakSelf.categoryView.defaultSelectedIndex = 0;
             [weakSelf.categoryView reloadData];
+            weakSelf.kcVC.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-(weakSelf.paySearModel.is_bought.boolValue?0:TAB_BAR_HEIGHT));
         }
         if (weakSelf.buySuccessBlock) {
             weakSelf.buySuccessBlock(searisID);

@@ -46,6 +46,7 @@
 @property(nonatomic, strong, readonly) ZFPlayerModel * _Nullable playerModel;
 @property (nonatomic, weak) id<ZFManagerPlayerDelegate> _Nullable managerDelegate;
 
+@property (nonatomic, assign) BOOL noReplay;//当前不允许自动播放
 /**
  *  播放
  */

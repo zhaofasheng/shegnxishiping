@@ -11,7 +11,7 @@
 #import "SXSearchVideoController.h"
 #import "NoticeLoginViewController.h"
 #import "SXPlayFullListController.h"
-
+#import "SXPlayDetailController.h"
 #import "UIViewController+TTCTransitionAnimator.h"
 #import "TTCTransitionDelegate.h"
 
@@ -136,12 +136,15 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         return;
     }
 
-    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
-    ctl.modelArray = self.dataArr;
-    ctl.currentPlayIndex = indexPath.row;
-    ctl.delegate = self;
-    ctl.ttcTransitionDelegate = [[TTCTransitionDelegate alloc] init];
-    ctl.hidesBottomBarWhenPushed = YES;
+    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
+    ctl.currentPlayModel = self.dataArr[indexPath.row];
+    
+//    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
+//    ctl.modelArray = self.dataArr;
+//    ctl.currentPlayIndex = indexPath.row;
+//    ctl.delegate = self;
+//    ctl.ttcTransitionDelegate = [[TTCTransitionDelegate alloc] init];
+//    ctl.hidesBottomBarWhenPushed = YES;
 
     [self.navigationController pushViewController:ctl animated:YES];
 }
@@ -150,8 +153,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 - (UIView *)smallVideoPlayIndex:(NSInteger)index {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
     return [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]].contentView;
-    
-    
+
 }
 
 //设置cell

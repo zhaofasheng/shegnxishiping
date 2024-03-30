@@ -145,4 +145,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 
 //非全屏播放
 - (void)nomerPlay;
+
+//重新播放
+- (void)_replayVideo;
 @end

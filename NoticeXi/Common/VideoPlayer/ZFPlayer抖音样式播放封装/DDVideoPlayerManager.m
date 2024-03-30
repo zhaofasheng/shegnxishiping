@@ -70,8 +70,6 @@
             DRLog(@"开启服务成功");
         }
     });
-   
-    DRLog(@"缓存视频大小%@",[HWToolBox stringFromByteCount:[KTVHTTPCache cacheTotalCacheLength]]);
 
 //    // 设置缓存最大容量
     long GB = 2;
@@ -152,6 +150,13 @@
     if([self.managerDelegate respondsToSelector:@selector(zfManager_playerFinished:)]) {
         [self.managerDelegate zfManager_playerFinished:model];
     }
+    
+    if (self.noReplay) {
+        self.noReplay = NO;
+        return;
+    }
+    //播放结束后，允许自动播放的时候就自动重新播放
+    [self.playerView _replayVideo];
 }
 /** 播放下一首 */
 - (void)zf_playerNextParter:(ZFPlayerModel *)model {
@@ -171,7 +176,7 @@
     if([self.managerDelegate respondsToSelector:@selector(zfManager_playerPlayerStatusChange:)]) {
         [self.managerDelegate zfManager_playerPlayerStatusChange:statu];
     }
-    DRLog(@"播放状态%ld",(long)statu);
+
     //如果是本地文件且播放失败
     if(statu == ZFPlayerStateFailed ) {
         if([self.playerModel.videoURL.scheme isEqualToString:@"file"]) {
