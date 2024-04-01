@@ -81,14 +81,14 @@
 //        choiceImageV1.image = UIImageNamed(@"sxnochoice_img");
 //        self.aliChoiceV = choiceImageV1;
 //        
-//        UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(20,277,DR_SCREEN_WIDTH-40, 40)];
-//        [button setAllCorner:20];
-//        button.backgroundColor = [UIColor colorWithHexString:@"#FF4B98"];
-//        [button setTitle:@"确认支付" forState:UIControlStateNormal];
-//        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        button.titleLabel.font = SIXTEENTEXTFONTSIZE;
-//        [self.contentView addSubview:button];
-//        [button addTarget:self action:@selector(payClick) forControlEvents:UIControlEventTouchUpInside];
+        UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(20,277,DR_SCREEN_WIDTH-40, 40)];
+        [button setAllCorner:20];
+        button.backgroundColor = [UIColor colorWithHexString:@"#FF4B98"];
+        [button setTitle:@"确认支付" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.titleLabel.font = SIXTEENTEXTFONTSIZE;
+        [self.contentView addSubview:button];
+        [button addTarget:self action:@selector(payClick) forControlEvents:UIControlEventTouchUpInside];
 //        
         self.isWeixinPay = YES;
     }

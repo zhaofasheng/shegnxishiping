@@ -56,7 +56,7 @@
     if (purchID) {
         
         NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-        
+   
         if ([purchID containsString:@"jing"]) {
             [parm setObject:purchID forKey:@"iosId"];
             [parm setObject:@"3" forKey:@"payType"];
@@ -98,7 +98,7 @@
     [self.showView disMiss];
     [self.showView show];
     
-    self.sn = payModel.ordersn;
+    self.sn = payModel.sn;
     self.noteType = @"3";
     if ([SKPaymentQueue canMakePayments]) {
         // 开始购买服务
@@ -135,6 +135,7 @@
         case SIAPPurchCancle:
             [NoticeSaveModel clearPayInfo];
             DRLog(@"用户取消购买");//这里要删除缓存数据
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
             break;
         case SIAPPurchVerFailed:
             [NoticeSaveModel clearPayInfo];

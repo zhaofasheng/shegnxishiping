@@ -99,10 +99,6 @@
 }
 
 - (void)sureBuyweix{
-    if (![WXApi isWXAppInstalled]) {
-        [self showToastWithText:@"手机没有安装微信，无法使用微信支付"];
-        return;
-    }
     
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     
@@ -115,7 +111,7 @@
         if (success) {
             
             SXWeiXinPayModel *payModel = [SXWeiXinPayModel mj_objectWithKeyValues:dict[@"data"]];
-            self.ordersn = payModel.ordersn;
+            self.ordersn = payModel.sn;
             AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
             payModel.productId = self.paySearModel.product_id;
             [appdel.payManager startSearisPay:payModel];
