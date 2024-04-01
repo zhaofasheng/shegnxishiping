@@ -20,7 +20,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 @interface NoticeVideosController ()<SmallVideoPlayControllerDelegate>
 
 @property (nonatomic, assign) NSInteger currentPlayTime;
-
+@property (nonatomic, assign) BOOL isRequesting;
 @end
 
 @implementation NoticeVideosController
@@ -99,6 +99,10 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 
 - (void)request{
 
+    if (self.isRequesting) {
+        return;
+    }
+    self.isRequesting = YES;
     NSString *url = @"";
     url = [NSString stringWithFormat:@"video/list?pageNo=%ld",self.pageNo];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
@@ -112,17 +116,17 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             
             for (NSDictionary *dic in dict[@"data"]) {
                 SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
-                
                 [self.dataArr addObject:videoM];
             }
             
             self.layout.dataList = self.dataArr;
             [self.collectionView reloadData];
-            
         }
+        self.isRequesting = NO;
     } fail:^(NSError * _Nullable error) {
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
+        self.isRequesting = NO;
     }];
 }
 
