@@ -47,11 +47,11 @@
         
         UIImageView *typeImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(20,13, 24, 24)];
         [tap1V addSubview:typeImageV];
-        typeImageV.image = UIImageNamed(@"sxweixpay_img");
+        typeImageV.image = UIImageNamed(@"Image_pingguo");
         
         UILabel *typeL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(typeImageV.frame)+10,13,150, 24)];
         typeL.font = SIXTEENTEXTFONTSIZE;
-        typeL.text = @"微信支付";
+        typeL.text = @"苹果支付";
         typeL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [tap1V addSubview:typeL];
         
@@ -60,36 +60,36 @@
         choiceImageV.image = UIImageNamed(@"sxpaysuccess_img");
         self.weixinChoiceV = choiceImageV;
         
-        UIView *tap2V = [[UIView  alloc] initWithFrame:CGRectMake(0, 154, DR_SCREEN_WIDTH, 50)];
-        tap2V.userInteractionEnabled = YES;
-        [self.contentView addSubview:tap2V];
-        UITapGestureRecognizer *paytap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(aliPay)];
-        [tap2V addGestureRecognizer:paytap2];
-        
-        UIImageView *typeImageV1 = [[UIImageView  alloc] initWithFrame:CGRectMake(20,13, 24, 24)];
-        [tap2V addSubview:typeImageV1];
-        typeImageV1.image = UIImageNamed(@"sxalipay_img");
-        
-        UILabel *typeL1 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(typeImageV.frame)+10,13,150, 24)];
-        typeL1.font = SIXTEENTEXTFONTSIZE;
-        typeL1.text = @"支付宝支付";
-        typeL1.textColor = [UIColor colorWithHexString:@"#14151A"];
-        [tap2V addSubview:typeL1];
-        
-        UIImageView *choiceImageV1 = [[UIImageView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-40, 15, 20, 20)];
-        [tap2V addSubview:choiceImageV1];
-        choiceImageV1.image = UIImageNamed(@"sxnochoice_img");
-        self.aliChoiceV = choiceImageV1;
-        
-        UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(20,277,DR_SCREEN_WIDTH-40, 40)];
-        [button setAllCorner:20];
-        button.backgroundColor = [UIColor colorWithHexString:@"#FF4B98"];
-        [button setTitle:@"确认支付" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.titleLabel.font = SIXTEENTEXTFONTSIZE;
-        [self.contentView addSubview:button];
-        [button addTarget:self action:@selector(payClick) forControlEvents:UIControlEventTouchUpInside];
-        
+//        UIView *tap2V = [[UIView  alloc] initWithFrame:CGRectMake(0, 154, DR_SCREEN_WIDTH, 50)];
+//        tap2V.userInteractionEnabled = YES;
+//        [self.contentView addSubview:tap2V];
+//        UITapGestureRecognizer *paytap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(aliPay)];
+//        [tap2V addGestureRecognizer:paytap2];
+//        
+//        UIImageView *typeImageV1 = [[UIImageView  alloc] initWithFrame:CGRectMake(20,13, 24, 24)];
+//        [tap2V addSubview:typeImageV1];
+//        typeImageV1.image = UIImageNamed(@"sxalipay_img");
+//        
+//        UILabel *typeL1 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(typeImageV.frame)+10,13,150, 24)];
+//        typeL1.font = SIXTEENTEXTFONTSIZE;
+//        typeL1.text = @"支付宝支付";
+//        typeL1.textColor = [UIColor colorWithHexString:@"#14151A"];
+//        [tap2V addSubview:typeL1];
+//        
+//        UIImageView *choiceImageV1 = [[UIImageView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-40, 15, 20, 20)];
+//        [tap2V addSubview:choiceImageV1];
+//        choiceImageV1.image = UIImageNamed(@"sxnochoice_img");
+//        self.aliChoiceV = choiceImageV1;
+//        
+//        UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(20,277,DR_SCREEN_WIDTH-40, 40)];
+//        [button setAllCorner:20];
+//        button.backgroundColor = [UIColor colorWithHexString:@"#FF4B98"];
+//        [button setTitle:@"确认支付" forState:UIControlStateNormal];
+//        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        button.titleLabel.font = SIXTEENTEXTFONTSIZE;
+//        [self.contentView addSubview:button];
+//        [button addTarget:self action:@selector(payClick) forControlEvents:UIControlEventTouchUpInside];
+//        
         self.isWeixinPay = YES;
     }
     return self;

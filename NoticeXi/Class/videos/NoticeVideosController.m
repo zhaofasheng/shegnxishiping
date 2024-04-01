@@ -102,6 +102,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     if (self.isRequesting) {
         return;
     }
+    
     self.isRequesting = YES;
     NSString *url = @"";
     url = [NSString stringWithFormat:@"video/list?pageNo=%ld",self.pageNo];

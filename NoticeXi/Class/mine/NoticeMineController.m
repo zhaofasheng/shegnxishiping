@@ -207,7 +207,6 @@
         self.supplyView.canSupply = NO;
         [self.supplyView showSupplyView];
     }else if(self.applyModel.status < 4 || self.applyModel.status == 5){//没店铺
-        
         self.supplyView.canSupply = YES;
         [self.supplyView showSupplyView];
     }

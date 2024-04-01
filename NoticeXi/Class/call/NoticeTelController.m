@@ -10,7 +10,6 @@
 #import "SXAskQuestionShopCell.h"
 #import "NoticdShopDetailForUserController.h"
 #import "NoticeLoginViewController.h"
-
 #import "UIViewController+TTCTransitionAnimator.h"
 #import "TTCTransitionDelegate.h"
 @interface NoticeTelController ()<shopDetailControllerDelegate>
@@ -47,6 +46,7 @@
         [self.navigationController pushViewController:ctl animated:YES];
         return;
     }
+    
     NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
     ctl.shopModel = self.dataArr[indexPath.row];
     ctl.delegate = self;

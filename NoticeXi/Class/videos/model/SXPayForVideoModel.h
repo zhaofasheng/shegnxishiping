@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *seriesId;//课程id
 @property (nonatomic, strong) NSString *series_name;//课程系列名称
 @property (nonatomic, strong) NSString *cover_url;//封面
+@property (nonatomic, strong) NSString *product_id;
 @property (nonatomic, strong) NSMutableArray *searisVideoList;
 @property (nonatomic, strong) NSString *episodes;//总课时
 @property (nonatomic, strong) NSString *published_episodes;//已发布课时

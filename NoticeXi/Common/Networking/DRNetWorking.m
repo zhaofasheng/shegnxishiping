@@ -13,6 +13,7 @@
 #import "NoticeTabbarController.h"
 #import "NoticePinBiView.h"
 #import <Bugly/Bugly.h>
+
 @implementation DRNetWorking
 {
 	AFHTTPSessionManager *_manager;

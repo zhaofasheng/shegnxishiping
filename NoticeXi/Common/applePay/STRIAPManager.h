@@ -48,12 +48,13 @@ typedef void (^IAPCompletionHandle)(SIAPPurchType type,NSData *data);
 @property (nonatomic, strong) NoticeActShowView *showView;
 @property (nonatomic, strong) NSString *sn;
 @property (nonatomic, strong) NSString *noteType;
+
 //开始内购
 - (void)startPurchWithID:(NSString *)purchID completeHandle:(IAPCompletionHandle)handle;
 
 //送等级专用
 - (void)startPurchWithID:(NSString *)purchID money:(NSString *)money toUserId:(NSString *)userId userNum:(NSString *)userNum isNiming:(NSString *)isNiming completeHandle:(IAPCompletionHandle)handle;
-
+- (void)startSearisPay:(SXWeiXinPayModel *)payModel;
 - (void)startWeixinPay:(SXWeiXinPayModel *)payModel;
 
 - (void)startAliPay:(SXWeiXinPayModel *)payModel;

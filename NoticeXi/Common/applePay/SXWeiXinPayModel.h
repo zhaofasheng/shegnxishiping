@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *prepayid;
 @property (nonatomic, strong) NSString *sign;
 @property (nonatomic, strong) NSString *timestamp;
-
+@property (nonatomic, strong) NSString *productId;
 @property (nonatomic, strong) NSString *alikey;
 
 @property (nonatomic, strong) NSString *pay_status;//1已取消2已付款

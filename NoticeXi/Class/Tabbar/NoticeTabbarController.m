@@ -74,8 +74,8 @@
                      [[BaseNavigationController alloc] initWithRootViewController:[[SXTelBaseController alloc] init]],
                      [[BaseNavigationController alloc] initWithRootViewController:[[NoticeMineController alloc] init]]];
     
-    NSArray *arr2 = @[@"免费",
-                      @"付费",
+    NSArray *arr2 = @[@"视频",
+                      @"课程",
                       @"咨询",
                       @"我的"];
  

@@ -34,7 +34,7 @@
         payL.font = [UIFont systemFontOfSize:10];
         payL.textColor = [UIColor whiteColor];
         payL.textAlignment = NSTextAlignmentCenter;
-        payL.text = @"付费课程";
+        payL.text = @"课程";
         [payL setAllCorner:4];
         [self.infoView  addSubview:payL];
         

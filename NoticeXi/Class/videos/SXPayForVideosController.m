@@ -26,7 +26,7 @@
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
     
     UILabel *label = [[UILabel  alloc] initWithFrame:CGRectMake(15, STATUS_BAR_HEIGHT, (DR_SCREEN_WIDTH-30)/2, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
-    label.text = @"付费课程";
+    label.text = @"课程";
     label.font = XGTwentyTwoBoldFontSize;
     label.textColor = [UIColor colorWithHexString:@"#14151A"];
     [self.view addSubview:label];

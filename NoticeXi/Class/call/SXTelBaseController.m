@@ -30,7 +30,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.titles = @[@"免费",@"付费"];
+        self.titles = @[@"体验",@"咨询"];
         self.menuViewStyle = WMMenuViewStyleDefault;
         self.menuViewLayoutMode = WMMenuViewLayoutModeLeft;
         self.progressViewIsNaughty = true;

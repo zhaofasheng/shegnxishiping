@@ -93,6 +93,26 @@
     }
 }
 
+- (void)startSearisPay:(SXWeiXinPayModel *)payModel{
+    self.showView.titleL.text = [NoticeTools getLocalStrWith:@"zb.pay"];
+    [self.showView disMiss];
+    [self.showView show];
+    
+    self.sn = payModel.ordersn;
+    self.noteType = @"3";
+    if ([SKPaymentQueue canMakePayments]) {
+        // 开始购买服务
+        _purchID = payModel.productId;
+        NSSet *nsset = [NSSet setWithArray:@[payModel.productId]];
+        SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:nsset];
+        request.delegate = self;
+        [request start];
+    }else{
+        [self.showView disMiss];
+        [self handleActionWithType:SIAPPurchNotArrow data:nil];
+    }
+}
+
 - (void)startPurchWithID:(NSString *)purchID money:(NSString *)money toUserId:(NSString *)userId userNum:(NSString *)userNum isNiming:(NSString *)isNiming completeHandle:(IAPCompletionHandle)handle{
     if (!purchID) {
         return;
@@ -153,7 +173,9 @@
 }
  
 - (void)checkOrderWithOrderSn:(NSString *)sn data:(NSData *)receipt noteType:(NSString *)type transaction:(SKPaymentTransaction *)transaction{
-    if (type.intValue == 2) {
+
+   
+    if (type.intValue == 2 || type.intValue == 3) {
         NSMutableDictionary *parm1 = [NSMutableDictionary new];
         [parm1 setObject:[receipt base64EncodedStringWithOptions:0] forKey:@"receiptData"];
         [parm1 setObject:sn forKey:@"sn"];
@@ -161,14 +183,21 @@
             [self.showView disMiss];
             if (success1) {
                 self.sn = nil;
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
-                [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.buysus"]];
+                if (type.intValue == 3) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
+                }else{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
+                    [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.buysus"]];
+                }
+          
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
             }else{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
                 [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.fail"]];
             }
             
         } fail:^(NSError * _Nullable error) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
             [self.showView disMiss];
         }];
     }else{
