@@ -87,7 +87,6 @@
     [self getwallect];
     [self getStatusRequest];
     [self redCirRequest];
-
 }
 
 - (void)redCirRequest{

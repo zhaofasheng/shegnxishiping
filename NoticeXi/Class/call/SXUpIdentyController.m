@@ -51,6 +51,8 @@
     for (int i = 0; i < 2; i++) {
         UIImageView *imageView = [[UIImageView  alloc] initWithFrame:CGRectMake(15, 97+(imgheight+24)*i, DR_SCREEN_WIDTH-30, imgheight)];
         imageView.userInteractionEnabled = YES;
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
         [headerView addSubview:imageView];
         
         FSCustomButton *btn = [[FSCustomButton  alloc] initWithFrame:imageView.bounds];

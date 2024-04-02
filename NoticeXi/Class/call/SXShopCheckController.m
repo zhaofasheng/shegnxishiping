@@ -124,8 +124,12 @@
         if (success) {
             self.verifyModel = [SXVerifyShopModel mj_objectWithKeyValues:dict[@"data"]];
             if (self.shopModel.verifyModel.verify_status.intValue == 4) {
+                self.type = 0;
+                self.tableView.hidden = NO;
+                [self.tableView reloadData];
                 return;
             }
+            
             if (self.verifyModel.verify_status.intValue == 4 || self.verifyModel.verify_status.intValue < 2) {//审核失败或者未提交认证信息
                 self.type = 0;
             }else{
