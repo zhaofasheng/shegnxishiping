@@ -1307,7 +1307,7 @@
 "bk.boke" = "ラジオスト";
 "up.fail" = "上传失败";
 //声昔小铺
-"zb.pay" = "ApplePay";
+"zb.pay" = "正在请求支付";
 "zb.buysus" = "購入成功";
 "zb.fail" = "検証に失敗。サービスに連絡";
 "zb.creatfail" = "注文の作成に失敗";

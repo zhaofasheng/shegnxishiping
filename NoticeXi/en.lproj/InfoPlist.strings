@@ -1278,7 +1278,7 @@
 "bk.boke" = "Podcast";
 
 //声昔小铺
-"zb.pay" = "Apple pay pulling up";
+"zb.pay" = "正在请求支付";
 "zb.buysus" = "Purchased successfully";
 "zb.fail" = "Verification failed，please contact customer service";
 "zb.creatfail" = "Failed to create an order";

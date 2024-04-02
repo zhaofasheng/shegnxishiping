@@ -1247,7 +1247,7 @@
 "chat.zuijinchant" = "最近交流";
 "chat.likeeaceh" = "相互欣赏";
 //声昔小铺
-"zb.pay" = "正在拉起苹果支付";
+"zb.pay" = "正在请求支付";
 "zb.buysus" = "购买成功";
 "zb.fail" = "校验失败，请联系客服";
 "zb.creatfail" = "创建订单失败";
