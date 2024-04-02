@@ -9,19 +9,12 @@
 #import "NoticeBaseController.h"
 #import "NoticeMyShopModel.h"
 
-@protocol shopDetailControllerDelegate<NSObject>
-
-- (UIView *_Nullable)detailIndex:(NSInteger)index ;
-
-
-@end
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticdShopDetailForUserController : NoticeBaseController
 
 @property (nonatomic, strong) NoticeMyShopModel *shopModel;
 @property (nonatomic, assign) NSInteger currentPlayIndex;
-@property (nonatomic, weak) id<shopDetailControllerDelegate> delegate;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -6,11 +6,11 @@
 //  Copyright © 2018年 zhaoxiaoer. All rights reserved.
 //
 
-#import "NoticeBaseListController.h"
+#import "NoticeBaseCellController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NoticeSearchPersonViewController : NoticeBaseListController
+@interface NoticeSearchPersonViewController : NoticeBaseCellController
 - (void)sarchPerson:(NSString *)name;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *cardNo;

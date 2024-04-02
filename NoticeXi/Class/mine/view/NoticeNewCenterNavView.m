@@ -10,6 +10,7 @@
 #import "NoticeManager.h"
 #import "NoticeSCListViewController.h"
 #import "NoticeManagerController.h"
+#import "NoticeSearchPersonViewController.h"
 @interface NoticeNewCenterNavView()<NoticeManagerUserDelegate>
 @property (nonatomic, strong) NoticeManager *magager;
 @end
@@ -43,9 +44,21 @@
             manageBtn.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
             [manageBtn addTarget:self action:@selector(managerClick) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:manageBtn];
+            
+            UIButton *manageBtn1 = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-100-55,STATUS_BAR_HEIGHT, 50, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
+            [manageBtn1 setTitle:@"搜索" forState:UIControlStateNormal];
+            [manageBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            manageBtn1.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
+            [manageBtn1 addTarget:self action:@selector(searchClick) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:manageBtn1];
         }
     }
     return self;
+}
+
+- (void)searchClick{
+    NoticeSearchPersonViewController *ctl = [[NoticeSearchPersonViewController alloc] init];
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)managerClick{

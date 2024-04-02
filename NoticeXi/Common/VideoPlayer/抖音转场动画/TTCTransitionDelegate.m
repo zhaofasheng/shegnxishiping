@@ -89,12 +89,6 @@
     }
 }
 
-
-
-
-
-
-
 #pragma mark - 这个是present的
 /// 这个函数用来设置当执行present方法时进行的转场动画
 /// @param presented 要弹出的Controller
@@ -113,6 +107,7 @@
     presentOrPushAniTrans.toVC = presented;
     return presentOrPushAniTrans;
 }
+
 /// 这个函数用来设置当执行dismiss方法时进行的转场动画
 /// @param dismissed
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {

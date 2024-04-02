@@ -132,6 +132,7 @@
 
 
 - (void)request{
+   
     NSString *url = @"";
 
     url = [NSString stringWithFormat:@"shopGoodsOrder/getShopComment/%@?type=1&pageNo=1",self.shopModel.myShopM.shopId];
@@ -191,6 +192,7 @@
 
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
+ 
     self.tableView.hidden = NO;
     self.headerView.shopModel = _shopModel.myShopM;
     if (!self.goodssellArr.count) {

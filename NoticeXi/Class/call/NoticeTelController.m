@@ -10,9 +10,8 @@
 #import "SXAskQuestionShopCell.h"
 #import "NoticdShopDetailForUserController.h"
 #import "NoticeLoginViewController.h"
-#import "UIViewController+TTCTransitionAnimator.h"
-#import "TTCTransitionDelegate.h"
-@interface NoticeTelController ()<shopDetailControllerDelegate>
+
+@interface NoticeTelController ()
 
 @end
 
@@ -49,17 +48,10 @@
     
     NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
     ctl.shopModel = self.dataArr[indexPath.row];
-    ctl.delegate = self;
-    ctl.currentPlayIndex = indexPath.row;
-    ctl.ttcTransitionDelegate = [[TTCTransitionDelegate alloc] init];
-    ctl.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ctl animated:YES];
-}
 
-#pragma mark - SmallVideoPlayControllerDelegate
-- (UIView *)detailIndex:(NSInteger)index {
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-    return [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]].contentView;
+    ctl.currentPlayIndex = indexPath.row;
+
+    [self.navigationController pushViewController:ctl animated:YES];
 }
 
 //设置cell

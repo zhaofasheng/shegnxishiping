@@ -283,6 +283,17 @@
     
     self.navBarView.hidden = NO;
     self.navBarView.titleL.text = self.navigationItem.title;
+    
+    if ([NoticeTools isManager]) {
+        UILabel *deveceinfoL = [[UILabel alloc] initWithFrame:CGRectMake(0,0, DR_SCREEN_WIDTH,100)];
+        deveceinfoL.font = ELEVENTEXTFONTSIZE;
+        deveceinfoL.numberOfLines = 0;
+        deveceinfoL.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        deveceinfoL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        self.deveceinfoL = deveceinfoL;
+        self.tableView.tableHeaderView = deveceinfoL;
+        [self requestDevoice];
+    }
 }
 
 - (void)clickCanLoadTap{
@@ -1362,11 +1373,7 @@
             }else if ([model.gender isEqualToString:@"2"]){
                 sex = @"女";
             }
-            if (sex) {
-                self.deveceinfoL.text = [NSString stringWithFormat:@"对方类型:%@%@ %@/%@\n\n学号:%@ 来了%@天 共%@个好友 心情:%@条,共%@\n\n书:%@   影:%@  音:%@  画:%@  配音:%@  台词:%@\n\n最近三天共享心情:%@条",model.personality_no,sex,model.last_login_device,model.app_version,model.frequency_no,model.comeHereTime,model.friend_num,model.voice_num,model.voice_total_len,model.voice_book_num,model.voice_movie_num,model.voice_song_num,model.artwork_num,model.dubbing_num,model.line_num,model.voice_three_days_share];
-            }else{
-                self.deveceinfoL.text = [NSString stringWithFormat:@"对方类型: %@/%@\n\n学号:%@ 来了%@天 共%@个好友 心情:%@条,共%@\n\n书:%@   影:%@  音:%@  画:%@  配音:%@  台词:%@\n\n最近三天共享心情:%@条",model.last_login_device,model.app_version,model.frequency_no,model.comeHereTime,model.friend_num,model.voice_num,model.voice_total_len,model.voice_book_num,model.voice_movie_num,model.voice_song_num,model.artwork_num,model.dubbing_num,model.line_num,model.voice_three_days_share];
-            }
+            self.deveceinfoL.text = [NSString stringWithFormat:@"对方类型: %@/%@\n\n学号:%@ 来了%@天",model.last_login_device,model.app_version,model.frequency_no,model.comeHereTime];
         }
     } fail:^(NSError * _Nullable error) {
     }];
