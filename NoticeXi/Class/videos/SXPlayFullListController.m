@@ -18,7 +18,8 @@
 @property (nonatomic, strong) DDVideoPlayerManager *videoPlayerManager;
 //这个是预加载视频的管理器
 @property (nonatomic, strong) DDVideoPlayerManager *preloadVideoPlayerManager;
-
+@property (nonatomic, assign) BOOL isRequesting;
+@property (nonatomic, assign) BOOL nodata;
 @property (nonatomic, assign) BOOL isFirstAlloc;
 @end
 
@@ -48,10 +49,6 @@
     [self.navBarView.backButton setImage:UIImageNamed(@"backwhties") forState:UIControlStateNormal];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.modelArray.count;
 }
@@ -64,7 +61,9 @@
    
         if (show) {
             weakSelf.videoPlayerManager.playerView.controlView.slider.hidden = YES;
+            self.navBarView.hidden = YES;
         }else{
+            self.navBarView.hidden = NO;
             weakSelf.videoPlayerManager.playerView.controlView.slider.hidden = NO;
         }
     };
@@ -81,6 +80,40 @@
     return cell;
 }
 
+- (void)request{
+
+    if (self.isRequesting || self.nodata) {
+        return;
+    }
+    
+    self.pageNo += 1;
+    self.isRequesting = YES;
+    NSString *url = @"";
+    url = [NSString stringWithFormat:@"video/list?pageNo=%ld",self.pageNo];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            if (self.isDown) {
+                self.isDown = NO;
+                [self.dataArr removeAllObjects];
+            }
+            
+            BOOL hasData = NO;
+            for (NSDictionary *dic in dict[@"data"]) {
+                SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
+                [self.modelArray addObject:videoM];
+                hasData = YES;
+            }
+            if (!hasData) {
+                self.nodata = YES;
+                return;
+            }
+            [self.tableView reloadData];
+        }
+        self.isRequesting = NO;
+    } fail:^(NSError * _Nullable error) {
+        self.isRequesting = NO;
+    }];
+}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currentIndex = round(self.tableView.contentOffset.y / SCREEN_HEIGHT);
@@ -92,6 +125,10 @@
         }
         self.currentPlayIndex = currentIndex;
         [self playIndex:self.currentPlayIndex];
+        
+        if (self.currentPlayIndex >= (self.modelArray.count-3)) {
+            [self request];
+        }
     }
 }
 

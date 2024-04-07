@@ -40,6 +40,8 @@
 
     
     self.titles = @[@"课程简介",@"课程目录"];
+    self.navBarView.titleL.text = self.paySearModel.series_name;
+    self.navBarView.titleL.alpha = 0;
 
     _categoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0,0,DR_SCREEN_WIDTH,40)];
     self.categoryView.titles = self.titles;
@@ -257,5 +259,12 @@
         
     };
     [self.navigationController pushViewController:ctl animated:YES];
+}
+
+- (void)mainTableViewDidScroll:(UIScrollView *)scrollView{
+    DRLog(@"%.f",scrollView.contentOffset.y);
+    CGFloat progress = 1/self.imgListView.frame.size.height;
+    CGFloat value = scrollView.contentOffset.y * progress;
+    self.navBarView.titleL.alpha = value;
 }
 @end

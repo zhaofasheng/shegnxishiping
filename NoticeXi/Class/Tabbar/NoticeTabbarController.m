@@ -13,14 +13,13 @@
 #import "NoticeMineController.h"
 #import "NoticeYunXin.h"
 #import "SXPayForVideosController.h"
+
 //获取全局并发队列和主队列的宏定义
 #define globalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define mainQueue dispatch_get_main_queue()
 
 @interface NoticeTabbarController ()<AxcAE_TabBarDelegate>
 @property (nonatomic,strong)UIButton *button;
-
-
 @end
 
 @implementation NoticeTabbarController
@@ -63,12 +62,11 @@
 
 
 - (void)addChildViewControllers{
-    // 创建选项卡的数据 想怎么写看自己，这块我就写笨点了
+// 创建选项卡的数据 想怎么写看自己，这块我就写笨点了
 //#import "NoticeVideosController.h"
 //#import "SXTelBaseController.h"
 //#import "NoticeMineController.h"
 
-    
     NSArray *arr = @[[[BaseNavigationController alloc] initWithRootViewController:[[NoticeVideosController alloc] init]],
                      [[BaseNavigationController alloc] initWithRootViewController:[[SXPayForVideosController alloc] init]],
                      [[BaseNavigationController alloc] initWithRootViewController:[[SXTelBaseController alloc] init]],

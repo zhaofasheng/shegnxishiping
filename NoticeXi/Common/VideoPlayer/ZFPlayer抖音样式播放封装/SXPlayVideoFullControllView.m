@@ -28,13 +28,13 @@
         self.activity.frame = CGRectMake((DR_SCREEN_WIDTH-45)/2, (DR_SCREEN_HEIGHT-45)/2, 45, 45);
         [self addSubview:self.activity];
         
-        self.slider = [[ZFSliderView alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, 16)];
+        self.slider = [[ZFSliderView alloc] initWithFrame:CGRectMake(15, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH-30, 16)];
         self.slider.delegate = self;
-        self.slider.maximumTrackTintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
-        self.slider.minimumTrackTintColor = [UIColor whiteColor];
+        self.slider.maximumTrackTintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
+        self.slider.minimumTrackTintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.7];
         self.slider.loadingTintColor = [UIColor whiteColor];
         self.slider.thumbSize = CGSizeMake(12 * 1, 12 * 1);
-        self.slider.sliderHeight = 1;
+        self.slider.sliderHeight = 0.85;
         self.slider.isHideSliderBlock = YES;
         [self addSubview:self.slider];
         
@@ -59,7 +59,7 @@
         self.slider.frame = CGRectMake(NAVIGATION_BAR_HEIGHT-5, self.frame.size.height-10-16, self.frame.size.width-NAVIGATION_BAR_HEIGHT*2-10, 16);
     }else{
         _backBtn.hidden = YES;
-        self.slider.frame = CGRectMake(0, self.frame.size.height-TAB_BAR_HEIGHT, self.frame.size.width, 16);
+        self.slider.frame = CGRectMake(15, self.frame.size.height-TAB_BAR_HEIGHT, self.frame.size.width-30, 16);
     }
     self.fastLabel.frame = CGRectMake((self.frame.size.width-self.fastLabel.frame.size.width)/2, self.slider.frame.origin.y-20, self.fastLabel.frame.size.width, 20);
     self.playImageView.frame = CGRectMake((self.frame.size.width-64)/2, (self.frame.size.height-64)/2, 64, 64);
@@ -86,7 +86,10 @@
 // 滑块滑动开始
 - (void)sliderTouchBegan:(float)value{
     DRLog(@"开始滑动%.f",value);
-    self.slider.sliderHeight = 4;
+    [UIView animateWithDuration:0.15 animations:^{
+        self.slider.sliderHeight = 4;
+    }];
+    
     self.slider.sliderBtn.hidden = NO;
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(sliderTouchBegan:)]) {
@@ -103,7 +106,10 @@
 // 滑块滑动结束
 - (void)sliderTouchEnded:(float)value{
     DRLog(@"滑动结束%.f",value);
-    self.slider.sliderHeight = 1;
+    [UIView animateWithDuration:0.15 animations:^{
+        self.slider.sliderHeight = 0.85;
+    }];
+    
     self.slider.sliderBtn.hidden = YES;
     if (self.delegate && [self.delegate respondsToSelector:@selector(sliderTouchEnded:)]) {
         [self.delegate sliderTouchEnded:value];

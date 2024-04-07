@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *fastLabel;
 
+@property (nonatomic, assign) BOOL pageNo;
+
 //非全屏
 @property (nonatomic, strong) UIButton *backBtn;
 

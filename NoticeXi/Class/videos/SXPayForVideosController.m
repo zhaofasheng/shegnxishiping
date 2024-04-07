@@ -138,6 +138,7 @@
         [self.navigationController pushViewController:ctl animated:YES];
         return;
     }
+    
     SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
     SXPayForVideoModel *model = self.dataArr[indexPath.row];
     ctl.paySearModel = model;

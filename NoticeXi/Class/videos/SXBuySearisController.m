@@ -68,7 +68,6 @@
 
 - (void)buyFaild{
     [self getOrderStatus];
- 
 }
 
 - (void)getOrderStatus{
@@ -93,14 +92,15 @@
 }
 
 - (void)buyClick{
-    [self sureBuyweix];
-
+//    self.payView.money = self.paySearModel.price;
+//    [self.payView showPayView];
+//    
+    [self sureApplePay];
 }
 
-- (void)sureBuyweix{
-    
+- (void)sureApplePay{
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-    
+
     [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
     [parm setObject:@"3" forKey:@"payType"];
     [parm setObject:@"2" forKey:@"platformId"];
@@ -122,41 +122,71 @@
     }];
 }
 
-//- (void)sureBuyAli{
-//    // 调用canOpenURL方法判断设备是否安装了支付宝
-//    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay://"]]) {
-//        [self showToastWithText:@"手机没有安装支付宝，无法使用支付宝支付"];
-//        return;
-//    }
-//    
-//    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-//    
-//    [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
-//    [parm setObject:@"2" forKey:@"payType"];
-//    [parm setObject:@"2" forKey:@"platformId"];
-//    [self showHUD];
-//    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-//        [self hideHUD];
-//        if (success) {
-//            
-//            SXWeiXinPayModel *payModel = [SXWeiXinPayModel mj_objectWithKeyValues:dict[@"data"]];
-//            self.ordersn = payModel.ordersn;
-//            AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//            [appdel.payManager startAliPay:payModel];
-//        }
-//    } fail:^(NSError * _Nullable error) {
-//        [self hideHUD];
-//        [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.creatfail"]];
-//    }];
-//
-//}
+- (void)sureBuyweix{
+    
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    
+    [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
+    [parm setObject:@"1" forKey:@"payType"];
+    [parm setObject:@"2" forKey:@"platformId"];
+    [self showHUD];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (success) {
+            
+            SXWeiXinPayModel *payModel = [SXWeiXinPayModel mj_objectWithKeyValues:dict[@"data"]];
+            self.ordersn = payModel.ordersn;
+            AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            payModel.productId = self.paySearModel.product_id;
+            [appdel.payManager startWeixinPay:payModel];
+            
+        }
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+        [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.creatfail"]];
+    }];
+}
+
+- (void)sureBuyAli{
+    // 调用canOpenURL方法判断设备是否安装了支付宝
+    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay://"]]) {
+        [self showToastWithText:@"手机没有安装支付宝，无法使用支付宝支付"];
+        return;
+    }
+    
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    
+    [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
+    [parm setObject:@"2" forKey:@"payType"];
+    [parm setObject:@"2" forKey:@"platformId"];
+    [self showHUD];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (success) {
+            
+            SXWeiXinPayModel *payModel = [SXWeiXinPayModel mj_objectWithKeyValues:dict[@"data"]];
+            self.ordersn = payModel.ordersn;
+            AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            [appdel.payManager startAliPay:payModel];
+        }
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+        [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.creatfail"]];
+    }];
+
+}
 
 - (SXGoPayView *)payView{
     if (!_payView) {
         _payView = [[SXGoPayView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
         __weak typeof(self) weakSelf = self;
         _payView.surePayBlock = ^(BOOL isWeixinPay) {
-            [weakSelf sureBuyweix];
+            if (isWeixinPay) {
+                [weakSelf sureBuyweix];
+            }else{
+                [weakSelf sureBuyAli];
+            }
+            
         };
     }
     return _payView;

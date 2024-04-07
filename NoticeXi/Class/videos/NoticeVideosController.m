@@ -143,7 +143,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 
     SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
     ctl.currentPlayModel = self.dataArr[indexPath.row];
-    
+//    
 //    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
 //    ctl.modelArray = self.dataArr;
 //    ctl.currentPlayIndex = indexPath.row;
