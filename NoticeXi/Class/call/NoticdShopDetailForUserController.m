@@ -18,7 +18,6 @@
 #import "NoticeOtherShopCardController.h"
 #import "NoticeJieYouShopHeaderView.h"
 
-#import "TTCTransitionDelegate.h"
 
 @interface NoticdShopDetailForUserController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) NoticeMyShopModel *timeModel;

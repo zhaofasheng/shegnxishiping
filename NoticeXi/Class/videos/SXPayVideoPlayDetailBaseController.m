@@ -183,6 +183,7 @@
     
     _player.playDidEndBlock = ^(BOOL playDidEnd) {
         if (playDidEnd) {
+            weakSelf.currentPlayModel.schedule = @"0";
             weakSelf.currentPlayModel.is_finished = @"1";
             DRLog(@"播放完成");
             [weakSelf.listVC playNext];

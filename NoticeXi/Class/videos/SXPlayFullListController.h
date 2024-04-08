@@ -10,24 +10,17 @@
 
 @class SXVideosModel;
 
-@protocol SmallVideoPlayControllerDelegate<NSObject>
-
-- (UIView *_Nullable)smallVideoPlayIndex:(NSInteger)index ;
-
-
-@end
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SXPlayFullListController : NoticeBaseCellController<UINavigationControllerDelegate>
+@interface SXPlayFullListController : NoticeBaseCellController
 @property (nonatomic, assign) NSUInteger page;
 @property (nonatomic, strong) NSMutableArray *modelArray;
 @property (nonatomic, assign) NSInteger currentPlayIndex;
 @property (nonatomic) BOOL hasMore;
-@property (nonatomic, weak) id<SmallVideoPlayControllerDelegate> delegate;
 @property (nonatomic, assign) NSInteger rid;
-
+@property (nonatomic, assign) BOOL isSearch;
 @property (nonatomic, copy) void(^popbackBlock)(void);
+@property (nonatomic, copy) void(^dataBlock)(NSInteger pageNo,NSMutableArray *dataArr);
 @end
 
 NS_ASSUME_NONNULL_END

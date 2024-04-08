@@ -148,4 +148,6 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 
 //重新播放
 - (void)_replayVideo;
+
+- (void)removeObserver;
 @end

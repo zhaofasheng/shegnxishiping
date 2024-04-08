@@ -198,7 +198,7 @@
 
 
 - (void)dealloc {
-    NSLog(@"销毁");
+    DRLog(@"销毁播放管理");
     [self resetPlayer];
 }
 

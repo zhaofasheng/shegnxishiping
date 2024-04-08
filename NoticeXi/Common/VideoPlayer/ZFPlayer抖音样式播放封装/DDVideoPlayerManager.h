@@ -77,11 +77,8 @@
 /**
  在当前页面，设置新的视频时候调用此方法
 
-
- @param playNowRealType YES的话 model里的是网络地址就播放网络地址,是本地地址就播放本地地址,NO则会去查一下是否本地已经缓存了这个网络地址,主要给iOS11以下用的
-
  */
-- (void)resetToPlayNewVideo;//WithplayNowRealType:(BOOL)playNowRealType;
+- (void)resetToPlayNewVideo;
 
 
 

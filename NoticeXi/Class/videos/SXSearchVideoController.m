@@ -15,10 +15,9 @@
 #import "SXSearchModel.h"
 #import "CYWWaterFallLayout.h"
 #import "SXPlayDetailController.h"
-#import "UIViewController+TTCTransitionAnimator.h"
-#import "TTCTransitionDelegate.h"
 
-@interface SXSearchVideoController ()<SmallVideoPlayControllerDelegate,UITextFieldDelegate,KMTagListViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+
+@interface SXSearchVideoController ()<UITextFieldDelegate,KMTagListViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) CYWWaterFallLayout *layout;
 @property (nonatomic, strong) UITextField *topicField;
@@ -399,25 +398,16 @@
         return;
     }
 
-    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
-    ctl.currentPlayModel = self.dataArr[indexPath.row];
-    
-//    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
-//    ctl.modelArray = self.dataArr;
-//    ctl.currentPlayIndex = indexPath.row;
-//    ctl.delegate = self;
-//    ctl.ttcTransitionDelegate = [[TTCTransitionDelegate alloc] init];
-//    ctl.hidesBottomBarWhenPushed = YES;
+//    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
+//    ctl.currentPlayModel = self.dataArr[indexPath.row];
+//    
+    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
+    ctl.modelArray = self.dataArr;
+    ctl.isSearch = YES;
+    ctl.currentPlayIndex = indexPath.row;
     [self.navigationController pushViewController:ctl animated:YES];
 }
 
-
-#pragma mark - SmallVideoPlayControllerDelegate
-- (UIView *)smallVideoPlayIndex:(NSInteger)index {
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-    return [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]].contentView;
-
-}
 //设置cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     

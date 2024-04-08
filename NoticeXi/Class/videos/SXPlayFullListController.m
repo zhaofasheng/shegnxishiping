@@ -8,11 +8,12 @@
 
 #import "SXPlayFullListController.h"
 #import "SXFullPlayCell.h"
-#import "TTCTransitionDelegate.h"
 #import "DDVideoPlayerManager.h"
 #import "SDImageCache.h"
 #import "TTCCom.h"
+
 @interface SXPlayFullListController ()<ZFManagerPlayerDelegate>
+
 @property (nonatomic, strong) UIView *fatherView;
 //这个是播放视频的管理器
 @property (nonatomic, strong) DDVideoPlayerManager *videoPlayerManager;
@@ -21,6 +22,7 @@
 @property (nonatomic, assign) BOOL isRequesting;
 @property (nonatomic, assign) BOOL nodata;
 @property (nonatomic, assign) BOOL isFirstAlloc;
+
 @end
 
 @implementation SXPlayFullListController
@@ -29,6 +31,7 @@
     [super viewDidLoad];
     
     self.isFirstAlloc = YES;
+    self.pageNo = self.page;
     
     self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT);
     self.tableView.pagingEnabled = YES;
@@ -57,13 +60,13 @@
     SXFullPlayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.videoModel = self.modelArray[indexPath.row];
     __weak typeof(self) weakSelf = self;
+    
     cell.showComBlock = ^(BOOL show) {
-   
         if (show) {
             weakSelf.videoPlayerManager.playerView.controlView.slider.hidden = YES;
-            self.navBarView.hidden = YES;
+            weakSelf.navBarView.hidden = YES;
         }else{
-            self.navBarView.hidden = NO;
+            weakSelf.navBarView.hidden = NO;
             weakSelf.videoPlayerManager.playerView.controlView.slider.hidden = NO;
         }
     };
@@ -77,12 +80,13 @@
     cell.fatherBlock = ^(CGRect bounds) {
         weakSelf.videoPlayerManager.playerView.frame = bounds;
     };
+    
     return cell;
 }
 
 - (void)request{
-
-    if (self.isRequesting || self.nodata) {
+  
+    if (self.isRequesting || self.nodata || self.isSearch) {
         return;
     }
     
@@ -107,7 +111,19 @@
                 self.nodata = YES;
                 return;
             }
-            [self.tableView reloadData];
+            
+            if (self.modelArray.count) {
+                [self.tableView reloadData];
+                
+                SXFullPlayCell *currentCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0]];
+                self.fatherView = currentCell.playerFatherView;
+                [self.fatherView addSubview:self.videoPlayerManager.playerView];
+                
+                if (self.dataBlock) {
+                    self.dataBlock(self.pageNo, self.modelArray);
+                }
+            }
+       
         }
         self.isRequesting = NO;
     } fail:^(NSError * _Nullable error) {
@@ -125,20 +141,29 @@
         }
         self.currentPlayIndex = currentIndex;
         [self playIndex:self.currentPlayIndex];
-        
-        if (self.currentPlayIndex >= (self.modelArray.count-3)) {
-            [self request];
-        }
     }
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     CGFloat currentIndex = self.tableView.contentOffset.y / SCREEN_HEIGHT;
     if(fabs(currentIndex - self.currentPlayIndex)>1) {
         [self.videoPlayerManager resetPlayer];
         [self.preloadVideoPlayerManager resetPlayer];
     }
+    
+    CGPoint offset = scrollView.contentOffset;
+    CGRect bounds = scrollView.bounds;
+    CGSize size = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    float reload_distance = 15;
+    
+    if(y > h + reload_distance) {
+        [self request];
+    }
 }
+
 
 
 - (void)playIndex:(NSInteger)currentIndex {
@@ -177,7 +202,7 @@
     self.videoPlayerManager.playerModel.fatherView       = self.fatherView;
     self.videoPlayerManager.playerModel.title            = title;
     self.videoPlayerManager.playerModel.artist = artist;
-    //self.videoPlayerManager.playerModel.placeholderImageURLString = cover_url;
+    self.videoPlayerManager.playerModel.placeholderImageURLString = cover_url;
     self.videoPlayerManager.playerModel.videoURL         = videoURL;
     self.videoPlayerManager.originVideoURL = originVideoURL;
     self.videoPlayerManager.playerModel.useDownAndPlay = YES;
@@ -187,10 +212,6 @@
     }
     [self.videoPlayerManager resetToPlayNewVideo];
     
-    if(self.delegate && [self.delegate respondsToSelector:@selector(smallVideoPlayIndex:)]) {
-       
-        self.ttcTransitionDelegate.smalCurPlayCell = [self.delegate smallVideoPlayIndex:self.currentPlayIndex];
-    }
 }
 
 - (CGFloat)deviceFreeMemorySize {
@@ -278,6 +299,7 @@
         // Fallback on earlier versions
     }
 }
+
 
 - (void)zfManager_playerCurrentSliderValue:(NSInteger)value playerModel:(ZFPlayerModel *)model{
     if (self.currentPlayIndex < self.modelArray.count) {

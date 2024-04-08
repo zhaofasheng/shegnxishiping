@@ -238,7 +238,6 @@
             self.canLoad = NO;
             [self.tableView.mj_footer beginRefreshing];
         }
-        
     }
 }
 @end

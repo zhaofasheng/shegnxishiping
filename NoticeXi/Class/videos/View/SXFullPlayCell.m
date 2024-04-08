@@ -11,16 +11,18 @@
 #import "TCCommentsPopView.h"
 #import "MyCommentView.h"
 #import "SXVideoUserCenterController.h"
+
 @interface SXFullPlayCell()<MyCommentViewDelegate>
+
 @property (nonatomic, assign) CGFloat widthtoheight;//小屏幕时候的宽高比
 @property (nonatomic, strong) TCCommentsPopView *popView;
+
 @end
 
 @implementation SXFullPlayCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        
         
         self.coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
         self.coverImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -30,7 +32,6 @@
         self.playerFatherView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
         [self.contentView addSubview:self.playerFatherView];
       
-        
         CAGradientLayer *gradientLayer = [CAGradientLayer new];
         
         gradientLayer.frame = CGRectMake(SCREEN_WIDTH - 100 , 0, 100 , SCREEN_HEIGHT);
@@ -52,9 +53,7 @@
 - (void)setVideoModel:(SXVideosModel *)videoModel{
     _videoModel = videoModel;
 
-    [SXTools getScreenshotWithUrlAsyn:[NSURL URLWithString:videoModel.video_url] completion:^(UIImage * _Nullable image) {
-        self.coverImageView.image = image;
-    }];
+
     //[self.coverImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.video_cover_url]];
     
     self.comButton.hidden = NO;

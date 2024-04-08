@@ -224,6 +224,11 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     return _fullView;
 }
 
+- (void)removeObserver{
+    // 移除通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - layoutSubviews
 
 - (void)layoutSubviews {

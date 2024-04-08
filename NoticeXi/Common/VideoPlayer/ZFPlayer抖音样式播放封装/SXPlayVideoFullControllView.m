@@ -85,7 +85,7 @@
 
 // 滑块滑动开始
 - (void)sliderTouchBegan:(float)value{
-    DRLog(@"开始滑动%.f",value);
+ 
     [UIView animateWithDuration:0.15 animations:^{
         self.slider.sliderHeight = 4;
     }];
@@ -98,14 +98,14 @@
 }
 // 滑块滑动中
 - (void)sliderValueChanged:(float)value{
-    DRLog(@"滑动%.f",value);
+ 
     if (self.delegate && [self.delegate respondsToSelector:@selector(sliderValueChanged:)]) {
         [self.delegate sliderValueChanged:value];
     }
 }
 // 滑块滑动结束
 - (void)sliderTouchEnded:(float)value{
-    DRLog(@"滑动结束%.f",value);
+    
     [UIView animateWithDuration:0.15 animations:^{
         self.slider.sliderHeight = 0.85;
     }];

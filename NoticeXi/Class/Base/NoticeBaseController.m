@@ -38,6 +38,10 @@
 
 }
 
+- (void)dealloc{
+    DRLog(@"销毁控制器");
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 

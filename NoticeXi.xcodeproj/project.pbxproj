@@ -1393,10 +1393,6 @@
 		FE44F22F2BB29FAB004ECF11 /* SelVideoSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1D22BB29FAA004ECF11 /* SelVideoSlider.m */; };
 		FE44F2322BB2C8E0004ECF11 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FE466B862BA824F200A7376B /* PrivacyInfo.xcprivacy */; };
 		FE44F29F2BB43392004ECF11 /* SXPlayFullListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F29E2BB43392004ECF11 /* SXPlayFullListController.m */; };
-		FE44F2A92BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F2A12BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m */; };
-		FE44F2AA2BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F2A22BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m */; };
-		FE44F2AB2BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F2A32BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m */; };
-		FE44F2AC2BB4339E004ECF11 /* TTCTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F2A42BB4339E004ECF11 /* TTCTransitionDelegate.m */; };
 		FE48C0F22B47CD130069D1A6 /* NoticePhoneChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE48C0F12B47CD130069D1A6 /* NoticePhoneChatView.m */; };
 		FE48C1062B47FC9B0069D1A6 /* Notice3DshopListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE48C1052B47FC9B0069D1A6 /* Notice3DshopListView.m */; };
 		FE48C13E2B4805630069D1A6 /* YoungSphere.m in Sources */ = {isa = PBXBuildFile; fileRef = FE48C13D2B4805630069D1A6 /* YoungSphere.m */; };
@@ -4167,14 +4163,6 @@
 		FE44F1D22BB29FAA004ECF11 /* SelVideoSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelVideoSlider.m; sourceTree = "<group>"; };
 		FE44F29D2BB43391004ECF11 /* SXPlayFullListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXPlayFullListController.h; sourceTree = "<group>"; };
 		FE44F29E2BB43392004ECF11 /* SXPlayFullListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPlayFullListController.m; sourceTree = "<group>"; };
-		FE44F2A12BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSmallVideoDismissOrPopAniTrans.m; sourceTree = "<group>"; };
-		FE44F2A22BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSmallVideoPresentOrPushAniTrans.m; sourceTree = "<group>"; };
-		FE44F2A32BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TTCTransitionAnimator.m"; sourceTree = "<group>"; };
-		FE44F2A42BB4339E004ECF11 /* TTCTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCTransitionDelegate.m; sourceTree = "<group>"; };
-		FE44F2A52BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSmallVideoDismissOrPopAniTrans.h; sourceTree = "<group>"; };
-		FE44F2A62BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSmallVideoPresentOrPushAniTrans.h; sourceTree = "<group>"; };
-		FE44F2A72BB4339E004ECF11 /* TTCTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCTransitionDelegate.h; sourceTree = "<group>"; };
-		FE44F2A82BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TTCTransitionAnimator.h"; sourceTree = "<group>"; };
 		FE466B862BA824F200A7376B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FE48C0F02B47CD130069D1A6 /* NoticePhoneChatView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticePhoneChatView.h; sourceTree = "<group>"; };
 		FE48C0F12B47CD130069D1A6 /* NoticePhoneChatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticePhoneChatView.m; sourceTree = "<group>"; };
@@ -8474,7 +8462,6 @@
 		FE44F0FF2BB29FAA004ECF11 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				FE44F2A02BB4339E004ECF11 /* 抖音转场动画 */,
 				FE44F1002BB29FAA004ECF11 /* KTVHTTPCache */,
 				FE44F16B2BB29FAA004ECF11 /* 视频缓存框架 */,
 				FE44F1862BB29FAA004ECF11 /* ZFPlayer抖音样式播放封装 */,
@@ -8818,21 +8805,6 @@
 				FE44F1CC2BB29FAA004ECF11 /* UIViewController+PlayerRotation.m */,
 			);
 			path = Configs;
-			sourceTree = "<group>";
-		};
-		FE44F2A02BB4339E004ECF11 /* 抖音转场动画 */ = {
-			isa = PBXGroup;
-			children = (
-				FE44F2A52BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.h */,
-				FE44F2A12BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m */,
-				FE44F2A62BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.h */,
-				FE44F2A22BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m */,
-				FE44F2A72BB4339E004ECF11 /* TTCTransitionDelegate.h */,
-				FE44F2A42BB4339E004ECF11 /* TTCTransitionDelegate.m */,
-				FE44F2A82BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.h */,
-				FE44F2A32BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m */,
-			);
-			path = "抖音转场动画";
 			sourceTree = "<group>";
 		};
 		FE6686762BA082FE006DBDF2 /* AxcAE_TabBar */ = {
@@ -9927,7 +9899,6 @@
 				FE9C40B12B9B27CC008C3A22 /* SXZiGeCheckView.m in Sources */,
 				A4E968CD2A69142600AE022E /* NoticeShopCommentModel.m in Sources */,
 				A4E9671D2A69142400AE022E /* NoticeVoiceComDetailView.m in Sources */,
-				FE44F2AB2BB4339E004ECF11 /* UIViewController+TTCTransitionAnimator.m in Sources */,
 				A4E965532A69142200AE022E /* NoticeAudioJoinToAudioModel.m in Sources */,
 				A4E966282A69142300AE022E /* NoticeBook.m in Sources */,
 				A4354C372A9EDB3800454D23 /* NoticeVipCenterController.m in Sources */,
@@ -10457,7 +10428,6 @@
 				A4E967A02A69142500AE022E /* NoticePiPeiFriendListViewController.m in Sources */,
 				A4E969732A69142700AE022E /* NoticeBgmHasChoiceShowView.m in Sources */,
 				A4E968E82A69142600AE022E /* NoticeJBChoiceView.swift in Sources */,
-				FE44F2A92BB4339E004ECF11 /* TTCSmallVideoDismissOrPopAniTrans.m in Sources */,
 				A4E965062A69142200AE022E /* JXCategoryNumberCell.m in Sources */,
 				A4E968E62A69142600AE022E /* NoticeChangePriceView.swift in Sources */,
 				A4E965AB2A69142200AE022E /* NoticeBgmLineView.m in Sources */,
@@ -10625,7 +10595,6 @@
 				A4E965092A69142200AE022E /* JXCategoryFactory.m in Sources */,
 				A4E968562A69142600AE022E /* NoticeAboutView.m in Sources */,
 				A4E968DE2A69142600AE022E /* NoticeShopDetailCell.swift in Sources */,
-				FE44F2AA2BB4339E004ECF11 /* TTCSmallVideoPresentOrPushAniTrans.m in Sources */,
 				A4E967902A69142400AE022E /* NoticeManagerImgList.m in Sources */,
 				A4E966E22A69142400AE022E /* NoticeHelpCommentCell.m in Sources */,
 				A4E9669E2A69142300AE022E /* NoticeClockButtonView.m in Sources */,
@@ -10851,7 +10820,6 @@
 				A46F54122AA972EA00A22D48 /* NoticeGetVipRecoderController.m in Sources */,
 				A4E969562A69142700AE022E /* NoticeVoiceStatusDetailModel.m in Sources */,
 				A4E9649C2A69142100AE022E /* NoticeTimerTools.m in Sources */,
-				FE44F2AC2BB4339E004ECF11 /* TTCTransitionDelegate.m in Sources */,
 				A4E9652C2A69142200AE022E /* DownloadAudioService.m in Sources */,
 				A4E9683D2A69142500AE022E /* NoticePhotoHeaderView.m in Sources */,
 				A4E965AD2A69142200AE022E /* NoticeBgmView.m in Sources */,
