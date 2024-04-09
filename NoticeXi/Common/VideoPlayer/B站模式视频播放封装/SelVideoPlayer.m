@@ -458,11 +458,13 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
             DRLog(@"开启服务失败");
         }else{
             DRLog(@"开启服务成功");
+            
+            long GB = 5;
+            [KTVHTTPCache cacheSetMaxCacheLength:1024 * 1024 * 1024 * GB];
         }
     });
     
-    long GB = 2;
-    [KTVHTTPCache cacheSetMaxCacheLength:1024 * 1024 * 1024 * GB];
+
 }
 
 

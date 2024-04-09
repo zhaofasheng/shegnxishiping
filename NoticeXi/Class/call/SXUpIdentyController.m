@@ -257,7 +257,7 @@
     [parm setObject:self.zmImageString forKey:@"front_photo_url"];
     [parm setObject:@"1" forKey:@"action"];
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [self hideHUD];
         if (self.imgBlock) {
             self.imgBlock(self.zmImage, self.fmImage);

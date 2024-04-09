@@ -10,19 +10,22 @@
 #import "NoticeShopChatCommentCell.h"
 #import "NoticeOrderComDetailController.h"
 @interface NoticeJieYouGoodsComController ()
-
+@property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
+@property (nonatomic, strong) NSMutableArray *comArr;
 @end
 
 @implementation NoticeJieYouGoodsComController
 
+- (NSMutableArray *)comArr{
+    if (!_comArr) {
+        _comArr = [[NSMutableArray alloc] init];
+    }
+    return _comArr;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBarView.hidden = NO;
-    self.navBarView.titleL.text = @"评价";
-    if (self.commentNum.intValue) {
-        self.navBarView.titleL.text = [NSString stringWithFormat:@"评价%@",self.commentNum];
-    }
     self.view.backgroundColor =  [UIColor whiteColor];
     [self.tableView registerClass:[NoticeShopChatCommentCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.frame = CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);
@@ -31,9 +34,29 @@
     self.tableView.backgroundColor = self.view.backgroundColor;
     [self createRefesh];
     
-    [self request];
+    if (!self.isList) {
+        [self request];
+        self.navBarView.hidden = NO;
+        self.navBarView.titleL.text = @"评价";
+        if (self.commentNum.intValue) {
+            self.navBarView.titleL.text = [NSString stringWithFormat:@"评价%@",self.commentNum];
+        }
+    }else{
+        self.navBarView.hidden = YES;
+        self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-BOTTOM_HEIGHT-50-40);
+    }
+    
 }
 
+- (void)setShopId:(NSString *)shopId{
+    _shopId = shopId;
+    if (self.isList) {
+        if (self.pageNo == 0) {
+            self.pageNo = 1;
+        }
+        [self request];
+    }
+}
 
 - (void)request{
     NSString *url = @"";
@@ -49,7 +72,7 @@
             }
             if (self.isDown) {
                 self.isDown = NO;
-                [self.dataArr removeAllObjects];
+                [self.comArr removeAllObjects];
             }
             for (NSDictionary *dic in dict[@"data"]) {
                 NoticeShopCommentModel *model = [NoticeShopCommentModel mj_objectWithKeyValues:dic];
@@ -62,10 +85,10 @@
                         model.marks = @"Ta觉得不太行噢";
                     }
                 }
-                [self.dataArr addObject:model];
+                [self.comArr addObject:model];
 
             }
-            if (self.dataArr.count) {
+            if (self.comArr.count) {
                 self.tableView.tableFooterView = nil;
             }else{
                 self.tableView.tableFooterView = self.defaultL;
@@ -100,7 +123,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NoticeShopCommentModel *model = self.dataArr[indexPath.row];
+    NoticeShopCommentModel *model = self.comArr[indexPath.row];
     if(self.isUserLookShop && [model.user_id isEqualToString:[NoticeTools getuserId]]){
         NoticeOrderComDetailController *ctl = [[NoticeOrderComDetailController alloc] init];
         ctl.orderId = model.order_id;
@@ -112,9 +135,9 @@
         ctl.needDelete = YES;
         __weak typeof(self) weakSelf = self;
         ctl.hasDeleteComBlock = ^(NSString * _Nonnull orderId) {
-            for (NoticeShopCommentModel *deleM in weakSelf.dataArr) {
+            for (NoticeShopCommentModel *deleM in weakSelf.comArr) {
                 if ([deleM.order_id isEqualToString:orderId]) {
-                    [weakSelf.dataArr removeObject:deleM];
+                    [weakSelf.comArr removeObject:deleM];
                     [weakSelf.tableView reloadData];
                     break;
                 }
@@ -134,7 +157,7 @@
 }
 
 - (void)refresh{
-    if(!self.dataArr.count){
+    if(!self.comArr.count){
         self.isDown = YES;
         self.pageNo = 1;
         [self request];
@@ -143,18 +166,18 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.dataArr.count;
+    return self.comArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NoticeShopChatCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.isUserView = self.isUserLookShop;
-    cell.commentModel = self.dataArr[indexPath.row];
+    cell.commentModel = self.comArr[indexPath.row];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NoticeShopCommentModel *model = self.dataArr[indexPath.row];
+    NoticeShopCommentModel *model = self.comArr[indexPath.row];
 
     if(self.isUserLookShop){//别人看店铺的视角
         return model.marksHeight+60+15+8;
@@ -164,5 +187,21 @@
     
 }
 
+
+- (UIView *)listView {
+    return self.view;
+}
+
+- (UIScrollView *)listScrollView {
+    return self.tableView;
+}
+
+- (void)listViewDidScrollCallback:(void (^)(UIScrollView *))callback {
+    self.scrollCallback = callback;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    !self.scrollCallback ?: self.scrollCallback(scrollView);
+}
 
 @end

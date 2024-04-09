@@ -15,6 +15,7 @@
 #import "JXPagerView.h"
 #import "JXPagerListRefreshView.h"
 #import "SXBuySearisController.h"
+
 @interface SXStudyBaseController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIView *sectionView;
@@ -38,7 +39,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    
     self.titles = @[@"课程简介",@"课程目录"];
     self.navBarView.titleL.text = self.paySearModel.series_name;
     self.navBarView.titleL.alpha = 0;
@@ -199,7 +199,7 @@
     NSString *price = [NSString stringWithFormat:@"¥%@",self.paySearModel.price];
     NSString *oriprice = [NSString stringWithFormat:@"¥%@",self.paySearModel.original_price];
     
-    CGFloat markWidth = GET_STRWIDTH(@"专属价", 15, 40);
+    CGFloat markWidth = GET_STRWIDTH(@"", 15, 40);
     CGFloat realPriceWidth = GET_STRWIDTH(price, 21, 40);
     CGFloat oriPriceWidth = GET_STRWIDTH(oriprice, 14, 40);
     CGFloat orSpace = (self.priceBtn.frame.size.width - markWidth-realPriceWidth-oriPriceWidth-2)/2;
@@ -207,7 +207,7 @@
     UILabel *markL = [[UILabel alloc] initWithFrame:CGRectMake(orSpace, 0, markWidth, 40)];
     markL.font = FIFTHTEENTEXTFONTSIZE;
     markL.textColor = [UIColor whiteColor];
-    markL.text = @"专属价";
+    markL.text = @"";
     markL.textAlignment = NSTextAlignmentCenter;
     [self.priceBtn addSubview:markL];
     

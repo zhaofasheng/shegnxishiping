@@ -28,6 +28,8 @@
 @property (nonatomic, strong) NSString *edcStringType;
 @property (nonatomic, strong) UITextField *nameTextField;
 @property (nonatomic, strong) UITextField *numTextField;
+
+
 @end
 
 @implementation SXEducationController
@@ -226,7 +228,8 @@
     
     self.zhengshuImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(10, 10, 91, 68)];
     self.zhengshuImageView.userInteractionEnabled = YES;
-    [imView addSubview:self.zhengshuImageView];
+    self.zhengshuImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.zhengshuImageView.clipsToBounds = YES;
     [self.zhengshuImageView setAllCorner:2];
     self.zhengshuImageView.hidden = YES;
     
@@ -516,7 +519,7 @@
     [parm setObject:imageUrl forKey:@"education_img_url"];
     [parm setObject:@"2" forKey:@"action"];
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [self hideHUD];
         if (self.upsuccessBlock) {
             self.upsuccessBlock(1);

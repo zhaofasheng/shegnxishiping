@@ -99,17 +99,24 @@
         }
     }
     
-    if (self.type == 1 || self.type == 3) {//认证审核中
-        self.backView.hidden = NO;
+    if (self.type == 5 || self.type == 6) {//职业认证了
+        self.tableView.tableHeaderView = self.workWaitOrSuccessView;
         self.workWaitOrSuccessView.verifyM = self.verifyModel;
+        if (self.type == 6) {
+            self.workWaitOrSuccessView.statusL1.textColor = [UIColor colorWithHexString:@"#14151A"];
+            self.workWaitOrSuccessView.statusL2.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        }else{
+            self.workWaitOrSuccessView.statusL1.textColor = [UIColor whiteColor];
+            self.workWaitOrSuccessView.statusL2.textColor = [UIColor whiteColor];
+        }
+    }
+    
+    if (self.type == 1 || self.type == 3 || self.type == 5) {//认证审核中
+        self.backView.hidden = NO;
         [self.navBarView.backButton setImage: UIImageNamed(@"sxwhitebackpopo_img") forState:UIControlStateNormal];
         self.navBarView.titleL.textColor = [UIColor whiteColor];
     }
     
-    if (self.type == 5) {//职业认证了
-        self.tableView.tableHeaderView = self.workWaitOrSuccessView;
-    }
-
     if (self.type > 0) {
         self.xieyBtn.hidden = YES;
     }
@@ -138,6 +145,9 @@
                     if (self.verifyModel.authentication_type.intValue == 1) {//学历认证
                         self.type = 1;
                         self.waitOrSuccessView.verifyM = self.verifyModel;
+                    }else if (self.verifyModel.authentication_type.intValue == 2){
+                        self.workWaitOrSuccessView.verifyM = self.verifyModel;
+                        self.type = 5;
                     }else if (self.verifyModel.authentication_type.intValue == 3){
                         self.zigeWaitOrSuccessView.verifyM = self.verifyModel;
                         self.type = 3;
@@ -148,12 +158,13 @@
                     if (self.verifyModel.authentication_type.intValue == 1) {//学历认证
                         self.waitOrSuccessView.verifyM = self.verifyModel;
                         self.type = 2;
-                    }else if (self.verifyModel.authentication_type.intValue == 3){
-                        self.zigeWaitOrSuccessView.verifyM = self.verifyModel;
-                        self.type = 4;
                     }else if (self.verifyModel.authentication_type.intValue == 2){
                         self.workWaitOrSuccessView.verifyM = self.verifyModel;
-                        self.type = 5;
+                        self.type = 6;
+                    }
+                    else if (self.verifyModel.authentication_type.intValue == 3){
+                        self.zigeWaitOrSuccessView.verifyM = self.verifyModel;
+                        self.type = 4;
                     }
                 }
             }

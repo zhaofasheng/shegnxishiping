@@ -7,10 +7,12 @@
 //
 
 #import "NoticeBaseCellController.h"
+#import "JXPagerView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NoticeJieYouGoodsComController : NoticeBaseCellController
+@interface NoticeJieYouGoodsComController : NoticeBaseCellController<NoticeAssestDelegate,JXPagerViewListViewDelegate>
 @property (nonatomic, assign) BOOL isUserLookShop;//是否是用户视角看店铺
+@property (nonatomic, assign) BOOL isList;
 @property (nonatomic, strong) NSString *shopId;
 @property (nonatomic, strong) NSString *commentNum;
 - (void)refresh;

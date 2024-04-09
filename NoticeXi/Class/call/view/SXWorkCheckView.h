@@ -21,6 +21,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIImageView *zmImageView;
 @property (nonatomic, strong) UIImageView *fmImageView;
+
+@property (nonatomic, strong) UIImageView *zhengshuImageView1;
+
+@property (nonatomic, strong) UIImageView *zhengshuImageView2;
+
+@property (nonatomic, strong) UIImageView *zhengshuImageView3;
+
+@property (nonatomic, strong) UIImageView *zhengshuImageView4;
+
+@property (nonatomic, strong) UIView *fg1View;
+@property (nonatomic, strong) UIView *fg2View;
+@property (nonatomic, strong) UIView *fg3View;
+@property (nonatomic, strong) UIView *fg4View;
+
+@property (nonatomic, strong) UIView *contentView;
 @end
 
 NS_ASSUME_NONNULL_END

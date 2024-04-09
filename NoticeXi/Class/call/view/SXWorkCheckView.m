@@ -30,8 +30,8 @@
         
         UIView *contentView = [[UIView  alloc] initWithFrame:CGRectMake(15, 97, DR_SCREEN_WIDTH-30, 210+imageHeight+45)];
         contentView.backgroundColor = [UIColor whiteColor];
-        [contentView setAllCorner:10];
         [self addSubview:contentView];
+        self.contentView = contentView;
         
         UILabel *identTitleL2 = [[UILabel  alloc] initWithFrame:CGRectMake(15, 15, 200, 22)];
         identTitleL2.font = XGSIXBoldFontSize;
@@ -66,7 +66,6 @@
             
             if (i < 2) {
                 UIImageView *imageView = [[UIImageView  alloc] initWithFrame:CGRectZero];
-                imageView.backgroundColor = [UIColor blueColor];
                 imageView.contentMode = UIViewContentModeScaleAspectFill;
                 imageView.clipsToBounds = YES;
                 if (i == 0) {
@@ -83,6 +82,41 @@
                 fgView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
                 [contentView addSubview:fgView];
                 [fgView setCornerOnBottom:2];
+            }
+        }
+        
+        for (int i = 0; i < 4; i++) {
+            UIImageView *zsImageView = [[UIImageView  alloc] initWithFrame:CGRectZero];
+            zsImageView.userInteractionEnabled = YES;
+            [contentView addSubview:zsImageView];
+            zsImageView.hidden = YES;
+            zsImageView.contentMode = UIViewContentModeScaleAspectFill;
+            zsImageView.clipsToBounds = YES;
+            
+            if (i < 2) {
+                zsImageView.frame = CGRectMake(15+(imageWidth+15)*i, CGRectGetMaxY(self.zmImageView.frame)+15, imageWidth, imageHeight);
+            }else{
+                zsImageView.frame = CGRectMake(15+(imageWidth+15)*(i-2), CGRectGetMaxY(self.zmImageView.frame)+15+imageHeight+15, imageWidth, imageHeight);
+            }
+            
+            UIView *fgView = [[UIView  alloc] initWithFrame:CGRectMake(zsImageView.frame.origin.x-2, zsImageView.frame.origin.y+imageHeight/2, imageWidth+4, imageHeight/2)];
+            fgView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+            [contentView addSubview:fgView];
+            [fgView setCornerOnBottom:2];
+            fgView.hidden = YES;
+            [zsImageView setAllCorner:4];
+            if (i == 0) {
+                self.fg1View = fgView;
+                self.zhengshuImageView1 = zsImageView;
+            }else if (i == 1){
+                self.fg2View = fgView;
+                self.zhengshuImageView2 = zsImageView;
+            }else if (i == 2){
+                self.fg3View = fgView;
+                self.zhengshuImageView3 = zsImageView;
+            }else if (i == 3){
+                self.fg4View = fgView;
+                self.zhengshuImageView4 = zsImageView;
             }
         }
         
@@ -107,6 +141,52 @@
         self.statusL1.text = @"“职业认证”审核中";
         self.statusL2.text = @"认证还在人工审核中，请耐心等待";
     }
+    
+    if (verifyM.career_images_url.count == 1) {
+        [self.zhengshuImageView1 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[0]]];
+        self.zhengshuImageView1.hidden = NO;
+        self.fg1View.hidden = NO;
+    }else if (verifyM.career_images_url.count == 2){
+        [self.zhengshuImageView1 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[0]]];
+        [self.zhengshuImageView2 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[1]]];
+        self.zhengshuImageView1.hidden = NO;
+        self.zhengshuImageView2.hidden = NO;
+        self.fg1View.hidden = NO;
+        self.fg2View.hidden = NO;
+    }else if (verifyM.career_images_url.count == 3){
+        [self.zhengshuImageView1 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[0]]];
+        [self.zhengshuImageView2 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[1]]];
+        [self.zhengshuImageView3 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[2]]];
+        self.zhengshuImageView1.hidden = NO;
+        self.zhengshuImageView2.hidden = NO;
+        self.zhengshuImageView3.hidden = NO;
+        self.fg1View.hidden = NO;
+        self.fg2View.hidden = NO;
+        self.fg3View.hidden = NO;
+    }else if (verifyM.career_images_url.count == 4){
+        [self.zhengshuImageView1 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[0]]];
+        [self.zhengshuImageView2 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[1]]];
+        [self.zhengshuImageView3 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[2]]];
+        [self.zhengshuImageView4 sd_setImageWithURL:[NSURL URLWithString:verifyM.career_images_url[3]]];
+        self.zhengshuImageView1.hidden = NO;
+        self.zhengshuImageView2.hidden = NO;
+        self.zhengshuImageView3.hidden = NO;
+        self.zhengshuImageView4.hidden = NO;
+        self.fg1View.hidden = NO;
+        self.fg2View.hidden = NO;
+        self.fg3View.hidden = NO;
+        self.fg4View.hidden = NO;
+    }
+    
+    CGFloat imageWidth = (DR_SCREEN_WIDTH- 75)/2;
+    CGFloat imageHeight = imageWidth/150*92;
+    if (verifyM.career_images_url.count <= 2 && verifyM.career_images_url.count) {
+        self.contentView.frame = CGRectMake(15, 97, DR_SCREEN_WIDTH-30, 210+imageHeight+45 + (imageHeight+15));
+    }else if (verifyM.career_images_url.count > 2){
+        self.contentView.frame = CGRectMake(15, 97, DR_SCREEN_WIDTH-30, 210+imageHeight+45 + (imageHeight+15)*2);
+    }
+    self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 97+self.contentView.frame.size.height);
+    [self.contentView setAllCorner:10];
 }
 
 @end

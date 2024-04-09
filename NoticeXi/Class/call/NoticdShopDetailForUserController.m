@@ -13,7 +13,7 @@
 #import "JXPagerListRefreshView.h"
 #import "NoticeXi-Swift.h"
 #import "NoticeJieYouGoodsComController.h"
-#import "NoticeJieYouGoodsController.h"
+
 #import "NoticeActShowView.h"
 #import "NoticeOtherShopCardController.h"
 #import "NoticeJieYouShopHeaderView.h"

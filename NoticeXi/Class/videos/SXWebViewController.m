@@ -8,14 +8,18 @@
 
 #import "SXWebViewController.h"
 #import <WebKit/WebKit.h>
+
 @interface SXWebViewController ()<WKNavigationDelegate,WKUIDelegate>
+
 @property (strong, nonatomic) WKWebView *webView;
+
 @end
 
 @implementation SXWebViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     // 设置偏好设置
     config.preferences = [[WKPreferences alloc] init];
@@ -23,7 +27,6 @@
     config.preferences.javaScriptEnabled = YES;
     // 在iOS上默认为NO，表示不能自动通过窗口打开
     config.preferences.javaScriptCanOpenWindowsAutomatically = YES;
-    
     // web内容处理池
     config.processPool = [[WKProcessPool alloc] init];
     WKUserContentController* userContentController = WKUserContentController.new;
@@ -43,7 +46,6 @@
 #pragma mark - WKNavigationDelegate
 // 页面开始加载时调用
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
-    
     [self showHUD];
 }
 
@@ -63,10 +65,8 @@
     [webView evaluateJavaScript:injectionJSString completionHandler:nil];
     //修改字体大小 300%
     [ webView evaluateJavaScript:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '200%'"completionHandler:nil];
-    
     //修改背景颜色
     [webView evaluateJavaScript:@"document.body.style.backgroundColor=\"#FFFFFF\"" completionHandler:nil];
 }
-
 
 @end

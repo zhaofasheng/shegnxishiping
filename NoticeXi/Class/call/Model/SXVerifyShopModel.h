@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *credentials_img_url;//资格证照片
 @property (nonatomic, strong) NSString *verify_status;//2已提交,待审核 3审核通过 4审核失败
 
-
+@property (nonatomic, strong) NSArray *career_images_url;//职业认知照片
 @end
 
 NS_ASSUME_NONNULL_END

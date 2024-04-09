@@ -12,12 +12,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeJieYouGoodsController : UIViewController<NoticeAssestDelegate,JXPagerViewListViewDelegate>
-@property (nonatomic, strong) NoticeMyShopModel *goodsModel;
-@property (nonatomic, strong) NoticeMyShopModel *shopDetailModel;
+@property (nonatomic, strong) NoticeMyShopModel *shopModel;
 @property (nonatomic, strong) NSMutableArray *goodssellArr;
 @property (nonatomic, copy) void(^refreshGoodsBlock)(NSMutableArray *goodsArr);
 @property (nonatomic, copy) void(^buyGoodsBlock)(NoticeGoodsModel *buyGood);
-@property (nonatomic, assign) BOOL isUserLookShop;//是否是用户视角看店铺
+
 @end
 
 NS_ASSUME_NONNULL_END

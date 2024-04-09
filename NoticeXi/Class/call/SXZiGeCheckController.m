@@ -195,6 +195,8 @@
     [imView addSubview:self.zhengshuImageView];
     [self.zhengshuImageView setAllCorner:2];
     self.zhengshuImageView.hidden = YES;
+    self.zhengshuImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.zhengshuImageView.clipsToBounds = YES;
     
     UIButton *reChoiceBtn = [[UIButton  alloc] initWithFrame:CGRectMake(67, 4, 20, 20)];
     [reChoiceBtn setImage:UIImageNamed(@"sxrechoicezj_img") forState:UIControlStateNormal];
@@ -347,7 +349,7 @@
     [parm setObject:imageUrl forKey:@"credentials_img_url"];
     [parm setObject:@"2" forKey:@"action"];
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/authentication/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [self hideHUD];
         if (self.upsuccessBlock) {
             self.upsuccessBlock(3);

@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "NoticeMyShopModel.h"
 #import "NoticeShopPhotosWall.h"
+#import "NoticeShopDetailHeader.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeJieYouShopHeaderView : UIView<NoticeRecordDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NoticeMyShopModel *shopModel;
 @property (nonatomic, strong) NoticeShopPhotosWall *photosWall;
+@property (nonatomic, strong) NoticeShopDetailHeader *detailHeader;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *labelArr;
 @property (nonatomic, assign) BOOL isUserLookShop;//是否是用户视角看店铺

@@ -82,6 +82,15 @@
     self.photosWall.photos = shopModel.myShopM.photowallArr;
 }
 
+- (NoticeShopDetailHeader *)detailHeader{
+    if (!_detailHeader) {
+        _detailHeader = [[NoticeShopDetailHeader  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 120)];
+        [self addSubview:_detailHeader];
+        [self bringSubviewToFront:_detailHeader];
+    }
+    return _detailHeader;
+}
+
 - (NoticeShopPhotosWall *)photosWall{
     if (!_photosWall) {
         _photosWall = [[NoticeShopPhotosWall  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH/2, self.frame.size.height-15-40-2, DR_SCREEN_WIDTH/2, 40+2)];

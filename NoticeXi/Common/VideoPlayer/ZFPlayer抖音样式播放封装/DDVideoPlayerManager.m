@@ -68,12 +68,12 @@
             DRLog(@"开启服务失败");
         }else{
             DRLog(@"开启服务成功");
+            
+            long GB = 5;
+            [KTVHTTPCache cacheSetMaxCacheLength:1024 * 1024 * 1024 * GB];
         }
     });
 
-//    // 设置缓存最大容量
-    long GB = 2;
-    [KTVHTTPCache cacheSetMaxCacheLength:1024 * 1024 * 1024 * GB];
 }
 
 /**

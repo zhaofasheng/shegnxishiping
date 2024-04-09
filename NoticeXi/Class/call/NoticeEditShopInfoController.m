@@ -16,6 +16,7 @@
 #import "NoticeEditCardCell.h"
 #import "NoticeChangeTeamNickNameView.h"
 #import "KMTagListView.h"
+
 @interface NoticeEditShopInfoController ()<KMTagListViewDelegate>
 @property (nonatomic, strong) KMTagListView *labeView;
 @property (nonatomic, strong) UIView *backView;
@@ -39,7 +40,7 @@
     self.tableView.backgroundColor = self.view.backgroundColor;
     
     self.introHeight = 128;
-    
+    self.photoHeight = (DR_SCREEN_WIDTH-40-12)/4*1+10+8;
     self.navBarView.titleL.text = @"编辑资料";
     
     if (!self.backView) {
@@ -54,7 +55,7 @@
 
     [self.tableView registerClass:[NoticeShopDetailSection class] forHeaderFooterViewReuseIdentifier:@"headerView"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequest) name:@"REFRESHMYWALLECT" object:nil];
-    self.photoHeight = (DR_SCREEN_WIDTH-40-12)/4*1+10+8;
+
     
     if (self.section > 2) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:self.section] atScrollPosition:UITableViewScrollPositionTop animated:NO];
@@ -377,8 +378,6 @@
     [nameString addAttribute:NSFontAttributeName value:EIGHTEENTEXTFONTSIZE range:NSMakeRange(0, textView.text.length)];
     textView.attributedText = nameString;
 }
-
-
 
 - (void)setTagRedColor:(NSString *)redString sourceString:(NSString *)sourchString textView:(UITextField*)textView att:(NSMutableAttributedString *)att{
     if (!att) {

@@ -15,9 +15,14 @@
 #import "NoticeShopRuleController.h"
 #import "NoticeShopCardController.h"
 #import "NoticeEditShopInfoController.h"
+#import "NoticeJieYouGoodsComController.h"
+#import "NoticeJieYouGoodsController.h"
+
 @interface NoticeMyJieYouShopController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NoticeShopCardController *cardVC;
+@property (nonatomic, strong) NoticeJieYouGoodsComController *comVC;
+@property (nonatomic, strong) NoticeJieYouGoodsController *goodsVC;
 @property (nonatomic, strong) NoticeCureentShopStatusModel *applyModel;
 @property (nonatomic, strong) UIButton *editButton;
 @property (nonatomic, strong) UIButton *workButton;
@@ -33,7 +38,12 @@
 @property (nonatomic, strong) JXCategoryTitleView *categoryView;
 @property (nonatomic, strong) JXPagerListRefreshView *pagerView;
 @property (nonatomic, strong) UIView *startView;
+@property (nonatomic, assign) CGFloat originY;
+@property (nonatomic, strong) UIView *backV;
 
+@property (nonatomic, strong) UILabel *infoButton;
+@property (nonatomic, strong) UILabel *orderButton;
+@property (nonatomic, strong) UILabel *comButton;
 @end
 
 @implementation NoticeMyJieYouShopController
@@ -62,6 +72,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     CGFloat imgHeight = (DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT)/2+NAVIGATION_BAR_HEIGHT;
+    self.originY = imgHeight - 30;
+    self.backV = [[UIView  alloc] initWithFrame:CGRectMake(0, self.originY, DR_SCREEN_WIDTH, 30)];
+    self.backV.backgroundColor = [UIColor whiteColor];
+    
     
     self.backImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, imgHeight)];
     [self.view addSubview:self.backImageView];
@@ -69,19 +83,31 @@
     self.backImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.backImageView.clipsToBounds = YES;
     
-    self.titles = @[@""];
+    UIView *blackV = [[UIView  alloc] initWithFrame:self.backImageView.bounds];
+    blackV.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+    [self.backImageView addSubview:blackV];
+    
+    [self.backImageView addSubview:self.backV];
+    
+    self.titles = @[@"",@"",@""];
     self.shopHeaderView = [[NoticeJieYouShopHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, imgHeight-NAVIGATION_BAR_HEIGHT-40-41-20)];
+    self.shopHeaderView.detailHeader.hidden = NO;
     
     __weak typeof(self) weakSelf = self;
     self.shopHeaderView.choiceUrlBlock = ^(NSString * _Nonnull choiceUrl) {
         [weakSelf.backImageView sd_setImageWithURL:[NSURL URLWithString:choiceUrl]];
     };
 
-    _categoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0,0,GET_STRWIDTH(@"商品的", 18, 50)*2+40,10)];
+    self.shopHeaderView.detailHeader.refreshShopModel = ^(BOOL refresh) {
+        [weakSelf getShopRequest];
+    };
+    
+    CGFloat width1 = GET_STRWIDTH(@"个人资料", 16, 50);
+    
+    _categoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0,0,width1*2+40,51)];
     self.categoryView.titles = self.titles;
     self.categoryView.delegate = self;
-    self.categoryView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
-    
+
     _pagerView = [[JXPagerListRefreshView alloc] initWithDelegate:self];
     self.pagerView.mainTableView.gestureDelegate = self;
     // 在定义JXPagerView的时候
@@ -93,8 +119,10 @@
     self.categoryView.listContainer = (id<JXCategoryViewListContainer>)self.pagerView.listContainerView;
     self.navigationController.interactivePopGestureRecognizer.enabled = (self.categoryView.selectedIndex == 0);
     
-    self.sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 10)];
-
+    self.sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 50)];
+    self.sectionView.backgroundColor = [UIColor whiteColor];
+    [self.sectionView setCornerOnTopRight:25];
+    [self.sectionView addSubview:self.categoryView];
 
     self.startView = [[UIView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-40-10, DR_SCREEN_WIDTH, 40)];
     [self.view addSubview:self.startView];
@@ -140,6 +168,10 @@
     [ruleBtn setImage:UIImageNamed(@"sxwhiteshoprule_img") forState:UIControlStateNormal];
     [ruleBtn addTarget:self action:@selector(ruleClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:ruleBtn];
+    
+    [self.sectionView addSubview:self.infoButton];
+    [self.sectionView addSubview:self.orderButton];
+    [self.sectionView addSubview:self.comButton];
 }
 
 - (void)editClick{
@@ -170,8 +202,17 @@
             self.shopModel = [NoticeMyShopModel mj_objectWithKeyValues:dict[@"data"]];
            
             self.shopHeaderView.shopModel = self.shopModel;
+            self.shopHeaderView.detailHeader.shopModel = self.shopModel;
             self.cardVC.shopModel = self.shopModel;
+            self.goodsVC.shopModel = self.shopModel;
+            self.comVC.shopId = self.shopModel.myShopM.shopId;
+            if (self.shopModel.myShopM.comment_num.intValue) {
 
+                self.comButton.text = [NSString stringWithFormat:@"评论%@",self.shopModel.myShopM.comment_num.intValue?self.shopModel.myShopM.comment_num:@""];
+            }else{
+                self.comButton.text = @"评价";
+            }
+            
             [self refresButton];
             
             if (!self.shopModel.myShopM.photowallArr.count) {
@@ -222,7 +263,7 @@
     }
     
     if(!self.sellGoodsArr.count){
-        [self showToastWithText:@"请上滑页面到添加商品入口 添加您要营业的商品"];
+        [self showToastWithText:@"请进入咨询服务页面添加您要营业的商品"];
         return;
     }
    
@@ -321,14 +362,31 @@
         _cardVC.editShopModelBlock = ^(BOOL edit) {
             [weakSelf editClick];
         };
-        _cardVC.refreshGoodsBlock = ^(NSMutableArray * _Nonnull goodsArr) {
-            weakSelf.sellGoodsArr = goodsArr;
-            [weakSelf refresButton];
-        };
+ 
     }
     return _cardVC;
 }
 
+- (NoticeJieYouGoodsController *)goodsVC{
+    if (!_goodsVC) {
+        __weak typeof(self) weakSelf = self;
+        _goodsVC = [[NoticeJieYouGoodsController alloc] init];
+        _goodsVC.refreshGoodsBlock = ^(NSMutableArray * _Nonnull goodsArr) {
+            weakSelf.sellGoodsArr = goodsArr;
+            weakSelf.shopHeaderView.detailHeader.goodsNum = goodsArr.count;
+            [weakSelf refresButton];
+        };
+    }
+    return _goodsVC;
+}
+
+- (NoticeJieYouGoodsComController *)comVC{
+    if (!_comVC) {
+        _comVC = [[NoticeJieYouGoodsComController alloc] init];
+        _comVC.isList = YES;
+    }
+    return _comVC;
+}
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -363,6 +421,11 @@
 }
 
 - (id<JXPagerViewListViewDelegate>)pagerView:(JXPagerView *)pagerView initListAtIndex:(NSInteger)index {
+    if (index == 1) {
+        return self.goodsVC;
+    }else if (index == 2){
+        return self.comVC;
+    }
     return self.cardVC;
 }
 
@@ -376,5 +439,73 @@
     return [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
 }
 
+- (void)mainTableViewDidScroll:(UIScrollView *)scrollView{
 
+    self.backV.frame = CGRectMake(0, self.originY-scrollView.contentOffset.y, DR_SCREEN_WIDTH, 50);
+}
+
+- (void)indexTap:(UITapGestureRecognizer *)tap{
+    UILabel *tapV = (UILabel *)tap.view;
+    
+    self.categoryView.defaultSelectedIndex = tapV.tag;
+    [self categoryCurentIndex:tapV.tag];
+    [self.categoryView reloadData];
+}
+
+- (void)categoryCurentIndex:(NSInteger)index{
+    self.infoButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+    self.orderButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+    self.comButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+    if (index == 0) {
+        self.infoButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+    }else if (index == 1){
+        self.orderButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+    }else if (index == 2){
+        self.comButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+    }
+
+}
+
+
+- (UILabel *)infoButton{
+    if (!_infoButton) {
+        _infoButton = [[UILabel  alloc] initWithFrame:CGRectMake(15, 0, GET_STRWIDTH(@"个人资料", 16, 50), 50)];
+        _infoButton.font = SIXTEENTEXTFONTSIZE;
+        _infoButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+        _infoButton.userInteractionEnabled = YES;
+        _infoButton.tag = 0;
+        _infoButton.text = @"个人资料";
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
+        [_infoButton addGestureRecognizer:tap];
+    }
+    return _infoButton;
+}
+
+- (UILabel *)orderButton{
+    if (!_orderButton) {
+        _orderButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.infoButton.frame)+30, 0, GET_STRWIDTH(@"个人资料", 16, 50), 50)];
+        _orderButton.font = SIXTEENTEXTFONTSIZE;
+        _orderButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        _orderButton.userInteractionEnabled = YES;
+        _orderButton.tag = 1;
+        _orderButton.text = @"咨询服务";
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
+        [_orderButton addGestureRecognizer:tap];
+    }
+    return _orderButton;
+}
+
+- (UILabel *)comButton{
+    if (!_comButton) {
+        _comButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.orderButton.frame)+30, 0, GET_STRWIDTH(@"评价9999", 16, 50), 50)];
+        _comButton.font = SIXTEENTEXTFONTSIZE;
+        _comButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        _comButton.userInteractionEnabled = YES;
+        _comButton.tag = 2;
+        _comButton.text = @"评价";
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
+        [_comButton addGestureRecognizer:tap];
+    }
+    return _comButton;
+}
 @end
