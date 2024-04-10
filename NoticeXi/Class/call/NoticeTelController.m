@@ -64,7 +64,6 @@
 
 //每个section的item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
     return self.dataArr.count;
 }
 
@@ -76,19 +75,27 @@
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             [self.dataArr removeAllObjects];
-            
             for (NSDictionary *dic in dict[@"data"]) {
                 NoticeMyShopModel *shopM = [NoticeMyShopModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:shopM];
             }
-            
             self.layout.telList = self.dataArr;
             [self.collectionView reloadData];
-     
         }
     } fail:^(NSError * _Nullable error) {
     }];
 }
 
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
+  //  self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    
+}
 
 @end

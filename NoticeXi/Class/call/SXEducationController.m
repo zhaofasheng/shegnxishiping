@@ -232,6 +232,7 @@
     self.zhengshuImageView.clipsToBounds = YES;
     [self.zhengshuImageView setAllCorner:2];
     self.zhengshuImageView.hidden = YES;
+    [imView addSubview:self.zhengshuImageView];
     
     UIButton *reChoiceBtn = [[UIButton  alloc] initWithFrame:CGRectMake(67, 4, 20, 20)];
     [reChoiceBtn setImage:UIImageNamed(@"sxrechoicezj_img") forState:UIControlStateNormal];

@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void(^refreshShopModel)(BOOL refresh);
 @property (nonatomic, strong) UIButton *addtagsButton;
 @property (nonatomic, copy) void(^editShopModelBlock)(BOOL edit);
+
+@property (nonatomic, assign) BOOL justShow;
 @end
 
 NS_ASSUME_NONNULL_END

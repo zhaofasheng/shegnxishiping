@@ -48,6 +48,15 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.justShow) {
+        if (!self.shopModel.myShopM.photowallArr.count) {
+            if (self.editShopBlock) {
+                self.editShopBlock(YES);
+            }
+        }
+        return;
+    }
+   
     if (indexPath.row == self.shopModel.myShopM.photowallArr.count) {
         TZImagePickerController *imagePicker = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
         imagePicker.sortAscendingByModificationDate = NO;
@@ -158,18 +167,33 @@
     
     NoticeWallCollectionViewCell *merchentCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     merchentCell.addPhotosButton.hidden = YES;
-    if (indexPath.row < self.shopModel.myShopM.photowallArr.count) {
-        merchentCell.photoModel = self.shopModel.myShopM.photowallArr[indexPath.row];
+    if (self.justShow) {
+        if (indexPath.row < self.shopModel.myShopM.photowallArr.count) {
+            merchentCell.photoModel = self.shopModel.myShopM.photowallArr[indexPath.row];
+        }
+        merchentCell.closeButton.hidden = YES;
+        merchentCell.addPhotosButton.hidden = self.shopModel.myShopM.photowallArr.count?YES:NO;
+    }else{
+        if (indexPath.row < self.shopModel.myShopM.photowallArr.count) {
+            merchentCell.photoModel = self.shopModel.myShopM.photowallArr[indexPath.row];
+        }
+        if (indexPath.row == self.shopModel.myShopM.photowallArr.count){
+            merchentCell.addPhotosButton.hidden = NO;
+        }
     }
-    if (indexPath.row == self.shopModel.myShopM.photowallArr.count){
-        merchentCell.addPhotosButton.hidden = NO;
-    }
+
     return merchentCell;
 }
 
 //每个section的item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
+    if (self.justShow) {
+        if (!self.shopModel.myShopM.photowallArr.count) {
+            return 1;
+        }else{
+            return (self.shopModel.myShopM.photowallArr.count < 4) ? self.shopModel.myShopM.photowallArr.count : 4;
+        }
+    }
     return (self.shopModel.myShopM.photowallArr.count < 10) ? (self.shopModel.myShopM.photowallArr.count+1) : self.shopModel.myShopM.photowallArr.count;
 }
 

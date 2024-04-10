@@ -43,7 +43,22 @@
         }
     }else{
         self.navBarView.hidden = YES;
+        
         self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-BOTTOM_HEIGHT-50-40);
+        if (!self.comArr.count) {
+            if (self.isList) {
+                
+                self.defaultL = [[UILabel alloc] initWithFrame:CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT/2)];
+
+                self.defaultL.textAlignment = NSTextAlignmentCenter;
+                self.defaultL.font = FOURTHTEENTEXTFONTSIZE;
+                self.defaultL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
+           
+                
+                self.defaultL.text = @"还没有评价";
+                self.tableView.tableHeaderView = self.defaultL;
+            }
+        }
     }
     
 }

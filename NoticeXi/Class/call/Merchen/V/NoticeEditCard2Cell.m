@@ -71,7 +71,7 @@
 
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
-
+ 
     if(shopModel.myShopM.introduce_len.intValue){
         self.voicePlayView.hidden = NO;
         self.voiceLenL.text = [NSString stringWithFormat:@"%@s",shopModel.myShopM.introduce_len];
@@ -81,6 +81,10 @@
         self.noVoiceL.hidden = NO;
     }
     self.rebutton.hidden = self.voicePlayView.hidden;
+    
+    if (self.justShow) {
+        self.rebutton.hidden = YES;
+    }
 }
 
 - (void)playNoReplay{
@@ -120,6 +124,12 @@
 }
 
 - (void)recoderClick{
+    if (self.justShow) {
+        if (self.editShopBlock) {
+            self.editShopBlock(YES);
+        }
+        return;
+    }
     [self.audioPlayer stopPlaying];
     self.isReplay = YES;
     NoticeRecoderView * recodeView = [[NoticeRecoderView alloc] shareRecoderViewWith:@""];

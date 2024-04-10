@@ -42,7 +42,7 @@
     _shopModel = shopModel;
     if (shopModel.myShopM.tale && shopModel.myShopM.tale.length) {
         self.backView.frame = CGRectMake(20, 0, DR_SCREEN_WIDTH-40, ((shopModel.myShopM.taleHeight>88)?(shopModel.myShopM.taleHeight+20):108));
-        self.nameL.frame = CGRectMake(10, 10, DR_SCREEN_WIDTH-60, ((shopModel.myShopM.taleHeight>88)?(shopModel.myShopM.taleHeight):88));
+        self.nameL.frame = CGRectMake(10, 10, DR_SCREEN_WIDTH-60, shopModel.myShopM.taleHeight);
         self.nameL.textColor = [UIColor colorWithHexString:@"#25262E"];
         self.nameL.attributedText = shopModel.myShopM.taleAtstr;
     }else{
@@ -51,6 +51,12 @@
 }
 
 - (void)changeIntro{
+    if (self.justShow) {
+        if (self.editShopBlock) {
+            self.editShopBlock(YES);
+        }
+        return;
+    }
     NoticeJuBaoBoKeTosatView *jubaoV = [[NoticeJuBaoBoKeTosatView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
     jubaoV.plaStr = @"写下你的故事，让Ta更了解你…";
     jubaoV.num = 80;

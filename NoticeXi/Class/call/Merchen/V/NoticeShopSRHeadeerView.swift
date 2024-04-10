@@ -234,7 +234,7 @@ class NoticeShopSRHeadeerView: UIView {
                             self?.getShouru()
                             self!.textFild?.text = ""
                             self!.markL?.text = ""
-                            NoticeQiaojjieTools.show(withTitle: "申请已提交，24小时内到账，请注意查收")
+                            NoticeQiaojjieTools.show(withTitle: "申请已提交，T+3个工作日内到账，请注意查收")
                         }
                         NotificationCenter.default.post(name: NSNotification.Name("REFRESHMYWALLECT"), object: nil, userInfo:nil)
                     }, fail: {(error) in

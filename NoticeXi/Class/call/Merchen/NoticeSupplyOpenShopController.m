@@ -125,9 +125,9 @@
         }
         
         __weak typeof(self) weakSelf = self;
-         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定信息是否无误？" message:[NSString stringWithFormat:@"%@\n%@\n错误的信息会导致提现失败哦",self.phoneView.text,self.codeView.text] sureBtn:[NoticeTools getLocalStrWith:@"sure.comgir"] cancleBtn:[NoticeTools getLocalStrWith:@"main.cancel"] right:YES];
+         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定信息是否无误？" message:[NSString stringWithFormat:@"%@\n%@\n错误的信息会导致提现失败哦",self.phoneView.text,self.codeView.text] sureBtn:@"取消" cancleBtn:@"确定" right:YES];
         alerView.resultIndex = ^(NSInteger index) {
-            if (index == 1) {
+            if (index == 2) {
                 NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
                 [parm setObject:self.phoneView.text forKey:@"real_name"];
                 [parm setObject:self.codeView.text forKey:@"cert_no"];
@@ -136,7 +136,6 @@
                     [weakSelf hideHUD];
                     if (success) {
                         NoticeSupplyCheckController *ctl = [[NoticeSupplyCheckController alloc] init];
-                   
                         [weakSelf.navigationController pushViewController:ctl animated:YES];
                     }
                 } fail:^(NSError * _Nullable error) {
@@ -146,10 +145,7 @@
             }
         };
         [alerView showXLAlertView];
-        
-
     }
-
 }
 
 - (void)viewDidDisappear:(BOOL)animated{

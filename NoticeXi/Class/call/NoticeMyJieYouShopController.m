@@ -128,16 +128,16 @@
     [self.view addSubview:self.startView];
     self.startView.backgroundColor = self.view.backgroundColor;
     
-    self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 0, 112, 40)];
-    self.editButton.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
-    [self.editButton setAllCorner:20];
-    [self.editButton setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
-    self.editButton.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
-    [self.editButton setTitle:@"编辑资料" forState:UIControlStateNormal];
-    [self.startView addSubview:self.editButton];
-    [self.editButton addTarget:self action:@selector(editClick) forControlEvents:UIControlEventTouchUpInside];
+//    self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 0, 112, 40)];
+//    self.editButton.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+//    [self.editButton setAllCorner:20];
+//    [self.editButton setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
+//    self.editButton.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
+//    [self.editButton setTitle:@"编辑资料" forState:UIControlStateNormal];
+//    [self.startView addSubview:self.editButton];
+//    [self.editButton addTarget:self action:@selector(editClick) forControlEvents:UIControlEventTouchUpInside];
 
-    self.workButton = [[UIButton alloc] initWithFrame:CGRectMake(147,0, DR_SCREEN_WIDTH-20-147, 40)];
+    self.workButton = [[UIButton alloc] initWithFrame:CGRectMake(20,0, DR_SCREEN_WIDTH-40, 40)];
     self.workButton.layer.cornerRadius = 20;
     self.workButton.layer.masksToBounds = YES;
     //渐变色

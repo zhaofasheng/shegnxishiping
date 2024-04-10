@@ -52,7 +52,7 @@
         [self.addButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
     }
 
-    [self.addButton setTitle:@"添加商品" forState:UIControlStateNormal];
+    [self.addButton setTitle:@"添加服务" forState:UIControlStateNormal];
     self.addButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
     [self.view addSubview:self.addButton];
     [self.addButton addTarget:self action:@selector(addClick) forControlEvents:UIControlEventTouchUpInside];

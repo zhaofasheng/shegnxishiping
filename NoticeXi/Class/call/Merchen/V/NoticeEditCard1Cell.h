@@ -14,8 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NoticeMyShopModel *shopModel;
 @property (nonatomic, copy) void(^refreshShopModel)(BOOL refresh);
+
 @property (nonatomic, copy) void(^refreshImgHeightBlock)(NSInteger imgNum);
 @property (nonatomic, assign) CGFloat height;
+@property (nonatomic, copy) void(^editShopBlock)(BOOL edit);
+@property (nonatomic, assign) BOOL justShow;
 @end
 
 NS_ASSUME_NONNULL_END

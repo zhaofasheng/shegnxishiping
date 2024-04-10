@@ -75,7 +75,7 @@ class NoticeShopRecodCell: BaseCell {
                 self.typeL?.text = "提现失败"
                 self.typeL?.textColor = UIColor.init(hexString: "#DB6E6E")
             }else{
-                self.typeL?.text = "提现中(24小时到账)"
+                self.typeL?.text = "提现中"
                 self.typeL?.textColor = UIColor.init(hexString: "#0099E6")
             }
         }else if recoM?.resource_type == "3" {//支付店铺订单

@@ -92,9 +92,8 @@
         }else if (verifyModel.authentication_type.intValue == 3){
             self.checkL.text = [NSString stringWithFormat:@"%@",verifyModel.credentials_name];
         }
-        self.checkL.frame = CGRectMake(20, 69, DR_SCREEN_WIDTH-125, GET_STRHEIGHT(self.checkL.text, 13, DR_SCREEN_WIDTH-125));
+        self.checkL.frame = CGRectMake(CGRectGetMaxX(self.iconImageView.frame)+10, 49, DR_SCREEN_WIDTH-115, GET_STRHEIGHT(self.checkL.text, 13, DR_SCREEN_WIDTH-115));
     }
-    
 
     self.shopNameL.text = shopModel.myShopM.shop_name;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:shopModel.myShopM.shop_avatar_url]];

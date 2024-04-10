@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UILabel *nameL;
 @property (nonatomic, strong) NSMutableAttributedString *attStroy;
+
+@property (nonatomic, copy) void(^editShopBlock)(BOOL edit);
+@property (nonatomic, assign) BOOL justShow;
 @end
 
 NS_ASSUME_NONNULL_END

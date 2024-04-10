@@ -398,13 +398,13 @@
         return;
     }
 
-//    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
-//    ctl.currentPlayModel = self.dataArr[indexPath.row];
+    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
+    ctl.currentPlayModel = self.dataArr[indexPath.row];
 //    
-    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
-    ctl.modelArray = self.dataArr;
-    ctl.isSearch = YES;
-    ctl.currentPlayIndex = indexPath.row;
+//    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
+//    ctl.modelArray = self.dataArr;
+//    ctl.isSearch = YES;
+//    ctl.currentPlayIndex = indexPath.row;
     [self.navigationController pushViewController:ctl animated:YES];
 }
 

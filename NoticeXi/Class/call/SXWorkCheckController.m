@@ -32,7 +32,6 @@
 
 @property (nonatomic, strong) UIImageView *zhengshuImageView3;
 
-@property (nonatomic, strong) UIImageView *zhengshuImageView4;
 
 @property (nonatomic, strong) NSMutableArray *imageArr;
 
@@ -214,7 +213,7 @@
     [imView1 setAllCorner:8];
     [imgCheckView addSubview:imView1];
     
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 3; i++) {
         UIImageView *zsImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(10+(imgageWidth+5)*i, 10, imgageWidth,imgageWidth)];
         zsImageView.userInteractionEnabled = YES;
         [imView1 addSubview:zsImageView];
@@ -235,8 +234,6 @@
             self.zhengshuImageView2 = zsImageView;
         }else if (i == 2){
             self.zhengshuImageView3 = zsImageView;
-        }else if (i == 3){
-            self.zhengshuImageView4 = zsImageView;
         }
     }
     
@@ -409,7 +406,7 @@
         self.zhengshuBtn.hidden = NO;
     }
     
-    if (self.imageArr.count && self.imageArr.count != 4) {
+    if (self.imageArr.count && self.imageArr.count != 3) {
         self.addBtn.hidden = NO;
     }else{
         self.addBtn.hidden = YES;
@@ -418,7 +415,6 @@
     self.zhengshuImageView1.hidden = YES;
     self.zhengshuImageView2.hidden = YES;
     self.zhengshuImageView3.hidden = YES;
-    self.zhengshuImageView4.hidden = YES;
     
     if (self.imageArr.count == 1) {
         self.addBtn.frame = self.zhengshuImageView2.frame;
@@ -431,22 +427,12 @@
         self.zhengshuImageView2.image = self.imageArr[1];
         self.zhengshuImageView2.hidden = NO;
     }else if (self.imageArr.count == 3){
-        self.addBtn.frame = self.zhengshuImageView4.frame;
         self.zhengshuImageView1.image = self.imageArr[0];
         self.zhengshuImageView1.hidden = NO;
         self.zhengshuImageView2.image = self.imageArr[1];
         self.zhengshuImageView2.hidden = NO;
         self.zhengshuImageView3.image = self.imageArr[2];
         self.zhengshuImageView3.hidden = NO;
-    }else if (self.imageArr.count == 4){
-        self.zhengshuImageView1.image = self.imageArr[0];
-        self.zhengshuImageView1.hidden = NO;
-        self.zhengshuImageView2.image = self.imageArr[1];
-        self.zhengshuImageView2.hidden = NO;
-        self.zhengshuImageView3.image = self.imageArr[2];
-        self.zhengshuImageView3.hidden = NO;
-        self.zhengshuImageView4.image = self.imageArr[3];
-        self.zhengshuImageView4.hidden = NO;
     }
 }
 
@@ -493,29 +479,6 @@
                             [self.zhengshuImageView3 sd_setImageWithURL:[NSURL URLWithString:self.verifyModel.career_images_url[2]] completed:^(UIImage * _Nullable image2, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                                 if (image2) {
                                     [self addZSImage:image2];
-                                }
-                            }];
-                        }
-                    }];
-                }
-            }];
-        }else if (self.verifyModel.career_images_url.count == 4){
-            [self.zhengshuImageView1 sd_setImageWithURL:[NSURL URLWithString:self.verifyModel.career_images_url[0]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                if (image) {
-                    [self addZSImage:image];
-                    
-                    [self.zhengshuImageView2 sd_setImageWithURL:[NSURL URLWithString:self.verifyModel.career_images_url[1]] completed:^(UIImage * _Nullable image1, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                        if (image1) {
-                            [self addZSImage:image1];
-                            
-                            [self.zhengshuImageView3 sd_setImageWithURL:[NSURL URLWithString:self.verifyModel.career_images_url[2]] completed:^(UIImage * _Nullable image2, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                                if (image2) {
-                                    [self addZSImage:image2];
-                                    [self.zhengshuImageView4 sd_setImageWithURL:[NSURL URLWithString:self.verifyModel.career_images_url[3]] completed:^(UIImage * _Nullable image3, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                                        if (image3) {
-                                            [self addZSImage:image3];
-                                        }
-                                    }];
                                 }
                             }];
                         }

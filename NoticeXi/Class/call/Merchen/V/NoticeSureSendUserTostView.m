@@ -62,7 +62,7 @@
         UIButton *surebtn = [[UIButton alloc] initWithFrame:CGRectMake(280/2, 201-40, 280/2, 40)];
         [surebtn setTitle:[NoticeTools getLocalStrWith:@"main.sure"] forState:UIControlStateNormal];
         surebtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
-        [surebtn setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
+        [surebtn setTitleColor:[UIColor colorWithHexString:@"#00B8F5"] forState:UIControlStateNormal];
         [surebtn addTarget:self action:@selector(sureClick) forControlEvents:UIControlEventTouchUpInside];
         [self.backView addSubview:surebtn];
         

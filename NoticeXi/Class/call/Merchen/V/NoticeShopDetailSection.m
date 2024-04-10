@@ -31,6 +31,36 @@
     }
 }
 
+- (UIView *)subEditView{
+    if (!_subEditView) {
+        _subEditView = [[UIView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-100, 0, 100, 37)];
+        _subEditView.userInteractionEnabled = YES;
+        
+        UIImageView *editImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(100-15-16, 21/2, 16, 16)];
+        editImageV.image = UIImageNamed(@"sxshopcomlook_img");
+        [_subEditView addSubview:editImageV];
+        editImageV.userInteractionEnabled = YES;
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100-15-16-2, 37)];
+        label.text = @"编辑";
+        label.font = THRETEENTEXTFONTSIZE;
+        label.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        label.textAlignment = NSTextAlignmentRight;
+        [_subEditView addSubview:label];
+        [self.contentView addSubview:_subEditView];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editclick)];
+        [_subEditView addGestureRecognizer:tap];
+    }
+    return _subEditView;
+}
+
+- (void)editclick{
+    if (self.editShopBlock) {
+        self.editShopBlock(YES);
+    }
+}
+
 - (UILabel *)subTitleLabel{
     if (!_subTitleLabel) {
         _subTitleLabel = [[UILabel  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-215, 0, 200, 37)];

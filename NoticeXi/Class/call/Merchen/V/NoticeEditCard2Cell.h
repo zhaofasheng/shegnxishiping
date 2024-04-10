@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isReplay;
 @property (nonatomic, assign) BOOL isPasue;
 @property (nonatomic, assign) BOOL stopPlay;
+
+@property (nonatomic, copy) void(^editShopBlock)(BOOL edit);
+@property (nonatomic, assign) BOOL justShow;
 @end
 
 NS_ASSUME_NONNULL_END
