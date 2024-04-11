@@ -456,12 +456,18 @@
     self.infoButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
     self.orderButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
     self.comButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+    self.comButton.font = SIXTEENTEXTFONTSIZE;
+    self.infoButton.font = SIXTEENTEXTFONTSIZE;
+    self.orderButton.font = SIXTEENTEXTFONTSIZE;
     if (index == 0) {
         self.infoButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+        self.infoButton.font = XGSIXBoldFontSize;
     }else if (index == 1){
         self.orderButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+        self.orderButton.font = XGSIXBoldFontSize;
     }else if (index == 2){
         self.comButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+        self.comButton.font = XGSIXBoldFontSize;
     }
 
 }
@@ -469,7 +475,7 @@
 
 - (UILabel *)infoButton{
     if (!_infoButton) {
-        _infoButton = [[UILabel  alloc] initWithFrame:CGRectMake(15, 0, GET_STRWIDTH(@"个人资料", 16, 50), 50)];
+        _infoButton = [[UILabel  alloc] initWithFrame:CGRectMake(15, 0, GET_STRWIDTH(@"个人资料得", 16, 50), 50)];
         _infoButton.font = SIXTEENTEXTFONTSIZE;
         _infoButton.textColor = [UIColor colorWithHexString:@"#14151A"];
         _infoButton.userInteractionEnabled = YES;
@@ -483,7 +489,7 @@
 
 - (UILabel *)orderButton{
     if (!_orderButton) {
-        _orderButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.infoButton.frame)+30, 0, GET_STRWIDTH(@"个人资料", 16, 50), 50)];
+        _orderButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.infoButton.frame)+25, 0, GET_STRWIDTH(@"个人资料得", 16, 50), 50)];
         _orderButton.font = SIXTEENTEXTFONTSIZE;
         _orderButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         _orderButton.userInteractionEnabled = YES;
@@ -497,7 +503,7 @@
 
 - (UILabel *)comButton{
     if (!_comButton) {
-        _comButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.orderButton.frame)+30, 0, GET_STRWIDTH(@"评价9999", 16, 50), 50)];
+        _comButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.orderButton.frame)+25, 0, GET_STRWIDTH(@"评价9999", 16, 50), 50)];
         _comButton.font = SIXTEENTEXTFONTSIZE;
         _comButton.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         _comButton.userInteractionEnabled = YES;

@@ -67,7 +67,6 @@
     
 }
 
-
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
 
@@ -159,7 +158,7 @@
     }else{
         if (self.shopModel.myShopM.tagsTextArr.count) {
             CGFloat tagsHeight = [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-60 string:self.shopModel.myShopM.tagString isJiacu:NO];
-            return tagsHeight < 36 ? 56 : (tagsHeight + 20);
+            return (tagsHeight < 36 ? 56 : (tagsHeight + 20))+20;
         }
         return 56;
     }

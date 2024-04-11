@@ -23,7 +23,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = [UIColor whiteColor];
-    self.navBarView.titleL.text = @"商品";
+    self.navBarView.titleL.text = @"服务";
     self.tableView.rowHeight = 160;
     
     [self.tableView registerClass:[NoticeChatVoiceShopCell class] forCellReuseIdentifier:@"cell1"];

@@ -181,7 +181,7 @@
     SXVideosModel *currentPlaySmallVideoModel = self.modelArray[currentIndex];
     
     title = currentPlaySmallVideoModel.title;
-    cover_url = currentPlaySmallVideoModel.video_cover_url;
+    cover_url = currentPlaySmallVideoModel.first_frame_url;
     videoURL = [NSURL URLWithString:currentPlaySmallVideoModel.video_url];
     originVideoURL = [NSURL URLWithString:currentPlaySmallVideoModel.video_url];
     useDownAndPlay = YES;

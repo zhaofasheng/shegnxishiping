@@ -70,8 +70,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
     [Bugly startWithAppId:@"7342677883"];
 
-
-
     //更新用户信息通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshUserInfo) name:@"REFRESHUSERINFORNOTICATION" object:nil];
     //用户登录通知

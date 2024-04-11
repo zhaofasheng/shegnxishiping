@@ -141,19 +141,19 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         return;
     }
 
-    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
-    ctl.currentPlayModel = self.dataArr[indexPath.row];
-//    
-//    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
-//    ctl.modelArray = self.dataArr;
-//    ctl.currentPlayIndex = indexPath.row;
-//    ctl.page = self.pageNo;
-//    __weak typeof(self) weakSelf = self;
-//    ctl.dataBlock = ^(NSInteger pageNo, NSMutableArray * _Nonnull dataArr) {
-//        weakSelf.pageNo = pageNo;
-//        weakSelf.dataArr = dataArr;
-//        [weakSelf.collectionView reloadData];
-//    };
+//    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
+//    ctl.currentPlayModel = self.dataArr[indexPath.row];
+    
+    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
+    ctl.modelArray = self.dataArr;
+    ctl.currentPlayIndex = indexPath.row;
+    ctl.page = self.pageNo;
+    __weak typeof(self) weakSelf = self;
+    ctl.dataBlock = ^(NSInteger pageNo, NSMutableArray * _Nonnull dataArr) {
+        weakSelf.pageNo = pageNo;
+        weakSelf.dataArr = dataArr;
+        [weakSelf.collectionView reloadData];
+    };
     
     CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
                                                                     withSubType:kCATransitionFromLeft

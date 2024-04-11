@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 从xx秒开始播放视频(默认0) */
 @property (nonatomic, assign) NSInteger    seekTime;
 
+@property (nonatomic, strong) NSString *first_frame_url;//第一帧图片
 @end
 
 NS_ASSUME_NONNULL_END

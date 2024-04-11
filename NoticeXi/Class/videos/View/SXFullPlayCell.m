@@ -54,7 +54,7 @@
     _videoModel = videoModel;
 
 
-    //[self.coverImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.video_cover_url]];
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.first_frame_url]];
     
     self.comButton.hidden = NO;
     

@@ -94,7 +94,7 @@
 - (void)buyClick{
 //    self.payView.money = self.paySearModel.price;
 //    [self.payView showPayView];
-//    
+
     [self sureApplePay];
 }
 

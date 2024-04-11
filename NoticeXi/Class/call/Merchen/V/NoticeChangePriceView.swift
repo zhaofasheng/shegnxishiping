@@ -66,7 +66,7 @@ class NoticeChangePriceView: UIView, UITextFieldDelegate{
         self.contentView?.addSubview(self.markL!)
         
         let getButton = UIButton.init(frame: CGRect(x: 20, y: backView.frame.origin.y+50+50, width: NoticeSwiftFile.screenWidth-40, height: 40))
-        getButton.backgroundColor = UIColor.init(hexString: "#0099E6")
+        getButton.backgroundColor = UIColor.init(hexString: "#1FC7FF")
         getButton.layer.cornerRadius = 8
         getButton.layer.masksToBounds = true
         getButton.setTitle("修改", for: .normal)

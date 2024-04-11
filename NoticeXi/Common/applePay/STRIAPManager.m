@@ -175,53 +175,30 @@
  
 - (void)checkOrderWithOrderSn:(NSString *)sn data:(NSData *)receipt noteType:(NSString *)type transaction:(SKPaymentTransaction *)transaction{
 
-   
-    if (type.intValue == 2 || type.intValue == 3) {
-        NSMutableDictionary *parm1 = [NSMutableDictionary new];
-        [parm1 setObject:[receipt base64EncodedStringWithOptions:0] forKey:@"receiptData"];
-        [parm1 setObject:sn forKey:@"sn"];
-        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder/verify" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm1 page:0 success:^(NSDictionary * _Nullable dict1, BOOL success1) {
-            [self.showView disMiss];
-            if (success1) {
-                self.sn = nil;
-                if (type.intValue == 3) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
-                }else{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
-                    [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.buysus"]];
-                }
-          
-                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    NSMutableDictionary *parm1 = [NSMutableDictionary new];
+    [parm1 setObject:[receipt base64EncodedStringWithOptions:0] forKey:@"receiptData"];
+    [parm1 setObject:sn forKey:@"sn"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder/verify" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm1 page:0 success:^(NSDictionary * _Nullable dict1, BOOL success1) {
+        [self.showView disMiss];
+        if (success1) {
+            self.sn = nil;
+            if (type.intValue == 3) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
             }else{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
-                [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.fail"]];
-            }
-            
-        } fail:^(NSError * _Nullable error) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
-            [self.showView disMiss];
-        }];
-    }else{
-        NSMutableDictionary *parm1 = [NSMutableDictionary new];
-        [parm1 setObject:[receipt base64EncodedStringWithOptions:0] forKey:@"receiptData"];
-        [parm1 setObject:sn forKey:@"sn"];
-        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"userOrder/verify" Accept:@"application/vnd.shengxi.v5.2.0+json" isPost:YES parmaer:parm1 page:0 success:^(NSDictionary * _Nullable dict1, BOOL success1) {
-            [self.showView disMiss];
-            if (success1) {
-                self.sn = nil;
-                if ([_purchID  isEqualToString:@"com.gmdoc.xi"]) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHUUSERINFOFORNOTICATION" object:nil];
-                }
-                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
                 [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.buysus"]];
-            }else{
-                [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.fail"]];
             }
+      
+            [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+        }else{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
+            [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.fail"]];
+        }
         
-        } fail:^(NSError * _Nullable error) {
-            [self.showView disMiss];
-        }];
-    }
+    } fail:^(NSError * _Nullable error) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
+        [self.showView disMiss];
+    }];
 }
 
 - (void)verifyPurchaseWithPaymentTransaction:(SKPaymentTransaction *)transaction isTestServer:(BOOL)flag{
