@@ -62,6 +62,8 @@
             self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-30-107, DR_SCREEN_WIDTH, 107);
             self.contentView.frame = self.bounds;
             self.colseButton.hidden = YES;
+            
+            self.scrollView.contentSize = CGSizeMake(DR_SCREEN_WIDTH-30, 0);
         }
         
         self.colseButton.frame = CGRectMake(DR_SCREEN_WIDTH-15-70, self.contentView.frame.size.height-40, 70, 40);
@@ -70,8 +72,6 @@
             self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
             self.colseButton.hidden = NO;
         }
-        
-        
     }];
     
     
@@ -92,6 +92,12 @@
         self.contentL.attributedText = videoModel.allTextAttStr;
     }
     
+    self.contentL.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH-30, 42);
+    self.scrollView.frame = CGRectMake(15, 56, DR_SCREEN_WIDTH-30, 42);
+    self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
+    self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-30-107, DR_SCREEN_WIDTH, 107);
+    self.contentView.frame = self.bounds;
+    self.colseButton.hidden = YES;
 }
 
 - (UIImageView *)iconImageView{
