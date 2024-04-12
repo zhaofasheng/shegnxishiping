@@ -106,9 +106,12 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     self.isRequesting = YES;
     NSString *url = @"";
     url = [NSString stringWithFormat:@"video/list?pageNo=%ld",self.pageNo];
+    
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
+        
         if (success) {
             if (self.isDown) {
                 self.isDown = NO;
@@ -124,6 +127,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             [self.collectionView reloadData];
         }
         self.isRequesting = NO;
+        
     } fail:^(NSError * _Nullable error) {
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
@@ -141,19 +145,19 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         return;
     }
 
-//    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
-//    ctl.currentPlayModel = self.dataArr[indexPath.row];
+    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
+    ctl.currentPlayModel = self.dataArr[indexPath.row];
     
-    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
-    ctl.modelArray = self.dataArr;
-    ctl.currentPlayIndex = indexPath.row;
-    ctl.page = self.pageNo;
-    __weak typeof(self) weakSelf = self;
-    ctl.dataBlock = ^(NSInteger pageNo, NSMutableArray * _Nonnull dataArr) {
-        weakSelf.pageNo = pageNo;
-        weakSelf.dataArr = dataArr;
-        [weakSelf.collectionView reloadData];
-    };
+//    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
+//    ctl.modelArray = self.dataArr;
+//    ctl.currentPlayIndex = indexPath.row;
+//    ctl.page = self.pageNo;
+//    __weak typeof(self) weakSelf = self;
+//    ctl.dataBlock = ^(NSInteger pageNo, NSMutableArray * _Nonnull dataArr) {
+//        weakSelf.pageNo = pageNo;
+//        weakSelf.dataArr = dataArr;
+//        [weakSelf.collectionView reloadData];
+//    };
     
     CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
                                                                     withSubType:kCATransitionFromLeft

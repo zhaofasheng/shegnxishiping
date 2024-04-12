@@ -7,8 +7,10 @@
 //
 
 #import "AppDelegate.h"
+
 //微信SDK头文件
 #import "WXApi.h"
+
 #import <Bugly/Bugly.h>
 #import "NoticeTabbarController.h"
 #import "BaseNavigationController.h"
@@ -21,6 +23,7 @@
 #import "UNNotificationsManager.h"
 #import "ZFSDateFormatUtil.h"
 #import "AFNetworking.h"
+
 #import <AlipaySDK/AlipaySDK.h>
 #import "JPUSHService.h"
 
@@ -55,9 +58,9 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [NSThread sleepForTimeInterval:1];
     [NoticeTools changeThemeWith:@"whiteColor"];
     
-    if (@available(iOS 13.0, *)) {
+    if(@available(iOS 13.0, *)) {
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDarkContent;
-    } else {
+    }else{
         // Fallback on earlier versions
     }
     [UIApplication sharedApplication].statusBarHidden = NO;
@@ -92,7 +95,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [SDImageCache sharedImageCache].config.maxMemoryCost = 130*1000*1000;
     
     [self changeRootVC];
-    [self registerWeixin];
+   // [self registerWeixin];
 
     return YES;
 }
@@ -101,7 +104,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     /**
      *  向微信终端注册ID，这里的APPID一般建议写成宏,容易维护。@“测试demo”不需用管。这里的id是假的，需要改这里还有target里面的URL Type
      */
-    
     [WXApi registerApp:@"wx7204a9a3e7196dd7"];
 }
 
@@ -119,7 +121,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
     // 初始化下载单例，若之前程序杀死时有正在下的任务，会自动恢复下载
     [HWDownloadManager shareManager];
-    
     // 开启网络监听
     [[HWNetworkReachabilityManager shareManager] monitorNetworkStatus];
 }

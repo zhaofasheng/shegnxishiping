@@ -20,7 +20,7 @@
         [self addGestureRecognizer:tap];
         
         UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-335)/2, (DR_SCREEN_HEIGHT-343)/2, 335, 343)];
-        contentView.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
+        contentView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         contentView.layer.cornerRadius = 10;
         contentView.layer.masksToBounds = YES;
         self.contentView = contentView;
@@ -32,7 +32,7 @@
         self.nickNameL = [[UILabel alloc] initWithFrame:CGRectMake(0, 37, 335, 22)];
         self.nickNameL.textAlignment = NSTextAlignmentCenter;
         self.nickNameL.font = SIXTEENTEXTFONTSIZE;
-        self.nickNameL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
+        self.nickNameL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
         [contentView addSubview:self.nickNameL];
         
         self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake((contentView.frame.size.width-75)/2, 109, 75, 75)];
@@ -41,19 +41,19 @@
         [contentView addSubview:self.iconImageView];
         
         UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake((contentView.frame.size.width-244)/2, 222, 244, 50)];
-        [loginBtn setBackgroundImage:UIImageNamed(@"img_buttonback") forState:UIControlStateNormal];
         loginBtn.layer.cornerRadius = 25;
         loginBtn.layer.masksToBounds = YES;
-        [loginBtn setTitle:[NoticeTools getLocalStrWith:@"dl.dl"] forState:UIControlStateNormal];
+        [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
+        loginBtn.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
         loginBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
         [loginBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
         [loginBtn addTarget:self action:@selector(loginClick) forControlEvents:UIControlEventTouchUpInside];
         [contentView addSubview:loginBtn];
         
         UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loginBtn.frame)+20, contentView.frame.size.width, 30)];
-        [cancelBtn setTitle:[NoticeTools getLocalStrWith:@"bdphone.changephon"] forState:UIControlStateNormal];
+        [cancelBtn setTitle:@"更换手机号" forState:UIControlStateNormal];
         cancelBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
-        [cancelBtn setTitleColor:[UIColor colorWithHexString:@"#A1A7B3"] forState:UIControlStateNormal];
+        [cancelBtn setTitleColor:[UIColor colorWithHexString:@"#5C5F66"] forState:UIControlStateNormal];
         [cancelBtn addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
         [contentView addSubview:cancelBtn];
     }

@@ -631,10 +631,7 @@ API_AVAILABLE(ios(13.0)){
                  
              }];
          }
-        
      }];
-    
-
 }
 
 //检测第三方账号是否已经注册过
@@ -658,9 +655,20 @@ API_AVAILABLE(ios(13.0)){
             if (userM.exists.intValue) {
                 [self logiWithThird:user type:type];
             }else{
-                
+                NSString *title = @"";
+                NSString *message = @"";
+                if (type.intValue == 1) {
+                    title = @"未注册或微信绑定已过期?";
+                    message = @"如果您没有绑定手机号，可使用手机号注册，然后自动绑定微信，已绑定手机号则使用手机号登录后去重新绑定微信登录即可";
+                }else if (type.intValue == 2){
+                    title = @"未注册或QQ绑定已过期?";
+                    message = @"如果您没有绑定手机号，可使用手机号注册，然后自动绑定QQ，已绑定手机号则使用手机号登录后去重新绑定QQ登录即可";
+                }else if (type.intValue == 3){
+                    title = @"未注册或微博绑定已过期?";
+                    message = @"如果您没有绑定手机号，可使用手机号注册，然后自动绑定微博，已绑定手机号则使用手机号登录后去重新绑定微博登录即可";
+                }
                 __weak typeof(self) weakSelf = self;
-                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"账号未注册\n是否注册新账号?" message:nil sureBtn:[NoticeTools getLocalStrWith:@"main.cancel"] cancleBtn:@"注册" right:YES];
+                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:title message:message sureBtn:@"取消" cancleBtn:@"手机号注册/登录" right:YES];
                 alerView.resultIndex = ^(NSInteger index) {
                     if (index == 2) {
                         NoticeUserInfoModel *regM = [[NoticeUserInfoModel alloc] init];
@@ -678,6 +686,7 @@ API_AVAILABLE(ios(13.0)){
                         NoticeChangePhoneViewController *ctl = [[NoticeChangePhoneViewController alloc] init];
                         ctl.regModel = regM;
                         ctl.isThird = YES;
+                        ctl.navtitle = @"手机号登录";
                         [weakSelf.navigationController pushViewController:ctl animated:YES];
                         
                     }
@@ -783,7 +792,6 @@ API_AVAILABLE(ios(13.0)){
             [ShareSDK cancelAuthorize:SSDKPlatformTypeQQ result:^(NSError *error) {
                 
             }];
-            
         }
         else
         {

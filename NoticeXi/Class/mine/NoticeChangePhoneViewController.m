@@ -32,7 +32,9 @@
     [super viewDidLoad];
     self.navBarView.titleL.text =[[[NoticeSaveModel getUserInfo] mobile] length] > 5? [NoticeTools getLocalStrWith:@"bdphone.changephon"] : [NoticeTools getLocalStrWith:@"bdphone.title"];
     
-    
+    if (self.navtitle) {
+        self.navBarView.titleL.text = self.navtitle;
+    }
     if (self.type == 2) {
         self.navBarView.titleL.text = [NoticeTools getLocalStrWith:@"Login.phone"];
         self.areaModel = [[NoticeAreaModel alloc] init];
@@ -161,7 +163,7 @@
         __weak typeof(self) weakSelf = self;
         NoticeAlreadlyUserView *showV = [[NoticeAlreadlyUserView alloc] initWithShowUserInfo];
         NSString *str = [NSString stringWithFormat:@"该手机号已绑定 %@",self.checkM.userM.nick_name];
-        showV.nickNameL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#FFFFFF"] setLengthString:[NoticeTools getLocalStrWith:@"bdphone.hasbd"] beginSize:0];
+        showV.nickNameL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#14151A"] setLengthString:@"该手机号已绑定" beginSize:0];
         [showV.iconImageView sd_setImageWithURL:[NSURL URLWithString:self.checkM.userM.avatar_url] placeholderImage:[UIImage imageNamed:@"Image_jynohe"] options:SDWebImageAvoidDecodeImage];
         showV.choicebtnTag = ^(NSInteger tag) {
             if (tag == 1) {
@@ -300,6 +302,25 @@
     }];
 }
 
+- (void)bangding{
+ 
+    NSMutableDictionary *parm = [NSMutableDictionary new];
+    [parm setObject:self.regModel.openId forKey:@"openId"];
+    [parm setObject:self.regModel.gender?self.regModel.gender:@"1" forKey:@"userGender"];
+    [parm setObject:self.regModel.unionId?self.regModel.unionId:@"876543hgfde" forKey:@"unionId"];
+    [parm setObject:self.regModel.thirdnickname?self.regModel.thirdnickname:@"" forKey:@"nickName"];
+    [parm setObject:self.regModel.authType forKey:@"authType"];
+    [parm setObject:[NoticeSaveModel getDeviceInfo] forKey:@"deviceInfo"];
+    [parm setObject:[NoticeSaveModel getVersion] forKey:@"appVersion"];
+    [parm setObject:@"2" forKey:@"platformId"];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@/third",[[NoticeSaveModel getUserInfo]user_id]] Accept:nil isPost:YES parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
+     
+    } fail:^(NSError *error) {
+      
+    }];
+}
+
 - (void)loginuser:(NSMutableDictionary *)parm{
     [self showHUD];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:self.type==2 ? @"users/login" : @"users/register" Accept:nil isPost:YES parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
@@ -309,6 +330,10 @@
             NoticeUserInfoModel *userInfo = [NoticeUserInfoModel mj_objectWithKeyValues:dict[@"data"]];
             [NoticeSaveModel saveUserInfo:userInfo];
             [NoticeSaveModel saveToken:userInfo.token];
+            
+            if (self.isThird && self.type == 2){
+                [self bangding];
+            }
             
             [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@",userInfo.user_id] Accept:nil isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict1, BOOL success) {
                 [self hideHUD];
