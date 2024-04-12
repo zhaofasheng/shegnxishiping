@@ -47,9 +47,6 @@
     NSArray * array = [textContent componentsSeparatedByString:@"\n"];//用换行分割成数组，剔除为空的字符串
     NSMutableArray *newArr = [NSMutableArray new];
     for (int i = 0;i < array.count; i++) {
-//        if ([array[i] length]) {
-//            [newArr addObject:array[i]];
-//        }
         [newArr addObject:array[i]];
     }
     

@@ -33,6 +33,16 @@
     return attStr;
 }
 
++ (NSMutableAttributedString *)setString:(NSString *)setStr setFont:(UIFont *)font setLengthString:(NSString *)lengthStr beginSize:(NSInteger)beginSize{
+
+    NSMutableAttributedString * attStr = [[NSMutableAttributedString alloc] initWithString:setStr];
+    if (beginSize < setStr.length) {
+        [attStr addAttribute:NSFontAttributeName value:font range:NSMakeRange(beginSize,[[NSString stringWithFormat:@"%@",lengthStr] length])];
+    }
+    
+    return attStr;
+}
+
 + (NSMutableAttributedString *)setJiaCuString:(NSString *)setStr setSize:(CGFloat)setSize setLengthString:(NSString *)lengthStr beginSize:(NSInteger)beginSize{
     NSMutableAttributedString * attStr = [[NSMutableAttributedString alloc] initWithString:setStr];
     if (beginSize < setStr.length) {

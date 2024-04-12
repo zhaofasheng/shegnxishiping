@@ -24,7 +24,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        self.coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+        self.coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT)];
         self.coverImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:self.coverImageView];
         self.contentView.backgroundColor = [UIColor blackColor];
@@ -66,13 +66,23 @@
         self.widthtoheight = 0.75;
     }
     
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.userModel.avatar_url]];
+    self.infoView.videoModel = videoModel;
+    [self.contentView bringSubviewToFront:self.infoView];
 }
 
-- (void)iconTap{
-    SXVideoUserCenterController *ctl = [[SXVideoUserCenterController alloc] init];
-    ctl.userModel = self.videoModel.userModel;
-    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+
+- (SXFullPlayInfoView *)infoView{
+    if (!_infoView) {
+        _infoView = [[SXFullPlayInfoView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-30-107, DR_SCREEN_WIDTH, 107)];
+        __weak typeof(self) weakSelf = self;
+        _infoView.openMoreBlock = ^(BOOL open) {
+            if (weakSelf.openMoreBlock) {
+                weakSelf.openMoreBlock(open);
+            }
+        };
+        [self.contentView addSubview:_infoView];
+    }
+    return _infoView;
 }
 
 - (void)fullClick{
@@ -83,10 +93,14 @@
 
 - (UIButton *)fullButton{
     if (!_fullButton) {
-        _fullButton = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-40, (DR_SCREEN_HEIGHT-40)/2+40, 40, 40)];
-        _fullButton.titleLabel.font = THRETEENTEXTFONTSIZE;
+        _fullButton = [[UIButton  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-68)/2, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-30-107-30-28, 68, 28)];
+        _fullButton.titleLabel.font = ELEVENTEXTFONTSIZE;
+        _fullButton.layer.cornerRadius = 14;
+        _fullButton.layer.masksToBounds = YES;
+        _fullButton.layer.borderWidth = 1;
+        _fullButton.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4].CGColor;
         [_fullButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_fullButton setTitle:@"全屏" forState:UIControlStateNormal];
+        [_fullButton setTitle:@"全屏观看" forState:UIControlStateNormal];
         [_fullButton addTarget:self action:@selector(fullClick) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_fullButton];
     }
@@ -105,17 +119,7 @@
     return _comButton;
 }
 
-- (UIImageView *)iconImageView{
-    if (!_iconImageView) {
-        _iconImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-10-40, (DR_SCREEN_HEIGHT-40)/2, 40, 40)];
-        [_iconImageView setAllCorner:20];
-        [self.contentView addSubview:_iconImageView];
-        _iconImageView.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(iconTap)];
-        [_iconImageView addGestureRecognizer:tap];
-    }
-    return _iconImageView;
-}
+
 
 - (void)comClick{
     if (self.showComBlock) {

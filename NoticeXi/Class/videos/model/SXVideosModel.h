@@ -35,6 +35,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger    seekTime;
 
 @property (nonatomic, strong) NSString *first_frame_url;//第一帧图片
+
+
+
+//内容是否展开（默认不设置，都是NO，收起状态）
+@property (nonatomic, assign) BOOL isOpen;
+
+@property (nonatomic, strong) NSString *textContent;
+@property (nonatomic, strong) NSAttributedString *fiveAttTextStr;
+@property (nonatomic, assign) BOOL isMoreFiveLines;//是否超过五行文字
+@property (nonatomic, strong) NSAttributedString *allTextAttStr;
+@property (nonatomic, assign) CGFloat textHeight;
+@property (nonatomic, strong) NSString *showText;
 @end
 
 NS_ASSUME_NONNULL_END

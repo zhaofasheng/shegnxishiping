@@ -1299,6 +1299,7 @@
 		FE35EA932B62385200524991 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE35EA922B62385200524991 /* CoreGraphics.framework */; };
 		FE35EA952B62386000524991 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE35EA942B62386000524991 /* AVFoundation.framework */; };
 		FE35EAA62B62518D00524991 /* NoticeVideoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE35EAA52B62518D00524991 /* NoticeVideoCollectionViewCell.m */; };
+		FE41C33E2BC925D000BAD263 /* SXFullPlayInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C33D2BC925D000BAD263 /* SXFullPlayInfoView.m */; };
 		FE44F1D32BB29FAB004ECF11 /* KTVHCPathTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1042BB29FAA004ECF11 /* KTVHCPathTool.m */; };
 		FE44F1D42BB29FAB004ECF11 /* KTVHCURLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1072BB29FAA004ECF11 /* KTVHCURLTool.m */; };
 		FE44F1D52BB29FAB004ECF11 /* KTVHCHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F10B2BB29FAA004ECF11 /* KTVHCHTTPConnection.m */; };
@@ -1367,7 +1368,6 @@
 		FE44F2142BB29FAB004ECF11 /* ZFSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1982BB29FAA004ECF11 /* ZFSliderView.m */; };
 		FE44F2152BB29FAB004ECF11 /* ZFPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1992BB29FAA004ECF11 /* ZFPlayerView.m */; };
 		FE44F2172BB29FAB004ECF11 /* DDVideoPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F19C2BB29FAA004ECF11 /* DDVideoPlayerManager.m */; };
-		FE44F2182BB29FAB004ECF11 /* ZFDouYinPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1A02BB29FAA004ECF11 /* ZFDouYinPlayerControlView.m */; };
 		FE44F2192BB29FAB004ECF11 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1A32BB29FAA004ECF11 /* NSDate+Helper.m */; };
 		FE44F21A2BB29FAB004ECF11 /* UITabBarController+ZFPlayerRotation.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1A42BB29FAA004ECF11 /* UITabBarController+ZFPlayerRotation.m */; };
 		FE44F21B2BB29FAB004ECF11 /* UIView+CommonFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1A52BB29FAA004ECF11 /* UIView+CommonFunction.m */; };
@@ -3972,6 +3972,9 @@
 		FE35EA942B62386000524991 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FE35EAA42B62518D00524991 /* NoticeVideoCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeVideoCollectionViewCell.h; sourceTree = "<group>"; };
 		FE35EAA52B62518D00524991 /* NoticeVideoCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeVideoCollectionViewCell.m; sourceTree = "<group>"; };
+		FE41C33C2BC925D000BAD263 /* SXFullPlayInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXFullPlayInfoView.h; sourceTree = "<group>"; };
+		FE41C33D2BC925D000BAD263 /* SXFullPlayInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXFullPlayInfoView.m; sourceTree = "<group>"; };
+		FE41C39F2BC9697300BAD263 /* ZFPlayerControlViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlayerControlViewDelegate.h; sourceTree = "<group>"; };
 		FE44F1012BB29FAA004ECF11 /* KTVHTTPCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVHTTPCache.h; sourceTree = "<group>"; };
 		FE44F1042BB29FAA004ECF11 /* KTVHCPathTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTVHCPathTool.m; sourceTree = "<group>"; };
 		FE44F1052BB29FAA004ECF11 /* KTVHCURLTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVHCURLTool.h; sourceTree = "<group>"; };
@@ -4111,9 +4114,7 @@
 		FE44F1992BB29FAA004ECF11 /* ZFPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFPlayerView.m; sourceTree = "<group>"; };
 		FE44F19B2BB29FAA004ECF11 /* SXPlayVideoFullControllView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXPlayVideoFullControllView.h; sourceTree = "<group>"; };
 		FE44F19C2BB29FAA004ECF11 /* DDVideoPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDVideoPlayerManager.m; sourceTree = "<group>"; };
-		FE44F19E2BB29FAA004ECF11 /* ZFPlayerControlViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlayerControlViewDelegate.h; sourceTree = "<group>"; };
 		FE44F19F2BB29FAA004ECF11 /* ZFPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlayerControlView.h; sourceTree = "<group>"; };
-		FE44F1A02BB29FAA004ECF11 /* ZFDouYinPlayerControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFDouYinPlayerControlView.m; sourceTree = "<group>"; };
 		FE44F1A12BB29FAA004ECF11 /* ASValuePopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASValuePopUpView.h; sourceTree = "<group>"; };
 		FE44F1A32BB29FAA004ECF11 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		FE44F1A42BB29FAA004ECF11 /* UITabBarController+ZFPlayerRotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+ZFPlayerRotation.m"; sourceTree = "<group>"; };
@@ -4139,7 +4140,6 @@
 		FE44F1B82BB29FAA004ECF11 /* ZFBrightnessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFBrightnessView.m; sourceTree = "<group>"; };
 		FE44F1B92BB29FAA004ECF11 /* ZFPlayer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZFPlayer.bundle; sourceTree = "<group>"; };
 		FE44F1BA2BB29FAA004ECF11 /* ASValuePopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASValuePopUpView.m; sourceTree = "<group>"; };
-		FE44F1BB2BB29FAA004ECF11 /* ZFDouYinPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFDouYinPlayerControlView.h; sourceTree = "<group>"; };
 		FE44F1BC2BB29FAA004ECF11 /* ZFPlayerControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFPlayerControlView.m; sourceTree = "<group>"; };
 		FE44F1BD2BB29FAA004ECF11 /* MMMaterialDesignSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMaterialDesignSpinner.m; sourceTree = "<group>"; };
 		FE44F1BE2BB29FAA004ECF11 /* global.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = global.m; sourceTree = "<group>"; };
@@ -8709,6 +8709,7 @@
 		FE44F1862BB29FAA004ECF11 /* ZFPlayer抖音样式播放封装 */ = {
 			isa = PBXGroup;
 			children = (
+				FE41C39F2BC9697300BAD263 /* ZFPlayerControlViewDelegate.h */,
 				FE44F18F2BB29FAA004ECF11 /* DDVideoPlayerManager.h */,
 				FE44F19C2BB29FAA004ECF11 /* DDVideoPlayerManager.m */,
 				FE44F19B2BB29FAA004ECF11 /* SXPlayVideoFullControllView.h */,
@@ -8728,25 +8729,22 @@
 		FE44F19D2BB29FAA004ECF11 /* 播放封装 */ = {
 			isa = PBXGroup;
 			children = (
-				FE44F19E2BB29FAA004ECF11 /* ZFPlayerControlViewDelegate.h */,
-				FE44F19F2BB29FAA004ECF11 /* ZFPlayerControlView.h */,
-				FE44F1A02BB29FAA004ECF11 /* ZFDouYinPlayerControlView.m */,
 				FE44F1A12BB29FAA004ECF11 /* ASValuePopUpView.h */,
+				FE44F1BA2BB29FAA004ECF11 /* ASValuePopUpView.m */,
+				FE44F1B62BB29FAA004ECF11 /* ASValueTrackingSlider.h */,
+				FE44F1C02BB29FAA004ECF11 /* ASValueTrackingSlider.m */,
 				FE44F1A22BB29FAA004ECF11 /* Category */,
 				FE44F1B32BB29FAA004ECF11 /* global.h */,
-				FE44F1B42BB29FAA004ECF11 /* TTCCom.h */,
+				FE44F1BE2BB29FAA004ECF11 /* global.m */,
 				FE44F1B52BB29FAA004ECF11 /* MMMaterialDesignSpinner.h */,
-				FE44F1B62BB29FAA004ECF11 /* ASValueTrackingSlider.h */,
-				FE44F1B72BB29FAA004ECF11 /* ZFPlayer.h */,
+				FE44F1BD2BB29FAA004ECF11 /* MMMaterialDesignSpinner.m */,
+				FE44F1B42BB29FAA004ECF11 /* TTCCom.h */,
+				FE44F1BF2BB29FAA004ECF11 /* ZFBrightnessView.h */,
 				FE44F1B82BB29FAA004ECF11 /* ZFBrightnessView.m */,
 				FE44F1B92BB29FAA004ECF11 /* ZFPlayer.bundle */,
-				FE44F1BA2BB29FAA004ECF11 /* ASValuePopUpView.m */,
-				FE44F1BB2BB29FAA004ECF11 /* ZFDouYinPlayerControlView.h */,
+				FE44F1B72BB29FAA004ECF11 /* ZFPlayer.h */,
+				FE44F19F2BB29FAA004ECF11 /* ZFPlayerControlView.h */,
 				FE44F1BC2BB29FAA004ECF11 /* ZFPlayerControlView.m */,
-				FE44F1BD2BB29FAA004ECF11 /* MMMaterialDesignSpinner.m */,
-				FE44F1BE2BB29FAA004ECF11 /* global.m */,
-				FE44F1BF2BB29FAA004ECF11 /* ZFBrightnessView.h */,
-				FE44F1C02BB29FAA004ECF11 /* ASValueTrackingSlider.m */,
 			);
 			path = "播放封装";
 			sourceTree = "<group>";
@@ -8875,6 +8873,8 @@
 				FE44F1952BB29FAA004ECF11 /* MyCommentView.m */,
 				FE44F1962BB29FAA004ECF11 /* SXFullPlayCell.h */,
 				FE44F18D2BB29FAA004ECF11 /* SXFullPlayCell.m */,
+				FE41C33C2BC925D000BAD263 /* SXFullPlayInfoView.h */,
+				FE41C33D2BC925D000BAD263 /* SXFullPlayInfoView.m */,
 				A4E95F432A69141C00AE022E /* CYWWaterFallLayout.h */,
 				A4E95F642A69141C00AE022E /* CYWWaterFallLayout.m */,
 				FE953C812B68D3420098F0A2 /* NoticeDownloadVoiceCell.h */,
@@ -10212,7 +10212,6 @@
 				FE7440C82BA7D470007EE4A6 /* SXKchengIntroController.m in Sources */,
 				A4E9675A2A69142400AE022E /* FDAlertView.m in Sources */,
 				FEE563162B8ED08A0004CC11 /* SXUserCenterCell.m in Sources */,
-				FE44F2182BB29FAB004ECF11 /* ZFDouYinPlayerControlView.m in Sources */,
 				A4E966BB2A69142300AE022E /* DRPsyCell.m in Sources */,
 				FE9C40962B9ADEDF008C3A22 /* SXShopCheckController.m in Sources */,
 				A4E967AD2A69142500AE022E /* NoticeChoiceReasonController.m in Sources */,
@@ -10445,6 +10444,7 @@
 				A4E967982A69142400AE022E /* NoticeSetBanneerView.m in Sources */,
 				A4E967F62A69142500AE022E /* NoticeCoverModel.m in Sources */,
 				A4E967D32A69142500AE022E /* NoticeFAQViewController.m in Sources */,
+				FE41C33E2BC925D000BAD263 /* SXFullPlayInfoView.m in Sources */,
 				A4E966A92A69142300AE022E /* NoticeWhitePyCell.m in Sources */,
 				A4E968DB2A69142600AE022E /* NoticePayView.m in Sources */,
 				A4E9697E2A69142700AE022E /* NoticeVoiceReadFooterView.m in Sources */,

@@ -211,7 +211,12 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
 
 - (void)setIsFullScreen:(BOOL)isFullScreen {
     _isFullScreen = isFullScreen;
-    self.playerLayer.frame = self.bounds;
+    if (isFullScreen) {
+        self.playerLayer.frame = self.bounds;
+    }else{
+        self.playerLayer.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, self.frame.size.height-TAB_BAR_HEIGHT);
+    }
+    
     self.controlView.frame = self.bounds;
     [self.controlView refreshUI:isFullScreen];
 }
@@ -233,7 +238,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.playerLayer.frame = self.bounds;
+    self.playerLayer.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, self.frame.size.height-TAB_BAR_HEIGHT);
 }
 
 #pragma mark - Public Method

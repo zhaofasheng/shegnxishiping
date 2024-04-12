@@ -120,6 +120,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             
             for (NSDictionary *dic in dict[@"data"]) {
                 SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
+                videoM.textContent = @"到时间了咖啡机收到了飞机了手机发啦生发剂拉萨电极法立卡随机发拉萨的会计法立卡就算了会计分录当升科技饭卡里受打击飞拉达手机大发立卡随机发考拉手机壳防雷接地撒了咖啡机打撒拉法基水电费扣篮大赛就发了肯定撒今飞凯达随机发科技大刷卡飞机李逵负荆都说了卡积分考虑到实际付款猎杀对决付款了电视剧风口浪尖送达了看\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n法金卡戴珊李逵负荆都是垃圾发啦扩\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\dsf n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n大升级发啦扩大随机发考拉较大山卡拉飞机打卡随机发立卡手机发啦科技大山卡拉飞机克拉的设计发啦科技大就";
                 [self.dataArr addObject:videoM];
             }
             
@@ -145,19 +146,19 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         return;
     }
 
-    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
-    ctl.currentPlayModel = self.dataArr[indexPath.row];
+//    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
+//    ctl.currentPlayModel = self.dataArr[indexPath.row];
     
-//    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
-//    ctl.modelArray = self.dataArr;
-//    ctl.currentPlayIndex = indexPath.row;
-//    ctl.page = self.pageNo;
-//    __weak typeof(self) weakSelf = self;
-//    ctl.dataBlock = ^(NSInteger pageNo, NSMutableArray * _Nonnull dataArr) {
-//        weakSelf.pageNo = pageNo;
-//        weakSelf.dataArr = dataArr;
-//        [weakSelf.collectionView reloadData];
-//    };
+    SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
+    ctl.modelArray = self.dataArr;
+    ctl.currentPlayIndex = indexPath.row;
+    ctl.page = self.pageNo;
+    __weak typeof(self) weakSelf = self;
+    ctl.dataBlock = ^(NSInteger pageNo, NSMutableArray * _Nonnull dataArr) {
+        weakSelf.pageNo = pageNo;
+        weakSelf.dataArr = dataArr;
+        [weakSelf.collectionView reloadData];
+    };
     
     CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
                                                                     withSubType:kCATransitionFromLeft

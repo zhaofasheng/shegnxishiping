@@ -71,6 +71,11 @@
         }
     };
     
+    
+    cell.openMoreBlock = ^(BOOL open) {
+        weakSelf.tableView.scrollEnabled = !open;
+    };
+    
     cell.fullBlock = ^(BOOL show) {
         if (show) {
             [weakSelf.videoPlayerManager.playerView fullPlay];
