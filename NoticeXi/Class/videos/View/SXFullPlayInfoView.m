@@ -32,16 +32,17 @@
         self.openMoreBlock(self.isOpen);
     }
     if (self.isOpen) {
+        
         self.contentL.attributedText = self.videoModel.allTextAttStr;
-        self.colseButton.frame = CGRectMake(DR_SCREEN_WIDTH-15-70, self.contentView.frame.size.height-40, 70, 40);
+        
     }else{
         self.contentL.attributedText = self.videoModel.fiveAttTextStr;
     }
     
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         if (self.isOpen) {
             self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-2);
-            self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+            
             if (self.videoModel.textHeight > (DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-60-TAB_BAR_HEIGHT-42)) {
                 self.contentView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+60, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-60-TAB_BAR_HEIGHT);
                 self.scrollView.frame = CGRectMake(15, 56, DR_SCREEN_WIDTH-30, self.frame.size.height-40-56);
@@ -53,7 +54,7 @@
             self.contentL.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH-30, self.videoModel.textHeight);
             self.scrollView.contentSize = CGSizeMake(DR_SCREEN_WIDTH-30, self.videoModel.textHeight);
             
-            self.colseButton.hidden = NO;
+            
         }else{
             self.contentL.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH-30, 42);
             self.scrollView.frame = CGRectMake(15, 56, DR_SCREEN_WIDTH-30, 42);
@@ -62,7 +63,14 @@
             self.contentView.frame = self.bounds;
             self.colseButton.hidden = YES;
         }
+        
+        self.colseButton.frame = CGRectMake(DR_SCREEN_WIDTH-15-70, self.contentView.frame.size.height-40, 70, 40);
     } completion:^(BOOL finished) {
+        if (self.isOpen) {
+            self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+            self.colseButton.hidden = NO;
+        }
+        
         
     }];
     
