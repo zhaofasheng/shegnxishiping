@@ -195,7 +195,17 @@
     }
 }
 
+- (void)beginChangeVlue{
+    if ([self.managerDelegate respondsToSelector:@selector(beginChangeVlue)]) {
+        [self.managerDelegate beginChangeVlue];
+    }
+}
 
+- (void)endChangeVlue{
+    if ([self.managerDelegate respondsToSelector:@selector(endChangeVlue)]) {
+        [self.managerDelegate endChangeVlue];
+    }
+}
 
 - (void)dealloc {
     DRLog(@"销毁播放管理");

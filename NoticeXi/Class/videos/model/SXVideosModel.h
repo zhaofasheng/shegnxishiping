@@ -41,6 +41,9 @@ NS_ASSUME_NONNULL_BEGIN
 //内容是否展开（默认不设置，都是NO，收起状态）
 @property (nonatomic, assign) BOOL isOpen;
 
+//是否正在拖动进度
+@property (nonatomic, assign) BOOL isDraging;
+
 @property (nonatomic, strong) NSString *textContent;
 @property (nonatomic, strong) NSAttributedString *fiveAttTextStr;
 @property (nonatomic, assign) BOOL isMoreFiveLines;//是否超过五行文字

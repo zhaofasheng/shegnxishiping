@@ -41,28 +41,6 @@
     } fail:^(NSError *error) {
         [self hideHUD];
     }];
-    
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@/settings?settingTag=notice",[NoticeTools getuserId]] Accept:@"application/vnd.shengxi.v4.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-        if (success) {
-            if ([dict[@"data"] isEqual:[NSNull null]]) {
-                return ;
-            }
-            self.aboutM = [NoticeAbout new];
-            for (NSDictionary *dic in dict[@"data"]) {
-                NoticeAbout *setM = [NoticeAbout mj_objectWithKeyValues:dic];
-                if ([setM.setting_name isEqualToString:@"about_artwork"]) {//灵魂画手
-                    self.aboutM.about_artwork = setM.setting_value;
-                }else if ([setM.setting_name isEqualToString:@"resource_subscription"]){//书影音订阅开关
-                    self.aboutM.resource_subscription = setM.setting_value;
-                }else if ([setM.setting_name isEqualToString:@"about_clock_vote"]){//闹钟配音开关
-                    self.aboutM.about_clock_vote = setM.setting_value;
-                }
-            }
-            [self.tableView reloadData];
-        }
-    } fail:^(NSError * _Nullable error) {
-        
-    }];
 }
 
 #pragma SwitchChoiceDelegate

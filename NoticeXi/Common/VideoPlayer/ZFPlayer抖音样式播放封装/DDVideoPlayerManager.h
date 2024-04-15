@@ -32,6 +32,11 @@
 /** 前往小视频播放界面 */
 - (void)zfManager_playerPushToPlaySmallViewListVC;
 
+//开始拖动进度
+- (void)beginChangeVlue;
+//结束拖动进度
+- (void)endChangeVlue;
+
 @end
 
 

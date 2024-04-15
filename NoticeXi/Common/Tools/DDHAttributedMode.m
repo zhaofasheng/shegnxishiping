@@ -52,6 +52,16 @@
     return attStr;
 }
 
++ (NSMutableAttributedString *)setJiaCuString:(NSString *)setStr setSize:(CGFloat)setSize setColor:(UIColor *)color setLengthString:(NSString *)lengthStr beginSize:(NSInteger)beginSize{
+    NSMutableAttributedString * attStr = [[NSMutableAttributedString alloc] initWithString:setStr];
+    if (beginSize < setStr.length) {
+        [attStr addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(beginSize,[lengthStr length])];
+        [attStr addAttribute:NSFontAttributeName value:[UIFont fontWithName:XGBoldFontName size:setSize] range:NSMakeRange(beginSize,[[NSString stringWithFormat:@"%@",lengthStr] length])];
+    }
+    
+    return attStr;
+}
+
 + (NSMutableAttributedString *)setColorString:(NSString *)setStr setColor:(UIColor *)color setLengthString:(NSString *)lengthStr beginSize:(NSInteger)beginSize{
     if ([setStr length]) {
         NSMutableAttributedString * attStr = [[NSMutableAttributedString alloc] initWithString:setStr];

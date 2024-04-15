@@ -74,8 +74,6 @@
         }
     }];
     
-    
-
 }
 
 - (void)setVideoModel:(SXVideosModel *)videoModel{
@@ -84,7 +82,6 @@
     _colseButton.hidden = YES;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.userModel.avatar_url]];
     self.nickNameL.text = videoModel.userModel.nick_name;
-
 
     if (videoModel.isMoreFiveLines) {
         self.contentL.attributedText = videoModel.fiveAttTextStr;
@@ -146,6 +143,7 @@
         _colseButton.font = XGFifthBoldFontSize;
         _colseButton.text = @"收起";
         _colseButton.textColor = [UIColor whiteColor];
+        _colseButton.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:_colseButton];
     }
     return _colseButton;

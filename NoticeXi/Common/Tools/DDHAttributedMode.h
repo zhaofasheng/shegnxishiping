@@ -40,4 +40,5 @@
 + (NSMutableAttributedString *)setTwoColorString:(NSString *)setStr setColor:(UIColor *)color setLengthString:(NSString *)lengthStr beginSize:(NSInteger)beginSize setLengthString1:(NSString *)lengthStr1 beginSize1:(NSInteger)beginSize1 setColor1:(UIColor *)color1;
 
 + (NSMutableAttributedString *)setString:(NSString *)setStr setFont:(UIFont *)font setLengthString:(NSString *)lengthStr beginSize:(NSInteger)beginSize;
++ (NSMutableAttributedString *)setJiaCuString:(NSString *)setStr setSize:(CGFloat)setSize setColor:(UIColor *)color setLengthString:(NSString *)lengthStr beginSize:(NSInteger)beginSize;
 @end

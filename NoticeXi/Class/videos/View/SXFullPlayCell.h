@@ -8,6 +8,7 @@
 
 #import "BaseCell.h"
 #import "SXFullPlayInfoView.h"
+#import "SXVideosComClickView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXFullPlayCell : BaseCell
@@ -17,11 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) UIView *playerFatherView;
 @property (nonatomic, strong) UIButton *fullButton;
-@property (nonatomic, strong) UIButton *comButton;
 @property (nonatomic,copy) void(^fullBlock)(BOOL show);
 @property (nonatomic,copy) void(^showComBlock)(BOOL show);
 @property (nonatomic,copy) void(^openMoreBlock)(BOOL open);
 @property (nonatomic,copy) void(^fatherBlock)(CGRect bounds);
+
+@property (nonatomic, strong) SXVideosComClickView *clickView;
 @end
 
 NS_ASSUME_NONNULL_END

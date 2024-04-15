@@ -12,10 +12,12 @@
 #import "NoticeSCViewController.h"
 #import "NoticeTestViewController.h"
 #import "NoticeReTestViewController.h"
-#import "NoticeSysViewController.h"
-
+#import "NoticeShopDetailSection.h"
+#import "NoticeNewMarkViewController.h"
+#import "SXChatEachOtherMeassageView.h"
 @interface NoticeSCListViewController ()
 
+@property (nonatomic, strong) SXChatEachOtherMeassageView *meassageView;
 @property (nonatomic, strong) NSString *lastId;
 @property (nonatomic, strong) NSString *personality_id;
 @property (nonatomic, strong) MJRefreshNormalHeader *refreshHeader;
@@ -58,6 +60,7 @@
 
     self.tableView.rowHeight = 70;
     [self.tableView registerClass:[NoticeStayCell class] forCellReuseIdentifier:@"cell1"];
+    [self.tableView registerClass:[NoticeShopDetailSection class] forHeaderFooterViewReuseIdentifier:@"headerView"];
     [self createRefesh];
    
     if (![[NoticeTools getuserId] isEqualToString:@"1"]) {
@@ -65,41 +68,30 @@
     }
     [self refreshChatList];
 
+    self.meassageView = [[SXChatEachOtherMeassageView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 113)];
+    self.tableView.tableHeaderView = self.meassageView;
 }
 
 
-- (void)request{
-    NSString *url = nil;
-    
-    url = [NSString stringWithFormat:@"messages/%@/1",[[NoticeSaveModel getUserInfo]user_id]];
-    
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.0.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-        
-     
-        if (success) {
-            if ([dict[@"data"] isEqual:[NSNull null]]) {
-                return ;
-            }
-        
-            NSMutableArray *arr = [[NSMutableArray alloc] init];
-            for (NSDictionary *dic in dict[@"data"]) {
-                if (arr.count) {
-                    break;
-                }
-                NoticeMessage *model = [NoticeMessage mj_objectWithKeyValues:dic];
-                [arr addObject:model];
-            }
-            
-            if (arr.count) {
-                self.sysMessage = arr[0];
-            }
-            [self.tableView reloadData];
-        }
-        
-    } fail:^(NSError *error) {
-    }];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+
+    NoticeShopDetailSection *headV = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"headerView"];
+    headV.mainTitleLabel.text = @"对话";
+    headV.mainTitleLabel.font = XGEightBoldFontSize;
+    headV.editTitleLabel.text = @"消息设置";
+    __weak typeof(self) weakSelf = self;
+    headV.editShopBlock = ^(BOOL edit) {
+        NoticeNewMarkViewController *ctl = [[NoticeNewMarkViewController alloc] init];
+        [weakSelf.navigationController pushViewController:ctl animated:YES];
+    };
+    headV.subEditView.hidden = NO;
+    return headV;
 }
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 37;
+}
 
 - (void)clearClick{
     __weak typeof(self) weakSelf = self;
@@ -131,6 +123,7 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"REFRESHCHATLISTNOTICION" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICENOREADNUMMESSAGE" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -160,27 +153,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NoticeStayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-    cell.isSys = indexPath.section == 0? YES: NO;
-    if (indexPath.section == 1) {
-        cell.contentView.tag = 2000+indexPath.row;
-        cell.canTap = YES;
-        cell.isSL = YES;
-        cell.stay = self.dataArr[indexPath.row];
-        cell.line.hidden = indexPath.row == self.dataArr.count-1?YES:NO;
-    }else{
-        cell.sysMessage = self.sysMessage;
-        cell.noReadSysNum = self.sysNoReadNum;
-    }
-
+    cell.isSys = NO;
+    cell.contentView.tag = 2000+indexPath.row;
+    cell.canTap = YES;
+    cell.isSL = YES;
+    cell.stay = self.dataArr[indexPath.row];
+    cell.line.hidden = indexPath.row == self.dataArr.count-1?YES:NO;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        NoticeSysViewController *ctl = [[NoticeSysViewController alloc] init];
-        [self.navigationController pushViewController:ctl animated:YES];
-        return;
-    }
+  
     NoticeStaySys *model = self.dataArr[indexPath.row];
     self.chatToModel = model;
     CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
@@ -200,9 +183,7 @@
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return nil;
-    }
+ 
     __weak typeof(self) weakSelf = self;
     NoticeStaySys *stay = self.dataArr[indexPath.row];
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -230,15 +211,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
-        return 1;
-    }
+
     return self.dataArr.count;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
-}
 
 - (void)createRefesh{
     
@@ -263,7 +239,7 @@
     
     NSString *url = nil;
     if (self.isDown) {
-        [self request];
+
         url = [NSString stringWithFormat:@"chats/users/%@/2",[[NoticeSaveModel getUserInfo] user_id]];
     }else{
         if (self.lastId) {
@@ -303,6 +279,9 @@
                 NoticeStaySys *lastM = self.dataArr[self.dataArr.count-1];
                 self.lastId = lastM.last_dialog_id;
                 self.tableView.tableFooterView = nil;
+            }else{
+                self.defaultL.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, self.tableView.frame.size.height-113-37);
+                self.tableView.tableFooterView = self.defaultL;
             }
             
             if (self.isDown) {
@@ -322,17 +301,8 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.5.4+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-        if (success) {
-            if ([dict[@"data"] isEqual:[NSNull null]]) {
-                return ;
-            }
-            NoticeStaySys *stay = [NoticeStaySys mj_objectWithKeyValues:dict[@"data"]];
-            self.sysNoReadNum = stay.sysM.num;
-            [self.tableView reloadData];
-        }
-    } fail:^(NSError *error) {
-    }];
+    [self.meassageView requestNoread];
 }
+
 
 @end

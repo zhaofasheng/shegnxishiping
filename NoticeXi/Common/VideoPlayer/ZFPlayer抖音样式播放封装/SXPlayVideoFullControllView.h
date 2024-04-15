@@ -36,6 +36,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *playImageView;
 
 @property (nonatomic, strong) UILabel *fastLabel;
+@property (nonatomic, strong) UILabel *nomerLabel;
+/** 播放时间 */
+@property (nonatomic, strong) UILabel *playTimeLabel;
+/** 视频总时间 */
+@property (nonatomic, strong) UILabel *totalTimeLabel;
 
 @property (nonatomic, assign) BOOL pageNo;
 

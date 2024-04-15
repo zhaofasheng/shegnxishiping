@@ -25,8 +25,7 @@
 //@property(nonatomic, strong, nullable)JPVideoPlayerResourceLoader *resourceLoader;
 
 @property (nonatomic, strong) AVAssetImageGenerator  *imageGenerator;
-/** playerLayer */
-@property (nonatomic, strong) AVPlayerLayer          *playerLayer;
+
 @property (nonatomic, strong) id                     timeObserve;
 /** 滑杆 */
 @property (nonatomic, strong) UISlider               *volumeViewSlider;
@@ -184,10 +183,9 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     [UIView animateWithDuration:duration animations:^{
         self.transform = CGAffineTransformMakeRotation(M_PI/2);
     }completion:^(BOOL finished) {
-        
     }];
     self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT);
-    
+
     self.isFullScreen = YES;
 }
 
@@ -211,11 +209,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
 
 - (void)setIsFullScreen:(BOOL)isFullScreen {
     _isFullScreen = isFullScreen;
-    if (isFullScreen) {
-        self.playerLayer.frame = self.bounds;
-    }else{
-        self.playerLayer.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, self.frame.size.height-TAB_BAR_HEIGHT);
-    }
+    self.playerLayer.frame = self.bounds;
     
     self.controlView.frame = self.bounds;
     [self.controlView refreshUI:isFullScreen];
@@ -234,12 +228,6 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark - layoutSubviews
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.playerLayer.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, self.frame.size.height-TAB_BAR_HEIGHT);
-}
 
 #pragma mark - Public Method
 
@@ -302,6 +290,9 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
 //            make.edges.mas_offset(UIEdgeInsetsZero);
 //        }];
         self.frame = view.bounds;
+        self.controlView.frame = self.bounds;
+        self.playerLayer.frame = self.bounds;
+        [self.controlView refreshUI:NO];
     }
 }
 
@@ -382,7 +373,9 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
 
     [self autoPause];
  
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(beginChangeVlue)]) {
+        [self.delegate beginChangeVlue];
+    }
 }
 
 // 滑块滑动中
@@ -394,11 +387,16 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     [_player seekToTime:dragedCMTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
     
     self.controlView.fastLabel.hidden = NO;
-    self.controlView.fastLabel.text = [NSString stringWithFormat:@"%@/%@",[self getMMSSFromSS:dragedSeconds],[self getMMSSFromSS:totalTime]];
+    
+    NSString *allStr = [NSString stringWithFormat:@"%@ / %@",[self getMMSSFromSS:dragedSeconds],[self getMMSSFromSS:totalTime]];
+    NSString *str1 = [self getMMSSFromSS:dragedSeconds];
+    
+    self.controlView.fastLabel.attributedText = [DDHAttributedMode setJiaCuString:allStr setSize:20 setColor:[UIColor whiteColor] setLengthString:str1 beginSize:0];
 }
 
 // 滑块滑动结束
 - (void)sliderTouchEnded:(float)value{
+    DRLog(@"滑动结束2");
     if (value != 1) {
         self.playDidEnd = NO;
     }
@@ -410,6 +408,10 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     }
     
     self.controlView.fastLabel.hidden = YES;
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(endChangeVlue)]) {
+        [self.delegate endChangeVlue];
+    }
 }
 
 -(NSString *)getMMSSFromSS:(NSInteger)totalTime{
@@ -538,6 +540,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
     // 初始化playerLayer
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    self.playerLayer.frame = self.bounds;
     self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
     // 增加下面这行可以解决iOS10兼容性问题了
     if ([self.player respondsToSelector:@selector(automaticallyWaitsToMinimizeStalling)]) {
@@ -573,6 +576,15 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
             weakSelf.controlView.slider.value = value;
             if([weakSelf.delegate respondsToSelector:@selector(zf_playerCurrentSliderValue:playerModel:)]) {
                 [weakSelf.delegate zf_playerCurrentSliderValue:currentTime playerModel:weakSelf.playerModel];
+            }
+            
+            NSString *str1 = [weakSelf getMMSSFromSS:currentTime];
+            NSString *allStr = [NSString stringWithFormat:@"%@/%@",str1,[weakSelf getMMSSFromSS:totalTime]];
+            weakSelf.controlView.nomerLabel.attributedText = [DDHAttributedMode setJiaCuString:allStr setSize:11 setColor:[UIColor whiteColor] setLengthString:str1 beginSize:0];
+            
+            if (weakSelf.isFullScreen) {
+                weakSelf.controlView.playTimeLabel.text = str1;
+                weakSelf.controlView.totalTimeLabel.text = [weakSelf getMMSSFromSS:totalTime];
             }
             
             [weakSelf.controlView.activity stopAnimating];
@@ -947,6 +959,8 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     [controlView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
+    
+    
 }
 
 - (void)setPlayerModel:(ZFPlayerModel *)playerModel {

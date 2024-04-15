@@ -13,7 +13,7 @@
 #import "NoticeMineController.h"
 #import "NoticeYunXin.h"
 #import "SXPayForVideosController.h"
-
+#import "NoticeStaySys.h"
 //获取全局并发队列和主队列的宏定义
 #define globalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define mainQueue dispatch_get_main_queue()
@@ -31,7 +31,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-
 }
 
 - (void)viewDidLoad {
@@ -42,6 +41,11 @@
 
     //退出登录监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSelectForOutLogin) name:@"GPTPFIRSTNOTICE" object:nil];
+    [self redCirRequest];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redCirRequest) name:@"NOTICENOREADNUMMESSAGE" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redCirRequest) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+    //
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redCirRequest) name:@"outLoginClearDataNOTICATION" object:nil];
 }
 
 
@@ -142,15 +146,39 @@
     [self.tabBar addSubview:self.axcTabBar];
 
     self.axcTabBar.frame = self.tabBar.bounds;
+    
 }
 
+- (void)redCirRequest{
+    if (![NoticeTools getuserId]) {
+        [self.tabBar hideBadgeOnItemIndex:4];
+        return;
+    }
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.5.4+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict1, BOOL success1) {
+        if (success1) {
+            if ([dict1[@"data"] isEqual:[NSNull null]]) {
+                return ;
+            }
+            
+            NoticeStaySys *stay1 = [NoticeStaySys mj_objectWithKeyValues:dict1[@"data"]];
+            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.char_priM.num.intValue + stay1.sysM.num.intValue];
+            if (allRedNum.intValue) {
+                [self.tabBar showBadgeOnItemIndex:4];
+            }else{
+                [self.tabBar hideBadgeOnItemIndex:4];
+            }
+        }
+    } fail:^(NSError *error) {
+    }];
+ 
+}
 
 - (void)setNewSelect:(NSInteger)index{
     [self axcAE_TabBar:self.axcTabBar selectIndex:0];
 }
 
 // 9.实现代理，如下：
-static NSInteger lastIdx = 0;
+
 - (void)axcAE_TabBar:(AxcAE_TabBar *)tabbar selectIndex:(NSInteger)index{
     if (@available(iOS 13.0, *)) {
         UIImpactFeedbackGenerator *impactor = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleRigid];

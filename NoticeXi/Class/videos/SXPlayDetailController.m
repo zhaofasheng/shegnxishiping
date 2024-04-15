@@ -186,8 +186,6 @@
     return _listVC;
 }
 
-
-
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self.view bringSubviewToFront:self.navBarView];
@@ -238,8 +236,6 @@
 
 - (void)mainTableViewDidScroll:(UIScrollView *)scrollView{
 
-  
- 
     if (self.currentPlayModel.screen.intValue == 2) {
         CGFloat height = DR_SCREEN_WIDTH*4/3-scrollView.contentOffset.y;
         if (height > DR_SCREEN_WIDTH/16*9) {
@@ -249,7 +245,6 @@
         }
         [self.player refreshUI];
     }
- 
 }
 
 - (void)mainTableViewWillBeginDraggingScroll:(UIScrollView *)scrollView{

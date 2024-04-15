@@ -26,8 +26,8 @@
     
     //确定小红点的位置
     CGFloat percentX = (index + 0.6) / TabbarItemNums;
-    CGFloat x = ceilf(percentX * tabFrame.size.width)+3;
-    CGFloat y = ceilf(0.1 * tabFrame.size.height);
+    CGFloat x = ceilf(percentX * tabFrame.size.width);
+    CGFloat y = ceilf(0.1 * tabFrame.size.height)+5;
     badgeView.frame = CGRectMake(x, y, 6.0, 6.0);//圆形大小为6
     badgeView.clipsToBounds = YES;
     [self addSubview:badgeView];

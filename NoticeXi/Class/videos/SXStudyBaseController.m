@@ -31,6 +31,8 @@
 @property (nonatomic, strong) UIButton *buyBtn;
 @property (nonatomic, strong) UIView *backView;
 
+@property (nonatomic, strong) UIView *zeroView;
+
 @property (nonatomic, strong) XLCycleCollectionView *cyleView;
 @end
 
@@ -39,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.titles = @[@"课程简介",@"课程目录"];
+    self.titles = @[@"课程目录",@"课程简介"];
     self.navBarView.titleL.text = self.paySearModel.series_name;
     self.navBarView.titleL.alpha = 0;
 
@@ -82,6 +84,13 @@
 
 }
 
+- (UIView *)zeroView{
+    if (!_zeroView) {
+        _zeroView = [[UIView  alloc] initWithFrame:CGRectZero];
+    }
+    return _zeroView;
+}
+
 - (UIView *)imgListView{
     if (!_imgListView) {
         _imgListView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH/16*9)];
@@ -98,11 +107,11 @@
 #pragma mark - JXPagerViewDelegate
 
 - (UIView *)tableHeaderViewInPagerView:(JXPagerView *)pagerView {
-    return self.imgListView;
+    return self.paySearModel.hasBuy?self.zeroView: self.imgListView;
 }
 
 - (NSUInteger)tableHeaderViewHeightInPagerView:(JXPagerView *)pagerView {
-    return self.imgListView.frame.size.height;
+    return self.paySearModel.hasBuy?0: self.imgListView.frame.size.height;
 }
 
 - (NSUInteger)heightForPinSectionHeaderInPagerView:(JXPagerView *)pagerView {
@@ -119,7 +128,7 @@
 }
 
 - (id<JXPagerViewListViewDelegate>)pagerView:(JXPagerView *)pagerView initListAtIndex:(NSInteger)index {
-    if (index == 1) {
+    if (index == 0) {
         return self.videoVC;
     }else{
         return self.kcVC;
@@ -135,6 +144,7 @@
             if (weakSelf.buySuccessBlock) {
                 weakSelf.buySuccessBlock(searisID);
             }
+          
         };
     }
     return _videoVC;

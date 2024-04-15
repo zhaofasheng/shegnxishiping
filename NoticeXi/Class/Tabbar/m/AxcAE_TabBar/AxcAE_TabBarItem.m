@@ -229,9 +229,6 @@
     self.frame = itemFrame;
     self.badge = _itemModel.badge;
     
-    
-    
-    
     [self bringSubviewToFront:self.titleLabel];
 }
 - (void)setIsSelect:(BOOL)isSelect{

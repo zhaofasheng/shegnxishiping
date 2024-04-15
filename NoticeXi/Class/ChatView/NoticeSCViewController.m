@@ -121,6 +121,7 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
 
+
     if (![[[NoticeSaveModel getUserInfo] user_id] isEqualToString:@"1"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHCHATLISTNOTICION" object:nil];//刷新私聊会话列表
     }

@@ -94,7 +94,7 @@ static const CGFloat kAnimate = 0.3;
     min_x = (min_view_w - min_w)/2;
     min_y = (min_view_h - min_h)/2;
     self.loadingBarView.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    
+
     self.bgProgressView.zf_centerY     = min_view_h * 0.5;
     self.bufferProgressView.zf_centerY = min_view_h * 0.5;
     self.sliderProgressView.zf_centerY = min_view_h * 0.5;
@@ -203,6 +203,15 @@ static const CGFloat kAnimate = 0.3;
     self.bgProgressView.zf_height     = sliderHeight;
     self.bufferProgressView.zf_height = sliderHeight;
     self.sliderProgressView.zf_height = sliderHeight;
+    
+    if (sliderHeight > 1) {
+        self.bgProgressView.layer.cornerRadius = sliderHeight/2;
+        self.sliderProgressView.layer.cornerRadius = sliderHeight/2;
+    }else{
+        self.bgProgressView.layer.cornerRadius = 0;
+        self.sliderProgressView.layer.cornerRadius = 0;
+    }
+ 
 }
 
 - (void)setSliderRadius:(CGFloat)sliderRadius {

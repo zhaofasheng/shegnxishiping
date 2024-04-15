@@ -48,6 +48,7 @@
         label.textAlignment = NSTextAlignmentRight;
         [_subEditView addSubview:label];
         [self.contentView addSubview:_subEditView];
+        _editTitleLabel = label;
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editclick)];
         [_subEditView addGestureRecognizer:tap];

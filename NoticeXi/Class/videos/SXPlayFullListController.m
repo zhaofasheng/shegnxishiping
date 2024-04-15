@@ -84,6 +84,7 @@
     
     cell.fatherBlock = ^(CGRect bounds) {
         weakSelf.videoPlayerManager.playerView.frame = bounds;
+        weakSelf.videoPlayerManager.playerView.playerLayer.frame = bounds;
     };
     
     return cell;
@@ -173,6 +174,7 @@
 
 
 - (void)playIndex:(NSInteger)currentIndex {
+
     SXFullPlayCell *currentCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:currentIndex inSection:0]];
     
     NSString *artist = nil;
@@ -185,7 +187,7 @@
     
     //关注,推荐
     SXVideosModel *currentPlaySmallVideoModel = self.modelArray[currentIndex];
-    
+
     title = currentPlaySmallVideoModel.title;
     cover_url = currentPlaySmallVideoModel.first_frame_url;
     videoURL = [NSURL URLWithString:currentPlaySmallVideoModel.video_url];
@@ -318,6 +320,26 @@
     if (self.currentPlayIndex < self.modelArray.count) {
         SXVideosModel *currentM = self.modelArray[self.currentPlayIndex];
         currentM.seekTime = 0;
+    }
+}
+
+//开始拖动进度
+- (void)beginChangeVlue{
+
+    if (self.currentPlayIndex < self.modelArray.count) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0];
+        SXFullPlayCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        cell.infoView.hidden = YES;
+    }
+}
+
+//结束拖动进度
+- (void)endChangeVlue{
+    if (self.currentPlayIndex < self.modelArray.count) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0];
+        SXFullPlayCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        cell.infoView.hidden = NO;
+
     }
 }
 

@@ -1300,6 +1300,11 @@
 		FE35EA952B62386000524991 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE35EA942B62386000524991 /* AVFoundation.framework */; };
 		FE35EAA62B62518D00524991 /* NoticeVideoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE35EAA52B62518D00524991 /* NoticeVideoCollectionViewCell.m */; };
 		FE41C33E2BC925D000BAD263 /* SXFullPlayInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C33D2BC925D000BAD263 /* SXFullPlayInfoView.m */; };
+		FE41C3A22BCCF5D300BAD263 /* SXVideosComClickView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3A12BCCF5D300BAD263 /* SXVideosComClickView.m */; };
+		FE41C3A52BCCFF9D00BAD263 /* SXVideoComInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3A42BCCFF9D00BAD263 /* SXVideoComInputView.m */; };
+		FE41C3A82BCD14FE00BAD263 /* SXChatEachOtherMeassageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3A72BCD14FE00BAD263 /* SXChatEachOtherMeassageView.m */; };
+		FE41C3AB2BCD178000BAD263 /* SXVideoCommentMeassageController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3AA2BCD178000BAD263 /* SXVideoCommentMeassageController.m */; };
+		FE41C3AE2BCD178E00BAD263 /* SXVideoCommentLikeController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3AD2BCD178E00BAD263 /* SXVideoCommentLikeController.m */; };
 		FE44F1D32BB29FAB004ECF11 /* KTVHCPathTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1042BB29FAA004ECF11 /* KTVHCPathTool.m */; };
 		FE44F1D42BB29FAB004ECF11 /* KTVHCURLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1072BB29FAA004ECF11 /* KTVHCURLTool.m */; };
 		FE44F1D52BB29FAB004ECF11 /* KTVHCHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F10B2BB29FAA004ECF11 /* KTVHCHTTPConnection.m */; };
@@ -3975,6 +3980,16 @@
 		FE41C33C2BC925D000BAD263 /* SXFullPlayInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXFullPlayInfoView.h; sourceTree = "<group>"; };
 		FE41C33D2BC925D000BAD263 /* SXFullPlayInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXFullPlayInfoView.m; sourceTree = "<group>"; };
 		FE41C39F2BC9697300BAD263 /* ZFPlayerControlViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlayerControlViewDelegate.h; sourceTree = "<group>"; };
+		FE41C3A02BCCF5D300BAD263 /* SXVideosComClickView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideosComClickView.h; sourceTree = "<group>"; };
+		FE41C3A12BCCF5D300BAD263 /* SXVideosComClickView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideosComClickView.m; sourceTree = "<group>"; };
+		FE41C3A32BCCFF9D00BAD263 /* SXVideoComInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoComInputView.h; sourceTree = "<group>"; };
+		FE41C3A42BCCFF9D00BAD263 /* SXVideoComInputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoComInputView.m; sourceTree = "<group>"; };
+		FE41C3A62BCD14FE00BAD263 /* SXChatEachOtherMeassageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXChatEachOtherMeassageView.h; sourceTree = "<group>"; };
+		FE41C3A72BCD14FE00BAD263 /* SXChatEachOtherMeassageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXChatEachOtherMeassageView.m; sourceTree = "<group>"; };
+		FE41C3A92BCD178000BAD263 /* SXVideoCommentMeassageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoCommentMeassageController.h; sourceTree = "<group>"; };
+		FE41C3AA2BCD178000BAD263 /* SXVideoCommentMeassageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoCommentMeassageController.m; sourceTree = "<group>"; };
+		FE41C3AC2BCD178E00BAD263 /* SXVideoCommentLikeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoCommentLikeController.h; sourceTree = "<group>"; };
+		FE41C3AD2BCD178E00BAD263 /* SXVideoCommentLikeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoCommentLikeController.m; sourceTree = "<group>"; };
 		FE44F1012BB29FAA004ECF11 /* KTVHTTPCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVHTTPCache.h; sourceTree = "<group>"; };
 		FE44F1042BB29FAA004ECF11 /* KTVHCPathTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTVHCPathTool.m; sourceTree = "<group>"; };
 		FE44F1052BB29FAA004ECF11 /* KTVHCURLTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVHCURLTool.h; sourceTree = "<group>"; };
@@ -5761,6 +5776,8 @@
 			children = (
 				A4E95D382A69141B00AE022E /* NoticeChatRecordView.h */,
 				A4E95D282A69141B00AE022E /* NoticeChatRecordView.m */,
+				FE41C3A62BCD14FE00BAD263 /* SXChatEachOtherMeassageView.h */,
+				FE41C3A72BCD14FE00BAD263 /* SXChatEachOtherMeassageView.m */,
 				A4E95D342A69141B00AE022E /* NoticeChatTitleView.h */,
 				A4E95D252A69141B00AE022E /* NoticeChatTitleView.m */,
 				FEE562C12B8CA0E50004CC11 /* NoticeChocieImgListView.h */,
@@ -8806,13 +8823,13 @@
 		FE6686762BA082FE006DBDF2 /* AxcAE_TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				FE6686772BA082FE006DBDF2 /* AxcAE_TabBarBadge.m */,
-				FE6686782BA082FE006DBDF2 /* AxcAE_TabBarItem.h */,
-				FE6686792BA082FE006DBDF2 /* AxcAE_TabBar.m */,
-				FE66867A2BA082FE006DBDF2 /* AxcAE_TabBarDefine.h */,
 				FE66867B2BA082FE006DBDF2 /* AxcAE_TabBar.h */,
-				FE66867C2BA082FE006DBDF2 /* AxcAE_TabBarItem.m */,
+				FE6686792BA082FE006DBDF2 /* AxcAE_TabBar.m */,
 				FE66867D2BA082FE006DBDF2 /* AxcAE_TabBarBadge.h */,
+				FE6686772BA082FE006DBDF2 /* AxcAE_TabBarBadge.m */,
+				FE66867A2BA082FE006DBDF2 /* AxcAE_TabBarDefine.h */,
+				FE6686782BA082FE006DBDF2 /* AxcAE_TabBarItem.h */,
+				FE66867C2BA082FE006DBDF2 /* AxcAE_TabBarItem.m */,
 			);
 			path = AxcAE_TabBar;
 			sourceTree = "<group>";
@@ -8875,6 +8892,10 @@
 				FE44F18D2BB29FAA004ECF11 /* SXFullPlayCell.m */,
 				FE41C33C2BC925D000BAD263 /* SXFullPlayInfoView.h */,
 				FE41C33D2BC925D000BAD263 /* SXFullPlayInfoView.m */,
+				FE41C3A02BCCF5D300BAD263 /* SXVideosComClickView.h */,
+				FE41C3A12BCCF5D300BAD263 /* SXVideosComClickView.m */,
+				FE41C3A32BCCFF9D00BAD263 /* SXVideoComInputView.h */,
+				FE41C3A42BCCFF9D00BAD263 /* SXVideoComInputView.m */,
 				A4E95F432A69141C00AE022E /* CYWWaterFallLayout.h */,
 				A4E95F642A69141C00AE022E /* CYWWaterFallLayout.m */,
 				FE953C812B68D3420098F0A2 /* NoticeDownloadVoiceCell.h */,
@@ -9047,6 +9068,10 @@
 				FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */,
 				FE9C40BB2B9FF40D008C3A22 /* SXHasBuyOrderListController.h */,
 				FE9C40BC2B9FF40D008C3A22 /* SXHasBuyOrderListController.m */,
+				FE41C3A92BCD178000BAD263 /* SXVideoCommentMeassageController.h */,
+				FE41C3AA2BCD178000BAD263 /* SXVideoCommentMeassageController.m */,
+				FE41C3AC2BCD178E00BAD263 /* SXVideoCommentLikeController.h */,
+				FE41C3AD2BCD178E00BAD263 /* SXVideoCommentLikeController.m */,
 			);
 			path = videos;
 			sourceTree = "<group>";
@@ -9718,6 +9743,7 @@
 				A4E967FA2A69142500AE022E /* NoticeVoiceListModel.m in Sources */,
 				FE74403E2BA31CF2007EE4A6 /* SXHistoryModel.m in Sources */,
 				A4E9663B2A69142300AE022E /* NoticeHotSongController.m in Sources */,
+				FE41C3A82BCD14FE00BAD263 /* SXChatEachOtherMeassageView.m in Sources */,
 				A4E9676D2A69142400AE022E /* NoticeAddReadController.m in Sources */,
 				A4E966112A69142300AE022E /* NoticeBoKeDocumCell.m in Sources */,
 				A4E965F42A69142300AE022E /* NoticeShareLineChatView.m in Sources */,
@@ -10305,6 +10331,7 @@
 				FE44F1D42BB29FAB004ECF11 /* KTVHCURLTool.m in Sources */,
 				A4E966D22A69142300AE022E /* NoticeSendEmilController.m in Sources */,
 				A4E968062A69142500AE022E /* NoticeUserCenterVoiceController.m in Sources */,
+				FE41C3A22BCCF5D300BAD263 /* SXVideosComClickView.m in Sources */,
 				A4E964882A69142100AE022E /* YYAnimatedImageView+loadNewSys.m in Sources */,
 				A4E9656E2A69142200AE022E /* NoticePhotoListView.m in Sources */,
 				A4E9697F2A69142700AE022E /* NoticeReadAllContentView.m in Sources */,
@@ -10336,6 +10363,7 @@
 				A4E9648D2A69142100AE022E /* UIViewController+XGErrorView.m in Sources */,
 				A4E969952A69142800AE022E /* UITabBarController+CLPlayerRotation.m in Sources */,
 				FE6CF9672B86DE49005EE663 /* SXPayForVideoModel.m in Sources */,
+				FE41C3AB2BCD178000BAD263 /* SXVideoCommentMeassageController.m in Sources */,
 				A4E965672A69142200AE022E /* GGProgressView.m in Sources */,
 				FE44F1E42BB29FAB004ECF11 /* KTVHCDataUnitQueue.m in Sources */,
 				FE44F2202BB29FAB004ECF11 /* UIViewController+ZFPlayerRotation.m in Sources */,
@@ -10383,6 +10411,7 @@
 				A4E966942A69142300AE022E /* NoticeClockPyModel.m in Sources */,
 				A4E9662D2A69142300AE022E /* NoticeSong.m in Sources */,
 				A4354C3C2A9F149C00454D23 /* NoticeVipLelveView.swift in Sources */,
+				FE41C3AE2BCD178E00BAD263 /* SXVideoCommentLikeController.m in Sources */,
 				A4E967DF2A69142500AE022E /* NoticeVersionController.m in Sources */,
 				A4E966E12A69142400AE022E /* NoticeHelpCommentModel.m in Sources */,
 				A4E966302A69142300AE022E /* NoticeRat.m in Sources */,
@@ -10505,6 +10534,7 @@
 				FEE562EE2B8CA1FD0004CC11 /* TZVideoCropController.m in Sources */,
 				A4E966572A69142300AE022E /* ZFSDateFormatUtil.m in Sources */,
 				A4E967FE2A69142500AE022E /* NoticeSmallArrModel.m in Sources */,
+				FE41C3A52BCCFF9D00BAD263 /* SXVideoComInputView.m in Sources */,
 				A4E968762A69142600AE022E /* NoticeTextZJContentView.m in Sources */,
 				A4E964BB2A69142100AE022E /* RealtimeAnalyzer.m in Sources */,
 				A4E969592A69142700AE022E /* NoticeTextVoiceController.m in Sources */,

@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *mainTitleLabel;
 @property (nonatomic, strong) UILabel *subTitleLabel;
 @property (nonatomic, strong) UIImageView *subImageView;
-
+@property (nonatomic, strong) UILabel *editTitleLabel;
 @property (nonatomic, strong) UIView *subEditView;
 @property (nonatomic, copy) void(^editShopBlock)(BOOL edit);
 @property (nonatomic,copy) void(^tapBlock)(BOOL tap);

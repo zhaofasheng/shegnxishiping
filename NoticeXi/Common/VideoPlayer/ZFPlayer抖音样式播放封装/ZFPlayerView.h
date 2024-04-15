@@ -48,6 +48,11 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 /** 播放状态发生改变 */
 - (void)zf_playerPlayerStatusChange:(ZFPlayerState)statu;
 
+//开始拖动进度
+- (void)beginChangeVlue;
+//结束拖动进度
+- (void)endChangeVlue;
+
 
 @end
 
@@ -55,7 +60,8 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 @interface ZFPlayerView : UIView
 
 @property (nonatomic, assign) BOOL isFirstAlloc;
-
+/** playerLayer */
+@property (nonatomic, strong) AVPlayerLayer          *playerLayer;
 @property (nonatomic, strong) SXPlayVideoFullControllView                 *controlView;
 
 @property (nonatomic, strong) ZFPlayerModel          *playerModel;
