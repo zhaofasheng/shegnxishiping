@@ -1305,6 +1305,7 @@
 		FE41C3A82BCD14FE00BAD263 /* SXChatEachOtherMeassageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3A72BCD14FE00BAD263 /* SXChatEachOtherMeassageView.m */; };
 		FE41C3AB2BCD178000BAD263 /* SXVideoCommentMeassageController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3AA2BCD178000BAD263 /* SXVideoCommentMeassageController.m */; };
 		FE41C3AE2BCD178E00BAD263 /* SXVideoCommentLikeController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3AD2BCD178E00BAD263 /* SXVideoCommentLikeController.m */; };
+		FE41C3B12BCE5FAA00BAD263 /* SXVideoCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3B02BCE5FAA00BAD263 /* SXVideoCommentModel.m */; };
 		FE44F1D32BB29FAB004ECF11 /* KTVHCPathTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1042BB29FAA004ECF11 /* KTVHCPathTool.m */; };
 		FE44F1D42BB29FAB004ECF11 /* KTVHCURLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1072BB29FAA004ECF11 /* KTVHCURLTool.m */; };
 		FE44F1D52BB29FAB004ECF11 /* KTVHCHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F10B2BB29FAA004ECF11 /* KTVHCHTTPConnection.m */; };
@@ -3990,6 +3991,8 @@
 		FE41C3AA2BCD178000BAD263 /* SXVideoCommentMeassageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoCommentMeassageController.m; sourceTree = "<group>"; };
 		FE41C3AC2BCD178E00BAD263 /* SXVideoCommentLikeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoCommentLikeController.h; sourceTree = "<group>"; };
 		FE41C3AD2BCD178E00BAD263 /* SXVideoCommentLikeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoCommentLikeController.m; sourceTree = "<group>"; };
+		FE41C3AF2BCE5FAA00BAD263 /* SXVideoCommentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoCommentModel.h; sourceTree = "<group>"; };
+		FE41C3B02BCE5FAA00BAD263 /* SXVideoCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoCommentModel.m; sourceTree = "<group>"; };
 		FE44F1012BB29FAA004ECF11 /* KTVHTTPCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVHTTPCache.h; sourceTree = "<group>"; };
 		FE44F1042BB29FAA004ECF11 /* KTVHCPathTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTVHCPathTool.m; sourceTree = "<group>"; };
 		FE44F1052BB29FAA004ECF11 /* KTVHCURLTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVHCURLTool.h; sourceTree = "<group>"; };
@@ -8847,6 +8850,8 @@
 				FEE2DD182B90574D008AAB53 /* SXSearisVideoListModel.m */,
 				FE7440362BA2A595007EE4A6 /* SXBuyVideoOrderList.h */,
 				FE7440372BA2A595007EE4A6 /* SXBuyVideoOrderList.m */,
+				FE41C3AF2BCE5FAA00BAD263 /* SXVideoCommentModel.h */,
+				FE41C3B02BCE5FAA00BAD263 /* SXVideoCommentModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -10577,6 +10582,7 @@
 				A4E966902A69142300AE022E /* NoticeCollectionPyTcController.m in Sources */,
 				A4E967232A69142400AE022E /* NoticeVoiceCommentCell.m in Sources */,
 				A44FBFB12AF4C70500D49DB5 /* XLCycleCell.m in Sources */,
+				FE41C3B12BCE5FAA00BAD263 /* SXVideoCommentModel.m in Sources */,
 				A4E968ED2A69142700AE022E /* NoticeShopXiaDanTostaView.swift in Sources */,
 				A4E964C82A69142100AE022E /* FIFOSampleBuffer.cpp in Sources */,
 				A4E965162A69142200AE022E /* LXCalendarWeekView.m in Sources */,

@@ -65,7 +65,7 @@
 }
 
 - (void)requestNoread{
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.5.4+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         if (success) {
             if ([dict[@"data"] isEqual:[NSNull null]]) {
                 return ;
@@ -87,7 +87,38 @@
             }else{
                 self.sysL.hidden = YES;
             }
+            
+            if (stay.videoCommentNumM.num.intValue) {
+                self.comL.hidden = NO;
+                if (stay.videoCommentNumM.num.intValue > 99) {
+                    stay.videoCommentNumM.num = @"99+";
+                }
+                self.comL.text = stay.videoCommentNumM.num;
+              
+                CGFloat width = GET_STRWIDTH(self.comL.text, 9, 14)+8;
+                if (width < 14) {
+                    width = 14;
+                }
+                self.comL.frame = CGRectMake(34, 0, width, 14);
+            }else{
+                self.comL.hidden = YES;
+            }
    
+            if (stay.likeModel.num.intValue) {
+                self.likeL.hidden = NO;
+                if (stay.likeModel.num.intValue > 99) {
+                    stay.likeModel.num = @"99+";
+                }
+                self.likeL.text = stay.likeModel.num;
+              
+                CGFloat width = GET_STRWIDTH(self.likeL.text, 9, 14)+8;
+                if (width < 14) {
+                    width = 14;
+                }
+                self.likeL.frame = CGRectMake(34, 0, width, 14);
+            }else{
+                self.likeL.hidden = YES;
+            }
         }
     } fail:^(NSError *error) {
     }];

@@ -31,6 +31,9 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     self.backgroundColor = [UIColor whiteColor];
     
 
+    self.pageNo = 1;
+    self.isDown = YES;
+    
     UIButton *closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-50, 0, 50, 50)];
     self.closeBtn = closeBtn;
     [self.closeBtn setImage:UIImageNamed(@"Image_blackclose") forState:UIControlStateNormal];
@@ -58,6 +61,54 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     tableView.dataSource = self;
     tableView.delegate = self;
     [tableView registerClass:[MyCommentCell class] forCellReuseIdentifier:commentCellIdentifier];
+    
+    [self createRefesh];
+    [self requestCom];
+}
+
+
+- (void)createRefesh{
+    
+    __weak MyCommentView *ctl = self;
+
+    
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        //上拉
+        ctl.isDown = NO;
+        ctl.pageNo++;
+        [ctl requestCom];
+    }];
+}
+
+- (NSMutableArray *)dataArr{
+    if (!_dataArr) {
+        _dataArr = [[NSMutableArray alloc] init];
+    }
+    return _dataArr;
+}
+
+- (void)requestCom{
+//    NSString *url = @"";
+//    
+//    url = [NSString stringWithFormat:@"series/%@/video",self.paySearModel.seriesId];
+//    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+//        [self.dataArr removeAllObjects];
+//        if (success) {
+//            if ([dict[@"data"] isEqual:[NSNull null]]) {
+//                return ;
+//            }
+//     
+//            for (NSDictionary *dic in dict[@"data"]) {
+//  
+//          
+//            }
+//         
+//            [self.tableView reloadData];
+//        }
+//    } fail:^(NSError *error) {
+//        [self.tableView.mj_header endRefreshing];
+//        [self.tableView.mj_footer endRefreshing];
+//    }];
 }
 
 - (void)closeComment {

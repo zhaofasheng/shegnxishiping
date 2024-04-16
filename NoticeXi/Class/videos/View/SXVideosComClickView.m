@@ -59,6 +59,7 @@
     return self;
 }
 
+
 - (void)comClick{
     if (self.comClickBlock) {
         self.comClickBlock(YES);
@@ -75,6 +76,19 @@
 - (void)setVideoModel:(SXVideosModel *)videoModel{
     _videoModel = videoModel;
     self.inputView.saveKey = [NSString stringWithFormat:@"videoLy%@%@",[NoticeTools getuserId],videoModel.vid];
+    
+    [self refreshUI];
+}
+
+- (void)refreshUI{
+    self.comNumL.text = _videoModel.commentCt.intValue?_videoModel.commentCt:@"评论";
+    CGFloat strWidth = GET_STRWIDTH(self.comNumL.text, 14, self.frame.size.height);
+    
+    self.markL.text = _videoModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论...";
+    
+    self.comNumL.frame = CGRectMake(self.frame.size.width-strWidth, 0, strWidth, self.frame.size.height);
+    self.comImageView.frame = CGRectMake(self.comNumL.frame.origin.x-28, 8, 24, 24);
+    self.markView.frame = CGRectMake(0, 0, self.comImageView.frame.origin.x-15, 40);
 }
 
 @end

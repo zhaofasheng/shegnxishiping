@@ -55,9 +55,16 @@
     NSString *str = nil;
     if (section == 0) {
         str = @"关闭后，手机将不再接收新的私信通知";
-      
-    }else{
+    }else if(section == 1){
         str = @"关闭后，手机将不再接收新的系统消息通知";
+    }else if(section == 2){
+
+        str = @"关闭后，手机将不再接收视频评论消息通知";
+        if (tag == 1) {
+            str = @"关闭后，手机将不再接收视频评论的点赞消息通知";
+        }
+    }else if(section == 3){
+        str = @"关闭后，购买课程内容更新时不再接受推送提醒";
     }
     
     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:str message:nil sureBtn:[NoticeTools getLocalStrWith:@"main.cancel"] cancleBtn:[NoticeTools getLocalStrWith:@"recoder.sureclose"] right:YES];
@@ -80,6 +87,15 @@
     }else if (section == 1){
         [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"sysRemind"];
  
+    }else if (section == 3){
+        [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"seriesRemind"];
+ 
+    }else if (section == 2){
+        if (tag == 0) {
+            [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"commentRemind"];
+        }else{
+            [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"likeRemind"];
+        }
     }
     [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"users/%@/setting",[[NoticeSaveModel getUserInfo] user_id]] Accept:nil parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
         [self hideHUD];
@@ -95,27 +111,49 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXTitleAndSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-    [cell.backView setAllCorner:8];
+    [cell.backView setAllCorner:0];
     cell.choiceTag = indexPath.row;
     cell.choiceSection = indexPath.section;
     cell.delegate = self;
     if (indexPath.section == 0) {
+        [cell.backView setAllCorner:8];
         cell.mainL.text = @"私信通知";
         cell.switchButton.on = self.noticeM.chat_pri_remind.boolValue;
     }
-    else{
+    else if (indexPath.section == 1){
+        [cell.backView setAllCorner:8];
         cell.switchButton.on = self.noticeM.sys_remind.boolValue;
         cell.mainL.text = @"系统消息通知";
+    }
+    else if (indexPath.section == 2){
+        if (indexPath.row == 0) {
+            [cell.backView setCornerOnTop:8];
+            cell.mainL.text = @"评论消息";
+            cell.switchButton.on = self.noticeM.comment_remind.boolValue;
+        }else if (indexPath.row == 1){
+            [cell.backView setCornerOnBottom:8];
+            cell.mainL.text = @"点赞消息";
+            cell.switchButton.on = self.noticeM.like_remind.boolValue;
+        }
+        
+//        cell.switchButton.on = self.noticeM.sys_remind.boolValue;
+//        cell.mainL.text = @"系统消息通知";
+    }    else if (indexPath.section == 3){
+        [cell.backView setAllCorner:8];
+        cell.switchButton.on = self.noticeM.series_remind.boolValue;
+        cell.mainL.text = @"购买课程内容有更新";
     }
     return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
- 
+    if (section == 2) {
+        return 2;
+    }
    return  1;
 }
 

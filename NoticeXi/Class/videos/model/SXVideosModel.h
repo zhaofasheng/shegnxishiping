@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *first_frame_url;//第一帧图片
 
-
+@property (nonatomic, strong) NSString *commentCt;//视频评论数量
 
 //内容是否展开（默认不设置，都是NO，收起状态）
 @property (nonatomic, assign) BOOL isOpen;

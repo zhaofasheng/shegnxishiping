@@ -161,7 +161,7 @@
             }
             
             NoticeStaySys *stay1 = [NoticeStaySys mj_objectWithKeyValues:dict1[@"data"]];
-            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.char_priM.num.intValue + stay1.sysM.num.intValue];
+            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.char_priM.num.intValue + stay1.sysM.num.intValue+stay1.likeModel.num.intValue+stay1.videoCommentNumM.num.intValue];
             if (allRedNum.intValue) {
                 [self.tabBar showBadgeOnItemIndex:4];
             }else{

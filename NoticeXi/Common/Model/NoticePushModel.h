@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *push_dubbing_id;
 @property (nonatomic, strong) NSString *push_artwork_id;
 @property (nonatomic, strong) NSString *push_about_id;
-
+@property (nonatomic, strong) NSString *push_series_id;
 @end
 
 NS_ASSUME_NONNULL_END

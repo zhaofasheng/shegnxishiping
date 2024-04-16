@@ -110,7 +110,7 @@
 - (void)setMessage:(NoticeMessage *)message{
     _message = message;
     
-    _titleL.text = (message.category_name.length && message.category_name)?message.category_name:[NoticeTools getLocalStrWith:@"system.mark"];
+    _titleL.text = (message.category_name.length && message.category_name)?message.category_name:@"声昔君说";
     _nickNameL.text = message.title;
     self.buttonL.text = [NoticeTools getLocalStrWith:@"system.detail"];
     //1 图书，2播客,3话题，4活动，5声昔君说，6反馈，7版本更新
@@ -132,6 +132,10 @@
         self.titleImageView.image = UIImageNamed(@"Image_sysbbgx");
     }else if (message.category_id.intValue == 8){
         self.titleImageView.image = UIImageNamed(@"Image_sysbbzb");
+    }else if (message.category_id.intValue == 9){
+        self.titleImageView.image = UIImageNamed(@"sx_kecesysmess");
+    }else if (message.category_id.intValue == 10){
+        self.titleImageView.image = UIImageNamed(@"sx_videosysmess");
     }
     else{
         self.titleImageView.image = UIImageNamed(@"Image_syssxjs");

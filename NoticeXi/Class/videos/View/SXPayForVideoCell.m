@@ -54,6 +54,12 @@
         self.label5.font = TWOTEXTFONTSIZE;
         self.label5.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.coverImageView addSubview:self.label5];
+        
+        self.buyNumL = [[UILabel  alloc] initWithFrame:CGRectMake(self.coverImageView.frame.size.width-165, self.coverImageView.frame.size.height-32, 150, 17)];
+        self.buyNumL.font = TWOTEXTFONTSIZE;
+        self.buyNumL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        self.buyNumL.textAlignment = NSTextAlignmentRight;
+        [self.coverImageView addSubview:self.buyNumL];
     }
     return self;
 }
@@ -84,7 +90,7 @@
             }
         }
     }
-
+    self.buyNumL.text = [NSString stringWithFormat:@"%d人已报名",model.buy_users_num.intValue];
     self.label5.text = [NSString stringWithFormat:@"共%@课时",model.episodes];
 }
 

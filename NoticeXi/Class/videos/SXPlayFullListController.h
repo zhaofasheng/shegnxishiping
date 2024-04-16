@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL hasMore;
 @property (nonatomic, assign) NSInteger rid;
 @property (nonatomic, assign) BOOL isSearch;
+@property (nonatomic, assign) BOOL noRequest;
 @property (nonatomic, copy) void(^popbackBlock)(void);
 @property (nonatomic, copy) void(^dataBlock)(NSInteger pageNo,NSMutableArray *dataArr);
 @end

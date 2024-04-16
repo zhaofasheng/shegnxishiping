@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *pay_tip;//支付提示
 @property (nonatomic, strong) NSString *is_bought;
 @property (nonatomic, assign) BOOL hasBuy;//是否已经购买
+@property (nonatomic, strong) NSString *buy_users_num;//购买用户数
 @property (nonatomic, strong) NSString *introduce_img_url;//课程详情
 @property (nonatomic, strong) NSArray *carousel_images;//轮播图
 @property (nonatomic, strong) NSDictionary *update_video;

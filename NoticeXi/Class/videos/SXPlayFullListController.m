@@ -11,6 +11,10 @@
 #import "DDVideoPlayerManager.h"
 #import "SDImageCache.h"
 #import "TTCCom.h"
+#import "NoticeMoreClickView.h"
+#import "NoticeXi-Swift.h"
+#import "SXTosatView.h"
+#import "NoticeVoiceDownLoadController.h"
 
 @interface SXPlayFullListController ()<ZFManagerPlayerDelegate>
 
@@ -22,7 +26,7 @@
 @property (nonatomic, assign) BOOL isRequesting;
 @property (nonatomic, assign) BOOL nodata;
 @property (nonatomic, assign) BOOL isFirstAlloc;
-
+@property (nonatomic, strong) UIButton *downloadBtn;
 @end
 
 @implementation SXPlayFullListController
@@ -50,7 +54,49 @@
     
     [self.view bringSubviewToFront:self.navBarView];
     [self.navBarView.backButton setImage:UIImageNamed(@"backwhties") forState:UIControlStateNormal];
+    [self.navBarView addSubview:self.downloadBtn];
 }
+
+- (UIButton *)downloadBtn{
+    if (!_downloadBtn) {
+        _downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-5-45, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-45)/2, 45, 45)];
+        [_downloadBtn setImage:UIImageNamed(@"sxdownload_img") forState:UIControlStateNormal];
+        [_downloadBtn addTarget:self action:@selector(downClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _downloadBtn;
+}
+
+- (void)downClick{
+    NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    moreView.isVideo = YES;
+    __weak typeof(self) weakSelf = self;
+    moreView.clickIndexBlock = ^(NSInteger buttonIndex) {
+        if (weakSelf.currentPlayIndex < weakSelf.modelArray.count) {
+            SXVideosModel *currentPlaySmallVideoModel = weakSelf.modelArray[weakSelf.currentPlayIndex];
+            
+            if (buttonIndex == 1) {
+                [SXTools getDownloadModelAndDownWithVideoModel:currentPlaySmallVideoModel successBlcok:^(BOOL success) {
+                    if (success) {
+                        SXTosatView *tosatView = [[SXTosatView  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-217)/2,(DR_SCREEN_HEIGHT-54)/2-100, 217, 54)];
+                        tosatView.lookSaveListBlock = ^(BOOL look) {
+                            NoticeVoiceDownLoadController *ctl = [[NoticeVoiceDownLoadController alloc] init];
+                            [self.navigationController pushViewController:ctl animated:YES];
+                        };
+                        [tosatView showSXToast];
+                    }
+                }];
+            }else if(buttonIndex == 0){
+                NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
+                juBaoView.reouceId = currentPlaySmallVideoModel.vid;
+                juBaoView.reouceType = @"148";
+                [juBaoView showView];
+            }
+        }
+        
+    };
+    [moreView showTost];
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.modelArray.count;
@@ -92,7 +138,7 @@
 
 - (void)request{
   
-    if (self.isRequesting || self.nodata || self.isSearch) {
+    if (self.isRequesting || self.nodata || self.isSearch || self.noRequest) {
         return;
     }
     
@@ -169,9 +215,11 @@
     if(y > h + reload_distance) {
         [self request];
     }
+    
+    if (offset.y < -80) {
+        [self showToastWithText:@"到顶啦~"];
+    }
 }
-
-
 
 - (void)playIndex:(NSInteger)currentIndex {
 
@@ -185,7 +233,7 @@
     BOOL useDownAndPlay = NO;
     AVLayerVideoGravity videoGravity = AVLayerVideoGravityResizeAspect;
     
-    //关注,推荐
+
     SXVideosModel *currentPlaySmallVideoModel = self.modelArray[currentIndex];
 
     title = currentPlaySmallVideoModel.title;

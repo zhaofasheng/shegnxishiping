@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *label3;
 @property (nonatomic, strong) UILabel *label4;
 @property (nonatomic, strong) UILabel *label5;
+@property (nonatomic, strong) UILabel *buyNumL;
 @end
 
 NS_ASSUME_NONNULL_END

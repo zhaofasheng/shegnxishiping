@@ -90,14 +90,14 @@
 }
 
 - (void)redCirRequest{
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.5.4+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict1, BOOL success1) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict1, BOOL success1) {
         if (success1) {
             if ([dict1[@"data"] isEqual:[NSNull null]]) {
                 return ;
             }
             
             NoticeStaySys *stay1 = [NoticeStaySys mj_objectWithKeyValues:dict1[@"data"]];
-            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.char_priM.num.intValue + stay1.sysM.num.intValue];
+            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.char_priM.num.intValue + stay1.sysM.num.intValue+stay1.likeModel.num.intValue+stay1.videoCommentNumM.num.intValue];
             self.navView.allNumL.hidden = allRedNum.intValue?NO:YES;
             CGFloat strWidth = GET_STRWIDTH(allRedNum, 9, 14);
             if (allRedNum.intValue < 10) {

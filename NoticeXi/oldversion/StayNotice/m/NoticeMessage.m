@@ -140,6 +140,11 @@
             _open_at = @"9";
         }
     }
+}
 
+- (void)setData:(NSDictionary *)data{
+    _data = data;
+    self.videoModel = [SXVideosModel mj_objectWithKeyValues:data];
+    self.searisModel = [SXPayForVideoModel mj_objectWithKeyValues:data];
 }
 @end

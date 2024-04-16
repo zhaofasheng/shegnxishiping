@@ -60,6 +60,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *char_pri;
 @property (nonatomic, strong) NoticeStayMesssage *char_priM;//私聊消息
 
+
+@property (nonatomic, strong) NSDictionary *videoCommentNum;
+@property (nonatomic, strong) NoticeStayMesssage *videoCommentNumM;//视频评论消息
+
 //悄悄话列表模块
 @property (nonatomic, strong) NSString *smalllevelImgName;
 @property (nonatomic, strong) NSString *levelImgName;

@@ -11,7 +11,9 @@
 #import "NoticeNoDataView.h"
 #import "AFHTTPSessionManager.h"
 #import "NoticeWebViewController.h"
+#import "SXPlayFullListController.h"
 #import "NoticeSysMeassageTostView.h"
+#import "SXStudyBaseController.h"
 @interface NoticeSysViewController ()
 
 @property (nonatomic, strong) NSString *lastId;
@@ -74,6 +76,26 @@
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
         }];
+    }else if (message.category_id.intValue == 9){
+        SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
+        SXPayForVideoModel *model = message.searisModel;
+        ctl.paySearModel = model;
+        [self.navigationController pushViewController:ctl animated:YES];
+    }else if (message.category_id.intValue == 10){
+        if (!message.videoModel) {
+            return;
+        }
+        SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
+        ctl.modelArray = [NSMutableArray arrayWithArray:@[message.videoModel]];
+        ctl.currentPlayIndex = 0;
+        ctl.noRequest = YES;
+        CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
+                                                                        withSubType:kCATransitionFromLeft
+                                                                           duration:0.3f
+                                                                     timingFunction:kCAMediaTimingFunctionLinear
+                                                                               view:self.navigationController.view];
+        [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
+        [self.navigationController pushViewController:ctl animated:NO];
     }
 
 }

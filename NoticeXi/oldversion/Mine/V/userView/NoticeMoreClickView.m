@@ -117,14 +117,8 @@
         }
       
     }else{
-        //1.判断是否支持画中画功能
-        if ([AVPictureInPictureController isPictureInPictureSupported]) {
-            self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img",@"sxpicinpic_img"];
-            self.titleArr = @[@"举报",@"缓存",@"窗口播放"];
-        }else{
-            self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img"];
-            self.titleArr = @[@"举报",@"缓存"];
-        }
+        self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img"];
+        self.titleArr = @[@"举报",@"缓存"];
 
     }
 

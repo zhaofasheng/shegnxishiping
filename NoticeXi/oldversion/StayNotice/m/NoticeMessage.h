@@ -10,6 +10,7 @@
 #import "NoticeBBSComent.h"
 #import "NoticeHelpCommentModel.h"
 #import "NoticeVoiceComModel.h"
+#import "SXPayForVideoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeMessage : NSObject
@@ -75,6 +76,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *podcast_id;//播客id
 @property (nonatomic, strong) NSDictionary *podcast_comment;
 @property (nonatomic, strong) NoticeVoiceComModel *comBokeModel;
+
+@property (nonatomic, strong) NSDictionary *data;
+@property (nonatomic, strong) SXVideosModel *videoModel;
+@property (nonatomic, strong) SXPayForVideoModel *searisModel;
 @end
 
 NS_ASSUME_NONNULL_END
