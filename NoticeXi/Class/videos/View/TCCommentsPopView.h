@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-
+#import "MyCommentView.h"
 @interface TCCommentsPopView:UIView
 
-+ (instancetype)commentsPopViewWithFrame:(CGRect)frame commentBackView:(UIView *)commentBackView withScale:(CGFloat)widthtoheight;
++ (instancetype)commentsPopViewWithFrame:(CGRect)frame commentBackView:(MyCommentView *)commentBackView withScale:(CGFloat)widthtoheight;
 - (void)showToView:(UIView *)view;
 - (void)dismiss;
 @property (nonatomic,copy) void(^showComBlock)(BOOL show);

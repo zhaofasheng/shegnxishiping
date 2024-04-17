@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *saveKey;
 @property (nonatomic, strong) UIButton *sendButton;
 @property (nonatomic, assign) BOOL isresiger;
+@property (nonatomic, assign) BOOL hasClick;
 @property (nonatomic, strong) NSString * __nullable commentId;//存在就是给留言留言，不存在就是留言
 - (void)showJustComment:(NSString * __nullable)commentId;
 

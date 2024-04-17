@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SXVideoComInputView.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface SXVideosComClickView : UIView<NoticeVideoComentInputDelegate>
+@interface SXVideosComClickView : UIView
 
 @property (nonatomic, strong) SXVideosModel *videoModel;
 
@@ -20,8 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *markView;
 @property (nonatomic, strong) UIImageView *comImageView;
 
-@property (nonatomic, strong) SXVideoComInputView *inputView;
-
+@property (nonatomic, copy) void(^upInputcomClickBlock)(BOOL click);
 @property (nonatomic, copy) void(^comClickBlock)(BOOL click);
 
 @end

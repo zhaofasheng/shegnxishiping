@@ -13,6 +13,7 @@ typedef void(^MyImageBlock)(UIImage * _Nullable image);
 typedef void (^downSuccessBlock)(BOOL success);
 
 @interface SXTools : NSObject
++ (NSString *)updateTimeForRowWithNoHourAndMin:(NSString *)createTimeString;
 +(void)getScreenshotWithUrlAsyn:(NSURL *)url completion:(MyImageBlock)handler;
 + (CGFloat)getSXvideoListHeight:(SXVideosModel *)videoModel;
 

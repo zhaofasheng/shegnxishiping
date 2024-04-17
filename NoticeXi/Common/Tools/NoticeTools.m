@@ -2031,6 +2031,7 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     return @"3天前";
 }
 
+
 + (NSString *)updateTimeForRow:(NSString *)createTimeString{
     // 获取当前时时间戳 1466386762.345715 十位整数 6位小数
     NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
@@ -2041,11 +2042,11 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     //秒转分钟
     NSInteger small = time / 60;
     if(small <= 0) {
-        return [NoticeTools getLocalStrWith:@"group.now"];
+        return @"刚刚";
         
     }
     if(small < 60) {
-        return [NSString stringWithFormat:@"%ld%@",(long)small >0?(long)small:1,[NoticeTools getLocalStrWith:@"group.time"]];
+        return [NSString stringWithFormat:@"%ld%@",(long)small >0?(long)small:1,@"分钟前"];
         
     }
 
@@ -2059,13 +2060,13 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
 
     BOOL isYesterday = [[NSCalendar currentCalendar] isDateInYesterday:date];
     if (isYesterday) {
-        return [NoticeTools getLocalStrWith:@"em.zt"];
+        return @"昨天";
     }
     
     NSInteger hours = time/3600;
     //BOOL isToday = [[NSCalendar currentCalendar] isDateInToday:date];
     if (hours >=1 && hours <= 24) {
-        return [NSString stringWithFormat:@"%ld%@",(long)hours,[NoticeTools getLocalStrWith:@"group.hour"]];
+        return [NSString stringWithFormat:@"%ld%@",(long)hours,@"小时前"];
         
     }
     

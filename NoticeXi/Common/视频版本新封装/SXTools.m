@@ -245,4 +245,56 @@
     
     successBlock(YES);
 }
+
+
++ (NSString *)updateTimeForRowWithNoHourAndMin:(NSString *)createTimeString{
+    // 获取当前时时间戳 1466386762.345715 十位整数 6位小数
+    NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+    // 创建歌曲时间戳(后台返回的时间 一般是13位数字)
+    NSTimeInterval createTime =[createTimeString floatValue];
+    // 时间差
+    NSTimeInterval time = currentTime - createTime;
+    //秒转分钟
+    NSInteger small = time / 60;
+    if(small <= 0) {
+        return @"刚刚";
+        
+    }
+    if(small < 60) {
+        return [NSString stringWithFormat:@"%ld%@",(long)small >0?(long)small:1,@"分钟前"];
+        
+    }
+
+    // 秒转小时
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setLocale:[NSLocale currentLocale]];
+    [outputFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *string = [outputFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:createTime]];
+    NSDate *date = [outputFormatter dateFromString:string];
+    
+
+    BOOL isYesterday = [[NSCalendar currentCalendar] isDateInYesterday:date];
+    if (isYesterday) {
+        return @"昨天";
+    }
+    
+    NSInteger hours = time/3600;
+    //BOOL isToday = [[NSCalendar currentCalendar] isDateInToday:date];
+    if (hours >=1 && hours <= 24) {
+        return [NSString stringWithFormat:@"%ld%@",(long)hours,@"小时前"];
+        
+    }
+    
+    NSDateFormatter *tFormatter = [[NSDateFormatter alloc] init];
+    [tFormatter setLocale:[NSLocale currentLocale]];
+    [tFormatter setDateFormat:@"yyyy"];
+    
+    if ([[NSString stringWithFormat:@"%@",[tFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:createTime]]] isEqualToString:[NSString stringWithFormat:@"%@",[tFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:currentTime]]]]) {
+        [tFormatter setDateFormat:@"MM-dd"];
+        return [NSString stringWithFormat:@"%@",[tFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:createTime]]];
+    }
+    [tFormatter setDateFormat:@"yyyy-MM-dd"];
+    return [NSString stringWithFormat:@"%@",[tFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:createTime]]];
+}
+
 @end

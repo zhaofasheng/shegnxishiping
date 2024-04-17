@@ -43,7 +43,7 @@
         self.contentView.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.contentView];
         
-        _plaL = [[UILabel alloc] initWithFrame:CGRectMake(27,7, 200, 34)];
+        _plaL = [[UILabel alloc] initWithFrame:CGRectMake(17,7, 200, 34)];
         _plaL.text = self.plaStr;
         _plaL.font = FOURTHTEENTEXTFONTSIZE;
         _plaL.textColor = [[UIColor colorWithHexString:@"#A1A7B3"] colorWithAlphaComponent:1];
@@ -65,6 +65,7 @@
 
 
 - (void)showJustComment:(NSString *)commentId{
+    self.hasClick = NO;
     self.commentId = commentId;
     [self.contentView becomeFirstResponder];
     UIWindow *rootWindow = [UIApplication sharedApplication].keyWindow;
@@ -101,9 +102,16 @@
     
     if (!self.contentView.text.length) {
         [self.contentView resignFirstResponder];
-       
         return;
     }
+    
+    
+    if (self.hasClick) {
+        return;
+    }
+    
+    self.hasClick = YES;
+    
     if(self.saveKey){
         [NoticeComTools removeWithKey:self.saveKey];
     }

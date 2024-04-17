@@ -1,29 +1,24 @@
 //
-//  MyCommentCell.m
-//  DouYinCComment
+//  SXVideoCmmentFirstCell.m
+//  NoticeXi
 //
-//  Created by 唐天成 on 2019/4/10.
-//  Copyright © 2019 唐天成. All rights reserved.
+//  Created by 赵小二 on 2024/4/17.
+//  Copyright © 2024 zhaoxiaoer. All rights reserved.
 //
 
-#import "MyCommentCell.h"
+#import "SXVideoCmmentFirstCell.h"
 #import "NoticeUserInfoCenterController.h"
 #import "SXVideoUserCenterController.h"
-@interface MyCommentCell ()
+@implementation SXVideoCmmentFirstCell
 
-@property (nonatomic, strong) UILabel *commentLabel;
-
-@end
-
-@implementation MyCommentCell
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier{
+    if (self = [super initWithReuseIdentifier:reuseIdentifier]) {
+        
         self.contentView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
        
         //头像
-        _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(56, 10, 24, 24)];
-        [_iconImageView setAllCorner:12];
+        _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 32, 32)];
+        [_iconImageView setAllCorner:16];
         [self.contentView addSubview:_iconImageView];
         _iconImageView.userInteractionEnabled = YES;
         UITapGestureRecognizer *iconTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userInfoTap)];
@@ -35,13 +30,13 @@
         _nickNameL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.contentView addSubview:_nickNameL];
         
-        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(88, 30, DR_SCREEN_WIDTH-88-15, 0)];
+        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(56, 31, DR_SCREEN_WIDTH-56-15, 0)];
         self.contentL.font = FOURTHTEENTEXTFONTSIZE;
         self.contentL.textColor = [UIColor colorWithHexString:@"#25262E"];
         self.contentL.numberOfLines = 0;
         [self.contentView addSubview:self.contentL];
         
-        self.bottomView = [[UIView  alloc] initWithFrame:CGRectMake(88, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-88-15, 20)];
+        self.bottomView = [[UIView  alloc] initWithFrame:CGRectMake(56, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-56-15, 20)];
         [self.contentView addSubview:self.bottomView];
         
         //时间
@@ -86,36 +81,35 @@
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:commentM.fromUserInfo.avatar_url]];
     
     self.nickNameL.text = commentM.fromUserInfo.nick_name;
-    self.nickNameL.frame = CGRectMake(88, 10, GET_STRWIDTH(self.nickNameL.text, 12, 17), 17);
-
+    self.nickNameL.frame = CGRectMake(56, 10, GET_STRWIDTH(self.nickNameL.text, 12, 17), 17);
+    _authorL.hidden = YES;
     
-    self.contentL.attributedText = commentM.secondAttr;
-    self.contentL.frame = CGRectMake(88, 30, DR_SCREEN_WIDTH-88-15, commentM.secondContentHeight);
+    if ([commentM.fromUserInfo.userId isEqualToString:self.videoUser.userId]) {
+        self.authorL.hidden = NO;
+        self.authorL.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame), 11, 30, 15);
+    }
     
-    self.bottomView.frame = CGRectMake(88, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-88-15, 20);
+    self.contentL.attributedText = commentM.firstAttr;
+    self.contentL.frame = CGRectMake(56, 31, DR_SCREEN_WIDTH-56-15, commentM.firstContentHeight);
+    
+    self.bottomView.frame = CGRectMake(56, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-56-15, 20);
     self.timeL.text = commentM.created_at;
     self.timeL.frame = CGRectMake(0, 0, GET_STRWIDTH(self.timeL.text, 12,20), 20);
     self.replyL.frame = CGRectMake(CGRectGetMaxX(_timeL.frame),0, 44, 20);
     
     [self refreshLikeUI:commentM];
     
-    _authorL.hidden = YES;
-    if ([commentM.fromUserInfo.userId isEqualToString:self.videoUser.userId]) {
-        self.authorL.hidden = NO;
-        self.authorL.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame), 11, 30, 15);
-    }
-    
-    //如果一级评论的id和回复对象的评论id不一样，代表是二级评论下面的回复
-    _replyToView.hidden = YES;
-    if (![commentM.parent_id isEqualToString:commentM.post_id]) {
-        self.replyToView.hidden = NO;
-        if (!_authorL.hidden) {
-            self.replyToView.frame = CGRectMake(CGRectGetMaxX(self.authorL.frame)+4, 10, DR_SCREEN_WIDTH-CGRectGetMaxX(self.authorL.frame)-4-15, 17);
-        }else{
-            self.replyToView.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame)+4, 10, DR_SCREEN_WIDTH-CGRectGetMaxX(self.nickNameL.frame)-4-15, 17);
+    _authorHasReplyL.hidden = YES;
+    if (commentM.author_reply.boolValue || commentM.author_zan.boolValue) {
+        self.authorHasReplyL.hidden = NO;
+        if (commentM.author_reply.boolValue) {
+            self.authorHasReplyL.text = @"作者回复过";
+            self.authorHasReplyL.frame = CGRectMake(56,CGRectGetMaxY(self.bottomView.frame)+8, 60, 15);
+        }else if (commentM.author_zan.boolValue){
+            self.authorHasReplyL.text = @"作者赞过";
+            self.authorHasReplyL.frame = CGRectMake(56,CGRectGetMaxY(self.bottomView.frame)+8, 50, 15);
         }
-        self.replyNameL.text = commentM.toUserInfo.nick_name;
-        self.replyNameL.frame = CGRectMake(28, 0, _replyToView.frame.size.width-28, 17);
+        [_authorHasReplyL setAllCorner:15/2];
     }
 }
 
@@ -151,46 +145,27 @@
     return _authorL;
 }
 
-- (UIView *)replyToView{
-    if (!_replyToView) {
-        _replyToView = [[UIView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.nickNameL.frame)+4, 10, DR_SCREEN_WIDTH-CGRectGetMaxX(self.nickNameL.frame)-4-15, 17)];
-        [self.contentView addSubview:_replyToView];
-        
-        UILabel *replyMarkL = [[UILabel  alloc] initWithFrame:CGRectMake(0, 0, GET_STRWIDTH(@"回复", 12, 17), 17)];
-        replyMarkL.font = TWOTEXTFONTSIZE;
-        replyMarkL.text = @"回复";
-        replyMarkL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
-        [_replyToView addSubview:replyMarkL];
-        
-        self.replyNameL = [[UILabel  alloc] initWithFrame:CGRectMake(28, 0, _replyToView.frame.size.width-28, 17)];
-        self.replyNameL.font = TWOTEXTFONTSIZE;
-        self.replyNameL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
-        [_replyToView addSubview:self.replyNameL];
+- (UILabel *)authorHasReplyL{
+    if (!_authorHasReplyL) {
+        _authorHasReplyL = [[UILabel  alloc] initWithFrame:CGRectMake(56,CGRectGetMaxY(self.bottomView.frame)+8, 60, 15)];
+        _authorHasReplyL.backgroundColor = [[UIColor colorWithHexString:@"#FF2A6F"] colorWithAlphaComponent:0.1];
+        _authorHasReplyL.font = [UIFont systemFontOfSize:10];
+        _authorHasReplyL.textColor = [UIColor colorWithHexString:@"#FF2A6F"];
+        _authorHasReplyL.textAlignment = NSTextAlignmentCenter;
+        [self.contentView addSubview:_authorHasReplyL];
     }
-    return _replyToView;
+    return _authorL;
 }
 
-- (void)userInfoTap{
-    if ([self.commentM.fromUserInfo.userId isEqualToString:self.videoUser.userId]) {
-        SXVideoUserCenterController *ctl = [[SXVideoUserCenterController alloc] init];
-        ctl.userModel = self.videoUser;
-        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-        return;
-    }
-
-    
-    if ([self.commentM.fromUserInfo.userId isEqualToString:[NoticeTools getuserId]]) {
-        NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
-        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-    }else{
-        NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
-        ctl.userId = self.commentM.fromUserInfo.userId;
-        ctl.isOther = YES;
-        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+- (void)replyClick{
+    if (self.replyClickBlock) {
+        self.replyClickBlock(self.commentM);
     }
 }
 
+//点赞，取消点赞
 - (void)likeClick{
+
     [[NoticeTools getTopViewController] showHUD];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoCommontZan/%@/%@",self.commentM.commentId,self.commentM.is_like.boolValue?@"0":@"1"] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
@@ -210,9 +185,23 @@
     }];
 }
 
-- (void)replyClick{
-    if (self.replyClickBlock) {
-        self.replyClickBlock(self.commentM);
+- (void)userInfoTap{
+    if ([self.commentM.fromUserInfo.userId isEqualToString:self.videoUser.userId]) {
+        SXVideoUserCenterController *ctl = [[SXVideoUserCenterController alloc] init];
+        ctl.userModel = self.videoUser;
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+        return;
+    }
+
+    
+    if ([self.commentM.fromUserInfo.userId isEqualToString:[NoticeTools getuserId]]) {
+        NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }else{
+        NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
+        ctl.userId = self.commentM.fromUserInfo.userId;
+        ctl.isOther = YES;
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
     }
 }
 

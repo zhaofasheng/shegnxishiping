@@ -1,16 +1,16 @@
 //
-//  MyCommentCell.h
-//  DouYinCComment
+//  SXVideoCmmentFirstCell.h
+//  NoticeXi
 //
-//  Created by 唐天成 on 2019/4/10.
-//  Copyright © 2019 唐天成. All rights reserved.
+//  Created by 赵小二 on 2024/4/17.
+//  Copyright © 2024 zhaoxiaoer. All rights reserved.
 //
 
-#import "BaseCell.h"
+#import <UIKit/UIKit.h>
 #import "SXVideoCommentModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MyCommentCell : BaseCell
+@interface SXVideoCmmentFirstCell : UITableViewHeaderFooterView
 @property (nonatomic, strong) SXVideoCommentModel *commentM;
 @property (nonatomic, strong) SXUserModel *videoUser;//视频作者的信息
 
@@ -24,9 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *likeImageView;
 @property (nonatomic, strong) UILabel *likeL;
 @property (nonatomic, strong) UILabel *authorL;
+
 @property (nonatomic,copy) void(^replyClickBlock)(SXVideoCommentModel *commentM);
-@property (nonatomic, strong) UIView *replyToView;
-@property (nonatomic, strong) UILabel *replyNameL;
+
 @end
 
 NS_ASSUME_NONNULL_END

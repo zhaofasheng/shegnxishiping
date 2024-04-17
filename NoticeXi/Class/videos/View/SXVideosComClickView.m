@@ -46,15 +46,6 @@
         self.markL.text = @"成为第一条评论…";
         [self.markView addSubview:self.markL];
         
-        
-        self.inputView = [[SXVideoComInputView alloc] initWithFrame:CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50, DR_SCREEN_WIDTH, 50)];
-        self.inputView.delegate = self;
-        self.inputView.limitNum = 500;
-        self.inputView.plaStr = @"成为第一条评论…";
-        self.inputView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
-        self.inputView.contentView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-        self.inputView.contentView.textColor = [UIColor colorWithHexString:@"#25262E"];
-        self.inputView.plaL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
     }
     return self;
 }
@@ -67,17 +58,27 @@
 }
 
 - (void)sendComClick{
-    if (self.comClickBlock) {
-        self.comClickBlock(YES);
+    if (self.upInputcomClickBlock) {
+        self.upInputcomClickBlock(YES);
     }
-    [self.inputView showJustComment:nil];
 }
 
 - (void)setVideoModel:(SXVideosModel *)videoModel{
     _videoModel = videoModel;
-    self.inputView.saveKey = [NSString stringWithFormat:@"videoLy%@%@",[NoticeTools getuserId],videoModel.vid];
-    
+ 
     [self refreshUI];
+}
+
+- (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId{
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:comment forKey:@"content"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoCommont/%@/0",self.videoModel.vid] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            
+        }
+    } fail:^(NSError * _Nullable error) {
+        
+    }];
 }
 
 - (void)refreshUI{

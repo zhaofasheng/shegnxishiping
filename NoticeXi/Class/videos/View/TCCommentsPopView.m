@@ -14,7 +14,7 @@
 
 @interface TCCommentsPopView () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) UIView                           *container;
+@property (nonatomic, strong) MyCommentView                           *container;
 @property (nonatomic, strong) UIButton *closeBtn;
 
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
@@ -31,12 +31,14 @@
 
 @implementation TCCommentsPopView
 
-+ (instancetype)commentsPopViewWithFrame:(CGRect)frame commentBackView:(UIView *)commentBackView withScale:(CGFloat)widthtoheight{
++ (instancetype)commentsPopViewWithFrame:(CGRect)frame commentBackView:(MyCommentView *)commentBackView withScale:(CGFloat)widthtoheight{
     TCCommentsPopView *view = [[TCCommentsPopView alloc] initWithFrame:frame commentBackView:commentBackView withScale:widthtoheight];
     return view;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame commentBackView:(UIView *)commentBackView withScale:(CGFloat)widthtoheight{
+
+
+- (instancetype)initWithFrame:(CGRect)frame commentBackView:(MyCommentView *)commentBackView withScale:(CGFloat)widthtoheight{
     self = [super initWithFrame:frame];
     if (self) {
         self.isDragScrollView = NO;
@@ -51,7 +53,7 @@
         self.container  = commentBackView;
         self.container.frame = CGRectMake(0, frame.size.height, frame.size.width, DR_SCREEN_HEIGHT - DR_SCREEN_WIDTH * widthtoheight);
         [self addSubview:self.container];
-        
+        [self.container refresUI];
         [self.container setCornerOnTop:20];
         
         //添加拖拽手势

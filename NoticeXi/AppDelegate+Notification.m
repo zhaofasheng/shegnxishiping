@@ -178,7 +178,6 @@
         vc.toUserId = model.push_user_id;
         vc.navigationItem.title = model.push_user_nick_name;
         [nav.topViewController.navigationController pushViewController:vc animated:NO];
-
     }else if (model.push_type.intValue == 1){//系统消息
         NoticeSysViewController *ctl = [[NoticeSysViewController alloc] init];
         [nav.topViewController.navigationController pushViewController:ctl animated:NO];
@@ -193,20 +192,18 @@
         [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",model.push_series_id] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
             if (success) {
                 if ([dict[@"data"] isEqual:[NSNull null]]) {
-                    return ;
+                    return;
                 }
                 SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
                 if (!searismodel) {
                     return;
                 }
                 SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
-                SXPayForVideoModel *model = searismodel;
                 ctl.paySearModel = searismodel;
                 [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
             }
         } fail:^(NSError *error) {
         }];
-     
     }
     
     if (@available(iOS 10.0, *)) {

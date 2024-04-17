@@ -100,23 +100,35 @@
         [self.contentView addSubview:_clickView];
         __weak typeof(self) weakSelf = self;
         _clickView.comClickBlock = ^(BOOL click) {
-            [weakSelf comClick];
+            [weakSelf comClick:NO];
+        };
+        _clickView.upInputcomClickBlock = ^(BOOL click) {
+            [weakSelf comClick:YES];
         };
     }
     return _clickView;
 }
 
-- (void)comClick{
+- (void)comClick:(BOOL)upInput{
     if (self.showComBlock) {
         self.showComBlock(YES);
     }
     self.coverImageView.hidden = YES;
     MyCommentView *commentView = [[MyCommentView alloc]init];
+    commentView.videoUser = self.videoModel.userModel;
+    commentView.type = @"1";
     commentView.delegate = self;
+    commentView.videoModel = self.videoModel;
     self.popView = [TCCommentsPopView commentsPopViewWithFrame:[UIScreen mainScreen].bounds commentBackView:commentView withScale:self.widthtoheight];
     [self.popView showToView:[NoticeTools getTopViewController].view];
-    
+    commentView.upInput = upInput;
     __weak typeof(self) weakSelf = self;
+    
+    commentView.refreshCommentCountBlock = ^(NSString * _Nonnull commentCount) {
+        weakSelf.videoModel.commentCt = commentCount;
+        weakSelf.clickView.videoModel = weakSelf.videoModel;
+    };
+    
     self.popView.showComBlock = ^(BOOL show) {
         if (!show) {
         
