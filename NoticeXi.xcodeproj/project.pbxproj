@@ -1309,6 +1309,9 @@
 		FE41C3B42BCFA1F900BAD263 /* SXVideoCommentJson.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3B32BCFA1F900BAD263 /* SXVideoCommentJson.m */; };
 		FE41C3B72BCFA5C400BAD263 /* SXVideoCmmentFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3B62BCFA5C400BAD263 /* SXVideoCmmentFirstCell.m */; };
 		FE41C3BA2BCFD4AF00BAD263 /* SXVideoCommentMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3B92BCFD4AF00BAD263 /* SXVideoCommentMoreView.m */; };
+		FE41C3BD2BD0EA5200BAD263 /* SXVideoCommentBeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3BC2BD0EA5200BAD263 /* SXVideoCommentBeModel.m */; };
+		FE41C3C02BD0EB8B00BAD263 /* SXVideoLikeComCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3BF2BD0EB8B00BAD263 /* SXVideoLikeComCell.m */; };
+		FE41C3C32BD0FFE500BAD263 /* SXVideoBeReplyComCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE41C3C22BD0FFE500BAD263 /* SXVideoBeReplyComCell.m */; };
 		FE44F1D32BB29FAB004ECF11 /* KTVHCPathTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1042BB29FAA004ECF11 /* KTVHCPathTool.m */; };
 		FE44F1D42BB29FAB004ECF11 /* KTVHCURLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F1072BB29FAA004ECF11 /* KTVHCURLTool.m */; };
 		FE44F1D52BB29FAB004ECF11 /* KTVHCHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FE44F10B2BB29FAA004ECF11 /* KTVHCHTTPConnection.m */; };
@@ -4002,6 +4005,12 @@
 		FE41C3B62BCFA5C400BAD263 /* SXVideoCmmentFirstCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoCmmentFirstCell.m; sourceTree = "<group>"; };
 		FE41C3B82BCFD4AF00BAD263 /* SXVideoCommentMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoCommentMoreView.h; sourceTree = "<group>"; };
 		FE41C3B92BCFD4AF00BAD263 /* SXVideoCommentMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoCommentMoreView.m; sourceTree = "<group>"; };
+		FE41C3BB2BD0EA5200BAD263 /* SXVideoCommentBeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoCommentBeModel.h; sourceTree = "<group>"; };
+		FE41C3BC2BD0EA5200BAD263 /* SXVideoCommentBeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoCommentBeModel.m; sourceTree = "<group>"; };
+		FE41C3BE2BD0EB8B00BAD263 /* SXVideoLikeComCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoLikeComCell.h; sourceTree = "<group>"; };
+		FE41C3BF2BD0EB8B00BAD263 /* SXVideoLikeComCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoLikeComCell.m; sourceTree = "<group>"; };
+		FE41C3C12BD0FFE500BAD263 /* SXVideoBeReplyComCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoBeReplyComCell.h; sourceTree = "<group>"; };
+		FE41C3C22BD0FFE500BAD263 /* SXVideoBeReplyComCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoBeReplyComCell.m; sourceTree = "<group>"; };
 		FE44F1012BB29FAA004ECF11 /* KTVHTTPCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVHTTPCache.h; sourceTree = "<group>"; };
 		FE44F1042BB29FAA004ECF11 /* KTVHCPathTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTVHCPathTool.m; sourceTree = "<group>"; };
 		FE44F1052BB29FAA004ECF11 /* KTVHCURLTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVHCURLTool.h; sourceTree = "<group>"; };
@@ -8863,6 +8872,8 @@
 				FE41C3B02BCE5FAA00BAD263 /* SXVideoCommentModel.m */,
 				FE41C3B22BCFA1F900BAD263 /* SXVideoCommentJson.h */,
 				FE41C3B32BCFA1F900BAD263 /* SXVideoCommentJson.m */,
+				FE41C3BB2BD0EA5200BAD263 /* SXVideoCommentBeModel.h */,
+				FE41C3BC2BD0EA5200BAD263 /* SXVideoCommentBeModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -8958,6 +8969,10 @@
 				FE9C3FC22B9095B2008C3A22 /* SXPlayPayVideoDetailListCell.m */,
 				FE9C40BE2B9FFD9E008C3A22 /* SXHasBuyVideoOrderListCell.h */,
 				FE9C40BF2B9FFD9E008C3A22 /* SXHasBuyVideoOrderListCell.m */,
+				FE41C3BE2BD0EB8B00BAD263 /* SXVideoLikeComCell.h */,
+				FE41C3BF2BD0EB8B00BAD263 /* SXVideoLikeComCell.m */,
+				FE41C3C12BD0FFE500BAD263 /* SXVideoBeReplyComCell.h */,
+				FE41C3C22BD0FFE500BAD263 /* SXVideoBeReplyComCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -10018,6 +10033,7 @@
 				FE44F1E62BB29FAB004ECF11 /* KTVHCDataCallback.m in Sources */,
 				A4E967CC2A69142500AE022E /* NoticeNoticenterModel.m in Sources */,
 				A4E966CC2A69142300AE022E /* NoticeNewLeadController.m in Sources */,
+				FE41C3C32BD0FFE500BAD263 /* SXVideoBeReplyComCell.m in Sources */,
 				A4E965722A69142200AE022E /* WHWeatherView.m in Sources */,
 				A4E9666C2A69142300AE022E /* NoticeDrawListViewController.m in Sources */,
 				A4E967802A69142400AE022E /* NoticeMangerVoiceController.m in Sources */,
@@ -10165,6 +10181,7 @@
 				A4E966952A69142300AE022E /* ZFSIsMute.m in Sources */,
 				A4E965CA2A69142200AE022E /* CustomBtn.m in Sources */,
 				A4E964C42A69142100AE022E /* RateTransposer.cpp in Sources */,
+				FE41C3C02BD0EB8B00BAD263 /* SXVideoLikeComCell.m in Sources */,
 				A4E967E42A69142500AE022E /* NoticeUserListController.m in Sources */,
 				A4E968992A69142600AE022E /* SCIndexViewConfiguration.m in Sources */,
 				FEB61BF42B4CEF6600B128FA /* NoticeShopStroyCell.m in Sources */,
@@ -10433,6 +10450,7 @@
 				A4E9662D2A69142300AE022E /* NoticeSong.m in Sources */,
 				A4354C3C2A9F149C00454D23 /* NoticeVipLelveView.swift in Sources */,
 				FE41C3AE2BCD178E00BAD263 /* SXVideoCommentLikeController.m in Sources */,
+				FE41C3BD2BD0EA5200BAD263 /* SXVideoCommentBeModel.m in Sources */,
 				A4E967DF2A69142500AE022E /* NoticeVersionController.m in Sources */,
 				A4E966E12A69142400AE022E /* NoticeHelpCommentModel.m in Sources */,
 				A4E966302A69142300AE022E /* NoticeRat.m in Sources */,

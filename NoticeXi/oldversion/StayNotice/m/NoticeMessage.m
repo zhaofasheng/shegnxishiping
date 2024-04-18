@@ -145,6 +145,10 @@
 - (void)setData:(NSDictionary *)data{
     _data = data;
     self.videoModel = [SXVideosModel mj_objectWithKeyValues:data];
+    if (self.videoModel.title || self.videoModel.introduce) {
+        self.videoModel.textContent = [NSString stringWithFormat:@"%@\n%@",self.videoModel.title,self.videoModel.introduce];
+    }
+
     self.searisModel = [SXPayForVideoModel mj_objectWithKeyValues:data];
 }
 @end

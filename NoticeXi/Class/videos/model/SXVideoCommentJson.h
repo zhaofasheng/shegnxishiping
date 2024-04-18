@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *list;
 @property (nonatomic, strong) NSString *commentCt;
 
+@property (nonatomic, strong) NSDictionary *topList;
 @end
 
 NS_ASSUME_NONNULL_END

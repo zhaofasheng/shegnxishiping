@@ -34,7 +34,7 @@
         }else if ([NoticeTools getLocalType] == 2){
             label.text = @"0 コメント";
         }else{
-            label.text = @"0条留言";
+            label.text = @"0 条留言";
         }
         
         label.textColor = [UIColor colorWithHexString:@"#25262E"];

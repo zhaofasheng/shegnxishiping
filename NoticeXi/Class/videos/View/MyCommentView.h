@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *type;//1=普通类型列表2=定位类型列表
 @property (nonatomic, strong) NSString *commentId;//评论定位类型 必传 评论ID 没有传0
 @property (nonatomic, strong) NSString *replyId;//评论定位类型 必传 回复ID 没有传0
-
+@property (nonatomic, assign) BOOL needPopCom;
 @property (nonatomic, assign) BOOL isDown;
 @property (nonatomic, assign) NSInteger pageNo;
 @property (nonatomic, strong) NSMutableArray *dataArr;

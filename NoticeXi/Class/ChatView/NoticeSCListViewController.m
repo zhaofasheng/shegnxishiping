@@ -100,22 +100,16 @@
         if (index == 2) {
             [weakSelf showHUD];
             NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-            [parm setObject:@"2" forKey:@"type"];
+            [parm setObject:@"1" forKey:@"type"];
             [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"messages/%@",[NoticeTools getuserId]] Accept:@"application/vnd.shengxi.v5.4.2+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                 [weakSelf hideHUD];
+                weakSelf.sysNoReadNum = @"0";
                 [weakSelf refreshNoUnread];
+                [weakSelf.meassageView requestNoread];
             } fail:^(NSError * _Nullable error) {
                 [weakSelf hideHUD];
             }];
-            
-            [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"messages/%@",[NoticeTools getuserId]] Accept:@"application/vnd.shengxi.v5.4.9+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-                if (success) {
-                    self.sysNoReadNum = @"0";
-                    [self.tableView reloadData];
-                }
-            } fail:^(NSError * _Nullable error) {
-                
-            }];
+        
         }
     };
     [alerView showXLAlertView];

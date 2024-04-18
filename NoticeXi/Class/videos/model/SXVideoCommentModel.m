@@ -33,6 +33,13 @@
     _created_at = [SXTools updateTimeForRowWithNoHourAndMin:created_at];
 }
 
+
+- (void)setFrom_user:(NSDictionary *)from_user{
+    _from_user = from_user;
+    self.fromUserInfo = [SXUserModel mj_objectWithKeyValues:from_user];
+}
+
+
 - (void)setContent:(NSString *)content{
     _content = content;
     self.firstAttr = [SXTools getStringWithLineHight:3 string:content];
@@ -40,11 +47,6 @@
     
     self.secondAttr = [SXTools getStringWithLineHight:3 string:content];
     self.secondContentHeight = [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-88-15 string:content isJiacu:NO];
-}
-
-- (void)setFrom_user:(NSDictionary *)from_user{
-    _from_user = from_user;
-    self.fromUserInfo = [SXUserModel mj_objectWithKeyValues:from_user];
 }
 
 - (void)setTo_user:(NSDictionary *)to_user{

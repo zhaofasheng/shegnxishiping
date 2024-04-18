@@ -10,7 +10,7 @@
 #import "SXVideoCommentModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SXVideoCmmentFirstCell : UITableViewHeaderFooterView
+@interface SXVideoCmmentFirstCell : UITableViewHeaderFooterView<LCActionSheetDelegate>
 @property (nonatomic, strong) SXVideoCommentModel *commentM;
 @property (nonatomic, strong) SXUserModel *videoUser;//视频作者的信息
 
@@ -24,9 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *likeImageView;
 @property (nonatomic, strong) UILabel *likeL;
 @property (nonatomic, strong) UILabel *authorL;
-
+@property (nonatomic, strong) UILabel *topL;
 @property (nonatomic,copy) void(^replyClickBlock)(SXVideoCommentModel *commentM);
-
+@property (nonatomic,copy) void(^deleteClickBlock)(SXVideoCommentModel *commentM);
+@property (nonatomic,copy) void(^topClickBlock)(SXVideoCommentModel *commentM);
 @end
 
 NS_ASSUME_NONNULL_END

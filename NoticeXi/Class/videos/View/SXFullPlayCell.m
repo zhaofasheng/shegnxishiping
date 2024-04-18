@@ -58,6 +58,13 @@
     
 }
 
+- (void)setNeedPopCom:(BOOL)needPopCom{
+    _needPopCom = needPopCom;
+    if (needPopCom) {
+        [self comClick:NO];
+    }
+}
+
 - (SXFullPlayInfoView *)infoView{
     if (!_infoView) {
         _infoView = [[SXFullPlayInfoView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-30-107, DR_SCREEN_WIDTH, 107)];
@@ -116,8 +123,17 @@
     self.coverImageView.hidden = YES;
     MyCommentView *commentView = [[MyCommentView alloc]init];
     commentView.videoUser = self.videoModel.userModel;
-    commentView.type = @"1";
+    if (self.needPopCom) {
+        commentView.type = @"2";
+    }else{
+        commentView.type = @"1";
+    }
+    
     commentView.delegate = self;
+    commentView.commentId = self.commentId;
+    commentView.replyId = self.replyId;
+    commentView.needPopCom = self.needPopCom;
+    self.needPopCom = NO;
     commentView.videoModel = self.videoModel;
     self.popView = [TCCommentsPopView commentsPopViewWithFrame:[UIScreen mainScreen].bounds commentBackView:commentView withScale:self.widthtoheight];
     [self.popView showToView:[NoticeTools getTopViewController].view];

@@ -16,10 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSUInteger page;
 @property (nonatomic, strong) NSMutableArray *modelArray;
 @property (nonatomic, assign) NSInteger currentPlayIndex;
+@property (nonatomic, strong) NSString *commentId;
+@property (nonatomic, strong) NSString *replyId;
+@property (nonatomic, assign) BOOL needPopCom;
 @property (nonatomic) BOOL hasMore;
 @property (nonatomic, assign) NSInteger rid;
 @property (nonatomic, assign) BOOL isSearch;
 @property (nonatomic, assign) BOOL noRequest;
+
 @property (nonatomic, copy) void(^popbackBlock)(void);
 @property (nonatomic, copy) void(^dataBlock)(NSInteger pageNo,NSMutableArray *dataArr);
 @end

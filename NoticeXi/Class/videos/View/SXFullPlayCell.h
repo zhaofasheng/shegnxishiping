@@ -22,7 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) void(^showComBlock)(BOOL show);
 @property (nonatomic,copy) void(^openMoreBlock)(BOOL open);
 @property (nonatomic,copy) void(^fatherBlock)(CGRect bounds);
-
+@property (nonatomic, strong) NSString *commentId;
+@property (nonatomic, strong) NSString *replyId;
+@property (nonatomic, assign) BOOL needPopCom;
 @property (nonatomic, strong) SXVideosComClickView *clickView;
 @end
 

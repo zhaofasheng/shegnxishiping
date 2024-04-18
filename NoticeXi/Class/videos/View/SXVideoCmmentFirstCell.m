@@ -9,6 +9,7 @@
 #import "SXVideoCmmentFirstCell.h"
 #import "NoticeUserInfoCenterController.h"
 #import "SXVideoUserCenterController.h"
+#import "NoticeXi-Swift.h"
 @implementation SXVideoCmmentFirstCell
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier{
@@ -71,6 +72,10 @@
         [self.bottomView addSubview:self.likeImageView];
         UITapGestureRecognizer *likeTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeClick)];
         [self.likeImageView addGestureRecognizer:likeTap1];
+        
+        UILongPressGestureRecognizer *longDleTap = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longDeleteVoice:)];
+        longDleTap.minimumPressDuration = 0.3;
+        [self addGestureRecognizer:longDleTap];
     }
     return self;
 }
@@ -82,6 +87,7 @@
     
     self.nickNameL.text = commentM.fromUserInfo.nick_name;
     self.nickNameL.frame = CGRectMake(56, 10, GET_STRWIDTH(self.nickNameL.text, 12, 17), 17);
+    
     _authorL.hidden = YES;
     
     if ([commentM.fromUserInfo.userId isEqualToString:self.videoUser.userId]) {
@@ -94,8 +100,13 @@
     
     self.bottomView.frame = CGRectMake(56, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-56-15, 20);
     self.timeL.text = commentM.created_at;
-    self.timeL.frame = CGRectMake(0, 0, GET_STRWIDTH(self.timeL.text, 12,20), 20);
+    self.timeL.frame = CGRectMake((commentM.top_at.intValue?34:0), 0, GET_STRWIDTH(self.timeL.text, 12,20), 20);
     self.replyL.frame = CGRectMake(CGRectGetMaxX(_timeL.frame),0, 44, 20);
+    
+    _topL.hidden = YES;
+    if (commentM.top_at.intValue) {
+        self.topL.hidden = NO;
+    }
     
     [self refreshLikeUI:commentM];
     
@@ -109,7 +120,6 @@
             self.authorHasReplyL.text = @"作者赞过";
             self.authorHasReplyL.frame = CGRectMake(56,CGRectGetMaxY(self.bottomView.frame)+8, 50, 15);
         }
-        [_authorHasReplyL setAllCorner:15/2];
     }
 }
 
@@ -152,9 +162,26 @@
         _authorHasReplyL.font = [UIFont systemFontOfSize:10];
         _authorHasReplyL.textColor = [UIColor colorWithHexString:@"#FF2A6F"];
         _authorHasReplyL.textAlignment = NSTextAlignmentCenter;
+        _authorHasReplyL.layer.cornerRadius = 15/2;
+        _authorHasReplyL.layer.masksToBounds = YES;
         [self.contentView addSubview:_authorHasReplyL];
     }
-    return _authorL;
+    return _authorHasReplyL;
+}
+
+- (UILabel *)topL{
+    if (!_topL) {
+        _topL = [[UILabel  alloc] initWithFrame:CGRectMake(0,2, 30, 16)];
+        _topL.backgroundColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.1];
+        _topL.font = [UIFont systemFontOfSize:12];
+        _topL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+        _topL.textAlignment = NSTextAlignmentCenter;
+        _topL.layer.cornerRadius = 15/2;
+        _topL.layer.masksToBounds = YES;
+        _topL.text = @"置顶";
+        [self.bottomView addSubview:_topL];
+    }
+    return _topL;
 }
 
 - (void)replyClick{
@@ -205,4 +232,161 @@
     }
 }
 
+- (void)longDeleteVoice:(id)sender{
+    UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)sender;
+    UIGestureRecognizerState longPressState = longPress.state;
+
+    //py.dele  删除  chat.jubao 举报
+    switch (longPressState) {
+        case UIGestureRecognizerStateBegan:{  //手势开始，对被选中cell截图，隐藏原cell
+    
+            NSArray *arr = nil;
+            if ([NoticeTools isManager]) {//管理员长按操作
+                arr = @[self.commentM.top_at.intValue?@"取消置顶": @"置顶",@"回复",@"复制",@"删除"];
+            }else if ([[NoticeTools getuserId] isEqualToString:self.videoUser.userId]){//视频发布者长按操作
+                
+                if ([self.commentM.fromUserInfo.userId isEqualToString:[NoticeTools getuserId]]) {//视频发布者长按自己的评论
+                    arr = @[self.commentM.top_at.intValue?@"取消置顶": @"置顶",@"回复",@"复制",@"删除"];
+                }else{//视频发布者长按别人的评论
+                    arr = @[self.commentM.top_at.intValue?@"取消置顶": @"置顶",@"回复",@"复制",@"举报",@"删除"];
+                }
+            }else if ([self.commentM.fromUserInfo.userId isEqualToString:[NoticeTools getuserId]]){//普通用户长按自己的评论
+                arr = @[@"回复",@"复制",@"删除"];
+            }else{//普通用户长按别人的评论
+                arr = @[@"回复",@"复制",@"举报"];
+            }
+            
+            LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:@"取消" clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
+            } otherButtonTitleArray:arr];
+            sheet.delegate = self;
+            [sheet show];
+
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+
+    if ([NoticeTools isManager]) {//管理员长按操作
+        if (buttonIndex == 1) {
+            [self setTopComment];
+        }else if (buttonIndex == 2){
+            [self replyClick];
+        }else if (buttonIndex == 3){
+            UIPasteboard *pastboard = [UIPasteboard generalPasteboard];
+            [pastboard setString:self.commentM.content];
+            [[NoticeTools getTopViewController] showToastWithText:@"已复制"];
+        }else if (buttonIndex == 4){
+            [self deleteComment];
+        }
+    }else if ([[NoticeTools getuserId] isEqualToString:self.videoUser.userId]){//视频发布者长按操作
+        
+        if ([self.commentM.fromUserInfo.userId isEqualToString:[NoticeTools getuserId]]) {//视频发布者长按自己的评论
+            if (buttonIndex == 1) {
+                [self setTopComment];
+            }else if (buttonIndex == 2){
+                [self replyClick];
+            }else if (buttonIndex == 3){
+                UIPasteboard *pastboard = [UIPasteboard generalPasteboard];
+                [pastboard setString:self.commentM.content];
+                [[NoticeTools getTopViewController] showToastWithText:@"已复制"];
+            }else if (buttonIndex == 4){
+                [self deleteComment];
+            }
+        }else{//视频发布者长按别人的评论
+     
+            if (buttonIndex == 1) {
+                [self setTopComment];
+            }else if (buttonIndex == 2){
+                [self replyClick];
+            }else if (buttonIndex == 3){
+                UIPasteboard *pastboard = [UIPasteboard generalPasteboard];
+                [pastboard setString:self.commentM.content];
+                [[NoticeTools getTopViewController] showToastWithText:@"已复制"];
+            }else if (buttonIndex == 4){
+                [self jubaoComment];
+            }
+            else if (buttonIndex == 5){
+                [self deleteComment];
+            }
+        }
+    }else if ([self.commentM.fromUserInfo.userId isEqualToString:[NoticeTools getuserId]]){//普通用户长按自己的评论
+        if (buttonIndex == 1){
+            [self replyClick];
+        }else if (buttonIndex == 2){
+            UIPasteboard *pastboard = [UIPasteboard generalPasteboard];
+            [pastboard setString:self.commentM.content];
+            [[NoticeTools getTopViewController] showToastWithText:@"已复制"];
+        }else if (buttonIndex == 3){
+            [self deleteComment];
+        }
+    }else{//普通用户长按别人的评论
+        
+        if (buttonIndex == 1){
+            [self replyClick];
+        }else if (buttonIndex == 2){
+            UIPasteboard *pastboard = [UIPasteboard generalPasteboard];
+            [pastboard setString:self.commentM.content];
+            [[NoticeTools getTopViewController] showToastWithText:@"已复制"];
+        }else if (buttonIndex == 3){
+            [self jubaoComment];
+        }
+    }
+}
+
+//置顶评论
+- (void)setTopComment{
+    [[NoticeTools getTopViewController] showHUD];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.commentM.commentId forKey:@"parentId"];
+    [parm setObject:self.commentM.top_at.intValue?@"0":@"1" forKey:@"type"];
+    [[DRNetWorking shareInstance] requestWithPatchPath:@"videoComment/setTop" Accept:@"application/vnd.shengxi.v5.8.1+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            self.commentM.top_at = self.commentM.top_at.intValue?@"0":@"1";
+            if (self.topClickBlock) {
+                self.topClickBlock(self.commentM);
+            }
+            if (self.commentM.top_at.intValue) {
+                [[NoticeTools getTopViewController] showToastWithText:@"已置顶"];
+            }else{
+                [[NoticeTools getTopViewController] showToastWithText:@"已取消置顶"];
+            }
+        }
+        [[NoticeTools getTopViewController] hideHUD];
+    } fail:^(NSError * _Nullable error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
+}
+
+//删除评论
+- (void)deleteComment{
+    __weak typeof(self) weakSelf = self;
+     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"该内容下的回复内容也会被删除" message:nil sureBtn:@"取消" cancleBtn:@"删除" right:YES];
+    alerView.resultIndex = ^(NSInteger index) {
+        if (index == 2) {
+            [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"videoCommont/%@",weakSelf.commentM.commentId] Accept:@"application/vnd.shengxi.v5.8.1+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+                if (success) {
+                    if (weakSelf.deleteClickBlock) {
+                        weakSelf.deleteClickBlock(weakSelf.commentM);
+                    }
+                }
+            } fail:^(NSError * _Nullable error) {
+                
+            }];
+        }
+    };
+    [alerView showXLAlertView];
+
+}
+
+//举报评论
+- (void)jubaoComment{
+    NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
+    juBaoView.reouceId = self.commentM.commentId;
+    juBaoView.reouceType = @"149";
+    [juBaoView showView];
+}
 @end

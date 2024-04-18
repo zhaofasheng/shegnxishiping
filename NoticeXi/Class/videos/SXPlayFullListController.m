@@ -105,10 +105,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SXFullPlayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.videoModel = self.modelArray[indexPath.row];
+    cell.commentId = self.commentId;
+    cell.replyId = self.replyId;
     __weak typeof(self) weakSelf = self;
     
     cell.showComBlock = ^(BOOL show) {
         if (show) {
+            weakSelf.needPopCom = NO;
             weakSelf.videoPlayerManager.playerView.controlView.slider.hidden = YES;
             weakSelf.navBarView.hidden = YES;
         }else{
@@ -268,6 +271,12 @@
     }
     [self.videoPlayerManager resetToPlayNewVideo];
     
+    if (self.needPopCom && self.noRequest) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0];
+        SXFullPlayCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        cell.needPopCom = self.needPopCom;
+        self.needPopCom = NO;
+    }
 }
 
 - (CGFloat)deviceFreeMemorySize {

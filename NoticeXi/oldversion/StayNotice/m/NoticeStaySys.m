@@ -21,6 +21,11 @@
     self.comModel = [NoticeStayMesssage mj_objectWithKeyValues:voice_comment];
 }
 
+- (void)setVideoCommentNum:(NSDictionary *)videoCommentNum{
+    _videoCommentNum = videoCommentNum;
+    self.videoCommentNumM = [NoticeStayMesssage mj_objectWithKeyValues:videoCommentNum];
+}
+
 - (void)setChar_pri:(NSDictionary *)char_pri{
     _char_pri = char_pri;
     self.char_priM = [NoticeStayMesssage mj_objectWithKeyValues:char_pri];
