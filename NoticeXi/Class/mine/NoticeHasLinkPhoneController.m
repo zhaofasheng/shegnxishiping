@@ -9,9 +9,11 @@
 #import "NoticeHasLinkPhoneController.h"
 #import "NoticeChangePhoneViewController.h"
 @interface NoticeHasLinkPhoneController ()
+
 @property (nonatomic, strong) UILabel *numL;
 @property (nonatomic, strong) UIImageView *markImageView;
 @property (nonatomic, strong) UIButton *changeBtn;
+
 @end
 
 @implementation NoticeHasLinkPhoneController
@@ -20,7 +22,6 @@
     [super viewDidLoad];
 
     self.navBarView.titleL.text = @"绑定手机号";
-    
     
     UIImageView *titleImageView = [[UIImageView alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-49)/2, 94+NAVIGATION_BAR_HEIGHT, 49, 75)];
 

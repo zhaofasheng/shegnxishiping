@@ -36,7 +36,7 @@
     TUICallParams *callParams = [TUICallParams new];
     callParams.offlinePushInfo = offlinePushInfo;
     callParams.timeout = getOrderTime.intValue?getOrderTime.intValue:120;
-    DRLog(@"超时不接时间%d",callParams.timeout);
+
     TUIRoomId *roomId = [[TUIRoomId alloc] init];
     roomId.intRoomId = roomIdNum;
     callParams.roomId = roomId;
@@ -45,7 +45,7 @@
     [[TUICallingStatusManager shareInstance] setDelegate:self.callingViewManager];
     
     [[TUICallEngine createInstance] call:userId callMediaType:TUICallMediaTypeAudio params:callParams succ:^{
-        DRLog(@"%d播放的房间id===拨打成功",callParams.roomId.intRoomId);
+
         weakSelf.autoCallNexting = NO;
         if (weakSelf.autoCallNext) {
             weakSelf.autoCallNexting = YES;
@@ -79,14 +79,13 @@
                     [alerView showXLAlertView];
                 }
             }
-            DRLog(@"买家取消下单通话");
+         
         }];
     } fail:^(int code, NSString * _Nullable errMsg) {
-        DRLog(@"拨打失败%@",errMsg);
+
         [NoticeQiaojjieTools showWithTitle:[NSString stringWithFormat:@"拨打失败，请稍后重试%d%@",code,errMsg]];
         if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
             [TUICallingAction hangup];
-            DRLog(@"买家取消下单通话");
         };
         if(weakSelf.cancelBlcok){
             weakSelf.cancelBlcok(YES);

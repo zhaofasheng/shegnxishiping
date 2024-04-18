@@ -57,10 +57,16 @@
 - (void)setReply:(NSDictionary *)reply{
     _reply = reply;
     self.firstReplyModel = [SXVideoCommentModel mj_objectWithKeyValues:reply];
+    if (self.firstReplyModel.comment_type.intValue > 1) {
+        self.firstReplyModel.content = @"请更新到最新版本";
+    }
 }
 
 - (void)setComment:(NSDictionary *)comment{
     _comment = comment;
     self.firstCommentModel = [SXVideoCommentModel mj_objectWithKeyValues:comment];
+    if (self.firstCommentModel.comment_type.intValue > 1) {
+        self.firstCommentModel.content = @"请更新到最新版本";
+    }
 }
 @end

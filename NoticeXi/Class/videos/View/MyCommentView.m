@@ -239,6 +239,9 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     if (topCommentModel.firstReplyModel) {//如果存在第一条回复数据
                         [topCommentModel.replyArr addObject:topCommentModel.firstReplyModel];
                     }
+                    if (topCommentModel.comment_type.intValue > 1) {
+                        topCommentModel.content = @"请更新到最新版本";
+                    }
                     [self.dataArr addObject:topCommentModel];
                 }
             }
@@ -246,6 +249,9 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
             if (jsonModel.list.count) {
                 for (NSDictionary *dic in jsonModel.list) {//普通列表
                     SXVideoCommentModel *commentM = [SXVideoCommentModel mj_objectWithKeyValues:dic];
+                    if (commentM.comment_type.intValue > 1) {
+                        commentM.content = @"请更新到最新版本";
+                    }
                     if (commentM.top_at.intValue) {
                         self.currentTopModel = commentM;
                     }
@@ -297,6 +303,9 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
             
             for (NSDictionary *dic in dict[@"data"]) {
                 SXVideoCommentModel *replyM = [SXVideoCommentModel mj_objectWithKeyValues:dic];
+                if (replyM.comment_type.intValue > 1) {
+                    replyM.content = @"请更新到最新版本";
+                }
                 BOOL hasSave = NO;
                 for (SXVideoCommentModel *oldm in commentM.moreReplyArr) {//去重
                     if ([oldm.commentId isEqualToString:replyM.commentId]) {
