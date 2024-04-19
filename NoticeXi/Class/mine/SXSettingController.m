@@ -16,6 +16,7 @@
 #import "NoticeVersionController.h"
 #import "NoticeFAQViewController.h"
 #import "SXHisToryDownLoadController.h"
+#import "ZFSDateFormatUtil.h"
 #import "KTVHTTPCache.h"
 @interface SXSettingController ()<SXSwitchChoiceDelegate>
 
@@ -141,6 +142,10 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+    if (currentTime > [ZFSDateFormatUtil timeIntervalWithDateString:@"2024-05-01 00:00:00"]) {
+        return 3;
+    }
     return 4;
 }
 

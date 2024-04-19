@@ -17,7 +17,6 @@
 #import "NoticeVoiceDownLoadController.h"
 
 @interface SXPlayFullListController ()<ZFManagerPlayerDelegate>
-
 @property (nonatomic, strong) UIView *fatherView;
 //这个是播放视频的管理器
 @property (nonatomic, strong) DDVideoPlayerManager *videoPlayerManager;
@@ -25,8 +24,10 @@
 @property (nonatomic, strong) DDVideoPlayerManager *preloadVideoPlayerManager;
 @property (nonatomic, assign) BOOL isRequesting;
 @property (nonatomic, assign) BOOL nodata;
+@property (nonatomic, assign) BOOL isPlayFail;
 @property (nonatomic, assign) BOOL isFirstAlloc;
 @property (nonatomic, strong) UIButton *downloadBtn;
+
 @end
 
 @implementation SXPlayFullListController
@@ -55,6 +56,17 @@
     [self.view bringSubviewToFront:self.navBarView];
     [self.navBarView.backButton setImage:UIImageNamed(@"backwhties") forState:UIControlStateNormal];
     [self.navBarView addSubview:self.downloadBtn];
+}
+
+- (void)hasNetWork{
+    if (self.isPlayFail) {
+        self.isPlayFail = NO;
+        
+        [self playIndex:self.currentPlayIndex];
+        if(self.modelArray.count > (self.currentPlayIndex + 1)) {
+            [self preLoadIndex:self.currentPlayIndex + 1];
+        }
+    }
 }
 
 - (UIButton *)downloadBtn{
@@ -370,6 +382,15 @@
     if (self.currentPlayIndex < self.modelArray.count) {
         SXVideosModel *currentM = self.modelArray[self.currentPlayIndex];
         currentM.seekTime = value;
+    }
+}
+
+- (void)zfManager_playerPlayerStatusChange:(ZFPlayerState)statu{
+   
+    if (statu == ZFPlayerStateFailed) {
+        self.isPlayFail = YES;
+    }else{
+        self.isPlayFail = NO;
     }
 }
 

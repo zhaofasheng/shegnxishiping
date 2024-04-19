@@ -48,7 +48,8 @@ typedef NS_ENUM(NSInteger, SelStatusBarHideState)
 /** 全屏状态下状态栏显示方式 */
 @property (nonatomic, assign) SelStatusBarHideState statusBarHideState;
 @property (nonatomic, assign) BOOL justShow;
-
+/** 是否自动全屏 */
+@property (nonatomic, assign) BOOL isAutoFull;
 //从什么位置开始播放
 @property (nonatomic, assign) CGFloat defalutPlayTime;
 @end

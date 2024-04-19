@@ -54,6 +54,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     self = [super initWithFrame:frame];
     if (self) {
         self.hasShowActivity = YES;
+        self.isAutoFull = configuration.isAutoFull;
         _playerConfiguration = configuration;
         self.isPay = configuration.isPay;
         self.screen = configuration.screen;
@@ -156,17 +157,27 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     [self.fullView addSubview:self];
     
     if (!self.screen) {
-        CGFloat duration = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;
-        
-        [UIView animateWithDuration:duration animations:^{
+        if (self.isAutoFull) {
             if (orientation == UIInterfaceOrientationLandscapeLeft){
                 self.transform = CGAffineTransformMakeRotation(-M_PI/2);
             }else if (orientation == UIInterfaceOrientationLandscapeRight) {
                 self.transform = CGAffineTransformMakeRotation(M_PI/2);
             }
-        }completion:^(BOOL finished) {
-            
-        }];
+            self.isAutoFull = NO;
+        }else{
+            CGFloat duration = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;
+            [UIView animateWithDuration:duration animations:^{
+                if (orientation == UIInterfaceOrientationLandscapeLeft){
+                    self.transform = CGAffineTransformMakeRotation(-M_PI/2);
+                }else if (orientation == UIInterfaceOrientationLandscapeRight) {
+                    self.transform = CGAffineTransformMakeRotation(M_PI/2);
+                }
+            }completion:^(BOOL finished) {
+                
+            }];
+        }
+    
+ 
         self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT);
     }else{
         self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT);
@@ -257,8 +268,6 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 - (void)setPlayDidEnd:(BOOL)playDidEnd{
     _playDidEnd = playDidEnd;
     self.playbackControls.playDidEnd = playDidEnd;
-    DRLog(@"是否播放完成%d",playDidEnd);
-
     if (self.playDidEndBlock) {
         self.playDidEndBlock(_playDidEnd);
     }
@@ -275,7 +284,6 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         [_playbackControls _setPlayerProgress:timeInterval / totalDuration];
     }
     else if ([keyPath isEqualToString:@"playbackBufferEmpty"]){
-        
         // 当无缓冲视频数据时
         if (self.playerItem.playbackBufferEmpty) {
             self.playerState = SelVideoPlayerStateBuffering;
@@ -292,11 +300,13 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     else if ([keyPath isEqualToString:@"status"])
     {
         if (self.player.currentItem.status == AVPlayerStatusReadyToPlay) {
-         
-        
             [self refreshUI];
             [self.layer insertSublayer:_playerLayer atIndex:0];
             self.playerState = SelVideoPlayerStatePlaying;
+            if (self.isAutoFull) {
+                [self _videoZoomInWithDirection:UIInterfaceOrientationLandscapeRight];
+            }
+            
         }
         else if (self.player.currentItem.status == AVPlayerItemStatusFailed) {
             self.playerState = SelVideoPlayerStateFailed;
@@ -693,7 +703,9 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         DRLog(@"非全屏");
         //隐藏=YES,显示=NO; Animation:动画效果
     }
-    
+    if (self.fullBlock) {
+        self.fullBlock(isFullScreen);
+    }
 }
 
 /** 根据playerItem，来添加移除观察者 */
@@ -762,12 +774,9 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 - (void)refreshUI{
     self.playerLayer.frame = self.bounds;
     self.playbackControls.frame = self.bounds;
-
     [self.playbackControls makeConstraints];
 }
 
-
-    
 /** 释放播放器 */
 - (void)_deallocPlayer
 {
@@ -784,22 +793,24 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     [self.playbackControls _playerCancelAutoHidePlaybackControls];
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    DRLog(@"释放");
+  
     if (self.timeObserve) {
-        
         [self.player removeTimeObserver:self.timeObserve];
         self.timeObserve = nil;
     }
+    
     self.playerLayer = nil;
     self.player = nil;
 }
 
 - (void)deallocAll{
+    
+    [self.fullView removeFromSuperview];
+    self.fullView = nil;
     self.playerItem = nil;
     [self.playbackControls _playerCancelAutoHidePlaybackControls];
   
     if (self.timeObserve) {
-        
         [self.player removeTimeObserver:self.timeObserve];
         self.timeObserve = nil;
     }

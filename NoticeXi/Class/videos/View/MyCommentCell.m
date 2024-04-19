@@ -41,6 +41,9 @@
         self.contentL.textColor = [UIColor colorWithHexString:@"#25262E"];
         self.contentL.numberOfLines = 0;
         [self.contentView addSubview:self.contentL];
+        self.contentL.userInteractionEnabled = YES;
+        UITapGestureRecognizer *replyTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(replyClick)];
+        [_contentL addGestureRecognizer:replyTap1];
         
         self.bottomView = [[UIView  alloc] initWithFrame:CGRectMake(88, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-88-15, 20)];
         [self.contentView addSubview:self.bottomView];
@@ -326,7 +329,7 @@
 //删除评论
 - (void)deleteComment{
     __weak typeof(self) weakSelf = self;
-     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"该内容下的回复内容也会被删除" message:nil sureBtn:@"取消" cancleBtn:@"删除" right:YES];
+     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定删除吗？" message:@"该内容下的回复内容也会被删除" sureBtn:@"取消" cancleBtn:@"删除" right:YES];
     alerView.resultIndex = ^(NSInteger index) {
         if (index == 2) {
             [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"videoCommont/%@",weakSelf.commentM.commentId] Accept:@"application/vnd.shengxi.v5.8.1+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {

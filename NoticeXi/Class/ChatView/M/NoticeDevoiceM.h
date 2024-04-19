@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NoticeDevoiceM : NSObject
 @property (nonatomic, strong) NSString *platform_id;
 @property (nonatomic, strong) NSString *app_version;
+@property (nonatomic, strong) NSString *forced_update;
+@property (nonatomic, strong) NSString *app_content;
 @property (nonatomic, strong) NSString *device_info;
 @property (nonatomic, strong) NSString *personality_no;
 @property (nonatomic, strong) NSString *gender;

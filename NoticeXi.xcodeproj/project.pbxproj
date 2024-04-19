@@ -5360,6 +5360,11 @@
 		A4E95C242A69141B00AE022E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A4E95E0E2A69141C00AE022E /* YZC_PickerView.h */,
+				A4E95E062A69141C00AE022E /* YZC_PickerView.m */,
+				A4E95E182A69141C00AE022E /* YZC_PickerView.xib */,
+				A4E95E0B2A69141C00AE022E /* ZFSDateFormatUtil.h */,
+				A4E95E172A69141C00AE022E /* ZFSDateFormatUtil.m */,
 				A42CBDFF2B187E5600C45415 /* XLCardSwitch */,
 				A48E62152A82269500C06969 /* 自定义一周日历 */,
 				A4E95CDE2A69141B00AE022E /* AlertView */,
@@ -6183,27 +6188,22 @@
 		A4E95E032A69141C00AE022E /* v */ = {
 			isa = PBXGroup;
 			children = (
-				A4E95E042A69141C00AE022E /* NoticeHotMovieCell.h */,
-				A4E95E052A69141C00AE022E /* NoticeMoivceInCell.m */,
-				A4E95E062A69141C00AE022E /* YZC_PickerView.m */,
 				A4E95E072A69141C00AE022E /* NoticeAllHotCell.h */,
-				A4E95E082A69141C00AE022E /* ZFSPickerModel.m */,
-				A4E95E092A69141C00AE022E /* NoticeHotMovieList.m */,
-				A4E95E0A2A69141C00AE022E /* NoticeMovieTopCell.m */,
-				A4E95E0B2A69141C00AE022E /* ZFSDateFormatUtil.h */,
-				A4E95E0C2A69141C00AE022E /* NoticeSearFootMovie.m */,
-				A4E95E0D2A69141C00AE022E /* NoticeMovieDetail.m */,
-				A4E95E0E2A69141C00AE022E /* YZC_PickerView.h */,
-				A4E95E0F2A69141C00AE022E /* NoticeMoivceInCell.h */,
-				A4E95E102A69141C00AE022E /* NoticeHotMovieCell.m */,
 				A4E95E112A69141C00AE022E /* NoticeAllHotCell.m */,
-				A4E95E122A69141C00AE022E /* NoticeMovieTopCell.h */,
+				A4E95E042A69141C00AE022E /* NoticeHotMovieCell.h */,
+				A4E95E102A69141C00AE022E /* NoticeHotMovieCell.m */,
 				A4E95E132A69141C00AE022E /* NoticeHotMovieList.h */,
-				A4E95E142A69141C00AE022E /* ZFSPickerModel.h */,
+				A4E95E092A69141C00AE022E /* NoticeHotMovieList.m */,
+				A4E95E0F2A69141C00AE022E /* NoticeMoivceInCell.h */,
+				A4E95E052A69141C00AE022E /* NoticeMoivceInCell.m */,
 				A4E95E152A69141C00AE022E /* NoticeMovieDetail.h */,
+				A4E95E0D2A69141C00AE022E /* NoticeMovieDetail.m */,
+				A4E95E122A69141C00AE022E /* NoticeMovieTopCell.h */,
+				A4E95E0A2A69141C00AE022E /* NoticeMovieTopCell.m */,
 				A4E95E162A69141C00AE022E /* NoticeSearFootMovie.h */,
-				A4E95E172A69141C00AE022E /* ZFSDateFormatUtil.m */,
-				A4E95E182A69141C00AE022E /* YZC_PickerView.xib */,
+				A4E95E0C2A69141C00AE022E /* NoticeSearFootMovie.m */,
+				A4E95E142A69141C00AE022E /* ZFSPickerModel.h */,
+				A4E95E082A69141C00AE022E /* ZFSPickerModel.m */,
 			);
 			path = v;
 			sourceTree = "<group>";
@@ -11208,7 +11208,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.8.2;
+				MARKETING_VERSION = 5.8.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -11408,7 +11408,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.8.2;
+				MARKETING_VERSION = 5.8.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

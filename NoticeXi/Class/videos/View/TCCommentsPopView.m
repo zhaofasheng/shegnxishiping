@@ -25,7 +25,6 @@
 ////向下拖拽最后时刻的位移
 //@property (nonatomic, assign) CGFloat lastDrapDistance;
 
-
 @end
 
 
@@ -35,8 +34,6 @@
     TCCommentsPopView *view = [[TCCommentsPopView alloc] initWithFrame:frame commentBackView:commentBackView withScale:widthtoheight];
     return view;
 }
-
-
 
 - (instancetype)initWithFrame:(CGRect)frame commentBackView:(MyCommentView *)commentBackView withScale:(CGFloat)widthtoheight{
     self = [super initWithFrame:frame];
@@ -87,7 +84,6 @@
         self.container.frame = frame;
     }
                      completion:^(BOOL finished) {
-        
     }];
 }
 

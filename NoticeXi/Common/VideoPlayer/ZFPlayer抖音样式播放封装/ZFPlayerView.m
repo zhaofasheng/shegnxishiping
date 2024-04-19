@@ -108,8 +108,6 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     return self;
 }
 
-
-
 /**
  *  storyboard、xib加载playerView会调用此方法
  */
@@ -155,7 +153,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
  *  添加观察者、通知
  */
 - (void)addNotifications {
-    
+
     //来了语音通话
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pausePlay) name:@"HASGETSHOPVOICECHANTTOTICE" object:nil];
     
@@ -722,6 +720,9 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
  *  应用退到后台
  */
 - (void)appDidEnterBackground {
+    if (self.state == ZFPlayerStateFailed) {//如果是播放失败状态就不需要执行自动暂停
+        return;
+    }
     if(self.playerModel.isAutoPauseWhenBackGround) {
         self.didEnterBackground     = YES;
         [self autoPause];
@@ -735,6 +736,9 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
  *  应用进入前台
  */
 - (void)appDidEnterPlayground {
+    if (self.state == ZFPlayerStateFailed) {//如果是播放失败状态就不需要执行自动播放
+        return;
+    }
     if(self.playerModel.isAutoPauseWhenBackGround) {
         self.didEnterBackground     = NO;
         [self autoPlay];
@@ -860,7 +864,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
             break;
         case ZFPlayerStateFailed:// 播放失败
         {
-
+            DRLog(@"播放失败");
         }
             break;
         case ZFPlayerStateBuffering:// 缓冲中

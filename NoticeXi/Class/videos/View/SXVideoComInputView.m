@@ -43,7 +43,7 @@
         self.contentView.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.contentView];
         
-        _plaL = [[UILabel alloc] initWithFrame:CGRectMake(17,7, 200, 34)];
+        _plaL = [[UILabel alloc] initWithFrame:CGRectMake(19,7, 200, 34)];
         _plaL.text = self.plaStr;
         _plaL.font = FOURTHTEENTEXTFONTSIZE;
         _plaL.textColor = [[UIColor colorWithHexString:@"#A1A7B3"] colorWithAlphaComponent:1];
@@ -99,7 +99,6 @@
 
 - (void)sendClick{
     
-    
     if (!self.contentView.text.length) {
         [self.contentView resignFirstResponder];
         return;
@@ -115,10 +114,12 @@
     if(self.saveKey){
         [NoticeComTools removeWithKey:self.saveKey];
     }
+    
     NSInteger num = self.limitNum?self.limitNum:500;
     if (self.contentView.text.length > num) {
         self.contentView.text = [self.contentView.text substringToIndex:num];
     }
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(sendWithComment: commentId:)]) {
         [self.delegate sendWithComment:self.contentView.text commentId:self.commentId];
     }
@@ -131,10 +132,8 @@
 
 -(void)keyboardWillChangeFrame:(NSNotification *)notification{
     
- 
     self.backView.hidden = NO;
 
-        
     NSDictionary *userInfo = notification.userInfo;
     // 键盘的frame
     CGRect keyboardF = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -153,7 +152,7 @@
 //        self.replyToView.replyLabel.textColor = [UIColor colorWithHexString:@"#8A8F99"];
 //     
 //    }
-    self.backView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-self.frame.origin.y);
+    //self.backView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-self.frame.origin.y);
     
     //[rootWindow bringSubviewToFront:self.replyToView];
     [rootWindow bringSubviewToFront:self];

@@ -27,13 +27,14 @@
 @property (nonatomic, strong) SXPayVideoPlayDetailListController *listVC;
 
 @property (nonatomic, strong) SelVideoPlayer *player;
-
+/** 加载指示器 */
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, strong) SXPlayPayVideoDetailHeaderView *videoHeaderView;
 @property (nonatomic, strong) SXplayPayVideoDetailSection *sectionView;
-
+@property (nonatomic, strong) UIView *balckView;
 @property (nonatomic, strong) NSArray *arr;
 @property (nonatomic, assign) BOOL isPause;
-
+@property (nonatomic, assign) BOOL isFullPlay;
 @end
 
 @implementation SXPayVideoPlayDetailBaseController
@@ -162,6 +163,8 @@
     
     __weak typeof(self) weakSelf = self;
     SelPlayerConfiguration *configuration = [[SelPlayerConfiguration alloc]init];
+    configuration.isAutoFull = self.isFullPlay;
+   
     configuration.screen = self.currentPlayModel.screen.intValue==2?YES:NO;
     configuration.shouldAutoPlay = YES;     //自动播放
     configuration.supportedDoubleTap = YES;     //支持双击播放暂停
@@ -178,6 +181,18 @@
             weakSelf.currentPlayModel.schedule = [NSString stringWithFormat:@"%ld",currentTime];
         }else{
             weakSelf.currentPlayModel.schedule = @"0";
+        }
+    };
+
+    _player.fullBlock = ^(BOOL isFull) {
+        weakSelf.isFullPlay = isFull;
+        if (isFull) {
+            [weakSelf.activityIndicatorView startAnimating];
+            [[SXTools getKeyWindow] addSubview:weakSelf.balckView];
+            [[SXTools getKeyWindow] bringSubviewToFront:weakSelf.player.fullView];
+        }else{
+            [weakSelf.balckView removeFromSuperview];
+            [weakSelf.activityIndicatorView stopAnimating];
         }
     };
     
@@ -220,11 +235,31 @@
         };
         [moreView showTost];
     };
-    
+   
     [self.view addSubview:self.player];
     
     [self refresUI];
 }
+
+- (UIView *)balckView{
+    if (!_balckView) {
+        _balckView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+        _balckView.backgroundColor = [UIColor blackColor];
+        [_balckView addSubview:self.activityIndicatorView];
+        self.activityIndicatorView.center = _balckView.center;
+    }
+    return _balckView;
+}
+
+/** 加载指示器 */
+- (UIActivityIndicatorView *)activityIndicatorView
+{
+    if (!_activityIndicatorView) {
+        _activityIndicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    }
+    return _activityIndicatorView;
+}
+
 
 - (SXPayVideoPlayDetailListController *)listVC{
     if(!_listVC){
@@ -316,6 +351,7 @@
 }
 
 - (void)destroyOldplay{
+ 
     [_player _pauseVideo];
     [_player _deallocPlayer];
     [_player deallocAll];
@@ -347,6 +383,7 @@
 }
 
 - (void)dealloc{
+    [self.balckView removeFromSuperview];
     [self destroyOldplay];
 }
 

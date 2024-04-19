@@ -136,6 +136,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     [parm setObject:comment forKey:@"content"];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoCommont/%@/%@",self.videoModel.vid,commentId.intValue?commentId:@"0"] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
+            self.tableView.tableFooterView = nil;
             SXVideoCommentModel *commentM = [SXVideoCommentModel mj_objectWithKeyValues:dict[@"data"]];
             if (commentM.commentId) {//评论成功且返回了数据
                 if (commentM.parent_id.intValue > 0) {//属于回复
@@ -170,6 +171,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     }
                 }else{//属于评论
                     [self.dataArr insertObject:commentM atIndex:0];
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
                 }
                 [self.tableView reloadData];
                 [[NoticeTools getTopViewController] showToastWithText:@"发送成功"];
@@ -383,6 +385,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     [weakSelf.dataArr exchangeObjectAtIndex:i withObjectAtIndex:0];
                 }
                 self.currentTopModel = commentM;
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
                 [weakSelf.tableView reloadData];
                 break;
             }

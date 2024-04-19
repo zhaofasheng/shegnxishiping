@@ -25,13 +25,14 @@
 @property (nonatomic,copy) void(^currentPlayTimeBlock)(NSInteger currentTime);
 @property (nonatomic,copy) void(^playDidEndBlock)(BOOL playDidEnd);
 @property (nonatomic,copy) void(^backPopBlock)(BOOL back);
+@property (nonatomic,copy) void(^fullBlock)(BOOL isFull);
 @property (nonatomic,copy) void(^downVideoBlock)(BOOL download);
 /** 播放器 */
 @property (nonatomic, strong) AVPlayerItem *playerItem;
 /** 播放器item */
 @property (nonatomic, strong) AVPlayer *player;
 
-
+- (void)_videoZoomInWithDirection:(UIInterfaceOrientation)orientation;
 
 /** 播放器layer */
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
@@ -64,6 +65,7 @@
 /** 释放播放器 */
 - (void)_deallocPlayer;
 - (void)deallocAll;
-
+/** 是否自动全屏 */
+@property (nonatomic, assign) BOOL isAutoFull;
 - (void)refreshUI;
 @end
