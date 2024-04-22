@@ -22,6 +22,7 @@
 #import "JVERIFICATIONService.h"
 #import "SXWebViewController.h"
 #import "SXHistoryLoginView.h"
+
 @interface NoticeLoginViewController ()<ASAuthorizationControllerDelegate,ASAuthorizationControllerPresentationContextProviding>
 @property (nonatomic, strong) NoticeCustumeNavView *timeLnavBarViews;//是否需要自定义导航栏
 
@@ -175,6 +176,7 @@
 
 //快速登录
 - (void)fastrequestLogin:(NoticeSaveLoginStory*)info{
+    
     if (info.openId) {
         SSDKUser *ssUser = [[SSDKUser alloc] init];
         ssUser.uid = info.openId;
@@ -510,9 +512,11 @@ API_AVAILABLE(ios(13.0)){
            
             [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@/%@",@"CN",phoneM.phone] Accept:nil isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
                 [self hideHUD];
+                
                 [JVERIFICATIONService dismissLoginControllerAnimated:NO completion:^{
                     //授权页隐藏完成
                 }];
+                
                 if (success) {
                     if ([dict[@"data"] isEqual:[NSNull null]]) {
                         return ;
