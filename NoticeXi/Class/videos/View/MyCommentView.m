@@ -171,7 +171,9 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     }
                 }else{//属于评论
                     [self.dataArr insertObject:commentM atIndex:0];
-                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+                    if (self.dataArr.count > 1) {
+                        [self.tableView setContentOffset:CGPointMake(0,0) animated:NO];
+                    }
                 }
                 [self.tableView reloadData];
                 [[NoticeTools getTopViewController] showToastWithText:@"发送成功"];
@@ -268,6 +270,12 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     if (self.refreshCommentCountBlock) {
                         self.refreshCommentCountBlock(jsonModel.commentCt);
                     }
+                }
+            }
+            if (!self.dataArr.count) {
+                self.titleL.text = @"评论";
+                if (self.refreshCommentCountBlock) {
+                    self.refreshCommentCountBlock(@"0");
                 }
             }
             self.tableView.tableFooterView = self.dataArr.count?nil:self.defaultL;
@@ -385,7 +393,10 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     [weakSelf.dataArr exchangeObjectAtIndex:i withObjectAtIndex:0];
                 }
                 self.currentTopModel = commentM;
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+                if (self.dataArr.count > 1) {
+                    [self.tableView setContentOffset:CGPointMake(0,0) animated:NO];
+                }
+                
                 [weakSelf.tableView reloadData];
                 break;
             }

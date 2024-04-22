@@ -30,7 +30,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     SXVideoCommentBeModel *model = self.dataArr[indexPath.row];
-    if (model.sysStatus.intValue != 1) {
+    if (model.sysStatus.intValue == 3) {
         [self showToastWithText:@"该内容已删除"];
         return;
     }

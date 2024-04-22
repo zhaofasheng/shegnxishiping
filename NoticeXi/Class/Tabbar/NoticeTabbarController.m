@@ -60,7 +60,7 @@
     [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     NSDate *datenow = [NSDate date];
     NSString *currentTimeString = [formatter stringFromDate:datenow];
-    NSInteger x = arc4random() % 99999999999999999;
+    NSInteger x = arc4random() % 9999999999999;
     return  [NSString stringWithFormat:@"%@//%ld",currentTimeString,(long)x];
 }
 

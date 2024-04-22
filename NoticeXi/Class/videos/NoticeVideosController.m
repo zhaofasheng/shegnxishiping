@@ -17,9 +17,11 @@
 static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCell";
 
 @interface NoticeVideosController ()
+
 @property (nonatomic, assign) NSInteger originIndex;
 @property (nonatomic, assign) NSInteger currentPlayTime;
 @property (nonatomic, assign) BOOL isRequesting;
+
 @end
 
 @implementation NoticeVideosController
