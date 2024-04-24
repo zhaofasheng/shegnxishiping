@@ -3,3 +3,4 @@ large_file_path filter=lfs diff=lfs merge=lfs -text
 /.git/objects/pack/pack-d6b06e797000406134ed36b4181c55174ec9c18c.pack filter=lfs diff=lfs merge=lfs -text
 /.git/objects/14/ee1de6b54feb381df20052a44e1f88284be458 filter=lfs diff=lfs merge=lfs -text
 /.git/lfs/objects/b4/1c/b41c5e35d187c0bb891a2b208154d7956c37f2ccb2ba60f9dfc6a11a4ca5fb5b filter=lfs diff=lfs merge=lfs -text
+NERtcSDK/NERTC/NERtcSDK/NERtcSDK.framework/NERtcSDK filter=lfs diff=lfs merge=lfs -text
