@@ -60,7 +60,8 @@
 
 
 - (void)regWangyiyun{
-    //推荐在程序启动的时候初始化 NIMSDK
+    //推荐在程序启动的时候初始化 NIMSDK 注册云信
+    
     NSString *appKey        = @"dd8114c96a13f86d8bf0f7de477d9cd9";//云信分配的 appKey
     NIMSDKOption *option    = [NIMSDKOption optionWithAppKey:appKey];
     option.apnsCername      = @"prPush";//APNs 推送证书名 正式环境prPush 测试环境devPush
