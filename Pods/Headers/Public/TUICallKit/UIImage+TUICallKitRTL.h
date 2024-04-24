@@ -1,1 +1,0 @@
-../../../TUICallKit/TUICallKit/TUICallKit/UI/Common/UIImage+TUICallKitRTL.h
