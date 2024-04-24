@@ -8,12 +8,8 @@
 
 #import "NoticeSaveModel.h"
 #import "UNNotificationsManager.h"
-#import "TUICore.h"
-#import "TUICallKit.h"
-#import "TUILogin.h"
-#import <ImSDK_Plus/ImSDK_Plus.h>
+
 #import "NoticeCallView.h"
-#import "TUICallingStatusManager.h"
 static NSString *const kXGUserInfo = @"XGUserInfo";
 static NSString *const kXGarea = @"XGArea";
 static NSString *const KForUUID = @"KForUUID";
@@ -50,11 +46,11 @@ static NSString *const KFToken = @"KFToken";
     [userDefaults synchronize];
     
     //退出腾讯云登录
-    [TUILogin logout:^{
-
-    } fail:^(int code, NSString *msg) {
-
-    }];
+//    [TUILogin logout:^{
+//
+//    } fail:^(int code, NSString *msg) {
+//
+//    }];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"outLoginClearDataNOTICATION" object:nil];
 }

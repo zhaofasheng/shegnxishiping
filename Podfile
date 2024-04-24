@@ -30,6 +30,6 @@ target ‘NoticeXi’ do
   pod 'SVGAPlayer'
   pod  'AlipaySDK-iOS'
   pod 'SDWebImage','~> 5.15.5',:inhibit_warnings => true
-  pod 'TUICallKit'
+
 
 end

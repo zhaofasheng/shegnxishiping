@@ -93,6 +93,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *user_flag;
 @property (nonatomic, strong) NSString *user_flagName;
 
+@property (nonatomic, strong) NSString *contentText;
+
 @property (nonatomic, strong) NoticeChats *lastChatModel;
 @property (nonatomic, strong) NSDictionary *last_dialog;
 @property (nonatomic, strong) NSString *voice_cover_img;

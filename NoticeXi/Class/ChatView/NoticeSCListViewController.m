@@ -233,7 +233,6 @@
     
     NSString *url = nil;
     if (self.isDown) {
-
         url = [NSString stringWithFormat:@"chats/users/%@/2",[[NoticeSaveModel getUserInfo] user_id]];
     }else{
         if (self.lastId) {

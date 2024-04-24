@@ -5,7 +5,7 @@
 //  Created by ios on 15/8/26.
 //
 #import <objc/runtime.h>
-#import "TUITool.h"
+#import "UIView+TUIToast.h"
 #import "UIViewController+ToastAndHUD.h"
 #import "MBProgressHUD.h"
 #import "UIView+Toast.h"
@@ -93,7 +93,7 @@ static void *ToastKEY = &ToastKEY;
 }
 
 - (void)showToastWithText:(NSString *)toastString {
-    [TUITool makeToast:toastString duration:2 position:CGPointMake(DR_SCREEN_WIDTH / 2.0, DR_SCREEN_HEIGHT / 2.0)];
+    [[UIApplication sharedApplication].keyWindow makeToast:toastString duration:2 position:[NSValue valueWithCGPoint:CGPointMake(DR_SCREEN_WIDTH / 2.0, DR_SCREEN_HEIGHT / 2.0)]];
  //   [self showToastWithText:toastString positon:CSToastPositionCenter];
 }
 

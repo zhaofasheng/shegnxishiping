@@ -582,31 +582,6 @@ SOFTWARE.
 
 
 
-## TUICallEngine
-
-copyright 2017 tencent Ltd. All rights reserved.
-
-
-## TUICallKit
-
-copyright 2017 tencent Ltd. All rights reserved.
-
-
-## TUICore
-
-copyright 2017 tencent Ltd. All rights reserved.
-
-
-## TXIMSDK_Plus_iOS
-
-copyright 2017 tencent Ltd. All rights reserved.
-
-
-## TXLiteAVSDK_TRTC
-
-copyright 2017 tencent Ltd. All rights reserved.
-
-
 ## Toast
 
 Copyright (c) 2011-2017 Charles Scalesse.

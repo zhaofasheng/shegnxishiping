@@ -7,13 +7,7 @@
 //
 
 #import "NoticeCallView.h"
-#import "TUICore.h"
-#import "TUICallKit.h"
-#import "TUILogin.h"
-#import <ImSDK_Plus/ImSDK_Plus.h>
-#import "TUICallKitGCDTimer.h"
-#import "TUICallingAction.h"
-#import "TUICallingStatusManager.h"
+
 #import "NoticeXi-Swift.h"
 #import "NoticeShopJubaoView.h"
 #import "NoticeShopjuBuView.h"
@@ -195,9 +189,9 @@
             [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoodsOrder/report" Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                 if(success){
                     DRLog(@"店主举报用户成功");
-                    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
-                        [TUICallingAction hangup];
-                    };
+//                    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
+//                        [TUICallingAction hangup];
+//                    };
                     [weakSelf dissMiseeShow];
                     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"已举报，订单结束" message:@"收到举报，管理员会尽快处理，鲸币明细具体以审核结果为准，将通过「声昔小助手」告知，请注意查收！" cancleBtn:@"我知道了"];
                     [alerView showXLAlertView];
@@ -217,9 +211,9 @@
                 [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoodsOrder/report" Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                     if(success){
                         DRLog(@"用户举报店主成功");
-                        if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
-                            [TUICallingAction hangup];
-                        };
+//                        if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
+//                            [TUICallingAction hangup];
+//                        };
                         [weakSelf dissMiseeShow];
                         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"已举报，订单结束" message:@"收到举报，管理员会尽快处理，鲸币明细具体以审核结果为准，将通过「声昔小助手」告知，请注意查收！" cancleBtn:@"我知道了"];
                         [alerView showXLAlertView];
@@ -292,7 +286,7 @@
         [self.mirButton setImage:UIImageNamed(@"tencent_openmirimg") forState:UIControlStateNormal];//tencent_closemirimg
         [self.mirButton setTitle:@"扩音" forState:UIControlStateNormal];
     }
-    [TUICallingAction selectAudioPlaybackDevice];
+   // [TUICallingAction selectAudioPlaybackDevice];
     
 }
 
@@ -302,11 +296,11 @@
     if (self.closeMicrophone){
         [self.muteButton setImage:UIImageNamed(@"tencent_closemuteimg") forState:UIControlStateNormal];
         [self.muteButton setTitle:@"已关麦" forState:UIControlStateNormal];
-        [TUICallingAction closeMicrophone];
+      //  [TUICallingAction closeMicrophone];
     }else{
         [self.muteButton setImage:UIImageNamed(@"tencent_openmuteimg") forState:UIControlStateNormal];
         [self.muteButton setTitle:@"关麦" forState:UIControlStateNormal];
-        [TUICallingAction openMicrophone];
+       // [TUICallingAction openMicrophone];
     }
 }
 
@@ -317,9 +311,9 @@
     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:self.chatInfoModel.is_experience.boolValue? @"确定结束通话吗？" : @"提前结束通话，费用不退回，确定结束吗？" message:nil sureBtn:@"再想想" cancleBtn:@"结束" right:YES];
     alerView.resultIndex = ^(NSInteger index) {
         if (index == 2) {
-            if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
-                [TUICallingAction hangup];
-            };
+//            if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
+//                [TUICallingAction hangup];
+//            };
             [weakSelf dissMiseeShow];
         }
     };
@@ -327,15 +321,15 @@
 }
 
 - (void)hasKillApp{
-    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
-        [TUICallingAction hangup];
-    };
+//    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
+//        [TUICallingAction hangup];
+//    };
 }
 
 - (void)otherlogin{
-    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
-        [TUICallingAction hangup];
-    };
+//    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
+//        [TUICallingAction hangup];
+//    };
 }
 
 - (void)showCallView{
@@ -408,10 +402,10 @@
                     weakSelf.timeOutL.text = [NSString stringWithFormat:@"%lds后订单即将自动结束",(weakSelf.chatInfoModel.goods_duration.intValue*60) - strongSelf.totalTime];
                 }
                 if(((weakSelf.chatInfoModel.goods_duration.intValue*60) - strongSelf.totalTime) <= 1){
-                    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
-                        DRLog(@"超时取消通话");
-                        [TUICallingAction hangup];
-                    };
+//                    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
+//                        DRLog(@"超时取消通话");
+//                        [TUICallingAction hangup];
+//                    };
                     [weakSelf dissMiseeShow];
                 }
             }
@@ -421,9 +415,9 @@
 
 //双方都网络等原因无法通话，后台自动结束订单
 - (void)errroOver{
-    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
-        [TUICallingAction hangup];
-    };
+//    if ([TUICallingStatusManager shareInstance].callStatus != TUICallStatusNone){
+//        [TUICallingAction hangup];
+//    };
     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"由于双方设备网络无法链接等情况导致通话中断" message:nil cancleBtn:@"好的，知道了"];
     [alerView showXLAlertView];
     [self dissMiseeShow];

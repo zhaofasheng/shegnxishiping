@@ -50,7 +50,7 @@
         _timeL.textColor = [[UIColor colorWithHexString:@"#8A8F99"] colorWithAlphaComponent:1];
         [self.contentView addSubview:_timeL];
         
-        _infoL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)+10,CGRectGetMaxY(_nickNameL.frame)+1,DR_SCREEN_WIDTH-CGRectGetMaxX(_iconImageView.frame)-15-10, 17)];
+        _infoL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)+10,CGRectGetMaxY(_nickNameL.frame)+1,DR_SCREEN_WIDTH-CGRectGetMaxX(_iconImageView.frame)-15-10-50, 17)];
         _infoL.font = THRETEENTEXTFONTSIZE;
         _infoL.textColor = [[UIColor colorWithHexString:@"#8A8F99"] colorWithAlphaComponent:1];
         [self.contentView addSubview:_infoL];
@@ -248,6 +248,12 @@
         str = @"[语音]";
     }else if (stay.last_resource_type.intValue == 2){
         str = @"[图片]";
+    }else if (stay.last_resource_type.intValue == 3 || stay.last_resource_type.intValue == 11){
+        if (stay.contentText) {
+            str = stay.contentText;
+        }else{
+            str = @"[文字]";
+        }
     }else{
         str = @"[文字]";
     }

@@ -1,7 +1,7 @@
 
 
 #import "YZC_AlertView.h"
-#import "TUITool.h"
+#import "UIView+TUIToast.h"
 //Toast默认停留时间
 #define ToastDispalyDuration 1.0f
 //Toast到顶端/底端默认距离
@@ -153,8 +153,7 @@
     if ([message isEqual:[NSNull null]]){
         message = @"无返回数据";
     }
-    [TUITool makeToast:message duration:2 position:CGPointMake(DR_SCREEN_WIDTH/2, DR_SCREEN_HEIGHT/2)];
-
+    [[UIApplication sharedApplication].keyWindow makeToast:message duration:2 position:[NSValue valueWithCGPoint:CGPointMake(DR_SCREEN_WIDTH / 2.0, DR_SCREEN_HEIGHT / 2.0)]];
 }
 
 #pragma mark-下方显示

@@ -65,31 +65,6 @@ PODS:
     - Protobuf (~> 3.4)
   - SVProgressHUD (2.2.5)
   - Toast (4.0.0)
-  - TUICallEngine/TRTC (2.1.0.815):
-    - TXIMSDK_Plus_iOS (~> 7.7.5282)
-    - TXLiteAVSDK_TRTC (~> 11.4.14445)
-  - TUICallKit (2.1.0.815):
-    - Masonry
-    - TUICallKit/TRTC (= 2.1.0.815)
-    - TUICore (~> 7.7.5282)
-  - TUICallKit/TRTC (2.1.0.815):
-    - Masonry
-    - TUICallEngine/TRTC (~> 2.1.0.815)
-    - TUICore (~> 7.7.5282)
-    - TXLiteAVSDK_TRTC
-  - TUICore (7.7.5294):
-    - SDWebImage
-    - TUICore/ImSDK_Plus (= 7.7.5294)
-  - TUICore/Base (7.7.5294):
-    - SDWebImage
-  - TUICore/ImSDK_Plus (7.7.5294):
-    - SDWebImage
-    - TUICore/Base
-    - TXIMSDK_Plus_iOS (~> 7.7.5294)
-  - TXIMSDK_Plus_iOS (7.7.5294)
-  - TXLiteAVSDK_TRTC (11.4.14571):
-    - TXLiteAVSDK_TRTC/TRTC (= 11.4.14571)
-  - TXLiteAVSDK_TRTC/TRTC (11.4.14571)
   - YYKit (1.0.9):
     - YYKit/no-arc (= 1.0.9)
   - YYKit/no-arc (1.0.9)
@@ -119,7 +94,6 @@ DEPENDENCIES:
   - SVGAPlayer
   - SVProgressHUD
   - Toast
-  - TUICallKit
   - YYKit
 
 SPEC REPOS:
@@ -147,11 +121,6 @@ SPEC REPOS:
     - SVGAPlayer
     - SVProgressHUD
     - Toast
-    - TUICallEngine
-    - TUICallKit
-    - TUICore
-    - TXIMSDK_Plus_iOS
-    - TXLiteAVSDK_TRTC
     - YYKit
 
 SPEC CHECKSUMS:
@@ -178,13 +147,8 @@ SPEC CHECKSUMS:
   SVGAPlayer: 318b85a78b61292d6ae9dfcd651f3f0d1cdadd86
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  TUICallEngine: 5046a3f687667644dbddc1a71ec42166535a8770
-  TUICallKit: 079c04d09843a071f604e3bf133403df5b0fa3a5
-  TUICore: 8c377c837042339fb0a72ec062635c240601f864
-  TXIMSDK_Plus_iOS: 81fcb20ad754ea5164207970772f00ea9f94bc8f
-  TXLiteAVSDK_TRTC: 5be9b8b610608ad24525e88ac0c7ec5f146523d5
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 4f080a3091b723f12f9c51020980967dbe6c27a8
+PODFILE CHECKSUM: 0a6bdf061ce0a5b9d1fc452fd7b79a6e0927bea8
 
 COCOAPODS: 1.14.3

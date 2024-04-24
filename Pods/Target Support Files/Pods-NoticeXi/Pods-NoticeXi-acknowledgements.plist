@@ -715,61 +715,6 @@ SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>copyright 2017 tencent Ltd. All rights reserved.
-</string>
-			<key>License</key>
-			<string>Proprietary</string>
-			<key>Title</key>
-			<string>TUICallEngine</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>copyright 2017 tencent Ltd. All rights reserved.
-</string>
-			<key>License</key>
-			<string>Proprietary</string>
-			<key>Title</key>
-			<string>TUICallKit</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>copyright 2017 tencent Ltd. All rights reserved.
-</string>
-			<key>License</key>
-			<string>Proprietary</string>
-			<key>Title</key>
-			<string>TUICore</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>copyright 2017 tencent Ltd. All rights reserved.
-</string>
-			<key>License</key>
-			<string>Proprietary</string>
-			<key>Title</key>
-			<string>TXIMSDK_Plus_iOS</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>copyright 2017 tencent Ltd. All rights reserved.
-</string>
-			<key>License</key>
-			<string>Proprietary</string>
-			<key>Title</key>
-			<string>TXLiteAVSDK_TRTC</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>Copyright (c) 2011-2017 Charles Scalesse.
 
 Permission is hereby granted, free of charge, to any person obtaining a

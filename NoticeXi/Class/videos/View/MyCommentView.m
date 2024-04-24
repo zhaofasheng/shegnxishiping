@@ -123,7 +123,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 - (void)setVideoModel:(SXVideosModel *)videoModel{
     _videoModel = videoModel;
     self.inputView.saveKey = [NSString stringWithFormat:@"videoLy%@%@",[NoticeTools getuserId],videoModel.vid];
-    self.markL.text = videoModel.commentCt.intValue?@"说说你的想法...":@"成为第一条评论…";
+    self.markL.text = videoModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论…";
     self.titleL.text = [NSString stringWithFormat:@"评论%@",videoModel.commentCt.intValue?videoModel.commentCt:@""];
     self.pageNo = 1;
     self.isDown = YES;
@@ -265,7 +265,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     [self.dataArr addObject:commentM];
                 }
                 if (self.pageNo == 1) {
-                    self.markL.text = jsonModel.commentCt.intValue?@"说说你的想法...":@"成为第一条评论…";
+                    self.markL.text = jsonModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论…";
                     self.titleL.text = [NSString stringWithFormat:@"评论%@",jsonModel.commentCt.intValue?jsonModel.commentCt:@""];
                     if (self.refreshCommentCountBlock) {
                         self.refreshCommentCountBlock(jsonModel.commentCt);

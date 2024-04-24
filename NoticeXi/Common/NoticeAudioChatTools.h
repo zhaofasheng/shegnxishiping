@@ -8,22 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-#import <ImSDK_Plus/ImSDK_Plus.h>
-#import "TUICallKit.h"
 #import "NoticeShopGetOrderTostView.h"
 #import "NoticeCallView.h"
-#import "TUICallingViewManager.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface NoticeAudioChatTools : UIView<TUICallObserver,V2TIMConversationListener>
-
+@interface NoticeAudioChatTools : UIView
 - (void)regTencent;
 @property (nonatomic, strong) UIWindow * __nullable callingWindow;
 @property (nonatomic, strong) NoticeShopGetOrderTostView *callView;
 @property (nonatomic, strong) NSString * __nullable fromUserId;
 @property (nonatomic, strong) NSString * __nullable toUserId;
-@property (nonatomic, strong) TUICallingViewManager *callingViewManager;
 @property (nonatomic, strong) NoticeByOfOrderModel *orderModel;
 @property (nonatomic, strong) NSString *selfUserId;
 @property (nonatomic, strong) NSString *roomId;
