@@ -1,4 +1,9 @@
 ${PODS_ROOT}/Target Support Files/Pods-NoticeXi/Pods-NoticeXi-frameworks.sh
-${PODS_ROOT}/TXIMSDK_Plus_iOS/ImSDK_Plus.framework
-${PODS_XCFRAMEWORKS_BUILD_DIR}/TXLiteAVSDK_TRTC/TRTC/TXSoundTouch.framework/TXSoundTouch
-${PODS_XCFRAMEWORKS_BUILD_DIR}/TXLiteAVSDK_TRTC/TRTC/TXFFmpeg.framework/TXFFmpeg
+${PODS_ROOT}/NECommonKit/NECommonKit.framework
+${PODS_ROOT}/NECoreKit/NECoreKit.framework
+${PODS_ROOT}/NERtcCallKit/NERtcCallKit.framework
+${PODS_ROOT}/NERtcSDK/NERTC/NERtcSDK/NERtcSDK.framework
+${PODS_ROOT}/NIMSDK_LITE/NIMSDK/NIMSDK.framework
+${PODS_ROOT}/NIMSDK_LITE/NIMSDK/NIMNOS.framework
+${PODS_ROOT}/YXAlog/YXAlog_iOS.framework
+${PODS_ROOT}/YXArtemis/YXArtemis.framework

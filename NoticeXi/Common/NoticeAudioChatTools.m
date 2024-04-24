@@ -10,6 +10,15 @@
 #import "NoticeXi-Swift.h"
 #import "NoticeQiaojjieTools.h"
 #import "UIWindow+TUICalling.h"
+
+#import <NIMSDK/NIMSDK.h>
+#import <NERtcCallKit/NERtcCallKit.h>
+
+@interface NoticeAudioChatTools()<NECallEngineDelegate>
+
+
+@end
+
 @implementation NoticeAudioChatTools
 
 - (void)callToUserId:(NSString *)userId roomId:(UInt32)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext{
@@ -49,7 +58,35 @@
         
 }
 
+
+- (void)regWangyiyun{
+    //推荐在程序启动的时候初始化 NIMSDK
+    NSString *appKey        = @"dd8114c96a13f86d8bf0f7de477d9cd9";//云信分配的 appKey
+    NIMSDKOption *option    = [NIMSDKOption optionWithAppKey:appKey];
+    option.apnsCername      = @"prPush";//APNs 推送证书名 正式环境prPush 测试环境devPush
+    option.pkCername        = @"voip";//PushKit  推送证书名
+    [[NIMSDK sharedSDK] registerWithOption:option];
+    [self setupSDK];
+}
+
+
+- (void)setupSDK {
+    NESetupConfig *config = [[NESetupConfig alloc] initWithAppkey:@"dd8114c96a13f86d8bf0f7de477d9cd9"];
+    [[NECallEngine sharedInstance] setup:config];
+
+    [NIMSDK.sharedSDK.loginManager login:@"xiaoer" token:@"123456" completion:^(NSError * _Nullable error) {
+        if(!error){
+            DRLog(@"登录云信成功");
+        }else{
+            DRLog(@"登录云信失败%@",error.description);
+        }
+    }];
+    [NECallEngine.sharedInstance addCallDelegate:self];
+}
+
+
 - (void)regTencent{
+    [self regWangyiyun];
 //    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"tentcent/userSig" Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
 //        if(success){
 //            NoticeByOfOrderModel *userSigM  = [NoticeByOfOrderModel mj_objectWithKeyValues:dict[@"data"]];

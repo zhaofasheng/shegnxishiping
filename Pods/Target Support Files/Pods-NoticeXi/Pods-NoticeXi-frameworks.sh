@@ -176,14 +176,24 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${PODS_ROOT}/TXIMSDK_Plus_iOS/ImSDK_Plus.framework"
-  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/TXLiteAVSDK_TRTC/TRTC/TXSoundTouch.framework"
-  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/TXLiteAVSDK_TRTC/TRTC/TXFFmpeg.framework"
+  install_framework "${PODS_ROOT}/NECommonKit/NECommonKit.framework"
+  install_framework "${PODS_ROOT}/NECoreKit/NECoreKit.framework"
+  install_framework "${PODS_ROOT}/NERtcCallKit/NERtcCallKit.framework"
+  install_framework "${PODS_ROOT}/NERtcSDK/NERTC/NERtcSDK/NERtcSDK.framework"
+  install_framework "${PODS_ROOT}/NIMSDK_LITE/NIMSDK/NIMSDK.framework"
+  install_framework "${PODS_ROOT}/NIMSDK_LITE/NIMSDK/NIMNOS.framework"
+  install_framework "${PODS_ROOT}/YXAlog/YXAlog_iOS.framework"
+  install_framework "${PODS_ROOT}/YXArtemis/YXArtemis.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${PODS_ROOT}/TXIMSDK_Plus_iOS/ImSDK_Plus.framework"
-  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/TXLiteAVSDK_TRTC/TRTC/TXSoundTouch.framework"
-  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/TXLiteAVSDK_TRTC/TRTC/TXFFmpeg.framework"
+  install_framework "${PODS_ROOT}/NECommonKit/NECommonKit.framework"
+  install_framework "${PODS_ROOT}/NECoreKit/NECoreKit.framework"
+  install_framework "${PODS_ROOT}/NERtcCallKit/NERtcCallKit.framework"
+  install_framework "${PODS_ROOT}/NERtcSDK/NERTC/NERtcSDK/NERtcSDK.framework"
+  install_framework "${PODS_ROOT}/NIMSDK_LITE/NIMSDK/NIMSDK.framework"
+  install_framework "${PODS_ROOT}/NIMSDK_LITE/NIMSDK/NIMNOS.framework"
+  install_framework "${PODS_ROOT}/YXAlog/YXAlog_iOS.framework"
+  install_framework "${PODS_ROOT}/YXArtemis/YXArtemis.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

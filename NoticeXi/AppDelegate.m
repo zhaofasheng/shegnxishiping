@@ -69,8 +69,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
     [self regreiteShare];
 
-    [NoticeTools setLangue];//设置默认语言
-    
     [Bugly startWithAppId:@"7342677883"];
 
     //更新用户信息通知
@@ -95,7 +93,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [SDImageCache sharedImageCache].config.maxMemoryCost = 130*1000*1000;
     
     [self changeRootVC];
-   // [self registerWeixin];
 
     return YES;
 }

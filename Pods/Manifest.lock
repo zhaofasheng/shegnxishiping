@@ -48,6 +48,23 @@ PODS:
     - mob_sharesdk/ShareSDK
     - MOBFoundation
   - MOBFoundation (3.1.9)
+  - NECommonKit (9.6.7):
+    - YXAlog
+  - NECoreKit (9.6.8):
+    - YXAlog (= 1.0.7)
+  - NERtcCallKit (2.2.0):
+    - NERtcCallKit/NOS (= 2.2.0)
+  - NERtcCallKit/NOS (2.2.0):
+    - NECommonKit
+    - NECoreKit
+    - NIMSDK_LITE (= 9.12.0)
+    - YXAlog
+  - NERtcSDK/RtcBasic (5.5.2)
+  - NIMSDK_LITE (9.12.0):
+    - NIMSDK_LITE/NOS (= 9.12.0)
+    - YXArtemis
+  - NIMSDK_LITE/NOS (9.12.0):
+    - YXArtemis
   - Protobuf (3.18.1)
   - ReactiveObjC (3.1.1)
   - SDWebImage (5.15.5):
@@ -65,6 +82,8 @@ PODS:
     - Protobuf (~> 3.4)
   - SVProgressHUD (2.2.5)
   - Toast (4.0.0)
+  - YXAlog (1.0.7)
+  - YXArtemis (1.1.3)
   - YYKit (1.0.9):
     - YYKit/no-arc (= 1.0.9)
   - YYKit/no-arc (1.0.9)
@@ -88,6 +107,9 @@ DEPENDENCIES:
   - mob_sharesdk/ShareSDKPlatforms/SinaWeibo (~> 4.2.0)
   - mob_sharesdk/ShareSDKPlatforms/WeChatFull
   - mob_sharesdk/ShareSDKUI
+  - NERtcCallKit (= 2.2.0)
+  - NERtcSDK/RtcBasic (= 5.5.2)
+  - NIMSDK_LITE (= 9.12.0)
   - ReactiveObjC
   - SDWebImage (~> 5.15.5)
   - SocketRocket
@@ -113,6 +135,11 @@ SPEC REPOS:
     - MJRefresh
     - mob_sharesdk
     - MOBFoundation
+    - NECommonKit
+    - NECoreKit
+    - NERtcCallKit
+    - NERtcSDK
+    - NIMSDK_LITE
     - Protobuf
     - ReactiveObjC
     - SDWebImage
@@ -121,6 +148,8 @@ SPEC REPOS:
     - SVGAPlayer
     - SVProgressHUD
     - Toast
+    - YXAlog
+    - YXArtemis
     - YYKit
 
 SPEC CHECKSUMS:
@@ -139,6 +168,11 @@ SPEC CHECKSUMS:
   MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
   mob_sharesdk: fc8a9aab921c08e5e88a5b1f36229c6d406a2ff8
   MOBFoundation: 11500153c10d83e4ac341f6ad6301b3998ce6db2
+  NECommonKit: 499c3817c0654376eb0b72cf4d6ae9148d618a28
+  NECoreKit: 02313c607f7c9aa64faafa5455136b3df7175d2c
+  NERtcCallKit: 848b8dc75bea80d64d81abc76ccda15207a9b160
+  NERtcSDK: 162fdb6ddd5e4f0ad4f115fcb2a71df26d9cbd48
+  NIMSDK_LITE: f1a026f9df4f2cecab7c2ea9a9b2102a115440bf
   Protobuf: 0ac2cdc92fb5c33dab66dd1c4e9f9cc4c34d00ba
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
@@ -147,8 +181,10 @@ SPEC CHECKSUMS:
   SVGAPlayer: 318b85a78b61292d6ae9dfcd651f3f0d1cdadd86
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  YXAlog: ac9bab3aff1326caa72cc25aedc358bc8d4f1b31
+  YXArtemis: 2771e9ac5e5e01867914835aedb03429d135043e
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 0a6bdf061ce0a5b9d1fc452fd7b79a6e0927bea8
+PODFILE CHECKSUM: 9e4833ac858736d75379d9bcda07157a01017734
 
 COCOAPODS: 1.14.3
