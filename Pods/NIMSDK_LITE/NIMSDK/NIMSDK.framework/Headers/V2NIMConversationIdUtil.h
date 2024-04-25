@@ -1,5 +1,5 @@
 //
-//  V2NIMConversationId.h
+//  V2NIMConversationIdUtil.h
 //  NIMLib
 //
 //  Created by Netease.
@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// 会话id
-@interface V2NIMConversationId : NSObject
+@interface V2NIMConversationIdUtil : NSObject
 
 /**
  *  使用账号Id构造会话id
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return 返回会话id
  *  @discussion
  */
-+ (NSString *)p2pConversationId:(NSString *)accountId;
++ (nullable NSString *)p2pConversationId:(NSString *)accountId;
 /**
  *  使用群Id构造会话id
  *
@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return 返回会话id
  *  @discussion
  */
-+ (NSString *)teamConversationId:(NSString *)teamId;
++ (nullable NSString *)teamConversationId:(NSString *)teamId;
 /**
  *  使用群Id构造会话id（超大群）
  *
@@ -38,15 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return 返回会话id
  *  @discussion
  */
-+ (NSString *)superTeamConversationId:(NSString *)teamId;
-/**
- *  使用聊天室Id构造会话id
- *
- *  @param roomId 聊天室Id
- *  @return 返回会话id
- *  @discussion
- */
-+ (NSString *)chatroomConversationId:(NSString *)roomId;
++ (nullable NSString *)superTeamConversationId:(NSString *)teamId;
 
 /**
  *  从会话id中获取会话类型
@@ -63,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return 返回会话对象id
  *  @discussion
  */
-+ (NSString *)conversationTargetId:(NSString *)conversationId;
++ (nullable NSString *)conversationTargetId:(NSString *)conversationId;
 
 @end
 

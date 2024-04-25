@@ -1,5 +1,5 @@
 //
-//  V2NIMLocalAntiSpamUtil.h
+//  V2NIMClientAntispamUtil.h
 //  NIMLib
 //
 //  Created by Netease.
@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class V2NIMMessage;
+@class V2NIMClientAntispamResult;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface V2NIMLocalAntiSpamUtil : NSObject
+@interface V2NIMClientAntispamUtil : NSObject
 
 /**
  *  对文本消息的文本进行检查，并可能替代
@@ -23,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return 返回原消息或者nil
  *  @discussion 使用此方法，会对输入的文本消息的文本进行本地反垃圾检查，如果被本地拦截，返回nil。如果需要屏蔽关键字，将使用参数shield中指定的文本进行屏蔽，并修改消息文本。如果需要服务器拦截，会自动进行标记。
  */
-+ (V2NIMMessage *)checkTextMessage:(V2NIMMessage *)message
-                            shield:(nullable NSString *)shield;
++ (V2NIMClientAntispamResult *)checkTextAntispam:(NSString *)text
+                                        replace:(nullable NSString *)replace;
 
 @end
 

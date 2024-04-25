@@ -1,5 +1,5 @@
 //
-//  V2NIMMessageCustomAttachment.h
+//  V2NIMSDKOption.h
 //  NIMLib
 //
 //  Created by Netease.
@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "V2NIMMessageAttachment.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-/// 消息自定义附件
-@interface V2NIMMessageCustomAttachment : NSObject <V2NIMMessageAttachment>
+@interface V2NIMSDKOption : NSObject
+
+/// 使用旧的登录接口，默认NO，不使用
+@property(nonatomic,assign,readwrite) BOOL useV1Login;
 
 @end
 
