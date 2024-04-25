@@ -381,6 +381,26 @@ typedef NS_ENUM(NSInteger, NERtcReasonConnectionChangedType) {
     kNERtcReasonConnectionChangedBeKickedDueToSameUserId = 14
 };
 
+/**
+ * @if English
+ * The feature type.
+ * @endif
+ * @if Chinese
+ * 功能类型
+ * @endif
+ */
+typedef NS_ENUM(NSInteger, NERtcFeatureType) {
+  /**
+   * @if English
+   * virtual background.
+   * @endif
+   * @if Chinese
+   * 虚拟背景
+   * @endif
+   */
+  kNERtcFeatureTypeVirtualBackground = 0,
+};
+
 #pragma mark -- VIDEO ENUM
 
 
@@ -1219,7 +1239,7 @@ typedef NS_ENUM(NSUInteger, NERtcVideoWatermarkType) {
      * Image
      * @endif
      * @if Chinese
-     * 图片。
+     * 图片水印。图片水印的图片大小不能超过 640*360 px。
      * @endif
      */
     kNERtcVideoWatermarkTypeImage = 0,
@@ -1229,7 +1249,7 @@ typedef NS_ENUM(NSUInteger, NERtcVideoWatermarkType) {
      * Text
      * @endif
      * @if Chinese
-     * 文字。
+     * 文字水印。
      * @endif
      */
     kNERtcVideoWatermarkTypeText,
@@ -1239,7 +1259,7 @@ typedef NS_ENUM(NSUInteger, NERtcVideoWatermarkType) {
      * Timestamp
      * @endif
      * @if Chinese
-     * 时间戳。
+     * 时间戳水印。
      * @endif
      */
     kNERtcVideoWatermarkTypeTimeStamp
@@ -1299,7 +1319,7 @@ typedef NS_ENUM(NSUInteger, NERtcLocalVideoWatermarkState) {
      * Image size error.
      * @endif
      * @if Chinese
-     * 图片尺寸设置错误。
+     * 图片尺寸设置错误。图片水印的图片大小不能超过 640*360 px。
      * @endif
      */
     kNERtcLocalVideoWatermarkStateImageSizeError,
@@ -1840,8 +1860,30 @@ typedef NS_ENUM(NSInteger, NERtcDistanceRolloffModel) {
      * 无衰减
      */
     kNERtcDistanceRolloffNone,
+    /**
+     * 仅线性衰减,没有方位效果
+     */
+    kNERtcDistanceRolloffLinearOnly
 };
 
+typedef NS_ENUM(NSInteger, NERtcRangeAudioMode) {
+    /**
+     * @if Chinese
+     * 默认模式
+     * @note
+     * - 设置后玩家附近一定范围的人都能听到该玩家讲话，如果范围内也有玩家设置为此模式，则也可以互相通话。
+     * - TeamID相同的队友可以互相听到
+     * @endif
+     */
+    NERtcRangeAudioModeDefault = 0,
+    /**
+     * @if Chinese
+     * 小组模式
+     * @note 仅TeamID相同的队友可以互相听到
+     * @endif
+     */
+    NERtcRangeAudioModeTeam = 1,
+};
 
 #pragma mark - media
 
@@ -3293,6 +3335,16 @@ typedef NS_ENUM(NSUInteger, NERtcEncryptionMode) {
      * @endif
      */
     NERtcEncryptionModeGMCryptoSM4ECB,
+  
+    /**
+     * @if English
+     * custom encryption mode.
+     * @endif
+     * @if Chinese
+     * 自定义加密模式。
+     * @endif
+     */
+    NERtcEncryptionModeCustom,
 };
 
 #pragma mark - last mile probe test
@@ -3470,6 +3522,24 @@ typedef NS_ENUM(NSInteger, NERtcLogLevel) {
      * @endif
      */
     kNERtcLogLevelOff           = 7,
+};
+
+#pragma mark - area
+
+typedef NS_ENUM(int, NERtcAreaCodeType) {
+    /**
+     * 未指定
+     */
+    kNERtcAreaCodeTypeDefault = 0x00,
+    /**
+     * 中国大陆
+     */
+    kNERtcAreaCodeTypeCN = 0x01,
+    /**
+     * 海外通用
+     */
+    kNERtcAreaCodeTypeOverseaDefault = 0x02,
+    
 };
 
 NS_ASSUME_NONNULL_END

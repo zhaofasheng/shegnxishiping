@@ -9,8 +9,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NEHangupParam : NSObject
 
+/// 信令通道id
 @property(nonatomic, strong) NSString *channelId;
 
+/// 用户自定义信息
 @property(nonatomic, strong, nullable) NSString *extraString;
 
 @end

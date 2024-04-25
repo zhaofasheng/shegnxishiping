@@ -48,6 +48,8 @@
 #import "NIMTeamManagerDelegate.h"
 #import "NIMTeamFetchMemberOption.h"
 #import "NIMTeamSearchOption.h"
+#import "NIMTeamMemberSearchOption.h"
+#import "NIMTeamMemberSearchResult.h"
 
 /**
  *  聊天室相关定义
@@ -453,6 +455,9 @@
 #import "NIMQChatUnreadInfoChangedEvent.h"
 #import "NIMQChatFetchQuickCommentsByMsgsResult.h"
 #import "NIMQChatUpdateQuickCommentInfo.h"
+#import "NIMQChatGetCommentatorsParam.h"
+#import "NIMQChatCommentator.h"
+#import "NIMQChatGetCommentatorsResult.h"
 #import "NIMQChatMessageAntispamSetting.h"
 #import "NIMQChatMessageAntispamResult.h"
 #import "NIMQChatMessageTypingEvent.h"

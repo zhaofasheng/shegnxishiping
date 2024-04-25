@@ -17,12 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 @class V2NIMKickedOfflineDetail;
 @class V2NIMDataSyncDetail;
 
-@protocol V2NIMLoginListener;
 @protocol V2NIMTokenProvider;
 @protocol V2NIMLoginExtensionProvider;
-@protocol V2NIMLoginDetail;
-@protocol V2NIMLoginDetailListener;
+@protocol V2NIMLoginListener;
 @protocol V2NIMReconnectDelayProvider;
+@protocol V2NIMLoginDetailListener;
 
 /// 登录鉴权类型
 typedef NS_ENUM(NSInteger, V2NIMLoginAuthType) {
@@ -37,17 +36,23 @@ typedef NS_ENUM(NSInteger, V2NIMLoginClientType) {
     V2NIM_LOGIN_CLIENT_TYPE_ANDROID                     = 1,  ///<Android
     V2NIM_LOGIN_CLIENT_TYPE_IOS                         = 2,  ///<iOS
     V2NIM_LOGIN_CLIENT_TYPE_PC                          = 4,  ///<PC
-    V2NIM_LOGIN_CLIENT_TYPE_WP                          = 8,  ///<WP
+    V2NIM_LOGIN_CLIENT_TYPE_WINPHONE                    = 8,  ///<WINPHONE
     V2NIM_LOGIN_CLIENT_TYPE_WEB                         = 16,  ///<WEB
     V2NIM_LOGIN_CLIENT_TYPE_RESTFUL                     = 32,  ///<REST API
-    V2NIM_LOGIN_CLIENT_TYPE_MACOS                       = 64,  ///<macOS
+    V2NIM_LOGIN_CLIENT_TYPE_MAC_OS                      = 64,  ///<macOS
+    V2NIM_LOGIN_CLIENT_TYPE_HARMONY_OS                  = 65,  ///<HarmonyOS
 };
 
 /// 登录状态
 typedef NS_ENUM(NSInteger, V2NIMLoginStatus) {
-    V2NIM_LOGIN_STATUS_LOGOUT                           = 0,  ///< 无登录
-    V2NIM_LOGIN_STATUS_LOGINED                          = 1,  ///< 已登录
-    V2NIM_LOGIN_STATUS_LOGINING                         = 2,  ///< 登录中
+    /// 登出状态，SDK初始化时，或调用logout接口后，或登录已终止（被踢下线或遇到无法继续登录的错误）。建议：在此状态时调用login接口。
+    V2NIM_LOGIN_STATUS_LOGOUT                           = 0,
+    /// 已登录
+    V2NIM_LOGIN_STATUS_LOGINED                          = 1,
+    /// 登录中（包括连接到服务器和与服务器进行登录鉴权）
+    V2NIM_LOGIN_STATUS_LOGINING                         = 2,
+    /// 未登录，但登录未终止，SDK会尝试重新登录。建议：不需要在此状态时调用login接口
+    V2NIM_LOGIN_STATUS_UNLOGIN                          = 3,
 };
 
 /// 被踢下线原因
@@ -69,6 +74,31 @@ typedef NS_ENUM(NSInteger, V2NIMDataSyncLevel) {
     V2NIM_DATA_SYNC_TYPE_LEVEL_FULL                     = 0,  ///< 完全同步
     V2NIM_DATA_SYNC_TYPE_LEVEL_BASIC                    = 1,  ///< 同步基础数据
 };
+
+/// 连接状态
+typedef NS_ENUM(NSInteger, V2NIMConnectStatus) {
+    V2NIM_CONNECT_STATUS_DISCONNECTED                   = 0,  ///< 未连接
+    V2NIM_CONNECT_STATUS_CONNECTED                      = 1,  ///< 已连接
+    V2NIM_CONNECT_STATUS_CONNECTING                     = 2,  ///< 连接中
+    V2NIM_CONNECT_STATUS_WAITING                        = 3,  ///< 等待重连
+};
+
+/// 数据同步类型
+typedef NS_ENUM(NSInteger, V2NIMDataSyncType) {
+    V2NIM_DATA_SYNC_TYPE_MAIN                         = 1,  ///< 同步主数据
+    V2NIM_DATA_SYNC_TYPE_TEAM_MEMBER                  = 2,  ///< 同步群组成员
+    V2NIM_DATA_SYNC_TYPE_SUPER_TEAM_MEMBER            = 3,  ///< 同步超大群组成员
+};
+
+/// 数据同步状态
+typedef NS_ENUM(NSInteger, V2NIMDataSyncState) {
+    V2NIM_DATA_SYNC_STATE_WAITING                     = 1,  ///< 等待同步
+    V2NIM_DATA_SYNC_STATE_SYNCING                     = 2,  ///< 同步中
+    V2NIM_DATA_SYNC_STATE_COMPLETED                   = 3,  ///< 同步完成
+};
+
+/// 成功接收聊天室link地址回调
+typedef void (^V2NIMChatroomLinkAddressCallback)(NSArray<NSString *> *links);
 
 /// 登录协议
 @protocol V2NIMLoginService <NSObject>
@@ -139,13 +169,6 @@ typedef NS_ENUM(NSInteger, V2NIMDataSyncLevel) {
 - (nullable V2NIMKickedOfflineDetail *)getKickedOfflineDetail;
 
 /**
- *  获取登录详情
- *
- *  @return 返回登录详情
- */
-- (id<V2NIMLoginDetail>)getLoginDetail;
-
-/**
  *  添加登录监听
  *
  *  @param listener
@@ -158,130 +181,6 @@ typedef NS_ENUM(NSInteger, V2NIMDataSyncLevel) {
  *  @param listener
  */
 - (void)removeLoginListener:(id<V2NIMLoginListener>)listener;
-
-@end
-
-/// 登录回调协议
-@protocol V2NIMLoginListener <NSObject>
-
-@optional
-
-- (void)onLoginStatus:(V2NIMLoginStatus)status;
-
-- (void)onLoginFailed:(V2NIMError *)error;
-
-- (void)onKickedOffline:(V2NIMKickedOfflineDetail *)detail;
-
-- (void)onLoginClientChanged:(V2NIMLoginClientChange)change
-                     changed:(nullable NSArray<V2NIMLoginClient *> *)changed;
-
-@end
-
-/// 获取token回调
-@protocol V2NIMTokenProvider <NSObject>
-
-- (nullable NSString *)getToken:(NSString *)accountId;
-
-@end
-
-/// 获取登录扩展回调
-@protocol V2NIMLoginExtensionProvider <NSObject>
-
-- (nullable NSString *)getLoginExtension:(NSString *)accountId;
-
-@end
-
-/// 登录选项
-@interface V2NIMLoginOption : NSObject
-
-/// 重试次数
-@property(nonatomic,assign) NSInteger retryCount;
-
-/// 强制登录模式
-@property(nonatomic,assign) BOOL forceMode;
-
-/// 认证类型
-@property(nonatomic,assign) V2NIMLoginAuthType authType;
-
-/// 提供token
-@property(nullable,nonatomic,strong) id<V2NIMTokenProvider> tokenProvider;
-
-/// 提供登录扩展信息
-@property(nullable,nonatomic,strong) id<V2NIMLoginExtensionProvider> loginExtensionProvider;
-
-/// 数据同步等级
-@property(nonatomic,assign) V2NIMDataSyncLevel syncLevel;
-
-@end
-
-/// 登录客户端信息
-@interface V2NIMLoginClient : NSObject
-
-/// 类型
-@property(nonatomic,assign,readonly) V2NIMLoginClientType type;
-
-/// 操作系统
-@property(nullable,nonatomic,copy,readonly) NSString *os;
-
-/// 登录时间
-@property(nonatomic,assign,readonly) NSTimeInterval timestamp;
-
-/// 自定义信息，最大32个字符；目前android多端登录，TV端和手表端，可以通过该字段区分
-@property(nullable,nonatomic,copy,readonly) NSString *customTag;
-
-/// 自定义类型
-@property(nonatomic,assign,readonly) NSInteger customClientType;
-
-@end
-
-/// 被踢下线详情
-@interface V2NIMKickedOfflineDetail : NSObject
-
-/// 原因
-@property(nonatomic,assign,readonly) V2NIMKickedOfflineReason reasonCode;
-/// 说明
-@property(nullable,nonatomic,copy,readonly) NSString *reasonDesc;
-/// 登录客户端类型
-@property(nonatomic,assign,readonly) V2NIMLoginClientType clientType;
-/// 自定义登录客户端类型
-@property(nonatomic,assign,readonly) NSInteger customClientType;
-
-@end
-
-/// 连接状态
-typedef NS_ENUM(NSInteger, V2NIMConnectStatus) {
-    V2NIM_CONNECT_STATUS_DISCONNECTED                   = 0,  ///< 未连接
-    V2NIM_CONNECT_STATUS_CONNECTED                      = 1,  ///< 已连接
-    V2NIM_CONNECT_STATUS_CONNECTING                     = 2,  ///< 连接中
-    V2NIM_CONNECT_STATUS_WAITING                        = 3,  ///< 等待重连
-};
-
-/// 数据同步类型
-typedef NS_ENUM(NSInteger, V2NIMDataSyncType) {
-    V2NIM_DATA_SYNC_TYPE_MAIN                         = 1,  ///< 同步主数据
-    V2NIM_DATA_SYNC_TYPE_TEAM_MEMBER                  = 2,  ///< 同步群组成员
-    V2NIM_DATA_SYNC_TYPE_SUPER_TEAM_MEMBER            = 3,  ///< 同步超大群组成员
-};
-
-/// 数据同步状态
-typedef NS_ENUM(NSInteger, V2NIMDataSyncState) {
-    V2NIM_DATA_SYNC_STATE_WAITING                     = 1,  ///< 等待同步
-    V2NIM_DATA_SYNC_STATE_SYNCING                     = 2,  ///< 同步中
-    V2NIM_DATA_SYNC_STATE_COMPLETED                   = 3,  ///< 同步完成
-};
-
-/// 数据同步详情
-@interface V2NIMDataSyncDetail : NSObject
-
-/// 类型
-@property(nonatomic,assign,readonly) V2NIMDataSyncType type;
-/// 状态
-@property(nonatomic,assign,readonly) V2NIMDataSyncState state;
-
-@end
-
-/// 登录详情协议
-@protocol V2NIMLoginDetail <NSObject>
 
 /**
  *  获取连接状态
@@ -318,6 +217,127 @@ typedef NS_ENUM(NSInteger, V2NIMDataSyncState) {
  */
 - (void)removeLoginDetailListener:(id<V2NIMLoginDetailListener>)listener;
 
+/**
+ *  获取聊天室link地址
+ *
+ *  @param roomId
+ *  @param success
+ *  @param failure
+ */
+- (void)getChatroomLinkAddress:(NSString *)roomId
+                       success:(nullable V2NIMChatroomLinkAddressCallback)success
+                       failure:(nullable V2NIMFailureCallback)failure;
+
+@end
+
+/// 登录选项
+@interface V2NIMLoginOption : NSObject
+
+/// 重试次数
+@property(nonatomic,assign) NSInteger retryCount;
+
+/// 登录超时时间，单位毫秒，>0表示有效的超时，其他表示不超时
+@property(nonatomic,assign) NSInteger timeout;
+
+/// 强制登录模式
+@property(nonatomic,assign) BOOL forceMode;
+
+/// 认证类型
+@property(nonatomic,assign) V2NIMLoginAuthType authType;
+
+/// 提供token
+@property(nullable,nonatomic,strong) id<V2NIMTokenProvider> tokenProvider;
+
+/// 提供登录扩展信息
+@property(nullable,nonatomic,strong) id<V2NIMLoginExtensionProvider> loginExtensionProvider;
+
+/// 数据同步等级
+@property(nonatomic,assign) V2NIMDataSyncLevel syncLevel;
+
+@end
+
+/// 登录客户端信息
+@interface V2NIMLoginClient : NSObject
+
+/// 类型
+@property(nonatomic,assign,readonly) V2NIMLoginClientType type;
+
+/// 操作系统
+@property(nullable,nonatomic,copy,readonly) NSString *os;
+
+/// 登录时间
+@property(nonatomic,assign,readonly) NSTimeInterval timestamp;
+
+/// 自定义信息，最大32个字符；目前android多端登录，TV端和手表端，可以通过该字段区分
+@property(nullable,nonatomic,copy,readonly) NSString *customTag;
+
+/// 自定义类型
+@property(nonatomic,assign,readonly) NSInteger customClientType;
+
+/// 登录客户端唯一标识
+@property(nullable,nonatomic,copy,readonly) NSString *clientId;
+
+@end
+
+/// 被踢下线详情
+@interface V2NIMKickedOfflineDetail : NSObject
+
+/// 原因
+@property(nonatomic,assign,readonly) V2NIMKickedOfflineReason reason;
+/// 说明
+@property(nullable,nonatomic,copy,readonly) NSString *reasonDesc;
+/// 登录客户端类型
+@property(nonatomic,assign,readonly) V2NIMLoginClientType clientType;
+/// 自定义登录客户端类型
+@property(nonatomic,assign,readonly) NSInteger customClientType;
+
+@end
+
+/// 数据同步详情
+@interface V2NIMDataSyncDetail : NSObject
+
+/// 类型
+@property(nonatomic,assign,readonly) V2NIMDataSyncType type;
+/// 状态
+@property(nonatomic,assign,readonly) V2NIMDataSyncState state;
+
+@end
+
+/// 获取token回调
+@protocol V2NIMTokenProvider <NSObject>
+
+- (nullable NSString *)getToken:(NSString *)accountId;
+
+@end
+
+/// 获取登录扩展回调
+@protocol V2NIMLoginExtensionProvider <NSObject>
+
+- (nullable NSString *)getLoginExtension:(NSString *)accountId;
+
+@end
+
+/// 登录回调协议
+@protocol V2NIMLoginListener <NSObject>
+
+@optional
+
+- (void)onLoginStatus:(V2NIMLoginStatus)status;
+
+- (void)onLoginFailed:(V2NIMError *)error;
+
+- (void)onKickedOffline:(V2NIMKickedOfflineDetail *)detail;
+
+- (void)onLoginClientChanged:(V2NIMLoginClientChange)change
+                     clients:(nullable NSArray<V2NIMLoginClient *> *)clients;
+
+@end
+
+/// 获取重连延时回调
+@protocol V2NIMReconnectDelayProvider <NSObject>
+
+- (int)getReconnectDelay:(int)delay;
+
 @end
 
 /// 登录详情回调协议
@@ -329,22 +349,11 @@ typedef NS_ENUM(NSInteger, V2NIMDataSyncState) {
 
 - (void)onDisconnected:(nullable V2NIMError *)error;
 
-- (void)onConnectSuccess;
-
 - (void)onConnectFailed:(nullable V2NIMError *)error;
-
-- (void)onConnecting;
 
 - (void)onDataSync:(V2NIMDataSyncType)type
              state:(V2NIMDataSyncState)state
              error:(nullable V2NIMError *)error;
-
-@end
-
-/// 获取重连延时回调
-@protocol V2NIMReconnectDelayProvider <NSObject>
-
-- (int)getReconnectDelay:(int)delay;
 
 @end
 

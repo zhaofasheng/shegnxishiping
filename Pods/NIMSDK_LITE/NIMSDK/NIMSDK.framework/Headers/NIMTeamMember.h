@@ -65,6 +65,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nullable,nonatomic,copy)        NSString *customInfo;
 
+/**
+ *  特别关注成员列表
+ */
+@property (nullable,nonatomic,copy,readonly)        NSArray<NSString *>*followAccountIds;
+
 @end
 
 NS_ASSUME_NONNULL_END

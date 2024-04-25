@@ -52,18 +52,16 @@ PODS:
     - YXAlog
   - NECoreKit (9.6.8):
     - YXAlog (= 1.0.7)
-  - NERtcCallKit (2.2.0):
-    - NERtcCallKit/NOS (= 2.2.0)
-  - NERtcCallKit/NOS (2.2.0):
+  - NERtcCallKit/NOS_Special (2.3.0):
     - NECommonKit
     - NECoreKit
-    - NIMSDK_LITE (= 9.12.0)
+    - NIMSDK_LITE
     - YXAlog
-  - NERtcSDK/RtcBasic (5.5.2)
-  - NIMSDK_LITE (9.12.0):
-    - NIMSDK_LITE/NOS (= 9.12.0)
+  - NERtcSDK/RtcBasic (5.5.21)
+  - NIMSDK_LITE (9.16.0):
+    - NIMSDK_LITE/NOS (= 9.16.0)
     - YXArtemis
-  - NIMSDK_LITE/NOS (9.12.0):
+  - NIMSDK_LITE/NOS (9.16.0):
     - YXArtemis
   - Protobuf (3.18.1)
   - ReactiveObjC (3.1.1)
@@ -107,9 +105,9 @@ DEPENDENCIES:
   - mob_sharesdk/ShareSDKPlatforms/SinaWeibo (~> 4.2.0)
   - mob_sharesdk/ShareSDKPlatforms/WeChatFull
   - mob_sharesdk/ShareSDKUI
-  - NERtcCallKit (= 2.2.0)
-  - NERtcSDK/RtcBasic (= 5.5.2)
-  - NIMSDK_LITE (= 9.12.0)
+  - NERtcCallKit/NOS_Special (= 2.3.0)
+  - NERtcSDK/RtcBasic (= 5.5.21)
+  - NIMSDK_LITE (= 9.16.0)
   - ReactiveObjC
   - SDWebImage (~> 5.15.5)
   - SocketRocket
@@ -170,9 +168,9 @@ SPEC CHECKSUMS:
   MOBFoundation: 11500153c10d83e4ac341f6ad6301b3998ce6db2
   NECommonKit: 499c3817c0654376eb0b72cf4d6ae9148d618a28
   NECoreKit: 02313c607f7c9aa64faafa5455136b3df7175d2c
-  NERtcCallKit: 848b8dc75bea80d64d81abc76ccda15207a9b160
-  NERtcSDK: 162fdb6ddd5e4f0ad4f115fcb2a71df26d9cbd48
-  NIMSDK_LITE: f1a026f9df4f2cecab7c2ea9a9b2102a115440bf
+  NERtcCallKit: 19b9b54a9a25483940527bc49b4feb97001a11f0
+  NERtcSDK: c7b7175a376d37c2538ddc0e9df9da2b58afb75e
+  NIMSDK_LITE: 5233e460dd377f57ef464a7f4abb28b2f32804e5
   Protobuf: 0ac2cdc92fb5c33dab66dd1c4e9f9cc4c34d00ba
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
@@ -185,6 +183,6 @@ SPEC CHECKSUMS:
   YXArtemis: 2771e9ac5e5e01867914835aedb03429d135043e
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 9e4833ac858736d75379d9bcda07157a01017734
+PODFILE CHECKSUM: 857205cc250ab82c34b0abd7c6b61cdb0af2bd27
 
 COCOAPODS: 1.14.3

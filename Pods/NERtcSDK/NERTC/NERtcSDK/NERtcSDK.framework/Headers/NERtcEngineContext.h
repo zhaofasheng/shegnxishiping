@@ -62,6 +62,12 @@ NERTC_EXPORT  @interface NERtcEngineContext: NSObject
  */
 @property (nonatomic, strong, nullable) NERtcServerAddresses *serverAddress;
 
+/**
+ *  代码内部默认值是0
+ *  详见NERtcAreaCodeType定义
+ */
+@property (nonatomic, assign) NERtcAreaCodeType areaCodeType;
+
 @end
 
 NS_ASSUME_NONNULL_END

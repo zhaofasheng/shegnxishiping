@@ -1730,7 +1730,7 @@
 </table>
 
 
- <h2 id="设备管理">空间音效（3D 音效）</h2>
+ <h2 id="空间音效">空间音效（3D 音效）和范围语音</h2>
 
 <table>
   <tr>
@@ -1738,15 +1738,21 @@
     <th width=600><b>功能</b></th>
     <th width=200><b>起始版本</b></th>
   </tr>
+    </tr>
+    <tr>
+    <td> {@link INERtcEngineEx#initSpatializer}  </td>
+    <td>初始化空间音效</td>
+    <td>V5.5.10</td>
+  </tr>
   <tr>
-    <td> {@link INERtcEngineEx#enableSpatializer:} </td>
+    <td> {@link INERtcEngineEx#enableSpatializer:applyToTeam:} </td>
     <td>开启/关闭空间音效</td>
     <td>V5.4.0</td>
   </tr>
   <tr>
-    <td> {@link INERtcEngineEx#updateSpatializerAudioRecvRange:conversationalDistance:rollOff:} </td>
+    <td> {@link INERtcEngineEx#setAudioRecvRange:conversationalDistance:rollOff:} </td>
     <td>设置空间音效的距离衰减属性和语音范围</td>
-    <td>V5.4.0</td>
+    <td>V5.5.10</td>
   </tr>
   <tr>
     <td> {@link INERtcEngineEx#setSpatializerRoomProperty:} </td>
@@ -1759,16 +1765,38 @@
     <td>V5.4.0</td>
   </tr>
   <tr>
-    <td> {@link  INERtcEngineEx#updateSpatializerSelfPosition:} </td>
+    <td> {@link  INERtcEngineEx#updateSelfPosition:} </td>
     <td>设置说话者和接收者的位置信息</td>
     <td>V5.4.0</td>
   </tr>
   <tr>
-    <td> {@link  INERtcEngineEx#setSpatializerRenderMode:} </td>
+    <td> {@link INERtcEngineEx#setSpatializerRenderMode:} </td>
     <td>设置渲染模式</td>
     <td>V5.4.0</td>
   </tr>
+    <tr>
+    <td>{@link INERtcEngineEx#setRangeAudioTeamID:} </td>
+    <td>设置范围语音的队伍号</td>
+    <td>V5.5.10</td>
+  </tr>
+  <tr>
+    <td> {@link INERtcEngineEx#setRangeAudioMode:} </td>
+    <td>设置范围语音的模式</td>
+    <td>V5.5.10</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>{@link INERtcEngineEx#setSubscribeAudioAllowlist:} </td>
+    <td>设置只订阅指定用户的音频流</td>
+    <td>V5.5.10</td>
+  </tr>
+  <tr>
+    <td> {@link INERtcEngineEx#setSubscribeAudioBlocklist:uidArray:} </td>
+    <td>设置不订阅指定用户的音频流</td>
+    <td>V5.5.10</td>
+  </tr>
 </table>
+ 
 
  <h2 id="故障排查">故障排查</h2>
 

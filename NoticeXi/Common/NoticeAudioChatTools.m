@@ -13,92 +13,107 @@
 
 #import <NIMSDK/NIMSDK.h>
 #import <NERtcCallKit/NERtcCallKit.h>
+#import <NERtcSDK/NERtcSDK.h>
+static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 
-@interface NoticeAudioChatTools()<NECallEngineDelegate>
+@interface NoticeAudioChatTools()<NECallEngineDelegate,NERtcEngineDelegateEx>
 
-
+@property (nonatomic, strong) NSString *currentRoomId;
+@property (nonatomic, assign) NSInteger chatTime;//聊天时长
 @end
 
 @implementation NoticeAudioChatTools
 
-- (void)callToUserId:(NSString *)userId roomId:(UInt32)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext{
+- (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext{
     //设置屏幕常亮
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 
-    self.roomId = [NSString stringWithFormat:@"%u",(unsigned int)roomIdNum];
+    self.roomId = [NSString stringWithFormat:@"%ld",roomIdNum];
     self.toUserId = userId;
     __weak typeof(self) weakSelf = self;
     
-    [NoticeQiaojjieTools showWithJieDanTitle:nickName roomId:self.roomId time:getOrderTime?getOrderTime: @"120" creatTime:@"0" autoNext:autonext clickBlcok:^(NSInteger tag) {
-    
-        if(tag == 1){//自己直接取消
-            weakSelf.autoCallNext = NO;
+    NECallParam *callParam = [[NECallParam alloc] initWithAccId:userId withCallType:NECallTypeAudio];
+    callParam.pushConfig.pushContent = @"有一条新的语音电话";
+    callParam.extraInfo = [NoticeTools getuserId];//自定义信息为拨打者的用户id
+    callParam.rtcChannelName = self.roomId;
+    [[NECallEngine sharedInstance] call:callParam completion:^(NSError * _Nullable error, NECallInfo * _Nullable callInfo) {
+        if (!error) {
             weakSelf.autoCallNexting = NO;
+            if (weakSelf.autoCallNext) {
+                weakSelf.autoCallNexting = YES;
+            }
+            DRLog(@"云信拨打电话成功\n房间信息%@--%ld\n房间号%@",callInfo.rtcInfo.channelName,callInfo.rtcInfo.channelId,self.roomId);
+            
+            [NoticeQiaojjieTools showWithJieDanTitle:nickName roomId:self.roomId time:getOrderTime?getOrderTime: @"120" creatTime:@"0" autoNext:autonext clickBlcok:^(NSInteger tag) {
+                [weakSelf hanupyunxin];
+                if(tag == 1){//自己直接取消
+                    weakSelf.autoCallNext = NO;
+                    weakSelf.autoCallNexting = NO;
+                    if(weakSelf.cancelBlcok){
+                        weakSelf.cancelBlcok(YES);
+                    }
+                }else if (tag == 2){//对方超时未接
+                    if (self.autoNextBlcok && self.autoCallNext) {//自动匹配的话，就执行自动拨打下一单
+                        self.autoCallNext = NO;
+                        if (self.autoNextBlcok) {
+                            self.autoNextBlcok(YES);
+                        }
+                    }else{
+                        weakSelf.autoCallNext = NO;
+                        weakSelf.autoCallNexting = NO;
+                        if(weakSelf.cancelBlcok){
+                            weakSelf.cancelBlcok(YES);
+                        }
+                        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已超时失效，请尝试其它店铺" message:nil cancleBtn:@"知道了"];
+                        [alerView showXLAlertView];
+                    }
+                }
+            }];
+        }else{
+            [[NoticeTools getTopViewController] showToastWithText:[NSString stringWithFormat:@"拨打失败，请稍后重试%@",error.description]];
             if(weakSelf.cancelBlcok){
                 weakSelf.cancelBlcok(YES);
             }
-        }else if (tag == 2){//对方超时未接
-            if (self.autoNextBlcok && self.autoCallNext) {//自动匹配的话，就执行自动拨打下一单
-                self.autoCallNext = NO;
-                if (self.autoNextBlcok) {
-                    self.autoNextBlcok(YES);
-                }
-            }else{
-                weakSelf.autoCallNext = NO;
-                weakSelf.autoCallNexting = NO;
-                if(weakSelf.cancelBlcok){
-                    weakSelf.cancelBlcok(YES);
-                }
-                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已超时失效，请尝试其它店铺" message:nil cancleBtn:@"知道了"];
-                [alerView showXLAlertView];
-            }
         }
-     
     }];
-        
 }
 
 
 - (void)regWangyiyun{
     //推荐在程序启动的时候初始化 NIMSDK 注册云信
-    
-    NSString *appKey        = @"dd8114c96a13f86d8bf0f7de477d9cd9";//云信分配的 appKey
+    NSString *appKey        = yunxinAppKey;//云信分配的 appKey
     NIMSDKOption *option    = [NIMSDKOption optionWithAppKey:appKey];
-    option.apnsCername      = @"prPush";//APNs 推送证书名 正式环境prPush 测试环境devPush
-    option.pkCername        = @"voip";//PushKit  推送证书名
+    option.apnsCername      = @"testPush";//APNs 推送证书名 正式环境prPush 测试环境devPush
     [[NIMSDK sharedSDK] registerWithOption:option];
     [self setupSDK];
 }
 
 
 - (void)setupSDK {
-    NESetupConfig *config = [[NESetupConfig alloc] initWithAppkey:@"dd8114c96a13f86d8bf0f7de477d9cd9"];
+    NESetupConfig *config = [[NESetupConfig alloc] initWithAppkey:yunxinAppKey];
     [[NECallEngine sharedInstance] setup:config];
 
-    [NIMSDK.sharedSDK.loginManager login:@"xiaoer" token:@"123456" completion:^(NSError * _Nullable error) {
+    //测试账号有1 2 3 4
+    [NIMSDK.sharedSDK.loginManager login:@"2" token:@"111111" completion:^(NSError * _Nullable error) {
         if(!error){
             DRLog(@"登录云信成功");
         }else{
             DRLog(@"登录云信失败%@",error.description);
         }
     }];
+  
     [NECallEngine.sharedInstance addCallDelegate:self];
+    [NECallEngine sharedInstance].engineDelegate = self;
+
+    NERtcEngine *coreEngine = [NERtcEngine sharedEngine];
+    [coreEngine enableAudioVolumeIndication:YES interval:1000 vad:YES]; // 启用说话者音量提示,在 onRemoteAudioVolumeIndication 和 onRemoteAudioVolumeIndication 回调中每隔 1000ms 返回音量提示
 }
+
 
 
 - (void)regTencent{
     [self regWangyiyun];
-//    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"tentcent/userSig" Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-//        if(success){
-//            NoticeByOfOrderModel *userSigM  = [NoticeByOfOrderModel mj_objectWithKeyValues:dict[@"data"]];
-//            [self regTencentWith:userSigM.user_sig];
-//        }else{
-//            [self regTencentWith:nil];
-//        }
-//    } fail:^(NSError * _Nullable error) {
-//        [self regTencentWith:nil];
-//    }];
-    
+
     self.selfUserId = [NoticeTools getuserId];
 }
 
@@ -146,15 +161,14 @@
                 self.noReClick = YES;
                 [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopGoodsOrder/%@",weakSelf.orderModel.room_id] Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                     if(success){
-                   
-                       // [TUICallingAction accept];
+                        [weakSelf acceptCall];
                     }else{
-                       // [TUICallingAction reject];
+                        [weakSelf hanupyunxin];
                     }
                     
                     [[NoticeTools getTopViewController] hideHUD];
                 } fail:^(NSError * _Nullable error) {
-//                    [TUICallingAction reject];
+                    [weakSelf hanupyunxin];
                     [[NoticeTools getTopViewController] hideHUD];
                     self.noReClick = NO;
                 }];
@@ -188,11 +202,11 @@
         if (close) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
         }
-       // [TUICallingAction reject];
+        [self hanupyunxin];
         return;
     }
     
-    //[TUICallingAction reject];
+    [self hanupyunxin];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:close?@"5": @"3" forKey:@"orderType"];
@@ -203,23 +217,45 @@
             if (close) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
             }
-           // [TUICallingAction reject];
-        }else{
-           // [TUICallingAction reject];
         }
     } fail:^(NSError * _Nullable error) {
-        //[TUICallingAction reject];
     }];
-    //[[TUICallingStatusManager shareInstance] clearAllStatus];
+}
+
+//云信接听  当被叫 onInvited 回调发生，调用 accept 接听呼叫
+- (void)acceptCall{
+//    __weak typeof(self) weakSelf = self;
+    [[NECallEngine sharedInstance] accept:^(NSError * _Nullable error, NECallInfo * _Nullable callInfo) {
+        if (!error) {
+            DRLog(@"接听成功");
+        }else{
+            [[NoticeTools getTopViewController] showToastWithText:[NSString stringWithFormat:@"接听失败%@",error.description]];
+        }
+    }];
+}
+
+//挂断云信电话
+- (void)hanupyunxin{
+    NEHangupParam *hangupParam = [[NEHangupParam alloc] init];
+    [[NECallEngine sharedInstance] hangup:hangupParam completion:^(NSError * _Nullable error) {
+        if (!error) {
+            DRLog(@"挂断云信电话");
+        }else{
+            DRLog(@"挂断云信失败%@",error.description);
+        }
+    }];
+
 }
 
 //获取等待的订单
 - (void)getOrder{
+    
     self.noReClick = NO;
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoodsOrder/select?type=2" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             DRLog(@"当前进行中等待中的订单%@",dict);
             self.orderModel = [NoticeByOfOrderModel mj_objectWithKeyValues:dict[@"data"]];
+            self.fromUserId = self.orderModel.user_id;
             if(self.orderModel.goods_type.intValue == 2){
                 UIViewController *viewController = [[UIViewController alloc] init];
                 [viewController.view addSubview:self.callView];
@@ -244,167 +280,140 @@
     }];
 }
 
-/**
- * 通话接通的回调(主叫和被叫都可以收到)
- *
- * @param roomId        此次通话的音视频房间 ID
- * @param callMediaType 通话的媒体类型，比如视频通话、语音通话
- * @param callRole      角色，枚举类型：主叫、被叫
- */
-//- (void)onCallBegin:(TUIRoomId *)roomId callMediaType:(TUICallMediaType)callMediaType callRole:(TUICallRole)callRole {
-//    [self clearCallWaitView];
-//    DRLog(@"接通电话%u",(unsigned int)roomId.intRoomId);
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPHASJUBAOEDSELFJUBAO" object:nil];
-//    self.callingView = nil;
-//    NoticeCallView *callView = [[NoticeCallView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-//    self.callingView = callView;
-//    self.callingView.roomId = [NSString stringWithFormat:@"%u",(unsigned int)roomId.intRoomId];
-//    callView.fromUserId = self.fromUserId;
-//    callView.toUserId = self.toUserId;
-//    [callView showCallView];
-//    [[NoticeTools getTopViewController] hideHUD];
-//}
+/// 通话建立的回调
+/// @param info 通话建立回调信息
+- (void)onCallConnected:(NECallInfo *)info{
+    [self clearCallWaitView];
+    self.chatTime = 0;
+    self.currentRoomId = info.rtcInfo.channelName;
+    DRLog(@"接通电话房间号%@",info.rtcInfo.channelName);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPHASJUBAOEDSELFJUBAO" object:nil];
+    self.callingView = nil;
+    NoticeCallView *callView = [[NoticeCallView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    self.callingView = callView;
+    __weak typeof(self) weakSelf = self;
+    callView.chatTimeBlock = ^(NSInteger chatTime) {
+        weakSelf.chatTime = chatTime;
+    };
+    //正式的时候打开这里
+    self.callingView.roomId = self.currentRoomId;
+    callView.fromUserId = self.fromUserId;
+    callView.toUserId = self.toUserId;
+    [callView showCallView];
+    [[NoticeTools getTopViewController] hideHUD];
+}
 
-/**
- * 通话结束的回调(主叫和被叫都可以收到)
- *
- * @param roomId        此次通话的音视频房间 ID
- * @param callMediaType 通话的媒体类型，比如视频通话、语音通话
- * @param callRole      角色，枚举类型：主叫、被叫
- * @param totalTime     此次通话的时长
- */
-//- (void)onCallEnd:(TUIRoomId *)roomId callMediaType:(TUICallMediaType)callMediaType callRole:(TUICallRole)callRole totalTime:(float)totalTime {
-//    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-//    DRLog(@"通话结束");
-//    self.autoCallNexting = NO;
-//    self.fromUserId = nil;
-//    self.toUserId = nil;
-//    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-//    if(totalTime < 1){
-//        totalTime = 1;
-//    }
-//    [parm setObject:[NSString stringWithFormat:@"%d",(int)totalTime] forKey:@"second"];
-//    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopGoodsOrder/complete/0/%u",(unsigned int)roomId.intRoomId] Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-//        if(success){
-//            DRLog(@"订单这设置为完成");
-//        }
-//    } fail:^(NSError * _Nullable error) {
-//    }]; 
-//    [[NoticeTools getTopViewController] hideHUD];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPOVERCHATORDER" object:nil];
-//}
+/// 通话结束
+/// @param info 通话结束携带信息
+- (void)onCallEnd:(NECallEndInfo *)info{
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 
+    [self clearCallWaitView];
+    
+    DRLog(@"通话结束回调的当前通话房间号信息%@",self.currentRoomId);
+    self.autoCallNexting = NO;
+    self.fromUserId = nil;
+    self.toUserId = nil;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPOVERCHATORDER" object:nil];
+    if (info.reasonCode == TerminalCodeTimeOut) {
+        DRLog(@"超时");
 
-//- (void)onCallReceived:(NSString *)callerId calleeIdList:(NSArray<NSString *> *)calleeIdList groupId:(NSString *)groupId callMediaType:(TUICallMediaType)callMediaType userData:(NSString *)userData{
-//    DRLog(@"收到%@的通话请求",callerId);
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"HASGETSHOPVOICECHANTTOTICE" object:nil];
-//    self.fromUserId = callerId;
-//    [self getOrder];
-//}
+        if(!self.autoCallNexting){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPNOACCEPECT" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
+        }
+    }else if (info.reasonCode == TerminalCodeBusy){
+        DRLog(@"用户占线");
+       
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
+ 
+    }else if (info.reasonCode == TerminalCodeRtcInitError){
+        DRLog(@"rtc 初始化失败");
+    }else if (info.reasonCode == TerminalCodeJoinRtcError){
+        DRLog(@"加入rtc失败");
+    }else if (info.reasonCode == TerminalCodeCancelErrorParam){
+        DRLog(@"cancel 取消参数错误");
+    }else if (info.reasonCode == TerminalCodeCallFailed){
+        DRLog(@"发起呼叫失败");
+    }else if (info.reasonCode == TerminalCodeKicked){
+        DRLog(@"TerminalCodeKicked");
+    }else if (info.reasonCode == TerminalCodeEmptyUid){
+        DRLog(@" uid 为空");
+    }else if (info.reasonCode == TerminalRtcDisconnected){
+        DRLog(@"Rtc 断连");
+        [self orderFinish];
+    }else if (info.reasonCode == TerminalCallerCancel){
+        DRLog(@"取消呼叫");
+    }else if (info.reasonCode == TerminalCalleeCancel){
+        DRLog(@"呼叫被取消");
+        [[NoticeTools getTopViewController] hideHUD];
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"对方取消了订单" message:nil cancleBtn:@"好的，知道了"];
+        [alerView showXLAlertView];
+    }else if (info.reasonCode == TerminalCalleeReject){
+        DRLog(@"拒绝呼叫");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
 
-/**
- * 通话取消的回调
- *
- * @param callerId 取消用户ID
- */
-//- (void)onCallCancelled:(NSString *)callerId{
-//    DRLog(@"%@取消通话 自己%@",callerId,[NoticeTools getuserId]);
-//    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-//    [[NoticeTools getTopViewController] hideHUD];
-//    [self clearCallWaitView];
-//    
-//    if (!self.autoCallNexting) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
-//    }
-//    if ([callerId isEqualToString:self.fromUserId]) {
-//
-//        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"对方取消了订单" message:nil cancleBtn:@"好的，知道了"];
-//        [alerView showXLAlertView];
-//    }
-//    
-//    self.fromUserId = nil;
-//    self.toUserId = nil;
-//}
+    }else if (info.reasonCode == TerminalCallerRejcted){
+        DRLog(@"呼叫被拒绝");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
+   
+        if (!self.autoCallNexting) {
+            if(self.repjectBlcok){
+                self.repjectBlcok(YES);
+            }
+        }else{
+            self.autoCallNexting = NO;
+            if (self.repjectautoNextBlcok) {
+                self.repjectautoNextBlcok(YES);
+            }
+        }
+    }else if (info.reasonCode == TerminalBeHuangUp){
+        DRLog(@"对方挂断了呼叫中的通话");
+        [self orderFinish];
+    }else if (info.reasonCode == TerminalUserRtcDisconnected){
+        DRLog(@"Rtc房间断开链接");
+    }else if (info.reasonCode == TerminalUserRtcLeave){
+        DRLog(@"离开Rtc房间");
+    }else if (info.reasonCode == TerminalAcceptFail){
+        DRLog(@"接听失败");
+    }else if (info.reasonCode == TerminalHuangUp){
+        DRLog(@"挂断通话中的电话");
+     
+        [self orderFinish];
+    }
+}
 
-/**
- * xxxx 用户拒绝通话的回调
- *
- * @param userId 拒绝用户的 ID
- */
-//- (void)onUserReject:(NSString *)userId{
-//    DRLog(@"拒绝通话%@",userId);
-//    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
-//    self.fromUserId = nil;
-//    self.toUserId = nil;
-//    if (!self.autoCallNexting) {
-//        if(self.repjectBlcok){
-//            self.repjectBlcok(YES);
-//        }
-//    }else{
-//        self.autoCallNexting = NO;
-//        if (self.repjectautoNextBlcok) {
-//            self.repjectautoNextBlcok(YES);
-//        }
-//    }
-//}
+- (void)orderFinish{
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    NSInteger totalTime = self.chatTime;
+    if(totalTime < 1){
+        totalTime = 1;
+    }
+    [parm setObject:[NSString stringWithFormat:@"%d",(int)totalTime] forKey:@"second"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopGoodsOrder/complete/0/%@",self.currentRoomId] Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if(success){
+            DRLog(@"订单这设置为完成");
+            self.currentRoomId = nil;
+        }
+    } fail:^(NSError * _Nullable error) {
+    }];
+    [[NoticeTools getTopViewController] hideHUD];
+}
 
-/**
- * xxxx 用户不响应的回调
- *
- * @param userId 无响应用户的 ID
- */
-//- (void)onUserNoResponse:(NSString *)userId{
-//    DRLog(@"通话无响应");
-//    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-//    self.fromUserId = nil;
-//    self.toUserId = nil;
-//    [self clearCallWaitView];
-//    if(!self.autoCallNexting){
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPNOACCEPECT" object:nil];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
-//    }
-//}
+//收到通话请求
+- (void)onReceiveInvited:(NEInviteInfo *)info{
 
-/**
- * xxxx 用户忙线的回调
- *
- * @param userId 忙线用户的 ID
- */
-//- (void)onUserLineBusy:(NSString *)userId{
-//    DRLog(@"用户忙线的回调");
-//    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-//    self.fromUserId = nil;
-//    self.toUserId = nil;
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
-//    [self clearCallWaitView];
-//
-//}
+    NECallInfo *callinfo = [[NECallEngine sharedInstance] getCallInfo];
+    self.currentRoomId = callinfo.rtcInfo.channelName;
+    DRLog(@"收到%@的通话请求\n房间号%@",info.extraInfo,callinfo.rtcInfo.channelName);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"HASGETSHOPVOICECHANTTOTICE" object:nil];
+    self.fromUserId = info.extraInfo;
+    //正式需要打开这里，调试的时候注释了
+    [self getOrder];
 
-//根据通话人的音量变化监听谁在说话
-//- (void)onUserVoiceVolumeChanged:(NSDictionary<NSString *, NSNumber *> *)volumeMap{
-// 
-//    NSArray *keyArray = volumeMap.allKeys;
-//    for (NSString *userId in keyArray) {
-//        if (userId) {
-//            if(self.fromUserId){//如果存在来电者id，则自己是店主
-//                if([userId isEqualToString:self.fromUserId]){//如果id是来电者的id，那么这个人是用户
-//                    [self.callingView setUserVolume:[volumeMap[userId] floatValue]];
-//                }else{
-//                    [self.callingView setShopVolume:[volumeMap[userId] floatValue]];
-//                }
-//            }else{
-//                if([userId isEqualToString:self.toUserId]){//被呼叫的人是店主
-//                    [self.callingView setShopVolume:[volumeMap[userId] floatValue]];
-//                }else{
-//                    [self.callingView setUserVolume:[volumeMap[userId] floatValue]];
-//                }
-//            }
-//        }
-//    }
-//    [self.callingView refreshStars];
-//}
+}
 
 - (void)clearCallWaitView{
     [self.callView removeFromSuperview];
@@ -412,4 +421,9 @@
     self.callingWindow = nil;
 }
 
+- (void)onRemoteAudioVolumeIndication:(NSArray<NERtcAudioVolumeInfo *> *)speakers totalVolume:(int)totalVolume{
+    for (NERtcAudioVolumeInfo *info in speakers) {
+        DRLog(@"%llu----%d",info.uid,info.volume);
+    }
+}
 @end

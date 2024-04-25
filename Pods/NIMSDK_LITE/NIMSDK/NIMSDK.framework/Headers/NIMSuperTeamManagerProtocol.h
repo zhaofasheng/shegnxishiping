@@ -12,6 +12,7 @@
 #import "NIMTeamManagerDelegate.h"
 #import "NIMTeam.h"
 #import "NIMTeamFetchMemberOption.h"
+#import "NIMTeamMemberSearchOption.h"
 
 NS_ASSUME_NONNULL_BEGIN
 /**
@@ -363,6 +364,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchTeamMutedMembers:(NSString *)teamId
                    completion:(nullable NIMTeamMemberHandler)completion;
 
+
+/**
+ *  群成员类型查询成员列表
+ *
+ *  @param teamId     群组ID
+ *  @param option     搜索配置
+ *  @param completion 完成后的回调
+ *
+ */
+- (void)getTeamMemberList:(NSString *)teamId
+                   option:(NIMTeamMemberRoleTypeSearchOption *)option
+               completion:(nullable NIMTeamMemberSearchResultHandler)completion;
+
+
 /**
  *  获取群信息
  *
@@ -383,6 +398,29 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable NIMTeamMember *)teamMember:(NSString *)userId
                                 inTeam:(NSString *)teamId;
+
+/**
+ *  群成员添加特别关注
+ *
+ *  @param teamId      群组ID
+ *  @param accoutIds   群成员id
+ *  @param completion  完成后的回调
+ */
+- (void)addTeamMembersFollow:(NSString *)teamId
+                   accoutIds:(NSArray <NSString*>*)accoutIds
+                  completion:(nullable NIMTeamHandler)completion;
+
+
+/**
+ *  群成员移除特别关注
+ *
+ *  @param teamId      群组ID
+ *  @param accoutIds   群成员id
+ *  @param completion  完成后的回调
+ */
+- (void)removeTeamMembersFollow:(NSString *)teamId
+                      accoutIds:(NSArray <NSString*>*)accoutIds
+                     completion:(nullable NIMTeamHandler)completion;
 
 /**
  *  添加超大群组委托

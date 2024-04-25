@@ -298,12 +298,12 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     self.needStop = YES;
     [NoticeTools setneedConnect:NO];
 
-    //清除角标
-    UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
-    content.badge = @(0);
-    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"clearBadge" content:content trigger:nil];
-    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-    }];
+
+    if (@available(iOS 16.0, *)) {
+        [[UNUserNotificationCenter currentNotificationCenter] setBadgeCount:0 withCompletionHandler:nil];
+    }else {
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    }
     
     [JPUSHService setBadge:0];
     
@@ -337,9 +337,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [[NSNotificationCenter defaultCenter] postNotificationName:@"APPWASKILLED" object:nil];//程序杀死，挂断电话
 }
 
-- (void)tencentDevicetoken{
-    [self onReportToken:self.deviceToken];
-}
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application{
     

@@ -1288,6 +1288,57 @@ NS_ASSUME_NONNULL_BEGIN
  * @endif
  */
 - (int)updatePermissionKey:(NSString *)key;
+
+/**
+ * @if Chinese
+ * 查询当前设备是否支持 SDK 中的某项功能
+ *
+ * @since v5.5.21
+ *
+ * @par 业务场景
+ * 以虚拟背景为例，在用户跳转 UI 至直播之前，可调用此接口来判断当前设备是否支持虚拟背景功能，如果不支持，则隐藏相关的按钮。
+ *
+ * @par 调用时机
+ * 请在引擎初始化之后调用此接口。
+ *
+ * @par 参数说明
+ *
+ * <table>
+ *  <tr>
+ *      <th>**参数名称**</th>
+ *      <th>**类型**</th>
+ *      <th>**描述**</th>
+ *  </tr>
+ *  <tr>
+ *      <td>featureType</td>
+ *      <td>NERtcFeatureType</td>
+ *      <td>RTC 功能类型</td>
+ *  </tr>
+ * </table>
+ *
+ * @par 示例代码
+ *
+ * @code
+ * NERtcFeatureType featureType = kNERtcFeatureTypeVirtualBackground;
+ * BOOL supported = [[NERtcEngine sharedEngine] isFeatureSupportedWithType:featureType];
+ * if (supported) {
+ *     // 该设备支持
+ * } else {
+ *     // 该设备不支持
+ * }
+ * @endcode
+ *
+ * @par 相关回调
+ * 无
+ *
+ * @return
+ * YES: 表示支持
+ * NO: 表示不支持
+ *
+ * @endif
+ */
+- (BOOL)isFeatureSupportedWithType:(NERtcFeatureType)featureType;
+
 #pragma mark - External Video Input
 
 /**
@@ -1666,7 +1717,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @par 使用前提
  * 建议在收到远端用户加入房间的 {@link NERtcEngineDelegate#onNERtcEngineUserDidJoinWithUserID:userName:joinExtraInfo:} 回调后，再调用此接口通过回调返回的 uid 设置对应视图。
  * @par 调用时机
- * 请在引擎初始化之后调用此接口，且该方法仅可在远端用户加入房间后调用。
+ * 请在引擎初始化之后调用此接口，且该方法在加入房间前后均可调用。
  * @note 
  * - 纯音频 SDK 禁用该接口，如需使用请前往云信官网下载并替换成视频 SDK。
  * - 退出房间后，SDK 会清除远端用户和画布的的绑定关系，该设置自动失效。
@@ -3513,52 +3564,67 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 3D Audio
 
 /**
-  * 空间音效的距离衰减属性和语音范围。
-  * @since V5.4.0
+* 设置玩家本人在房间中的范围语音模式，该设置不影响其他人。
+* @since V5.5.10
+* @par 调用时机
+* 请在引擎初始化后调用此接口，且该方法在加入房间前后均可调用。
+* @note 
+* - 离开房间后，此参数不会自动重置为默认模式，所以请在每次加入房间之前都调用此方法设置语音模式。
+* - 加入房间后，可以随时修改语音模式，并立即生效。
+* @param[in] mode 范围语音模式，包括所有人和仅小队两种模式。具体请参见 {@link NERtcRangeAudioMode} 。
+* @return
+* - 0: 方法调用成功
+* - 其他: 调用失败
+*/
+- (int)setRangeAudioMode:(NERtcRangeAudioMode)mode;
+
+/**
+* 设置范围语音的小队ID。
+* @since V5.5.10
+* @par 调用时机
+* 请在引擎初始化后调用此接口，且该方法在加入房间前后均可调用。
+* @note 
+* - 离开房间后，TeamID 失效，需要重新配置TeamID ，请在每次加入房间之前都调用此方法设置队伍号。
+* - 如果离开房间后再加入房间，请在收到退房成功回调（onLeaveChannel）后，再调用此方法设置队伍号。
+* - 若加入房间后，调用此接口修改队伍号，设置后立即生效。
+* - 请配合 {@link #setRangeAudioMode:} 接口一起使用。
+* @param teamId 小队ID, 有效值: >=0。若team_id = 0，则房间内所有人（不论范围语音的模式是所有人还是仅小队）都可以听到该成员的声音。
+* @return
+* - 0: 方法调用成功
+* - 其他: 调用失败
+*/
+-(int)setRangeAudioTeamID:(int32_t)teamId;
+
+/**
+  * 设置空间音效的距离衰减属性和语音范围。
+  * @since V5.5.10
   * @par 调用时机
-  * 请在引擎初始化后调用此接口，且该方法在加入房间前才可调用。
+  * 请在引擎初始化后调用此接口，且该方法在加入房间前后均可调用。
   * @note 
-  * - 请先调用 {@link #enableSpatializer:} 接口后，再调用本接口。
-  * - 在通话过程中无法修改该属性，只有退出房间后才可重新设置。
-  * @par 参数说明
-  * <table>
-  *  <tr>
-  *      <th>**参数名称**</th>
-  *      <th>**类型**</th>
-  *      <th>**描述**</th>
-  *  </tr>
-  *  <tr>
-  *      <td>audibleDistance</td>
-  *      <td>Integer</td>
-  *      <td>监听器能接收到音频的最大距离，用户的声音在该范围内可被听见。在该范围内，声音将会随距离的增加而衰减，直至超出所设置的范围，则不再有声音。取值范围[0,1000] 默认值为 32。</td>
-  *  </tr>
-  *  <tr>
-  *      <td>conversationalDistance</td>
-  *      <td>Integer</td>
-  *      <td>监听器不对音频进行衰减的距离，在该距离范围内，扬声器音频保持其原始音量，超出该范围时，声音将会随距离的增加而衰减。默认值为 1。</td>
-  *  </tr>
-  *  <tr>
-  *      <td>rollOff</td>
-  *      <td> {@link #NERtcDistanceRolloffModel}</td>
-  *      <td>距离衰减模式。默认值为 #kNERtcDistanceRolloffNone 。</td>
-  *  </tr>
-  * </table>  
+  * - 若要使用范围语音或空间音效功能，加入房间前需要调用一次本接口。
+  * - 仅使用范围语音时，只需要设置audibleDistance参数，其他参数设置不生效，填写默认值即可。
+  * @param audibleDistance 监听器能够听到扬声器并接收其语音的距离扬声器的最大距离。距离有效范围：[1,max int) ，无默认值。
+  * @param conversationalDistance 范围语音场景中，该参数设置的值不起作用，保持默认值即可。空间音效场景中，需要配置该参数。
+  * 控制音频保持其原始音量的范围，超出该范围时，语音聊天的响度在被听到时开始淡出。
+  * 默认值为 1。
+  * @param rollOff 范围语音场景中，该参数设置的值不起作用，保持默认值即可。空间音效场景中，需要配置该参数。
+  * 距离衰减模式，具体请参见 {@link #NERtcDistanceRolloffModel} ，默认值为 kNERtcDistanceRolloffNone。
  * @return
  * - 0: 方法调用成功
  * - 其他: 调用失败
  */
-- (int)updateSpatializerAudioRecvRange:(int)audibleDistance conversationalDistance:(int)conversationalDistance rollOff:(NERtcDistanceRolloffModel)rollOff;
+- (int)setAudioRecvRange:(int)audibleDistance conversationalDistance:(int)conversationalDistance rollOff:(NERtcDistanceRolloffModel)rollOff;
 
 /**
  * 设置空间音效中说话者和接收者的空间位置信息。SDK 会根据该方法中的参数计算接收者和说话者之间的相对位置，进而渲染出空间音效。
- * @since V5.4.0
+ * @since V5.5.10
  * @par 调用时机
   * 请在引擎初始化后调用此接口，且该方法在加入房间前后均可调用。
   * @note 
-  * - 请先调用 {@link #enableSpatializer:} 接口后，再调用本接口。
-  * - 调用 {@link #enableSpatializer:} 接口关闭空间音效后，空间位置信息会重置为默认值，您需要重新设置位置信息。
+  * - 请先调用 {@link #enableSpatializer:applyToTeam:} 接口后，再调用本接口。
+  * - 调用 {@link #enableSpatializer:applyToTeam:} 接口关闭空间音效后，空间位置信息会重置为默认值，您需要重新设置位置信息。
   * @par 参数说明
-  * 通过 info 参数设置空间音效中说话者和接收者的空间位置信息。#NERtcSpatializerPositionInfo 的具体参数说明如下表所示。
+  * 通过 info 参数设置空间音效中说话者和接收者的空间位置信息。#NERtcPositionInfo 的具体参数说明如下表所示。
     * <table>
     *  <tr>
     *      <th>**参数名称**</th>
@@ -3570,7 +3636,7 @@ NS_ASSUME_NONNULL_BEGIN
     *  </tr>
     *  <tr>
     *      <td>speaker_quaternion</td>
-    *      <td>说话者的旋转信息，通过四元组来表示，数据格式为{w, x, y, z}。默认值{0,0,0,0} </td>
+    *      <td><note type="note">该参数设置的值暂时不起作用，保持默认值即可。</note>说话者的旋转信息，通过四元组来表示，数据格式为{w, x, y, z}。默认值{0,0,0,0} </td>
     *  </tr>
     *  <tr>
     *      <td>head_position</td>
@@ -3585,7 +3651,7 @@ NS_ASSUME_NONNULL_BEGIN
  * - 0: 方法调用成功
  * - 其他: 调用失败
  */
-- (int)updateSpatializerSelfPosition:(NERtcSpatializerPositionInfo *)info;
+- (int)updateSelfPosition:(NERtcPositionInfo *)info;
 
 /**
   * 开启或关闭空间音效的房间混响效果
@@ -3593,7 +3659,7 @@ NS_ASSUME_NONNULL_BEGIN
   * @par 调用时机
   * 请在引擎初始化后调用此接口，且该方法在加入房间前后均可调用。
   * @note 
-  * 请先调用 {@link #enableSpatializer()} 接口后，再调用本接口。
+  * 请先调用 {@link #enableSpatializer:applyToTeam:} 接口后，再调用本接口。
  * @param enabled 混响效果开关，默认值关闭
  * @return
  * - 0: 方法调用成功
@@ -3607,7 +3673,7 @@ NS_ASSUME_NONNULL_BEGIN
   * @par 调用时机
   * 请在引擎初始化后调用此接口，且该方法在加入房间前才可调用。
   * @note 
-  * 请先调用 {@link #enableSpatializer:} 接口启用空间音效，再调用本接口。
+  * 请先调用 {@link #enableSpatializer:applyToTeam:} 接口启用空间音效，再调用本接口。
  * @param roomProperty 房间属性，具体请参见 #NERtcSpatializerRoomProperty
  * @return
  * - 0: 方法调用成功
@@ -3621,7 +3687,7 @@ NS_ASSUME_NONNULL_BEGIN
   * @par 调用时机
   * 请在引擎初始化后调用此接口，且该方法在加入房间前才可调用。
   * @note 
-  * 请先调用 {@link #enableSpatializer:} 接口启用空间音效，再调用本接口。
+  * 请先调用 {@link #enableSpatializer:applyToTeam:} 接口启用空间音效，再调用本接口。
  * @param mode 渲染模式，具体请参见 #NERtcSpatializerRenderMode ，默认值 #kNERtcSpatializerRenderBinauralHighQuality
  * @return
  * - 0: 方法调用成功
@@ -3630,19 +3696,67 @@ NS_ASSUME_NONNULL_BEGIN
 - (int)setSpatializerRenderMode:(NERtcSpatializerRenderMode)mode;
 
 /**
+* 初始化引擎3D音效算法
+* @since V5.5.10
+* @par 调用时机
+* 请在引擎初始化后调用此接口，此接口在加入房间前后均可调用。
+* @return
+* - 0: 方法调用成功
+* - 其他: 调用失败
+*/
+- (int)initSpatializer;
+
+/**
  * 开启或关闭空间音效
   * @since V5.4.0
   * @par 调用时机
   * 请在引擎初始化后调用此接口，且该方法在加入房间前才可调用。
-  * @note 开启空间音效后，通话结束时仍保留该开关状态，不重置。
+  * @note 
+  * - 开启空间音效后，通话结束时仍保留该开关状态，不重置。
+  * - 请先调用  #initSpatializer 接口初始化空间音效算法，再调用本接口。
  * @param enabled 是否打开3D音效算法功能，默认为关闭状态。
+ * @param apply_to_team 是否仅本小队开启3D音效。true: 仅仅和接收端同一个小队的人有3D音效；false: 接收到所有的语音都有3d音效
  * - YES：: 开启空间音效
  * - NO: 关闭空间音效
  * @return
  * - 0: 方法调用成功
  * - 其他: 调用失败
  */
-- (int)enableSpatializer:(BOOL)enabled;
+- (int)enableSpatializer:(BOOL)enabled applyToTeam:(BOOL)applyToTeam;
+
+#pragma mark - ASL black and white list
+/**
+     * @if Chinese
+     * 你可以调用该方法指定不订阅的音频流。
+     * @note
+     *  - 此接口需要在加入房间成功后调用。
+     *  - 对于调用接口时不在房间的 uid 不生效。
+     * @since V5.5.10
+     * @param[in] type 音频流类型。
+     * @param[in] uidArray 不订阅此 用户uid列表 的音频。
+     * 此列表为全量列表。如果列表为空或 null，取消订阅黑名单。
+     * @return
+     * - 0：方法调用成功。
+     * - 其他：方法调用失败。
+     * @endif
+     */
+- (int)setSubscribeAudioBlocklist:(NERtcAudioStreamType)type uidArray:(NSArray<NSNumber*> *)uidArray;
+
+/**
+     * @if Chinese
+     * 你可以调用该方法指定只订阅的音频流。
+     * @note
+     *  - 此接口需要在加入房间成功后调用。
+     *  - 对于调用接口时不在房间的 uid 不生效。
+     * @since V5.5.10
+     * @param[in] uid_array 只订阅此 用户uid列表 的音频。
+     * 此列表为全量列表。如果列表为空或 null，取消订阅白名单。
+     * @return
+     * - 0：方法调用成功。
+     * - 其他：方法调用失败。
+     * @endif
+     */
+- (int)setSubscribeAudioAllowlist:(NSArray<NSNumber*> *)uidArray;
 
 #pragma mark - Data Channel
 

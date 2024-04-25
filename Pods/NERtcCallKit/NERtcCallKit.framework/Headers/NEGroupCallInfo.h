@@ -9,22 +9,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NEGroupCallInfo : NSObject
 
+/// 通话id
 @property(nonatomic, strong) NSString *callId;
 
+/// 主叫信息
 @property(nonatomic, strong) GroupCallMember *callerInfo;
 
+/// 被叫列表
 @property(nonatomic, strong) NSArray<GroupCallMember *> *calleeList;
 
+/// 群id
 @property(nonatomic, strong) NSString *groupId;
 
+/// 群类型
 @property(nonatomic, assign) NSInteger groupType;
 
-@property(nonatomic, assign) NSInteger inviteMode;  // GroupInviteMode
+/// 邀请模式，GroupInviteMode
+@property(nonatomic, assign) NSInteger inviteMode;
 
-@property(nonatomic, assign) NSInteger joinMode;  // GroupJoinMode
+/// 加入模式，GroupJoinMode
+@property(nonatomic, assign) NSInteger joinMode;
 
+/// 通话开始时间
 @property(nonatomic, assign) NSInteger startTimestamp;
 
+/// 自定义信息
 @property(nonatomic, strong) NSString *extraInfo;
 
 @end

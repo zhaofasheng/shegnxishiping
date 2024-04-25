@@ -371,6 +371,33 @@ typedef NS_ENUM(int, NERtcError) {
     kNERtcErrDeviceOccupied = 30027,
     /**
      * @if English
+     * Join operation was interrupted due to leave action.
+     * @endif
+     * @if Chinese
+     * Join 流程因外部调用 leave API 而中断
+     * @endif
+     */
+    kNERtcErrJoinInterruptedDueToLeaveAction = 30028,
+    /**
+     * @if English
+     * Join operation was interrupted due to destroy action.
+     * @endif
+     * @if Chinese
+     * Join 流程因外部调用 destroy API 而中断
+     * @endif
+     */
+    kNERtcErrJoinInterruptedDueToDestroyAction = 30029,
+    /**
+     * @if English
+     * Join operation was interrupted due to app termination.
+     * @endif
+     * @if Chinese
+     * Join 流程因 App 进程退出而中断
+     * @endif
+     */
+    kNERtcErrJoinInterruptedDueToAppTermination = 30030,
+    /**
+     * @if English
      * A user already joined a room.
      * @endif
      * @if Chinese
@@ -706,6 +733,15 @@ typedef NS_ENUM(int, NERtcError) {
      * @endif
      */
     kNERtcRuntimeErrADMPlayoutFailed = 40008,
+    /**
+     * @if English
+     * audio device permissions is not determined
+     * @endif
+     * @if Chinese
+     * 音频设备权限未确定。
+     * @endif
+     */
+    kNERtcRuntimeErrADMAuthorizeNotDetermined = 40009,
     /**
      * @if English
      * Have no video device permissions

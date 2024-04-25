@@ -23,9 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否在初始化的时候初始化Rtc，默认初始化(Web无此配置)
 @property(nonatomic, assign) NECallInitRtcMode initRtcMode;
 
-/// 当前用户accid
-@property(nonatomic, strong) NSString *currentUserAccId;
-
 /// 当前用户rtcUid
 @property(nonatomic, assign) uint64_t currentUserUid;
 

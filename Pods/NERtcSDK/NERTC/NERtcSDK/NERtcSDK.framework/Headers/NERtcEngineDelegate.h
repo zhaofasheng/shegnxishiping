@@ -849,7 +849,7 @@ NERtcEngineVideoSEIObserver>
  * @endif
  * @if Chinese
  * 已接收到远端视频首帧回调。
- * 第一帧远端视频显示在视图上时，触发此调用。
+ * SDK 收到远端第一帧视频并解码成功时，触发此调用。每次重新调用 enableLocalVideo 开启本地视频采集，也会触发该回调（V5.5.10版本开始）。App 可在此回调中设置该用户的视频画布。
  * @note 该回调仅在显示远端用户的主流视频首帧时会触发，若您希望同时接收到接收辅流的相关通知，请监听 {@link NERtcEngineDelegateEx#onNERtcEngineFirstVideoDataDidReceiveWithUserID:streamType:} 回调。
  * @param userID  远端用户 ID，指定是哪个用户的视频流。 
  * @endif
@@ -859,8 +859,11 @@ NERtcEngineVideoSEIObserver>
 /**
  * @if Chinese
  * 已显示远端视频首帧的回调。
- * <br>当远端视频的第一帧画面显示在视窗上时，会触发此回调。
  * @since V4.6.20
+  * @note 以下场景都会触发该回调：
+  * - SDK 收到远端第一帧视频并解码成功时。
+  * - 重新调用 enableLocalVideo 开启本地视频采集。（V5.5.10版本开始）
+  * - 停止屏幕共享后再重新调用 startScreenCapture 接口共享屏幕。（V5.5.10版本开始）
  * @par 参数说明
  * <table>
  *  <tr>
@@ -1006,7 +1009,7 @@ NERtcEngineVideoSEIObserver>
 /**
  * @if Chinese
  * 已接收到远端视频首帧并完成解码的回调。
- * <br>当 SDK 收到远端视频的第一帧并解码成功时，会触发该回调。应用层可在该回调中设置此用户的视频画布。
+ * <br>当 SDK 收到远端视频并解码成功时，会触发该回调。应用层可在该回调中设置此用户的视频画布。
  * @since V4.6.20
  * @par 参数说明
  * <table>
@@ -1039,6 +1042,48 @@ NERtcEngineVideoSEIObserver>
  * @endif
  */
 - (void)onEngineFirstVideoFrameDecoded:(uint64_t)userID width:(uint32_t)width height:(uint32_t)height streamType:(NERtcStreamChannelType)streamType;
+
+/**
+ * @if Chinese
+ * 已接收到远端视频首帧并完成渲染的回调。
+ * <br>当 SDK 第一帧远端视频流并渲染成功时，会触发该回调。
+ * @since V5.5.10
+ * @par 参数说明
+ * <table>
+ *  <tr>
+ *      <th>**参数名称**</th>
+ *      <th>**类型**</th>
+ *      <th>**描述**</th>
+ *  </tr>
+ *  <tr>
+ *      <td>userID</td>
+ *      <td>uint64_t</td>
+ *      <td>用户 ID，提示是哪个用户的视频流。</td>
+ *  </tr>
+ *  <tr>
+ *      <td>width</td>
+ *      <td>uint32_t</td>
+ *      <td>首帧视频的宽度，单位为 px。</td>
+ *  </tr>
+ *  <tr>
+ *      <td>height</td>
+ *      <td>uint32_t</td>
+ *      <td>首帧视频的高度，单位为 px。</td>
+ *  </tr>
+ *  <tr>
+ *      <td>elapsed</td>
+ *      <td>uint64_t</td>
+ *      <td>从订阅动作开始到发生此事件过去的时间（毫秒)。</td>
+ *  </tr>
+ *  <tr>
+ *      <td>type</td>
+ *      <td>{@link NERtcStreamChannelType}</td>
+ *      <td>视频通道类型：<ul><li>kNERtcStreamChannelTypeMainStream：主流。<li>kNERtcStreamChannelTypeSubStream：辅流。</td>
+ *  </tr>
+ * </table>
+ * @endif
+ */
+- (void)onEngineFirstVideoFrameRender:(uint64_t)userID width:(uint32_t)width height:(uint32_t)height elapsed:(uint64_t)elapsed streamType:(NERtcStreamChannelType)streamType;
 
 /**
  * @if English 
@@ -1289,17 +1334,34 @@ NERtcEngineVideoSEIObserver>
 
 /**
  * @if English 
+ * @deprecated This callback is deprecated. Use {@link onNERtcEngineAudioHasHowling:} instead.
  * Occurs when howling is detected.
  * When the distance between the sound source and the PA equipment is too close, howling may occur. The NERTC SDK supports howling detection. When a howling signal is detected, the callback is automatically triggered until the howling stops. The application layer can prompt the user to mute the microphone or directly mute the microphone when the app receives the howling information returned by the callback.
  * @note Howling detection is used in human voice scenarios, such as voice chat rooms or online meetings. We recommend that you do not use howling detection in entertainment scenes that include background music.
  * @endif
  * @if Chinese
+ * @deprecated 该回调将在未来版本中废弃，请使用`- (void)onNERtcEngineAudioHasHowling:(BOOL)flag`.
  * 检测到啸叫回调。
  * 当声源与扩音设备之间因距离过近时，可能会产生啸叫。NERTC SDK 支持啸叫检测，当检测到有啸叫信号产生的时候，自动触发该回调直至啸叫停止。App 应用层可以在收到啸叫回调时，提示用户静音麦克风，或直接静音麦克风。
  * @note 啸叫检测功能一般用于语音聊天室或在线会议等纯人声环境，不推荐在包含背景音乐的娱乐场景中使用。
  * @endif
  */
 - (void)onNERtcEngineAudioHasHowling;
+
+/**
+ * @if English
+ * Occurs after the local user join channel success.
+ * When the distance between the sound source and the PA equipment is too close, howling may occur. The NERTC SDK supports howling detection. When a howling signal is detected, the callback is automatically triggered until the howling stops. The application layer can prompt the user to mute the microphone or directly mute the microphone when the app receives the howling information returned by the callback.
+ * @note Howling detection is used in human voice scenarios, such as voice chat rooms or online meetings. We recommend that you do not use howling detection in entertainment scenes that include background music.
+ * @endif
+ * @if Chinese
+ * 检测啸叫回调, 调用JoinChannel成功后，会一直周期性触发该回调, 不建议在该回调里做频繁的API调用和耗时操作。
+ * 当声源与扩音设备之间因距离过近时，可能会产生啸叫。NERTC SDK 支持啸叫检测，当检测到有啸叫信号产生的时候，参数flag为 YES，无啸叫时参数flag为 NO。App 应用层可以在有啸叫时，提示用户静音麦克风，或直接静音麦克风。
+ * @note 啸叫检测功能一般用于语音聊天室或在线会议等纯人声环境，不推荐在包含背景音乐的娱乐场景中使用。
+ * @param flag 是否检测到啸叫。
+ * @endif
+ */
+- (void)onNERtcEngineAudioHasHowling:(BOOL)flag;
 
 /**
  * @if English 
@@ -1763,6 +1825,36 @@ NERtcEngineVideoSEIObserver>
  */
 - (void)onNERtcEnginePlaybackSubStreamAudioFrameBeforeMixingWithUserID:(uint64_t)userID frame:(NERtcAudioFrame *)frame channelId:(uint64_t)channelId;
 
+
+@end
+
+@protocol NERtcEnginePacketObserver <NSObject>
+
+ @optional
+/**
+ * 音频包发送回调
+ * 在音频包被发送给远端用户前触发
+ * @param packet 数据包
+ */
+- (BOOL)onSendAudioPacket:(NERtcPacket *)packet;
+/**
+ * 视频包发送回调
+ * 在视频包被发送给远端用户前触发
+ * @param packet 数据包
+ */
+- (BOOL)onSendVideoPacket:(NERtcPacket *)packet;
+/**
+ * 接收音频包回调
+ * 在收到远端用户的音频包前触发
+ * @param packet 数据包
+ */
+- (BOOL)onReceiveAudioPacket:(NERtcPacket *)packet;
+/**
+ * 接收视频包回调
+ * 在收到远端用户的视频包前触发
+ * @param packet 数据包
+ */
+- (BOOL)onReceiveVideoPacket:(NERtcPacket *)packet;
 
 @end
 

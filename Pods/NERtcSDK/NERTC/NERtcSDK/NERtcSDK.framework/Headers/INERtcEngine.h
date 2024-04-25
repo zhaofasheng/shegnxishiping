@@ -157,6 +157,19 @@ typedef void(^NERtcTakeSnapshotCallback)(int errorCode, UIImage * _Nullable imag
 - (int)setEngineEventDelegate:(nullable id<NERtcEngineDelegateEx>)delegate;
 
 /**
+ *
+ * @if Chinese
+ * 设置驱动 NERtcEngineDelegateEx 事件回调队列
+ * @since V5.5.10
+ * @par 调用时机
+ * 请在引擎初始化后调用此接口，且该方法在加入房间前后均可调用。
+ * @note
+ * - 如果您不指定自己的 delegateQueue 或者设置为 NULL, 默认会采用 MainQueue 作为驱动 NERtcCallback 事件回调的队列。
+ * - 如果您指定了自己的 delegateQueue，请不要直接 NERtcEngineDelegateEx 回调函数中操作UI，会引发线程安全问题。且需要考虑线程的生命周期，如果线程提前终止，将无法收到 NERtcEngineDelegateEx 的回调。
+ */
+- (int)setDelegateQueue:(nullable dispatch_queue_t)delegateQueue;
+
+/**
  * @if English 
  * Joins an RTC room.
  * <br>If the specified room does not exist when you join the room, a room with the specified name is automatically created in the server provided by CommsEase.
@@ -386,13 +399,15 @@ typedef void(^NERtcTakeSnapshotCallback)(int errorCode, UIImage * _Nullable imag
  * @endif
  * @if Chinese
  * 快速切换音视频房间。
- * 通过此接口可以实现当房间场景为直播场景时，房间中角色为观众的成员从当前房间快速切换至另一个房间。
+ * 通过此接口可以实现当房间场景为直播场景时，用户从当前房间快速切换至另一个房间。
  * @par 使用前提
- * 请先通过 {@link INERtcEngine#setChannelProfile:} 接口设置房间模式为直播模式，并通过 {@link INERtcEngine#setClientRole:} 接口设置房间成员的角色为观众。
+ * 请先通过 {@link INERtcEngine#setChannelProfile:} 接口设置房间模式为直播模式。
  * @par 调用时机
  * 请在引擎初始化之后调用此接口，且该方法仅可在加入房间后调用。
  * @note
- * 房间成员成功切换房间后，默认订阅房间内所有其他成员的音频流，因此会产生用量并产生计费；若想取消订阅，可以调用 {@link INERtcEngineEx#subscribeRemoteAudio:forUserID:} 方法，并设置 subscribe 参数为 NO。
+ * - 房间成员成功切换房间后，将会保持切换前的音视频的状态。
+ * - v5.5.10 及之后版本，主播和观众都支持调用本接口快速切换至另一个房间。
+ * - v5.5.10 之前版本，只支持观众调用本接口快速切换至另一个房间。
  * @par 参数说明
  * <table>
  *  <tr>

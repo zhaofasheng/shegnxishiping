@@ -520,6 +520,42 @@ typedef void(^NIMQChatAreMentionedMeMessagesHandler)(NSError *__nullable error, 
 - (void)clearMessageCache;
 
 /**
+ * 增加一条缓存数据，如果该频道下已经存在数据，则被新数据覆盖。
+ *
+ * @param serverId 服务器ID，大于0
+ * @param channelId 频道ID，大于0
+ * @param text 要增加的内容，不能是空指针
+ * @return YES：成功添加或者替换；NO：其它
+ */
+- (BOOL)insertOrReplaceTextCache:(unsigned long long)serverId
+                       channelId:(unsigned long long)channelId
+                            value:(NSString *)value;
+
+/**
+ * 删除缓存数据。
+ * serverId > 0 && channelId > 0：删除指定频道的数据
+ * serverId > 0 && channelId == 0：删除指定服务器下所有频道的数据
+ * serverId == 0 && channelId > 0：删除指定频道ID的数据
+ * serverId == 0 && channelId == 0：清空数据
+ *
+ * @param serverId 服务器ID，大于等于0
+ * @param channelId 频道ID，大于等于0
+ * @return YES：完成删除操作，包括数据存在的删除和数据不存在的删除；NO：其它
+ */
+- (BOOL)deleteTextCache:(unsigned long long)serverId
+              channelId:(unsigned long long)channelId;
+
+/**
+ * 查询指定频道的缓存数据。
+ *
+ * @param serverId
+ * @param channelId
+ * @return
+ */
+- (nullable NSString *)getTextCache:(unsigned long long)serverId
+                 channelId:(unsigned long long)channelId;
+
+/**
  *  添加通知对象
  *
  *  @param delegate 通知对象

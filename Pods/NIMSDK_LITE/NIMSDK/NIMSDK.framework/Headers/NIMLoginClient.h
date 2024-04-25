@@ -48,6 +48,10 @@ typedef NS_ENUM(NSInteger, NIMLoginClientType) {
      *  macOS
      */
     NIMLoginClientTypemacOS       = 64,
+    /**
+     *  HarmonyOS
+     */
+    NIMLoginClientTypeHarmonyOS   = 65,
 };
 
 

@@ -11,6 +11,7 @@
 
 @class NIMTeam;
 @class NIMTeamMember;
+@class NIMTeamMemberSearchResult;
 
 /**
  *  群类型
@@ -166,7 +167,7 @@ typedef NS_ENUM(NSInteger, NIMTeamNotifyState) {
      */
     NIMTeamNotifyStateNone        = 1,
     /**
-     *  只接受管理员的群消息通知(仅高级群支持，超大群不支持)
+     *  只接受管理员的群消息通知
      */
     NIMTeamNotifyStateOnlyManager = 2,
     
@@ -221,6 +222,15 @@ typedef void(^NIMTeamSearchHandler)(NSError * __nullable error, NSArray<NIMTeam 
  *  @param members 成功的群成员列表,内部为NIMTeamMember
  */
 typedef void(^NIMTeamMemberHandler)(NSError * __nullable error, NSArray<NIMTeamMember *> * __nullable members);
+
+/**
+ *  搜索结果 block
+ *
+ *  @param error 错误,如果成功则error为nil
+ *  @param result 搜索成功结果
+ */
+
+typedef void (^NIMTeamMemberSearchResultHandler)(NSError * __nullable error, NIMTeamMemberSearchResult * __nullable result);
 
 /**
  *  拉取群信息Block

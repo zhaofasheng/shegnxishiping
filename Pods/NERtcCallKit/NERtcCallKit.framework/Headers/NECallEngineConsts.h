@@ -9,74 +9,125 @@
 @class NERtcCallKitContext;
 
 typedef NS_OPTIONS(NSUInteger, NECallType) {
-  NECallTypeAudio = 1,  /// 音频
-  NECallTypeVideo = 2,  /// 视频
+  /// 音频
+  NECallTypeAudio = 1,
+  /// 视频
+  NECallTypeVideo = 2,
 };
 
+/// 通话行为
 typedef NS_ENUM(NSUInteger, NECallSwitchState) {
-  NECallSwitchStateInvite = 1,  /// 邀请
-  NECallSwitchStateAgree = 2,   /// 接受
-  NECallSwitchStateReject = 3,  /// 拒绝
+  /// 邀请
+  NECallSwitchStateInvite = 1,
+  /// 接受
+  NECallSwitchStateAgree = 2,
+  /// 拒绝
+  NECallSwitchStateReject = 3,
 };
 
+/// 引擎状态
 typedef NS_ENUM(NSUInteger, NECallEngineStatus) {
-  NECallStatusIdle = 0,  /// 闲置
-  NECallStatusCalling,   /// 呼叫中
-  NECallStatusCalled,    /// 正在被呼叫
-  NECallStatusInCall,    /// 通话中
+  /// 闲置
+  NECallStatusIdle = 0,
+  /// 呼叫中
+  NECallStatusCalling,
+  /// 正在被呼叫
+  NECallStatusCalled,
+  /// 通话中
+  NECallStatusInCall,
 };
 
+/// 通话状态
 typedef NS_ENUM(NSUInteger, NERtcCallStatus) {
-  NERtcCallStatusIdle = 0,  /// 闲置
-  NERtcCallStatusCalling,   /// 呼叫中
-  NERtcCallStatusCalled,    /// 正在被呼叫
-  NERtcCallStatusInCall,    /// 通话中
+  /// 闲置
+  NERtcCallStatusIdle = 0,
+  /// 呼叫中
+  NERtcCallStatusCalling,
+  /// 正在被呼叫
+  NERtcCallStatusCalled,
+  /// 通话中
+  NERtcCallStatusInCall,
 };
 
+/// 通话结束错误码
 typedef NS_ENUM(NSInteger, NERtcCallTerminalCode) {
-  TerminalCodeNormal = 0,            /// 正常流程
-  TerminalCodeTokenError,            /// token 请求失败
-  TerminalCodeTimeOut,               /// 超时
-  TerminalCodeBusy,                  /// 用户占线
-  TerminalCodeRtcInitError,          /// rtc 初始化失败
-  TerminalCodeJoinRtcError,          /// 加入rtc失败
-  TerminalCodeCancelErrorParam,      /// cancel 取消参数错误
-  TerminalCodeCallFailed,            /// 发起呼叫失败
-  TerminalCodeKicked,                /// 账号被踢
-  TerminalCodeEmptyUid,              ///  uid 为空
-  TerminalRtcDisconnected = 10,      ///  Rtc 断连
-  TerminalCallerCancel = 11,         /// 取消呼叫
-  TerminalCalleeCancel = 12,         /// 呼叫被取消
-  TerminalCalleeReject = 13,         /// 拒绝呼叫
-  TerminalCallerRejcted = 14,        /// 呼叫被拒绝
-  TerminalHuangUp = 15,              /// 挂断呼叫
-  TerminalBeHuangUp = 16,            /// 呼叫被挂断
-  TerminalOtherRejected = 17,        /// 多端登录被其他端拒绝
-  TerminalOtherAccepted = 18,        /// 多端登录被其他端接听
-  TerminalUserRtcDisconnected = 19,  /// Rtc房间断开链接
-  TerminalUserRtcLeave = 20,         /// 离开Rtc房间
-  TerminalAcceptFail = 21,           /// 接听失败
+  /// 正常流程
+  TerminalCodeNormal = 0,
+  /// token 请求失败
+  TerminalCodeTokenError,
+  /// 超时
+  TerminalCodeTimeOut,
+  /// 用户占线
+  TerminalCodeBusy,
+  /// rtc 初始化失败
+  TerminalCodeRtcInitError,
+  /// 加入rtc失败
+  TerminalCodeJoinRtcError,
+  /// cancel 取消参数错误
+  TerminalCodeCancelErrorParam,
+  /// 发起呼叫失败
+  TerminalCodeCallFailed,
+  /// 账号被踢
+  TerminalCodeKicked,
+  ///  uid 为空
+  TerminalCodeEmptyUid,
+  ///  Rtc 断连
+  TerminalRtcDisconnected = 10,
+  /// 取消呼叫
+  TerminalCallerCancel = 11,
+  /// 呼叫被取消
+  TerminalCalleeCancel = 12,
+  /// 拒绝呼叫
+  TerminalCalleeReject = 13,
+  /// 呼叫被拒绝
+  TerminalCallerRejcted = 14,
+  /// 挂断呼叫
+  TerminalHuangUp = 15,
+  /// 呼叫被挂断
+  TerminalBeHuangUp = 16,
+  /// 多端登录被其他端拒绝
+  TerminalOtherRejected = 17,
+  /// 多端登录被其他端接听
+  TerminalOtherAccepted = 18,
+  /// Rtc房间断开链接
+  TerminalUserRtcDisconnected = 19,
+  /// 离开Rtc房间
+  TerminalUserRtcLeave = 20,
+  /// 接听失败
+  TerminalAcceptFail = 21,
 };
 
 typedef NS_OPTIONS(NSUInteger, NERtcCallType) {
-  NERtcCallTypeAudio = 1,  /// 音频
-  NERtcCallTypeVideo = 2,  /// 视频
+  /// 音频
+  NERtcCallTypeAudio = 1,
+  /// 视频
+  NERtcCallTypeVideo = 2,
 };
 
+/// 通话行为
 typedef NS_ENUM(NSUInteger, NERtcSwitchState) {
-  NERtcSwitchStateInvite = 1,  /// 邀请
-  NERtcSwitchStateAgree = 2,   /// 接受
-  NERtcSwitchStateReject = 3,  /// 拒绝
+  /// 邀请
+  NERtcSwitchStateInvite = 1,
+  /// 接受
+  NERtcSwitchStateAgree = 2,
+  /// 拒绝
+  NERtcSwitchStateReject = 3,
 };
 
+/// RTCSDK初始化模式
 typedef NS_ENUM(NSUInteger, NECallInitRtcMode) {
-  GlobalInitRtc = 1,  // 全局初始化一次
-  InitRtcInNeed,  // 主叫呼叫以及被叫接收到呼叫邀请时候初始化，结束通话后销毁Rtc
-  InitRtcInNeedDelayToAccept,  // 被叫初始化Rtc延迟到 accept 执行
+  /// 全局初始化一次
+  GlobalInitRtc = 1,
+  /// 主叫呼叫以及被叫接收到呼叫邀请时候初始化，结束通话后销毁Rtc
+  InitRtcInNeed,
+  /// 被叫初始化Rtc延迟到 accept 执行
+  InitRtcInNeedDelayToAccept,
 };
 
+/// 引擎错误码
 typedef NS_ENUM(NSInteger, NECallEngineErrorCode) {
-  CurrentStatusNotSupport = 20026  // 当前状态不支持
+  /// 当前状态不支持
+  CurrentStatusNotSupport = 20026
 };
 
 typedef void (^NERtcCallKitTokenHandler)(uint64_t uid, NSString *channelName,

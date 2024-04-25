@@ -31,7 +31,8 @@ target ‘NoticeXi’ do
   pod  'AlipaySDK-iOS'
   pod 'SDWebImage','~> 5.15.5',:inhibit_warnings => true
 
-  pod 'NIMSDK_LITE','9.12.0'
-  pod 'NERtcCallKit', '2.2.0'
-  pod 'NERtcSDK', '5.5.2', :subspecs => ['RtcBasic']
+  pod 'NIMSDK_LITE', '9.16.0'
+  pod 'NERtcCallKit/NOS_Special', '2.3.0'
+  pod 'NERtcSDK', '5.5.21', :subspecs => ['RtcBasic']
+
 end

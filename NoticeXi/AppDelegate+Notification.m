@@ -21,6 +21,7 @@
 #import "NoticeTabbarController.h"
 #import "BaseNavigationController.h"
 #import "NoticePushModel.h"
+#import <NIMSDK/NIMSDK.h>
 
 #import "NoticeSCViewController.h"
 
@@ -52,6 +53,7 @@
     [self registNotification];
     
 }
+
 
 - (void)registNotification
 {
@@ -129,7 +131,10 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [JPUSHService registerDeviceToken:deviceToken];
     self.deviceToken = deviceToken;
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"ONREPORTDEVICETOKEN" object:nil];
+    // 上传devicetoken至云信服务端。
+    [[NIMSDK sharedSDK] updateApnsToken:deviceToken];
+    
+
 }
 
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {

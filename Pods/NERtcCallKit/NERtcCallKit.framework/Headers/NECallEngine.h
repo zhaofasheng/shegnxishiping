@@ -85,9 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 单位:秒,IM服务器邀请2分钟后无响应为超时,最大值不超过2分钟。
 @property(nonatomic, assign) NSTimeInterval timeOutSeconds;
 
-/**
- NERtcEngine 的回调接口，由用户提供
- */
+/// NERtcEngine 的回调接口，由用户提供
 @property(nonatomic, weak) id<NERtcEngineDelegateEx> engineDelegate;
 
 /// 中转NERtcEngine统计回调

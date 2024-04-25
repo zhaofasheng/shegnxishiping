@@ -251,7 +251,7 @@ typedef void(^NIMChatManagerBlock)(NSError * __nullable error);
 /**
  *  发送已读回执 (Team 批量接口)
  *
- *  @param receipts   已读回执
+ *  @param receipts   已读回执 receipts count 最多不超过50个
  *  @param completion 完成回调
  *  @discussion 此接口仅适用于 Team 消息。
  */

@@ -147,7 +147,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         [self.navigationController pushViewController:ctl animated:YES];
         return;
     }
-
+    
 //    SXPlayDetailController *ctl = [[SXPlayDetailController alloc] init];
 //    ctl.currentPlayModel = self.dataArr[indexPath.row];
     

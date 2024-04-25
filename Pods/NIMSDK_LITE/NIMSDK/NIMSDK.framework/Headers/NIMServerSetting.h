@@ -20,6 +20,7 @@ typedef NS_ENUM (NSInteger, NIMLinkAddressType){
     NIMLinkAddressTypeIpv4 = 0,  //仅使用IPv4
     NIMLinkAddressTypeIpv6,      //仅使用IPv6
     NIMLinkAddressTypeAuto,      //自动选择
+    NIMLinkAddressTypeIpv6First  //IPv6优先
 };
 
 typedef NS_ENUM (NSInteger, NIMServerEnv){

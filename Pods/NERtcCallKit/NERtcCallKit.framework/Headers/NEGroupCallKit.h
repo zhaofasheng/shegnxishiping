@@ -83,10 +83,15 @@ NS_ASSUME_NONNULL_BEGIN
                     (nullable void (^)(NSError *_Nullable error,
                                        GroupQueryCallInfoResult *_Nullable result))completion;
 
+/// 查询多人通话成员列表
+/// @param param 查询入参
+/// @param completion 回调
 - (void)groupQueryMembers:(GroupQueryMembersParam *)param
                completion:(nullable void (^)(NSError *_Nullable error,
                                              GroupQueryMembersResult *_Nullable result))completion;
 
+/// 多人通话设置
+/// @param param 设置参数
 - (void)setupGroupCall:(GroupConfigParam *)param;
 
 /// 添加代理 接受回调

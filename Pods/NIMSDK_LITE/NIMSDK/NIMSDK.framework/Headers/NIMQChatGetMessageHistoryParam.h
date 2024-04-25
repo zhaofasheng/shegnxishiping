@@ -56,6 +56,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy) NSNumber *reverse;
 
+/**
+ * 是否包括本地的消息
+ * NO(默认)：查询结果不包括本地的消息
+ * YES：查询结果由云端消息和本地的消息组成
+ */
+@property(nonatomic, assign) BOOL includeLocalMessages;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger totalTime;
 @property (nonatomic, copy) NSString * __nullable timerName;
 @property (nonatomic, strong) UILabel *noticeL;
+@property (nonatomic,copy) void(^chatTimeBlock)(NSInteger chatTime);
 
 - (void)setUserVolume:(CGFloat)userVolume;
 - (void)setShopVolume:(CGFloat)shopVolume;

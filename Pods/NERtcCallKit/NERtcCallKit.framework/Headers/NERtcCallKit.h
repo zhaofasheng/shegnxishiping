@@ -176,9 +176,7 @@ typedef void (^NERtcCallKitRecordMessageHander)(NIMMessage *message);
 /// 话单自定义回调，如果需要修发送话单内容可以在此回调中修改message相关字段
 @property(nonatomic, copy, nullable) NERtcCallKitRecordMessageHander recordHandler;
 
-/**
- NERtcEngine 的回调接口，由用户提供
- */
+/// NERtcEngine 的回调接口，由用户提供
 @property(nonatomic, weak) id<NERtcEngineDelegateEx> engineDelegate;
 
 /// 中转NERtcEngine统计回调

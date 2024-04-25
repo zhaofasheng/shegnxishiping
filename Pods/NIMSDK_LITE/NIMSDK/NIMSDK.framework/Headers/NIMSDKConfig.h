@@ -307,6 +307,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) BOOL fixMsgStatusByBlackList;
 
+/**
+ * 默认NO，如果为YES，会上报被过滤的消息
+ */
+@property (nonatomic, assign) BOOL reportIgnoredMessage;
+
 @end
 
 

@@ -16,6 +16,8 @@
 @class NIMQChatUpdateQuickCommentInfo;
 @class NIMQChatFetchQuickCommentsByMsgsResult;
 @class NIMQChatMessageThreadInfo;
+@class NIMQChatGetCommentatorsParam;
+@class NIMQChatGetCommentatorsResult;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -50,9 +52,16 @@ typedef void(^NIMQChatBatchGetMessageThreadInfoHandler)(NSError *__nullable erro
  *
  *  @param error 结果
  *  @param result 获取结果
-
  */
 typedef void (^NIMQChatFetchQuickCommentsByMsgsHandler) (NSError * _Nullable  error, NIMQChatFetchQuickCommentsByMsgsResult * _Nullable result);
+
+/**
+ *  批量获取快捷评论的评论者信息回调
+ *
+ *  @param error 结果
+ *  @param result 获取结果
+ */
+typedef void (^NIMQChatGetCommentatorsHandler) (NSError * _Nullable  error, NIMQChatGetCommentatorsResult * _Nullable result);
 
 /**
  *  圈组消息扩展管理器
@@ -147,6 +156,14 @@ typedef void (^NIMQChatFetchQuickCommentsByMsgsHandler) (NSError * _Nullable  er
 - (void)fetchQuickComments:(NSArray <NIMQChatMessage *> *)messages
                 completion:(NIMQChatFetchQuickCommentsByMsgsHandler)completion;
 
+/**
+ * 获取评论者列表
+ *
+ * @param message
+ * @param completion
+ */
+- (void)getCommentators:(NIMQChatGetCommentatorsParam *)param
+                 completion:(NIMQChatGetCommentatorsHandler _Nullable)completion;
 
 /**
  *  添加通知对象

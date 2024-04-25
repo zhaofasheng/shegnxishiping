@@ -12,11 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 会话类型
 typedef NS_ENUM(NSInteger, V2NIMConversationType) {
-    V2NIM_CONVERSATION_TYPE_UNKNOWN                           = 0,  ///< 未知
-    V2NIM_CONVERSATION_TYPE_P2P                               = 1,  ///< 单聊
-    V2NIM_CONVERSATION_TYPE_TEAM                              = 2,  ///< 群聊
-    V2NIM_CONVERSATION_TYPE_SUPER_TEAM                        = 3,  ///< 超大群
-    V2NIM_CONVERSATION_TYPE_CHATROOM                          = 4,  ///< 聊天室
+    V2NIM_CONVERSATION_TYPE_UNKNOWN                         = 0,
+    V2NIM_CONVERSATION_TYPE_P2P                             = 1,  ///< 点对应会话
+    V2NIM_CONVERSATION_TYPE_TEAM                            = 2,  ///< 群会话
+    V2NIM_CONVERSATION_TYPE_SUPER_TEAM                      = 3,   ///< 超大群会话
+
 };
 
 NS_ASSUME_NONNULL_END

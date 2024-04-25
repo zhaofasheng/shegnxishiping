@@ -6,6 +6,7 @@
 #import "NERtcEngineEnum.h"
 
 @protocol NERtcEngineVideoRenderSink;
+@protocol NERtcEnginePacketObserver;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -280,6 +281,8 @@ NERTC_EXTERN_API NSString * const kNERtcKeyDisableVideoDecoder;
  */
 NERTC_EXTERN_API NSString * const kNERtcKeyLoginCustomData;
 
+
+NERTC_EXTERN_API NSString * const kNERtcKeyDisableFirstJoinUserCreateChannel;
 
 /**
  * @if English
@@ -2195,6 +2198,13 @@ NERTC_EXPORT  @interface NERtcEncryptionConfig : NSObject
  */
 @property (nonatomic, copy, nullable) NSString *key;
 
+/**
+ * @if Chinese
+ * 自定义加密回调 observer, mode 为自定义加密时需要设置
+ * @endif
+ */
+@property (nonatomic, weak, nullable) id<NERtcEnginePacketObserver> observer;
+
 @end
 
 #pragma mark - privatization
@@ -2723,7 +2733,7 @@ NERTC_EXPORT @interface NERtcJoinChannelOptions : NSObject
 
 /**
  * @if Chinese
- * 权限密钥。能控制通话时长及媒体权限能力。
+ * 权限密钥。能控制通话时长及媒体权限能力。如果是高级Token 鉴权场景，用户加入时需要设置权限密钥，该参数的值由您的业务服务器提供。
  * @endif
  */
 @property (nonatomic, nullable, copy) NSString *permissionKey;
@@ -2952,7 +2962,7 @@ NERTC_EXPORT @interface NERtcAudioEncodedFrame : NSObject
 @end
 
 /** 3D音效算法中坐标信息。*/
-NERTC_EXPORT  @interface NERtcSpatializerPositionInfo : NSObject
+NERTC_EXPORT  @interface NERtcPositionInfo : NSObject
 
 /**
  发声坐标，表示左右
@@ -3060,5 +3070,20 @@ NERTC_EXPORT  @interface NERtcSpatializerRoomProperty : NSObject
 @property (nonatomic, assign) CGFloat reverbBrightness;
 
 @end
+
+NERTC_EXPORT @interface NERtcPacket : NSObject
+
+/**
+ * 需要发送或接收的数据
+ */
+@property (nonatomic, assign) const unsigned char* buffer;
+
+/**
+ * 需要发送或接收的数据大小
+ */
+@property (nonatomic, assign) long size;
+
+@end
+
 
 NS_ASSUME_NONNULL_END

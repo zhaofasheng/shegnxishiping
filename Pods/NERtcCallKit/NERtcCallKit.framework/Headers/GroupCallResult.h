@@ -9,64 +9,80 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GroupBaseResult : NSObject
 
+/// 错误码
 @property(nonatomic, assign) NSInteger code;
 
 @end
 
 @interface GroupCallResult : GroupBaseResult
 
+/// 通话id
 @property(nonatomic, strong) NSString *callId;
 
+/// 主叫id
 @property(nonatomic, assign) NSInteger callerUid;
 
+/// 通话发起时间
 @property(nonatomic, assign) NSInteger startTimestamp;
 
+/// 信令通道id
 @property(nonatomic, assign) uint64_t channelId;
 
 @end
 
 @interface GroupHangupResult : GroupBaseResult
 
+/// 通话id
 @property(nonatomic, strong) NSString *callId;
 
+/// 挂断原因
 @property(nonatomic, assign) NSInteger reason;
 
 @end
 
 @interface GroupAcceptResult : GroupBaseResult
 
+/// 多人通话信息
 @property(nonatomic, strong) NEGroupCallInfo *groupCallInfo;
 
+/// 信令通道id
 @property(nonatomic, assign) uint64_t channelId;
 
 @end
 
 @interface GroupInviteResult : GroupBaseResult
 
+/// 通话id
 @property(nonatomic, strong) NSString *callId;
 
 @end
 
 @interface GroupJoinResult : GroupBaseResult
 
+/// 多人通话信息
 @property(nonatomic, strong) NEGroupCallInfo *groupCallInfo;
 
+/// 信令通道id
 @property(nonatomic, assign) uint64_t channelId;
 
 @end
 
 @interface GroupQueryCallInfoResult : GroupBaseResult
 
+/// 多人通话信息
 @property(nonatomic, strong) NEGroupInfo *groupCallInfo;
 
 @end
 
 @interface GroupQueryMembersResult : GroupBaseResult
 
+/// 通话id
 @property(nonatomic, strong) NSString *callId;
 
+/// 多人通话信息
 @property(nonatomic, strong) GroupCallMember *callerInfo;
 
+/// 被叫列表
 @property(nonatomic, strong) NSArray<GroupCallMember *> *calleeList;
 
 @end

@@ -1369,7 +1369,6 @@
 		01EA149F123F2B3FAF8A19802E513F07 /* NSButton+WebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSButton+WebCache.h"; path = "SDWebImage/Core/NSButton+WebCache.h"; sourceTree = "<group>"; };
 		025CC4980CBEA10069B8CA8B545CCDB4 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "View+MASShorthandAdditions.h"; path = "Masonry/View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		0264570F0BB6A200FE2579F84121FB85 /* M80AttributedLabel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = M80AttributedLabel.m; path = M80AttributedLabel/M80AttributedLabel.m; sourceTree = "<group>"; };
-		027FC6883CB03B2AE0233C73295DB015 /* NERtcCallKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NERtcCallKit.framework; sourceTree = "<group>"; };
 		0323CC25FB09023540EE5E4C84BD9169 /* ReactiveObjC-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReactiveObjC-dummy.m"; sourceTree = "<group>"; };
 		0397FF8BCAAA568BB907E402B9B489C1 /* GPBFieldMask.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBFieldMask.pbobjc.m; path = objectivec/GPBFieldMask.pbobjc.m; sourceTree = "<group>"; };
 		0436031BF3F6F7FB43290A48BEF2F626 /* AFNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.debug.xcconfig; sourceTree = "<group>"; };
@@ -1443,6 +1442,7 @@
 		14449A50D0084EA240E59452744A6982 /* UIGestureRecognizer+RACSignalSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIGestureRecognizer+RACSignalSupport.h"; path = "ReactiveObjC/UIGestureRecognizer+RACSignalSupport.h"; sourceTree = "<group>"; };
 		148AA1A4722F45C2BB10510554205334 /* SDImageTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageTransformer.h; path = SDWebImage/Core/SDImageTransformer.h; sourceTree = "<group>"; };
 		14924769AA892B2396D689D7B349B2A5 /* UIBezierPath+YYAdd.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIBezierPath+YYAdd.h"; path = "YYKit/Base/UIKit/UIBezierPath+YYAdd.h"; sourceTree = "<group>"; };
+		149859F5065F0A15FF6AA81715F46E86 /* NERtcCallKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NERtcCallKit.debug.xcconfig; sourceTree = "<group>"; };
 		14A3FE4DA4CE007A926AAC6102122F2E /* AliyunOSSiOS */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = AliyunOSSiOS; path = libAliyunOSSiOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1582BE6D064E54B75F7D7928A51D1D8F /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+AFNetworking.m"; path = "UIKit+AFNetworking/UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		15A88AFF646B4882C50A2C65592A73E0 /* WeiboSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WeiboSDK.h; path = SDK/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WeiboSDK.h; sourceTree = "<group>"; };
@@ -1494,7 +1494,6 @@
 		206A4676B413E8480794399795C58415 /* MJRefreshBackGifFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshBackGifFooter.m; path = MJRefresh/Custom/Footer/Back/MJRefreshBackGifFooter.m; sourceTree = "<group>"; };
 		20FFC81AA163F199AB667BB668A4A06B /* JCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JCore.debug.xcconfig; sourceTree = "<group>"; };
 		2101BAD44C643BB618ED958EACB4C7CB /* SVGAVectorLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVGAVectorLayer.h; path = Source/SVGAVectorLayer.h; sourceTree = "<group>"; };
-		2137E01A0A68A90D928FB1698DB851A4 /* NERtcCallKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NERtcCallKit.debug.xcconfig; sourceTree = "<group>"; };
 		214096EF729773C0E5FE1DB1FCA0F4AC /* RACSignal+Operations.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "RACSignal+Operations.h"; path = "ReactiveObjC/RACSignal+Operations.h"; sourceTree = "<group>"; };
 		21E3456C851DC610FE61AC5CD61214A7 /* NSDictionary+RACSequenceAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+RACSequenceAdditions.m"; path = "ReactiveObjC/NSDictionary+RACSequenceAdditions.m"; sourceTree = "<group>"; };
 		2239B10235A07723E0E4DCE652EDD48F /* _YYWebImageSetter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = _YYWebImageSetter.h; path = YYKit/Image/Categories/_YYWebImageSetter.h; sourceTree = "<group>"; };
@@ -1549,7 +1548,6 @@
 		3000CB0A871CC831F343FF4DBF5AE58F /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = SDK/ShareSDK/Support/PlatformSDK/WeChatSDKFull/WXApiObject.h; sourceTree = "<group>"; };
 		3079401082458950495F2DC04E71FC4E /* SVGAPlayer */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = SVGAPlayer; path = libSVGAPlayer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		30C268204C5A44C855DC146FA581B897 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImagePrefetcher.m; path = SDWebImage/Core/SDWebImagePrefetcher.m; sourceTree = "<group>"; };
-		31228C48DE1AD75D1C763EBE2860CD39 /* NERtcCallKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NERtcCallKit.release.xcconfig; sourceTree = "<group>"; };
 		31705456466A996BC7B17C3E91584BDE /* AliyunOSSiOS.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AliyunOSSiOS.h; path = "Supporting Files/AliyunOSSiOS.h"; sourceTree = "<group>"; };
 		31F9876D41C39A820C16D676AE7439D5 /* RACScopedDisposable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACScopedDisposable.h; path = ReactiveObjC/RACScopedDisposable.h; sourceTree = "<group>"; };
 		31FE679A1149F18A55AE794A4D575744 /* YYKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YYKit-prefix.pch"; sourceTree = "<group>"; };
@@ -1634,6 +1632,7 @@
 		43E0F5F554BF9B22836BA90C7597576D /* OSSGetSymlinkResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OSSGetSymlinkResult.h; path = AliyunOSSSDK/OSSGetSymlinkResult.h; sourceTree = "<group>"; };
 		440B5CB4D6807E93C2343CF8267684FF /* SVGAVideoSpriteEntity.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVGAVideoSpriteEntity.h; path = Source/SVGAVideoSpriteEntity.h; sourceTree = "<group>"; };
 		441C82CD2420EEEB7B173029B4712DBC /* GPBAny.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBAny.pbobjc.h; path = objectivec/GPBAny.pbobjc.h; sourceTree = "<group>"; };
+		443981B4564421481A7A054311516EA9 /* NERtcCallKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NERtcCallKit.release.xcconfig; sourceTree = "<group>"; };
 		443C789CB94900A10E4F103FB09CDF10 /* SVGAParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVGAParser.h; path = Source/SVGAParser.h; sourceTree = "<group>"; };
 		44B3FA0C1F54CAEF0DBB88B414D19F83 /* NSBundle+YYAdd.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSBundle+YYAdd.h"; path = "YYKit/Base/Foundation/NSBundle+YYAdd.h"; sourceTree = "<group>"; };
 		44E4F564DA8B7D8F2B9B674ABA6993AA /* YYTextRunDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YYTextRunDelegate.h; path = YYKit/Text/String/YYTextRunDelegate.h; sourceTree = "<group>"; };
@@ -2301,6 +2300,7 @@
 		E49D6D248DD1CEE584E6776B9164A1B2 /* MJRefresh */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = MJRefresh; path = libMJRefresh.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4A318B06C0B6538D295884744B2109F /* UIButton+RACCommandSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+RACCommandSupport.h"; path = "ReactiveObjC/UIButton+RACCommandSupport.h"; sourceTree = "<group>"; };
 		E4B668470BA8A092D4EA40F0F1D5E271 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+WebCache.m"; path = "SDWebImage/Core/UIImageView+WebCache.m"; sourceTree = "<group>"; };
+		E575A41FC5E8A3BBDA133813141B9340 /* NERtcCallKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NERtcCallKit.framework; sourceTree = "<group>"; };
 		E59FC9777C43D94EAD4240D126B537E7 /* SVGAVideoEntity.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVGAVideoEntity.h; path = Source/SVGAVideoEntity.h; sourceTree = "<group>"; };
 		E5BD256087B37DF04BA02C64F5BB03E6 /* RACGroupedSignal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACGroupedSignal.h; path = ReactiveObjC/RACGroupedSignal.h; sourceTree = "<group>"; };
 		E66DF404C74F51C06E234653CB705281 /* OSSModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OSSModel.m; path = AliyunOSSSDK/OSSModel.m; sourceTree = "<group>"; };
@@ -2747,16 +2747,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		24F330E8DF674F3E0F9D5574629F7112 /* NERtcCallKit */ = {
-			isa = PBXGroup;
-			children = (
-				684A7A5776A998D1C05C9330DCDA28E7 /* NOS */,
-				3818DAD0BCCF4CD5138CC12920AC654C /* Support Files */,
-			);
-			name = NERtcCallKit;
-			path = NERtcCallKit;
-			sourceTree = "<group>";
-		};
 		25C715534A3BC2B6987F727A8FDABF7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -2799,14 +2789,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/ReactiveObjC";
-			sourceTree = "<group>";
-		};
-		2FFF7FD3926E42AB00FEC7DEA905DB05 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				027FC6883CB03B2AE0233C73295DB015 /* NERtcCallKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		30784790D18EDDEEF75B236A38811483 /* RtcBasic */ = {
@@ -2893,16 +2875,6 @@
 			);
 			name = Bugly;
 			path = Bugly;
-			sourceTree = "<group>";
-		};
-		3818DAD0BCCF4CD5138CC12920AC654C /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				2137E01A0A68A90D928FB1698DB851A4 /* NERtcCallKit.debug.xcconfig */,
-				31228C48DE1AD75D1C763EBE2860CD39 /* NERtcCallKit.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/NERtcCallKit";
 			sourceTree = "<group>";
 		};
 		398371A96A51E521CB6530B7657DBE70 /* NERtcSDK */ = {
@@ -3027,6 +2999,16 @@
 				B82CE736DD33F8EB06947DE4A30BBABC /* Frameworks */,
 			);
 			name = NOS;
+			sourceTree = "<group>";
+		};
+		3D0963086CA7B985C11EDBF67BA02CCA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				149859F5065F0A15FF6AA81715F46E86 /* NERtcCallKit.debug.xcconfig */,
+				443981B4564421481A7A054311516EA9 /* NERtcCallKit.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/NERtcCallKit";
 			sourceTree = "<group>";
 		};
 		3E63C731182E58DBA964AEFD07BCE38A /* Support Files */ = {
@@ -3217,6 +3199,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4759378CCEB646DD500C6379C5074D22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E575A41FC5E8A3BBDA133813141B9340 /* NERtcCallKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		497B3A99703DF3E9E96F3A7E66E4FE44 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -3388,14 +3378,6 @@
 				1582BE6D064E54B75F7D7928A51D1D8F /* UIWebView+AFNetworking.m */,
 			);
 			name = UIKit;
-			sourceTree = "<group>";
-		};
-		684A7A5776A998D1C05C9330DCDA28E7 /* NOS */ = {
-			isa = PBXGroup;
-			children = (
-				2FFF7FD3926E42AB00FEC7DEA905DB05 /* Frameworks */,
-			);
-			name = NOS;
 			sourceTree = "<group>";
 		};
 		68640BEC45096D34511547ABC157303A /* Resources */ = {
@@ -3649,6 +3631,14 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SVProgressHUD";
+			sourceTree = "<group>";
+		};
+		8C41372F961683FCE6A2FEE197EC43B5 /* NOS_Special */ = {
+			isa = PBXGroup;
+			children = (
+				4759378CCEB646DD500C6379C5074D22 /* Frameworks */,
+			);
+			name = NOS_Special;
 			sourceTree = "<group>";
 		};
 		8C4343C1121E4EDC990DA578C5B77DE6 /* Resources */ = {
@@ -4016,7 +4006,7 @@
 				EEBCF70C0EF2E954E7BDBAF51F4B5AF6 /* MOBFoundation */,
 				96089780661322F5786E15A54B85D69C /* NECommonKit */,
 				E0DFB0C8F418C73A6966977D1457D657 /* NECoreKit */,
-				24F330E8DF674F3E0F9D5574629F7112 /* NERtcCallKit */,
+				CBC0B0B21A1969BFC206A7D550785C11 /* NERtcCallKit */,
 				398371A96A51E521CB6530B7657DBE70 /* NERtcSDK */,
 				5D3AEF125C75BA7138125257820F8BFC /* NIMSDK_LITE */,
 				73C440A2C29D63445D51BBEDA77F8144 /* Protobuf */,
@@ -4145,6 +4135,16 @@
 			);
 			name = AFNetworking;
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		CBC0B0B21A1969BFC206A7D550785C11 /* NERtcCallKit */ = {
+			isa = PBXGroup;
+			children = (
+				8C41372F961683FCE6A2FEE197EC43B5 /* NOS_Special */,
+				3D0963086CA7B985C11EDBF67BA02CCA /* Support Files */,
+			);
+			name = NERtcCallKit;
+			path = NERtcCallKit;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -6502,23 +6502,6 @@
 			};
 			name = Release;
 		};
-		0BECB420AACBE06183D68C9A298D7E5E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2137E01A0A68A90D928FB1698DB851A4 /* NERtcCallKit.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		18545C9FDBE379245D6F8C7E92A7B07F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5CB8D8CFF5543AFC0DC4F171D1FDD2C3 /* Protobuf.debug.xcconfig */;
@@ -6665,6 +6648,23 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
+		};
+		257E16A9387EF4D785507D0A319C2195 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 149859F5065F0A15FF6AA81715F46E86 /* NERtcCallKit.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
 		};
 		3C8B32B94C6511AF84D8C6EECED053AE /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -6933,14 +6933,14 @@
 			};
 			name = Debug;
 		};
-		60E5501D25D1B950456AF705CB021255 /* Release */ = {
+		62CB5E38E8CD6703FF3193969A3F7FBB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31228C48DE1AD75D1C763EBE2860CD39 /* NERtcCallKit.release.xcconfig */;
+			baseConfigurationReference = 443981B4564421481A7A054311516EA9 /* NERtcCallKit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -8037,8 +8037,8 @@
 		729A76B6459CEFEF41B4ED7B9AD8B2D2 /* Build configuration list for PBXAggregateTarget "NERtcCallKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0BECB420AACBE06183D68C9A298D7E5E /* Debug */,
-				60E5501D25D1B950456AF705CB021255 /* Release */,
+				257E16A9387EF4D785507D0A319C2195 /* Debug */,
+				62CB5E38E8CD6703FF3193969A3F7FBB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

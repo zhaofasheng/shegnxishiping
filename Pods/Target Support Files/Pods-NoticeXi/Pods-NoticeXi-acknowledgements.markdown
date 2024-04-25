@@ -245,7 +245,7 @@ Copyright 2022 Netease
 
 ## NIMSDK_LITE
 
-Copyright 2023 Netease 
+Copyright 2024 Netease 
 
 ## Protobuf
 

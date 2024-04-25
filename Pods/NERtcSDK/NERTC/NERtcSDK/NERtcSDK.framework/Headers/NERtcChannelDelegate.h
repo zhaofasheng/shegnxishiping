@@ -584,6 +584,48 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @if Chinese
+ * 已接收到远端视频首帧并完成渲染的回调。
+ * <br>当 SDK 收到远端视频并渲染成功时，会触发该回调。
+ * @since V5.5.10
+ * @par 参数说明
+ * <table>
+ *  <tr>
+ *      <th>**参数名称**</th>
+ *      <th>**类型**</th>
+ *      <th>**描述**</th>
+ *  </tr>
+ *  <tr>
+ *      <td>userID</td>
+ *      <td>uint64_t</td>
+ *      <td>用户 ID，提示是哪个用户的视频流。</td>
+ *  </tr>
+ *  <tr>
+ *      <td>width</td>
+ *      <td>uint32_t</td>
+ *      <td>首帧视频的宽度，单位为 px。</td>
+ *  </tr>
+ *  <tr>
+ *      <td>height</td>
+ *      <td>uint32_t</td>
+ *      <td>首帧视频的高度，单位为 px。</td>
+ *  </tr>
+ *  <tr>
+ *      <td>elapsed</td>
+ *      <td>uint64_t</td>
+ *      <td>从订阅动作开始到发生此事件过去的时间（毫秒)。</td>
+ *  </tr>
+ *  <tr>
+ *      <td>type</td>
+ *      <td>{@link NERtcStreamChannelType}</td>
+ *      <td>视频通道类型：<ul><li>kNERtcStreamChannelTypeMainStream：主流。<li>kNERtcStreamChannelTypeSubStream：辅流。</td>
+ *  </tr>
+ * </table>
+ * @endif
+ */
+- (void)onNERtcChannelFirstVideoFrameRender:(uint64_t)userID width:(uint32_t)width height:(uint32_t)height elapsed:(uint64_t)elapsed streamType:(NERtcStreamChannelType)streamType;
+
+/**
+ * @if Chinese
  * 远端视频分辨率发生变化的回调。
  * <br>当远端视频的画面分辨率发生变化，会触发此回调。
  * @since V5.4.1
