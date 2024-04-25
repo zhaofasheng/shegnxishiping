@@ -320,7 +320,7 @@
                 appdel.audioChatTools.autoCallNext = YES;
             }
             
-            [appdel.audioChatTools callToUserId:@"1" roomId:weakSelf.orderM.room_id.intValue getOrderTime:autoNext?weakSelf.choiceGoods.match_time : weakSelf.orderM.get_order_time nickName:weakSelf.orderM.user_nick_name autoNext:autoNext];
+            [appdel.audioChatTools callToUserId:@"2" roomId:weakSelf.orderM.room_id.intValue getOrderTime:autoNext?weakSelf.choiceGoods.match_time : weakSelf.orderM.get_order_time nickName:weakSelf.orderM.user_nick_name autoNext:autoNext];
             
             //[appdel.audioChatTools callToUserId:autoNext?weakSelf.choiceGoods.shop_user_id: weakSelf.shopDetailM.myShopM.user_id roomId:weakSelf.orderM.room_id.intValue getOrderTime:autoNext?weakSelf.choiceGoods.match_time : weakSelf.orderM.get_order_time nickName:weakSelf.orderM.user_nick_name autoNext:autoNext];
             

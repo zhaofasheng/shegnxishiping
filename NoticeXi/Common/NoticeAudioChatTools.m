@@ -10,14 +10,14 @@
 #import "NoticeXi-Swift.h"
 #import "NoticeQiaojjieTools.h"
 #import "UIWindow+TUICalling.h"
-
 #import <NIMSDK/NIMSDK.h>
 #import <NERtcCallKit/NERtcCallKit.h>
 #import <NERtcSDK/NERtcSDK.h>
+
 static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 
 @interface NoticeAudioChatTools()<NECallEngineDelegate,NERtcEngineDelegateEx>
-
+@property(nonatomic, assign) UInt64 calleruid;//呼叫方的uid
 @property (nonatomic, strong) NSString *currentRoomId;
 @property (nonatomic, assign) NSInteger chatTime;//聊天时长
 @end
@@ -78,7 +78,6 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     }];
 }
 
-
 - (void)regWangyiyun{
     //推荐在程序启动的时候初始化 NIMSDK 注册云信
     NSString *appKey        = yunxinAppKey;//云信分配的 appKey
@@ -94,7 +93,7 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     [[NECallEngine sharedInstance] setup:config];
 
     //测试账号有1 2 3 4
-    [NIMSDK.sharedSDK.loginManager login:@"2" token:@"111111" completion:^(NSError * _Nullable error) {
+    [NIMSDK.sharedSDK.loginManager login:@"1" token:@"111111" completion:^(NSError * _Nullable error) {
         if(!error){
             DRLog(@"登录云信成功");
         }else{
@@ -108,8 +107,6 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     NERtcEngine *coreEngine = [NERtcEngine sharedEngine];
     [coreEngine enableAudioVolumeIndication:YES interval:1000 vad:YES]; // 启用说话者音量提示,在 onRemoteAudioVolumeIndication 和 onRemoteAudioVolumeIndication 回调中每隔 1000ms 返回音量提示
 }
-
-
 
 - (void)regTencent{
     [self regWangyiyun];
@@ -283,6 +280,7 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 /// 通话建立的回调
 /// @param info 通话建立回调信息
 - (void)onCallConnected:(NECallInfo *)info{
+    self.calleruid = info.calleeInfo.uid;
     [self clearCallWaitView];
     self.chatTime = 0;
     self.currentRoomId = info.rtcInfo.channelName;
@@ -421,9 +419,5 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     self.callingWindow = nil;
 }
 
-- (void)onRemoteAudioVolumeIndication:(NSArray<NERtcAudioVolumeInfo *> *)speakers totalVolume:(int)totalVolume{
-    for (NERtcAudioVolumeInfo *info in speakers) {
-        DRLog(@"%llu----%d",info.uid,info.volume);
-    }
-}
+
 @end
