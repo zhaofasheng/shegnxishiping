@@ -24,6 +24,7 @@
 #import "SXShopCheckController.h"
 #import "SXSettingController.h"
 #import "NoticeStaySys.h"
+
 @interface NoticeMineController ()
 @property (nonatomic, strong) NoticeNewCenterNavView *navView;
 @property (nonatomic, strong) SXUserCenterHeader *headerView;
@@ -44,6 +45,7 @@
 @property (nonatomic, assign) BOOL needAutoShowSupply;
 @property (nonatomic, strong) SXSpulyShopView *supplyView;
 @property (nonatomic, assign) BOOL needFirst;
+
 @end
 
 @implementation NoticeMineController

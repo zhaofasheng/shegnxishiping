@@ -102,6 +102,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *podcastNum;//播客数量
 @property (nonatomic, strong) NSString *invitationNum;//求助帖数量
 @property (nonatomic, strong) NSString *albumNum;//专辑数量
+
+@property (nonatomic, strong) NSString *yunxin_token;
+@property (nonatomic, strong) NSString *yunxin_id;
 @end
 
 NS_ASSUME_NONNULL_END

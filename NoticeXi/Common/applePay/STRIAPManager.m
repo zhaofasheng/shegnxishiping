@@ -153,7 +153,6 @@
     }
 #endif
    // NSString *receiptString= [data base64EncodedStringWithOptions:0];//转化为base64字符串
-
 }
 
 #pragma mark - 🍐delegate
@@ -188,7 +187,6 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
                 [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.buysus"]];
             }
-      
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
         }else{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];

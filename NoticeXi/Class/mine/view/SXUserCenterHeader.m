@@ -103,12 +103,11 @@
             NoticeUserInfoModel *userIn = [NoticeUserInfoModel mj_objectWithKeyValues:dict1[@"data"]];
        
             if (userIn.mobile.length < 6) {//没有绑定手机号
-                __weak typeof(self) weakSelf = self;
                  XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"未有绑定手机号" message:@"您未有绑定手机号，可能导致后期账号丢失，以及无法使用所有功能，我们将尊重用户的隐私权限，手机号仅用于账号登录以及需要手机验证的权限功能" sureBtn:@"取消" cancleBtn:@"去绑定" right:YES];
                 alerView.resultIndex = ^(NSInteger index) {
                     if (index == 2) {
                         NoticeChangePhoneViewController *vc = [[NoticeChangePhoneViewController alloc] init];
-                        NoticeUserInfoModel *userM = [NoticeSaveModel getUserInfo];
+               
                         vc.hasPhone = NO;
                         [[NoticeTools getTopViewController].navigationController pushViewController:vc animated:YES];
                     }

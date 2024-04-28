@@ -1384,7 +1384,6 @@
    
 }
 
-
 //发送预设语音
 - (void)sendDefault{
     NoticeDefaultMessageView *defautView = [[NoticeDefaultMessageView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];

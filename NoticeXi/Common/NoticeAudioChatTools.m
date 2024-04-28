@@ -13,16 +13,21 @@
 #import <NIMSDK/NIMSDK.h>
 #import <NERtcCallKit/NERtcCallKit.h>
 #import <NERtcSDK/NERtcSDK.h>
-
+#import "NoticeYunXin.h"
 static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 
-@interface NoticeAudioChatTools()<NECallEngineDelegate,NERtcEngineDelegateEx>
+@interface NoticeAudioChatTools()<NECallEngineDelegate>
 @property(nonatomic, assign) UInt64 calleruid;//呼叫方的uid
 @property (nonatomic, strong) NSString *currentRoomId;
 @property (nonatomic, assign) NSInteger chatTime;//聊天时长
 @end
 
 @implementation NoticeAudioChatTools
+
+{
+    NSInteger loginCount;
+}
+
 
 - (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext{
     //设置屏幕常亮
@@ -91,21 +96,83 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 - (void)setupSDK {
     NESetupConfig *config = [[NESetupConfig alloc] initWithAppkey:yunxinAppKey];
     [[NECallEngine sharedInstance] setup:config];
+    
+    //    1.用户信息接口返回了云信账号密码的时候直接使用登录云信
+    //    2.用户信息接口没返回的是，主动调用后端接口获取登录
+    NoticeUserInfoModel *userInfo = [NoticeSaveModel getUserInfo];
+    if (userInfo.user_id && userInfo.yunxin_token && userInfo.yunxin_token.length > 3) {
+        DRLog(@"存在云信token直接登录");
+        [self loginToYunxin:userInfo];
+    }else{
+        [self loginTiYunxin];
+    }
 
-    //测试账号有1 2 3 4
-    [NIMSDK.sharedSDK.loginManager login:@"1" token:@"111111" completion:^(NSError * _Nullable error) {
+}
+
+- (void)loginToYunxin:(NoticeUserInfoModel *)userInfo{
+    [NIMSDK.sharedSDK.loginManager login:userInfo.yunxin_id token:userInfo.yunxin_token completion:^(NSError * _Nullable error) {
         if(!error){
+            self->loginCount = 0;
             DRLog(@"登录云信成功");
         }else{
-            DRLog(@"登录云信失败%@",error.description);
+            DRLog(@"%@====%@登录云信失败%@",userInfo.yunxin_id,userInfo.yunxin_token,error.description);
+            if (self->loginCount < 5) {
+                self->loginCount++;
+                [self loginTiYunxin];
+            }
         }
     }];
-  
     [NECallEngine.sharedInstance addCallDelegate:self];
-    [NECallEngine sharedInstance].engineDelegate = self;
+    //    [NECallEngine sharedInstance].engineDelegate = self;
+    //
+    //    NERtcEngine *coreEngine = [NERtcEngine sharedEngine];
+    //    [coreEngine enableAudioVolumeIndication:YES interval:1000 vad:YES]; // 启用说话者音量提示,在 onRemoteAudioVolumeIndication 和 onRemoteAudioVolumeIndication 回调中每隔 1000ms 返回音量提示
+}
 
-    NERtcEngine *coreEngine = [NERtcEngine sharedEngine];
-    [coreEngine enableAudioVolumeIndication:YES interval:1000 vad:YES]; // 启用说话者音量提示,在 onRemoteAudioVolumeIndication 和 onRemoteAudioVolumeIndication 回调中每隔 1000ms 返回音量提示
+//获取云信toekn
+- (void)loginTiYunxin{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+        if ([NoticeSaveModel getUserInfo]) {//已经登录
+            self->loginCount++;
+            [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@/yxtoken",[[NoticeSaveModel getUserInfo] user_id]] Accept:nil isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+                if (success) {
+                    if ([dict[@"data"] isEqual:[NSNull null]]) {
+                        if (self->loginCount < 5) {
+                           [self loginTiYunxin];
+                        }
+                        return ;
+                    }
+                    NoticeYunXin *yunxin = [NoticeYunXin mj_objectWithKeyValues:dict[@"data"]];
+                    DRLog(@"云信token>>>>%@",yunxin.token);
+                    if (yunxin.yunxin_id && yunxin.token) {
+                        self->loginCount = 0;
+                        NoticeUserInfoModel *userInfo = [NoticeSaveModel getUserInfo];
+                        userInfo.yunxin_id = yunxin.yunxin_id;
+                        userInfo.yunxin_token = yunxin.token;
+                        [NoticeSaveModel saveUserInfo:userInfo];
+                        [self loginToYunxin:userInfo];
+                    }else{
+                        if (self->loginCount < 5) {
+                            self->loginCount++;
+                            [self loginTiYunxin];
+                        }
+                    }
+                }else{
+                    DRLog(@"获取云信token失败%@",dict.description);
+                    if (self->loginCount < 5) {
+                        self->loginCount++;
+                        [self loginTiYunxin];
+                    }
+                }
+            } fail:^(NSError *error) {
+                DRLog(@"获取云信接口token失败%@",error.description);
+                if (self->loginCount < 5) {
+                    self->loginCount++;
+                    [self loginTiYunxin];
+                }
+            }];
+        }
+    });
 }
 
 - (void)regTencent{
@@ -317,16 +384,13 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPOVERCHATORDER" object:nil];
     if (info.reasonCode == TerminalCodeTimeOut) {
         DRLog(@"超时");
-
         if(!self.autoCallNexting){
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPNOACCEPECT" object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
         }
     }else if (info.reasonCode == TerminalCodeBusy){
         DRLog(@"用户占线");
-       
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
- 
     }else if (info.reasonCode == TerminalCodeRtcInitError){
         DRLog(@"rtc 初始化失败");
     }else if (info.reasonCode == TerminalCodeJoinRtcError){
@@ -378,7 +442,6 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
         DRLog(@"接听失败");
     }else if (info.reasonCode == TerminalHuangUp){
         DRLog(@"挂断通话中的电话");
-     
         [self orderFinish];
     }
 }
@@ -405,7 +468,7 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 
     NECallInfo *callinfo = [[NECallEngine sharedInstance] getCallInfo];
     self.currentRoomId = callinfo.rtcInfo.channelName;
-    DRLog(@"收到%@的通话请求\n房间号%@",info.extraInfo,callinfo.rtcInfo.channelName);
+    DRLog(@"收到%@的通话请求\n房间号%@",info.callerAccId,callinfo.rtcInfo.channelName);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"HASGETSHOPVOICECHANTTOTICE" object:nil];
     self.fromUserId = info.extraInfo;
     //正式需要打开这里，调试的时候注释了
@@ -418,6 +481,5 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     self.callingWindow.hidden = YES;
     self.callingWindow = nil;
 }
-
 
 @end
