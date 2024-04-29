@@ -10,6 +10,7 @@
 #import "BaseNavigationController.h"
 #import "NoticeTabbarController.h"
 #import "UIWindow+TUICalling.h"
+#import <Bugly/Bugly.h>
 @implementation NoticeShopGetOrderTostView
 {
     UILabel *_titleL;
@@ -48,6 +49,8 @@
 }
 
 - (void)hasKillApp{
+    NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@杀死app拒接电话\n时间%@\n",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
+    [Bugly reportException:exception];
     if(self.endOpenBlock){
         self.endOpenBlock(YES);
     }

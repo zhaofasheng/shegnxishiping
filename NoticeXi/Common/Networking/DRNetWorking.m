@@ -163,9 +163,9 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
             //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
         }else{
-            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
-            [Bugly reportException:exception];
-            [Bugly reportError:error];
+//            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
+//            [Bugly reportException:exception];
+//            [Bugly reportError:error];
         }
     }];
 }
@@ -221,9 +221,9 @@
             [NoticeSaveModel outLoginClearData];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
         }else{
-            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
-            [Bugly reportException:exception];
-            [Bugly reportError:error];
+//            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
+//            [Bugly reportException:exception];
+//            [Bugly reportError:error];
         }
     }];
 }
@@ -383,9 +383,9 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
                 //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
             }else{
-                NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
-                [Bugly reportException:exception];
-                [Bugly reportError:error];
+//                NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
+//                [Bugly reportException:exception];
+//                [Bugly reportError:error];
             }
             // 请求失败
             fail(error);
@@ -448,9 +448,9 @@
                  //    [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
              }else{
                  [self pareseError:error];
-                 NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
-                 [Bugly reportException:exception];
-                 [Bugly reportError:error];
+//                 NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
+//                 [Bugly reportException:exception];
+//                 [Bugly reportError:error];
              }
             
              // 请求失败
@@ -542,9 +542,9 @@
                 [NoticeSaveModel outLoginClearData];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
             }else{
-                NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
-                [Bugly reportException:exception];
-                [Bugly reportError:error];
+//                NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
+//                [Bugly reportException:exception];
+//                [Bugly reportError:error];
             }
             // 请求失败
             fail(error);
@@ -597,9 +597,9 @@
                  //    [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
              }else{
                  [self pareseError:error];
-                 NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
-                 [Bugly reportException:exception];
-                 [Bugly reportError:error];
+//                 NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
+//                 [Bugly reportException:exception];
+//                 [Bugly reportError:error];
              }
              // 请求失败
              fail(error);
@@ -670,9 +670,9 @@
             // [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
         }else{
             [self pareseError:error];
-            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
-            [Bugly reportException:exception];
-            [Bugly reportError:error];
+//            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
+//            [Bugly reportException:exception];
+//            [Bugly reportError:error];
         }
 
         // 请求失败
@@ -742,9 +742,9 @@
             //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
         }else{
             [self pareseError:error];
-            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
-            [Bugly reportException:exception];
-            [Bugly reportError:error];
+//            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
+//            [Bugly reportException:exception];
+//            [Bugly reportError:error];
         }
         // 请求失败
         fail(error);

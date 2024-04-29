@@ -14,12 +14,15 @@
 #import <NERtcCallKit/NERtcCallKit.h>
 #import <NERtcSDK/NERtcSDK.h>
 #import "NoticeYunXin.h"
+#import <Bugly/Bugly.h>
 static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 
 @interface NoticeAudioChatTools()<NECallEngineDelegate>
+
 @property(nonatomic, assign) UInt64 calleruid;//呼叫方的uid
 @property (nonatomic, strong) NSString *currentRoomId;
 @property (nonatomic, assign) NSInteger chatTime;//聊天时长
+
 @end
 
 @implementation NoticeAudioChatTools
@@ -49,6 +52,9 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
             }
             DRLog(@"云信拨打电话成功\n房间信息%@--%ld\n房间号%@",callInfo.rtcInfo.channelName,callInfo.rtcInfo.channelId,self.roomId);
             
+            NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@给%@拨打电话成功\n房间号%@\n时间%@",[NoticeTools getuserId],userId,self.roomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+            [Bugly reportException:exception];
+            
             [NoticeQiaojjieTools showWithJieDanTitle:nickName roomId:self.roomId time:getOrderTime?getOrderTime: @"120" creatTime:@"0" autoNext:autonext clickBlcok:^(NSInteger tag) {
                 [weakSelf hanupyunxin];
                 if(tag == 1){//自己直接取消
@@ -75,6 +81,9 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
                 }
             }];
         }else{
+            NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@给%@拨打电话失败\n房间号%@\n时间%@\n原因%@",[NoticeTools getuserId],userId,self.roomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
+            [Bugly reportException:exception];
+            
             [[NoticeTools getTopViewController] showToastWithText:[NSString stringWithFormat:@"拨打失败，请稍后重试%@",error.description]];
             if(weakSelf.cancelBlcok){
                 weakSelf.cancelBlcok(YES);
@@ -102,6 +111,9 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     NoticeUserInfoModel *userInfo = [NoticeSaveModel getUserInfo];
     if (userInfo.user_id && userInfo.yunxin_token && userInfo.yunxin_token.length > 3) {
         DRLog(@"存在云信token直接登录");
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@存在云信token登录\n时间%@",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
+        
         [self loginToYunxin:userInfo];
     }else{
         [self loginTiYunxin];
@@ -114,7 +126,11 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
         if(!error){
             self->loginCount = 0;
             DRLog(@"登录云信成功");
+            NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@云信登录成功\n时间%@",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
+            [Bugly reportException:exception];
         }else{
+            NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@--%@云信登录失败\n时间%@\n原因%@",userInfo.yunxin_id,userInfo.yunxin_token,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
+            [Bugly reportException:exception];
             DRLog(@"%@====%@登录云信失败%@",userInfo.yunxin_id,userInfo.yunxin_token,error.description);
             if (self->loginCount < 5) {
                 self->loginCount++;
@@ -144,6 +160,8 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
                     }
                     NoticeYunXin *yunxin = [NoticeYunXin mj_objectWithKeyValues:dict[@"data"]];
                     DRLog(@"云信token>>>>%@",yunxin.token);
+                    NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取云信token接口\n时间%@\n获取的数据%@",[NoticeTools getuserId],[SXTools getCurrentTime],dict.description] userInfo:nil];//数据上报
+                    [Bugly reportException:exception];
                     if (yunxin.yunxin_id && yunxin.token) {
                         self->loginCount = 0;
                         NoticeUserInfoModel *userInfo = [NoticeSaveModel getUserInfo];
@@ -158,6 +176,8 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
                         }
                     }
                 }else{
+                    NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取云信token接口调用成功，但获取失败\n时间%@\n获取的数据%@",[NoticeTools getuserId],[SXTools getCurrentTime],dict.description] userInfo:nil];//数据上报
+                    [Bugly reportException:exception];
                     DRLog(@"获取云信token失败%@",dict.description);
                     if (self->loginCount < 5) {
                         self->loginCount++;
@@ -166,6 +186,8 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
                 }
             } fail:^(NSError *error) {
                 DRLog(@"获取云信接口token失败%@",error.description);
+                NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取云信token接口调用失败败\n时间%@\n失败理由%@",[NoticeTools getuserId],[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
+                [Bugly reportException:exception];
                 if (self->loginCount < 5) {
                     self->loginCount++;
                     [self loginTiYunxin];
@@ -198,8 +220,12 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
         __weak typeof(self) weakSelf = self;
         _callView.acceptBlock = ^(BOOL accept) {
             if(accept){
+                NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@点击接听按钮\n房间号%@\n时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+                [Bugly reportException:exception];
                 [weakSelf accept];
             }else{
+                NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@点击拒接按钮\n房间号%@\n时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+                [Bugly reportException:exception];
                 [weakSelf repject:NO];
             }
         };
@@ -225,18 +251,27 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
                 self.noReClick = YES;
                 [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopGoodsOrder/%@",weakSelf.orderModel.room_id] Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                     if(success){
+                        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@点击接听按钮调用接听接口成功\n房间号%@\n时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+                        [Bugly reportException:exception];
                         [weakSelf acceptCall];
                     }else{
+                        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@点击接听按钮调用接听接口失败\n房间号%@\n时间%@\n失败理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],dict.description] userInfo:nil];//数据上报
+                        [Bugly reportException:exception];
                         [weakSelf hanupyunxin];
                     }
                     
                     [[NoticeTools getTopViewController] hideHUD];
                 } fail:^(NSError * _Nullable error) {
+                    NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@点击接听按钮调用接听接口请求失败\n房间号%@\n时间%@\n失败理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
+                    [Bugly reportException:exception];
+                    
                     [weakSelf hanupyunxin];
                     [[NoticeTools getTopViewController] hideHUD];
                     self.noReClick = NO;
                 }];
             }else { // 没有麦克风权限
+                NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@点击接听按钮没有麦克风权限\n房间号%@\n时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+                [Bugly reportException:exception];
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:[NoticeTools getLocalStrWith:@"recoder.kaiqire"] message:@"有麦克风权限才可以语音通话功能哦~" sureBtn:[NoticeTools getLocalStrWith:@"recoder.kaiqi"] cancleBtn:[NoticeTools getLocalStrWith:@"main.cancel"] right:YES];
                 alerView.resultIndex = ^(NSInteger index) {
                     if (index == 1) {
@@ -288,11 +323,15 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 
 //云信接听  当被叫 onInvited 回调发生，调用 accept 接听呼叫
 - (void)acceptCall{
-//    __weak typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     [[NECallEngine sharedInstance] accept:^(NSError * _Nullable error, NECallInfo * _Nullable callInfo) {
         if (!error) {
             DRLog(@"接听成功");
+            NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@点击接听按钮接听成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+            [Bugly reportException:exception];
         }else{
+            NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@点击接听按钮接听失败\n房间号%@\n时间%@\n理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
+            [Bugly reportException:exception];
             [[NoticeTools getTopViewController] showToastWithText:[NSString stringWithFormat:@"接听失败%@",error.description]];
         }
     }];
@@ -300,11 +339,16 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 
 //挂断云信电话
 - (void)hanupyunxin{
+    __weak typeof(self) weakSelf = self;
     NEHangupParam *hangupParam = [[NEHangupParam alloc] init];
     [[NECallEngine sharedInstance] hangup:hangupParam completion:^(NSError * _Nullable error) {
         if (!error) {
+            NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@挂断成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+            [Bugly reportException:exception];
             DRLog(@"挂断云信电话");
         }else{
+            NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@挂断失败\n房间号%@\n时间%@\n理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
+            [Bugly reportException:exception];
             DRLog(@"挂断云信失败%@",error.description);
         }
     }];
@@ -313,13 +357,18 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 
 //获取等待的订单
 - (void)getOrder{
-    
+    __weak typeof(self) weakSelf = self;
     self.noReClick = NO;
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoodsOrder/select?type=2" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             DRLog(@"当前进行中等待中的订单%@",dict);
+       
             self.orderModel = [NoticeByOfOrderModel mj_objectWithKeyValues:dict[@"data"]];
             self.fromUserId = self.orderModel.user_id;
+            
+            NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取等待中的订单成功\n房间号%@\n时间%@\n电话来自%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],self.fromUserId] userInfo:nil];//数据上报
+            [Bugly reportException:exception];
+            
             if(self.orderModel.goods_type.intValue == 2){
                 UIViewController *viewController = [[UIViewController alloc] init];
                 [viewController.view addSubview:self.callView];
@@ -340,7 +389,8 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 
     } fail:^(NSError * _Nullable error) {
         [self repject:NO];
-
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取等待中的订单请求失败\n房间号%@\n时间%@\n理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
     }];
 }
 
@@ -367,6 +417,9 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     callView.toUserId = self.toUserId;
     [callView showCallView];
     [[NoticeTools getTopViewController] hideHUD];
+    
+    NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话建立成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.fromUserId,info.rtcInfo.channelName,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+    [Bugly reportException:exception];
 }
 
 /// 通话结束
@@ -377,9 +430,7 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     [self clearCallWaitView];
     
     DRLog(@"通话结束回调的当前通话房间号信息%@",self.currentRoomId);
-    self.autoCallNexting = NO;
-    self.fromUserId = nil;
-    self.toUserId = nil;
+
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPOVERCHATORDER" object:nil];
     if (info.reasonCode == TerminalCodeTimeOut) {
@@ -388,10 +439,18 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPNOACCEPECT" object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
         }
+        
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:超时",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
+        
     }else if (info.reasonCode == TerminalCodeBusy){
         DRLog(@"用户占线");
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:用户占线",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
     }else if (info.reasonCode == TerminalCodeRtcInitError){
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:rtc 初始化失败",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
         DRLog(@"rtc 初始化失败");
     }else if (info.reasonCode == TerminalCodeJoinRtcError){
         DRLog(@"加入rtc失败");
@@ -405,6 +464,8 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
         DRLog(@" uid 为空");
     }else if (info.reasonCode == TerminalRtcDisconnected){
         DRLog(@"Rtc 断连");
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:Rtc 断连",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
         [self orderFinish];
     }else if (info.reasonCode == TerminalCallerCancel){
         DRLog(@"取消呼叫");
@@ -413,12 +474,19 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
         [[NoticeTools getTopViewController] hideHUD];
         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"对方取消了订单" message:nil cancleBtn:@"好的，知道了"];
         [alerView showXLAlertView];
+        
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:拨打的人取消了通话，也就是呼叫被取消",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
     }else if (info.reasonCode == TerminalCalleeReject){
         DRLog(@"拒绝呼叫");
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:拒绝呼叫",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
 
     }else if (info.reasonCode == TerminalCallerRejcted){
         DRLog(@"呼叫被拒绝");
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:呼叫被拒拒绝",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPCANCELORDER" object:nil];
    
         if (!self.autoCallNexting) {
@@ -433,17 +501,29 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
         }
     }else if (info.reasonCode == TerminalBeHuangUp){
         DRLog(@"对方挂断了呼叫中的通话");
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:对方挂断了呼叫中的通话",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
         [self orderFinish];
     }else if (info.reasonCode == TerminalUserRtcDisconnected){
         DRLog(@"Rtc房间断开链接");
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:Rtc房间断开链接",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
     }else if (info.reasonCode == TerminalUserRtcLeave){
         DRLog(@"离开Rtc房间");
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:离开Rtc房间",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
     }else if (info.reasonCode == TerminalAcceptFail){
         DRLog(@"接听失败");
     }else if (info.reasonCode == TerminalHuangUp){
         DRLog(@"挂断通话中的电话");
+        NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:挂断通话中的电话",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportException:exception];
         [self orderFinish];
     }
+    
+    self.autoCallNexting = NO;
+    self.fromUserId = nil;
+    self.toUserId = nil;
 }
 
 - (void)orderFinish{
@@ -456,6 +536,7 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopGoodsOrder/complete/0/%@",self.currentRoomId] Accept:@"application/vnd.shengxi.v5.5.0+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if(success){
             DRLog(@"订单这设置为完成");
+            
             self.currentRoomId = nil;
         }
     } fail:^(NSError * _Nullable error) {
@@ -469,8 +550,11 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     NECallInfo *callinfo = [[NECallEngine sharedInstance] getCallInfo];
     self.currentRoomId = callinfo.rtcInfo.channelName;
     DRLog(@"收到%@的通话请求\n房间号%@",info.callerAccId,callinfo.rtcInfo.channelName);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"HASGETSHOPVOICECHANTTOTICE" object:nil];
     self.fromUserId = info.extraInfo;
+    NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@收到%@通话请求\n房间号%@\n时间%@\n",[NoticeTools getuserId],info.callerAccId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+    [Bugly reportException:exception];
     //正式需要打开这里，调试的时候注释了
     [self getOrder];
 

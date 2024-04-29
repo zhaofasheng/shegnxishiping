@@ -14,7 +14,7 @@
 #import "NoticeShopjuBuView.h"
 #import "NoticeTimerTools.h"
 #import <NERtcSDK/NERtcSDK.h>
-
+#import <Bugly/Bugly.h>
 @interface NoticeCallView()
 
 @property (nonatomic, strong) StarsOverlay *starsView;
@@ -336,7 +336,8 @@
 
 - (void)hasKillApp{
     [self hanUp];
-
+    NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@杀死app挂电话\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+    [Bugly reportException:exception];
 }
 
 - (void)otherlogin{

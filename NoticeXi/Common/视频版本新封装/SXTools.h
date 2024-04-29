@@ -43,6 +43,8 @@ typedef void (^downSuccessBlock)(BOOL success);
 + (void)setLastPayPlayVideo:(NSString *)videoName searisId:(NSString *)searisId;
 
 + (UIWindow *)getKeyWindow;
+
++ (NSString *)getCurrentTime;
 @end
 
 NS_ASSUME_NONNULL_END
