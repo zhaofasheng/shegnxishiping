@@ -104,7 +104,14 @@
     if(!_buyButton){
         _buyButton = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-30-60-15, 38, 60, 32)];
         [_buyButton setAllCorner:16];
-        _buyButton.backgroundColor = [UIColor colorWithHexString:@"#FF68A3"];
+        //渐变色
+        CAGradientLayer *gradientLayer = [[CAGradientLayer alloc] init];
+        gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FF68A3"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#FF3C92"].CGColor];//#FF3C92
+        gradientLayer.startPoint = CGPointMake(0, 1);
+        gradientLayer.endPoint = CGPointMake(1, 1);
+        gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(_buyButton.frame), CGRectGetHeight(_buyButton.frame));
+  
+        [_buyButton.layer addSublayer:gradientLayer];
         [_buyButton setTitle:@"通话" forState:UIControlStateNormal];
         [_buyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _buyButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;

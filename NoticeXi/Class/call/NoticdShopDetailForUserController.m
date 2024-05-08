@@ -152,7 +152,7 @@
     self.workButton.layer.masksToBounds = YES;
     //渐变色
     CAGradientLayer *gradientLayer = [[CAGradientLayer alloc] init];
-    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FF3C92"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#FF68A3"].CGColor];
+    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FF68A3"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#FF3C92"].CGColor];//#FF3C92
     gradientLayer.startPoint = CGPointMake(0, 1);
     gradientLayer.endPoint = CGPointMake(1, 1);
     gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.workButton.frame), CGRectGetHeight(self.workButton.frame));

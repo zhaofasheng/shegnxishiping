@@ -10,7 +10,6 @@
 #import "MyCommentCell.h"
 #import "Masonry.h"
 #import "SXVideoCommentJson.h"
-
 #import "SXVideoCmmentFirstCell.h"
 #import "SXVideoCommentMoreView.h"
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
@@ -21,7 +20,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 @property (nonatomic, strong) UILabel *defaultL;
 @property (nonatomic, strong) UILabel *markL;
 @property (nonatomic, strong) UIView *markView;
-
+@property (nonatomic, strong) NSString *currentComCount;
 @property (nonatomic, strong) SXVideoCommentModel *currentTopModel;//当前置顶的评论
 @end
 
@@ -137,6 +136,13 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoCommont/%@/%@",self.videoModel.vid,commentId.intValue?commentId:@"0"] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             self.tableView.tableFooterView = nil;
+            
+            self.currentComCount = [NSString stringWithFormat:@"%d",self.currentComCount.intValue+1];
+            if (self.refreshCommentCountBlock) {
+                self.refreshCommentCountBlock(self.currentComCount);
+            }
+            self.titleL.text = [NSString stringWithFormat:@"评论%@",self.currentComCount];
+            
             SXVideoCommentModel *commentM = [SXVideoCommentModel mj_objectWithKeyValues:dict[@"data"]];
             if (commentM.commentId) {//评论成功且返回了数据
                 if (commentM.parent_id.intValue > 0) {//属于回复
@@ -180,15 +186,12 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
             }
         }
     } fail:^(NSError * _Nullable error) {
-        
     }];
 }
 
 - (void)createRefesh{
     
     __weak MyCommentView *ctl = self;
-
-    
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         //上拉
         ctl.isDown = NO;
@@ -267,6 +270,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                 if (self.pageNo == 1) {
                     self.markL.text = jsonModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论…";
                     self.titleL.text = [NSString stringWithFormat:@"评论%@",jsonModel.commentCt.intValue?jsonModel.commentCt:@""];
+                    self.currentComCount = jsonModel.commentCt;
                     if (self.refreshCommentCountBlock) {
                         self.refreshCommentCountBlock(jsonModel.commentCt);
                     }
@@ -404,6 +408,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     };
     
     headV.deleteClickBlock = ^(SXVideoCommentModel * _Nonnull commentM) {
+        [weakSelf requestComCount];
         for (int i = 0; i < weakSelf.dataArr.count; i++) {
             SXVideoCommentModel *oldM = weakSelf.dataArr[i];
             if ([oldM.commentId isEqualToString:commentM.commentId]) {
@@ -455,6 +460,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     };
     
     cell.deleteClickBlock = ^(SXVideoCommentModel * _Nonnull commentM) {
+        [weakSelf requestComCount];
         [weakSelf replaceForDelete:commentM];
     };
     return cell;
@@ -502,6 +508,35 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 
 - (CGFloat)getTwoCommentHeight:(SXVideoCommentModel *)commentModel{
     return 30 + 22 + (NSInteger)commentModel.secondContentHeight+5;
+}
+
+//获取评论数量
+- (void)requestComCount{
+    NSString *url = @"";
+    if (!self.videoModel) {
+        return;
+    }
+    url = [NSString stringWithFormat:@"videoCommont/%@/%@?commentId=%@&replyId=%@&pageNo=1",self.videoModel.vid,@"1",@"0",@"0"];
+  
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return ;
+            }
+     
+            SXVideoCommentJson *jsonModel = [SXVideoCommentJson mj_objectWithKeyValues:dict[@"data"]];
+            self.titleL.text = [NSString stringWithFormat:@"评论%@",jsonModel.commentCt.intValue?jsonModel.commentCt:@""];
+            self.currentComCount = jsonModel.commentCt;
+            if (self.refreshCommentCountBlock) {
+                self.refreshCommentCountBlock(jsonModel.commentCt);
+            }
+            
+        }
+    } fail:^(NSError *error) {
+        [self.tableView.mj_footer endRefreshing];
+    }];
 }
 
 - (UILabel *)defaultL{

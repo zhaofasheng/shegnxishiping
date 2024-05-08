@@ -29,8 +29,10 @@
         _manager.requestSerializer.timeoutInterval = kTimeOutInterval;
         //生命获取到的数据格式
         _manager.responseSerializer = [AFHTTPResponseSerializer serializer];//afn不会自动解析,数据是data类型,需要自己解析
-        //生命上传的是json格式的参数,需要和后台约定,不然会造成后台无法获取参数的情况
+        //声明上传的是json格式的参数,需要和后台约定,不然会造成后台无法获取参数的情况
         _manager.requestSerializer = [AFHTTPRequestSerializer serializer];//上传普通格式
+        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModePublicKey withPinnedCertificates:[AFSecurityPolicy certificatesInBundle:[NSBundle mainBundle]]];
+        _manager.securityPolicy = securityPolicy;
     }
     
     return self;

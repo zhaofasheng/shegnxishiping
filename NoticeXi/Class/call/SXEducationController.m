@@ -410,8 +410,8 @@
     if (_imagePickerController==nil) {
         _imagePickerController=[[UIImagePickerController alloc]init];
         _imagePickerController.delegate = (id)self;
-        _imagePickerController.sourceType=UIImagePickerControllerSourceTypeCamera;
-        _imagePickerController.cameraDevice=UIImagePickerControllerCameraDeviceRear;
+        _imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        _imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
         NSMutableArray *mediaTypes = [NSMutableArray array];
         [mediaTypes addObject:(NSString *)kUTTypeImage];
         _imagePickerController.mediaTypes= mediaTypes;
@@ -510,6 +510,7 @@
 }
 
 - (void)upAllData:(NSString *)imageUrl{
+    
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:@"1" forKey:@"authentication_type"];
     [parm setObject:self.nameTextField.text forKey:@"real_name"];

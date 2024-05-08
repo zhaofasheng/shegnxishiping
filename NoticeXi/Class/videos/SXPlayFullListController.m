@@ -45,7 +45,6 @@
     self.tableView.rowHeight = DR_SCREEN_HEIGHT;
     [self.tableView registerClass:[SXFullPlayCell class] forCellReuseIdentifier:@"cell"];
 
-    
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
     
     [self playIndex:self.currentPlayIndex];
@@ -104,7 +103,6 @@
                 [juBaoView showView];
             }
         }
-        
     };
     [moreView showTost];
 }
@@ -175,6 +173,7 @@
                 [self.modelArray addObject:videoM];
                 hasData = YES;
             }
+            
             if (!hasData) {
                 self.nodata = YES;
                 return;

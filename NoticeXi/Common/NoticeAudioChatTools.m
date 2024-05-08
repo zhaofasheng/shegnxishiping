@@ -15,22 +15,18 @@
 #import <NERtcSDK/NERtcSDK.h>
 #import "NoticeYunXin.h"
 #import <Bugly/Bugly.h>
-static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
+static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
 @interface NoticeAudioChatTools()<NECallEngineDelegate>
 
 @property(nonatomic, assign) UInt64 calleruid;//呼叫方的uid
 @property (nonatomic, strong) NSString *currentRoomId;
 @property (nonatomic, assign) NSInteger chatTime;//聊天时长
+@property (nonatomic, assign) NSInteger loginCount;//登录次数
 
 @end
 
 @implementation NoticeAudioChatTools
-
-{
-    NSInteger loginCount;
-}
-
 
 - (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext{
     //设置屏幕常亮
@@ -41,7 +37,10 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     __weak typeof(self) weakSelf = self;
     
     NECallParam *callParam = [[NECallParam alloc] initWithAccId:userId withCallType:NECallTypeAudio];
-    callParam.pushConfig.pushContent = @"有一条新的语音电话";
+    NECallPushConfig *pushConfig = [[NECallPushConfig alloc] init];
+    callParam.pushConfig = pushConfig;
+    callParam.pushConfig.pushContent = @"你有新的语音通话";
+    callParam.pushConfig.pushTitle = @"语音电话";
     callParam.extraInfo = [NoticeTools getuserId];//自定义信息为拨打者的用户id
     callParam.rtcChannelName = self.roomId;
     [[NECallEngine sharedInstance] call:callParam completion:^(NSError * _Nullable error, NECallInfo * _Nullable callInfo) {
@@ -118,13 +117,13 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
     }else{
         [self loginTiYunxin];
     }
-
 }
 
 - (void)loginToYunxin:(NoticeUserInfoModel *)userInfo{
+    __weak typeof(self) weakSelf = self;
     [NIMSDK.sharedSDK.loginManager login:userInfo.yunxin_id token:userInfo.yunxin_token completion:^(NSError * _Nullable error) {
         if(!error){
-            self->loginCount = 0;
+            weakSelf.loginCount = 0;
             DRLog(@"登录云信成功");
             NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@云信登录成功\n时间%@",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
             [Bugly reportException:exception];
@@ -132,9 +131,10 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
             NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@--%@云信登录失败\n时间%@\n原因%@",userInfo.yunxin_id,userInfo.yunxin_token,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
             [Bugly reportException:exception];
             DRLog(@"%@====%@登录云信失败%@",userInfo.yunxin_id,userInfo.yunxin_token,error.description);
-            if (self->loginCount < 5) {
-                self->loginCount++;
-                [self loginTiYunxin];
+            if (weakSelf.loginCount < 5) {
+                weakSelf.loginCount++;
+                DRLog(@"====%ld",weakSelf.loginCount);
+                [weakSelf loginTiYunxin];
             }
         }
     }];
@@ -149,11 +149,11 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
 - (void)loginTiYunxin{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
         if ([NoticeSaveModel getUserInfo]) {//已经登录
-            self->loginCount++;
+            self.loginCount++;
             [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@/yxtoken",[[NoticeSaveModel getUserInfo] user_id]] Accept:nil isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
                 if (success) {
                     if ([dict[@"data"] isEqual:[NSNull null]]) {
-                        if (self->loginCount < 5) {
+                        if (self.loginCount < 5) {
                            [self loginTiYunxin];
                         }
                         return ;
@@ -162,16 +162,17 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
                     DRLog(@"云信token>>>>%@",yunxin.token);
                     NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取云信token接口\n时间%@\n获取的数据%@",[NoticeTools getuserId],[SXTools getCurrentTime],dict.description] userInfo:nil];//数据上报
                     [Bugly reportException:exception];
+                    
                     if (yunxin.yunxin_id && yunxin.token) {
-                        self->loginCount = 0;
+               
                         NoticeUserInfoModel *userInfo = [NoticeSaveModel getUserInfo];
                         userInfo.yunxin_id = yunxin.yunxin_id;
                         userInfo.yunxin_token = yunxin.token;
                         [NoticeSaveModel saveUserInfo:userInfo];
                         [self loginToYunxin:userInfo];
                     }else{
-                        if (self->loginCount < 5) {
-                            self->loginCount++;
+                        if (self.loginCount < 5) {
+                            self.loginCount++;
                             [self loginTiYunxin];
                         }
                     }
@@ -179,8 +180,8 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
                     NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取云信token接口调用成功，但获取失败\n时间%@\n获取的数据%@",[NoticeTools getuserId],[SXTools getCurrentTime],dict.description] userInfo:nil];//数据上报
                     [Bugly reportException:exception];
                     DRLog(@"获取云信token失败%@",dict.description);
-                    if (self->loginCount < 5) {
-                        self->loginCount++;
+                    if (self.loginCount < 5) {
+                        self.loginCount++;
                         [self loginTiYunxin];
                     }
                 }
@@ -188,8 +189,8 @@ static NSString *const yunxinAppKey = @"b168ffd044d3549bdd592e0ea696cd65";
                 DRLog(@"获取云信接口token失败%@",error.description);
                 NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取云信token接口调用失败败\n时间%@\n失败理由%@",[NoticeTools getuserId],[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
                 [Bugly reportException:exception];
-                if (self->loginCount < 5) {
-                    self->loginCount++;
+                if (self.loginCount < 5) {
+                    self.loginCount++;
                     [self loginTiYunxin];
                 }
             }];

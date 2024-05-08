@@ -258,12 +258,8 @@
         str = @"[文字]";
     }
     
-    if (stay.topic_type.intValue == 1) {
-        NSString *helpStr = [NSString stringWithFormat:@"%@「忘记密码」",str];
-        _infoL.attributedText = [DDHAttributedMode setColorString:helpStr setColor:[NoticeTools getWhiteColor:@"#FB5C57" NightColor:@"#ad403d"] setLengthString:@"「忘记密码」" beginSize:4];
-    }else{
-        _infoL.text = str;
-    }
+    _infoL.text = str;
+    
     _numL.frame = CGRectMake(DR_SCREEN_WIDTH-((GET_STRWIDTH(stay.un_read_num, 9, 14)+5)>14?(GET_STRWIDTH(stay.un_read_num, 9, 14)+5):14)-15, CGRectGetMaxY(_timeL.frame)+5, ((GET_STRWIDTH(stay.un_read_num, 9, 14)+5)>14?(GET_STRWIDTH(stay.un_read_num, 9, 14)+5):14), 14);
     _numL.hidden = !stay.un_read_num.intValue;
     
