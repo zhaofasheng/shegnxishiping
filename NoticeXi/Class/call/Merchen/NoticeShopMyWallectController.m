@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NoticeChongzhiShopController *chongzhiVC;
 @property (nonatomic, strong) NoticeShouRuShopController *shouruVC;
-
+@property (nonatomic, assign) BOOL hasMoney;
 @end
 
 @implementation NoticeShopMyWallectController
@@ -27,7 +27,7 @@
         self.delegate = self;
         self.menuView.delegate = self;
         self.progressWidth = GET_STRWIDTH([NoticeTools getLocalStrWith:@"py.tc"], 20, 18);
-        self.progressHeight = 2;
+        self.progressHeight = 0;
         self.titleSizeNormal = 18;
         self.titleSizeSelected = 18;
         self.progressViewBottomSpace = 0;
@@ -43,6 +43,17 @@
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     [self.view addSubview:self.navBarView];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"wallet" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if(success){
+            NoticeMyWallectModel *wallectM = [NoticeMyWallectModel mj_objectWithKeyValues:dict[@"data"]];
+            self.hasMoney = wallectM.total_balance.intValue ? YES:NO;
+            [self.menuView reload];
+            [self reloadData];
+        }
+    } fail:^(NSError * _Nullable error) {
+    }];
+    
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForMenuView:(WMMenuView *)menuView{
@@ -70,6 +81,9 @@
 }
 
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController{
+    if ([[NoticeTools getuserId] isEqualToString:@"2"] || !self.hasMoney) {
+        return 1;
+    }
     return 2;
 }
 
@@ -85,7 +99,7 @@
 - (NoticeCustumeNavView *)navBarView{
     if (!_navBarView) {
         _navBarView = [[NoticeCustumeNavView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, NAVIGATION_BAR_HEIGHT)];
-        _navBarView.titleL.text = @"我的钱包";
+//        _navBarView.titleL.text = @"我的钱包";
         _navBarView.titleL.textColor = [UIColor colorWithHexString:@"#25262E"];
         [_navBarView.backButton setImage:UIImageNamed(@"Image_blackBack") forState:UIControlStateNormal];
         [_navBarView.backButton addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];

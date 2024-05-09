@@ -107,7 +107,6 @@
                 alerView.resultIndex = ^(NSInteger index) {
                     if (index == 2) {
                         NoticeChangePhoneViewController *vc = [[NoticeChangePhoneViewController alloc] init];
-               
                         vc.hasPhone = NO;
                         [[NoticeTools getTopViewController].navigationController pushViewController:vc animated:YES];
                     }

@@ -28,7 +28,7 @@
 @interface NoticeMineController ()
 @property (nonatomic, strong) NoticeNewCenterNavView *navView;
 @property (nonatomic, strong) SXUserCenterHeader *headerView;
-
+ 
 @property (nonatomic, strong) NSArray *section0imgArr;
 @property (nonatomic, strong) NSArray *section0titleArr;
 
