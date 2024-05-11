@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SXVideoCommentModel.h"
+#import "GZLabel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXVideoCmmentFirstCell : UITableViewHeaderFooterView<LCActionSheetDelegate>
@@ -17,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *timeL;
 @property (nonatomic, strong) UILabel *nickNameL;
-@property (nonatomic, strong) UILabel *contentL;
+@property (nonatomic, strong) GZLabel *contentL;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UILabel *authorHasReplyL;
 @property (nonatomic, strong) UILabel *replyL;

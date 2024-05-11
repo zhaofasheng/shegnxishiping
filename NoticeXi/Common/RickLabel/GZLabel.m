@@ -246,11 +246,16 @@ static NSString *GZColor = @"gzcolor";
     // 2.设置换行模型
     NSMutableAttributedString *attrStringM = [self addLineBreak:attrString];
     
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+    [paragraphStyle setLineSpacing:3];
+
     // 3.给文本添加显示字号和颜色
     NSDictionary *attr;
     attr = @{
              NSFontAttributeName : self.font,
-             NSForegroundColorAttributeName : self.GZLabelNormalColor
+             NSForegroundColorAttributeName : self.GZLabelNormalColor,
+             NSParagraphStyleAttributeName:paragraphStyle
              };
     
     [attrStringM setAttributes:attr range:NSMakeRange(0, attrStringM.length)];
@@ -288,7 +293,7 @@ static NSString *GZColor = @"gzcolor";
     }
     
     // 8.匹配话题##
-    NSArray *topicRanges = [self getRanges:@"#.*?#"];
+    NSArray *topicRanges = [self getRanges:@"【.*?】"];
     self.topicRangesArr = topicRanges;
     for (NSValue *value in topicRanges) {
         NSRange range;

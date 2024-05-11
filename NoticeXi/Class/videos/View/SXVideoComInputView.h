@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "NoticeTeamTextView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol NoticeVideoComentInputDelegate <NSObject>
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface SXVideoComInputView : UIView<UITextViewDelegate>
-@property (nonatomic, strong) UITextView *contentView;
+@property (nonatomic, strong) NoticeTeamTextView *contentView;
 @property (nonatomic, weak) id <NoticeVideoComentInputDelegate>delegate;
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UILabel *plaL;
@@ -29,9 +29,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isresiger;
 @property (nonatomic, assign) BOOL hasClick;
 @property (nonatomic, strong) NSString * __nullable commentId;//存在就是给留言留言，不存在就是留言
+@property (nonatomic, assign) BOOL needBack;
+@property (nonatomic, strong) NSMutableArray *studyArr;
+
 - (void)showJustComment:(NSString * __nullable)commentId;
 
 - (void)clearView;
+@property (nonatomic, strong) NSMutableArray * currentSelectedPersonItems;
+@property (nonatomic, strong) UIView *addStudyView;
 @end
 
 NS_ASSUME_NONNULL_END

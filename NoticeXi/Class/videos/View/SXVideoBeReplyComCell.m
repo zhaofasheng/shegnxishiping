@@ -168,7 +168,7 @@
 
 - (SXVideoComInputView *)inputView{
     if (!_inputView) {
-        _inputView = [[SXVideoComInputView alloc] initWithFrame:CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50, DR_SCREEN_WIDTH, 50)];
+        _inputView = [[SXVideoComInputView alloc] initWithFrame:CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50-44, DR_SCREEN_WIDTH, 50+44)];
         _inputView.delegate = self;
         _inputView.limitNum = 500;
         _inputView.plaStr = @"成为第一条评论…";

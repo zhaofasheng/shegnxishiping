@@ -8,6 +8,11 @@
 
 #import "SXVideoComInputView.h"
 
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "YYPersonItem.h"
+#import "YYTextAttachmentManager.h"
+#import "NSAttributedString+YY.h"
+
 @implementation SXVideoComInputView
 
 {
@@ -18,7 +23,6 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         
-        
         UIWindow *rootWindow = [UIApplication sharedApplication].keyWindow;
         self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
         self.backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
@@ -28,10 +32,9 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(regFirst)];
         [self.backView addGestureRecognizer:tap];
         
-
         self.backgroundColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];
         
-        self.contentView = [[UITextView alloc] initWithFrame:CGRectMake(15,8, DR_SCREEN_WIDTH-15-60, 34)];
+        self.contentView = [[NoticeTeamTextView alloc] initWithFrame:CGRectMake(15,8, DR_SCREEN_WIDTH-15-60, 34)];
         self.contentView.tintColor = GetColorWithName(VMainThumeColor);
         self.contentView.backgroundColor = [[UIColor colorWithHexString:@"#F7F8FC"] colorWithAlphaComponent:1];
         self.contentView.delegate = self;
@@ -56,6 +59,8 @@
         [sendBtn addTarget:self action:@selector(sendClick) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:sendBtn];
         self.sendButton = sendBtn;
+        
+        [self addSubview:self.addStudyView];
                 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDiddisss) name:UIKeyboardWillHideNotification object:nil];
@@ -63,6 +68,55 @@
     return self;
 }
 
+- (NSMutableArray *)studyArr{
+    if (!_studyArr) {
+        _studyArr = [[NSMutableArray alloc] init];
+    }
+    return _studyArr;
+}
+
+- (void)addStudyTap{
+    __weak typeof(self) weakSelf = self;
+    YYPersonItem *item = [[YYPersonItem alloc] init];
+    item.name = @"【MBTI职场课】";
+    [self.studyArr addObject:item];
+    
+    for (YYPersonItem *person in self.studyArr) {//艾特的人转成图片显示在输入框
+        NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:weakSelf.contentView.font.pointSize]};
+        NSMutableArray *currentSelectedPersonItems = [[weakSelf.contentView.attributedText getCurrentAtPersonItems] mutableCopy];
+        [currentSelectedPersonItems addObject:person];//这里可以判断去重...（根据自己需求情况而定）
+
+        //将人的名字转化为NSTextAttachment
+        [[YYTextAttachmentManager getInstance] transformTextWithTextView:weakSelf.contentView tickedPersonItems:currentSelectedPersonItems atAllPersons:nil canRepeat:NO needBack:weakSelf.needBack color:[UIColor colorWithHexString:@"#FF2A6F"] attributes:attributes completeBlock:^(NSMutableAttributedString *mutableAttributedString, NSRange selectedRange) {
+            weakSelf.needBack = NO;
+            weakSelf.contentView.attributedText = mutableAttributedString;
+            weakSelf.contentView.selectedRange = selectedRange;
+            [weakSelf textViewDidChange:weakSelf.contentView];
+            [weakSelf textViewDidChangeSelection:weakSelf.contentView];
+        }];
+    }
+}
+
+- (UIView *)addStudyView{
+    if (!_addStudyView) {
+        _addStudyView = [[UIView alloc] initWithFrame:CGRectMake(15, self.frame.size.height-44, 160, 44)];
+        _addStudyView.userInteractionEnabled = YES;
+        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 12, 20, 20)];
+        imageV.userInteractionEnabled = YES;
+        imageV.image = UIImageNamed(@"sx_comaddstudy_img");
+        [_addStudyView addSubview:imageV];
+        
+        UILabel *label = [[UILabel  alloc] initWithFrame:CGRectMake(22, 0, 100, 44)];
+        label.font = FOURTHTEENTEXTFONTSIZE;
+        label.text = @"课程链接";
+        label.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        [_addStudyView addSubview:label];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addStudyTap)];
+        [_addStudyView addGestureRecognizer:tap];
+    }
+    return _addStudyView;
+}
 
 - (void)showJustComment:(NSString *)commentId{
     self.hasClick = NO;
@@ -99,8 +153,8 @@
 
 - (void)sendClick{
     
-    if (!self.contentView.text.length) {
-        [self.contentView resignFirstResponder];
+    NSString *str = [YYTextAttachmentManager attributedStringToString:self.contentView.attributedText];
+    if(!str || !str.length){
         return;
     }
     
@@ -116,12 +170,13 @@
     }
     
     NSInteger num = self.limitNum?self.limitNum:500;
-    if (self.contentView.text.length > num) {
-        self.contentView.text = [self.contentView.text substringToIndex:num];
+    if (str.length > num) {
+        str = [str substringToIndex:num];
+        //self.contentView.text = [self.contentView.text substringToIndex:num];
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(sendWithComment: commentId:)]) {
-        [self.delegate sendWithComment:self.contentView.text commentId:self.commentId];
+        [self.delegate sendWithComment:str commentId:self.commentId];
     }
 
     self.contentView.text = @"";
@@ -141,8 +196,8 @@
     self.isresiger = NO;
     
     kebordHeight = keyboardF.size.height;
-    self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
-
+    self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-44,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
+    self.addStudyView.frame = CGRectMake(15, self.frame.size.height-44, 160, 44);
     UIWindow *rootWindow = [UIApplication sharedApplication].keyWindow;
 //    if (self.commentId) {
 //        [self.replyToView removeFromSuperview];
@@ -165,7 +220,8 @@
     self.backView.hidden = YES;
     self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-self.frame.size.height-BOTTOM_HEIGHT, DR_SCREEN_WIDTH, self.frame.size.height);
     kebordHeight = 0;
-    self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
+    self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-44,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
+    self.addStudyView.frame = CGRectMake(15, self.frame.size.height-44, 160, 44);
     if (self.commentId) {
         //self.replyToView.frame = CGRectMake(0, self.frame.origin.y-30, DR_SCREEN_WIDTH, 30);
     }
@@ -192,6 +248,9 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView{
+    
+    self.currentSelectedPersonItems = [NSMutableArray arrayWithArray:[self.contentView.attributedText getCurrentAtPersonItems]];
+    
     //获取高亮部分
     UITextPosition * position = [textView positionFromPosition:textView.markedTextRange.start offset:0];
     if(!position){
@@ -225,7 +284,7 @@
         textView.text = [textView.text substringToIndex:num];
     }
     float height;
-    height = [self heightForTextView:textView WithText:[NSString stringWithFormat:@"%@",textView.text]];
+    height = [self heightForTextView:textView WithText:[YYTextAttachmentManager attributedStringToString:self.contentView.attributedText]];
     if (height > 70) {
         height = 70;
     }
@@ -233,18 +292,24 @@
         height = 36;
     }
     frame.size.height = height;
-
+    
+    if (self.contentView.needBackOldPoint) {
+        self.contentView.selectedRange = self.contentView.oldRange;
+        self.contentView.needBackOldPoint= NO;
+    }
+    
     if (self.isresiger) {
         return;
     }
     [UIView animateWithDuration:0.1 animations:^{
-        self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-(14+height)-self->kebordHeight-(self->kebordHeight>0?0:50), DR_SCREEN_WIDTH,14+height);
+        self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-(14+height+44)-self->kebordHeight-(self->kebordHeight>0?0:(50+44)), DR_SCREEN_WIDTH,14+height+44);
 
         if (self.commentId) {
             //self.replyToView.frame = CGRectMake(0, self.frame.origin.y-30, DR_SCREEN_WIDTH, 30);
         }
         textView.frame = frame;
-        self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
+        self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-44,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
+        self.addStudyView.frame = CGRectMake(15, self.frame.size.height-44, 160, 44);
     } completion:nil];
 }
 

@@ -31,9 +31,10 @@
         _nickNameL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.contentView addSubview:_nickNameL];
         
-        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(56, 31, DR_SCREEN_WIDTH-56-15, 0)];
+        self.contentL = [[GZLabel alloc] initWithFrame:CGRectMake(56, 31, DR_SCREEN_WIDTH-56-15, 0)];
         self.contentL.font = FOURTHTEENTEXTFONTSIZE;
-        self.contentL.textColor = [UIColor colorWithHexString:@"#25262E"];
+        self.contentL.GZLabelNormalColor = [UIColor colorWithHexString:@"#25262E"];
+        [self.contentL setHightLightLabelColor:[UIColor colorWithHexString:@"#FF2A6F"] forGZLabelStyle:GZLabelStyleTopic];
         self.contentL.numberOfLines = 0;
         [self.contentView addSubview:self.contentL];
         self.contentL.userInteractionEnabled = YES;
@@ -98,7 +99,7 @@
         self.authorL.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame), 11, 30, 15);
     }
     
-    self.contentL.attributedText = commentM.firstAttr;
+    self.contentL.text = commentM.content;
     self.contentL.frame = CGRectMake(56, 31, DR_SCREEN_WIDTH-56-15, commentM.firstContentHeight);
     
     self.bottomView.frame = CGRectMake(56, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-56-15, 20);

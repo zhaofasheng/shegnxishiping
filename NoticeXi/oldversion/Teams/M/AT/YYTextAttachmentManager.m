@@ -65,7 +65,7 @@
         YYAtTextAttachment *attach = [[YYAtTextAttachment alloc] init];
         attach.personItem = personItem;
         UIFont *font = textView.font;
-        NSString *nameAndSpace = [NSString stringWithFormat:@"@%@ ", personItem.name];
+        NSString *nameAndSpace = [NSString stringWithFormat:@"%@ ", personItem.name];
         attach.image = [UIImage imageWithString:nameAndSpace font:font color:color];//将字转化为UIImage
         CGSize size = CGSizeMake([nameAndSpace getSizeWithFont:font constrainedWidth:0 numberOfLines:1].width, font.pointSize + 3);
         attach.imageSize = CGSizeMake(size.width, size.height);
@@ -120,7 +120,7 @@
         YYAtTextAttachment * textAtt = attrs[@"NSAttachment"];
         if (textAtt)
         {
-            [resutlAtt replaceCharactersInRange:range withString:[NSString stringWithFormat:@"@%@ ",textAtt.personItem.name]];
+            [resutlAtt replaceCharactersInRange:range withString:[NSString stringWithFormat:@"%@ ",textAtt.personItem.name]];
         }
     }];
     return resutlAtt.string;

@@ -76,7 +76,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     [self createRefesh];
     [self requestCom];
     
-    self.inputView = [[SXVideoComInputView alloc] initWithFrame:CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50, DR_SCREEN_WIDTH, 50)];
+    self.inputView = [[SXVideoComInputView alloc] initWithFrame:CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50-44, DR_SCREEN_WIDTH, 50+44)];
     self.inputView.delegate = self;
     self.inputView.limitNum = 500;
     self.inputView.plaStr = @"成为第一条评论…";

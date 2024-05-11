@@ -465,7 +465,6 @@
                         NSString *str1 = [NSString stringWithFormat:@"%@",goods.price];
                         NSString *str2 = [NSString stringWithFormat:@"鲸币/%@分钟",goods.duration];
                         [weakSelf.workButton setAttributedTitle:[DDHAttributedMode setString:[NSString stringWithFormat:@"%@%@",str1,str2] setSize:12 setLengthString:str2 beginSize:str1.length] forState:UIControlStateNormal];
-                        
                     }
                 }
                 if (hasFree) {
@@ -475,7 +474,6 @@
                     weakSelf.freeButton.hidden = YES;
                     weakSelf.workButton.frame = CGRectMake(20,0, DR_SCREEN_WIDTH-40, 40);
                 }
-                
                 weakSelf.gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(weakSelf.workButton.frame), CGRectGetHeight(weakSelf.workButton.frame));
             }else{
                 weakSelf.startView.hidden = YES;
