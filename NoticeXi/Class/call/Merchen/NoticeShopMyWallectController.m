@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NoticeChongzhiShopController *chongzhiVC;
 @property (nonatomic, strong) NoticeShouRuShopController *shouruVC;
 @property (nonatomic, assign) BOOL hasMoney;
+
 @end
 
 @implementation NoticeShopMyWallectController
@@ -47,7 +48,7 @@
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"wallet" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if(success){
             NoticeMyWallectModel *wallectM = [NoticeMyWallectModel mj_objectWithKeyValues:dict[@"data"]];
-            self.hasMoney = wallectM.total_balance.intValue ? YES:NO;
+            self.hasMoney = wallectM.income_balance.intValue ? YES:NO;
             [self.menuView reload];
             [self reloadData];
         }

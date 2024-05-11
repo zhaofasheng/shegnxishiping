@@ -18,7 +18,7 @@
 
 static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
-@interface NoticeAudioChatTools()<NECallEngineDelegate>
+@interface NoticeAudioChatTools()<NECallEngineDelegate,NERtcEngineMediaStatsObserver>
 
 @property(nonatomic, assign) UInt64 calleruid;//呼叫方的uid
 @property (nonatomic, strong) NSString *currentRoomId;
@@ -139,6 +139,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
         }
     }];
     [NECallEngine.sharedInstance addCallDelegate:self];
+    [[NERtcEngine sharedEngine] addEngineMediaStatsObserver:self];
     //    [NECallEngine sharedInstance].engineDelegate = self;
     //
     //    NERtcEngine *coreEngine = [NERtcEngine sharedEngine];
@@ -157,7 +158,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
                         if (self.loginCount < 5) {
                             [self loginTiYunxin:YES];
                         }
-                        return ;
+                        return;
                     }
                     
                     NoticeYunXin *yunxin = [NoticeYunXin mj_objectWithKeyValues:dict[@"data"]];
@@ -333,6 +334,10 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
         }else{
             NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@点击接听按钮接听失败\n房间号%@\n时间%@\n理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
             [Bugly reportException:exception];
+            if (error.code == 20017) {
+                [[NoticeTools getTopViewController] showToastWithText:@"对方已挂断"];
+                return;
+            }
             [[NoticeTools getTopViewController] showToastWithText:[NSString stringWithFormat:@"接听失败%@",error.description]];
         }
     }];
@@ -421,14 +426,26 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     
     NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@和%@通话建立成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.fromUserId,info.rtcInfo.channelName,[SXTools getCurrentTime]] userInfo:nil];//数据上报
     [Bugly reportException:exception];
+    
+    
 }
+
+
+- (void)onNetworkQuality:(NSArray<NERtcNetworkQualityStats *> *)stats{
+   
+    for (NERtcNetworkQualityStats *state in stats) {
+        if (state.txQuality > 3 || state.rxQuality > 3) {
+            DRLog(@"网络状态比较差");
+        }
+    }
+}
+
 
 /// 通话结束
 /// @param info 通话结束携带信息
 - (void)onCallEnd:(NECallEndInfo *)info{
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-
     [self clearCallWaitView];
     
     DRLog(@"通话结束回调的当前通话房间号信息%@",self.currentRoomId);
