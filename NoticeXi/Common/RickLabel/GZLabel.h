@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger , GZLabelStyle){
 @optional
 
 // 代理
--(void)GZLabel:(GZLabel *)label didSelectedString:(NSString *)selectedString forGZLabelStyle:(GZLabelStyle *)style onRange:(NSRange)range ;
+-(void)GZLabel:(GZLabel *)label didSelectedString:(NSString *)selectedString forGZLabelStyle:(GZLabelStyle *)style onRange:(NSRange)range;
 
 @end
 

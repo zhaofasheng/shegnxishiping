@@ -11,7 +11,7 @@
 #import "GZLabel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SXVideoCmmentFirstCell : UITableViewHeaderFooterView<LCActionSheetDelegate>
+@interface SXVideoCmmentFirstCell : UITableViewHeaderFooterView<LCActionSheetDelegate,GZLabelDelegate>
 @property (nonatomic, strong) SXVideoCommentModel *commentM;
 @property (nonatomic, strong) SXUserModel *videoUser;//视频作者的信息
 

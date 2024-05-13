@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SXUserModel.h"
+#import "SXPayForVideoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXVideosModel : NSObject
@@ -21,8 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *introduce;//视频简介
 @property (nonatomic, assign) CGFloat introHeight;
 @property (nonatomic, strong) NSMutableAttributedString *introAttStr;
-
 @property (nonatomic, strong) NSString *title;//视频标题
+@property (nonatomic, strong) NSString *sell_series_id;//推荐课程id
+@property (nonatomic, strong) NSString *series_name;//推荐课程名称
 @property (nonatomic, strong) NSString *user_id;//用户id
 @property (nonatomic, strong) NSString *video_url;//视频标题
 @property (nonatomic, strong) NSString *video_len;//视频时长(单位秒)
@@ -44,12 +46,15 @@ NS_ASSUME_NONNULL_BEGIN
 //是否正在拖动进度
 @property (nonatomic, assign) BOOL isDraging;
 
+@property (nonatomic, strong) SXPayForVideoModel *tuijianStudyModel;
+
 @property (nonatomic, strong) NSString *textContent;
 @property (nonatomic, strong) NSAttributedString *fiveAttTextStr;
 @property (nonatomic, assign) BOOL isMoreFiveLines;//是否超过五行文字
 @property (nonatomic, strong) NSAttributedString *allTextAttStr;
 @property (nonatomic, assign) CGFloat textHeight;
 @property (nonatomic, strong) NSString *showText;
+
 @end
 
 NS_ASSUME_NONNULL_END

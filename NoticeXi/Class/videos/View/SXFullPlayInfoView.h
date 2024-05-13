@@ -17,12 +17,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIView *contentView;
 
+@property (nonatomic, strong) UIView *studyView;
+@property (nonatomic, strong) UILabel *studyNameL;
+@property (nonatomic, strong) UILabel *buyL;
+@property (nonatomic, strong) UIImageView *buyImageV;
+
 @property (nonatomic, strong) UILabel *contentL;
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, strong) UILabel *colseButton;
 @property (nonatomic,copy) void(^openMoreBlock)(BOOL open);
 
+@property (nonatomic, assign) BOOL isHasStudy;
+@property (nonatomic, assign) CGFloat studyWidth;
 @property (nonatomic, assign) BOOL isOpen;
 @end
 

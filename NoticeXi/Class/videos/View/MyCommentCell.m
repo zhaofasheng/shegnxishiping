@@ -36,14 +36,16 @@
         _nickNameL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.contentView addSubview:_nickNameL];
         
-        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(88, 30, DR_SCREEN_WIDTH-88-15, 0)];
+        self.contentL = [[GZLabel alloc] initWithFrame:CGRectMake(88, 30, DR_SCREEN_WIDTH-88-15, 0)];
         self.contentL.font = FOURTHTEENTEXTFONTSIZE;
-        self.contentL.textColor = [UIColor colorWithHexString:@"#25262E"];
+        self.contentL.GZLabelNormalColor = [UIColor colorWithHexString:@"#25262E"];
+        [self.contentL setHightLightLabelColor:[UIColor colorWithHexString:@"#FF2A6F"] forGZLabelStyle:GZLabelStyleTopic];
         self.contentL.numberOfLines = 0;
         [self.contentView addSubview:self.contentL];
+        self.contentL.delegate = self;
         self.contentL.userInteractionEnabled = YES;
-        UITapGestureRecognizer *replyTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(replyClick)];
-        [_contentL addGestureRecognizer:replyTap1];
+//        UITapGestureRecognizer *replyTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(replyClick)];
+//        [_contentL addGestureRecognizer:replyTap1];
         
         self.bottomView = [[UIView  alloc] initWithFrame:CGRectMake(88, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-88-15, 20)];
         [self.contentView addSubview:self.bottomView];
@@ -97,7 +99,7 @@
     self.nickNameL.frame = CGRectMake(88, 10, GET_STRWIDTH(self.nickNameL.text, 12, 17), 17);
 
     
-    self.contentL.attributedText = commentM.secondAttr;
+    self.contentL.text = commentM.content;
     self.contentL.frame = CGRectMake(88, 30, DR_SCREEN_WIDTH-88-15, commentM.secondContentHeight);
     
     self.bottomView.frame = CGRectMake(88, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-88-15, 20);
@@ -325,6 +327,9 @@
     }
 }
 
+-(void)GZLabel:(GZLabel *)label didSelectedString:(NSString *)selectedString forGZLabelStyle:(GZLabelStyle *)style onRange:(NSRange)range{
+    DRLog(@"点击的链接是%@",selectedString);
+}
 
 //删除评论
 - (void)deleteComment{

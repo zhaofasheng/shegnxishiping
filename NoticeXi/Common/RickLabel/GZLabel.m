@@ -325,7 +325,6 @@ static NSString *GZColor = @"gzcolor";
             }
             self.userDefineRangesArr = [arrM copy];
         }
-        
     }
     
     // 11.更新显示，重新绘制
@@ -580,18 +579,15 @@ static NSString *GZColor = @"gzcolor";
 -(NSArray *)getRangesFromResult:(NSRegularExpression *)regex{
     
     NSArray<NSTextCheckingResult *> *results = [regex matchesInString:[self.GZTextString string] options:0 range:NSMakeRange(0, self.GZTextString.length)];
-    
     // 2.遍历结果
     NSMutableArray *ranges = [NSMutableArray array];
     for (NSTextCheckingResult *result in results) {
-        
         // 将结构体保存到数组
         // 先用一个变量接受结构体
         NSRange range = result.range;
         NSValue *value = [NSValue valueWithBytes:&range objCType:@encode(NSRange)];
         [ranges addObject:value];
     }
-    
     return ranges;
 }
 
@@ -620,7 +616,6 @@ static NSString *GZColor = @"gzcolor";
         
         [attrStringM setAttributes:attributes range:range];
     }
-    
     return attrStringM;
 }
 

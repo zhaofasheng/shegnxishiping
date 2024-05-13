@@ -7,17 +7,18 @@
 //
 
 #import "BaseCell.h"
+#import "GZLabel.h"
 #import "SXVideoCommentModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MyCommentCell : BaseCell<LCActionSheetDelegate>
+@interface MyCommentCell : BaseCell<LCActionSheetDelegate,GZLabelDelegate>
 @property (nonatomic, strong) SXVideoCommentModel *commentM;
 @property (nonatomic, strong) SXUserModel *videoUser;//视频作者的信息
 @property (nonatomic, strong) UILabel *authorL;
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *timeL;
 @property (nonatomic, strong) UILabel *nickNameL;
-@property (nonatomic, strong) UILabel *contentL;
+@property (nonatomic, strong) GZLabel *contentL;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UILabel *authorHasReplyL;
 @property (nonatomic, strong) UILabel *replyL;

@@ -36,10 +36,11 @@
         self.contentL.GZLabelNormalColor = [UIColor colorWithHexString:@"#25262E"];
         [self.contentL setHightLightLabelColor:[UIColor colorWithHexString:@"#FF2A6F"] forGZLabelStyle:GZLabelStyleTopic];
         self.contentL.numberOfLines = 0;
+        self.contentL.delegate = self;
         [self.contentView addSubview:self.contentL];
         self.contentL.userInteractionEnabled = YES;
-        UITapGestureRecognizer *replyTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(replyClick)];
-        [_contentL addGestureRecognizer:replyTap1];
+//        UITapGestureRecognizer *replyTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(replyClick)];
+//        [_contentL addGestureRecognizer:replyTap1];
         
         self.bottomView = [[UIView  alloc] initWithFrame:CGRectMake(56, CGRectGetMaxY(self.contentL.frame)+2, DR_SCREEN_WIDTH-56-15, 20)];
         [self.contentView addSubview:self.bottomView];
@@ -224,7 +225,6 @@
         return;
     }
 
-    
     if ([self.commentM.fromUserInfo.userId isEqualToString:[NoticeTools getuserId]]) {
         NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
@@ -234,6 +234,10 @@
         ctl.isOther = YES;
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
     }
+}
+
+-(void)GZLabel:(GZLabel *)label didSelectedString:(NSString *)selectedString forGZLabelStyle:(GZLabelStyle *)style onRange:(NSRange)range{
+    DRLog(@"点击的链接是%@",selectedString);
 }
 
 - (void)longDeleteVoice:(id)sender{
@@ -273,7 +277,6 @@
 }
 
 - (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
-
     if ([NoticeTools isManager]) {//管理员长按操作
         if (buttonIndex == 1) {
             [self setTopComment];
@@ -301,7 +304,7 @@
                 [self deleteComment];
             }
         }else{//视频发布者长按别人的评论
-     
+            
             if (buttonIndex == 1) {
                 [self setTopComment];
             }else if (buttonIndex == 2){
@@ -368,7 +371,7 @@
 //删除评论
 - (void)deleteComment{
     __weak typeof(self) weakSelf = self;
-     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定删除吗？" message:@"该内容下的回复内容也会被删除" sureBtn:@"取消" cancleBtn:@"删除" right:YES];
+    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定删除吗？" message:@"该内容下的回复内容也会被删除" sureBtn:@"取消" cancleBtn:@"删除" right:YES];
     alerView.resultIndex = ^(NSInteger index) {
         if (index == 2) {
             [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"videoCommont/%@",weakSelf.commentM.commentId] Accept:@"application/vnd.shengxi.v5.8.1+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
@@ -378,12 +381,10 @@
                     }
                 }
             } fail:^(NSError * _Nullable error) {
-                
             }];
         }
     };
     [alerView showXLAlertView];
-
 }
 
 //举报评论
