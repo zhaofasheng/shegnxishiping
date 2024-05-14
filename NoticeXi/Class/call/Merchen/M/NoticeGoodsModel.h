@@ -28,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *type;//1=文字聊天 2 语音聊天
 @property (nonatomic, strong) NSString *experience_time;//免费通话时长
 @property (nonatomic, strong) NSString *experience_times;//剩余免费通话次数
+
+@property (nonatomic, strong) NSString *tagString;
+@property (nonatomic, assign) CGFloat nameHeight;
 @end
 
 NS_ASSUME_NONNULL_END

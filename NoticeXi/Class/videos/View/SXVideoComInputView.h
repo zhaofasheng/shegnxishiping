@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "NoticeTeamTextView.h"
+#import "SXStudyListView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol NoticeVideoComentInputDelegate <NSObject>
 
 @optional
-- (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId;
+- (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId linkArr:(NSMutableArray *)linkArr;
 
 @end
 
@@ -31,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString * __nullable commentId;//存在就是给留言留言，不存在就是留言
 @property (nonatomic, assign) BOOL needBack;
 @property (nonatomic, strong) NSMutableArray *studyArr;
+@property (nonatomic, strong) SXStudyListView *listView;
 
 - (void)showJustComment:(NSString * __nullable)commentId;
 

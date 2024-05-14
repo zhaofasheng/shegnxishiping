@@ -13,9 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeAtTeamsListView : UIView<UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *dataArr;
-@property (nonatomic, strong) UIView *contentView;
+
 @property (nonatomic, strong) NSMutableArray *syArr;
 @property (nonatomic, strong) NSMutableArray *atArr;
 @property (nonatomic, assign) BOOL canChoiceMore;
@@ -25,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) void (^atBlock)(NSMutableArray *atArrary);
 @property (nonatomic, strong) UIView *atAllView;
 - (void)remvokUserId:(NSString *)userId;
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *dataArr;
+@property (nonatomic, strong) UIView *contentView;
 - (void)showATView;
 @end
 

@@ -329,6 +329,19 @@
 
 -(void)GZLabel:(GZLabel *)label didSelectedString:(NSString *)selectedString forGZLabelStyle:(GZLabelStyle *)style onRange:(NSRange)range{
     DRLog(@"点击的链接是%@",selectedString);
+    for (SXPayForVideoModel *model in self.commentM.seariesArr) {
+        if ([model.name isEqualToString:selectedString]) {
+            if (self.linkClickBlock) {
+                self.linkClickBlock(model.seriesId);
+            }
+            break;
+        }
+    }
+  
+}
+
+- (void)didSelecteNomer{
+    [self replyClick];
 }
 
 //删除评论

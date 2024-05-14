@@ -293,7 +293,7 @@ static NSString *GZColor = @"gzcolor";
     }
     
     // 8.匹配话题##
-    NSArray *topicRanges = [self getRanges:@"【.*?】"];
+    NSArray *topicRanges = [self getRanges:@"「.*?」"];
     self.topicRangesArr = topicRanges;
     for (NSValue *value in topicRanges) {
         NSRange range;
@@ -353,6 +353,10 @@ static NSString *GZColor = @"gzcolor";
     
     if (self.selectedRange.length == 0) {
         [super touchesEnded:touches withEvent:event];
+        if ([self.delegate respondsToSelector:@selector(didSelecteNomer)]) {
+            
+            [self.delegate didSelecteNomer];
+        }
         return;
     }
     

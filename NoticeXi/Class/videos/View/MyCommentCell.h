@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) void(^deleteClickBlock)(SXVideoCommentModel *commentM);
 @property (nonatomic, strong) UIView *replyToView;
 @property (nonatomic, strong) UILabel *replyNameL;
+@property (nonatomic,copy) void(^linkClickBlock)(NSString *searId);
 @end
 
 NS_ASSUME_NONNULL_END

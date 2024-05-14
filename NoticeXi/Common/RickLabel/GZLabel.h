@@ -26,7 +26,8 @@ typedef NS_ENUM(NSUInteger , GZLabelStyle){
 
 // 代理
 -(void)GZLabel:(GZLabel *)label didSelectedString:(NSString *)selectedString forGZLabelStyle:(GZLabelStyle *)style onRange:(NSRange)range;
-
+//点击的是普通文案
+-(void)didSelecteNomer;
 @end
 
 //Block

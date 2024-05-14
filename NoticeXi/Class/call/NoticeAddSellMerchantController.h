@@ -6,11 +6,11 @@
 //  Copyright © 2023 zhaoxiaoer. All rights reserved.
 //
 
-#import "NoticeBaseListController.h"
+#import "NoticeBaseCellController.h"
 #import "NoticeMyShopModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NoticeAddSellMerchantController : NoticeBaseListController
+@interface NoticeAddSellMerchantController : NoticeBaseCellController
 @property (nonatomic, strong) NoticeMyShopModel *goodsModel;
 @property (nonatomic, strong) NSMutableArray *sellGoodsArr;
 @property (nonatomic, copy) void(^refreshGoodsBlock)(NSMutableArray *goodsArr);

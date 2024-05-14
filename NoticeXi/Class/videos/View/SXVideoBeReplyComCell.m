@@ -35,11 +35,13 @@
         _markL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.contentView addSubview:_markL];
         
-        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(56, 54, DR_SCREEN_WIDTH-56-68, 20)];
+        self.contentL = [[GZLabel alloc] initWithFrame:CGRectMake(56, 54, DR_SCREEN_WIDTH-56-68, 20)];
         self.contentL.font = FIFTHTEENTEXTFONTSIZE;
-        self.contentL.textColor = [UIColor colorWithHexString:@"#25262E"];
         [self.contentView addSubview:self.contentL];
+        self.contentL.GZLabelNormalColor = [UIColor colorWithHexString:@"#25262E"];
+        [self.contentL setHightLightLabelColor:[UIColor colorWithHexString:@"#FF2A6F"] forGZLabelStyle:GZLabelStyleTopic];
         self.contentL.numberOfLines = 0;
+        self.contentL.userInteractionEnabled = NO;
         
         //时间
         _timeL = [[UILabel alloc] initWithFrame:CGRectMake(56,82, 100, 16)];
@@ -90,10 +92,10 @@
         self.likeImageView.hidden = NO;
         if (likeComM.replyContent) {
             self.contentL.frame = CGRectMake(56, 54, DR_SCREEN_WIDTH-56-78, likeComM.replytHeight);
-            self.contentL.attributedText = likeComM.replyAtt;
+            self.contentL.text = likeComM.replyContent;
         }else{
             self.contentL.frame = CGRectMake(56, 54, DR_SCREEN_WIDTH-56-78, likeComM.commentHeight);
-            self.contentL.attributedText = likeComM.commentAtt;
+            self.contentL.text = likeComM.commentContent;
         }
     }else{
         self.likeImageView.hidden = YES;
@@ -145,7 +147,7 @@
     }];
 }
 
-- (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId{
+- (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId linkArr:(nonnull NSMutableArray *)linkArr{
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:comment forKey:@"content"];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoCommont/%@/%@",self.likeComM.videoModel.vid,commentId.intValue?commentId:@"0"] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {

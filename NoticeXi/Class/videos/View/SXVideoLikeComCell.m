@@ -34,9 +34,10 @@
         _markL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.contentView addSubview:_markL];
         
-        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(56, 54, DR_SCREEN_WIDTH-56-68, 20)];
+        self.contentL = [[GZLabel alloc] initWithFrame:CGRectMake(56, 54, DR_SCREEN_WIDTH-56-68, 20)];
         self.contentL.font = FOURTHTEENTEXTFONTSIZE;
-        self.contentL.textColor = [UIColor colorWithHexString:@"#25262E"];
+        self.contentL.GZLabelNormalColor = [UIColor colorWithHexString:@"#25262E"];
+        [self.contentL setHightLightLabelColor:[UIColor colorWithHexString:@"#FF2A6F"] forGZLabelStyle:GZLabelStyleTopic];
         [self.contentView addSubview:self.contentL];
         
         //时间

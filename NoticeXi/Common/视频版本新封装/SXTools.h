@@ -45,6 +45,9 @@ typedef void (^downSuccessBlock)(BOOL success);
 + (UIWindow *)getKeyWindow;
 
 + (NSString *)getCurrentTime;
+
+//首行缩进的文本高度
++(CGFloat)getHeightWithLineHight:(CGFloat)lineHeight font:(CGFloat)font width:(CGFloat)width string:(NSString *)string andFirstWidth:(CGFloat)firstWidth;
 @end
 
 NS_ASSUME_NONNULL_END

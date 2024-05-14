@@ -170,6 +170,20 @@
     return sizestring.size.height;
 }
 
++(CGFloat)getHeightWithLineHight:(CGFloat)lineHeight font:(CGFloat)font width:(CGFloat)width string:(NSString *)string andFirstWidth:(CGFloat)firstWidth{
+    if (!string) {
+        return 0;
+    }
+
+    NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:string];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+    paragraphStyle.firstLineHeadIndent = firstWidth;
+    [paragraphStyle setLineSpacing:lineHeight];
+    [string1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,string.length)];
+    CGRect sizestring = [string boundingRectWithSize:CGSizeMake(width,9999999999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:XGBoldFontName size:font],NSParagraphStyleAttributeName:paragraphStyle} context:nil];
+    return sizestring.size.height;
+}
+
 + (NSMutableAttributedString *)getStringWithLineHight:(CGFloat)lineHeight string:(NSString *)string{
     if (!string) {
         return nil;

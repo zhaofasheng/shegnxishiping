@@ -21,19 +21,24 @@
     [super viewDidLoad];
 
     self.navBarView.hidden = NO;
-    self.navBarView.titleL.text = @"店铺头像";
+    self.navBarView.titleL.text = self.isChoiceGoods?@"商品图片": @"店铺头像";
     self.tableView.hidden = YES;
     
     self.headeimageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,(DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-DR_SCREEN_WIDTH)/2-30, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH)];
     [self.view addSubview:self.headeimageView];
-    [self.headeimageView sd_setImageWithURL:[NSURL URLWithString:self.url]];
+    if (self.url) {
+        [self.headeimageView sd_setImageWithURL:[NSURL URLWithString:self.url]];
+    }else{
+        self.headeimageView.image = self.choiceImage;
+    }
+    
     self.view.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(64,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50-40-NAVIGATION_BAR_HEIGHT,DR_SCREEN_WIDTH-128, 50);
     [btn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     btn.titleLabel.font = EIGHTEENTEXTFONTSIZE;
-    [btn setTitle:@"更换店铺头像" forState:UIControlStateNormal];
+    [btn setTitle:self.isChoiceGoods?@"更换图片" : @"更换店铺头像" forState:UIControlStateNormal];
     btn.backgroundColor = [UIColor colorWithHexString:@"#1D1E24"];
     [btn setAllCorner:25];
     [btn addTarget:self action:@selector(changeIcon) forControlEvents:UIControlEventTouchUpInside];
@@ -70,6 +75,9 @@
             [self upLoadHeader:choiceImage path:[filePath stringByReplacingOccurrencesOfString:@"file://" withString:@""] withDate:[outputFormatter stringFromDate:asset.creationDate]];
         }
     }];
+    if (self.isChoiceGoods) {
+        self.headeimageView.image = choiceImage;
+    }
 }
 
 - (void)upLoadHeader:(UIImage *)image path:(NSString *)path withDate:(NSString *)date{
@@ -89,6 +97,13 @@
     } complectionHandler:^(NSError *error, NSString *errorMessage,NSString *bucketId, BOOL sussess) {
         if (sussess) {
             
+            if (self.isChoiceGoods) {
+                if (self.choiceBlock) {
+                    self.choiceBlock(errorMessage, image);
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+                return;
+            }
             NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
             [parm setObject:errorMessage forKey:@"avatar_url"];
             

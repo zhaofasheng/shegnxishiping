@@ -1285,6 +1285,16 @@
 		A4E969A12A69142800AE022E /* NoticeCustumBackImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E9647E2A69141F00AE022E /* NoticeCustumBackImageView.m */; };
 		A4E969A22A69142800AE022E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E964802A69141F00AE022E /* AppDelegate.m */; };
 		ED4752A19A8FCE52C09D6FBA /* libPods-NoticeXi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0825C7A307206BC0F78C701F /* libPods-NoticeXi.a */; };
+		FE07BDEA2BF2F34200E6812A /* SXStudyListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDE92BF2F34100E6812A /* SXStudyListView.m */; };
+		FE07BDED2BF2F3BE00E6812A /* SXStudyListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDEC2BF2F3BE00E6812A /* SXStudyListCell.m */; };
+		FE07BDF02BF35D6A00E6812A /* SXAddNewGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDEF2BF35D6A00E6812A /* SXAddNewGoodsController.m */; };
+		FE07BDF32BF35E9600E6812A /* SXAddNewsGoods1Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDF22BF35E9600E6812A /* SXAddNewsGoods1Cell.m */; };
+		FE07BDF62BF35EA900E6812A /* SXAddNewsGoods2Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDF52BF35EA900E6812A /* SXAddNewsGoods2Cell.m */; };
+		FE07BDF92BF35EBA00E6812A /* SXAddNewsGoods3Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDF82BF35EBA00E6812A /* SXAddNewsGoods3Cell.m */; };
+		FE07BDFC2BF35EC700E6812A /* SXAddNewsGoods4Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDFB2BF35EC700E6812A /* SXAddNewsGoods4Cell.m */; };
+		FE07BDFF2BF35ED300E6812A /* SXAddNewsGoods5Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDFE2BF35ED300E6812A /* SXAddNewsGoods5Cell.m */; };
+		FE07BE022BF3732C00E6812A /* SXGoodsTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE012BF3732C00E6812A /* SXGoodsTimeCell.m */; };
+		FE07BE052BF37C4700E6812A /* SXUpGoodsToSellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE042BF37C4700E6812A /* SXUpGoodsToSellView.m */; };
 		FE1A48112B3D4475004E6239 /* novoice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE1A48102B3D4475004E6239 /* novoice.mp3 */; };
 		FE1A48172B467D6F004E6239 /* NoticeManagerUserAction.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A48162B467D6F004E6239 /* NoticeManagerUserAction.m */; };
 		FE2B934B2BA053F9002698AF /* SXSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2B934A2BA053F9002698AF /* SXSettingController.m */; };
@@ -3970,6 +3980,26 @@
 		A4E964822A69141F00AE022E /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		A4E964832A69141F00AE022E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0264C4AA5A1898E8831E9DD /* Pods-NoticeXi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoticeXi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoticeXi/Pods-NoticeXi.debug.xcconfig"; sourceTree = "<group>"; };
+		FE07BDE82BF2F34100E6812A /* SXStudyListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXStudyListView.h; sourceTree = "<group>"; };
+		FE07BDE92BF2F34100E6812A /* SXStudyListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXStudyListView.m; sourceTree = "<group>"; };
+		FE07BDEB2BF2F3BE00E6812A /* SXStudyListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXStudyListCell.h; sourceTree = "<group>"; };
+		FE07BDEC2BF2F3BE00E6812A /* SXStudyListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXStudyListCell.m; sourceTree = "<group>"; };
+		FE07BDEE2BF35D6A00E6812A /* SXAddNewGoodsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXAddNewGoodsController.h; sourceTree = "<group>"; };
+		FE07BDEF2BF35D6A00E6812A /* SXAddNewGoodsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXAddNewGoodsController.m; sourceTree = "<group>"; };
+		FE07BDF12BF35E9600E6812A /* SXAddNewsGoods1Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXAddNewsGoods1Cell.h; sourceTree = "<group>"; };
+		FE07BDF22BF35E9600E6812A /* SXAddNewsGoods1Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXAddNewsGoods1Cell.m; sourceTree = "<group>"; };
+		FE07BDF42BF35EA900E6812A /* SXAddNewsGoods2Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXAddNewsGoods2Cell.h; sourceTree = "<group>"; };
+		FE07BDF52BF35EA900E6812A /* SXAddNewsGoods2Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXAddNewsGoods2Cell.m; sourceTree = "<group>"; };
+		FE07BDF72BF35EBA00E6812A /* SXAddNewsGoods3Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXAddNewsGoods3Cell.h; sourceTree = "<group>"; };
+		FE07BDF82BF35EBA00E6812A /* SXAddNewsGoods3Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXAddNewsGoods3Cell.m; sourceTree = "<group>"; };
+		FE07BDFA2BF35EC700E6812A /* SXAddNewsGoods4Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXAddNewsGoods4Cell.h; sourceTree = "<group>"; };
+		FE07BDFB2BF35EC700E6812A /* SXAddNewsGoods4Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXAddNewsGoods4Cell.m; sourceTree = "<group>"; };
+		FE07BDFD2BF35ED300E6812A /* SXAddNewsGoods5Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXAddNewsGoods5Cell.h; sourceTree = "<group>"; };
+		FE07BDFE2BF35ED300E6812A /* SXAddNewsGoods5Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXAddNewsGoods5Cell.m; sourceTree = "<group>"; };
+		FE07BE002BF3732C00E6812A /* SXGoodsTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXGoodsTimeCell.h; sourceTree = "<group>"; };
+		FE07BE012BF3732C00E6812A /* SXGoodsTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXGoodsTimeCell.m; sourceTree = "<group>"; };
+		FE07BE032BF37C4700E6812A /* SXUpGoodsToSellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXUpGoodsToSellView.h; sourceTree = "<group>"; };
+		FE07BE042BF37C4700E6812A /* SXUpGoodsToSellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXUpGoodsToSellView.m; sourceTree = "<group>"; };
 		FE1A48102B3D4475004E6239 /* novoice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = novoice.mp3; sourceTree = "<group>"; };
 		FE1A48152B467D6F004E6239 /* NoticeManagerUserAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeManagerUserAction.h; sourceTree = "<group>"; };
 		FE1A48162B467D6F004E6239 /* NoticeManagerUserAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeManagerUserAction.m; sourceTree = "<group>"; };
@@ -8935,6 +8965,10 @@
 				FE41C3B62BCFA5C400BAD263 /* SXVideoCmmentFirstCell.m */,
 				FE41C3B82BCFD4AF00BAD263 /* SXVideoCommentMoreView.h */,
 				FE41C3B92BCFD4AF00BAD263 /* SXVideoCommentMoreView.m */,
+				FE07BDE82BF2F34100E6812A /* SXStudyListView.h */,
+				FE07BDE92BF2F34100E6812A /* SXStudyListView.m */,
+				FE07BDEB2BF2F3BE00E6812A /* SXStudyListCell.h */,
+				FE07BDEC2BF2F3BE00E6812A /* SXStudyListCell.m */,
 				FE44F1962BB29FAA004ECF11 /* SXFullPlayCell.h */,
 				FE44F18D2BB29FAA004ECF11 /* SXFullPlayCell.m */,
 				FE41C33C2BC925D000BAD263 /* SXFullPlayInfoView.h */,
@@ -9037,6 +9071,20 @@
 				FE9C40B02B9B27CC008C3A22 /* SXZiGeCheckView.m */,
 				FE9C40B22B9B33C1008C3A22 /* SXWorkCheckView.h */,
 				FE9C40B32B9B33C1008C3A22 /* SXWorkCheckView.m */,
+				FE07BDF12BF35E9600E6812A /* SXAddNewsGoods1Cell.h */,
+				FE07BDF22BF35E9600E6812A /* SXAddNewsGoods1Cell.m */,
+				FE07BDF42BF35EA900E6812A /* SXAddNewsGoods2Cell.h */,
+				FE07BDF52BF35EA900E6812A /* SXAddNewsGoods2Cell.m */,
+				FE07BDF72BF35EBA00E6812A /* SXAddNewsGoods3Cell.h */,
+				FE07BDF82BF35EBA00E6812A /* SXAddNewsGoods3Cell.m */,
+				FE07BDFA2BF35EC700E6812A /* SXAddNewsGoods4Cell.h */,
+				FE07BDFB2BF35EC700E6812A /* SXAddNewsGoods4Cell.m */,
+				FE07BDFD2BF35ED300E6812A /* SXAddNewsGoods5Cell.h */,
+				FE07BDFE2BF35ED300E6812A /* SXAddNewsGoods5Cell.m */,
+				FE07BE002BF3732C00E6812A /* SXGoodsTimeCell.h */,
+				FE07BE012BF3732C00E6812A /* SXGoodsTimeCell.m */,
+				FE07BE032BF37C4700E6812A /* SXUpGoodsToSellView.h */,
+				FE07BE042BF37C4700E6812A /* SXUpGoodsToSellView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -9188,6 +9236,8 @@
 				A4E962B02A69141E00AE022E /* NoticeEditShopInfoController.m */,
 				A4E962B92A69141E00AE022E /* NoticeAddSellMerchantController.h */,
 				A4E962CF2A69141E00AE022E /* NoticeAddSellMerchantController.m */,
+				FE07BDEE2BF35D6A00E6812A /* SXAddNewGoodsController.h */,
+				FE07BDEF2BF35D6A00E6812A /* SXAddNewGoodsController.m */,
 				A4E963512A69141E00AE022E /* NoticdShopDetailForUserController.h */,
 				A4E962C32A69141E00AE022E /* NoticdShopDetailForUserController.m */,
 				FE9C40942B9ADEDF008C3A22 /* SXShopCheckController.h */,
@@ -9631,6 +9681,7 @@
 				A4E9664D2A69142300AE022E /* NoticeMovieTopViewController.m in Sources */,
 				A4E968012A69142500AE022E /* NoticeBgmModel.m in Sources */,
 				A4E968862A69142600AE022E /* UIImage+Tools.m in Sources */,
+				FE07BDFC2BF35EC700E6812A /* SXAddNewsGoods4Cell.m in Sources */,
 				A4E968AE2A69142600AE022E /* NoticeSupplyOpenShopController.m in Sources */,
 				A4E964892A69142100AE022E /* UIView+Frame.m in Sources */,
 				A4E964CA2A69142100AE022E /* cpu_detect_x86.cpp in Sources */,
@@ -9733,6 +9784,7 @@
 				A4E968C42A69142600AE022E /* NoticeOrderListBaseController.m in Sources */,
 				A4E967C62A69142500AE022E /* NoticeDepartureController.m in Sources */,
 				A4E969992A69142800AE022E /* CLGCDTimerManager.m in Sources */,
+				FE07BDF62BF35EA900E6812A /* SXAddNewsGoods2Cell.m in Sources */,
 				A4E967A22A69142500AE022E /* NoticeCardInfoModel.m in Sources */,
 				FE6686802BA082FE006DBDF2 /* AxcAE_TabBarItem.m in Sources */,
 				A4E965E12A69142200AE022E /* NoticeGetUserSig.swift in Sources */,
@@ -9916,6 +9968,7 @@
 				A4E965F12A69142300AE022E /* NoticeSharePyChatView.m in Sources */,
 				A4E965622A69142200AE022E /* SCImageView.m in Sources */,
 				A4E9690C2A69142700AE022E /* NoticrBBSManagerController.m in Sources */,
+				FE07BDEA2BF2F34200E6812A /* SXStudyListView.m in Sources */,
 				A4E967992A69142400AE022E /* LHEditTextView.m in Sources */,
 				FE2B934B2BA053F9002698AF /* SXSettingController.m in Sources */,
 				FEE562ED2B8CA1FD0004CC11 /* TZVideoEditedPreviewController.m in Sources */,
@@ -10001,6 +10054,7 @@
 				A43BC4E42B318CD7003BF9EF /* NoticeChangeBokeController.m in Sources */,
 				A4E967DA2A69142500AE022E /* NoticeLangusetViewController.m in Sources */,
 				A4E965712A69142200AE022E /* NoticePlayCustumePlay.m in Sources */,
+				FE07BE052BF37C4700E6812A /* SXUpGoodsToSellView.m in Sources */,
 				A4E9685F2A69142600AE022E /* NoticeTextMusicZjCell.m in Sources */,
 				A4E967BC2A69142500AE022E /* NoticeNull.m in Sources */,
 				A4E966B12A69142300AE022E /* NoticeReTestViewController.m in Sources */,
@@ -10366,6 +10420,7 @@
 				A4E966992A69142300AE022E /* NoticeColockSetModel.m in Sources */,
 				A43BB0482ADF79E3006F4571 /* NoticeLeftPopMenu.m in Sources */,
 				A4E9651A2A69142200AE022E /* LXCalendarView.m in Sources */,
+				FE07BE022BF3732C00E6812A /* SXGoodsTimeCell.m in Sources */,
 				A4E9649A2A69142100AE022E /* FDanmakuView.m in Sources */,
 				A4E966C12A69142300AE022E /* NoticeSearchSongCell.m in Sources */,
 				A4E966FA2A69142400AE022E /* NoticeNewTuiJianCell.m in Sources */,
@@ -10461,6 +10516,7 @@
 				A4E967FD2A69142500AE022E /* NoticeFriendAcdModel.m in Sources */,
 				FE44F1F22BB29FAB004ECF11 /* HTTPLogging.m in Sources */,
 				A4E965B22A69142200AE022E /* NoticeRecoderView.m in Sources */,
+				FE07BDFF2BF35ED300E6812A /* SXAddNewsGoods5Cell.m in Sources */,
 				A4E964F42A69142200AE022E /* JXCategoryIndicatorDotLineView.m in Sources */,
 				A4E964D62A69142100AE022E /* WMScrollView.m in Sources */,
 				A46F54032AA6FD9D00A22D48 /* NoticeVipUpRouteCell.m in Sources */,
@@ -10563,6 +10619,7 @@
 				A4E968282A69142500AE022E /* NSDate+Extension.m in Sources */,
 				A4E964872A69142100AE022E /* AppDelegate+Notification.m in Sources */,
 				A4E969682A69142700AE022E /* GetColor.m in Sources */,
+				FE07BDF32BF35E9600E6812A /* SXAddNewsGoods1Cell.m in Sources */,
 				A4E966BE2A69142300AE022E /* NoticeSongDetail.m in Sources */,
 				A4E9688D2A69142600AE022E /* NoticeTeamRpelyView.m in Sources */,
 				A4E966042A69142300AE022E /* NoticeAreaCell.m in Sources */,
@@ -10655,6 +10712,7 @@
 				A4E965C52A69142200AE022E /* XLAlertView.m in Sources */,
 				A4E9649B2A69142100AE022E /* WaveHeader.cpp in Sources */,
 				A4E966EA2A69142400AE022E /* NoticeLyView.m in Sources */,
+				FE07BDF92BF35EBA00E6812A /* SXAddNewsGoods3Cell.m in Sources */,
 				A4E967B62A69142500AE022E /* NoticeVoiceDepartController.m in Sources */,
 				A4E967ED2A69142500AE022E /* NoticeChangeSkinReusableView.m in Sources */,
 				A4E968932A69142600AE022E /* RXPopMenuArrow.m in Sources */,
@@ -10665,6 +10723,7 @@
 				A4E9680B2A69142500AE022E /* NoticeOtherHeaderViewController.m in Sources */,
 				A4E968412A69142500AE022E /* NoticeCalenderPlayerView.m in Sources */,
 				FE48C1442B4805670069D1A6 /* ChildLongPress.m in Sources */,
+				FE07BDED2BF2F3BE00E6812A /* SXStudyListCell.m in Sources */,
 				FE9C3FBD2B9093AA008C3A22 /* SXplayPayVideoDetailSection.m in Sources */,
 				A4E9655E2A69142200AE022E /* NoticeChoiceRecoderView.m in Sources */,
 				A4E9671A2A69142400AE022E /* NoticeChatsCell.m in Sources */,
@@ -10760,6 +10819,7 @@
 				A4E9680A2A69142500AE022E /* NoticeJoinTextAlbumController.m in Sources */,
 				A4E9681B2A69142500AE022E /* NoticeChangeIntroduceViewController.m in Sources */,
 				A4E968522A69142600AE022E /* NoticeTimePlayer.m in Sources */,
+				FE07BDF02BF35D6A00E6812A /* SXAddNewGoodsController.m in Sources */,
 				FE44F21A2BB29FAB004ECF11 /* UITabBarController+ZFPlayerRotation.m in Sources */,
 				A4E966562A69142300AE022E /* NoticeAllHotCell.m in Sources */,
 				A4E966912A69142300AE022E /* NoticeMyDownloadPyController.m in Sources */,

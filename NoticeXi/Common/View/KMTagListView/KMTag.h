@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface KMTag : UILabel
-
+@property (nonatomic, assign) BOOL isChoice;
 - (void)setupWithColorText:(NSString*)text;
 - (void)setupWithText:(NSString*)text;
 

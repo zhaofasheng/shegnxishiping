@@ -55,6 +55,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL hasGetMore;//已经获取过更多回复数据
 
 @property (nonatomic, strong) NSString *top_at;//置顶时间大于0表示置顶
+
+@property (nonatomic, strong) NSArray *to_series;
+@property (nonatomic, strong) NSMutableArray *seariesArr;
 @end
 
 NS_ASSUME_NONNULL_END

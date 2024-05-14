@@ -76,25 +76,49 @@
 }
 
 - (void)addStudyTap{
-    __weak typeof(self) weakSelf = self;
-    YYPersonItem *item = [[YYPersonItem alloc] init];
-    item.name = @"【MBTI职场课】";
-    [self.studyArr addObject:item];
     
-    for (YYPersonItem *person in self.studyArr) {//艾特的人转成图片显示在输入框
-        NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:weakSelf.contentView.font.pointSize]};
-        NSMutableArray *currentSelectedPersonItems = [[weakSelf.contentView.attributedText getCurrentAtPersonItems] mutableCopy];
-        [currentSelectedPersonItems addObject:person];//这里可以判断去重...（根据自己需求情况而定）
+    [self.contentView resignFirstResponder];
+    [self.listView showATView];
+    
+    __weak typeof(self) weakSelf = self;
+    self.studyArr = [NSMutableArray arrayWithArray:[self.contentView.attributedText getCurrentAtPersonItems]];
+    self.listView.addBlock = ^(SXPayForVideoModel * _Nonnull studyModel) {
+        
+        BOOL hasOld = NO;
+        for (YYPersonItem *oldItem in weakSelf.studyArr) {
+            if ([oldItem.user_id isEqualToString:studyModel.seriesId]) {//去重
+                hasOld = YES;
+                break;
+            }
+        }
+        
+        if (hasOld) {
+            [weakSelf showJustComment:weakSelf.commentId];
+            return;
+        }
+        
+        YYPersonItem *item = [[YYPersonItem alloc] init];
+        item.name = [NSString stringWithFormat:@"「%@」",studyModel.series_name];
+        item.user_id = studyModel.seriesId;
+        [weakSelf.studyArr addObject:item];
+        
+        for (YYPersonItem *person in weakSelf.studyArr) {//艾特的人转成图片显示在输入框
+            NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:weakSelf.contentView.font.pointSize]};
+            NSMutableArray *currentSelectedPersonItems = [[weakSelf.contentView.attributedText getCurrentAtPersonItems] mutableCopy];
+            [currentSelectedPersonItems addObject:person];//这里可以判断去重...（根据自己需求情况而定）
 
-        //将人的名字转化为NSTextAttachment
-        [[YYTextAttachmentManager getInstance] transformTextWithTextView:weakSelf.contentView tickedPersonItems:currentSelectedPersonItems atAllPersons:nil canRepeat:NO needBack:weakSelf.needBack color:[UIColor colorWithHexString:@"#FF2A6F"] attributes:attributes completeBlock:^(NSMutableAttributedString *mutableAttributedString, NSRange selectedRange) {
-            weakSelf.needBack = NO;
-            weakSelf.contentView.attributedText = mutableAttributedString;
-            weakSelf.contentView.selectedRange = selectedRange;
-            [weakSelf textViewDidChange:weakSelf.contentView];
-            [weakSelf textViewDidChangeSelection:weakSelf.contentView];
-        }];
-    }
+            //将人的名字转化为NSTextAttachment
+            [[YYTextAttachmentManager getInstance] transformTextWithTextView:weakSelf.contentView tickedPersonItems:currentSelectedPersonItems atAllPersons:nil canRepeat:NO needBack:weakSelf.needBack color:[UIColor colorWithHexString:@"#FF2A6F"] attributes:attributes completeBlock:^(NSMutableAttributedString *mutableAttributedString, NSRange selectedRange) {
+                weakSelf.needBack = NO;
+                weakSelf.contentView.attributedText = mutableAttributedString;
+                weakSelf.contentView.selectedRange = selectedRange;
+                [weakSelf textViewDidChange:weakSelf.contentView];
+                [weakSelf textViewDidChangeSelection:weakSelf.contentView];
+            }];
+        }
+        
+        [weakSelf showJustComment:weakSelf.commentId];
+    };
 }
 
 - (UIView *)addStudyView{
@@ -123,15 +147,7 @@
     self.commentId = commentId;
     [self.contentView becomeFirstResponder];
     UIWindow *rootWindow = [UIApplication sharedApplication].keyWindow;
-//    if (commentId) {
-//    
-//        self.replyToView = [[NoticeReplyToView alloc] initWithFrame:CGRectMake(0, self.frame.origin.y-30, DR_SCREEN_WIDTH, 30)];
-//        if (self.isHelp) {
-//            self.replyToView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-//            self.replyToView.replyLabel.textColor = [UIColor colorWithHexString:@"#8A8F99"];
-//        }
-//    }
-    
+
     [self.backView removeFromSuperview];
     [rootWindow addSubview:self.backView];
     
@@ -158,7 +174,6 @@
         return;
     }
     
-    
     if (self.hasClick) {
         return;
     }
@@ -175,8 +190,10 @@
         //self.contentView.text = [self.contentView.text substringToIndex:num];
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(sendWithComment: commentId:)]) {
-        [self.delegate sendWithComment:str commentId:self.commentId];
+    self.currentSelectedPersonItems = [NSMutableArray arrayWithArray:[self.contentView.attributedText getCurrentAtPersonItems]];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sendWithComment: commentId: linkArr:)]) {
+        [self.delegate sendWithComment:str commentId:self.commentId linkArr:self.currentSelectedPersonItems];
     }
 
     self.contentView.text = @"";
@@ -199,17 +216,7 @@
     self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-44,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
     self.addStudyView.frame = CGRectMake(15, self.frame.size.height-44, 160, 44);
     UIWindow *rootWindow = [UIApplication sharedApplication].keyWindow;
-//    if (self.commentId) {
-//        [self.replyToView removeFromSuperview];
-//        [rootWindow addSubview:self.replyToView];
-//        self.replyToView.frame = CGRectMake(0, self.frame.origin.y-30, DR_SCREEN_WIDTH, 30);
-//        self.replyToView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-//        self.replyToView.replyLabel.textColor = [UIColor colorWithHexString:@"#8A8F99"];
-//     
-//    }
-    //self.backView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-self.frame.origin.y);
-    
-    //[rootWindow bringSubviewToFront:self.replyToView];
+
     [rootWindow bringSubviewToFront:self];
 }
 
@@ -222,9 +229,6 @@
     kebordHeight = 0;
     self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-44,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
     self.addStudyView.frame = CGRectMake(15, self.frame.size.height-44, 160, 44);
-    if (self.commentId) {
-        //self.replyToView.frame = CGRectMake(0, self.frame.origin.y-30, DR_SCREEN_WIDTH, 30);
-    }
 
 }
 
@@ -323,6 +327,12 @@
     return textHeight;
 }
 
+- (SXStudyListView *)listView{
+    if (!_listView) {
+        _listView = [[SXStudyListView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    }
+    return _listView;
+}
 
 - (void)setPlaStr:(NSString *)plaStr{
     _plaStr = plaStr;

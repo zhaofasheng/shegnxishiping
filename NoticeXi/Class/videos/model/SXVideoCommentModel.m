@@ -69,4 +69,14 @@
         self.firstCommentModel.content = @"请更新到最新版本";
     }
 }
+
+- (void)setTo_series:(NSArray *)to_series{
+    _to_series = to_series;
+    self.seariesArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in to_series) {
+        SXPayForVideoModel *model = [SXPayForVideoModel mj_objectWithKeyValues:dic];
+        model.series_name = model.name;
+        [self.seariesArr addObject:model];
+    }
+}
 @end

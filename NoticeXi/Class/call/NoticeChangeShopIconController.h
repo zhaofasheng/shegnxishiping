@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *shopId;
 @property (nonatomic, copy) void(^refreshShopModel)(BOOL refresh);
+@property (nonatomic, copy) void(^choiceBlock)(NSString * imageUrl,UIImage *image);
+@property (nonatomic, strong) UIImage *choiceImage;
+@property (nonatomic, assign) BOOL isChoiceGoods;
 @end
 
 NS_ASSUME_NONNULL_END

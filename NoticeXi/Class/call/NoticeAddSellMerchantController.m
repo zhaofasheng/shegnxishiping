@@ -8,13 +8,17 @@
 
 #import "NoticeAddSellMerchantController.h"
 #import "NoticeChatVoiceShopCell.h"
-#import "NoticeChatTextCell.h"
-
+#import "NoticeShopDetailSection.h"
+#import "SXAddNewGoodsController.h"
 @interface NoticeAddSellMerchantController ()
 @property (nonatomic, strong) NSMutableArray *voiceArr;
+@property (nonatomic, strong) NSMutableArray *freeArr;
 @property (nonatomic, strong) NSMutableArray *choiceArr;
 @property (nonatomic, strong) NoticeGoodsModel *oldGoodsModel;
 @property (nonatomic, strong) UIButton *addButton;
+@property (nonatomic, strong) UILabel *redL;
+@property (nonatomic, strong) UIView *footView;
+@property (nonatomic, strong) UIView *addNewGoodsView;
 @end
 
 @implementation NoticeAddSellMerchantController
@@ -24,7 +28,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.navBarView.titleL.text = @"服务";
-    self.tableView.rowHeight = 160;
+    [self.tableView registerClass:[NoticeShopDetailSection class] forHeaderFooterViewReuseIdentifier:@"headerView"];
     
     [self.tableView registerClass:[NoticeChatVoiceShopCell class] forCellReuseIdentifier:@"cell1"];
     
@@ -36,10 +40,16 @@
                 [self.choiceArr addObject:goods];
             }
         }
-        [self.voiceArr addObject:goods];
+        if (goods.is_experience.boolValue) {
+            [self.freeArr addObject:goods];
+        }else{
+            [self.voiceArr addObject:goods];
+        }
+        
     }
     
     [self.tableView reloadData];
+    
     
     self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(20, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-10-40, DR_SCREEN_WIDTH-40, 40)];
     self.addButton.layer.cornerRadius = 20;
@@ -52,7 +62,7 @@
         [self.addButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
     }
 
-    [self.addButton setTitle:@"添加服务" forState:UIControlStateNormal];
+    [self.addButton setTitle:@"确认" forState:UIControlStateNormal];
     self.addButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
     [self.view addSubview:self.addButton];
     [self.addButton addTarget:self action:@selector(addClick) forControlEvents:UIControlEventTouchUpInside];
@@ -71,12 +81,28 @@
             for (NSDictionary *dic in dict[@"data"][@"goods_list"]) {
                 NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];
                 goods.choice = goods.is_selling.boolValue? @"1" : @"0";
+    
+                if (goods.tagString) {
+                    goods.nameHeight = [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-96-60 string:goods.goods_name andFirstWidth:GET_STRWIDTH(goods.tagString, 11, 20)+10+5];
+                    if (goods.nameHeight < 20) {
+                        goods.nameHeight = 20;
+                    }
+                }else{
+                    goods.nameHeight = [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-96-60 string:goods.goods_name isJiacu:YES];
+                    if (goods.nameHeight < 20) {
+                        goods.nameHeight = 20;
+                    }
+                }
                 
                 if(goods.choice.boolValue){
                     [self.choiceArr addObject:goods];
                 }
+                if (goods.is_experience.boolValue) {
+                    [self.freeArr addObject:goods];
+                }else{
+                    [self.voiceArr addObject:goods];
+                }
                 
-                [self.voiceArr addObject:goods];
             }
             if(self.choiceArr.count){
                 self.addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
@@ -89,13 +115,6 @@
         }
     } fail:^(NSError * _Nullable error) {
     }];
-}
-
-- (NSMutableArray *)choiceArr{
-    if(!_choiceArr){
-        _choiceArr = [[NSMutableArray alloc] init];
-    }
-    return _choiceArr;
 }
 
 - (void)addClick{
@@ -114,14 +133,16 @@
         [self showToastWithText:@"必须添加一个付费商品才能营业哦~"];
         return;
     }
-    if(self.choiceArr.count==1){
-        NoticeGoodsModel *good1 = self.choiceArr[0];
-        [parm setObject:good1.goodId forKey:@"goodsId"];
-    }else if (self.choiceArr.count == 2){
-        NoticeGoodsModel *good1 = self.choiceArr[0];
-        NoticeGoodsModel *good2 = self.choiceArr[1];
-        [parm setObject:[NSString stringWithFormat:@"%@,%@",good1.goodId,good2.goodId] forKey:@"goodsId"];
+    
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    for (NoticeGoodsModel *goods in self.choiceArr) {
+        [arr addObject:goods.goodId];
     }
+    if (arr.count) {
+        [parm setObject:[arr componentsJoinedByString:@","] forKey:@"goodsId"];
+    }
+
+
     __weak typeof(self) weakSelf = self;
     [self showHUD];
     [[DRNetWorking shareInstance] requestWithPatchPath:@"shop/setShopProduct" Accept:@"application/vnd.shengxi.v5.5.0+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
@@ -147,12 +168,19 @@
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (granted) { // 有使用麦克风的权限
-                NoticeGoodsModel *voiceChatM = weakSelf.voiceArr[indexPath.row];
+                NoticeGoodsModel *voiceChatM = indexPath.section==0?weakSelf.freeArr[indexPath.row] : weakSelf.voiceArr[indexPath.row];
                 voiceChatM.choice = voiceChatM.choice.boolValue?@"0":@"1";
                 [weakSelf.tableView reloadData];
                 
                 [self.choiceArr removeAllObjects];
+                
                 for (NoticeGoodsModel *voiceM in weakSelf.voiceArr) {
+                    if(voiceM.choice.boolValue){
+                        [weakSelf.choiceArr addObject:voiceM];
+                    }
+                }
+                
+                for (NoticeGoodsModel *voiceM in weakSelf.freeArr) {
                     if(voiceM.choice.boolValue){
                         [weakSelf.choiceArr addObject:voiceM];
                     }
@@ -189,10 +217,11 @@
 }
 
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NoticeChatVoiceShopCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
     cell1.shopId = self.goodsModel.myShopM.shopId;
-    cell1.goodModel = self.voiceArr[indexPath.row];
+    cell1.goodModel = indexPath.section == 0?self.freeArr[indexPath.row] : self.voiceArr[indexPath.row];
     __weak typeof(self) weakSelf = self;
     cell1.changePriceBlock = ^(NSString * _Nonnull price) {
         if(weakSelf.changePriceBlock){
@@ -202,9 +231,26 @@
     return cell1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return 101;
+    }
+    NoticeGoodsModel *goods = self.voiceArr[indexPath.row];
+    return goods.nameHeight+92+15+8;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    if (section == 0) {
+        return self.freeArr.count;
+    }
     return self.voiceArr.count;
 }
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
+
 
 - (NSMutableArray *)voiceArr{
     if(!_voiceArr){
@@ -214,5 +260,103 @@
 }
 
 
+- (NSMutableArray *)freeArr{
+    if(!_freeArr){
+        _freeArr = [[NSMutableArray alloc] init];
+    }
+    return _freeArr;
+}
 
+- (NSMutableArray *)choiceArr{
+    if(!_choiceArr){
+        _choiceArr = [[NSMutableArray alloc] init];
+    }
+    return _choiceArr;
+}
+
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+
+    NoticeShopDetailSection *headV = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"headerView"];
+    headV.mainTitleLabel.hidden = section==0?YES:NO;
+    headV.mainTitleLabel.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+    headV.mainTitleLabel.font = TWOTEXTFONTSIZE;
+    headV.mainTitleLabel.attributedText = [DDHAttributedMode setJiaCuString:@"收费服务 必选" setSize:14 setColor:[UIColor colorWithHexString:@"#14151A"] setLengthString:@"收费服务" beginSize:0];
+    [self.redL removeFromSuperview];
+    [_addNewGoodsView removeFromSuperview];
+    if (section == 1) {
+        if (self.voiceArr.count) {
+            [headV addSubview:self.addNewGoodsView];
+        }
+        [headV addSubview:self.redL];
+        headV.mainTitleLabel.frame = CGRectMake(CGRectGetMaxX(self.redL.frame), 28, 200, 37);
+    }
+  
+    if (self.voiceArr.count) {
+        self.tableView.tableFooterView = nil;
+    }else{
+        self.tableView.tableFooterView = self.footView;
+    }
+    return headV;
+}
+
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return section == 0 ? 0 : 65;
+}
+
+- (UILabel *)redL{
+    if (!_redL) {
+        _redL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 28, GET_STRWIDTH(@"*", 14, 37), 37)];
+        _redL.text = @"*";
+        _redL.font = XGFourthBoldFontSize;
+        _redL.textColor = [UIColor colorWithHexString:@"#EE4B4E"];
+        
+    }
+    return _redL;
+}
+
+
+- (UIView *)addNewGoodsView{
+    if (!_addNewGoodsView) {
+        _addNewGoodsView = [[UIView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-78-15, 28, 78, 37)];
+        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 17/2, 20, 20)];
+        imageV.userInteractionEnabled = YES;
+        imageV.image = UIImageNamed(@"sx_addnewsgood_img");
+        [_addNewGoodsView addSubview:imageV];
+        
+        UILabel *label = [[UILabel  alloc] initWithFrame:CGRectMake(23, 0, 56, 37)];
+        label.font = XGFourthBoldFontSize;
+        label.text = @"新增服务";
+        label.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+        [_addNewGoodsView addSubview:label];
+        
+        _addNewGoodsView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addNewsGoods)];
+        [_addNewGoodsView addGestureRecognizer:tap];
+    }
+    return _addNewGoodsView;
+}
+
+- (UIView *)footView{
+    if(!_footView){
+        _footView = [[UIView alloc] initWithFrame:CGRectMake(0,0, DR_SCREEN_WIDTH, (DR_SCREEN_WIDTH-30)*116/345+20)];
+        _footView.backgroundColor = [UIColor whiteColor];
+
+
+        UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(15, 20, DR_SCREEN_WIDTH-30, (DR_SCREEN_WIDTH-30)*116/345)];
+        [button setBackgroundImage:UIImageNamed(@"sx_footaddnewsgood") forState:UIControlStateNormal];
+        [_footView addSubview:button];
+        [button addTarget:self action:@selector(addNewsGoods) forControlEvents:UIControlEventTouchUpInside];
+
+    }
+    return _footView;
+}
+
+- (void)addNewsGoods{
+    SXAddNewGoodsController *ctl = [[SXAddNewGoodsController alloc] init];
+    [self.navigationController pushViewController:ctl animated:YES];
+}
 @end

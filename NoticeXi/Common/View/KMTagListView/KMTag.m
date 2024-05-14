@@ -61,16 +61,15 @@
 
 - (void)setupCousTumeWithText:(NSString *)text{
     self.text = text;
-    self.textColor = [[UIColor colorWithHexString:@"#5C5F66"] colorWithAlphaComponent:1];
-    self.font = [UIFont systemFontOfSize:14];
+    self.textColor = [[UIColor colorWithHexString:@"#14151A"] colorWithAlphaComponent:1];
+    self.font = [UIFont systemFontOfSize:15];
     UIFont* font = self.font;
     CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: font}];
     CGRect frame = self.frame;
-    frame.size = CGSizeMake(size.width + 20, size.height + 10);
+    frame.size = CGSizeMake((NSInteger)size.width + 40, 32);
     self.frame = frame;
-    self.backgroundColor = [[UIColor colorWithHexString:@"#14151A"] colorWithAlphaComponent:0];
-    self.layer.cornerRadius = frame.size.height/2;
-    self.layer.masksToBounds = YES;
+    self.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+    [self setAllCorner:4];
 }
 
 @end

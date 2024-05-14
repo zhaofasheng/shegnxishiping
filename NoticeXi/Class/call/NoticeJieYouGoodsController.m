@@ -13,12 +13,15 @@
 #import "NoticeHasServeredController.h"
 #import "NoticeXi-Swift.h"
 #import "NoticeShopDetailSection.h"
+#import "SXUpGoodsToSellView.h"
 @interface NoticeJieYouGoodsController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *footView;
 @property (nonatomic, strong) UIButton *freeButton;
 @property (nonatomic, assign) BOOL hasFree;
+@property (nonatomic, strong) UIView *headView;
+@property (nonatomic, strong) SXUpGoodsToSellView *sellView;
 @end
 
 @implementation NoticeJieYouGoodsController
@@ -49,7 +52,7 @@
     
     [self.tableView registerClass:[NoticeShopDetailSection class] forHeaderFooterViewReuseIdentifier:@"headerView"];
     self.view.backgroundColor =  [UIColor whiteColor];
-
+    self.tableView.tableHeaderView = self.headView;
     [self.view addSubview:self.tableView];
     self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-BOTTOM_HEIGHT-50-40);
 
@@ -78,7 +81,6 @@
                 [self.goodssellArr addObject:model];
             }
      
-            [self refreshIfHasFree];
         }
     } fail:^(NSError * _Nullable error) {
     }];
@@ -106,7 +108,7 @@
     __weak typeof(self) weakSelf = self;
     ctl.refreshGoodsBlock = ^(NSMutableArray * _Nonnull goodsArr) {
         weakSelf.goodssellArr = goodsArr;
-        [weakSelf refreshIfHasFree];
+        [weakSelf.tableView reloadData];
     };
     ctl.changePriceBlock = ^(NSString * _Nonnull price) {
         for (NoticeGoodsModel *model in self.goodssellArr) {
@@ -119,63 +121,6 @@
     };
     [self.navigationController pushViewController:ctl animated:YES];
 }
-
-//添加在售免费商品
-- (void)addFreeClick{
-    if (!self.shopModel) {
-        return;
-    }
-    if(self.shopModel.myShopM.operate_status.integerValue == 2){
-        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"店铺营业中，不能更换售卖的商品哦" message:nil cancleBtn:@"知道了"];
-        [alerView showXLAlertView];
-        return;
-    }
-    [self showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-        if (success) {
-            for (NSDictionary *dic in dict[@"data"][@"goods_list"]) {
-                NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];
-                if (goods.is_experience.boolValue) {
-                    [self.goodssellArr insertObject:goods atIndex:0];
-                    [self refreshSelledGoods];
-                    break;
-                }
-            }
-            [self.tableView reloadData];
-        }
-        [self hideHUD];
-    } fail:^(NSError * _Nullable error) {
-        [self hideHUD];
-    }];
-}
-
-- (void)refreshSelledGoods{
-    if (!self.goodssellArr.count) {
-        return;
-    }
-    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-
-
-    if(self.goodssellArr.count==1){
-        NoticeGoodsModel *good1 = self.goodssellArr[0];
-        [parm setObject:good1.goodId forKey:@"goodsId"];
-    }else if (self.goodssellArr.count == 2){
-        NoticeGoodsModel *good1 = self.goodssellArr[0];
-        NoticeGoodsModel *good2 = self.goodssellArr[1];
-        [parm setObject:[NSString stringWithFormat:@"%@,%@",good1.goodId,good2.goodId] forKey:@"goodsId"];
-    }
-    __weak typeof(self) weakSelf = self;
-   
-    [[DRNetWorking shareInstance] requestWithPatchPath:@"shop/setShopProduct" Accept:@"application/vnd.shengxi.v5.5.0+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-        [weakSelf hideHUD];
-        if(success){
-            [weakSelf refreshIfHasFree];
-        }
-    } fail:^(NSError * _Nullable error) {
-        [self hideHUD];
-    }];
-}
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
@@ -195,84 +140,37 @@
     NoticeShopDetailSection *headV = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"headerView"];
     headV.subTitleLabel.hidden = YES;
     headV.subImageView.hidden = YES;
-    [_footView removeFromSuperview];
-    [_freeButton removeFromSuperview];
+    headV.mainTitleLabel.text = @"在售服务";
+    headV.mainTitleLabel.frame = CGRectMake(15,0, 200,37);
     if (!self.goodssellArr.count) {//没有在售商品
-        
+        self.tableView.tableFooterView = self.footView;
         [headV addSubview:self.footView];
     }else{
-        if (!self.hasFree) {
-            [headV addSubview:self.freeButton];
-        }
+        self.tableView.tableFooterView = nil;
     }
     return headV;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (!self.goodssellArr.count) {
-        return self.footView.frame.size.height;
-    }else{
-        if (self.hasFree) {
-            return 0;
-        }else{
-            return self.freeButton.frame.size.height;
-        }
-    }
+    return 37;
 }
 
 - (UIView *)footView{
     if(!_footView){
-        _footView = [[UIView alloc] initWithFrame:CGRectMake(0,0, DR_SCREEN_WIDTH, (DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT)/2)];
+        _footView = [[UIView alloc] initWithFrame:CGRectMake(0,0, DR_SCREEN_WIDTH, 132)];
         _footView.backgroundColor = [UIColor whiteColor];
 
-        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-60)/2, (_footView.frame.size.height-150)/2, 60, 60)];
-        imageV.image = UIImageNamed(@"sxnogoodsshow");
-        [_footView addSubview:imageV];
-        
-        UILabel *markL = [[UILabel  alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageV.frame)+12, DR_SCREEN_WIDTH, 20)];
+
+        UILabel *markL = [[UILabel  alloc] initWithFrame:CGRectMake(0,0, DR_SCREEN_WIDTH, 132)];
         markL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
         markL.font = FOURTHTEENTEXTFONTSIZE;
         markL.textAlignment = NSTextAlignmentCenter;
         markL.text = @"有服务商品才能开始营业噢～";
         [_footView addSubview:markL];
         
-        UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-93)/2, CGRectGetMaxY(markL.frame)+20, 93, 32)];
-        addBtn.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
-        [addBtn setAllCorner:16];
-        [addBtn setTitle:@"添加商品" forState:UIControlStateNormal];
-        [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        addBtn.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
-        [addBtn addTarget:self action:@selector(addClick) forControlEvents:UIControlEventTouchUpInside];
-        [_footView addSubview:addBtn];
+
     }
     return _footView;
-}
-
-- (UIButton *)freeButton{
-    if (!_freeButton) {
-        _freeButton = [[UIButton  alloc] initWithFrame:CGRectMake(15, 0, DR_SCREEN_WIDTH-30, (DR_SCREEN_WIDTH-30)*48/345)];
-        [_freeButton setBackgroundImage:UIImageNamed(@"addfreegood_img") forState:UIControlStateNormal];
-        [_freeButton addTarget:self action:@selector(addFreeClick) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _freeButton;
-}
-
-- (void)refreshIfHasFree{
-    
-    if (self.refreshGoodsBlock) {
-        self.refreshGoodsBlock(self.goodssellArr);
-    }
-    
-    BOOL hasFree = NO;
-    for (NoticeGoodsModel * goods in self.goodssellArr) {
-        if (goods.is_experience.boolValue) {
-            hasFree = YES;
-            break;
-        }
-    }
-
-    self.hasFree = hasFree;
-    [self.tableView reloadData];
 }
 
 
@@ -292,6 +190,46 @@
     !self.scrollCallback ?: self.scrollCallback(scrollView);
 }
 
+- (UIView *)headView{
+    if (!_headView) {
+        
+        _headView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 100)];
+        CGFloat width = (DR_SCREEN_WIDTH-45)/2;
+        for (int i = 0; i < 2; i++) {
+            FSCustomButton *button = [[FSCustomButton  alloc] initWithFrame:CGRectMake(15+(width+15)*i, 18, width, 64)];
+            button.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+            [button setAllCorner:10];
+            button.titleLabel.font = XGFourthBoldFontSize;
+            [button setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
+            [button setTitle:i==0?@"  管理服务列表":@"  上架服务" forState:UIControlStateNormal];
+            button.tag = i;
+            [button setImage:i==0?UIImageNamed(@"sx_managergood"):UIImageNamed(@"sx_upgoods") forState:UIControlStateNormal];
+            button.buttonImagePosition = FSCustomButtonImagePositionLeft;
+            [button addTarget:self action:@selector(funClick:) forControlEvents:UIControlEventTouchUpInside];
+            [_headView addSubview:button];
+        }
+    }
+    return _headView;
+}
 
+- (void)funClick:(FSCustomButton *)button{
+    if (button.tag == 0) {
+        [self addClick];
+    }else{
+        [self.sellView showATView];
+    }
+}
 
+- (SXUpGoodsToSellView *)sellView{
+    if (!_sellView) {
+        _sellView = [[SXUpGoodsToSellView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+        _sellView.goodsModel = self.shopModel;
+        __weak typeof(self) weakSelf = self;
+        _sellView.refreshGoodsBlock = ^(NSMutableArray * _Nonnull goodsArr) {
+            weakSelf.goodssellArr = goodsArr;
+            [weakSelf.tableView reloadData];
+        };
+    }
+    return _sellView;
+}
 @end

@@ -175,10 +175,17 @@
         }
         return;
     }
-    if (self.oneClick) {
-        
-    }
+    
     KMTag *tag = (KMTag *)pan.view;
+    if (self.isChoiceTap) {
+        for (KMTag *oldT in self.tags) {
+            oldT.isChoice = NO;
+            oldT.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+        }
+        tag.isChoice = YES;
+        tag.backgroundColor = [UIColor colorWithHexString:@"#D8F361"];
+   
+    }
     if ([self.delegate_ respondsToSelector:@selector(ptl_TagListView:didSelectTagViewAtIndex:selectContent:)]) {
         [self.delegate_ ptl_TagListView:self didSelectTagViewAtIndex:tag.tag selectContent:tag.text];
     }
@@ -190,7 +197,7 @@
     
     if(self.hasImge){
         CGFloat marginX = 10;
-        CGFloat marginY = 5;
+        CGFloat marginY = self.isChoiceTap?10: 5;
         
         __block CGFloat x = 0;
         __block CGFloat y = 10;

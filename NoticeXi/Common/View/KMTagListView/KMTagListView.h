@@ -19,6 +19,7 @@
 @property (nonatomic, assign) BOOL oneClick;//单点
 @property (nonatomic, weak)id<KMTagListViewDelegate> delegate_;
 @property (nonatomic, assign) BOOL hasImge;//带图片的标签
+@property (nonatomic, assign) BOOL isChoiceTap;
 - (void)setupSubViewsWithTitles:(NSArray *)titles;
 @property (nonatomic, strong) NSMutableArray *labelItems;
 - (void)setupCustomeSubViewsWithTitles:(NSArray *)titles;

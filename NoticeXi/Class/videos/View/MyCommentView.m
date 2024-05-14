@@ -12,6 +12,8 @@
 #import "SXVideoCommentJson.h"
 #import "SXVideoCmmentFirstCell.h"
 #import "SXVideoCommentMoreView.h"
+#import "YYPersonItem.h"
+#import "SXStudyBaseController.h"
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 
 @interface MyCommentView ()<UITableViewDataSource,UITableViewDelegate>
@@ -130,9 +132,24 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 }
 
 //发送评论或者回复
-- (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId{
+- (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId linkArr:(nonnull NSMutableArray *)linkArr{
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:comment forKey:@"content"];
+    
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    for (YYPersonItem *item in linkArr) {
+        if (item.user_id && item.name) {
+            NSMutableDictionary *parm1 = [[NSMutableDictionary alloc] init];
+            [parm1 setObject:item.user_id forKey:@"id"];
+            [parm1 setObject:item.name forKey:@"name"];
+            [arr addObject:parm1];
+        }
+    }
+    
+    if (arr.count) {
+        [parm setObject:[NoticeTools arrayToJSONString:arr] forKey:@"toSeries"];
+    }
+    
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoCommont/%@/%@",self.videoModel.vid,commentId.intValue?commentId:@"0"] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             self.tableView.tableFooterView = nil;
@@ -186,6 +203,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
             }
         }
     } fail:^(NSError * _Nullable error) {
+        
     }];
 }
 
@@ -418,6 +436,10 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
             }
         }
     };
+    
+    headV.linkClickBlock = ^(NSString * _Nonnull searid) {
+        [weakSelf pushSearis:searid];
+    };
     return headV;
 }
 
@@ -463,7 +485,33 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
         [weakSelf requestComCount];
         [weakSelf replaceForDelete:commentM];
     };
+    
+    cell.linkClickBlock = ^(NSString * _Nonnull searId) {
+        [weakSelf pushSearis:searId];
+    };
     return cell;
+}
+
+- (void)pushSearis:(NSString *)searId{
+ 
+    [[NoticeTools getTopViewController] showHUD];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",searId] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+        [[NoticeTools getTopViewController] hideHUD];
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return;
+            }
+            SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
+            if (!searismodel) {
+                return;
+            }
+            SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
+            ctl.paySearModel = searismodel;
+            [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+        }
+    } fail:^(NSError *error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
 }
 
 //删除回复的时候，请求接口替换一级评论
