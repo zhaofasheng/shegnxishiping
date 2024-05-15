@@ -22,7 +22,8 @@
 @property (nonatomic, assign) BOOL isChoiceTap;
 - (void)setupSubViewsWithTitles:(NSArray *)titles;
 @property (nonatomic, strong) NSMutableArray *labelItems;
-- (void)setupCustomeSubViewsWithTitles:(NSArray *)titles;
+- (void)setupCustomeSubViewsWithTitles:(NSArray *)titles;//
+- (void)setupCustomeSubViewsWithTitles:(NSArray *)titles defaultStr:(NSString *)defaultStr;
 - (void)setupCustomeColorSubViewsWithTitles:(NSArray *)titles;
 - (void)setupCustomeImgSubViewsWithTitles1:(NSMutableArray *)titles;//固定图片
 - (void)setupCustomeImgSubViewsWithTitles:(NSMutableArray *)titles;//不固定图片

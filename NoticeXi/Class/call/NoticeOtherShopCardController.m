@@ -8,10 +8,10 @@
 
 #import "NoticeOtherShopCardController.h"
 #import "NoticerUserShopDetailHeaderView.h"
-#import "NoticeChoiceJieyouChatCell.h"
 #import "NoticeShopChatCommentCell.h"
 #import "NoticeShopDetailSection.h"
 #import "NoticeJieYouGoodsComController.h"
+#import "NoticeChatVoiceShopCell.h"
 @interface NoticeOtherShopCardController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
 @property (nonatomic, strong) UITableView *tableView;
@@ -46,7 +46,7 @@
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        [_tableView registerClass:[NoticeChoiceJieyouChatCell class] forCellReuseIdentifier:@"cell"];
+        [_tableView registerClass:[NoticeChatVoiceShopCell class] forCellReuseIdentifier:@"cell"];
         [_tableView registerClass:[NoticeShopChatCommentCell class] forCellReuseIdentifier:@"cell1"];
         [_tableView registerClass:[NoticeShopDetailSection class] forHeaderFooterViewReuseIdentifier:@"headerView"];
         _tableView.rowHeight = 123;
@@ -109,12 +109,25 @@
         self.goodssellArr = [[NSMutableArray alloc] init];
     }
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/%@/goods",self.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/%@/goods",self.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             [self.goodssellArr removeAllObjects];
             for (NSDictionary *dic in dict[@"data"]) {
-                NoticeGoodsModel *model = [NoticeGoodsModel mj_objectWithKeyValues:dic];
-                [self.goodssellArr addObject:model];
+                NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];
+                
+                if (goods.tagString) {
+                    goods.nameHeight = [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-96-60 string:goods.goods_name andFirstWidth:GET_STRWIDTH(goods.tagString, 11, 20)+10+5];
+                    if (goods.nameHeight < 20) {
+                        goods.nameHeight = 20;
+                    }
+                }else{
+                    goods.nameHeight = [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-96-60 string:goods.goods_name isJiacu:YES];
+                    if (goods.nameHeight < 20) {
+                        goods.nameHeight = 20;
+                    }
+                }
+                
+                [self.goodssellArr addObject:goods];
             }
             if (_goodssellArr.count) {
                 if(self.refreshGoodsBlock){
@@ -209,16 +222,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
    
     if (indexPath.section == 0) {
-        NoticeChoiceJieyouChatCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        cell.isUserLookShop = YES;
-        __weak typeof(self) weakSelf = self;
-        cell.buyGoodsBlock = ^(NoticeGoodsModel * _Nonnull buyGood) {
-            if(weakSelf.buyGoodsBlock){
-                weakSelf.buyGoodsBlock(buyGood);
-            }
-        };
+        
+        NoticeChatVoiceShopCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        cell.noneedEdit = YES;
+        cell.isOtherLook = YES;
         cell.goodModel = self.goodssellArr[indexPath.row];
         return cell;
+        
     }else{
         NoticeShopChatCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
         cell.isUserView = YES;
@@ -227,7 +237,20 @@
     }
 }
 
+- (void)scrolllToGoods{
+    if (self.goodssellArr.count) {
+        [self.tableView setContentOffset:CGPointMake(0, self.headerView.frame.size.height)];
+    }
+}
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        NoticeGoodsModel *goodM = self.goodssellArr[indexPath.row];
+        if(self.buyGoodsBlock){
+            self.buyGoodsBlock(goodM);
+        }
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 1) {
@@ -238,10 +261,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        if (indexPath.row == self.goodssellArr.count-1) {
-            return 123+15;
+        NoticeGoodsModel *goods = self.goodssellArr[indexPath.row];
+        if (goods.is_experience.boolValue) {
+            return 101+8;
         }
-        return 123;
+        return goods.nameHeight+92+15+8-45;
     }
     NoticeShopCommentModel *model = self.comArr[indexPath.row];
 

@@ -8,12 +8,13 @@
 
 #import "NoticeJieYouGoodsController.h"
 #import "NoticeAddSellMerchantController.h"
-#import "NoticeChoiceJieyouChatCell.h"
+#import "NoticeChatVoiceShopCell.h"
 #import "NoticeShopMyWallectController.h"
 #import "NoticeHasServeredController.h"
 #import "NoticeXi-Swift.h"
 #import "NoticeShopDetailSection.h"
 #import "SXUpGoodsToSellView.h"
+#import "SXAddNewGoodsController.h"
 @interface NoticeJieYouGoodsController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
 @property (nonatomic, strong) UITableView *tableView;
@@ -35,7 +36,7 @@
         _tableView.dataSource = self;
         _tableView.rowHeight = 123;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_tableView registerClass:[NoticeChoiceJieyouChatCell class] forCellReuseIdentifier:@"cell1"];
+        [_tableView registerClass:[NoticeChatVoiceShopCell class] forCellReuseIdentifier:@"cell1"];
         _tableView.estimatedRowHeight = 0;
         _tableView.estimatedSectionHeaderHeight = 0;
         _tableView.estimatedSectionFooterHeight = 0;
@@ -54,7 +55,7 @@
     self.view.backgroundColor =  [UIColor whiteColor];
     self.tableView.tableHeaderView = self.headView;
     [self.view addSubview:self.tableView];
-    self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-BOTTOM_HEIGHT-50-40);
+    self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-BOTTOM_HEIGHT-50-44-10);
 
 }
 
@@ -73,14 +74,34 @@
     if (!self.goodssellArr) {
         self.goodssellArr = [[NSMutableArray alloc] init];
     }
-    
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoods/byUser" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+ 
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/%@/goods",self.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
-            for (NSDictionary *dic in dict[@"data"][@"goodsList"]) {
-                NoticeGoodsModel *model = [NoticeGoodsModel mj_objectWithKeyValues:dic];
-                [self.goodssellArr addObject:model];
+            [self.goodssellArr removeAllObjects];
+            for (NSDictionary *dic in dict[@"data"]) {
+                NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];
+                
+                if (goods.tagString) {
+                    goods.nameHeight = [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-96-60 string:goods.goods_name andFirstWidth:GET_STRWIDTH(goods.tagString, 11, 20)+10+5];
+                    if (goods.nameHeight < 20) {
+                        goods.nameHeight = 20;
+                    }
+                }else{
+                    goods.nameHeight = [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-96-60 string:goods.goods_name isJiacu:YES];
+                    if (goods.nameHeight < 20) {
+                        goods.nameHeight = 20;
+                    }
+                }
+                
+                [self.goodssellArr addObject:goods];
             }
-     
+            if (self.goodssellArr.count) {
+                if (self.refreshGoodsBlock) {
+                    self.refreshGoodsBlock(self.goodssellArr);
+                }
+                [self.tableView reloadData];
+            }
+      
         }
     } fail:^(NSError * _Nullable error) {
     }];
@@ -94,7 +115,19 @@
             [alerView showXLAlertView];
             return;
         }
-        [self addClick];
+        
+        NoticeGoodsModel *goodM = self.goodssellArr[indexPath.row];
+        if (goodM.is_experience.boolValue) {
+            return;
+        }
+        SXAddNewGoodsController *ctl = [[SXAddNewGoodsController alloc] init];
+        ctl.goodsModel = self.shopModel;
+        ctl.changeGoodModel = goodM;
+        __weak typeof(self) weakSelf = self;
+        ctl.refreshBlock = ^(BOOL refresh) {
+            [weakSelf requestGoods];
+        };
+        [self.navigationController pushViewController:ctl animated:YES];
     }
    
 }
@@ -128,9 +161,21 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NoticeChoiceJieyouChatCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+    NoticeChatVoiceShopCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+    cell.noneedEdit = YES;
+    cell.isSelfLook = YES;
+    cell.shopId = self.shopModel.myShopM.shopId;
     cell.goodModel = self.goodssellArr[indexPath.row];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+ 
+    NoticeGoodsModel *goods = self.goodssellArr[indexPath.row];
+    if (goods.is_experience.boolValue) {
+        return 101+8;
+    }
+    return goods.nameHeight+92+15+8-45;
 }
 
 
@@ -144,7 +189,6 @@
     headV.mainTitleLabel.frame = CGRectMake(15,0, 200,37);
     if (!self.goodssellArr.count) {//没有在售商品
         self.tableView.tableFooterView = self.footView;
-        [headV addSubview:self.footView];
     }else{
         self.tableView.tableFooterView = nil;
     }
@@ -213,9 +257,19 @@
 }
 
 - (void)funClick:(FSCustomButton *)button{
+    if(self.shopModel.myShopM.operate_status.integerValue == 2){
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"店铺营业中，不能更换修改商品哦" message:nil cancleBtn:@"知道了"];
+        [alerView showXLAlertView];
+        return;
+    }
     if (button.tag == 0) {
         [self addClick];
     }else{
+        if(!self.goodssellArr.count){
+            XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"请在管理列表添加收费服务" message:nil cancleBtn:@"知道了"];
+            [alerView showXLAlertView];
+            return;
+        }
         [self.sellView showATView];
     }
 }

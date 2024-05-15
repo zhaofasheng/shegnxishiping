@@ -158,6 +158,7 @@
     gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.workButton.frame), CGRectGetHeight(self.workButton.frame));
     self.gradientLayer = gradientLayer;
     [self.workButton.layer addSublayer:self.gradientLayer];
+    [self.workButton setTitle:@"付费咨询" forState:UIControlStateNormal];
     [self.workButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     self.workButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
     [self.startView addSubview:self.workButton];
@@ -304,7 +305,7 @@
     [parm setObject:weakSelf.choiceGoods.goodId forKey:@"goodsId"];
     [parm setObject:weakSelf.choiceGoods.shop_id forKey:@"shopId"];
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoodsOrder" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoodsOrder" Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [weakSelf hideHUD];
         if(success){
             weakSelf.orderM = [NoticeByOfOrderModel mj_objectWithKeyValues:dict[@"data"]];
@@ -461,10 +462,6 @@
                 for (NoticeGoodsModel *goods in goodsArr) {
                     if (goods.is_experience.boolValue) {
                         hasFree = YES;
-                    }else{
-                        NSString *str1 = [NSString stringWithFormat:@"%@",goods.price];
-                        NSString *str2 = [NSString stringWithFormat:@"鲸币/%@分钟",goods.duration];
-                        [weakSelf.workButton setAttributedTitle:[DDHAttributedMode setString:[NSString stringWithFormat:@"%@%@",str1,str2] setSize:12 setLengthString:str2 beginSize:str1.length] forState:UIControlStateNormal];
                     }
                 }
                 if (hasFree) {
@@ -494,13 +491,8 @@
 }
 
 - (void)startClick{
-    for (NoticeGoodsModel *goods in _goodsArr) {
-        if (!goods.is_experience.boolValue) {
-            goods.shop_id = self.shopModel.shopId;
-            [self buyVoiceChat:goods];
-            break;
-        }
-    }
+    [self.pagerView.mainTableView setContentOffset:CGPointMake(0, self.shopHeaderView.frame.size.height)];
+    [self.cardVC scrolllToGoods];
 }
 
 - (void)viewDidLayoutSubviews {

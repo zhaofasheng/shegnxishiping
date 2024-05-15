@@ -17,14 +17,14 @@
 #import "NoticeEditShopInfoController.h"
 #import "NoticeJieYouGoodsComController.h"
 #import "NoticeJieYouGoodsController.h"
-
+#import "SXShopOpenTypeView.h"
 @interface NoticeMyJieYouShopController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NoticeShopCardController *cardVC;
 @property (nonatomic, strong) NoticeJieYouGoodsComController *comVC;
 @property (nonatomic, strong) NoticeJieYouGoodsController *goodsVC;
 @property (nonatomic, strong) NoticeCureentShopStatusModel *applyModel;
-@property (nonatomic, strong) UIButton *editButton;
+@property (nonatomic, strong) FSCustomButton *editButton;
 @property (nonatomic, strong) UIButton *workButton;
 @property (nonatomic, strong) NSMutableArray *sellGoodsArr;
 @property (nonatomic, strong) NoticeMyShopModel *shopModel;
@@ -44,6 +44,8 @@
 @property (nonatomic, strong) UILabel *infoButton;
 @property (nonatomic, strong) UILabel *orderButton;
 @property (nonatomic, strong) UILabel *comButton;
+
+@property (nonatomic, strong) SXShopOpenTypeView *typeView;
 @end
 
 @implementation NoticeMyJieYouShopController
@@ -124,22 +126,23 @@
     [self.sectionView setCornerOnTopRight:25];
     [self.sectionView addSubview:self.categoryView];
 
-    self.startView = [[UIView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-40-10, DR_SCREEN_WIDTH, 40)];
+    self.startView = [[UIView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-44-10, DR_SCREEN_WIDTH, 44)];
     [self.view addSubview:self.startView];
     self.startView.backgroundColor = self.view.backgroundColor;
     
-//    self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 0, 112, 40)];
-//    self.editButton.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
-//    [self.editButton setAllCorner:20];
-//    [self.editButton setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
-//    self.editButton.titleLabel.font = FIFTHTEENTEXTFONTSIZE;
-//    [self.editButton setTitle:@"编辑资料" forState:UIControlStateNormal];
-//    [self.startView addSubview:self.editButton];
-//    [self.editButton addTarget:self action:@selector(editClick) forControlEvents:UIControlEventTouchUpInside];
+    self.editButton = [[FSCustomButton alloc] initWithFrame:CGRectMake(0, 0, 74, 44)];
+    [self.editButton setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
+    self.editButton.titleLabel.font = ELEVENTEXTFONTSIZE;
+    [self.editButton setTitle:@"营业模式" forState:UIControlStateNormal];
+    self.editButton.buttonImagePosition = FSCustomButtonImagePositionTop;
+    [self.editButton setImage:UIImageNamed(@"sx_shopopentype") forState:UIControlStateNormal];
+    [self.startView addSubview:self.editButton];
+    [self.editButton addTarget:self action:@selector(typeClick) forControlEvents:UIControlEventTouchUpInside];
 
-    self.workButton = [[UIButton alloc] initWithFrame:CGRectMake(20,0, DR_SCREEN_WIDTH-40, 40)];
-    self.workButton.layer.cornerRadius = 20;
+    self.workButton = [[UIButton alloc] initWithFrame:CGRectMake(74,0, DR_SCREEN_WIDTH-74-15, 44)];
+    self.workButton.layer.cornerRadius = 22;
     self.workButton.layer.masksToBounds = YES;
+    
     //渐变色
     CAGradientLayer *gradientLayer = [[CAGradientLayer alloc] init];
     gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FE827E"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#D84022"].CGColor];
@@ -207,7 +210,6 @@
             self.goodsVC.shopModel = self.shopModel;
             self.comVC.shopId = self.shopModel.myShopM.shopId;
             if (self.shopModel.myShopM.comment_num.intValue) {
-
                 self.comButton.text = [NSString stringWithFormat:@"评论%@",self.shopModel.myShopM.comment_num.intValue?self.shopModel.myShopM.comment_num:@""];
             }else{
                 self.comButton.text = @"评价";
@@ -237,6 +239,10 @@
 - (void)ruleClick{
     NoticeShopRuleController *ctl = [[NoticeShopRuleController alloc] init];
     [self.navigationController pushViewController:ctl animated:YES];
+}
+
+- (void)typeClick{
+    [self.typeView showATView];
 }
 
 - (void)startClick{
@@ -372,9 +378,12 @@
         __weak typeof(self) weakSelf = self;
         _goodsVC = [[NoticeJieYouGoodsController alloc] init];
         _goodsVC.refreshGoodsBlock = ^(NSMutableArray * _Nonnull goodsArr) {
-            weakSelf.sellGoodsArr = goodsArr;
-            weakSelf.shopHeaderView.detailHeader.goodsNum = goodsArr.count;
-            [weakSelf refresButton];
+            if (goodsArr.count) {
+                weakSelf.sellGoodsArr = goodsArr;
+                weakSelf.shopHeaderView.detailHeader.goodsNum = goodsArr.count;
+                [weakSelf refresButton];
+            }
+
         };
     }
     return _goodsVC;
@@ -513,5 +522,12 @@
         [_comButton addGestureRecognizer:tap];
     }
     return _comButton;
+}
+
+- (SXShopOpenTypeView *)typeView{
+    if (!_typeView) {
+        _typeView = [[SXShopOpenTypeView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    }
+    return _typeView;
 }
 @end

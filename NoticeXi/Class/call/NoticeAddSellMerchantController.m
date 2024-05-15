@@ -54,13 +54,8 @@
     self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(20, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-10-40, DR_SCREEN_WIDTH-40, 40)];
     self.addButton.layer.cornerRadius = 20;
     self.addButton.layer.masksToBounds = YES;
-    if(self.choiceArr.count){
-        self.addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
-        [self.addButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-    }else{
-        self.addButton.backgroundColor = [UIColor colorWithHexString:@"#8A8F99"];
-        [self.addButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
-    }
+    self.addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+    [self.addButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
 
     [self.addButton setTitle:@"确认" forState:UIControlStateNormal];
     self.addButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
@@ -74,11 +69,12 @@
 
 - (void)requestGoods{
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
-            
+            [self.freeArr removeAllObjects];
+            [self.voiceArr removeAllObjects];
             [self.choiceArr removeAllObjects];
-            for (NSDictionary *dic in dict[@"data"][@"goods_list"]) {
+            for (NSDictionary *dic in dict[@"data"]) {
                 NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];
                 goods.choice = goods.is_selling.boolValue? @"1" : @"0";
     
@@ -104,13 +100,7 @@
                 }
                 
             }
-            if(self.choiceArr.count){
-                self.addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
-                [self.addButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-            }else{
-                self.addButton.backgroundColor = [UIColor colorWithHexString:@"#8A8F99"];
-                [self.addButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
-            }
+   
             [self.tableView reloadData];
         }
     } fail:^(NSError * _Nullable error) {
@@ -130,7 +120,7 @@
         }
     }
     if (!hasNoFree) {
-        [self showToastWithText:@"必须添加一个付费商品才能营业哦~"];
+        [self showToastWithText:@"请至少选中一项收费服务"];
         return;
     }
     
@@ -145,7 +135,7 @@
 
     __weak typeof(self) weakSelf = self;
     [self showHUD];
-    [[DRNetWorking shareInstance] requestWithPatchPath:@"shop/setShopProduct" Accept:@"application/vnd.shengxi.v5.5.0+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestWithPatchPath:@"shop/setShopProduct" Accept:@"application/vnd.shengxi.v5.8.2+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [weakSelf hideHUD];
         if(success){
             [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHGOODS" object:nil];
@@ -186,13 +176,7 @@
                     }
                 }
         
-                if(weakSelf.choiceArr.count){
-                    weakSelf.addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
-                    [weakSelf.addButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-                }else{
-                    weakSelf.addButton.backgroundColor = [UIColor colorWithHexString:@"#8A8F99"];
-                    [weakSelf.addButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
-                }
+           
             }else { // 没有麦克风权限
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:[NoticeTools getLocalStrWith:@"recoder.kaiqire"] message:@"有麦克风权限才可以开通语音通话功能哦~" sureBtn:[NoticeTools getLocalStrWith:@"recoder.kaiqi"] cancleBtn:[NoticeTools getLocalStrWith:@"main.cancel"] right:YES];
                 alerView.resultIndex = ^(NSInteger index) {
@@ -223,10 +207,11 @@
     cell1.shopId = self.goodsModel.myShopM.shopId;
     cell1.goodModel = indexPath.section == 0?self.freeArr[indexPath.row] : self.voiceArr[indexPath.row];
     __weak typeof(self) weakSelf = self;
-    cell1.changePriceBlock = ^(NSString * _Nonnull price) {
-        if(weakSelf.changePriceBlock){
-            weakSelf.changePriceBlock(price);
-        }
+    cell1.changePriceBlock = ^(NoticeGoodsModel * _Nonnull goodModel) {
+        [weakSelf changeGoods:goodModel];
+    };
+    cell1.deleteBlock = ^(NoticeGoodsModel * _Nonnull goodModel) {
+        [weakSelf deleteGood:goodModel];
     };
     return cell1;
 }
@@ -357,6 +342,39 @@
 
 - (void)addNewsGoods{
     SXAddNewGoodsController *ctl = [[SXAddNewGoodsController alloc] init];
+    ctl.goodsModel = self.goodsModel;
+    __weak typeof(self) weakSelf = self;
+    ctl.refreshBlock = ^(BOOL refresh) {
+        [weakSelf requestGoods];
+    };
     [self.navigationController pushViewController:ctl animated:YES];
+}
+
+- (void)changeGoods:(NoticeGoodsModel *)goodM{
+    SXAddNewGoodsController *ctl = [[SXAddNewGoodsController alloc] init];
+    ctl.goodsModel = self.goodsModel;
+    ctl.changeGoodModel = goodM;
+    __weak typeof(self) weakSelf = self;
+    ctl.refreshBlock = ^(BOOL refresh) {
+        [weakSelf requestGoods];
+    };
+    [self.navigationController pushViewController:ctl animated:YES];
+}
+
+- (void)deleteGood:(NoticeGoodsModel *)goodM{
+
+    [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"shop/goods/%@",goodM.goodId] Accept:@"application/vnd.shengxi.v5.8.2+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        
+    } fail:^(NSError * _Nullable error) {
+        
+    }];
+    
+    for (NoticeGoodsModel *oldM in self.voiceArr) {
+        if ([oldM.goodId isEqualToString:goodM.goodId]) {
+            [self.voiceArr removeObject:oldM];
+            [self.tableView reloadData];
+            break;
+        }
+    }
 }
 @end

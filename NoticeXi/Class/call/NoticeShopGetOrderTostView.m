@@ -12,9 +12,7 @@
 #import "UIWindow+TUICalling.h"
 #import <Bugly/Bugly.h>
 @implementation NoticeShopGetOrderTostView
-{
-    UILabel *_titleL;
-}
+
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor colorWithHexString:@"#333333"];

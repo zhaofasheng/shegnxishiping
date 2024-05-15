@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SXAddNewsGoods4Cell : BaseCell<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UITableView *movieTableView;
+@property (nonatomic, strong) NSMutableArray *timeArr;
+@property (nonatomic, copy)  void(^timeBlock)(NSString *time);
 @end
 
 NS_ASSUME_NONNULL_END

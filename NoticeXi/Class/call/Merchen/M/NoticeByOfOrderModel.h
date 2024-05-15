@@ -39,7 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *experience_time;
 @property (nonatomic, strong) NSString *completeNum;//完成数量
 @property (nonatomic, strong) NSString *failNum;//失效数量
-
 @property (nonatomic, strong) NSString *user_sig;
 /*
  店铺状态说明  key=>shopOrder

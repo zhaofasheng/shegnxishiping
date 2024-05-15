@@ -89,7 +89,7 @@
     //获取七牛token
     NSString *pathMd5 =[NSString stringWithFormat:@"%ld_%@.jpg",arc4random()%999999999678999,[NoticeTools getFileMD5WithPath:path]];
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-    [parm setObject:@"86" forKey:@"resourceType"];
+    [parm setObject:self.isChoiceGoods?@"91": @"86" forKey:@"resourceType"];
     [parm setObject:pathMd5 forKey:@"resourceContent"];
 
     [[XGUploadDateManager sharedManager] uploadImageWithImage:image parm:parm progressHandler:^(CGFloat progress) {

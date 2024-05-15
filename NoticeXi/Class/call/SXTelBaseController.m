@@ -12,10 +12,11 @@
 #import "NoticeMyShopModel.h"
 #import "SXSpulyShopView.h"
 #import "NoticeMyJieYouShopController.h"
+#import "SXTeleListBaseController.h"
 @interface SXTelBaseController ()
 
 @property (nonatomic, strong) NoticeTelController *freeVC;
-@property (nonatomic, strong) NoticeTelController *payVC;
+@property (nonatomic, strong) SXTeleListBaseController *payVC;
 @property (nonatomic, strong) SXSpulyShopView *supplyView;
 @property (nonatomic, strong) UIImageView *shopIconImageView;
 @property (nonatomic, strong) UILabel *shopStatusL;
@@ -125,9 +126,9 @@
     return _freeVC;
 }
 
-- (NoticeTelController *)payVC{
+- (SXTeleListBaseController *)payVC{
     if (!_payVC) {
-        _payVC = [[NoticeTelController alloc] init];
+        _payVC = [[SXTeleListBaseController alloc] init];
     }
     return _payVC;
 }

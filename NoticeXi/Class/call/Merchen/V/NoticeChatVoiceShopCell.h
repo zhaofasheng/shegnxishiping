@@ -19,11 +19,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *titleL;
 @property (nonatomic, strong) UILabel *markL;
 @property (nonatomic, strong) UILabel *tagL;
+@property (nonatomic, strong) UILabel *changeGoodsBtn;
 @property (nonatomic, strong) FSCustomButton *changePriceBtn;
 @property (nonatomic, strong) FSCustomButton *deleteBtn;
-@property (nonatomic, copy) void(^changePriceBlock)(NSString *price);
+@property (nonatomic, copy) void(^changePriceBlock)(NoticeGoodsModel *goodModel);
+@property (nonatomic, copy) void(^deleteBlock)(NoticeGoodsModel *goodModel);
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, assign) BOOL noneedEdit;
+@property (nonatomic, assign) BOOL isSelfLook;
+@property (nonatomic, assign) BOOL isOtherLook;
+
+@property (nonatomic, strong) UILabel *freeLabel;
+@property (nonatomic, strong) UIButton *buyButton;
 @end
 
 NS_ASSUME_NONNULL_END

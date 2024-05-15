@@ -81,7 +81,7 @@
 
     __weak typeof(self) weakSelf = self;
     [[NoticeTools getTopViewController] showHUD];
-    [[DRNetWorking shareInstance] requestWithPatchPath:@"shop/setShopProduct" Accept:@"application/vnd.shengxi.v5.5.0+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestWithPatchPath:@"shop/setShopProduct" Accept:@"application/vnd.shengxi.v5.8.2+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [[NoticeTools getTopViewController] hideHUD];
         if(success){
             [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHGOODS" object:nil];
@@ -97,38 +97,14 @@
     
 }
 
-
-
-
-- (void)createRefesh{
-    
-//    __weak SXUpGoodsToSellView *ctl = self;
-//
-//    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        ctl.isDown = YES;
-//        ctl.pageNo = 1;
-//        [ctl request];
-//    }];
-//    // 设置颜色
-//    header.stateLabel.textColor = [NoticeTools isWhiteTheme]? [UIColor colorWithHexString:@"#b7b7b7"] : GetColorWithName(VMainTextColor);
-//    header.lastUpdatedTimeLabel.textColor = [NoticeTools isWhiteTheme]? [UIColor colorWithHexString:@"#b7b7b7"] : GetColorWithName(VMainTextColor);
-//    self.tableView.mj_header = header;
-//    
-//    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-//        //上拉
-//        ctl.isDown = NO;
-//        ctl.pageNo++;
-//        [ctl request];
-//    }];
-}
-
 - (void)request{
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
-            
+            [self.freeArr removeAllObjects];
+            [self.voiceArr removeAllObjects];
             [self.choiceArr removeAllObjects];
-            for (NSDictionary *dic in dict[@"data"][@"goods_list"]) {
+            for (NSDictionary *dic in dict[@"data"]) {
                 NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];
                 goods.choice = goods.is_selling.boolValue? @"1" : @"0";
     
@@ -154,13 +130,7 @@
                 }
                 
             }
-//            if(self.choiceArr.count){
-//                self.addButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
-//                [self.addButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-//            }else{
-//                self.addButton.backgroundColor = [UIColor colorWithHexString:@"#8A8F99"];
-//                [self.addButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
-//            }
+
             [self.tableView reloadData];
         }
     } fail:^(NSError * _Nullable error) {
@@ -210,6 +180,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return section == 0 ? 0 : 10;
 }
+
 - (void)showATView{
 
     self.isDown = YES;

@@ -19,17 +19,8 @@
         self.backView.layer.masksToBounds = YES;
         [self.contentView addSubview:self.backView];
         self.backView.backgroundColor = [UIColor whiteColor];
-        
-        self.tagView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, self.backView.frame.size.width, 30)];
-        self.tagView.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
-        [self.backView addSubview:self.tagView];
-        self.tagView.hidden = YES;
-        
-        self.tagL = [[UILabel  alloc] initWithFrame:CGRectMake(10, 0, self.tagView.frame.size.width-15, 30)];
-        self.tagL.font = ELEVENTEXTFONTSIZE;
-        self.tagL.textColor = [UIColor whiteColor];
-        [self.tagView addSubview:self.tagL];
-        
+    
+
         self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.backView.frame.size.width-72)/2,40, 72, 72)];
         self.iconImageView.layer.cornerRadius = 36;
         self.iconImageView.layer.masksToBounds = YES;
@@ -50,27 +41,27 @@
         self.contentL.numberOfLines = 0;
         [self.backView addSubview:self.contentL];
         
-        self.callView = [[UIView  alloc] initWithFrame:CGRectMake(0, self.backView.frame.size.height-45, self.backView.frame.size.width, 45)];
+        self.callView = [[UIView  alloc] initWithFrame:CGRectMake(self.backView.frame.size.width/2-20, self.backView.frame.size.height-32, self.backView.frame.size.width/2+20, 32)];
         [self.backView addSubview:self.callView];
         
-        UIImageView *callImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(10, 17, 12, 12)];
-        callImageV.image = UIImageNamed(@"sxcallimg_img");
-        [self.callView addSubview:callImageV];
+        CAGradientLayer *gradientLayer = [[CAGradientLayer alloc] init];
+        gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FFA2CC"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#FF60B3"].CGColor];
+        gradientLayer.startPoint = CGPointMake(0, 1);
+        gradientLayer.endPoint = CGPointMake(1, 1);
+        gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.callView.frame), CGRectGetHeight(self.callView.frame));
+        [self.callView.layer addSublayer:gradientLayer];
         
-        self.timeL = [[UILabel alloc] initWithFrame:CGRectMake(26, 0, (self.callView.frame.size.width-20)/2-26, 45)];
-        self.timeL.font = XGELEVENBoldFontSize;
-        self.timeL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        [self.callView addSubview:self.timeL];
+        [self.callView setCornerOnTopLeft:20];
         
-        self.moneyL = [[UILabel alloc] initWithFrame:CGRectMake(self.callView.frame.size.width/2, 0, self.callView.frame.size.width/2-10, 45)];
-        self.moneyL.font = SXNUMBERFONT(22);
-        self.moneyL.textAlignment = NSTextAlignmentRight;
-        self.moneyL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
+
+        self.moneyL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.callView.frame.size.width, 32)];
+        self.moneyL.font = SXNUMBERFONT(20);
+        self.moneyL.textAlignment = NSTextAlignmentCenter;
+        self.moneyL.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.callView addSubview:self.moneyL];
         
-    
-        self.markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)-20, CGRectGetMaxY(_iconImageView.frame)-20, 20, 20)];
-        self.markImageView.image = UIImageNamed(@"sxrenztub_img");
+        self.markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(12, 10, 54, 18)];
+        self.markImageView.image = UIImageNamed(@"sxrenztub_img1");
         [self.backView addSubview:self.markImageView];
         self.markImageView.hidden = YES;
     }
@@ -88,9 +79,9 @@
     }else{
         self.callView.hidden = NO;
         self.timeL.text = [NSString stringWithFormat:@"%@分钟",shopM.goodsM.duration];
-        NSString *allStr = [NSString stringWithFormat:@"%@鲸币",shopM.goodsM.price];
+        NSString *allStr = [NSString stringWithFormat:@"%@鲸币起",shopM.goodsM.price];
         NSString *money = shopM.goodsM.price;
-        self.moneyL.attributedText = [DDHAttributedMode setString:allStr setSize:12 setLengthString:@"鲸币" beginSize:money.length];
+        self.moneyL.attributedText = [DDHAttributedMode setString:allStr setSize:12 setLengthString:@"鲸币起" beginSize:money.length];
     }
     
     if (shopM.tale) {
@@ -103,18 +94,11 @@
     }
   
     if (shopM.verifyModel.authentication_type.intValue > 0) {
-        self.tagView.hidden = NO;
-        if (shopM.verifyModel.authentication_type.intValue == 1) {
-            self.tagL.text = [NSString stringWithFormat:@"%@ %@%@",shopM.verifyModel.school_name,shopM.verifyModel.speciality_name,shopM.verifyModel.education_optionName];
-        }else if (shopM.verifyModel.authentication_type.intValue == 2){
-            self.tagL.text = [NSString stringWithFormat:@"%@%@",shopM.verifyModel.industry_name,shopM.verifyModel.position_name];
-        }else if (shopM.verifyModel.authentication_type.intValue == 3){
-            self.tagL.text = shopM.verifyModel.credentials_name;
-        }
+  
         self.markImageView.hidden = NO;
     }else{
         self.markImageView.hidden = YES;
-        self.tagView.hidden = YES;
+
     }
 }
 

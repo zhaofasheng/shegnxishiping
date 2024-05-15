@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void(^buyGoodsBlock)(NoticeGoodsModel *buyGood);
 @property (nonatomic, copy) void(^refreshGoodsBlock)(NSMutableArray *goodsArr);
 - (void)stopPlay;
+- (void)scrolllToGoods;
 @end
 
 NS_ASSUME_NONNULL_END

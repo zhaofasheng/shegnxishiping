@@ -55,6 +55,32 @@
     [self setupAllSubViews];
 }
 
+- (void)setupCustomeSubViewsWithTitles:(NSArray *)titles defaultStr:(NSString *)defaultStr{
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.tags removeAllObjects];
+    
+    for (NSInteger i = 0; i < titles.count; i++) {
+        KMTag *tag = [[KMTag alloc] initWithFrame:CGRectZero];
+       
+        [tag setupCousTumeWithText:titles[i]];
+        if (defaultStr) {
+            if ([titles[i] isEqualToString:defaultStr]) {
+                tag.isChoice = YES;
+                tag.backgroundColor = [UIColor colorWithHexString:@"#D8F361"];
+            }
+        }
+        [self addSubview:tag];
+        [self.tags addObject:tag];
+        // 添加手势
+        tag.tag = i;
+        UITapGestureRecognizer *pan = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectTagClick:)];
+        [tag addGestureRecognizer:pan];
+        tag.userInteractionEnabled = YES;
+    }
+    
+    [self setupAllSubViews];
+}
+
 - (void)setupSubViewsWithTitles:(NSArray *)titles {
     
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -257,7 +283,7 @@
         return;
     }
     CGFloat marginX = 10;
-    CGFloat marginY = 5;
+    CGFloat marginY = self.isChoiceTap?8: 5;
     
     __block CGFloat x = 0;
     __block CGFloat y = 10;

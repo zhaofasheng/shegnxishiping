@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) StarsOverlay *starsView;
 @property (nonatomic, strong) NSMutableDictionary *parm;
+@property (nonatomic, strong) UILabel *jubaoL;
 
 @end
 
@@ -45,7 +46,7 @@
         [imageView addSubview:self.starsView];
         
         
-        self.endButton = [[UIButton alloc] initWithFrame:CGRectMake(20, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2, 60, 32)];
+        self.endButton = [[UIButton alloc] initWithFrame:CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2, 60, 32)];
         self.endButton.backgroundColor = [UIColor colorWithHexString:@"#DB6E6E"];
         self.endButton.layer.cornerRadius = 16;
         self.endButton.layer.masksToBounds = YES;
@@ -134,7 +135,7 @@
         [contentView addSubview:label];
         self.noticeL = label;
         
-        UILabel *jubaoL = [[UILabel alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-20-60, STATUS_BAR_HEIGHT, 60, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
+        UILabel *jubaoL = [[UILabel alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-60, STATUS_BAR_HEIGHT, 60, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
         jubaoL.text = @"举报";
         jubaoL.font = SIXTEENTEXTFONTSIZE;
         jubaoL.textColor = [UIColor whiteColor];
@@ -145,6 +146,7 @@
         [self addSubview:jubaoL];
         self.closeMicrophone = NO;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hasKillApp) name:@"APPWASKILLED" object:nil];
+        self.jubaoL = jubaoL;
         
         [[NERtcEngine sharedEngine] setLoudspeakerMode:false];
     }
@@ -161,6 +163,11 @@
         self.endButton.hidden = NO;
     }else{
         self.endButton.hidden = YES;
+        self.jubaoL.frame = CGRectMake(DR_SCREEN_WIDTH-15-102, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2, 102, 32);
+        self.jubaoL.backgroundColor = [UIColor colorWithHexString:@"#DB6E6E"];
+        self.jubaoL.text = @"举报并结束";
+        self.jubaoL.textAlignment = NSTextAlignmentCenter;
+        [self.jubaoL setAllCorner:16];
     }
     DRLog(@"来电者%@  自己%@",fromUserId,[NoticeTools getuserId]);
 }
@@ -172,6 +179,11 @@
     }
     if([_toUserId isEqualToString:[NoticeTools getuserId]]){//如果来电者是自己的，那么自己是买家，否则自己是卖家
         self.endButton.hidden = YES;
+        self.jubaoL.frame = CGRectMake(DR_SCREEN_WIDTH-15-102, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2, 102, 32);
+        self.jubaoL.backgroundColor = [UIColor colorWithHexString:@"#DB6E6E"];
+        self.jubaoL.text = @"举报并结束";
+        self.jubaoL.textAlignment = NSTextAlignmentCenter;
+        [self.jubaoL setAllCorner:16];
     }else{
         self.endButton.hidden = NO;
     }

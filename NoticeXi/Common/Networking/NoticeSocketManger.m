@@ -375,7 +375,7 @@
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话仅试聊%d分钟，收入0鲸币。",orderM.resultModel.experience_time.intValue/60] cancleBtn:@"知道了"];
                 [alerView showXLAlertView];
             }else{
-                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话收入%.2f鲸币，实收款为扣除%.f%%声昔服务费后的费用",orderM.resultModel.reality_jingbi.floatValue,orderM.resultModel.ratio.floatValue*100] cancleBtn:@"知道了"];
+                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话预计收款%.2f鲸币，实收款为扣除%.f%%声昔服务费后的费用",orderM.resultModel.reality_jingbi.floatValue,orderM.resultModel.ratio.floatValue*100] cancleBtn:@"知道了"];
                 [alerView showXLAlertView];
             }
             
@@ -394,9 +394,17 @@
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话时长「%@」,需支付%@鲸币,将从你的钱包中扣除",[self getMMSSFromSS:orderM.resultModel.second],orderM.resultModel.price] sureBtn:@"我知道了" cancleBtn:@"给个评价" right:YES];
                 alerView.resultIndex = ^(NSInteger index) {
                     if (index == 2) {
-                        NoticeGoToComShopController *ctl = [[NoticeGoToComShopController alloc] init];
-                        ctl.resultModel = orderM.resultModel;
-                        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+                        
+                        XLAlertView *alerView1 = [[XLAlertView alloc] initWithTitle:@"确定评价吗？" message:@"评价后，订单将变为已完成状态。为保障售后权益，请再次确认" sureBtn:@"再想想" cancleBtn:@"继续评价" right:YES];
+                        alerView1.resultIndex = ^(NSInteger index1) {
+                            if (index1 == 2) {
+                                NoticeGoToComShopController *ctl = [[NoticeGoToComShopController alloc] init];
+                                ctl.resultModel = orderM.resultModel;
+                                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+                            }
+                        };
+                        [alerView1 showXLAlertView];
+                      
                     }
                 };
                 [alerView showXLAlertView];

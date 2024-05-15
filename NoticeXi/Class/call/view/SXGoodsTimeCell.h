@@ -7,11 +7,12 @@
 //
 
 #import "BaseCell.h"
-
+#import "SXGoodsInfoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXGoodsTimeCell : BaseCell
 @property (nonatomic, strong) UILabel *timeL;
+@property (nonatomic, strong) SXGoodsInfoModel *timeModel;
 @end
 
 NS_ASSUME_NONNULL_END

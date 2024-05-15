@@ -14,6 +14,8 @@
     return @{@"goodId":@"id"};
 }
 
-
-
+- (void)setCategory_name:(NSString *)category_name{
+    _category_name = category_name;
+    self.tagString = category_name;
+}
 @end

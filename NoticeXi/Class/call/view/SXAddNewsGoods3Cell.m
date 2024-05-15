@@ -72,7 +72,7 @@
 }
 
 - (void)textFieldDidChange:(id) sender {
-    UITextField *_field = (UITextField *)sender;
+
 
     if (self.priceBlock) {
         self.priceBlock(self.nameField.text);

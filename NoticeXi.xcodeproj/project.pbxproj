@@ -1119,7 +1119,6 @@
 		A4E968DC2A69142600AE022E /* NoticeShopSRHeadeerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E9630C2A69141E00AE022E /* NoticeShopSRHeadeerView.swift */; };
 		A4E968DD2A69142600AE022E /* NoticePayRecodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E9630E2A69141E00AE022E /* NoticePayRecodCell.m */; };
 		A4E968DE2A69142600AE022E /* NoticeShopDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E9630F2A69141E00AE022E /* NoticeShopDetailCell.swift */; };
-		A4E968DF2A69142600AE022E /* NoticeChoiceJieyouChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E963122A69141E00AE022E /* NoticeChoiceJieyouChatCell.m */; };
 		A4E968E02A69142600AE022E /* NoticeQiaojjieTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E963132A69141E00AE022E /* NoticeQiaojjieTools.m */; };
 		A4E968E12A69142600AE022E /* NoticeShopJubaoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E963142A69141E00AE022E /* NoticeShopJubaoView.m */; };
 		A4E968E32A69142600AE022E /* NoticeShopForLabelcomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E9631A2A69141E00AE022E /* NoticeShopForLabelcomCell.m */; };
@@ -1295,6 +1294,10 @@
 		FE07BDFF2BF35ED300E6812A /* SXAddNewsGoods5Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDFE2BF35ED300E6812A /* SXAddNewsGoods5Cell.m */; };
 		FE07BE022BF3732C00E6812A /* SXGoodsTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE012BF3732C00E6812A /* SXGoodsTimeCell.m */; };
 		FE07BE052BF37C4700E6812A /* SXUpGoodsToSellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE042BF37C4700E6812A /* SXUpGoodsToSellView.m */; };
+		FE07BE082BF44E1500E6812A /* SXTeleListBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE072BF44E1500E6812A /* SXTeleListBaseController.m */; };
+		FE07BE0B2BF481D200E6812A /* SXGoodsInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE0A2BF481D200E6812A /* SXGoodsInfoModel.m */; };
+		FE07BE0E2BF4BA8800E6812A /* SXShopOpenTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE0D2BF4BA8800E6812A /* SXShopOpenTypeView.m */; };
+		FE07BE112BF4C14300E6812A /* SXChoiceShopOpenTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE102BF4C14300E6812A /* SXChoiceShopOpenTimeView.m */; };
 		FE1A48112B3D4475004E6239 /* novoice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE1A48102B3D4475004E6239 /* novoice.mp3 */; };
 		FE1A48172B467D6F004E6239 /* NoticeManagerUserAction.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A48162B467D6F004E6239 /* NoticeManagerUserAction.m */; };
 		FE2B934B2BA053F9002698AF /* SXSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2B934A2BA053F9002698AF /* SXSettingController.m */; };
@@ -3665,7 +3668,6 @@
 		A4E9630F2A69141E00AE022E /* NoticeShopDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeShopDetailCell.swift; sourceTree = "<group>"; };
 		A4E963102A69141E00AE022E /* NoticeLelveImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeLelveImageView.h; sourceTree = "<group>"; };
 		A4E963112A69141E00AE022E /* NoticeChatVoiceShopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeChatVoiceShopCell.h; sourceTree = "<group>"; };
-		A4E963122A69141E00AE022E /* NoticeChoiceJieyouChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeChoiceJieyouChatCell.m; sourceTree = "<group>"; };
 		A4E963132A69141E00AE022E /* NoticeQiaojjieTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeQiaojjieTools.m; sourceTree = "<group>"; };
 		A4E963142A69141E00AE022E /* NoticeShopJubaoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeShopJubaoView.m; sourceTree = "<group>"; };
 		A4E963152A69141E00AE022E /* NoticerMerchantListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticerMerchantListCell.h; sourceTree = "<group>"; };
@@ -3706,7 +3708,6 @@
 		A4E963392A69141E00AE022E /* NoticerMerchantListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticerMerchantListCell.m; sourceTree = "<group>"; };
 		A4E9633A2A69141E00AE022E /* NoticeShopJubaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeShopJubaoView.h; sourceTree = "<group>"; };
 		A4E9633B2A69141E00AE022E /* NoticeQiaojjieTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeQiaojjieTools.h; sourceTree = "<group>"; };
-		A4E9633C2A69141E00AE022E /* NoticeChoiceJieyouChatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeChoiceJieyouChatCell.h; sourceTree = "<group>"; };
 		A4E9633D2A69141E00AE022E /* NoticeChatVoiceShopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeChatVoiceShopCell.m; sourceTree = "<group>"; };
 		A4E9633E2A69141E00AE022E /* NoticeChatTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeChatTextCell.m; sourceTree = "<group>"; };
 		A4E9633F2A69141E00AE022E /* NoticeJieYouShopHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeJieYouShopHeaderView.h; sourceTree = "<group>"; };
@@ -4000,6 +4001,14 @@
 		FE07BE012BF3732C00E6812A /* SXGoodsTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXGoodsTimeCell.m; sourceTree = "<group>"; };
 		FE07BE032BF37C4700E6812A /* SXUpGoodsToSellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXUpGoodsToSellView.h; sourceTree = "<group>"; };
 		FE07BE042BF37C4700E6812A /* SXUpGoodsToSellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXUpGoodsToSellView.m; sourceTree = "<group>"; };
+		FE07BE062BF44E1500E6812A /* SXTeleListBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXTeleListBaseController.h; sourceTree = "<group>"; };
+		FE07BE072BF44E1500E6812A /* SXTeleListBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXTeleListBaseController.m; sourceTree = "<group>"; };
+		FE07BE092BF481D200E6812A /* SXGoodsInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXGoodsInfoModel.h; sourceTree = "<group>"; };
+		FE07BE0A2BF481D200E6812A /* SXGoodsInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXGoodsInfoModel.m; sourceTree = "<group>"; };
+		FE07BE0C2BF4BA8800E6812A /* SXShopOpenTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopOpenTypeView.h; sourceTree = "<group>"; };
+		FE07BE0D2BF4BA8800E6812A /* SXShopOpenTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopOpenTypeView.m; sourceTree = "<group>"; };
+		FE07BE0F2BF4C14300E6812A /* SXChoiceShopOpenTimeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXChoiceShopOpenTimeView.h; sourceTree = "<group>"; };
+		FE07BE102BF4C14300E6812A /* SXChoiceShopOpenTimeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXChoiceShopOpenTimeView.m; sourceTree = "<group>"; };
 		FE1A48102B3D4475004E6239 /* novoice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = novoice.mp3; sourceTree = "<group>"; };
 		FE1A48152B467D6F004E6239 /* NoticeManagerUserAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeManagerUserAction.h; sourceTree = "<group>"; };
 		FE1A48162B467D6F004E6239 /* NoticeManagerUserAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeManagerUserAction.m; sourceTree = "<group>"; };
@@ -9045,8 +9054,6 @@
 		FE6CF96C2B872532005EE663 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				A4E9633C2A69141E00AE022E /* NoticeChoiceJieyouChatCell.h */,
-				A4E963122A69141E00AE022E /* NoticeChoiceJieyouChatCell.m */,
 				FE9C40972B9AE11F008C3A22 /* SXShopCheckTypeCell.h */,
 				FE9C40982B9AE11F008C3A22 /* SXShopCheckTypeCell.m */,
 				A4E963462A69141E00AE022E /* NoticeShopChatCommentCell.h */,
@@ -9085,6 +9092,10 @@
 				FE07BE012BF3732C00E6812A /* SXGoodsTimeCell.m */,
 				FE07BE032BF37C4700E6812A /* SXUpGoodsToSellView.h */,
 				FE07BE042BF37C4700E6812A /* SXUpGoodsToSellView.m */,
+				FE07BE0C2BF4BA8800E6812A /* SXShopOpenTypeView.h */,
+				FE07BE0D2BF4BA8800E6812A /* SXShopOpenTypeView.m */,
+				FE07BE0F2BF4C14300E6812A /* SXChoiceShopOpenTimeView.h */,
+				FE07BE102BF4C14300E6812A /* SXChoiceShopOpenTimeView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -9094,6 +9105,8 @@
 			children = (
 				FE7440332BA17A00007EE4A6 /* SXVerifyShopModel.h */,
 				FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */,
+				FE07BE092BF481D200E6812A /* SXGoodsInfoModel.h */,
+				FE07BE0A2BF481D200E6812A /* SXGoodsInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -9258,6 +9271,8 @@
 				FEBCADD22B83615F0048F5A1 /* NoticeTelController.m */,
 				FE6CF9732B873233005EE663 /* SXTelBaseController.h */,
 				FE6CF9742B873233005EE663 /* SXTelBaseController.m */,
+				FE07BE062BF44E1500E6812A /* SXTeleListBaseController.h */,
+				FE07BE072BF44E1500E6812A /* SXTeleListBaseController.m */,
 			);
 			path = call;
 			sourceTree = "<group>";
@@ -9730,7 +9745,6 @@
 				A4E967F22A69142500AE022E /* NoticeCarePeopleModel.m in Sources */,
 				A4E968FC2A69142700AE022E /* NoticeOrderListCell.m in Sources */,
 				A4E965742A69142200AE022E /* WHWeatherClound.m in Sources */,
-				A4E968DF2A69142600AE022E /* NoticeChoiceJieyouChatCell.m in Sources */,
 				FEB61C002B4D1C5200B128FA /* NoticePhotoWallCell.m in Sources */,
 				A4E967072A69142400AE022E /* UITabBar+XSDExt.m in Sources */,
 				A4E9668E2A69142300AE022E /* NoticeNewBdController.m in Sources */,
@@ -9773,6 +9787,7 @@
 				A4E9692A2A69142700AE022E /* NoticeCustumButton.m in Sources */,
 				A4E965192A69142200AE022E /* NSString+NCDate.m in Sources */,
 				A4E964F22A69142200AE022E /* JXCategoryIndicatorBallView.m in Sources */,
+				FE07BE0B2BF481D200E6812A /* SXGoodsInfoModel.m in Sources */,
 				A4E9698C2A69142800AE022E /* NoticeAlreadlyUserView.m in Sources */,
 				A4E964F52A69142200AE022E /* JXCategoryIndicatorBackgroundView.m in Sources */,
 				FE9C409F2B9AE497008C3A22 /* SXWorkCheckController.m in Sources */,
@@ -9963,6 +9978,7 @@
 				A4E968252A69142500AE022E /* CalenderModel.m in Sources */,
 				A4E968152A69142500AE022E /* NoticeChoiceVoiceTimeController.m in Sources */,
 				A4E966132A69142300AE022E /* NoticeBokeTosatView.m in Sources */,
+				FE07BE082BF44E1500E6812A /* SXTeleListBaseController.m in Sources */,
 				FE44F1E52BB29FAB004ECF11 /* KTVHCDataLoader.m in Sources */,
 				A4E965362A69142200AE022E /* NSString+HDExtension.m in Sources */,
 				A4E965F12A69142300AE022E /* NoticeSharePyChatView.m in Sources */,
@@ -10542,6 +10558,7 @@
 				A4E967D52A69142500AE022E /* NoticeListenPriSetController.m in Sources */,
 				A4E968052A69142500AE022E /* NoticeCarePeopleController.m in Sources */,
 				FE9C409C2B9AE455008C3A22 /* SXEducationController.m in Sources */,
+				FE07BE0E2BF4BA8800E6812A /* SXShopOpenTypeView.m in Sources */,
 				A4E966FE2A69142400AE022E /* NoticeHelpListCell.m in Sources */,
 				A4E969712A69142700AE022E /* NoticeKeyBordTopView.m in Sources */,
 				A4E9679A2A69142400AE022E /* NoticeManagerWorldCell.m in Sources */,
@@ -10736,6 +10753,7 @@
 				FE44F1ED2BB29FAB004ECF11 /* HTTPDynamicFileResponse.m in Sources */,
 				A4E968E92A69142600AE022E /* NoticeSupplyShopView.swift in Sources */,
 				A4E967912A69142400AE022E /* NoticeUserQuestionCell.m in Sources */,
+				FE07BE112BF4C14300E6812A /* SXChoiceShopOpenTimeView.m in Sources */,
 				A4E967962A69142400AE022E /* NoticeCheckCenterCell.m in Sources */,
 				A4E965382A69142200AE022E /* UIImage+HDExtension.m in Sources */,
 				A4E968F42A69142700AE022E /* NoticeProtocolView.swift in Sources */,

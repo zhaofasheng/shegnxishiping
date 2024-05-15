@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL hasShow;//已经弹出
 @property (nonatomic, copy) void(^acceptBlock)(BOOL accept);
 @property (nonatomic, copy) void(^endOpenBlock)(BOOL close);
+@property (nonatomic, strong) UILabel *titleL;
 - (void)showCallView;
 - (void)dissMiseeShow;
 @end

@@ -7,11 +7,14 @@
 //
 
 #import "NoticeBaseCellController.h"
-
+#import "NoticeGoodsModel.h"
+#import "NoticeMyShopModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXAddNewGoodsController : NoticeBaseCellController
-
+@property (nonatomic, strong) NoticeMyShopModel *goodsModel;
+@property (nonatomic, strong) NoticeGoodsModel *changeGoodModel;
+@property (nonatomic, copy)  void(^refreshBlock)(BOOL refresh);
 @end
 
 NS_ASSUME_NONNULL_END

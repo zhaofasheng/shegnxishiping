@@ -375,23 +375,20 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
             NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取等待中的订单成功\n房间号%@\n时间%@\n电话来自%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],self.fromUserId] userInfo:nil];//数据上报
             [Bugly reportException:exception];
             
-            if(self.orderModel.goods_type.intValue == 2){
-                UIViewController *viewController = [[UIViewController alloc] init];
-                [viewController.view addSubview:self.callView];
-                self.callingWindow.rootViewController = viewController;
-                self.callingWindow.hidden = NO;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (self->_callingWindow != nil) {
-                        [self.callingWindow t_makeKeyAndVisible];
-                    }
-                });
-                return;
-            }else{
-                [self repject:NO];
-            }
+            self.callView.titleL.text = [NSString stringWithFormat:@"店铺有新的订单(%@分钟%@)来了",self.orderModel.duration,self.orderModel.is_experience.boolValue?@"体验通话":@"收费通话"];
+            UIViewController *viewController = [[UIViewController alloc] init];
+            [viewController.view addSubview:self.callView];
+     
+            self.callingWindow.rootViewController = viewController;
+            self.callingWindow.hidden = NO;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self->_callingWindow != nil) {
+                    [self.callingWindow t_makeKeyAndVisible];
+                }
+            });
         }else{
             [self repject:NO];
-        }
+        }//
 
     } fail:^(NSError * _Nullable error) {
         [self repject:NO];
@@ -434,9 +431,14 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 - (void)onNetworkQuality:(NSArray<NERtcNetworkQualityStats *> *)stats{
    
     for (NERtcNetworkQualityStats *state in stats) {
-        if (state.txQuality > 3 || state.rxQuality > 3) {
-            DRLog(@"网络状态比较差");
+        if (state.txQuality == kNERtcNetworkQualityDown || state.rxQuality == kNERtcNetworkQualityDown) {
+            [[NoticeTools getTopViewController] showToastWithText:@"网络已断开"];
+        }else{
+            if (state.txQuality > 3 || state.rxQuality > 3) {
+                [[NoticeTools getTopViewController] showToastWithText:@"当前网络环境较差"];
+            }
         }
+     
     }
 }
 

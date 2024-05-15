@@ -8,6 +8,7 @@
 
 #import "SXAddNewsGoods4Cell.h"
 #import "SXGoodsTimeCell.h"
+
 @implementation SXAddNewsGoods4Cell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -41,15 +42,32 @@
     return self;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    for (SXGoodsInfoModel *timeM in self.timeArr) {
+        timeM.isChoice = NO;
+    }
+    SXGoodsInfoModel *timeM = self.timeArr[indexPath.row];
+    timeM.isChoice = YES;
+    if (self.timeBlock) {
+        self.timeBlock(timeM.time);
+    }
+    [self.movieTableView reloadData];
+}
+
+- (void)setTimeArr:(NSMutableArray *)timeArr{
+    _timeArr = timeArr;
+    [self.movieTableView reloadData];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXGoodsTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    
+    cell.timeModel = self.timeArr[indexPath.row];
     cell.contentView.transform = CGAffineTransformMakeRotation(M_PI / 2);
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 13;
+    return self.timeArr.count;
 }
 
 - (void)awakeFromNib {

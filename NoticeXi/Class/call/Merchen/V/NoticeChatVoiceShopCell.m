@@ -49,7 +49,7 @@
         [backV addSubview:self.markL];
         
         self.changePriceBtn = [[FSCustomButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.priceL.frame)+25, backV.frame.size.width/2, 20)];
-        [self.changePriceBtn setTitle:@"改价" forState:UIControlStateNormal];
+        [self.changePriceBtn setTitle:@"修改" forState:UIControlStateNormal];
         [self.changePriceBtn setTitleColor:[UIColor colorWithHexString:@"#5C5F66"] forState:UIControlStateNormal];
         self.changePriceBtn.titleLabel.font = TWOTEXTFONTSIZE;
         [self.changePriceBtn setImage:UIImageNamed(@"Image_changevoiceprice") forState:UIControlStateNormal];
@@ -72,8 +72,6 @@
 - (void)setGoodModel:(NoticeGoodsModel *)goodModel{
     _goodModel = goodModel;
     
-
-    
     self.choiceImageView.image = UIImageNamed(goodModel.choice.boolValue?@"Image_choicesh":@"Image_nochoicesh");
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:goodModel.goods_img_url]];
     
@@ -93,9 +91,10 @@
         self.backView.frame = CGRectMake(15, 0, DR_SCREEN_WIDTH-30, 101);
         self.priceL.frame = CGRectMake(81, 60, 200, 26);
         self.titleL.frame = CGRectMake(81, 15, DR_SCREEN_WIDTH-96-60, 20);
-        self.titleL.text = goodModel.goods_name;
+
+        self.titleL.attributedText = [SXTools getStringWithLineHight:3 string:goodModel.goods_name];;
     }else{
-        self.backView.frame = CGRectMake(15, 0, DR_SCREEN_WIDTH-30, goodModel.nameHeight+92+15);
+        self.backView.frame = CGRectMake(15, 0, DR_SCREEN_WIDTH-30, goodModel.nameHeight+92+15 - (self.noneedEdit?45:0));
         if (goodModel.tagString) {
             self.tagL.hidden = NO;
             self.tagL.text = goodModel.tagString;
@@ -109,7 +108,6 @@
             [string1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,goodModel.goods_name.length)];
             self.titleL.attributedText = string1;
         }else{
-            
             self.titleL.attributedText = [SXTools getStringWithLineHight:3 string:goodModel.goods_name];
             self.titleL.frame = CGRectMake(81, 15, DR_SCREEN_WIDTH-96-60, goodModel.nameHeight);
         }
@@ -119,11 +117,67 @@
         self.deleteBtn.frame = CGRectMake(self.backView.frame.size.width/2,CGRectGetMaxY(self.priceL.frame)+25,self.backView.frame.size.width/2, 20);
     }
     
+    _changeGoodsBtn.hidden = YES;
     if (self.noneedEdit) {
         self.deleteBtn.hidden = YES;
         self.changePriceBtn.hidden = YES;
+        
+        if (self.isSelfLook && !goodModel.is_experience.boolValue) {
+            self.changeGoodsBtn.hidden = NO;
+            self.changeGoodsBtn.frame = CGRectMake(self.backView.frame.size.width-15-56, self.priceL.frame.origin.y-1, 56, 28);
+        }
+    }
+    
+    _freeLabel.hidden = YES;
+    _buyButton.hidden = YES;
+    if (self.noneedEdit && self.isOtherLook) {
+        if (goodModel.is_experience.boolValue) {
+            self.freeLabel.hidden = NO;
+            self.freeLabel.text = [NSString stringWithFormat:@"免费试聊%d次",goodModel.experience_times.intValue];
+        }
+        self.buyButton.frame = CGRectMake(self.backView.frame.size.width-15-60, self.priceL.frame.origin.y-3, 60, 32);
+        self.buyButton.hidden = NO;
+    }
+    
+    if (self.isSelfLook || self.isOtherLook) {
+        self.choiceImageView.hidden = YES;
     }
 }
+
+- (UIButton *)buyButton{
+    if(!_buyButton){
+        _buyButton = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-30-60-15, 38, 60, 32)];
+        [_buyButton setAllCorner:16];
+        //渐变色
+        CAGradientLayer *gradientLayer = [[CAGradientLayer alloc] init];
+        gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FF68A3"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#FF3C92"].CGColor];//#FF3C92
+        gradientLayer.startPoint = CGPointMake(0, 1);
+        gradientLayer.endPoint = CGPointMake(1, 1);
+        gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(_buyButton.frame), CGRectGetHeight(_buyButton.frame));
+        _buyButton.userInteractionEnabled = NO;
+        [_buyButton.layer addSublayer:gradientLayer];
+        [_buyButton setTitle:@"通话" forState:UIControlStateNormal];
+        [_buyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _buyButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
+        [self.backView addSubview:_buyButton];
+    }
+    return _buyButton;
+}
+
+- (UILabel *)freeLabel{
+    if (!_freeLabel) {
+     
+        _freeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-90, 0,90, 20)];
+        _freeLabel.font = ELEVENTEXTFONTSIZE;
+        [_freeLabel setTopRightAndbottomLeftCorner:10];
+        _freeLabel.textAlignment = NSTextAlignmentCenter;
+        _freeLabel.backgroundColor = [UIColor colorWithHexString:@"#D8F361"];
+        _freeLabel.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [self.backView addSubview:_freeLabel];
+    }
+    return _freeLabel;
+}
+
 
 - (UILabel *)tagL{
     if (!_tagL) {
@@ -139,32 +193,41 @@
     return _tagL;
 }
 
-- (void)changeClick{
-    __weak typeof(self) weakSelf = self;
+- (UILabel *)changeGoodsBtn{
+    if (!_changeGoodsBtn) {
+        _changeGoodsBtn = [[UILabel  alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-15-56, self.priceL.frame.origin.y-1, 56, 28)];
+        _changeGoodsBtn.layer.cornerRadius = 14;
+        _changeGoodsBtn.layer.masksToBounds = YES;
+        _changeGoodsBtn.layer.borderColor = [UIColor colorWithHexString:@"#E1E4F0"].CGColor;
+        _changeGoodsBtn.layer.borderWidth = 1;
+        _changeGoodsBtn.text = @"修改";
+        _changeGoodsBtn.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        _changeGoodsBtn.font = TWOTEXTFONTSIZE;
+        _changeGoodsBtn.textAlignment = NSTextAlignmentCenter;
+        [self.backView addSubview:_changeGoodsBtn];
+    }
+    return _changeGoodsBtn;
+}
 
-    NoticeChangePriceView *nameVieww = [[NoticeChangePriceView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-    nameVieww.nameBlock = ^(NSString * _Nullable name) {
-        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-  
-        [parm setObject:name forKey:@"price"];
-        
-        [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"shop/setPrice/%@/%@",self.shopId,self.goodModel.goodId] Accept:@"application/vnd.shengxi.v5.5.0+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-            if(success){
-                weakSelf.goodModel.price = name;
-                weakSelf.priceL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@鲸币/分钟",weakSelf.goodModel.price] setSize:12 setLengthString:@"鲸币/分钟" beginSize:weakSelf.goodModel.price.length];
-                if(weakSelf.changePriceBlock){
-                    weakSelf.changePriceBlock(weakSelf.goodModel.price);
-                }
-            }
-        } fail:^(NSError * _Nullable error) {
-            
-        }];
-    };
-    [nameVieww showView];
+- (void)changeClick{
+ 
+    if(self.changePriceBlock){
+        self.changePriceBlock(self.goodModel);
+    }
 }
 
 - (void)deleteClick{
-    
+    __weak typeof(self) weakSelf = self;
+     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定删除这个服务吗？" message:nil sureBtn:@"再想想" cancleBtn:@"删除" right:YES];
+    alerView.resultIndex = ^(NSInteger index) {
+        if (index == 2) {
+            if (weakSelf.deleteBlock) {
+                weakSelf.deleteBlock(weakSelf.goodModel);
+            }
+        }
+    };
+    [alerView showXLAlertView];
+ 
 }
 
 - (void)awakeFromNib {
