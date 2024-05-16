@@ -32,4 +32,25 @@
     return self;
 }
 
+- (void)setNeedDetailButton:(BOOL)needDetailButton{
+    _needDetailButton = needDetailButton;
+    if (needDetailButton) {
+        UILabel *label = [[UILabel  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-GET_STRWIDTH(@"鲸币明细", 14, 20)-15, STATUS_BAR_HEIGHT, GET_STRWIDTH(@"鲸币明细", 14, 20), NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
+        label.font = FOURTHTEENTEXTFONTSIZE;
+        label.textColor = [UIColor colorWithHexString:@"#14151A"];
+        label.textAlignment = NSTextAlignmentRight;
+        label.userInteractionEnabled = YES;
+        [self addSubview:label];
+        self.rightL = label;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rightTap)];
+        [label addGestureRecognizer:tap];
+    }
+}
+
+- (void)rightTap{
+    if (self.rightTapBlock) {
+        self.rightTapBlock(YES);
+    }
+}
+
 @end

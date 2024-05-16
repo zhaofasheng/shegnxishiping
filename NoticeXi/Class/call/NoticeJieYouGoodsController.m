@@ -129,7 +129,6 @@
         };
         [self.navigationController pushViewController:ctl animated:YES];
     }
-   
 }
 
 - (void)addClick{
@@ -141,7 +140,23 @@
     __weak typeof(self) weakSelf = self;
     ctl.refreshGoodsBlock = ^(NSMutableArray * _Nonnull goodsArr) {
         weakSelf.goodssellArr = goodsArr;
+        for (int i = 0; i < weakSelf.goodssellArr.count;i++) {
+            NoticeGoodsModel *goods = weakSelf.goodssellArr[i];
+            if (goods.is_experience.boolValue) {
+                [weakSelf.goodssellArr exchangeObjectAtIndex:i withObjectAtIndex:0];
+                break;
+            }
+        }
         [weakSelf.tableView reloadData];
+    };
+    ctl.deleteGoodMBlock = ^(NoticeGoodsModel * _Nonnull deleteModel) {
+        for (NoticeGoodsModel *oldM in weakSelf.goodssellArr) {
+            if ([oldM.goodId isEqualToString:deleteModel.goodId]) {
+                [self.goodssellArr removeObject:oldM];
+                [self.tableView reloadData];
+                break;
+            }
+        }
     };
     ctl.changePriceBlock = ^(NSString * _Nonnull price) {
         for (NoticeGoodsModel *model in self.goodssellArr) {
@@ -281,6 +296,13 @@
         __weak typeof(self) weakSelf = self;
         _sellView.refreshGoodsBlock = ^(NSMutableArray * _Nonnull goodsArr) {
             weakSelf.goodssellArr = goodsArr;
+            for (int i = 0; i < weakSelf.goodssellArr.count;i++) {
+                NoticeGoodsModel *goods = weakSelf.goodssellArr[i];
+                if (goods.is_experience.boolValue) {
+                    [weakSelf.goodssellArr exchangeObjectAtIndex:i withObjectAtIndex:0];
+                    break;
+                }
+            }
             [weakSelf.tableView reloadData];
         };
     }

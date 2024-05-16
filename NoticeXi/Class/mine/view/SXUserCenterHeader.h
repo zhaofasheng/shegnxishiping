@@ -14,14 +14,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NoticeUserInfoModel *userM;
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *nickNameL;
-@property (nonatomic, strong) UILabel *titleL;
+
 @property (nonatomic, strong) UILabel *checkL;
 @property (nonatomic, strong) FSCustomButton *freuView;
 @property (nonatomic, strong) UIView *jinbiView;
-
+@property (nonatomic, strong) UILabel *titleL;
 @property (nonatomic, strong) UIImageView *titleImageView;
+@property (nonatomic, strong) UILabel *titleL1;
+@property (nonatomic, strong) UIImageView *titleImageView1;
 @property (nonatomic, strong) UILabel *moneyL;
-
+@property (nonatomic, strong) UILabel *incomeL;
 @property (nonatomic, strong) SXVerifyShopModel *verifyModel;
 
 - (void)refresh;

@@ -68,7 +68,7 @@
     [self.view addSubview:navView];
     
     self.tableView.frame = CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT);
-    self.headerView = [[SXUserCenterHeader alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 231-15)];
+    self.headerView = [[SXUserCenterHeader alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 231-15+28)];
     self.tableView.tableHeaderView = self.headerView;
     self.tableView.rowHeight = 64;
     [self.tableView registerClass:[SXMineSetCell class] forCellReuseIdentifier:@"cell"];
@@ -124,11 +124,18 @@
         if(success){
             NoticeMyWallectModel *wallectM = [NoticeMyWallectModel mj_objectWithKeyValues:dict[@"data"]];
             self.wallectM = wallectM;
+            
             NSString *allMoney = wallectM.total_balance.floatValue>0?wallectM.total_balance:@"0";
             NSString *titstr = @"鲸币";
-
             NSString *allStr = [NSString stringWithFormat:@"%@%@",allMoney,titstr];
             self.headerView.moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:allStr setColor:[UIColor colorWithHexString:@"#25262E"] setSize:12 setLengthString:titstr beginSize:allStr.length-2];
+            
+            NSString *allMoney1 = wallectM.income_balance.floatValue>0?wallectM.income_balance:@"0";
+            allMoney1 = [NSString stringWithFormat:@"%.2f",allMoney1.floatValue/2];
+            NSString *titstr1 = @"元";
+            NSString *allStr1 = [NSString stringWithFormat:@"%@%@",allMoney1,titstr1];
+            self.headerView.incomeL.attributedText = [DDHAttributedMode setSizeAndColorString:allStr1 setColor:[UIColor colorWithHexString:@"#25262E"] setSize:12 setLengthString:titstr1 beginSize:allStr1.length-1];
+            
             [self.tableView reloadData];
         }
     } fail:^(NSError * _Nullable error) {

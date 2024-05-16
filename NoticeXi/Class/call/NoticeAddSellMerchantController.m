@@ -98,7 +98,9 @@
                 }else{
                     [self.voiceArr addObject:goods];
                 }
-                
+                if(self.refreshGoodsBlock){
+                    self.refreshGoodsBlock(self.choiceArr);
+                }
             }
    
             [self.tableView reloadData];
@@ -368,6 +370,10 @@
     } fail:^(NSError * _Nullable error) {
         
     }];
+    
+    if (self.deleteGoodMBlock) {
+        self.deleteGoodMBlock(goodM);
+    }
     
     for (NoticeGoodsModel *oldM in self.voiceArr) {
         if ([oldM.goodId isEqualToString:goodM.goodId]) {

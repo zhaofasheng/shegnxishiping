@@ -27,12 +27,6 @@
     NSInteger loginCount;
 }
 
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     loginCount = 0;

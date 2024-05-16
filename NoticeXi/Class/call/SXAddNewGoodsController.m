@@ -65,7 +65,7 @@
         return;
     }
     
-    if (!self.name) {
+    if (!self.name.length) {
         [self showToastWithText:@"请输入商品名称"];
         return;
     }

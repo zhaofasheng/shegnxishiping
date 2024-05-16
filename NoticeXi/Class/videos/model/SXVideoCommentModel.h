@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *top_at;//置顶时间大于0表示置顶
 
-@property (nonatomic, strong) NSArray *to_series;
+@property (nonatomic, strong) NSString *to_series;
 @property (nonatomic, strong) NSMutableArray *seariesArr;
 @end
 

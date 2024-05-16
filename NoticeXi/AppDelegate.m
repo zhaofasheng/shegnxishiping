@@ -320,7 +320,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     if (![NoticeSaveModel getUserInfo]) {
         return;
     }
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICENOREADNUMMESSAGE" object:nil];
     //进前台，检查socket
     [NoticeTools setneedConnect:YES];
     [self.socketManager reConnect];

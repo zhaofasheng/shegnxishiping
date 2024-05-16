@@ -34,7 +34,7 @@
         self.contentL = [[GZLabel alloc] initWithFrame:CGRectMake(56, 31, DR_SCREEN_WIDTH-56-15, 0)];
         self.contentL.font = FOURTHTEENTEXTFONTSIZE;
         self.contentL.GZLabelNormalColor = [UIColor colorWithHexString:@"#25262E"];
-        [self.contentL setHightLightLabelColor:[UIColor colorWithHexString:@"#FF2A6F"] forGZLabelStyle:GZLabelStyleTopic];
+        [self.contentL setHightLightLabelColor:[UIColor colorWithHexString:@"#FF4A98"] forGZLabelStyle:GZLabelStyleTopic];
         self.contentL.numberOfLines = 0;
         self.contentL.delegate = self;
         [self.contentView addSubview:self.contentL];

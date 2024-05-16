@@ -15,7 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIButton *backButton;
 @property (nonatomic, strong) UILabel *titleL;
 @property (nonatomic, strong) UIButton *rightButton;
-
+@property (nonatomic,copy) void(^rightTapBlock)(BOOL tapRight);
+@property (nonatomic, strong) UILabel *rightL;
+@property (nonatomic, assign) BOOL needDetailButton;
 @end
 
 NS_ASSUME_NONNULL_END

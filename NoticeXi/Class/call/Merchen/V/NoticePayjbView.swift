@@ -49,7 +49,7 @@ class NoticePayjbView: UIView {
         self.sureButton = UIButton.init(frame: CGRect(x: 20, y: 146+76, width: NoticeSwiftFile.screenWidth-40, height: 40))
         self.sureButton?.titleLabel?.font = UIFont .systemFont(ofSize: 16)
         self.sureButton?.setTitleColor(UIColor.white, for: .normal)
-        self.sureButton?.backgroundColor = UIColor.init(hexString: "#E5749D")
+        self.sureButton?.backgroundColor = UIColor.init(hexString: "#FF4B98")
         self.sureButton?.layer.cornerRadius = 8
         self.sureButton?.layer.masksToBounds = true
         self.addSubview(self.sureButton!)
@@ -72,7 +72,7 @@ class NoticePayjbView: UIView {
         let label2 = UILabel.init(frame: CGRect(x:space+strwidth0, y: 196+76, width: strwidth1, height: 20))
         label2.text = "《鲸币用户协议》"
         label2.font = UIFont.systemFont(ofSize: 14)
-        label2.textColor = UIColor.init(hexString: "#E5749D")
+        label2.textColor = UIColor.init(hexString: "#FF4B98")
         self.addSubview(label2)
         label2.isUserInteractionEnabled = true
         let tap2 = UITapGestureRecognizer.init(target: self, action: #selector(tapXieyi))
@@ -82,7 +82,7 @@ class NoticePayjbView: UIView {
         let label3 = UILabel.init(frame: CGRect(x:space+strwidth0+strwidth1, y: 196+76, width: strwidth2, height: 20))
         label3.text = "《鲸币使用手册》"
         label3.font = UIFont.systemFont(ofSize: 14)
-        label3.textColor = UIColor.init(hexString: "#E5749D")
+        label3.textColor = UIColor.init(hexString: "#FF4B98")
         self.addSubview(label3)
         label3.isUserInteractionEnabled = true
         let tap3 = UITapGestureRecognizer.init(target: self, action: #selector(tapshouce))
@@ -135,7 +135,7 @@ class NoticePayjbView: UIView {
         self.oldChoiceJBView?.titleVew?.setTitleColor(UIColor.init(hexString: "#25262E"), for: .normal)
         self.oldChoiceJBView?.label?.textColor = UIColor.init(hexString: "#8A8F99")
 
-        self.newChoiceJBView?.backgroundColor = UIColor.init(hexString: "#E5749D")
+        self.newChoiceJBView?.backgroundColor = UIColor.init(hexString: "#FF4B98")
         self.newChoiceJBView?.layer.borderWidth = 0
         self.newChoiceJBView?.titleVew?.setTitleColor(UIColor.init(hexString: "#FFFFFF"), for: .normal)
         self.newChoiceJBView?.label?.textColor = UIColor.init(hexString: "#F7F8FC")

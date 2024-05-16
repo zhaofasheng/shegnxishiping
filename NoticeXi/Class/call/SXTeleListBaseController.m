@@ -72,7 +72,7 @@
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index{
-    return GET_STRWIDTH(self.titles[index], 16, 16);
+    return GET_STRWIDTH(self.titles[index], 16, 16)+4;
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu itemMarginAtIndex:(NSInteger)index{

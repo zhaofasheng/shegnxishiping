@@ -1074,21 +1074,19 @@
     self.tapChat = chat;
     
     NSArray *arr = nil;
-    if(self.tapChat.content_type.intValue == 1){//音频
-        arr = @[[NoticeTools getLocalStrWith:@"yl.sctodui"],chat.is_self.integerValue?[NoticeTools getLocalStrWith:@"group.back"]:[NoticeTools getLocalStrWith:@"chat.jubao"]];
-    }else if (self.tapChat.content_type.intValue == 3){//图片
-        arr = @[chat.is_self.integerValue?[NoticeTools getLocalStrWith:@"group.back"]:[NoticeTools getLocalStrWith:@"chat.jubao"],@"添加表情"];
-    }
-    else{
-        arr = @[chat.is_self.integerValue?[NoticeTools getLocalStrWith:@"group.back"]:[NoticeTools getLocalStrWith:@"chat.jubao"]];
-    }
-    
+
     if (chat.is_self.intValue) {//自己的消息
         arr = @[[RXPopMenuItem itemTitle:@"撤回"]];
+        if (self.tapChat.content_type.intValue == 11) {
+            arr = @[[RXPopMenuItem itemTitle:@"撤回"],[RXPopMenuItem itemTitle:@"复制"]];
+        }
     }else{
         if (chat.content_type.intValue == 3) {//图片
             arr = @[[RXPopMenuItem itemTitle:@"添加表情"],[RXPopMenuItem itemTitle:@"举报"]];
-        }else{
+        }if (self.tapChat.content_type.intValue == 11) {
+            arr = @[[RXPopMenuItem itemTitle:@"举报"],[RXPopMenuItem itemTitle:@"复制"]];
+        }
+        else{
             arr = @[[RXPopMenuItem itemTitle:@"举报"]];
         }
     }
@@ -1107,6 +1105,10 @@
             juBaoView.reouceId = weak.tapChat.dialog_id;
             juBaoView.reouceType = @"3";
             [juBaoView showView];
+        }else if([item.title isEqualToString:@"复制"]){
+            [self showToastWithText:@"已复制"];
+            UIPasteboard *pastboard = [UIPasteboard generalPasteboard];
+            [pastboard setString:self.tapChat.contentText];
         }
     };
 }

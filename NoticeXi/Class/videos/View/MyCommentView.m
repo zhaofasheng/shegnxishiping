@@ -274,6 +274,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
             if (jsonModel.list.count) {
                 for (NSDictionary *dic in jsonModel.list) {//普通列表
                     SXVideoCommentModel *commentM = [SXVideoCommentModel mj_objectWithKeyValues:dic];
+                
                     if (commentM.comment_type.intValue > 1) {
                         commentM.content = @"请更新到最新版本";
                     }

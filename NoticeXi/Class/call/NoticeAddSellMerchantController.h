@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *sellGoodsArr;
 @property (nonatomic, copy) void(^refreshGoodsBlock)(NSMutableArray *goodsArr);
 @property (nonatomic, copy) void(^changePriceBlock)(NSString *price);
+@property (nonatomic, copy) void(^deleteGoodMBlock)(NoticeGoodsModel *deleteModel);
 @property (nonatomic, assign) BOOL isFromDetail;
 @end
 

@@ -9,7 +9,7 @@
 import UIKit
 
 class NoticeShopChangeRecoderController: NoticeBaseCellController {
-
+    @objc public var isJusttix = false //只看提现
     @objc public var isShouRuDetail = false //是否收入明细
     var isDwons = true
     
@@ -27,6 +27,10 @@ class NoticeShopChangeRecoderController: NoticeBaseCellController {
         
         if self.isShouRuDetail {
             self.navBarView.titleL.text = "收入明细"
+        }
+        
+        if self.isJusttix {
+            self.navBarView.titleL.text = "提现记录"
         }
         
         self.tableView.rowHeight = 90

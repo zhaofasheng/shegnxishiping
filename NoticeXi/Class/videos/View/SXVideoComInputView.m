@@ -93,6 +93,7 @@
         }
         
         if (hasOld) {
+            [[NoticeTools getTopViewController] showToastWithText:@"已存在当前课程，不可以重复添加哦"];
             [weakSelf showJustComment:weakSelf.commentId];
             return;
         }

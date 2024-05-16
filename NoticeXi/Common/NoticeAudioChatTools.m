@@ -358,7 +358,6 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
             DRLog(@"挂断云信失败%@",error.description);
         }
     }];
-
 }
 
 //获取等待的订单

@@ -70,13 +70,24 @@
     }
 }
 
-- (void)setTo_series:(NSArray *)to_series{
+- (void)setTo_series:(NSString *)to_series{
     _to_series = to_series;
+    NSArray *arr = [NoticeTools arraryWithJsonString:to_series];
     self.seariesArr = [[NSMutableArray alloc] init];
-    for (NSDictionary *dic in to_series) {
+    for (NSDictionary *dic in arr) {
         SXPayForVideoModel *model = [SXPayForVideoModel mj_objectWithKeyValues:dic];
         model.series_name = model.name;
         [self.seariesArr addObject:model];
     }
 }
+
+//- (void)setTo_series:(NSArray *)to_series{
+//    _to_series = to_series;
+//    self.seariesArr = [[NSMutableArray alloc] init];
+//    for (NSDictionary *dic in to_series) {
+//        SXPayForVideoModel *model = [SXPayForVideoModel mj_objectWithKeyValues:dic];
+//        model.series_name = model.name;
+//        [self.seariesArr addObject:model];
+//    }
+//}
 @end

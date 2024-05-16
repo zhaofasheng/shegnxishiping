@@ -16,15 +16,25 @@ class NoticeChongzhiShopController: NoticeBaseCellController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.frame = CGRect(x: 0, y: 0, width: NoticeSwiftFile.screenWidth, height: NoticeSwiftFile.screenHeight-NoticeSwiftFile.NAVHEIGHT()-48)
+        //self.tableView.frame = CGRect(x: 0, y: 0, width: NoticeSwiftFile.screenWidth, height: NoticeSwiftFile.screenHeight-NoticeSwiftFile.NAVHEIGHT())
         self.tableView.backgroundColor = UIColor.init(hexString: "#F7F8FC")
         self.view.backgroundColor = UIColor.init(hexString: "#F7F8FC")
         
-        self.headerView = NoticeChongzhiJbView.init(frame: CGRect(x: 0, y: 0, width: NoticeSwiftFile.screenWidth, height: NoticeSwiftFile.screenHeight))
+        self.headerView = NoticeChongzhiJbView.init(frame: CGRect(x: 0, y: 0, width: NoticeSwiftFile.screenWidth, height: NoticeSwiftFile.screenHeight-NoticeSwiftFile.NAVHEIGHT()))
         self.tableView.tableHeaderView = self.headerView!
         NotificationCenter.default.addObserver(self, selector: #selector(getMyWallect), name: NSNotification.Name(rawValue:"REFRESHMYWALLECT"), object: nil)
      
+        self.navBarView.titleL.text = "我的鲸币"
+        self.headerView?.frame = CGRectMake(0, 0, NoticeSwiftFile.screenWidth, (self.headerView?.allL?.frame.origin.y ?? 0)+(self.headerView?.allL?.frame.size.height ?? 0))
         self.getMyWallect()
+        self.navBarView.needDetailButton = true
+        self.navBarView.rightL.text = "鲸币明细"
+        self.navBarView.rightTapBlock = {(righttap:Bool) in
+            let ctl = NoticeShopChangeRecoderController();
+            
+            self.navigationController?.pushViewController(ctl, animated: true)
+        }
+      
     }
     
     @objc func getMyWallect(){
@@ -38,7 +48,6 @@ class NoticeChongzhiShopController: NoticeBaseCellController {
           
                 self?.wallectModel = NoticeMyWallectModel.mj_object(withKeyValues: nsDict["data"])
                 self?.headerView?.moneyL?.text = self?.wallectModel?.total_balance ?? "0"
-                self?.headerView?.allL?.text = "收入" + (self?.wallectModel?.income_balance ?? "0") + "+" + "充值" + (self?.wallectModel?.recharge_balance ?? "0")
             }
  
             }, fail: {[weak self] (error) in

@@ -29,7 +29,6 @@ class NoticeShopSRHeadeerView: UIView {
     @objc public var myShouRuModel :NoticeMyWallectModel?
     @objc public var limitL :UILabel?
     @objc public var tixianBtn :UIButton?
-    @objc public var biliL :UILabel?
     @objc public var tixianName :String?
     @objc public var tixianIcon :String?
     @objc public var wechatPayModel :NoticeMyWallectModel?
@@ -38,34 +37,30 @@ class NoticeShopSRHeadeerView: UIView {
     override init(frame: CGRect){
         super.init(frame: frame)
         
+        let imageView = UIImageView.init(frame: CGRect(x: 20, y: 8, width: NoticeSwiftFile.screenWidth-40, height: (NoticeSwiftFile.screenWidth-40)*144/335))
+        imageView.image = UIImage(named: "sx_myjingbiincome")
+        self.addSubview(imageView)
+        
         self.backgroundColor = UIColor.init(hexString: "#F7F8FC")
-        self.titleL = UILabel.init(frame: CGRect(x: 0, y: 20, width: NoticeSwiftFile.screenWidth, height: 20))
+        self.titleL = UILabel.init(frame: CGRect(x: 24, y: 30, width: NoticeSwiftFile.screenWidth-100, height: 20))
         self.titleL?.textColor = UIColor.init(hexString: "#5C5F66")
         self.titleL?.font = UIFont.systemFont(ofSize: 14)
-        self.titleL?.textAlignment = NSTextAlignment.center
-        self.titleL?.text = "可提现鲸币"
-        self.addSubview(self.titleL!)
+        self.titleL?.text = "收益(元)"
+        imageView.addSubview(self.titleL!)
         
-        self.moneyL = UILabel.init(frame: CGRect(x: 0, y: 40, width: NoticeSwiftFile.screenWidth, height: 42))
-        self.moneyL?.textColor = UIColor.init(hexString: "#25262E")
-        self.moneyL?.font = UIFont.init(name: "PingFangSC-Medium", size: 30)
-        self.moneyL?.textAlignment = NSTextAlignment.center
-        self.addSubview(self.moneyL!)
-        
-        self.limitL = UILabel.init(frame: CGRect(x: 0, y: 82, width: NoticeSwiftFile.screenWidth, height: 20))
-        self.limitL?.textColor = UIColor.init(hexString: "#8A8F99")
-        self.limitL?.font = UIFont.systemFont(ofSize: 14)
-        self.limitL?.textAlignment = NSTextAlignment.center
+        self.moneyL = UILabel.init(frame: CGRect(x: 24, y: 70, width: NoticeSwiftFile.screenWidth, height: 26))
+        self.moneyL?.textColor = UIColor.init(hexString: "#14151A")
+        self.moneyL?.font = UIFont.init(name: "PingFangSC-Medium", size: 26)
+        imageView.addSubview(self.moneyL!)
+    
+        self.limitL = UILabel.init(frame: CGRect(x: 20, y: CGRectGetMaxY(imageView.frame)+30, width: NoticeSwiftFile.screenWidth-20, height: 20))
+        self.limitL?.textColor = UIColor.init(hexString: "#14151A")
+        self.limitL?.font = UIFont.systemFont(ofSize: 15)
+        self.limitL?.text = "提现金额"
         self.addSubview(self.limitL!)
         
-        let subTitleL = UILabel.init(frame: CGRect(x: 20, y: 122, width:NoticeSwiftFile.screenWidth-20, height: 22))
-        subTitleL.font = UIFont.systemFont(ofSize: 16)
-        subTitleL.textColor = UIColor.init(hexString: "#25262E")
-     
-        self.addSubview(subTitleL)
-        self.biliL = subTitleL
-        
-        let backView = UIView.init(frame: CGRect(x: 20, y: 154, width: NoticeSwiftFile.screenWidth-40, height: 50))
+
+        let backView = UIView.init(frame: CGRect(x: 20, y: CGRectGetMaxY(self.limitL!.frame)+12, width: NoticeSwiftFile.screenWidth-40, height: 50))
         backView.backgroundColor = UIColor.white
         backView.layer.cornerRadius = 8
         backView.layer.masksToBounds = true
@@ -77,23 +72,22 @@ class NoticeShopSRHeadeerView: UIView {
         self.textFild?.textColor = UIColor.init(hexString: "#25262E")
         self.textFild?.keyboardType = .numberPad
         backView.addSubview(self.textFild!)
-        self.textFild?.attributedPlaceholder = DDHAttributedMode.setSizeAndColorString("请输入提现鲸币数量", setColor: UIColor.init(hexString: "#A1A7B3"), setSize: 13, setLengthString: "请输入提现鲸币数量", beginSize: 0)
+        self.textFild?.attributedPlaceholder = DDHAttributedMode.setSizeAndColorString("请输入提现金额", setColor: UIColor.init(hexString: "#A1A7B3"), setSize: 13, setLengthString: "请输入提现金额", beginSize: 0)
         self.textFild?.setupToolbarToDismissRightButton()
-        //[self.phoneView addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         self.textFild?.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
-        self.markL = UILabel.init(frame: CGRect(x: 20, y: 214-6, width: NoticeSwiftFile.screenWidth-40, height: 17))
+        self.markL = UILabel.init(frame: CGRect(x: 20, y: CGRectGetMaxY(backView.frame)+10, width: NoticeSwiftFile.screenWidth-40, height: 17))
         self.markL?.textColor = UIColor.init(hexString: "#DB6E6E")
         self.markL?.font = UIFont.systemFont(ofSize: 12)
         self.addSubview(self.markL!)
         
-        let subTitleL1 = UILabel.init(frame: CGRect(x: 20, y: 240-6, width:NoticeSwiftFile.screenWidth-20, height: 22))
-        subTitleL1.font = UIFont.systemFont(ofSize: 16)
-        subTitleL1.textColor = UIColor.init(hexString: "#25262E")
+        let subTitleL1 = UILabel.init(frame: CGRect(x: 20, y: CGRectGetMaxY(backView.frame)+30, width:NoticeSwiftFile.screenWidth-20, height: 21))
+        subTitleL1.font = UIFont.systemFont(ofSize: 15)
+        subTitleL1.textColor = UIColor.init(hexString: "#14151A")
         subTitleL1.text = "提现到"
         self.addSubview(subTitleL1)
         
-        let webackView = UIView.init(frame: CGRect(x: 20, y: 270, width: NoticeSwiftFile.screenWidth-40, height: 100))
+        let webackView = UIView.init(frame: CGRect(x: 20, y: CGRectGetMaxY(subTitleL1.frame)+12, width: NoticeSwiftFile.screenWidth-40, height: 100))
         webackView.backgroundColor = UIColor.white
         webackView.layer.cornerRadius = 8
         webackView.layer.masksToBounds = true
@@ -127,7 +121,7 @@ class NoticeShopSRHeadeerView: UIView {
         self.weChatChangeButton?.setTitleColor(UIColor.init(hexString: "#0099E6"), for: .normal)
         self.weChatChangeButton?.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         
-        let ailbackView = UIView.init(frame: CGRect(x: 20, y: 382, width: NoticeSwiftFile.screenWidth-40, height: 100))
+        let ailbackView = UIView.init(frame: CGRect(x: 20, y: CGRectGetMaxY(webackView.frame)+10, width: NoticeSwiftFile.screenWidth-40, height: 100))
         ailbackView.backgroundColor = UIColor.white
         ailbackView.layer.cornerRadius = 8
         ailbackView.layer.masksToBounds = true
@@ -161,7 +155,7 @@ class NoticeShopSRHeadeerView: UIView {
         self.ailChangeButton?.setTitleColor(UIColor.init(hexString: "#0099E6"), for: .normal)
         self.ailChangeButton?.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         
-        let getButton = UIButton.init(frame: CGRect(x: 20, y: ailbackView.frame.origin.y+100+30, width: NoticeSwiftFile.screenWidth-40, height: 40))
+        let getButton = UIButton.init(frame: CGRect(x: 20, y: CGRectGetMaxY(ailbackView.frame)+30, width: NoticeSwiftFile.screenWidth-40, height: 40))
         getButton.backgroundColor = UIColor.init(hexString: "#A1A7B3")
         getButton.layer.cornerRadius = 8
         getButton.layer.masksToBounds = true
@@ -184,6 +178,9 @@ class NoticeShopSRHeadeerView: UIView {
 
                 self?.myShouRuModel = NoticeMyWallectModel.mj_object(withKeyValues: nsDict["data"])
                 self?.moneyL?.text = self?.myShouRuModel?.income_balance
+     
+                var allMoney = ((Float)(self?.myShouRuModel?.income_balance ?? "0") ?? 0) * ((Float)(self?.myShouRuModel?.rate ?? "0.5") ?? 0.5 )//当前总金额
+                self?.moneyL?.text = String(format: "%.2f", allMoney)
 
                 for i in 0..<(self?.myShouRuModel?.payModelArr.count ?? 0){
                     
@@ -199,15 +196,11 @@ class NoticeShopSRHeadeerView: UIView {
                     }
                 }
                 
-                let subStr = "(" + (self?.myShouRuModel?.proportion_text ?? "2鲸币=1RMB") + ")"
-                let allStr = "提现鲸币" + subStr
-                
-                self?.biliL?.attributedText = DDHAttributedMode.setSizeAndColorString(allStr, setColor: UIColor.init(hexString: "#5C5F66"), setSize: 14, setLengthString: subStr, beginSize: 4)
-
                 if ((Float)(self?.myShouRuModel?.limit_amount ?? "0") ?? 0 ) > ((Float)(self?.myShouRuModel?.income_balance ?? "0") ?? 0 ){
-                    self?.limitL?.text = "当前鲸币不足" + (self?.myShouRuModel?.limit_amount ?? "0") + "," + "暂不能提现"
+                    let limitMoney = (Float)(self?.myShouRuModel?.limit_amount ?? "0") ?? 0 //最低可提现金额要求
+                    self?.markL?.text = String(format: "当前余额不足%.2f 暂不能提现", limitMoney * ((Float)(self?.myShouRuModel?.rate ?? "0.5") ?? 0.5))
                 }else{
-                    self?.limitL?.text = ""
+                    self?.markL?.text = ""
                 }
             }
             
@@ -224,10 +217,10 @@ class NoticeShopSRHeadeerView: UIView {
             sureView.iconImageView.sd_setImage(with: URL.init(string: self.tixianIcon ?? ""), completed: { image, error, type, url in
             })
             sureView.sureBlock = {[weak self] (sure) in
-                NoticeQiaojjieTools.show(withTitle:String(format: "实际提现金额\n\n¥%.2f", (Float(self?.textFild?.text ?? "") ?? 0)*((Float)(self?.myShouRuModel?.rate ?? "0.2") ?? 0.2 )), msg: "", button1: "再想想", button2: "提现") { [weak self] (click) in
+                NoticeQiaojjieTools.show(withTitle:String(format: "实际提现金额\n\n¥%.2f", (Float(self?.textFild?.text ?? "") ?? 0)), msg: "", button1: "再想想", button2: "提现") { [weak self] (click) in
                     NoticeOcToSwift.topViewController().showHUD()
                     let parm = NSMutableDictionary()
-                    parm .setObject(self?.textFild?.text as Any, forKey: "amount" as NSCopying) //String(format: "transfer/%@", self?.tixianId as CVarArg)
+                    parm .setObject(String(format: "%.2f", (Float(self?.textFild?.text ?? "") ?? 0)/((Float)(self?.myShouRuModel?.rate ?? "0.5") ?? 0.5 )), forKey: "amount" as NSCopying)
                     DRNetWorking.shareInstance()?.requestNoNeedLogin(withPath: "transfer/" + (self?.tixianId ?? "") , accept: "application/vnd.shengxi.v5.3.8+json", isPost: true, parmaer: parm, page: 0, success: {[weak self] (dict, success) in
                         NoticeOcToSwift.topViewController().hideHUD()
                         if success == true{
@@ -265,7 +258,6 @@ class NoticeShopSRHeadeerView: UIView {
                 NoticeOcToSwift.topViewController().hideHUD()
                 if success == true{
                     self?.getShouru()
-                  
                 }
             }, fail: {(error) in
                 NoticeOcToSwift.topViewController().hideHUD()
@@ -278,7 +270,6 @@ class NoticeShopSRHeadeerView: UIView {
     @objc func bangdingWeChat(){
         NoticeTools.getWeChatsuccess {[weak self] (payId, type ,name,icon)in
             self?.bangding(bangdId: payId, bangType: "1", bangName: name, bangIcon: icon)
-            
         }
     }
     
@@ -336,10 +327,8 @@ class NoticeShopSRHeadeerView: UIView {
             DRNetWorking.shareInstance()?.requestNoNeedLogin(withPath: String(format: "authorizeUser/2?auth_code=%@", backM.auth_code), accept: "application/vnd.shengxi.v5.3.8+json", isPost: false, parmaer: nil, page: 0, success: {[weak self] (dict, success) in
                 NoticeOcToSwift.topViewController().hideHUD()
                 if success == true{
-                    
                     let nsDict = dict! as NSDictionary
                     let nameModel = NoticeMJIDModel.mj_object(withKeyValues: nsDict["data"])
-                    
                     self?.bangding(bangdId: backM.user_id, bangType: "2", bangName: nameModel?.identity_name, bangIcon: nameModel?.identity_img_url)
                 }
             }, fail: {(error) in
@@ -352,28 +341,32 @@ class NoticeShopSRHeadeerView: UIView {
     
         self.canTixian = false
         self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#A1A7B3")
-        self.tixianBtn?.setTitleColor(UIColor.init(hexString: "#E1E4F0"), for: .normal)//171.44
+        self.tixianBtn?.setTitleColor(UIColor.init(hexString: "#E1E4F0"), for: .normal)
         
         if Int(self.textFild?.text ?? "") ?? 0 > 0 {
-            
             self.markL?.textColor = UIColor.init(hexString: "#DB6E6E")
-            
-            if ((Float)(self.myShouRuModel?.limit_amount ?? "0") ?? 0 ) > ((Float)(self.myShouRuModel?.income_balance ?? "0") ?? 0 ){//鲸币小于最低可提现要求
-                self.markL?.text = "当前鲸币不足" + (self.myShouRuModel?.limit_amount ?? "0") + "," + "暂不能提现"
+            let inpuMoney = (Float(self.textFild?.text ?? "") ?? 0) //输入的提现金额
+            let inputJinb = (Float(self.textFild?.text ?? "") ?? 0) / ((Float)(self.myShouRuModel?.rate ?? "0.5") ?? 0.5 )//转成的鲸币
+            let limitMoney = (Float)(self.myShouRuModel?.limit_amount ?? "0") ?? 0 //最低可提现金额要求
+            let allMoney = (Float)(self.myShouRuModel?.income_balance ?? "0") ?? 0 //当前总金额
+            if (limitMoney > allMoney){//鲸币小于最低可提现要求
+                self.markL?.text = "当前余额不足" + (self.myShouRuModel?.limit_amount ?? "0") + "," + "暂不能提现"
             }else{
-                if Float(self.textFild?.text ?? "") ?? 0 < ((Float)(self.myShouRuModel?.limit_amount ?? "0") ?? 0 ) {//输入提现鲸币小于最低要求
-                    self.markL?.text = "单笔提现不能少于" + (self.myShouRuModel?.limit_amount ?? "0") + "鲸币"
-                }else  if Float(self.textFild?.text ?? "") ?? 0 > ((Float)(self.myShouRuModel?.income_balance ?? "0") ?? 0 ){//输入鲸币超过可提现鲸币
-                    self.markL?.text = "输入鲸币超过了可提现鲸币"
-                }else{
+                if inputJinb < limitMoney {//输入提现鲸币小于最低要求
+                    self.markL?.text = String(format: "单笔提现不能少于%.2f元", limitMoney * ((Float)(self.myShouRuModel?.rate ?? "0.5") ?? 0.5 ))
+                }else  if inputJinb > ((Float)(self.myShouRuModel?.income_balance ?? "0") ?? 0 ){//输入鲸币超过可提现鲸币
+                    self.markL?.text = "超过了可提现余额"
+                }else  if (inpuMoney > 2000){//输入鲸币超过可提现范围
+                    self.markL?.text = "单次提现不得大于2000元"
+                }
+                else{
                     self.canTixian = true
                     if self.tixianType > 0 {
                         self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#0099E6")
                         self.tixianBtn?.setTitleColor(UIColor.init(hexString: "#FFFFFF"), for: .normal)
                     }
-                    
                     self.markL?.textColor = UIColor.init(hexString: "#8A8F99")
-                    self.markL?.text = String(format: "当前鲸币可提现%.2fRMB", (Float(self.textFild?.text ?? "") ?? 0)*((Float)(self.myShouRuModel?.rate ?? "0.5") ?? 0.5 ))
+                    self.markL?.text = String(format: "当前可提现%.2fRMB", Float(self.textFild?.text ?? "") ?? 0)
                 }
             }
         }
