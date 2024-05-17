@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SXChoiceShopOpenTimeView.h"
+#import "NoticeMyShopModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXShopOpenTypeView : UIView
@@ -18,8 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *timeView;
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, strong) UIButton *addButton;
+@property (nonatomic, strong) NSString *startTime;
+@property (nonatomic, strong) NSString *endTime;
 @property (nonatomic, strong) UILabel *timeL;
 @property (nonatomic, strong) SXChoiceShopOpenTimeView *openTimeView;
+@property (nonatomic, strong) NoticeMyShopModel *shopModel;
+@property (nonatomic, assign) NSInteger originType;
 - (void)showATView;
 @end
 

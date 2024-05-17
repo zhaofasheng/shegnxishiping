@@ -14,7 +14,7 @@
 @interface NoticeTelController ()
 
 @property (nonatomic, assign) NSInteger noLoginDevice;
-
+@property (nonatomic, strong) UILabel *defaultL;
 @end
 
 @implementation NoticeTelController
@@ -72,6 +72,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     SXAskQuestionShopCell *merchentCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"askCell" forIndexPath:indexPath];
+    merchentCell.isFree = self.isFree;
     merchentCell.shopM = self.dataArr[indexPath.row];
     return merchentCell;
 }
@@ -93,8 +94,13 @@
         url = [NSString stringWithFormat:@"shop/list?isExperience=%@&userDevice=%ld&pageNo=%ld",self.isFree?@"1":@"2",self.noLoginDevice,self.pageNo];
     }else{
         url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%ld",self.isFree?@"1":@"2",self.pageNo];
+        if (!self.isFree) {
+            url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%ld&categoryId=%@",self.isFree?@"1":@"2",self.pageNo,self.category_Id];
+        }
     }
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             
             if (self.isDown) {
@@ -109,6 +115,11 @@
             self.layout.telList = self.dataArr;
             [self.collectionView reloadData];
         }
+        if (self.dataArr.count) {
+            [_defaultL removeFromSuperview];
+        }else{
+            [self.collectionView addSubview:self.defaultL];
+        }
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
     } fail:^(NSError * _Nullable error) {
@@ -117,6 +128,16 @@
     }];
 }
 
+- (UILabel *)defaultL{
+    if (!_defaultL) {
+        _defaultL = [[UILabel  alloc] initWithFrame:self.collectionView.bounds];
+        _defaultL.text = @"欸 这里空空的";
+        _defaultL.font = FOURTHTEENTEXTFONTSIZE;
+        _defaultL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
+        _defaultL.textAlignment = NSTextAlignmentCenter;
+    }
+    return _defaultL;
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     

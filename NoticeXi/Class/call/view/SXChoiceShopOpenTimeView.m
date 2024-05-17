@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSArray *oneArr;
 @property (nonatomic, strong) NSArray *twoArr;
 @property (nonatomic, strong) NSArray *threeArr;
+
 @end
 
 
@@ -131,6 +132,25 @@
     self.endView.layer.borderColor = [UIColor colorWithHexString:@"#F0F1F5"].CGColor;
     self.endView.layer.borderWidth = 1;
     self.endView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+    
+    NSArray *arrary = [self.startTime componentsSeparatedByString:@":"];
+    if (arrary.count == 2) {
+        for (int i = 0;i < self.twoArr.count;i++) {
+            NSString *times = self.twoArr[i];
+            if ([times isEqualToString:arrary[0]]) {
+                [self.datePicker selectRow:i inComponent:1 animated:YES];
+                break;
+            }
+        }
+        for (int i = 0;i < self.threeArr.count;i++) {
+            NSString *times = self.threeArr[i];
+            if ([times isEqualToString:arrary[1]]) {
+                [self.datePicker selectRow:i inComponent:2 animated:YES];
+                break;
+            }
+        }
+    }
+    
 }
 
 - (void)endTap{
@@ -142,14 +162,64 @@
     self.startView.layer.borderColor = [UIColor colorWithHexString:@"#F0F1F5"].CGColor;
     self.startView.layer.borderWidth = 1;
     self.startView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+    
+    NSArray *arrary = [self.endTime componentsSeparatedByString:@":"];
+    if (arrary.count == 2) {
+        for (int i = 0;i < self.twoArr.count;i++) {
+            NSString *times = self.twoArr[i];
+            if ([times isEqualToString:arrary[0]]) {
+                [self.datePicker selectRow:i inComponent:1 animated:YES];
+                break;
+            }
+        }
+        for (int i = 0;i < self.threeArr.count;i++) {
+            NSString *times = self.threeArr[i];
+            if ([times isEqualToString:arrary[1]]) {
+                [self.datePicker selectRow:i inComponent:2 animated:YES];
+                break;
+            }
+        }
+    }
+    
 }
 
 - (void)saveClick{
+    if ([self.startTimeL.text isEqualToString:self.endTimeL.text]) {
+        [[NoticeTools getTopViewController] showToastWithText:@"开始时间和结束时间不可以同一时间哦~"];
+        return;
+    }
+    if (self.choiceTimeBlock) {
+        self.choiceTimeBlock(self.startTimeL.text, self.endTimeL.text);
+    }
     [self cancelClick];
 }
 
 
 - (void)showATView{
+    self.startTimeL.text = self.startTime;
+    self.endTimeL.text = self.endTime;
+    [self.datePicker selectRow:0 inComponent:0 animated:YES];
+    
+    [self.addButton setTitle:[NSString stringWithFormat:@"确认修改为：每天%@-%@营业",self.startTimeL.text,self.endTimeL.text] forState:UIControlStateNormal];
+    NSArray *arrary = [self.startTime componentsSeparatedByString:@":"];
+    if (arrary.count == 2) {
+        for (int i = 0;i < self.twoArr.count;i++) {
+            NSString *times = self.twoArr[i];
+            if ([times isEqualToString:arrary[0]]) {
+                [self.datePicker selectRow:i inComponent:1 animated:YES];
+                break;
+            }
+        }
+        for (int i = 0;i < self.threeArr.count;i++) {
+            NSString *times = self.threeArr[i];
+            if ([times isEqualToString:arrary[1]]) {
+                [self.datePicker selectRow:i inComponent:2 animated:YES];
+                break;
+            }
+        }
+    }
+    
+    
     [self.datePicker reloadAllComponents];
     UIWindow *rootWindow = [SXTools getKeyWindow];
     [rootWindow addSubview:self];
@@ -164,6 +234,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         self.contentView.frame = CGRectMake(0, DR_SCREEN_HEIGHT, DR_SCREEN_WIDTH, self.contentView.frame.size.height);
     } completion:^(BOOL finished) {
+        [self startTap];
         [self removeFromSuperview];
     }];
 }
@@ -244,7 +315,9 @@
     }else{
         self.endTimeL.text = [NSString stringWithFormat:@"%@:%@",self.twoArr[row2],self.threeArr[row3]];
     }
- 
+    self.startTime = self.startTimeL.text;
+    self.endTime = self.endTimeL.text;
+    [self.addButton setTitle:[NSString stringWithFormat:@"确认修改为：每天%@-%@营业",self.startTimeL.text,self.endTimeL.text] forState:UIControlStateNormal];
     [self.datePicker reloadAllComponents];
 }
 

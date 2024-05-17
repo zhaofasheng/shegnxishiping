@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *label;
 @property (nonatomic, strong) NSString *goods_img_url;
 @property (nonatomic, strong) NSString *price;
+
 @property (nonatomic, strong) NSString *duration;
 @property (nonatomic, strong) NSString *created_at;
 @property (nonatomic, strong) NSString  *choice;

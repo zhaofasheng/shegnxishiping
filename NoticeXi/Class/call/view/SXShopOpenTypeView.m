@@ -22,7 +22,7 @@
         
         UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-5-50, 0, 50, 50)];
         [cancelBtn setImage:UIImageNamed(@"sx_blackclose_img") forState:UIControlStateNormal];
-        [cancelBtn addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
+        [cancelBtn addTarget:self action:@selector(sureDissClick) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:cancelBtn];
                 
         UILabel *contentL = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 200,50)];
@@ -121,16 +121,70 @@
 }
 
 - (void)choiceTap{
+    if (self.type == 0) {
+        [self timeTap];
+        return;
+    }
+    self.openTimeView.startTime = self.startTime;
+    self.openTimeView.endTime = self.endTime;
     [self.openTimeView showATView];
 }
 
 - (void)saveClick{
-    [self cancelClick];
+    if (self.type == 0) {
+        if (self.originType == 0) {//没更改直接回退
+            [self cancelClick];
+            return;
+        }
+        __weak typeof(self) weakSelf = self;
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"切换为「不定时」，结束时需要手动结束，确定切换吗？" message:nil sureBtn:@"再想想" cancleBtn:@"切换" right:YES];
+        alerView.resultIndex = ^(NSInteger index) {
+            if (index == 2) {
+                [weakSelf noTime];
+            }
+        };
+        [alerView showXLAlertView];
+    }else{
+        [[NoticeTools getTopViewController] showHUD];
+        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+        [parm setObject:self.startTime forKey:@"start_time"];
+        [parm setObject:self.endTime forKey:@"end_time"];
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/operateStatus/%@/%@",self.shopModel.myShopM.shopId,self.shopModel.myShopM.operate_status.intValue==3?@"2":self.shopModel.myShopM.operate_status] Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if(success){
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
+                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"设置成功" message:[NSString stringWithFormat:@"营业时间为「每日%@-%@」\n打开手机通知，以便即时接收营业提示",self.startTime,self.endTime] cancleBtn:@"知道了"];
+                [alerView showXLAlertView];
+                [self cancelClick];
+            }
+        } fail:^(NSError * _Nullable error) {
+            
+        }];
+    }
+}
+
+
+
+- (void)noTime{
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/operateStatus/%@/%@",self.shopModel.myShopM.shopId,self.shopModel.myShopM.operate_status.intValue==3?@"2":self.shopModel.myShopM.operate_status] Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if(success){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
+            [[NoticeTools getTopViewController] showToastWithText:@"设置成功"];
+            [self cancelClick];
+        }
+    } fail:^(NSError * _Nullable error) {
+        
+    }];
 }
 
 - (SXChoiceShopOpenTimeView *)openTimeView{
     if (!_openTimeView) {
         _openTimeView = [[SXChoiceShopOpenTimeView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+        __weak typeof(self) weakSelf = self;
+        _openTimeView.choiceTimeBlock = ^(NSString * _Nonnull startTime, NSString * _Nonnull endTime) {
+            weakSelf.startTime = startTime;
+            weakSelf.endTime = endTime;
+            weakSelf.timeL.text = [NSString stringWithFormat:@"营业时间  每天%@-%@",weakSelf.startTime,weakSelf.endTime];
+        };
     }
     return _openTimeView;
 }
@@ -161,6 +215,22 @@
 
 - (void)showATView{
 
+    if (self.shopModel.myShopM.is_timing.boolValue) {//当前是定时营业模式
+        [self timeTap];
+
+    }else{
+        [self allTap];
+    }
+    if (!self.shopModel.myShopM.start_time) {
+        self.startTime = @"00:00";
+        self.endTime = @"23:55";
+    }else{
+        self.startTime = self.shopModel.myShopM.start_time;
+        self.endTime = self.shopModel.myShopM.end_time;
+    }
+    self.timeL.text = [NSString stringWithFormat:@"营业时间  每天%@-%@",self.startTime,self.endTime];
+    self.originType = self.shopModel.myShopM.is_timing.boolValue?1:0;
+    
     UIWindow *rootWindow = [SXTools getKeyWindow];
     [rootWindow addSubview:self];
     
@@ -178,5 +248,21 @@
     }];
 }
 
+- (void)sureDissClick{
+    if (self.originType == self.type) {
+        [self cancelClick];
+    }else{
+        __weak typeof(self) weakSelf = self;
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:[NSString stringWithFormat:@"模式已切换为「%@」，是否保存设置？",self.type==1?@"定时营业":@"不定时营业"] message:nil sureBtn:@"不保存" cancleBtn:@"保存" right:YES];
+        alerView.resultIndex = ^(NSInteger index) {
+            if (index == 2) {
+                [weakSelf saveClick];
+            }else{
+                [weakSelf cancelClick];
+            }
+        };
+        [alerView showXLAlertView];
+    }
+}
 
 @end

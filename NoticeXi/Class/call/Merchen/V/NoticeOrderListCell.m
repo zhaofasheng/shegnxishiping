@@ -9,6 +9,7 @@
 #import "NoticeOrderListCell.h"
 #import "NoticeGoToComShopController.h"
 #import "NoticeOrderComDetailController.h"
+#import "NoticeJuBaoBoKeTosatView.h"
 #import "NoticdShopDetailForUserController.h"
 @implementation NoticeOrderListCell
 
@@ -61,7 +62,7 @@
         UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shopTap)];
         [self.userNameL addGestureRecognizer:tap2];
         
-        self.statusL = [[UILabel alloc] initWithFrame:CGRectMake(backView.frame.size.width-10-126, 12, 126, 17)];
+        self.statusL = [[UILabel alloc] initWithFrame:CGRectMake(backView.frame.size.width-10-166, 12, 166, 17)];
         self.statusL.textColor = [UIColor colorWithHexString:@"#25262E"];
         self.statusL.font = XGTWOBoldFontSize;
         self.statusL.textAlignment = NSTextAlignmentRight;
@@ -97,10 +98,55 @@
     }
 }
 
+- (void)replyShouhou{
+    NoticeJuBaoBoKeTosatView *jubaoV = [[NoticeJuBaoBoKeTosatView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    jubaoV.plaStr = @"请输入申请的内容";
+    jubaoV.num = 100;
+    jubaoV.noDissmiss = YES;
+    [jubaoV.sendButton setTitle:@"提交" forState:UIControlStateNormal];
+
+    jubaoV.titleL.text = @"申请售后";
+    __block NoticeJuBaoBoKeTosatView *strongBlock = jubaoV;
+    [jubaoV showView];
+    __weak typeof(self) weakSelf = self;
+    jubaoV.jubaoBlock = ^(NSString * _Nonnull content) {
+        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+        [parm setObject:content forKey:@"reason"];
+        [[NoticeTools getTopViewController] showHUD];
+        
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/orderAfterSales/%@",weakSelf.orderM.orderId] Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success1) {
+            [[NoticeTools getTopViewController] hideHUD];
+
+            if (success1) {
+                [strongBlock removeFromSuperview];
+                [strongBlock cancelClick];
+                weakSelf.orderM.after_sales_status = @"1";
+                weakSelf.statusL.text = @"售后处理中";
+                if (weakSelf.isUser) {
+                    weakSelf.comButton.hidden = NO;
+                    [weakSelf.comButton setTitleColor:[UIColor colorWithHexString:@"#EE4B4E"] forState:UIControlStateNormal];
+                    [weakSelf.comButton setTitle:@"售后处理中" forState:UIControlStateNormal];
+                    weakSelf.comButton.layer.borderWidth = 1;
+                    weakSelf.comButton.layer.borderColor = [UIColor colorWithHexString:@"#EE4B4E"].CGColor;
+                    weakSelf.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+                }
+            }
+        } fail:^(NSError * _Nullable error) {
+            [strongBlock removeFromSuperview];
+            [strongBlock cancelClick];
+            [[NoticeTools getTopViewController] hideHUD];
+        }];
+    };
+}
+
 - (void)comClick{
     __weak typeof(self) weakSelf = self;
     if(self.isUser){
-
+        if (self.orderM.after_sales_time.intValue > 0 && self.orderM.after_sales_status.intValue == 0) {
+            [self replyShouhou];
+            return;
+        }
+        
         if(_orderM.is_comment.intValue == 0){//没有评价的时候点击进入评价
             NoticeGoToComShopController *ctl = [[NoticeGoToComShopController alloc] init];
             ctl.orderM = self.orderM;
@@ -167,16 +213,10 @@
     _orderM = orderM;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:orderM.goods_img_url]];
     [self.userIconImageView sd_setImageWithURL:[NSURL URLWithString:self.isUser?orderM.shop_avatar_url: orderM.avatar_url]];
-    self.shopNameL.text = self.orderM.room_id.intValue?[NSString stringWithFormat:@"%@*%@",self.orderM.goods_name,[self getMMSSFromSS:self.orderM.voice_duration]]: [NSString stringWithFormat:@"文字聊天*%@",self.orderM.goods_name];
-    if (orderM.room_id.intValue) {
-        self.priceL.text = [NSString stringWithFormat:@"%@鲸币/分钟", orderM.unit_price];
-    }else{
-        NSString *allStr = [NSString stringWithFormat:@"%@鲸币(%@分钟)",orderM.price,orderM.duration];
-        NSString *str1 = [NSString stringWithFormat:@"%@鲸币", orderM.price];
-        NSString *str2 = [NSString stringWithFormat:@"(%@分钟)",orderM.duration];
-        self.priceL.attributedText = [DDHAttributedMode setSizeAndColorString:allStr setColor:[UIColor colorWithHexString:@"#5C5F66"] setSize:12 setLengthString:str2 beginSize:str1.length];
-    }
- 
+    
+    self.shopNameL.text = self.orderM.room_id.intValue?self.orderM.goods_name : [NSString stringWithFormat:@"文字聊天*%@",self.orderM.goods_name];
+    self.priceL.text = [self getMMSSFromSS:self.orderM.voice_duration];
+    
     self.userNameL.text =self.isUser?orderM.shop_name: orderM.user_nick_name;
     
     if(self.isUser){
@@ -193,63 +233,89 @@
     }
     
     self.payL.hidden = YES;
-    
     self.comButton.hidden = YES;
-    if (orderM.order_type.intValue == 3 || orderM.order_type.intValue == 2) {
-        self.statusL.text = @"拒绝订单";
-    }else if (orderM.order_type.intValue == 4){
-        self.statusL.text = @"接单超时";
-    }else if (orderM.order_type.intValue == 6){
-        self.statusL.text = @"已完成";
-        self.payL.hidden = NO;
-        self.comButton.hidden = NO;
-    }else if (orderM.order_type.intValue == 7){
-        self.statusL.text = @"订单异常，审核中";
-    }else if (orderM.order_type.intValue == 8){
-        if(orderM.is_fault.intValue == 2){//卖家过错
-            self.statusL.text  = @"交易失败";
-        }else{
-            self.payL.hidden = NO;
-            self.statusL.text = @"已完成";
-            self.comButton.hidden = NO;
-        }
-    }
-    
     self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#A1A7B3"].CGColor;
-    if(self.isUser){
-        self.payL.text = [NSString stringWithFormat:@"支付:%@鲸币",orderM.price];
-        if(orderM.is_comment.intValue == 0){
-            [self.comButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-            [self.comButton setTitle:@"给个评价" forState:UIControlStateNormal];
-            self.comButton.layer.borderWidth = 0;
-            self.comButton.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
-        }else if(orderM.is_comment.intValue == 1){
-            [self.comButton setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
-            [self.comButton setTitle:@"查看评价" forState:UIControlStateNormal];
-            self.comButton.layer.borderWidth = 1;
-            self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
-        }else if(orderM.is_comment.intValue == 2){
-            [self.comButton setTitleColor:[UIColor colorWithHexString:@"#A1A7B3"] forState:UIControlStateNormal];
-            [self.comButton setTitle:@"评价已删除" forState:UIControlStateNormal];
-            self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#F7F8FC"].CGColor;
-            self.comButton.layer.cornerRadius = 16;
-            self.comButton.layer.borderWidth = 1;
-            self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+    if (orderM.after_sales_time.intValue > 0) {//订单服务保障中
+        if (orderM.after_sales_status.intValue == 0) {
+            self.statusL.text = @"订单服务保障中";
+            if (self.isUser) {
+                self.comButton.hidden = NO;
+                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
+                [self.comButton setTitle:@"申请售后" forState:UIControlStateNormal];
+                self.comButton.layer.borderWidth = 0;
+                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
+            }
+        }else{
+            self.statusL.text = @"售后处理中";
+            if (self.isUser) {
+                self.comButton.hidden = NO;
+                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#EE4B4E"] forState:UIControlStateNormal];
+                [self.comButton setTitle:@"售后处理中" forState:UIControlStateNormal];
+                self.comButton.layer.borderWidth = 1;
+                self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#EE4B4E"].CGColor;
+                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+            }
         }
     }else{
-        self.payL.text = [NSString stringWithFormat:@"实收:%@鲸币",orderM.income];
-        if(orderM.is_comment.intValue == 1){
-            [self.comButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-            [self.comButton setTitle:@"查看评价" forState:UIControlStateNormal];
-            self.comButton.layer.borderWidth = 0;
-            self.comButton.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
-        }else{
-            [self.comButton setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
-            [self.comButton setTitle:@"暂无评价" forState:UIControlStateNormal];
-            self.comButton.layer.borderWidth = 1;
-            self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        if (orderM.order_type.intValue == 3 || orderM.order_type.intValue == 2) {
+            self.statusL.text = @"拒绝订单";
+        }else if (orderM.order_type.intValue == 4){
+            self.statusL.text = @"接单超时";
+        }else if (orderM.order_type.intValue == 6){
+            self.statusL.text = @"已完成";
+            self.payL.hidden = NO;
+            self.comButton.hidden = NO;
+        }else if (orderM.order_type.intValue == 7){
+            self.statusL.text = @"订单异常，审核中";
+        }else if (orderM.order_type.intValue == 8){
+            if(orderM.is_fault.intValue == 2){//卖家过错
+                self.statusL.text  = @"交易失败";
+            }else{
+                self.payL.hidden = NO;
+                self.statusL.text = @"已完成";
+                self.comButton.hidden = NO;
+            }
         }
     }
+    
+
+    if (!orderM.after_sales_time.intValue) {
+        if(self.isUser){
+            self.payL.text = [NSString stringWithFormat:@"支付:%@鲸币",orderM.price];
+            if(orderM.is_comment.intValue == 0){
+                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
+                [self.comButton setTitle:@"给个评价" forState:UIControlStateNormal];
+                self.comButton.layer.borderWidth = 0;
+                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
+            }else if(orderM.is_comment.intValue == 1){
+                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
+                [self.comButton setTitle:@"查看评价" forState:UIControlStateNormal];
+                self.comButton.layer.borderWidth = 1;
+                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+            }else if(orderM.is_comment.intValue == 2){
+                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#A1A7B3"] forState:UIControlStateNormal];
+                [self.comButton setTitle:@"评价已删除" forState:UIControlStateNormal];
+                self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#F7F8FC"].CGColor;
+                self.comButton.layer.cornerRadius = 16;
+                self.comButton.layer.borderWidth = 1;
+                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+            }
+        }else{
+            self.payL.text = [NSString stringWithFormat:@"%@:%@鲸币",orderM.after_sales_time.intValue > 0?@"待收":@"实收",orderM.income];
+            if(orderM.is_comment.intValue == 1){
+                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
+                [self.comButton setTitle:@"查看评价" forState:UIControlStateNormal];
+                self.comButton.layer.borderWidth = 0;
+                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
+            }else{
+                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
+                [self.comButton setTitle:@"暂无评价" forState:UIControlStateNormal];
+                self.comButton.layer.borderWidth = 1;
+                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+            }
+        }
+    }
+   
 
 }
 

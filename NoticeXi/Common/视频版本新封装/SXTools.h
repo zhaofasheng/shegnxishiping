@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SXVideosModel.h"
+#import "NoticeByOfOrderModel.h"
 NS_ASSUME_NONNULL_BEGIN
 typedef void(^MyImageBlock)(UIImage * _Nullable image);
 typedef void (^downSuccessBlock)(BOOL success);
@@ -48,6 +49,11 @@ typedef void (^downSuccessBlock)(BOOL success);
 
 //首行缩进的文本高度
 +(CGFloat)getHeightWithLineHight:(CGFloat)lineHeight font:(CGFloat)font width:(CGFloat)width string:(NSString *)string andFirstWidth:(CGFloat)firstWidth;
+
+
++ (void)savePayInfo:(NoticeByOfOrderModel *)payInfo;
++ (NoticeByOfOrderModel *)getPayInfo;
++ (void)clearPayInfo;
 @end
 
 NS_ASSUME_NONNULL_END

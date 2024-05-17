@@ -74,13 +74,13 @@
     self.nickNameL.text = shopM.shop_name;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:shopM.shop_avatar_url] placeholderImage:UIImageNamed(@"sxshopdefaulticon_img")];
     
-    if (shopM.goodsM.is_experience.intValue) {//体验版
+    if (self.isFree) {//体验版
         self.callView.hidden = YES;
     }else{
         self.callView.hidden = NO;
         self.timeL.text = [NSString stringWithFormat:@"%@分钟",shopM.goodsM.duration];
-        NSString *allStr = [NSString stringWithFormat:@"%@鲸币起",shopM.goodsM.price];
-        NSString *money = shopM.goodsM.price;
+        NSString *allStr = [NSString stringWithFormat:@"%@鲸币起",shopM.min_price];
+        NSString *money = shopM.min_price;
         self.moneyL.attributedText = [DDHAttributedMode setString:allStr setSize:12 setLengthString:@"鲸币起" beginSize:money.length];
     }
     
@@ -93,7 +93,7 @@
         self.contentL.text = shopM.tale;
     }
   
-    if (shopM.verifyModel.authentication_type.intValue > 0) {
+    if (shopM.verifyModel.is_certified.intValue > 0) {
   
         self.markImageView.hidden = NO;
     }else{

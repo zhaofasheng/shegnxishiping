@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *cert_no;//身份证号
 @property (nonatomic, strong) NSString *front_photo_url;//身份证正面照
 @property (nonatomic, strong) NSString *back_photo_url;//身份证反面照
+@property (nonatomic, strong) NSString *is_certified;
 @property (nonatomic, strong) NSString *authentication_type;//认证类型(1学历认证 2职业认证 3资格证认证)
 @property (nonatomic, strong) NSString *education_option;//学历(1本科在读 2本科 3硕士在读 4硕士 5博士在读 6博士)
 @property (nonatomic, strong) NSString *education_optionName;

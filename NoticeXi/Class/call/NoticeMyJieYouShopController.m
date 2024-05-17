@@ -242,29 +242,38 @@
 }
 
 - (void)typeClick{
+    if (!self.sellGoodsArr.count) {
+        [self showToastWithText:@"管理服务列表添加收费服务后，才能设置营业时间"];
+        return;
+    }
+    if (self.shopModel.myShopM.is_stop.integerValue > 0) {
+        [self showToastWithText:@"店铺当前无法营业，暂不能使用此功能"];
+        return;
+    }
+    self.typeView.shopModel = self.shopModel;
     [self.typeView showATView];
 }
 
 - (void)startClick{
     
     
-    if(self.shopModel.myShopM.is_stop.integerValue){
+    if(self.shopModel.myShopM.is_stop.integerValue || (self.shopModel.myShopM.is_timing.boolValue && self.shopModel.myShopM.operate_status.intValue == 1)){
         return;
     }
 
-    if(self.shopModel.myShopM.operate_status.integerValue == 2){
-        [self showHUD];
-        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-        [parm setObject:@"99" forKey:@"goods_id"];
-        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/operateStatus/%@/1",self.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-            if(success){
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
-                [self getShopRequest];
+    if (self.shopModel.myShopM.is_timing.boolValue && self.shopModel.myShopM.operate_status.integerValue == 2) {
+        __weak typeof(self) weakSelf = self;
+         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:[NSString stringWithFormat:@"你设置的营业时间为「%@-%@」，确定提前结束营业吗？",self.shopModel.myShopM.start_time,self.shopModel.myShopM.end_time] message:nil sureBtn:@"再想想" cancleBtn:@"结束营业" right:YES];
+        alerView.resultIndex = ^(NSInteger index) {
+            if (index == 2) {
+                [weakSelf endWork];
             }
-            [self hideHUD];
-        } fail:^(NSError * _Nullable error) {
-            [self hideHUD];
-        }];
+        };
+        [alerView showXLAlertView];
+        return;
+    }
+    if(self.shopModel.myShopM.operate_status.integerValue == 2){
+        [self endWork];
         return;
     }
     
@@ -286,21 +295,33 @@
     }
 }
 
+- (void)endWork{
+    [self showHUD];
+
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/operateStatus/%@/1",self.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if(success){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
+            [self getShopRequest];
+        }
+        [self hideHUD];
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
+}
+
 - (void)start{
     
     __weak typeof(self) weakSelf = self;
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (granted) { // 有使用麦克风的权限
-                NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
                 if(weakSelf.sellGoodsArr.count){
-                    [parm setObject:@"99" forKey:@"goods_id"];
                 }else{
                     [YZC_AlertView showViewWithTitleMessage:@"没有选择营业的商品"];
                     return;
                 }
                 
-                [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/operateStatus/%@/2",weakSelf.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+                [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/operateStatus/%@/2",weakSelf.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                     if(success){
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
                         [weakSelf getShopRequest];
@@ -341,7 +362,20 @@
         }
         self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor];
         
-    }else{
+    }else if (self.shopModel.myShopM.is_timing.boolValue){//定时营业
+        if(self.shopModel.myShopM.operate_status.integerValue == 2){
+            self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FE827E"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#D84022"].CGColor];
+            [self.workButton setTitle:[NSString stringWithFormat:@"营业至：每天%@-%@",self.shopModel.myShopM.start_time,self.shopModel.myShopM.end_time] forState:UIControlStateNormal];
+           
+        }else if (self.shopModel.myShopM.role <=0 || !self.sellGoodsArr.count){
+            [self.workButton setTitle:[NSString stringWithFormat:@"每天%@-%@",self.shopModel.myShopM.start_time,self.shopModel.myShopM.end_time] forState:UIControlStateNormal];
+            self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor];
+        }else if (self.shopModel.myShopM.operate_status.integerValue == 1){
+            [self.workButton setTitle:[NSString stringWithFormat:@"每天%@-%@",self.shopModel.myShopM.start_time,self.shopModel.myShopM.end_time] forState:UIControlStateNormal];
+            self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor];
+        }
+    }
+    else{
         if(self.shopModel.myShopM.operate_status.integerValue == 2){
             self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FE827E"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#D84022"].CGColor];
             [self.workButton setTitle:@"结束营业" forState:UIControlStateNormal];

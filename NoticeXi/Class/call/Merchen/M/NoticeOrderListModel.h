@@ -36,6 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *shop_name;
 @property (nonatomic, strong) NSString *is_experience;
 @property (nonatomic, strong) NSString *experience_time;
+
+@property (nonatomic, strong) NSString *after_sales_time;//服务保障有效期(大于0表示还在有效期)
+@property (nonatomic, strong) NSString *after_sales_status;//售后状态 0未申请售后 1售后处理中 2已完成售后
 @end
 
 NS_ASSUME_NONNULL_END

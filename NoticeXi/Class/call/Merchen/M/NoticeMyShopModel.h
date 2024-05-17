@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NoticeGoodsModel *goodsM;
 
 @property (nonatomic, strong) NSString *certification_title;//认证信息
-
+@property (nonatomic, strong) NSString *min_price;//最低商品价格
 @property (nonatomic, strong) NSDictionary *shop;
 @property (nonatomic, strong) NoticeMyShopModel *myShopM;
 @property (nonatomic, strong) NSString *jingbi;//买家鲸币数量，获取别人店铺信息的时候返回
@@ -75,7 +75,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *authentication_info;//认证信息
 @property (nonatomic, strong) SXVerifyShopModel *verifyModel;
 
-
+@property (nonatomic, strong) NSString *start_time;//店铺设置营业开始时间
+@property (nonatomic, strong) NSString *end_time;//店铺设置营业结束时间
+@property (nonatomic, strong) NSString *is_timing;//1=设置定时 0=没有定时
 @end
 
 NS_ASSUME_NONNULL_END

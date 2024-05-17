@@ -17,9 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *startTimeL;
 @property (nonatomic, strong) UILabel *endTimeL;
 @property (nonatomic, assign) BOOL isStart;
-
+@property (nonatomic, strong) NSString *startTime;
+@property (nonatomic, strong) NSString *endTime;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIButton *addButton;
+@property (nonatomic,copy) void(^choiceTimeBlock)(NSString *startTime,NSString *endTime);
+
 - (void)showATView;
 @end
 

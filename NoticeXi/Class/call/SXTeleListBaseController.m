@@ -8,9 +8,12 @@
 
 #import "SXTeleListBaseController.h"
 #import "NoticeTelController.h"
+#import "SXGoodsInfoModel.h"
+#import "SXGoodsInfoModel.h"
 @interface SXTeleListBaseController ()
 @property (nonatomic, strong) NSMutableArray *titleArr;
 @property (nonatomic, strong) NSMutableArray *controllArr;
+@property (nonatomic, strong) NSMutableArray *cataArr;
 @end
 
 @implementation SXTeleListBaseController
@@ -43,21 +46,32 @@
 
     self.controllArr = [[NSMutableArray alloc] init];
     self.titleArr = [[NSMutableArray alloc] init];
+    self.cataArr = [[NSMutableArray alloc] init];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/category/list" Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            
+
+            NoticeTelController *ctl1 = [[NoticeTelController alloc] init];
+            ctl1.category_Id = @"0";
+            [self.controllArr addObject:ctl1];
+            [self.titleArr addObject:@"全部"];
+            
+            for (NSDictionary *dic in dict[@"data"]) {
+                SXGoodsInfoModel *cataM = [SXGoodsInfoModel mj_objectWithKeyValues:dic];
+                NoticeTelController *ctl = [[NoticeTelController alloc] init];
+                ctl.category_Id = cataM.category_Id;
+                [self.controllArr addObject:ctl];
+                [self.titleArr addObject:cataM.category_name];
+            }
+            self.titles = [NSArray arrayWithArray:self.titleArr];
+            [self.menuView reload];
+            [self reloadData];
+        }
+    } fail:^(NSError * _Nullable error) {
+        
+    }];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-    NSArray *arr = @[@"全部",@"MBTI",@"心理咨询",@"原生家庭",@"学业咨询",@"MBTI",@"心理咨询",@"原生家庭",@"学业咨询"];
-    for (int i = 0; i < arr.count; i++) {
-        NoticeTelController *ctl = [[NoticeTelController alloc] init];
-        [self.controllArr addObject:ctl];
-        [self.titleArr addObject:arr[i]];
-    }
-    self.titles = [NSArray arrayWithArray:self.titleArr];
-    [self.menuView reload];
-    [self reloadData];
-}
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForMenuView:(WMMenuView *)menuView{
     return CGRectMake(0,0, DR_SCREEN_WIDTH, 43);

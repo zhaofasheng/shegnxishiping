@@ -331,4 +331,22 @@
     return [NSString stringWithFormat:@"%@",[tFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:createTime]]];
 }
 
+
+
++ (void)savePayInfo:(NoticeByOfOrderModel *)payInfo{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[payInfo mj_keyValues] forKey:[NSString stringWithFormat:@"callorderinfo%@",[NoticeTools getuserId]]];
+    [userDefaults synchronize];
+}
+
++ (NoticeByOfOrderModel *)getPayInfo{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *userInfoDic  = [userDefaults objectForKey:[NSString stringWithFormat:@"callorderinfo%@",[NoticeTools getuserId]]];
+    return [NoticeByOfOrderModel mj_objectWithKeyValues:userInfoDic];
+}
+
++ (void)clearPayInfo{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:[NSString stringWithFormat:@"callorderinfo%@",[NoticeTools getuserId]]];
+}
 @end

@@ -34,17 +34,27 @@
     statusL.textAlignment = NSTextAlignmentCenter;
     statusL.text =  self.orderM.goods_name;
     [colorView addSubview:statusL];
-    if (_orderM.order_type.intValue == 3 || _orderM.order_type.intValue == 2) {
-        statusL.text = @"拒绝订单";
-    }else if (_orderM.order_type.intValue == 4){
-        statusL.text = @"接单超时";
-    }else if (_orderM.order_type.intValue == 6){
-        statusL.text = @"已完成";
-    }else if (_orderM.order_type.intValue == 7){
-        statusL.text = @"订单异常，审核中";
-    }else if (_orderM.order_type.intValue == 8){
-        statusL.text = _orderM.isNoFinish?@"交易失败" : @"已完成";
+    
+    if (_orderM.after_sales_time.intValue > 0) {
+        if (_orderM.after_sales_status.intValue == 0) {
+            statusL.text = @"订单服务保障中";
+        }else{
+            statusL.text = @"售后处理中";
+        }
+    }else{
+        if (_orderM.order_type.intValue == 3 || _orderM.order_type.intValue == 2) {
+            statusL.text = @"拒绝订单";
+        }else if (_orderM.order_type.intValue == 4){
+            statusL.text = @"接单超时";
+        }else if (_orderM.order_type.intValue == 6){
+            statusL.text = @"已完成";
+        }else if (_orderM.order_type.intValue == 7){
+            statusL.text = @"订单异常，审核中";
+        }else if (_orderM.order_type.intValue == 8){
+            statusL.text = _orderM.isNoFinish?@"交易失败" : @"已完成";
+        }
     }
+
     
     UIImageView *backImageV = [[UIImageView alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-345)/2, NAVIGATION_BAR_HEIGHT+46, 345, 405)];
     backImageV.image = UIImageNamed(self.orderM.isNoFinish?@"color_shopimgn": @"color_shopimg");
@@ -60,11 +70,11 @@
     UILabel *shopNameL = [[UILabel alloc] initWithFrame:CGRectMake(70, 39, GET_STRWIDTH(@"语音通话.体验版本*00时00秒00分", 16, 22), 22)];
     shopNameL.textColor = [UIColor colorWithHexString:@"#25262E"];
     shopNameL.font = SIXTEENTEXTFONTSIZE;
-    shopNameL.text = self.orderM.room_id.intValue?[NSString stringWithFormat:@"%@*%@",self.orderM.goods_name,[self getMMSSFromSS:self.orderM.voice_duration]]: [NSString stringWithFormat:@"文字聊天*%@",self.orderM.goods_name];
+    shopNameL.text = self.orderM.room_id.intValue?self.orderM.goods_name : [NSString stringWithFormat:@"文字聊天*%@",self.orderM.goods_name];
     [backImageV addSubview:shopNameL];
     
     
-    for (int i = 0; i < (self.orderM.is_experience.boolValue?4:3); i++) {
+    for (int i = 0; i < 4; i++) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 120+32*i, 62, 17)];
         label.font = TWOTEXTFONTSIZE;
         label.textColor = [UIColor colorWithHexString:@"#8A8F99"];
@@ -101,6 +111,19 @@
             }
         }else if (i == 2){
             if (!self.orderM.isNoFinish) {
+                label.text = @"订单价格：";
+                
+                if (_orderM.room_id.intValue) {
+                    label1.text = [NSString stringWithFormat:@"%@分钟/%@鲸币",_orderM.duration, _orderM.unit_price];
+                }else{
+                    NSString *allStr = [NSString stringWithFormat:@"%@鲸币(%@分钟)",_orderM.price,_orderM.duration];
+                    NSString *str1 = [NSString stringWithFormat:@"%@鲸币", _orderM.price];
+                    NSString *str2 = [NSString stringWithFormat:@"(%@分钟)",_orderM.duration];
+                    label1.attributedText = [DDHAttributedMode setSizeAndColorString:allStr setColor:[UIColor colorWithHexString:@"#5C5F66"] setSize:12 setLengthString:str2 beginSize:str1.length];
+                }
+            }
+        }else if (i == 3){
+            if (!self.orderM.isNoFinish) {
                 label.text = @"订单时长：";
                 
                 if(self.orderM.room_id.intValue){
@@ -108,11 +131,6 @@
                 }else{
                     label1.text = [NSString stringWithFormat:@"%@分钟",self.orderM.duration];
                 }
-            }
-        }else if (i == 3){
-            if (!self.orderM.isNoFinish) {
-                label.text = @"免费时长：";
-                label1.text = [NSString stringWithFormat:@"-%d分钟",self.orderM.experience_time.intValue/60];
             }
         }
     }
@@ -131,22 +149,27 @@
         priclabel.textAlignment = NSTextAlignmentRight;
         priclabel.textColor = [UIColor colorWithHexString:@"#25262E"];
         [backImageV addSubview:priclabel];
-        if ( _orderM.order_type.intValue == 7){
-            if([self.orderM.shop_user_id isEqualToString:[NoticeTools getuserId]]){//自己是店主
-                priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实收款：%@",@"审核中"] setSize:12 setLengthString:@"实收款：" beginSize:0];
-            }else{
-                priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实付款：%@",@"审核中"] setSize:12 setLengthString:@"实付款：" beginSize:0];
-            }
-            
-           
+        if (_orderM.after_sales_time.intValue > 0 && [self.orderM.shop_user_id isEqualToString:[NoticeTools getuserId]]) {
+            priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"待收款：%@鲸币",self.orderM.income] setSize:12 setLengthString:@"待收款：" beginSize:0];
         }else{
-            if([self.orderM.shop_user_id isEqualToString:[NoticeTools getuserId]]){//自己是店主
-                priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实收款：%@鲸币",self.orderM.income] setSize:12 setLengthString:@"实收款：" beginSize:0];
+            if ( _orderM.order_type.intValue == 7){
+                if([self.orderM.shop_user_id isEqualToString:[NoticeTools getuserId]]){//自己是店主
+                    priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实收款：%@",@"审核中"] setSize:12 setLengthString:@"实收款：" beginSize:0];
+                }else{
+                    priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实付款：%@",@"审核中"] setSize:12 setLengthString:@"实付款：" beginSize:0];
+                }
+                
+               
             }else{
-                priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实付款：%@鲸币",self.orderM.price] setSize:12 setLengthString:@"实付款：" beginSize:0];
+                if([self.orderM.shop_user_id isEqualToString:[NoticeTools getuserId]]){//自己是店主
+                    priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实收款：%@鲸币",self.orderM.income] setSize:12 setLengthString:@"实收款：" beginSize:0];
+                }else{
+                    priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实付款：%@鲸币",self.orderM.price] setSize:12 setLengthString:@"实付款：" beginSize:0];
+                }
+          
             }
-      
         }
+
     }
     
     [self.view bringSubviewToFront:self.navBarView];

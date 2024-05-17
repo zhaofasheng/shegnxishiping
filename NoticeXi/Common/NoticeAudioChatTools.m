@@ -362,9 +362,14 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
 //获取等待的订单
 - (void)getOrder{
+    if (self.hasGet) {
+        return;
+    }
+    self.hasGet = YES;
     __weak typeof(self) weakSelf = self;
     self.noReClick = NO;
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoodsOrder/select?type=2" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        self.hasGet = NO;
         if (success) {
             DRLog(@"当前进行中等待中的订单%@",dict);
        
@@ -386,10 +391,12 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
                 }
             });
         }else{
+            DRLog(@"当前进行中等待中的订单获取失败%@",dict);
             [self repject:NO];
         }//
 
     } fail:^(NSError * _Nullable error) {
+        self.hasGet = NO;
         [self repject:NO];
         NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@获取等待中的订单请求失败\n房间号%@\n时间%@\n理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
         [Bugly reportException:exception];
