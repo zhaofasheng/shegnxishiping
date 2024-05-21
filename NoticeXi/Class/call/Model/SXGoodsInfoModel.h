@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *cateArr;
 @property (nonatomic, strong) NSString *category_name;
 @property (nonatomic, strong) NSString *category_Id;
+@property (nonatomic, assign) NSInteger cateWidth;
 @end
 
 NS_ASSUME_NONNULL_END

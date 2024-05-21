@@ -20,10 +20,15 @@
     self.cateArr = [[NSMutableArray alloc] init];
     for (NSDictionary *dic in category_list) {
         SXGoodsInfoModel *info = [SXGoodsInfoModel mj_objectWithKeyValues:dic];
+       
         [self.cateArr addObject:info];
     }
 }
 
+- (void)setCategory_name:(NSString *)category_name{
+    _category_name = category_name;
+    self.cateWidth = GET_STRWIDTH(category_name, 10, 18)+10;
+}
 
 - (void)setDurations:(NSArray *)durations{
     _durations = durations;

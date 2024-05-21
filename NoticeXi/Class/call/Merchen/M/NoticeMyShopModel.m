@@ -8,6 +8,7 @@
 
 #import "NoticeMyShopModel.h"
 #import "NoticeComLabelModel.h"
+#import "SXGoodsInfoModel.h"
 @implementation NoticeMyShopModel
 + (NSDictionary *)mj_replacedKeyFromPropertyName
 {
@@ -41,6 +42,15 @@
     
     if (self.tagsTextArr.count) {
         self.tagString = [self.tagsTextArr componentsJoinedByString:@" · "];
+    }
+}
+
+- (void)setCategory_list:(NSArray *)category_list{
+    _category_list = category_list;
+    self.categoryNameArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in category_list) {
+        SXGoodsInfoModel *cateM = [SXGoodsInfoModel mj_objectWithKeyValues:dic];;
+        [self.categoryNameArr addObject:cateM];
     }
 }
 

@@ -7,9 +7,10 @@
 //
 
 #import "NoticeOrderDetailController.h"
-
+#import "NoticeJuBaoBoKeTosatView.h"
 @interface NoticeOrderDetailController ()
-
+@property (nonatomic, strong) UIButton *comButton;
+@property (nonatomic, strong) UILabel *statusL;
 @end
 
 @implementation NoticeOrderDetailController
@@ -34,27 +35,8 @@
     statusL.textAlignment = NSTextAlignmentCenter;
     statusL.text =  self.orderM.goods_name;
     [colorView addSubview:statusL];
+    self.statusL = statusL;
     
-    if (_orderM.after_sales_time.intValue > 0) {
-        if (_orderM.after_sales_status.intValue == 0) {
-            statusL.text = @"订单服务保障中";
-        }else{
-            statusL.text = @"售后处理中";
-        }
-    }else{
-        if (_orderM.order_type.intValue == 3 || _orderM.order_type.intValue == 2) {
-            statusL.text = @"拒绝订单";
-        }else if (_orderM.order_type.intValue == 4){
-            statusL.text = @"接单超时";
-        }else if (_orderM.order_type.intValue == 6){
-            statusL.text = @"已完成";
-        }else if (_orderM.order_type.intValue == 7){
-            statusL.text = @"订单异常，审核中";
-        }else if (_orderM.order_type.intValue == 8){
-            statusL.text = _orderM.isNoFinish?@"交易失败" : @"已完成";
-        }
-    }
-
     
     UIImageView *backImageV = [[UIImageView alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-345)/2, NAVIGATION_BAR_HEIGHT+46, 345, 405)];
     backImageV.image = UIImageNamed(self.orderM.isNoFinish?@"color_shopimgn": @"color_shopimg");
@@ -73,6 +55,44 @@
     shopNameL.text = self.orderM.room_id.intValue?self.orderM.goods_name : [NSString stringWithFormat:@"文字聊天*%@",self.orderM.goods_name];
     [backImageV addSubview:shopNameL];
     
+    if (_orderM.after_sales_time.intValue > 0) {
+        if(![self.orderM.shop_user_id isEqualToString:[NoticeTools getuserId]]){//自己是买家
+            self.comButton = [[UIButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-80)/2, CGRectGetMaxY(backImageV.frame)+40, 80, 32)];
+            self.comButton.titleLabel.font = TWOTEXTFONTSIZE;
+            self.comButton.layer.cornerRadius = 16;
+            self.comButton.layer.masksToBounds = YES;
+            [self.view addSubview:self.comButton];
+            self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#EE4B4E"].CGColor;
+            [self.comButton addTarget:self action:@selector(comClick) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        if (_orderM.after_sales_status.intValue == 0) {
+            statusL.text = @"订单服务保障中";
+            [self.comButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [self.comButton setTitle:@"申请售后" forState:UIControlStateNormal];
+            self.comButton.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
+            self.comButton.layer.borderWidth = 0;
+        
+        }else{
+            [self.comButton setTitleColor:[UIColor colorWithHexString:@"#EE4B4E"] forState:UIControlStateNormal];
+            [self.comButton setTitle:@"售后处理中" forState:UIControlStateNormal];
+            self.comButton.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+            self.comButton.layer.borderWidth = 1;
+            statusL.text = @"售后处理中";
+        }
+    }else{
+        if (_orderM.order_type.intValue == 3 || _orderM.order_type.intValue == 2) {
+            statusL.text = @"拒绝订单";
+        }else if (_orderM.order_type.intValue == 4){
+            statusL.text = @"接单超时";
+        }else if (_orderM.order_type.intValue == 6){
+            statusL.text = @"已完成";
+        }else if (_orderM.order_type.intValue == 7){
+            statusL.text = @"订单异常，审核中";
+        }else if (_orderM.order_type.intValue == 8){
+            statusL.text = _orderM.isNoFinish?@"交易失败" : @"已完成";
+        }
+    }
     
     for (int i = 0; i < 4; i++) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 120+32*i, 62, 17)];
@@ -174,6 +194,56 @@
     
     [self.view bringSubviewToFront:self.navBarView];
 
+}
+
+- (void)comClick{
+    if (self.orderM.after_sales_time.intValue <= 0) {
+        return;
+    }
+    
+    if (self.orderM.after_sales_status.intValue != 0) {
+        return;
+    }
+    
+    NoticeJuBaoBoKeTosatView *jubaoV = [[NoticeJuBaoBoKeTosatView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    jubaoV.plaStr = @"请输入申请的内容";
+    jubaoV.num = 100;
+    jubaoV.noDissmiss = YES;
+    [jubaoV.sendButton setTitle:@"提交" forState:UIControlStateNormal];
+
+    jubaoV.titleL.text = @"申请售后";
+    __block NoticeJuBaoBoKeTosatView *strongBlock = jubaoV;
+    [jubaoV showView];
+    __weak typeof(self) weakSelf = self;
+    jubaoV.jubaoBlock = ^(NSString * _Nonnull content) {
+        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+        [parm setObject:content forKey:@"reason"];
+        [weakSelf showHUD];
+        
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/orderAfterSales/%@",weakSelf.orderM.orderId] Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success1) {
+            [[NoticeTools getTopViewController] hideHUD];
+
+            if (success1) {
+                [strongBlock removeFromSuperview];
+                [strongBlock cancelClick];
+                weakSelf.orderM.after_sales_status = @"1";
+                weakSelf.statusL.text = @"售后处理中";
+                weakSelf.comButton.hidden = NO;
+                [weakSelf.comButton setTitleColor:[UIColor colorWithHexString:@"#EE4B4E"] forState:UIControlStateNormal];
+                [weakSelf.comButton setTitle:@"售后处理中" forState:UIControlStateNormal];
+                weakSelf.comButton.layer.borderWidth = 1;
+                weakSelf.comButton.layer.borderColor = [UIColor colorWithHexString:@"#EE4B4E"].CGColor;
+                weakSelf.comButton.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+                if (weakSelf.refresStatusBlock) {
+                    weakSelf.refresStatusBlock(YES);
+                }
+            }
+        } fail:^(NSError * _Nullable error) {
+            [strongBlock removeFromSuperview];
+            [strongBlock cancelClick];
+            [weakSelf hideHUD];
+        }];
+    };
 }
 
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{

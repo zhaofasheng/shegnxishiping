@@ -129,6 +129,7 @@
                     weakSelf.comButton.layer.borderWidth = 1;
                     weakSelf.comButton.layer.borderColor = [UIColor colorWithHexString:@"#EE4B4E"].CGColor;
                     weakSelf.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+                    weakSelf.comButton.userInteractionEnabled = NO;
                 }
             }
         } fail:^(NSError * _Nullable error) {
@@ -140,7 +141,9 @@
 }
 
 - (void)comClick{
+    
     __weak typeof(self) weakSelf = self;
+    
     if(self.isUser){
         if (self.orderM.after_sales_time.intValue > 0 && self.orderM.after_sales_status.intValue == 0) {
             [self replyShouhou];
@@ -158,7 +161,6 @@
                     weakSelf.comButton.layer.borderWidth = 1;
                     weakSelf.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
                 }
-         
             };
             [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
         }else if(_orderM.is_comment.intValue == 1){//有评价的时候点击查看评价
@@ -212,6 +214,7 @@
 - (void)setOrderM:(NoticeOrderListModel *)orderM{
     _orderM = orderM;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:orderM.goods_img_url]];
+    
     [self.userIconImageView sd_setImageWithURL:[NSURL URLWithString:self.isUser?orderM.shop_avatar_url: orderM.avatar_url]];
     
     self.shopNameL.text = self.orderM.room_id.intValue?self.orderM.goods_name : [NSString stringWithFormat:@"文字聊天*%@",self.orderM.goods_name];
@@ -235,6 +238,7 @@
     self.payL.hidden = YES;
     self.comButton.hidden = YES;
     self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#A1A7B3"].CGColor;
+    self.comButton.userInteractionEnabled = YES;
     if (orderM.after_sales_time.intValue > 0) {//订单服务保障中
         if (orderM.after_sales_status.intValue == 0) {
             self.statusL.text = @"订单服务保障中";
@@ -254,6 +258,7 @@
                 self.comButton.layer.borderWidth = 1;
                 self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#EE4B4E"].CGColor;
                 self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+                self.comButton.userInteractionEnabled = NO;
             }
         }
     }else{

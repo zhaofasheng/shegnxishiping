@@ -26,6 +26,21 @@
     return self;
 }
 
+- (void)setCateModel:(SXGoodsInfoModel *)cateModel{
+    _cateModel = cateModel;
+    
+    self.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+    self.contentView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+    
+    self.timeL.text = cateModel.category_name;
+    self.timeL.frame = CGRectMake(0, 0, cateModel.cateWidth, 18);
+    self.timeL.layer.cornerRadius = 6;
+    self.timeL.layer.masksToBounds = YES;
+    self.timeL.font = [UIFont systemFontOfSize:10];
+    self.timeL.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+    self.timeL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+}
+
 - (void)setTimeModel:(SXGoodsInfoModel *)timeModel{
     _timeModel = timeModel;
     self.timeL.text = [NSString stringWithFormat:@"%@分钟",timeModel.time];

@@ -178,7 +178,10 @@
     if (self.isPlaying) {
         [self stopPlaying];
     }
-    
+    //后台播放
+   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil];
+   //静音状态下播放
+   [[AVAudioSession sharedInstance] setActive:YES error:nil];
     [[UIApplication sharedApplication] setIdleTimerDisabled: YES];//设置不黑屏
    // [[UIDevice currentDevice] setProximityMonitoringEnabled:YES]; //开启红外感应
     self.isLocalFile = isLocalFile;
@@ -263,6 +266,7 @@
 
 - (void)pause:(BOOL)pause
 {
+    
     if (pause) {
         self.isPlaying = NO;
         [[UIApplication sharedApplication] setIdleTimerDisabled: NO];//设置不黑屏

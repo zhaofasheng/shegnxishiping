@@ -7,7 +7,7 @@
 //
 
 #import "SXAskQuestionShopCell.h"
-
+#import "SXGoodsTimeCell.h"
 @implementation SXAskQuestionShopCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -21,25 +21,36 @@
         self.backView.backgroundColor = [UIColor whiteColor];
     
 
-        self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.backView.frame.size.width-72)/2,40, 72, 72)];
+        self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.backView.frame.size.width-72)/2,32, 72, 72)];
         self.iconImageView.layer.cornerRadius = 36;
         self.iconImageView.layer.masksToBounds = YES;
         [self.backView addSubview:self.iconImageView];
         self.iconImageView.image = UIImageNamed(@"noImage_jynohe");
         self.iconImageView.userInteractionEnabled = YES;
         
-        self.nickNameL = [[UILabel alloc] initWithFrame:CGRectMake(0, 120, self.backView.frame.size.width,22)];
+        self.nickNameL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.iconImageView.frame)+8, self.backView.frame.size.width,22)];
         self.nickNameL.font = FIFTHTEENTEXTFONTSIZE;
-        self.nickNameL.textColor = [UIColor colorWithHexString:@"#25262E"];
+        self.nickNameL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self.backView addSubview:self.nickNameL];
         self.nickNameL.textAlignment = NSTextAlignmentCenter;
         self.nickNameL.text = @"用户昵称";
         
-        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(5, 152, self.backView.frame.size.width-10, 54)];
+        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(5, 152, self.backView.frame.size.width-10, 38)];
         self.contentL.font = THRETEENTEXTFONTSIZE;
         self.contentL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         self.contentL.numberOfLines = 0;
         [self.backView addSubview:self.contentL];
+        
+        self.movieTableView = [[UITableView alloc] init];
+        self.movieTableView.delegate = self;
+        self.movieTableView.dataSource = self;
+        self.movieTableView.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+        self.movieTableView.frame = CGRectMake(5,CGRectGetMaxY(self.contentView.frame)+10,self.backView.frame.size.width-30, 18);
+        _movieTableView.showsVerticalScrollIndicator = NO;
+        self.movieTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self.movieTableView registerClass:[SXGoodsTimeCell class] forCellReuseIdentifier:@"cell"];
+        self.movieTableView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0];
+        [self.backView addSubview:self.movieTableView];
         
         self.callView = [[UIView  alloc] initWithFrame:CGRectMake(self.backView.frame.size.width/2-20, self.backView.frame.size.height-32, self.backView.frame.size.width/2+20, 32)];
         [self.backView addSubview:self.callView];
@@ -60,7 +71,7 @@
         self.moneyL.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self.callView addSubview:self.moneyL];
         
-        self.markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(12, 10, 54, 18)];
+        self.markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(10, 10, 54, 18)];
         self.markImageView.image = UIImageNamed(@"sxrenztub_img1");
         [self.backView addSubview:self.markImageView];
         self.markImageView.hidden = YES;
@@ -86,20 +97,42 @@
     
     if (shopM.tale) {
         CGFloat height = GET_STRHEIGHT(shopM.tale, 13, self.backView.frame.size.width-10);
-        if (height > 54) {
-            height = 54;
+        if (height > 38) {
+            height = 38;
         }
-        self.contentL.frame = CGRectMake(5, 152, self.backView.frame.size.width-10, height);
+        self.contentL.frame = CGRectMake(5, CGRectGetMaxY(self.nickNameL.frame)+4, self.backView.frame.size.width-10, height);
         self.contentL.text = shopM.tale;
+        self.movieTableView.frame =  self.movieTableView.frame = CGRectMake(5,CGRectGetMaxY(self.contentL.frame)+10,self.backView.frame.size.width-10, 18);
+    }else{
+        self.movieTableView.frame = CGRectMake(5,CGRectGetMaxY(self.nickNameL.frame)+10,self.backView.frame.size.width-10, 18);
     }
   
-    if (shopM.verifyModel.is_certified.intValue > 0) {
-  
+    if (shopM.is_certified.intValue > 0) {
         self.markImageView.hidden = NO;
     }else{
         self.markImageView.hidden = YES;
-
     }
+    
+    if (self.shopM.categoryNameArr.count) {
+        [self.movieTableView reloadData];
+    }
+
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    SXGoodsInfoModel *cataM = self.shopM.categoryNameArr[indexPath.row];
+    return cataM.cateWidth+8;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    SXGoodsTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    cell.cateModel = self.shopM.categoryNameArr[indexPath.row];
+    cell.contentView.transform = CGAffineTransformMakeRotation(M_PI / 2);
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.shopM.categoryNameArr.count;
 }
 
 @end

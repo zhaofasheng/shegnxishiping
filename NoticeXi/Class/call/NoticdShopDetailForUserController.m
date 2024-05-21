@@ -164,7 +164,6 @@
     [self.startView addSubview:self.workButton];
     [self.workButton addTarget:self action:@selector(startClick) forControlEvents:UIControlEventTouchUpInside];
 
-
 }
 
 - (void)backClick{

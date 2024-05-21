@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeOrderDetailController : BaseTableViewController
 @property (nonatomic, strong) NoticeOrderListModel *orderM;
+@property (nonatomic,copy) void(^refresStatusBlock)(BOOL refresh);
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -50,7 +50,7 @@
     NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@杀死app拒接电话\n时间%@\n",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
     [Bugly reportException:exception];
     if(self.endOpenBlock){
-        self.endOpenBlock(YES);
+        self.endOpenBlock(NO);
     }
 }
 

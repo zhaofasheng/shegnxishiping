@@ -10,6 +10,7 @@
 #import "NoticeGoodsModel.h"
 #import "NoticeShopDataIdModel.h"
 #import "SXVerifyShopModel.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeMyShopModel : NSObject
@@ -78,6 +79,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *start_time;//店铺设置营业开始时间
 @property (nonatomic, strong) NSString *end_time;//店铺设置营业结束时间
 @property (nonatomic, strong) NSString *is_timing;//1=设置定时 0=没有定时
+
+@property (nonatomic, strong) NSArray *category_list;
+@property (nonatomic, strong) NSMutableArray *categoryNameArr;
+
 @end
 
 NS_ASSUME_NONNULL_END

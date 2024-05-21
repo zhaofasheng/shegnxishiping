@@ -196,6 +196,7 @@ class NoticeShopSRHeadeerView: UIView {
                     }
                 }
                 
+                
                 if ((Float)(self?.myShouRuModel?.limit_amount ?? "0") ?? 0 ) > ((Float)(self?.myShouRuModel?.income_balance ?? "0") ?? 0 ){
                     let limitMoney = (Float)(self?.myShouRuModel?.limit_amount ?? "0") ?? 0 //最低可提现金额要求
                     self?.markL?.text = String(format: "当前余额不足%.2f 暂不能提现", limitMoney * ((Float)(self?.myShouRuModel?.rate ?? "0.5") ?? 0.5))

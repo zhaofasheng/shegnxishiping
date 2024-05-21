@@ -234,7 +234,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
         };
         
         _callView.endOpenBlock = ^(BOOL close) {
-            [weakSelf repject:YES];
+            [weakSelf repject:close];
         };
     }
     return _callView;

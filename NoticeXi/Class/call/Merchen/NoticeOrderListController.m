@@ -49,6 +49,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NoticeOrderDetailController *ctl = [[NoticeOrderDetailController alloc] init];
     ctl.orderM = self.dataArr[indexPath.row];
+    __weak typeof(self) weakSelf = self;
+    ctl.refresStatusBlock = ^(BOOL refresh) {
+        [weakSelf.tableView reloadData];
+    };
     [self.navigationController pushViewController:ctl animated:YES];
 }
 

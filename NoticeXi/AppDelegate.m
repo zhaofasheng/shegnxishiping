@@ -76,6 +76,8 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRootVC) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     //用户退出登录通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin) name:@"outLoginClearDataNOTICATION" object:nil];
+    //收到通话邀请播放无声音频，防止app在后台被系统杀死
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getPhone) name:@"HASGETSHOPVOICECHANTTOTICE" object:nil];
 
     NoticeTabbarController *tabbarVC = [[NoticeTabbarController alloc] init];
     self.window.rootViewController = tabbarVC;
@@ -159,7 +161,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 - (void)changeRootVC{
     
     if ([NoticeSaveModel getUserInfo]) {//已经登录
-
+        [self.noVoicePlayer stopPlaying];
         [self jpushSetAlias];
         [self regsigerTencent];
 
@@ -293,6 +295,10 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    //进入后台播放无声音频，保持app活跃
+    [self.noVoicePlayer startPlayWithUrlandRecoding:[[NSBundle mainBundle] pathForResource:@"novoice" ofType:@"mp3"] isLocalFile:YES];
+    
     [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^(){}];
     self.needStop = YES;
     [NoticeTools setneedConnect:NO];
@@ -306,10 +312,15 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
     [JPUSHService setBadge:0];
     
+
+    [self beginTask];
+}
+
+- (void)getPhone{
+    [_noVoicePlayer stopPlaying];
     //进入后台播放无声音频，保持app活跃
     [self.noVoicePlayer startPlayWithUrlandRecoding:[[NSBundle mainBundle] pathForResource:@"novoice" ofType:@"mp3"] isLocalFile:YES];
-    
-    [self beginTask];
+    DRLog(@"收到来电邀请播放无声音频");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

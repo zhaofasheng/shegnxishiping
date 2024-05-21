@@ -45,7 +45,7 @@ class NoticeShopChangeRecoderController: NoticeBaseCellController {
     /*请求数据*/
     func request() {
       
-        let url = String(format: "transactionRecord?pageNo=%d", self.pageNo)
+        let url = self.isJusttix ? String(format: "transactionRecord?pageNo=%d&resourceType=2", self.pageNo) : String(format: "transactionRecord?pageNo=%d", self.pageNo)
         
         DRNetWorking.shareInstance()?.requestNoNeedLogin(withPath: self.isShouRuDetail ? String(format: "transactionRecord?pageNo=%d&resourceType=4", self.pageNo):url, accept: "application/vnd.shengxi.v5.3.8+json", isPost: false, parmaer: nil, page: 0, success: { [weak self] (dict, success) in
             self?.tableView.mj_header.endRefreshing()
