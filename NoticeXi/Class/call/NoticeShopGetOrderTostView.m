@@ -41,17 +41,17 @@
             [button addTarget:self action:@selector(getOrCancel:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:button];
         }
-      
     }
     return self;
 }
 
 - (void)hasKillApp{
-    NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@杀死app拒接电话\n时间%@\n",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
-    [Bugly reportException:exception];
+ 
     if(self.endOpenBlock){
         self.endOpenBlock(NO);
     }
+    NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@杀死app拒接电话\n时间%@\n",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
+    [Bugly reportException:exception];
 }
 
 - (void)setIsAudioCalling:(BOOL)isAudioCalling{

@@ -424,8 +424,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
                      break;
              }
             DRLog(@"支付宝支付%@",strMsg);
-            
-             
          }];
         return YES;
     }
@@ -467,9 +465,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopGoodsOrder/select?type=2" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             DRLog(@"订单%@",dict);
-
             NoticeByOfOrderModel *orderModel = [NoticeByOfOrderModel mj_objectWithKeyValues:dict[@"data"]];
-
             if (orderModel.orderId) {
                 [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopGoodsOrder/cache/%@",orderModel.orderId] Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict1, BOOL success1) {
                     if (success1) {

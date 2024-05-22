@@ -348,7 +348,7 @@
 
 - (void)hasKillApp{
     [self hanUp];
-    NSException *exception = [NSException exceptionWithName:@"云信相关" reason:[NSString stringWithFormat:@"%@杀死app挂电话\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+    NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@杀死app挂电话\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
     [Bugly reportException:exception];
 }
 
