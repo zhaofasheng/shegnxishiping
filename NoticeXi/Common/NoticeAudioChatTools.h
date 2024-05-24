@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface NoticeAudioChatTools : UIView
+@property (nonatomic, strong,nullable) LGAudioPlayer *callPlayer;
 - (void)regTencent;
 @property (nonatomic, strong) UIWindow * __nullable callingWindow;
 @property (nonatomic, strong) NoticeShopGetOrderTostView *callView;

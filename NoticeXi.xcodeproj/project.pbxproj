@@ -1298,6 +1298,7 @@
 		FE07BE0B2BF481D200E6812A /* SXGoodsInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE0A2BF481D200E6812A /* SXGoodsInfoModel.m */; };
 		FE07BE0E2BF4BA8800E6812A /* SXShopOpenTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE0D2BF4BA8800E6812A /* SXShopOpenTypeView.m */; };
 		FE07BE112BF4C14300E6812A /* SXChoiceShopOpenTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BE102BF4C14300E6812A /* SXChoiceShopOpenTimeView.m */; };
+		FE07BE132C003C4E00E6812A /* avchat_ring.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE07BE122C003C4E00E6812A /* avchat_ring.mp3 */; };
 		FE1A48112B3D4475004E6239 /* novoice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE1A48102B3D4475004E6239 /* novoice.mp3 */; };
 		FE1A48172B467D6F004E6239 /* NoticeManagerUserAction.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A48162B467D6F004E6239 /* NoticeManagerUserAction.m */; };
 		FE2B934B2BA053F9002698AF /* SXSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2B934A2BA053F9002698AF /* SXSettingController.m */; };
@@ -4009,6 +4010,7 @@
 		FE07BE0D2BF4BA8800E6812A /* SXShopOpenTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopOpenTypeView.m; sourceTree = "<group>"; };
 		FE07BE0F2BF4C14300E6812A /* SXChoiceShopOpenTimeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXChoiceShopOpenTimeView.h; sourceTree = "<group>"; };
 		FE07BE102BF4C14300E6812A /* SXChoiceShopOpenTimeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXChoiceShopOpenTimeView.m; sourceTree = "<group>"; };
+		FE07BE122C003C4E00E6812A /* avchat_ring.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = avchat_ring.mp3; sourceTree = "<group>"; };
 		FE1A48102B3D4475004E6239 /* novoice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = novoice.mp3; sourceTree = "<group>"; };
 		FE1A48152B467D6F004E6239 /* NoticeManagerUserAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeManagerUserAction.h; sourceTree = "<group>"; };
 		FE1A48162B467D6F004E6239 /* NoticeManagerUserAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeManagerUserAction.m; sourceTree = "<group>"; };
@@ -5351,6 +5353,7 @@
 		A4E95BF82A69141B00AE022E /* Resouces */ = {
 			isa = PBXGroup;
 			children = (
+				FE07BE122C003C4E00E6812A /* avchat_ring.mp3 */,
 				FE1A48102B3D4475004E6239 /* novoice.mp3 */,
 				A4E95C112A69141B00AE022E /* custumvoice.caf */,
 				A4E95BFA2A69141B00AE022E /* enQuestionTest.plist */,
@@ -7040,39 +7043,39 @@
 		A4E960662A69141D00AE022E /* v */ = {
 			isa = PBXGroup;
 			children = (
-				A4E960672A69141D00AE022E /* NoticeCheckCenterCell.h */,
 				A4E960682A69141D00AE022E /* LHEditTextView.h */,
-				A4E960692A69141D00AE022E /* NoticeSetBanneerView.h */,
-				A4E9606A2A69141D00AE022E /* NoticeBannerCell.m */,
-				A4E9606B2A69141D00AE022E /* NoticeYuSetCell.m */,
-				A4E9606C2A69141D00AE022E /* NoticeManagerCiTiaoCell.h */,
-				A4E9606D2A69141D00AE022E /* NoticeJuBaoShopChatCell.m */,
-				A4E9606E2A69141D00AE022E /* NoticeManagerWorldCell.h */,
-				A4E9606F2A69141D00AE022E /* NoticeManagerImgList.m */,
-				A4E960702A69141D00AE022E /* NoticeUserQuestionCell.m */,
-				A4E960712A69141D00AE022E /* NoticeMangerCell.m */,
-				A4E960722A69141D00AE022E /* NoticeManageTeamMemberCell.m */,
-				A4E960732A69141D00AE022E /* NoticeQuestionDetailCell.m */,
-				A4E960742A69141D00AE022E /* NoticeShopChuliCell.h */,
+				A4E9607D2A69141D00AE022E /* LHEditTextView.m */,
 				A4E960752A69141D00AE022E /* LHTopTextView.h */,
-				A4E960762A69141D00AE022E /* NoticeReadEveryDayCell.m */,
+				A4E960812A69141D00AE022E /* LHTopTextView.m */,
+				A4E9607B2A69141D00AE022E /* NoticeBannerCell.h */,
+				A4E9606A2A69141D00AE022E /* NoticeBannerCell.m */,
+				A4E960672A69141D00AE022E /* NoticeCheckCenterCell.h */,
 				A4E960772A69141D00AE022E /* NoticeCheckCenterCell.m */,
 				A4E960782A69141D00AE022E /* NoticeJuBaoShopChatCell.h */,
+				A4E9606D2A69141D00AE022E /* NoticeJuBaoShopChatCell.m */,
+				A4E9606C2A69141D00AE022E /* NoticeManagerCiTiaoCell.h */,
 				A4E960792A69141D00AE022E /* NoticeManagerCiTiaoCell.m */,
-				A4E9607A2A69141D00AE022E /* NoticeYuSetCell.h */,
-				A4E9607B2A69141D00AE022E /* NoticeBannerCell.h */,
-				A4E9607C2A69141D00AE022E /* NoticeSetBanneerView.m */,
-				A4E9607D2A69141D00AE022E /* LHEditTextView.m */,
-				A4E9607E2A69141D00AE022E /* NoticeUserQuestionCell.h */,
 				A4E9607F2A69141D00AE022E /* NoticeManagerImgList.h */,
-				A4E960802A69141D00AE022E /* NoticeManagerWorldCell.m */,
-				A4E960812A69141D00AE022E /* LHTopTextView.m */,
-				A4E960822A69141D00AE022E /* NoticeReadEveryDayCell.h */,
-				A4E960832A69141D00AE022E /* NoticeShopChuliCell.m */,
-				A4E960842A69141D00AE022E /* NoticeQuestionDetailCell.h */,
-				A4E960852A69141D00AE022E /* NoticeManageTeamMemberCell.h */,
+				A4E9606F2A69141D00AE022E /* NoticeManagerImgList.m */,
 				A4E960862A69141D00AE022E /* NoticeManagerWorkCell.swift */,
+				A4E9606E2A69141D00AE022E /* NoticeManagerWorldCell.h */,
+				A4E960802A69141D00AE022E /* NoticeManagerWorldCell.m */,
+				A4E960852A69141D00AE022E /* NoticeManageTeamMemberCell.h */,
+				A4E960722A69141D00AE022E /* NoticeManageTeamMemberCell.m */,
 				A4E960872A69141D00AE022E /* NoticeMangerCell.h */,
+				A4E960712A69141D00AE022E /* NoticeMangerCell.m */,
+				A4E960842A69141D00AE022E /* NoticeQuestionDetailCell.h */,
+				A4E960732A69141D00AE022E /* NoticeQuestionDetailCell.m */,
+				A4E960822A69141D00AE022E /* NoticeReadEveryDayCell.h */,
+				A4E960762A69141D00AE022E /* NoticeReadEveryDayCell.m */,
+				A4E960692A69141D00AE022E /* NoticeSetBanneerView.h */,
+				A4E9607C2A69141D00AE022E /* NoticeSetBanneerView.m */,
+				A4E960742A69141D00AE022E /* NoticeShopChuliCell.h */,
+				A4E960832A69141D00AE022E /* NoticeShopChuliCell.m */,
+				A4E9607E2A69141D00AE022E /* NoticeUserQuestionCell.h */,
+				A4E960702A69141D00AE022E /* NoticeUserQuestionCell.m */,
+				A4E9607A2A69141D00AE022E /* NoticeYuSetCell.h */,
+				A4E9606B2A69141D00AE022E /* NoticeYuSetCell.m */,
 			);
 			path = v;
 			sourceTree = "<group>";
@@ -9579,6 +9582,7 @@
 				A4E965A12A69142200AE022E /* ele_white_cloud_2.png in Resources */,
 				A4E968722A69142600AE022E /* siwuzj.jpg in Resources */,
 				A4E9699B2A69142800AE022E /* CLPlayer.bundle in Resources */,
+				FE07BE132C003C4E00E6812A /* avchat_ring.mp3 in Resources */,
 				A4E9686D2A69142600AE022E /* guanjizj.jpg in Resources */,
 				A4E965A82A69142200AE022E /* ele_sunnyBird8.png in Resources */,
 				A4E9667E2A69142300AE022E /* Image_kongleader9.png in Resources */,

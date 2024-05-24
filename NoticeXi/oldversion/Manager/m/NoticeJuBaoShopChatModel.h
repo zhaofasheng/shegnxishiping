@@ -34,6 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *to_report_num;
 @property (nonatomic, strong) NSString *second;
 @property (nonatomic, strong) NSString *unit_price;
+
+@property (nonatomic, strong) NSString *moduleType;
+@property (nonatomic, strong) NSString *reason;//申请售后原因
 @end
 
 NS_ASSUME_NONNULL_END

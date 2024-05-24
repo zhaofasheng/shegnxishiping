@@ -8,12 +8,14 @@
 
 #import "NoticeVoiceChatOfJuBaoController.h"
 #import "NoticeUserInfoCenterController.h"
+#import "NoticeSysMeassageTostView.h"
 @interface NoticeVoiceChatOfJuBaoController ()
 @property (nonatomic, strong) UIButton *button1;
 @property (nonatomic, strong) UIButton *button2;
 @property (nonatomic, strong) UIButton *button3;
 @property (nonatomic, strong) UIButton *button4;
 @property (nonatomic, strong) UIButton *button5;
+@property (nonatomic, strong) NoticeSysMeassageTostView *tostView;
 @end
 
 @implementation NoticeVoiceChatOfJuBaoController
@@ -23,7 +25,15 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navBarView.titleL.text = self.jubaoM.resource_type.intValue == 2 ? @"被举报的店铺":@"被举报的买家";
     [self jubaoButton];
-    
+    if (self.jubaoM.reason && self.jubaoM.moduleType.intValue == 2) {
+        self.navBarView.titleL.text = [NSString stringWithFormat:@"售后反馈订单(房间号%@)",self.jubaoM.room_id];
+        self.navBarView.rightButton.frame = CGRectMake(DR_SCREEN_WIDTH-GET_STRWIDTH(@"理由", 12, 50)-15, STATUS_BAR_HEIGHT, GET_STRWIDTH(@"理由", 12, 50), NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
+        self.navBarView.rightButton.hidden = NO;
+        [self.navBarView.rightButton setTitle:@"理由" forState:UIControlStateNormal];
+        [self.navBarView.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        self.navBarView.rightButton.titleLabel.font = TWOTEXTFONTSIZE;
+        [self.navBarView.rightButton addTarget:self action:@selector(reasonClick) forControlEvents:UIControlEventTouchUpInside];
+    }
     UILabel *textL = [[UILabel alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT+73, DR_SCREEN_WIDTH, 22)];
     textL.textColor = [UIColor colorWithHexString:@"#25262E"];
     textL.font = FOURTHTEENTEXTFONTSIZE;
@@ -90,6 +100,23 @@
     }
 }
 
+- (void)reasonClick{
+    NoticeMessage *reasM = [[NoticeMessage alloc] init];
+
+    reasM.title = @"反馈理由";
+    reasM.content = self.jubaoM.reason;
+    self.tostView.message = reasM;
+    [self.tostView showActiveView];
+}
+
+- (NoticeSysMeassageTostView *)tostView{
+    if (!_tostView) {
+        _tostView = [[NoticeSysMeassageTostView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    }
+    return _tostView;
+}
+
+
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{
  
     NSInteger seconds = [totalTime integerValue];
@@ -148,6 +175,8 @@
         self.button5.hidden = YES;
     }
     [self refreshM];
+    
+    
 }
 
 - (void)chuliClick:(UIButton *)btn{

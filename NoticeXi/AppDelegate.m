@@ -76,8 +76,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRootVC) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     //用户退出登录通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin) name:@"outLoginClearDataNOTICATION" object:nil];
-    //收到通话邀请播放无声音频，防止app在后台被系统杀死
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getPhone) name:@"HASGETSHOPVOICECHANTTOTICE" object:nil];
+ 
 
     NoticeTabbarController *tabbarVC = [[NoticeTabbarController alloc] init];
     self.window.rootViewController = tabbarVC;
@@ -314,13 +313,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
 
     [self beginTask];
-}
-
-- (void)getPhone{
-    [_noVoicePlayer stopPlaying];
-    //进入后台播放无声音频，保持app活跃
-    [self.noVoicePlayer startPlayWithUrlandRecoding:[[NSBundle mainBundle] pathForResource:@"novoice" ofType:@"mp3"] isLocalFile:YES];
-    DRLog(@"收到来电邀请播放无声音频");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

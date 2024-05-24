@@ -11,7 +11,7 @@
 @implementation NoticeJuBaoShopChatModel
 + (NSDictionary *)mj_replacedKeyFromPropertyName
 {
-    return @{@"jubaiId":@"id"};
+    return @{@"jubaiId":@"id",@"moduleType":@"module"};
 }
 
 - (void)setCreated_at:(NSString *)created_at{

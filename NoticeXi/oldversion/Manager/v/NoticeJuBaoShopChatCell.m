@@ -67,7 +67,7 @@
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:jubaoModel.toUserM.avatar_url]];
     self.nickNameL.text = jubaoModel.resource_type.intValue == 1?jubaoModel.toUserM.nick_name : jubaoModel.shop_name;
     self.timeL.text = jubaoModel.created_at;
-    self.staltusL.text = jubaoModel.type_id;
+    self.staltusL.text = jubaoModel.moduleType.intValue==2?@"售后反馈": jubaoModel.type_id;
     self.staltusL1.text = jubaoModel.resource_type.intValue == 2?@"店铺" : @"买家";
 }
 
