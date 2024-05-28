@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *goodssellArr;
 @property (nonatomic, copy) void(^refreshGoodsBlock)(NSMutableArray *goodsArr);
 @property (nonatomic, copy) void(^buyGoodsBlock)(NoticeGoodsModel *buyGood);
-
+- (void)manageGoods;
 @end
 
 NS_ASSUME_NONNULL_END

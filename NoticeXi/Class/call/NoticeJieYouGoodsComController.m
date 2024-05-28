@@ -89,6 +89,7 @@
                 self.isDown = NO;
                 [self.comArr removeAllObjects];
             }
+            
             for (NSDictionary *dic in dict[@"data"]) {
                 NoticeShopCommentModel *model = [NoticeShopCommentModel mj_objectWithKeyValues:dic];
                 if (!model.marks || model.marks.length <= 0) {
@@ -100,7 +101,19 @@
                         model.marks = @"Ta觉得不太行噢";
                     }
                 }
-                [self.comArr addObject:model];
+                
+                BOOL hasSave = NO;
+                for (NoticeShopCommentModel *oldm in self.comArr) {//去重
+                    if ([oldm.comId isEqualToString:model.comId]) {
+                        hasSave = YES;
+                        break;
+                    }
+                }
+                
+                if (!hasSave) {
+                    [self.comArr addObject:model];
+                }
+                
 
             }
             if (self.comArr.count) {

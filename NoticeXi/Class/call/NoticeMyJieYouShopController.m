@@ -18,6 +18,7 @@
 #import "NoticeJieYouGoodsComController.h"
 #import "NoticeJieYouGoodsController.h"
 #import "SXShopOpenTypeView.h"
+
 @interface NoticeMyJieYouShopController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NoticeShopCardController *cardVC;
@@ -243,13 +244,27 @@
 
 - (void)typeClick{
     if (!self.sellGoodsArr.count) {
-        [self showToastWithText:@"管理服务列表添加收费服务后，才能设置营业时间"];
+        __weak typeof(self) weakSelf = self;
+         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"管理服务列表添加收费服务后，才能设置营业时间" message:nil sureBtn:@"再想想" cancleBtn:@"添加" right:YES];
+        alerView.resultIndex = ^(NSInteger index) {
+            if (index == 2) {
+                weakSelf.categoryView.defaultSelectedIndex = 1;
+                [weakSelf categoryCurentIndex:1];
+                [weakSelf.categoryView reloadData];
+                [weakSelf.goodsVC manageGoods];
+            }
+        };
+        [alerView showXLAlertView];
+      
         return;
     }
     if (self.shopModel.myShopM.is_stop.integerValue > 0) {
         [self showToastWithText:@"店铺当前无法营业，暂不能使用此功能"];
         return;
     }
+    
+
+    
     self.typeView.shopModel = self.shopModel;
     [self.typeView showATView];
 }
@@ -380,7 +395,7 @@
             self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FE827E"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#D84022"].CGColor];
             [self.workButton setTitle:@"结束营业" forState:UIControlStateNormal];
            
-        }else if (self.shopModel.myShopM.role <=0 || !self.sellGoodsArr.count){
+        }else if (!self.sellGoodsArr.count){
             [self.workButton setTitle:@"开始营业" forState:UIControlStateNormal];
             self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#A1A7B3"].CGColor];
         }else if (self.shopModel.myShopM.operate_status.integerValue == 1){
@@ -388,7 +403,6 @@
             self.gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#1FE4FB"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#1FC7FF"].CGColor];
         }
     }
-    
 }
 
 
@@ -417,7 +431,6 @@
                 weakSelf.shopHeaderView.detailHeader.goodsNum = goodsArr.count;
                 [weakSelf refresButton];
             }
-
         };
     }
     return _goodsVC;

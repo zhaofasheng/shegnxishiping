@@ -131,6 +131,10 @@
     }
 }
 
+- (void)manageGoods{
+    [self addClick];
+}
+
 - (void)addClick{
     if (!self.shopModel) {
         return;
@@ -140,6 +144,11 @@
     __weak typeof(self) weakSelf = self;
     ctl.refreshGoodsBlock = ^(NSMutableArray * _Nonnull goodsArr) {
         weakSelf.goodssellArr = goodsArr;
+        if (weakSelf.goodssellArr.count) {
+            if (weakSelf.refreshGoodsBlock) {
+                weakSelf.refreshGoodsBlock(weakSelf.goodssellArr);
+            }
+        }
         for (int i = 0; i < weakSelf.goodssellArr.count;i++) {
             NoticeGoodsModel *goods = weakSelf.goodssellArr[i];
             if (goods.is_experience.boolValue) {

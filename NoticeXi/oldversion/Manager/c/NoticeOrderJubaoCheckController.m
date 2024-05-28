@@ -45,6 +45,7 @@
             if ([dict[@"data"] isEqual:[NSNull null]]) {
                 return ;
             }
+            
             if (self.isDown) {
                 self.isDown = NO;
                 [self.dataArr removeAllObjects];
@@ -54,6 +55,7 @@
                 NoticeJuBaoShopChatModel *model = [NoticeJuBaoShopChatModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:model];
             }
+            
             [self.tableView reloadData];
         }
     } fail:^(NSError * _Nullable error) {
