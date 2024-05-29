@@ -55,6 +55,8 @@
     return self;
 }
 
+
+
 - (void)setOrderListM:(SXBuyVideoOrderList *)orderListM{
     _orderListM = orderListM;
     self.orderNumL.text = [NSString stringWithFormat:@"订单编号：%@",orderListM.sn];
