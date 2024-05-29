@@ -511,7 +511,6 @@
                             [self showMssage:dict[@"msg"]];
                         }
                     }
-
                     success(dict, NO);
                 }
             }else {
@@ -551,7 +550,6 @@
             // 请求失败
             fail(error);
         }];
-        
     }else{
         
         [_manager POST:[self urlWithPath:path portTag:0] parameters:parmaer progress:^(NSProgress * _Nonnull uploadProgress) {

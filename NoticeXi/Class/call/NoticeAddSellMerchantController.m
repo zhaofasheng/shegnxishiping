@@ -25,11 +25,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.navBarView.titleL.text = @"服务";
     [self.tableView registerClass:[NoticeShopDetailSection class] forHeaderFooterViewReuseIdentifier:@"headerView"];
-    
     [self.tableView registerClass:[NoticeChatVoiceShopCell class] forCellReuseIdentifier:@"cell1"];
     
     for (NoticeGoodsModel *goods in self.goodsModel.goods_listArr) {
@@ -45,11 +45,9 @@
         }else{
             [self.voiceArr addObject:goods];
         }
-        
     }
     
     [self.tableView reloadData];
-    
     
     self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(20, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-10-40, DR_SCREEN_WIDTH-40, 40)];
     self.addButton.layer.cornerRadius = 20;
@@ -71,9 +69,11 @@
     
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/goodsList" Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
+            
             [self.freeArr removeAllObjects];
             [self.voiceArr removeAllObjects];
             [self.choiceArr removeAllObjects];
+            
             for (NSDictionary *dic in dict[@"data"]) {
                 NoticeGoodsModel *goods = [NoticeGoodsModel mj_objectWithKeyValues:dic];
                 goods.choice = goods.is_selling.boolValue? @"1" : @"0";
@@ -93,11 +93,13 @@
                 if(goods.choice.boolValue){
                     [self.choiceArr addObject:goods];
                 }
+                
                 if (goods.is_experience.boolValue) {
                     [self.freeArr addObject:goods];
                 }else{
                     [self.voiceArr addObject:goods];
                 }
+                
                 if(self.refreshGoodsBlock){
                     self.refreshGoodsBlock(self.choiceArr);
                 }
