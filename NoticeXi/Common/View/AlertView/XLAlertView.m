@@ -199,7 +199,6 @@
     if (self == [super init]) {
         
         self.frame = [UIScreen mainScreen].bounds;
-        
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         
         self.alertView = [[UIView alloc] init];
@@ -226,7 +225,6 @@
             
             self.msgLbl = [self GetAdaptiveLable:CGRectMake(XLSpace, CGRectGetMaxY(self.titleLbl.frame)+XLSpace-title.length?0:20, AlertW-2*XLSpace, 20) AndText:message andIsTitle:NO];
             self.msgLbl.textAlignment = NSTextAlignmentCenter;
-            
             [self.alertView addSubview:self.msgLbl];
             
             CGFloat msgW = self.msgLbl.bounds.size.width;
@@ -242,7 +240,6 @@
         
         //两个按钮
         if (cancleTitle && sureTitle) {
-            
             self.cancleBtn = [UIButton buttonWithType:UIButtonTypeSystem];
             self.cancleBtn.frame = CGRectMake(0, CGRectGetMaxY(self.lineView.frame), (AlertW-1)/2, 40);
             [self.cancleBtn setTitle:sureTitle forState:UIControlStateNormal];
@@ -366,73 +363,62 @@
 - (instancetype)initWithTitle:(NSString *)title name:(NSString *)name time:(NSString *)time creatTime:(NSInteger)creatTime autoNext:(BOOL)autonext{
     if (self == [super init]) {
         
-    
         self.autoNext = autonext;
         self.frame = [UIScreen mainScreen].bounds;
-        //
-        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];//
+        
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hasKillApp) name:@"APPWASKILLED" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelOrder) name:@"SHOPCANCELORDER" object:nil];
         self.alertView = [[UIView alloc] init];
         self.alertView.backgroundColor = [[UIColor colorWithHexString:@"#FCFCFC"] colorWithAlphaComponent:1];
         self.alertView.layer.cornerRadius = 10.0;
         
-        self.alertView.frame = CGRectMake(0, 0, AlertW, 100);
+        self.alertView.frame = CGRectMake(0, 0, 280, 372);
         self.alertView.layer.position = self.center;
+        
+        self.backImageView = [[UIImageView  alloc] initWithFrame:self.alertView.bounds];
+        self.backImageView.userInteractionEnabled = YES;
+        [self.alertView addSubview:self.backImageView];
+        self.backImageView.image = autonext?UIImageNamed(@""):UIImageNamed(@"");
+        
         self.time = time.intValue ? time.intValue: 60;
-        if (!self.autoNext) {
-            title = [NSString stringWithFormat:@"你的随机昵称:%@\n等待店主接单...%lds后订单失效",name,self.time];
-        }else{
-            title = [NSString stringWithFormat:@"上家店铺不方便接听，已为您匹配新店铺，\n等待店主接单...%lds后订单失效",self.time];
-        }
-        if (title) {
-            
-            self.titleLbl = [self GetAdaptiveLable:CGRectMake(2*XLSpace, 2*XLSpace, AlertW-4*XLSpace, 20) AndText:title andIsTitle:YES];
-            self.titleLbl.textAlignment = NSTextAlignmentCenter;
-            
-            [self.alertView addSubview:self.titleLbl];
-            self.titleLbl.textColor = [UIColor colorWithHexString:@"#333333"];
-            CGFloat titleW = self.titleLbl.bounds.size.width;
-            CGFloat titleH = self.titleLbl.bounds.size.height;
-            
-            self.titleLbl.frame = CGRectMake((AlertW-titleW)/2, 2*XLSpace, titleW, titleH);
-            
-        }
+                
         self.name = name;
 
         [self timeChange];
-        self.lineView = [[UIView alloc] init];
-        self.lineView.frame = self.msgLbl?CGRectMake(0, CGRectGetMaxY(self.msgLbl.frame)+XLSpace, AlertW, 0.5):CGRectMake(0, CGRectGetMaxY(self.titleLbl.frame)+2*XLSpace, AlertW, 0.5);
-        self.lineView.backgroundColor = [UIColor colorWithHexString:@"#EBECF0"];
-        [self.alertView addSubview:self.lineView];
         
-        NSString *cancleTitle = @"取消订单";
+        NSString *cancleTitle = @"取消呼叫";
         
-        //两个按钮
-        if (cancleTitle) {
-            UIView *bav = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.lineView.frame), AlertW, 10)];
-            bav.backgroundColor = self.alertView.backgroundColor;
-            [self.alertView addSubview:bav];
-            self.lineView.backgroundColor = bav.backgroundColor;
-            self.cancleBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-            self.cancleBtn.frame = CGRectMake(0, CGRectGetMaxY(self.lineView.frame), AlertW, 40);
-            [self.cancleBtn setTitle:cancleTitle forState:UIControlStateNormal];
-            [self.cancleBtn setTitleColor:[UIColor colorWithHexString:@"#5C5F66"] forState:UIControlStateNormal];
-            self.cancleBtn.tag = 1;
-            self.cancleBtn.layer.cornerRadius = 10.0;
-            self.cancleBtn.layer.masksToBounds = YES;
-            self.cancleBtn.backgroundColor = self.alertView.backgroundColor;
-            [self.cancleBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
-            [self.alertView addSubview:self.cancleBtn];
-        }
-        
-        //计算高度
-        CGFloat alertHeight = cancleTitle?CGRectGetMaxY(self.cancleBtn.frame):CGRectGetMaxY(self.sureBtn.frame);
-        self.alertView.frame = CGRectMake(0, 0, AlertW, alertHeight);
-        self.alertView.layer.position = self.center;
+        self.cancleBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        self.cancleBtn.frame = CGRectMake((self.alertView.frame.size.width-160)/2, self.alertView.frame.size.height-78, 160, 48);
+        [self.cancleBtn setTitle:cancleTitle forState:UIControlStateNormal];
+        [self.cancleBtn setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
+        self.cancleBtn.tag = 1;
+        self.cancleBtn.titleLabel.font = XGEightBoldFontSize;
+        self.cancleBtn.layer.cornerRadius = 24;
+        self.cancleBtn.layer.masksToBounds = YES;
+        self.cancleBtn.layer.borderWidth = 1;
+        self.cancleBtn.layer.borderColor = [UIColor colorWithHexString:@"#E1E2E6"].CGColor;
+        self.cancleBtn.backgroundColor = self.alertView.backgroundColor;
+        [self.cancleBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
+        [self.alertView addSubview:self.cancleBtn];
         
         [self addSubview:self.alertView];
     
+        
+        self.msgLbl = [[UILabel  alloc] initWithFrame:CGRectMake(20, self.cancleBtn.frame.origin.y-58, self.alertView.frame.size.width-25, 18)];
+        self.msgLbl.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        self.msgLbl.font = THRETEENTEXTFONTSIZE;
+        self.msgLbl.text = [NSString stringWithFormat:@"本次通话你的代号：%@",name];
+        [self.alertView addSubview:self.msgLbl];
+        
+        CGFloat strHeight = [SXTools getHeightWithLineHight:3 font:18 width:self.alertView.frame.size.width-25 string:@"店主正在飞奔而来的路上 预计等待30s" isJiacu:YES];
+        
+        self.titleLbl = [[UILabel  alloc] initWithFrame:CGRectMake(20, self.msgLbl.frame.origin.y-10-strHeight, self.alertView.frame.size.width-25, strHeight)];
+        self.titleLbl.numberOfLines = 0;
+        self.titleLbl.textColor = [UIColor colorWithHexString:@"#14151A"];
+        self.titleLbl.font = XGEightBoldFontSize;
+        [self.alertView addSubview:self.titleLbl];
     }
     
     return self;
@@ -453,7 +439,7 @@
             if (strongSelf.autoNext) {
                 strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"上家店铺不方便接听，已为您匹配新店铺，\n等待店主接单...%lds后订单失效",strongSelf.time]];
             }else{
-                strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"你的随机昵称:%@\n等待店主接单...%lds后订单失效",strongSelf.name,strongSelf.time]];
+                strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"正在全力呼叫店主中\n预计等待%lds",strongSelf.time]];
             }
         }else{
             [strongSelf outTimeCancel];

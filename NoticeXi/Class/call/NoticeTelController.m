@@ -30,7 +30,7 @@
     self.layout.minimumInteritemSpacing = 10;
     self.layout.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
     
-    self.collectionView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-(self.isFree?0:43));
+    self.collectionView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-(self.isFree?0:43)-44);
     [self.collectionView registerClass:[SXAskQuestionShopCell class] forCellWithReuseIdentifier:@"askCell"];
     
     self.pageNo = 1;

@@ -18,6 +18,8 @@
 #import "NoticeVoiceComModel.h"
 #import "NoticeHelpCommentModel.h"
 #import "NoticeTeamChatModel.h"
+#import "SXVideosModel.h"
+#import "SXVideoCommentModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeManagerJuBaoModel : NSObject
@@ -102,6 +104,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NoticeAbout *massMember;
 @property (nonatomic, strong) NSDictionary *mass_chat_log;
 @property (nonatomic, strong) NoticeTeamChatModel *chatTeamM;
+
+@property (nonatomic, strong) NSDictionary *reportComment;//被举报的视频评论
+@property (nonatomic, strong) SXVideoCommentModel *reportCommentM;
+@property (nonatomic, strong) NSMutableArray *jubaArr;
+
+@property (nonatomic, strong) NSDictionary *videoComment;//被举报评论的一级评论
+@property (nonatomic, strong) SXVideoCommentModel *firstVideoCommentM;
+@property (nonatomic, strong) NSMutableArray *resoceArr;
+
+@property (nonatomic, strong) NSDictionary *video;
+@property (nonatomic, strong) SXVideosModel *videoM;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -12,9 +12,7 @@
 
 @interface CYWWaterFallLayout ()
 
- 
 @property (nonatomic, strong) NSMutableArray<UICollectionViewLayoutAttributes *> *layoutAttributes;
-
 @property (nonatomic, strong) NSArray<NSNumber *> *heightsForColumnArray;
 
 @end
@@ -46,8 +44,6 @@
         allColumnMaxY[currentColumn] = @(0);
     }
 
- 
-    
     for (int index = 0; index < numberOfItem; index++)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:section];
@@ -78,6 +74,7 @@
 }
 
 - (void)setVideoHeight{
+    
     [_layoutAttributes removeAllObjects];
     NSInteger column = self.columnCount;
     NSInteger section = 0;
@@ -89,8 +86,6 @@
         allColumnMaxY[currentColumn] = @(0);
     }
 
- 
-    
     for (int index = 0; index < numberOfItem; index++)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:section];
@@ -106,7 +101,7 @@
             }
         }
 
-        // 这里获取item的UICollectionViewLayoutAttributes布局属性，如果是高度根据手动计算出来的，那么在下面直接设置item的高度就好。(网上看到大多都是能确定item高度的瀑布流布局方式)
+        //这里获取item的UICollectionViewLayoutAttributes布局属性，如果是高度根据手动计算出来的，那么在下面直接设置item的高度就好。(网上看到大多都是能确定item高度的瀑布流布局方式)
 
         UICollectionViewLayoutAttributes *layoutAttributes = [self layoutAttributesForItemAtIndexPath:indexPath];
         CGFloat itemY = minColumnMaxY + self.minimumLineSpacing;
@@ -131,49 +126,30 @@
 - (CGSize)collectionViewContentSize {
 
     CGSize size = [super collectionViewContentSize];
-
     if (_heightsForColumnArray.count == 0) {
-
         return size;
-
     }
 
     CGFloat height = _heightsForColumnArray[0].floatValue;
-
     for (int i = 0; i < _heightsForColumnArray.count; i++)
-
     {
-
         if (height < _heightsForColumnArray[i].floatValue)
-
         {
-
             height = _heightsForColumnArray[i].floatValue;
-
         }
-
     }
-
     return CGSizeMake(size.width, height + self.sectionInset.bottom);
-
 }
 
 #pragma mark - Getter
 
 - (NSMutableArray<UICollectionViewLayoutAttributes *> *)layoutAttributes
-
 {
-
     if (!_layoutAttributes)
-
     {
-
         _layoutAttributes = [NSMutableArray<UICollectionViewLayoutAttributes *> array];
-
     }
-
     return _layoutAttributes;
-
 }
 
 @end

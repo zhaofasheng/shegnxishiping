@@ -174,7 +174,6 @@
     [self.navigationController pushViewController:ctl animated:YES];
 }
 
-
 - (UIView *)footView{
     if (!_footView) {
         _footView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 100)];

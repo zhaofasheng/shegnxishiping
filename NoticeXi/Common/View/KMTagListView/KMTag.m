@@ -56,7 +56,7 @@
     frame.size = CGSizeMake(size.width + 20, size.height + 10);
     
     self.frame = frame;
-    self.layer.cornerRadius = frame.size.height/2;
+    [self setAllCorner:self.frame.size.height/2];
 }
 
 - (void)setupCousTumeWithText:(NSString *)text{

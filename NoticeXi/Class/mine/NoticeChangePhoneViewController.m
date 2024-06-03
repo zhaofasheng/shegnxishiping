@@ -13,6 +13,7 @@
 #import "NoticeSetRegNameController.h"
 #import "NoticeAlreadlyUserView.h"
 #import "NoticeDesTroyView.h"
+
 @interface NoticeChangePhoneViewController ()<CQCountDownButtonDataSource, CQCountDownButtonDelegate,UITextFieldDelegate>
 @property (strong, nonatomic) UITextField *codeView;
 @property (strong, nonatomic) UITextField *phoneView;
@@ -486,12 +487,12 @@
             NoticeCheckModel *checkM = [NoticeCheckModel mj_objectWithKeyValues:dict[@"data"]];
             self.checkM = checkM;
             
-            if (checkM.is_forbid.boolValue) {
+            if(checkM.is_forbid.boolValue) {
                 [self showToastWithText:[NoticeTools getLocalStrWith:@"bdphone.fh"]];
                 return;
             }
             
-            if (checkM.is_exist.boolValue) {
+            if(checkM.is_exist.boolValue) {
                 self.type = 2;
             }else{
                 self.type = 1;

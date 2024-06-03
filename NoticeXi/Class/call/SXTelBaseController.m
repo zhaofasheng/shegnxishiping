@@ -13,6 +13,8 @@
 #import "SXSpulyShopView.h"
 #import "NoticeMyJieYouShopController.h"
 #import "SXTeleListBaseController.h"
+#import "NoticeLoginViewController.h"
+#import "SXsearchShopController.h"
 @interface SXTelBaseController ()
 
 @property (nonatomic, strong) NoticeTelController *freeVC;
@@ -57,6 +59,40 @@
 
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     self.menuView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+    
+    UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(15,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH-30, 36)];
+    [searchBtn setAllCorner:18];
+    searchBtn.backgroundColor = [[UIColor colorWithHexString:@"#F0F1F5"] colorWithAlphaComponent:1];
+    UIImageView *searImg = [[UIImageView alloc] initWithFrame:CGRectMake(15, 8, 20, 20)];
+    searImg.image = UIImageNamed(@"Image_newsearchss");
+    [searchBtn addSubview:searImg];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(36, 0, searchBtn.frame.size.width-40, 36)];
+    label.text = @"搜索店铺";
+    label.font = FOURTHTEENTEXTFONTSIZE;
+    label.textColor = [[UIColor colorWithHexString:@"#8A8F99"] colorWithAlphaComponent:1];
+    [searchBtn addSubview:label];
+    [searchBtn addTarget:self action:@selector(searchClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:searchBtn];
+}
+
+- (void)searchClick{
+
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
+    SXsearchShopController *ctl = [[SXsearchShopController alloc] init];
+ 
+    CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
+                                                                    withSubType:kCATransitionFromLeft
+                                                                       duration:0.3f
+                                                                 timingFunction:kCAMediaTimingFunctionLinear
+                                                                           view:self.navigationController.view];
+    [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
+    [self.navigationController pushViewController:ctl animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -84,7 +120,7 @@
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForContentView:(WMScrollView *)contentView{
-    return CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
+    return CGRectMake(0,NAVIGATION_BAR_HEIGHT+44, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-44);
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index{

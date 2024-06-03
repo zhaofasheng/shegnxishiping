@@ -94,10 +94,33 @@
         self.resourceTypeName = @"社团聊天";
     }else if ([resource_type isEqualToString:@"147"]){
         self.resourceTypeName = @"社团用户";
+    }else if ([resource_type isEqualToString:@"148"]){
+        self.resourceTypeName = @"举报视频";
+    }else if ([resource_type isEqualToString:@"149"]){
+        self.resourceTypeName = @"视频评论";
     }
     else{
         DRLog(@"举报类型%@",resource_type);
     }
+}
+
+- (void)setVideo:(NSDictionary *)video{
+    _video = video;
+    self.videoM = [SXVideosModel mj_objectWithKeyValues:video];
+}
+
+- (void)setVideoComment:(NSDictionary *)videoComment{
+    _videoComment = videoComment;
+    self.firstVideoCommentM = [SXVideoCommentModel mj_objectWithKeyValues:videoComment];
+    self.resoceArr = [[NSMutableArray alloc] init];
+    [self.resoceArr addObject:self.firstVideoCommentM];
+}
+
+- (void)setReportComment:(NSDictionary *)reportComment{
+    _reportComment = reportComment;
+    self.reportCommentM = [SXVideoCommentModel mj_objectWithKeyValues:reportComment];
+    self.jubaArr = [[NSMutableArray alloc] init];
+    [self.jubaArr addObject:self.reportCommentM];
 }
 
 - (void)setMass_member:(NSDictionary *)mass_member{

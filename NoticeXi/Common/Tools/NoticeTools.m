@@ -2368,6 +2368,24 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     return arrayDict;
 }
 
++ (void)saveShopSearchArr:(NSArray *)arrary{
+   
+    NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
+    NSString * fileName = [docDir stringByAppendingPathComponent:[NSString stringWithFormat:@"shopSearchArrary%@",[NoticeTools getuserId]]];
+    [arrary writeToFile:fileName atomically:YES];
+}
+
++ (NSMutableArray *)getshopSearchArr{
+    NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
+    NSString * fileName = [docDir stringByAppendingPathComponent:[NSString stringWithFormat:@"shopSearchArrary%@",[NoticeTools getuserId]]];
+    NSArray * models = [NSArray arrayWithContentsOfFile:fileName];
+    NSMutableArray *arrayDict=[NSMutableArray arrayWithArray:models];
+    if (!models) {
+        return [NSMutableArray new];
+    }
+    return arrayDict;
+}
+
 + (void)saveSearchGroupArr:(NSArray *)arrary{
    
     NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];

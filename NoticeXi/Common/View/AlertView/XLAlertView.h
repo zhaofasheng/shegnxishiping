@@ -27,6 +27,7 @@ typedef void(^AlertResult)(NSInteger index);
 @property (nonatomic,retain) UIButton * _Nullable cancleBtn;
 //横线线
 @property (nonatomic,retain) UIView * _Nullable lineView;
+@property (nonatomic, strong) UIImageView *backImageView;
 //竖线
 @property (nonatomic,retain) UIView * _Nullable verLineView;
 @property (nonatomic, strong) NSString * _Nullable orderId;

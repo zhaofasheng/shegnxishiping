@@ -364,6 +364,9 @@ typedef void (^SuccessGetAliBlock)(id);// 授权成功block
 /// 获取 二进制数据data大小
 /// - Parameter data: 二进制数据
 + (NSString *)getBytesFromDataLength:(NSData *)data;
+
++ (NSMutableArray *)getshopSearchArr;
++ (void)saveShopSearchArr:(NSArray *)arrary;
 @end
 
 NS_ASSUME_NONNULL_END

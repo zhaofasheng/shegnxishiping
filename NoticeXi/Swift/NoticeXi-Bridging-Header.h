@@ -67,3 +67,4 @@
 #import "NoticeDanMuController.h"
 #import "JXPagerView.h"
 #import "UIView+CLSetRect.h"
+#import "SXVideoCommentJubaoController.h"
