@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JXPagerView.h"
 #import "NoticeMyShopModel.h"
+#import "NoticerUserShopDetailHeaderView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeOtherShopCardController : UIViewController<JXPagerViewListViewDelegate>
@@ -18,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void(^editShopModelBlock)(BOOL edit);
 @property (nonatomic, copy) void(^buyGoodsBlock)(NoticeGoodsModel *buyGood);
 @property (nonatomic, copy) void(^refreshGoodsBlock)(NSMutableArray *goodsArr);
+@property (nonatomic, strong) NoticerUserShopDetailHeaderView *headerView;
 - (void)stopPlay;
 - (void)scrolllToGoods;
 @end

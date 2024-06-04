@@ -18,13 +18,10 @@
 #import "NoticeMyShopModel.h"
 #import "NoticeMyJieYouShopController.h"
 #import "SXSpulyShopView.h"
-#import "NoticeHasServeredController.h"
-#import "NoticeBuyOrderListController.h"
-#import "SXHasBuyOrderListController.h"
-#import "SXShopCheckController.h"
 #import "SXSettingController.h"
 #import "NoticeStaySys.h"
-
+#import "SXHasBuyOrderListController.h"
+#import "SXUserHowController.h"
 @interface NoticeMineController ()
 @property (nonatomic, strong) NoticeNewCenterNavView *navView;
 @property (nonatomic, strong) SXUserCenterHeader *headerView;
@@ -32,8 +29,6 @@
 @property (nonatomic, strong) NSArray *section0imgArr;
 @property (nonatomic, strong) NSArray *section0titleArr;
 
-@property (nonatomic, strong) NSArray *section1imgArr;
-@property (nonatomic, strong) NSArray *section1titleArr;
 
 @property (nonatomic, strong) NSArray *section2imgArr;
 @property (nonatomic, strong) NSArray *section2titleArr;
@@ -55,12 +50,10 @@
     self.navBarView.hidden = YES;
     
     self.section0titleArr = @[@"课程订单",@"已购课程",@"我的店铺",@"店铺认证"];
-    self.section1titleArr = @[@"我的店铺",@"店铺认证",@"服务过的订单",@"买过的订单"];
-    self.section2titleArr = @[@"缓存",@"联系客服",@"设置"];
+    self.section2titleArr = @[@"缓存",@"联系客服",@"声昔使用手册",@"设置"];
     
     self.section0imgArr = @[@"sxorder_img",@"sxhasbuyed_img"];
-    self.section1imgArr = @[@"sxMyshop_img",@"sxshopcheck_img",@"sxhasfuwurec_img",@"sxhasbuyrec_img"];
-    self.section2imgArr = @[@"sxdownvideo_img",@"sxconnectkf_img",@"sxset_img"];
+    self.section2imgArr = @[@"sxdownvideo_img",@"sxconnectkf_img",@"sx_sxuseteace_img",@"sxset_img"];
     
     
     NoticeNewCenterNavView *navView = [[NoticeNewCenterNavView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, NAVIGATION_BAR_HEIGHT)];
@@ -242,57 +235,20 @@
             [self.navigationController pushViewController:ctl animated:YES];
         }
     }
+   
     if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            if (!self.applyModel) {
-                [self showToastWithText:@"正在获取店铺状态"];
-                return;
-            }
-            
-            [self myShopTap];
-        }
-        if (indexPath.row == 1) {
-            if (!self.applyModel) {
-                [self showToastWithText:@"正在获取店铺状态"];
-                return;
-            }
-            
-            if (self.applyModel.status == 6) {//有店铺了
-                if (self.shopModel) {
-                    SXShopCheckController *ctl = [[SXShopCheckController alloc] init];
-                    ctl.shopModel = self.shopModel.myShopM;
-                    [self.navigationController pushViewController:ctl animated:YES];
-                }
-              
-            }else if(self.applyModel.status == 4){//待审核
-                self.supplyView.canSupply = NO;
-                [self.supplyView showSupplyView];
-            }else if(self.applyModel.status < 4 || self.applyModel.status == 5){//没店铺
-                
-                self.supplyView.canSupply = YES;
-                [self.supplyView showSupplyView];
-            }
-      
-        }
-        if (indexPath.row == 2) {
-            NoticeHasServeredController *ctl = [[NoticeHasServeredController alloc] init];
-            [self.navigationController pushViewController:ctl animated:YES];
-        }
-        if (indexPath.row == 3) {
-            NoticeBuyOrderListController *ctl = [[NoticeBuyOrderListController alloc] init];
-            [self.navigationController pushViewController:ctl animated:YES];
-        }
-    }
-    if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             NoticeVoiceDownLoadController *ctl = [[NoticeVoiceDownLoadController alloc] init];
             [self.navigationController pushViewController:ctl animated:YES];
-            
             
         }else if (indexPath.row == 1){
             [NoticeComTools connectXiaoer];
           
         }else if (indexPath.row == 2){
+            SXUserHowController *ctl = [[SXUserHowController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+        }
+        else if (indexPath.row == 3){
             SXSettingController *ctl = [[SXSettingController alloc] init];
             __weak typeof(self) weakSelf = self;
             ctl.needFirstBlock = ^(BOOL needFirst) {
@@ -314,14 +270,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
         return self.section0imgArr.count;
-    }else if (section == 1){
-        return self.section1imgArr.count;
     }
     return self.section2imgArr.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -337,40 +291,6 @@
             [cell.backView setCornerOnTop:10];
         }else if(indexPath.row == self.section0imgArr.count-1){
             [cell.backView setCornerOnBottom:10];
-        }
-    }else if(indexPath.section == 1){
-        cell.titleImageView.image = UIImageNamed(self.section1imgArr[indexPath.row]);
-        cell.titleL.text = self.section1titleArr[indexPath.row];
-        if (indexPath.row == 0) {
-            [cell.backView setCornerOnTop:10];
-        }else if(indexPath.row == self.section1imgArr.count-1){
-            [cell.backView setCornerOnBottom:10];
-        }
-        
-        if (indexPath.row == 2 || indexPath.row == 3) {
-            cell.subL.hidden = NO;
-            cell.subImageV.hidden = YES;
-            
-            //服务过的订单
-            if (indexPath.row == 2) {
-                if (!self.shopModel) {
-                    cell.subL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@单",@"0"] setSize:12 setLengthString:@"单" beginSize:1];
-                }else{
-                    if (!self.shopModel.myShopM.order_num.intValue) {
-                        self.shopModel.myShopM.order_num = @"0";
-                    }
-                    cell.subL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@单",self.shopModel.myShopM.order_num] setSize:12 setLengthString:@"单" beginSize:self.shopModel.myShopM.order_num.length];
-                }
-            }
-            if (indexPath.row == 3) {
-                NSString *str = @"0";
-                if (!self.wallectM.buy_order_num.intValue || !self.wallectM) {
-                    str = @"0";
-                }else{
-                    str = self.wallectM.buy_order_num;
-                }
-                cell.subL.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"%@单",str] setSize:12 setLengthString:@"单" beginSize:str.length];
-            }
         }
     }else{
         cell.titleImageView.image = UIImageNamed(self.section2imgArr[indexPath.row]);

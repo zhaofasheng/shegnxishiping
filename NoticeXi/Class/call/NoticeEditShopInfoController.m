@@ -26,7 +26,7 @@
 @property (nonatomic, assign) CGFloat photoHeight;
 @property (nonatomic, strong) UILabel *addTagsL;
 @property (nonatomic, strong) UILabel *photosNumL;
-
+@property (nonatomic, assign) BOOL isBoy;
 @property (nonatomic, strong) NSMutableAttributedString *attName;
 @property (nonatomic, strong) NSMutableAttributedString *attTag;
 @end
@@ -183,45 +183,44 @@
     [nameV showNameView];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        NoticeChangeShopNameView *nameView = [[NoticeChangeShopNameView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-        __block NoticeChangeShopNameView *strongBlock = nameView;
-        nameView.textFild.text = self.shopModel.myShopM.shop_name;
-        nameView.noDissMiss = YES;
-        __weak typeof(self) weakSelf = self;
-        nameView.nameBlock = ^(NSString * _Nullable name) {
-            if (!name) {
-                return;
-            }
-            NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-            [parm setObject:name forKey:@"shop_name"];
-            [[NoticeTools getTopViewController] showHUD];
-            
-            [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/%@",weakSelf.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success1) {
-                [[NoticeTools getTopViewController] hideHUD];
-   
-                if (success1) {
-                    [strongBlock closeClick];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
-                }else{
-                    NoticeOneToOne *msgModel = [NoticeOneToOne mj_objectWithKeyValues:dict];
-                    if (msgModel.chatM.keyword.count) {
-                        for (NSString *str in msgModel.chatM.keyword) {
-                            [weakSelf setNameRedColor:str sourceString:strongBlock.textFild.text textView:strongBlock.textFild att:weakSelf.attName];
-                        }
-                    }else{
-                        [strongBlock closeClick];
-                    }
-                }
-            } fail:^(NSError * _Nullable error) {
-                [strongBlock closeClick];
-                [[NoticeTools getTopViewController] hideHUD];
-            }];
 
-        };
-        [nameView showView];
-    }
+- (void)changeName{
+    NoticeChangeShopNameView *nameView = [[NoticeChangeShopNameView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    __block NoticeChangeShopNameView *strongBlock = nameView;
+    nameView.textFild.text = self.shopModel.myShopM.shop_name;
+    nameView.noDissMiss = YES;
+    __weak typeof(self) weakSelf = self;
+    nameView.nameBlock = ^(NSString * _Nullable name) {
+        if (!name) {
+            return;
+        }
+        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+        [parm setObject:name forKey:@"shop_name"];
+        [[NoticeTools getTopViewController] showHUD];
+        
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/%@",weakSelf.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success1) {
+            [[NoticeTools getTopViewController] hideHUD];
+
+            if (success1) {
+                [strongBlock closeClick];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
+            }else{
+                NoticeOneToOne *msgModel = [NoticeOneToOne mj_objectWithKeyValues:dict];
+                if (msgModel.chatM.keyword.count) {
+                    for (NSString *str in msgModel.chatM.keyword) {
+                        [weakSelf setNameRedColor:str sourceString:strongBlock.textFild.text textView:strongBlock.textFild att:weakSelf.attName];
+                    }
+                }else{
+                    [strongBlock closeClick];
+                }
+            }
+        } fail:^(NSError * _Nullable error) {
+            [strongBlock closeClick];
+            [[NoticeTools getTopViewController] hideHUD];
+        }];
+
+    };
+    [nameView showView];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -230,7 +229,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 56+12;
+        return 56+12+105;
     }else if (indexPath.section == 1){
 
         NSInteger imgNum = self.shopModel.myShopM.photowallArr.count;
@@ -257,6 +256,13 @@
 
     if (indexPath.section == 0) {
         NoticeEditCardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell0"];
+        __weak typeof(self) weakSelf = self;
+        cell.changeNameBlock = ^(BOOL change) {
+            [weakSelf changeName];
+        };
+        cell.sexBlock = ^(BOOL boy) {
+            weakSelf.isBoy = boy;
+        };
         cell.shopModel = self.shopModel;
         return cell;
     }else if (indexPath.section == 1){

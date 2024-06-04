@@ -12,6 +12,7 @@
 #import "SXSearchModel.h"
 #import "SXSearchShopCell.h"
 @interface SXsearchShopController ()<UITextFieldDelegate,KMTagListViewDelegate>
+
 @property (nonatomic, strong) UITextField *topicField;
 @property (nonatomic, strong) KMTagListView *labeView;
 @property (nonatomic, strong) UIView *headerView;
@@ -20,8 +21,8 @@
 @property (nonatomic, assign) BOOL hasNoCreateRefsh;
 @property (nonatomic, strong) SXSearchModel *defaultSearM;
 @property (nonatomic, strong) NSMutableArray *localArr;
-
 @property (nonatomic, strong) UITableView *shopTableView;
+
 @end
 
 @implementation SXsearchShopController
@@ -36,9 +37,7 @@
     [super viewDidLoad];
     self.navBarView.hidden = YES;
     
-
     self.searchHistoryArr = [NoticeTools getshopSearchArr];
-    
     [self refreshHistory];
     
     self.topicField = [[UITextField alloc] initWithFrame:CGRectMake(40, 0,DR_SCREEN_WIDTH-15-40-65, 36)];
@@ -78,7 +77,6 @@
     
     [self.tableView registerClass:[SXSearchThinkCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.rowHeight = 40;
-    
 }
 
 - (void)refreshIfShowList{
@@ -125,7 +123,6 @@
         self.tableView.tableHeaderView = self.headerView;
         [self.tableView reloadData];
     }
-    
 }
 
 - (void)textFieldDidChange:(id) sender {
@@ -141,9 +138,7 @@
             [self refreshHistory];
         }
     }
-    
 }
-
 
 //获取联想词汇
 - (void)requestLoacal:(NSString *)str{

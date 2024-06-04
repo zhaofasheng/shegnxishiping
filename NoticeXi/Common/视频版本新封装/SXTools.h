@@ -54,6 +54,9 @@ typedef void (^downSuccessBlock)(BOOL success);
 + (void)savePayInfo:(NoticeByOfOrderModel *)payInfo;
 + (NoticeByOfOrderModel *)getPayInfo;
 + (void)clearPayInfo;
+
++ (BOOL)isFirstuseOnThisDeveice;
++ (void)setMarkFornofirst;
 @end
 
 NS_ASSUME_NONNULL_END

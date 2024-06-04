@@ -37,6 +37,18 @@
         self.shopNameL.textColor = [UIColor whiteColor];
         [self addSubview:self.shopNameL];
         
+        self.sexImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.shopNameL.frame)+2, self.shopNameL.frame.origin.y+4, 20, 20)];
+        self.sexImageView.image = UIImageNamed(@"sx_shop_male");//sx_shop_fale女
+        [self addSubview:self.sexImageView];
+        
+        UIButton *editButton = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-65, self.shopNameL.frame.origin.y+2, 65, 24)];
+        editButton.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.5];
+        [editButton setAllCorner:12];
+        [editButton setTitle:@"编辑资料" forState:UIControlStateNormal];
+        editButton.titleLabel.font = TWOTEXTFONTSIZE;
+        [self addSubview:editButton];
+        [editButton addTarget:self action:@selector(editClick) forControlEvents:UIControlEventTouchUpInside];
+        
         self.checkL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.iconImageView.frame)+10, 49, DR_SCREEN_WIDTH-115, 18)];
         self.checkL.font = THRETEENTEXTFONTSIZE;
         self.checkL.textColor = [UIColor whiteColor];
@@ -80,6 +92,12 @@
 
 }
 
+- (void)editClick{
+    if (self.editshShopModel) {
+        self.editshShopModel(YES);
+    }
+}
+
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
     
@@ -96,6 +114,9 @@
     }
 
     self.shopNameL.text = shopModel.myShopM.shop_name;
+    self.shopNameL.frame = CGRectMake(CGRectGetMaxX(self.iconImageView.frame)+10, 10, GET_STRWIDTH(self.shopNameL.text, 21, 28), 28);
+    self.sexImageView.image = shopModel.myShopM.sex.intValue == 2 ? UIImageNamed(@"sx_shop_fale") : UIImageNamed(@"sx_shop_male");
+    self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.shopNameL.frame)+2, self.shopNameL.frame.origin.y+4, 20, 20);
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:shopModel.myShopM.shop_avatar_url]];
     
     NSString *str1 = shopModel.myShopM.order_num.intValue?shopModel.myShopM.order_num:@"0";

@@ -14,11 +14,14 @@
     if(self = [super initWithFrame:frame]){
         self.userInteractionEnabled = YES;
         self.backgroundColor = [UIColor whiteColor];
+        
+        self.backcontentView = [[UIView  alloc] initWithFrame:CGRectMake(0, 20, DR_SCREEN_WIDTH, self.frame.size.height-20)];
+        [self addSubview:self.backcontentView];
 
-        self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-100, 20, 80, 80)];
+        self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-100, 0, 80, 80)];
         [self.iconImageView setAllCorner:40];
         self.iconImageView.userInteractionEnabled = YES;
-        [self addSubview:self.iconImageView];
+        [self.backcontentView addSubview:self.iconImageView];
         
         UIImageView *imageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.iconImageView.frame)-32,CGRectGetMaxY(self.iconImageView.frame)-32, 32, 32)];
         imageView.userInteractionEnabled = YES;
@@ -28,35 +31,35 @@
         UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playNoReplay)];
         [imageView addGestureRecognizer:tap2];
         self.playImageV = imageView;
-        [self addSubview:imageView];
+        [self.backcontentView addSubview:imageView];
         
-        self.shopNameL = [[UILabel alloc] initWithFrame:CGRectMake(20, 33, DR_SCREEN_WIDTH-150, 28)];
+        self.shopNameL = [[UILabel alloc] initWithFrame:CGRectMake(20, 13, DR_SCREEN_WIDTH-150, 28)];
         self.shopNameL.font = XGTwentyBoldFontSize;
         self.shopNameL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        [self addSubview:self.shopNameL];
+        [self.backcontentView addSubview:self.shopNameL];
         
     
-        self.checkL = [[UILabel  alloc] initWithFrame:CGRectMake(20, 69, DR_SCREEN_WIDTH-150, 18)];
+        self.checkL = [[UILabel  alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.shopNameL.frame)+8, DR_SCREEN_WIDTH-150, 18)];
         self.checkL.font = THRETEENTEXTFONTSIZE;
         self.checkL.textColor = [UIColor colorWithHexString:@"#14151A"];
         self.checkL.numberOfLines = 0;
-        [self addSubview:self.checkL];
+        [self.backcontentView addSubview:self.checkL];
         
-        self.goodsNumL = [[UILabel  alloc] initWithFrame:CGRectMake(20, 107+15, GET_STRWIDTH(@"咨询服务 2", 12, 19)+30, 19)];
+        self.goodsNumL = [[UILabel  alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.checkL.frame)+21, GET_STRWIDTH(@"咨询服务 2", 12, 19)+30, 19)];
         self.goodsNumL.font = TWOTEXTFONTSIZE;
         self.goodsNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         self.goodsNumL.text = @"咨询服务 0";
-        [self addSubview:self.goodsNumL];
+        [self.backcontentView addSubview:self.goodsNumL];
         
         self.searvNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.goodsNumL.frame), self.goodsNumL.frame.origin.y, GET_STRWIDTH(@"被咨询 999", 12, 19)+47, 19)];
         self.searvNumL.font = TWOTEXTFONTSIZE;
         self.searvNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
-        [self addSubview:self.searvNumL];
+        [self.backcontentView addSubview:self.searvNumL];
         
         self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.searvNumL.frame), self.goodsNumL.frame.origin.y, GET_STRWIDTH(@"评价 9999", 12, 19)+10, 19)];
         self.comNumL.font = TWOTEXTFONTSIZE;
         self.comNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
-        [self addSubview:self.comNumL];
+        [self.backcontentView addSubview:self.comNumL];
         self.comNumL.userInteractionEnabled = YES;
         UITapGestureRecognizer *comtap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentTap)];
         [self.comNumL addGestureRecognizer:comtap];
@@ -65,15 +68,20 @@
         
         self.markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
         self.markImageView.image = UIImageNamed(@"sxrenztub_img");
-        [self addSubview:self.markImageView];
+        [self.backcontentView addSubview:self.markImageView];
         self.markImageView.hidden = YES;
+        
+        self.sexImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.shopNameL.frame)+2, self.shopNameL.frame.origin.y+4, 20, 20)];
+        self.sexImageView.image = UIImageNamed(@"sx_shop_male");//sx_shop_fale女
+        [self.backcontentView addSubview:self.sexImageView];
+        //UIImageNamed(@"sx_shop_male");//sx_shop_fale女
     }
     return self;
 }
 
 - (UIView *)contentView{
     if (!_contentView) {
-        _contentView = [[UIView  alloc] initWithFrame:CGRectMake(15, 156, DR_SCREEN_WIDTH-30, 0)];
+        _contentView = [[UIView  alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.searvNumL.frame)+40, DR_SCREEN_WIDTH-30, 0)];
         _contentView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
         _contentView.layer.cornerRadius = 10;
         _contentView.layer.masksToBounds = YES;
@@ -96,11 +104,11 @@
         
         [self addSubview:self.contentView];
         
-        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(30, 146+15, 24, 18)];
+        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(30,_contentView.frame.origin.y-9, 24, 18)];
         imageV.image = UIImageNamed(@"introYinhao_img");
         self.yhImageView = imageV;
         self.yhImageView.hidden = YES;
-        [self addSubview:self.yhImageView];
+        [self.backcontentView addSubview:self.yhImageView];
     }
     return _contentView;
 }
@@ -162,21 +170,24 @@
         self.checkL.frame = CGRectMake(20, 69, DR_SCREEN_WIDTH-125, GET_STRHEIGHT(self.checkL.text, 13, DR_SCREEN_WIDTH-125));
         self.markImageView.hidden = NO;
         
-       self.markImageView.frame = CGRectMake(20+GET_STRWIDTH(shopModel.shop_name, 21, 28), 33+4, 20, 20);
+       self.markImageView.frame = CGRectMake(20+GET_STRWIDTH(shopModel.shop_name, 21, 28),self.shopNameL.frame.origin.y+4, 20, 20);
     }
     
     self.shopNameL.text = shopModel.shop_name;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:shopModel.shop_avatar_url]];
+    self.sexImageView.image = shopModel.sex.intValue == 2 ? UIImageNamed(@"sx_shop_fale") : UIImageNamed(@"sx_shop_male");
+    if (self.markImageView.hidden) {
+        self.sexImageView.frame = CGRectMake(20+GET_STRWIDTH(shopModel.shop_name, 21, 28),self.shopNameL.frame.origin.y+4, 20, 20);
+    }else{
+        self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.markImageView.frame)+2,self.shopNameL.frame.origin.y+4, 20, 20);
+    }
     
     if (shopModel.operate_status.intValue == 3) {
         self.workIngView.hidden = NO;
-        if (self.markImageView.hidden) {
-            self.workIngView.frame = CGRectMake(20+10+GET_STRWIDTH(shopModel.shop_name, 21, 28), 33, 57, 28);
-        }else{
-            self.workIngView.frame = CGRectMake(CGRectGetMaxX(self.markImageView.frame)+5, 33, 57, 28);
-        }
-        
+        self.workIngView.frame = CGRectMake(CGRectGetMaxX(self.sexImageView.frame)+5, self.shopNameL.frame.origin.y, 57, 28);
+        self.severceView.hidden = NO;
     }else{
+        _severceView.hidden = YES;
         _workIngView.hidden = YES;
     }
     
@@ -196,7 +207,7 @@
         CGFloat taleHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tale isJiacu:NO];
         
         self.contentView.hidden = NO;
-        self.contentView.frame = CGRectMake(15, 156+15, DR_SCREEN_WIDTH-30, tagHeight+taleHeight+60);
+        self.contentView.frame = CGRectMake(15, 156+15 + (shopModel.operate_status.intValue == 3 ? 30 : 0), DR_SCREEN_WIDTH-30, tagHeight+taleHeight+60);
         
         self.tagsL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, tagHeight);
         self.tagsL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tagString];
@@ -207,13 +218,12 @@
         self.stroryL.frame = CGRectMake(15, CGRectGetMaxY(self.lineView.frame)+15, DR_SCREEN_WIDTH-60, taleHeight);
         self.stroryL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tale];
         
-        
     }else{
         if (shopModel.tagsTextArr.count) {//有标签
             CGFloat tagHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tagString isJiacu:NO];
             
             self.contentView.hidden = NO;
-            self.contentView.frame = CGRectMake(15, 156+15, DR_SCREEN_WIDTH-30, tagHeight+30);
+            self.contentView.frame = CGRectMake(15, 156+15 + (shopModel.operate_status.intValue == 3 ? 30 : 0), DR_SCREEN_WIDTH-30, tagHeight+30);
             
             self.tagsL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, tagHeight);
             self.tagsL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tagString];
@@ -224,7 +234,7 @@
             CGFloat taleHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tale isJiacu:NO];
             
             self.contentView.hidden = NO;
-            self.contentView.frame = CGRectMake(15, 156+15, DR_SCREEN_WIDTH-30, taleHeight+30);
+            self.contentView.frame = CGRectMake(15, 156+15+ (shopModel.operate_status.intValue == 3 ? 30 : 0), DR_SCREEN_WIDTH-30, taleHeight+30);
             
             self.lineView.hidden = YES;
             
@@ -235,16 +245,37 @@
     
     
     if (_contentView.hidden) {
-        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+15);
+        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+15+ (shopModel.operate_status.intValue == 3 ? 30 : 0));
     }else{
-        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+self.contentView.frame.size.height+15+15);
+        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+self.contentView.frame.size.height+15+15+ (shopModel.operate_status.intValue == 3 ? 30 : 0));
     }
+    
+    self.backcontentView.frame = CGRectMake(0, 20+ (shopModel.operate_status.intValue == 3 ? 30 : 0), DR_SCREEN_WIDTH, self.frame.size.height-20 - (shopModel.operate_status.intValue == 3 ? 30 : 0));
 
     if ((shopModel.tale && shopModel.tale.length) || shopModel.tagsTextArr.count){
         self.yhImageView.hidden = NO;
+        self.yhImageView.frame = CGRectMake(30,_contentView.frame.origin.y-9, 24, 18);
     }else{
         self.yhImageView.hidden = YES;
     }
+}
+
+- (UIView *)severceView{
+    if (!_severceView) {
+        _severceView = [[UIView  alloc] initWithFrame:CGRectMake(20, 20, DR_SCREEN_WIDTH-25, 20)];
+        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+        imageV.image = UIImageNamed(@"sx_shop_workingtime");
+        [_severceView addSubview:imageV];
+        
+        self.severTimeL = [[UILabel  alloc] initWithFrame:CGRectMake(28, 0, _severceView.frame.size.width-28, 20)];
+        self.severTimeL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        self.severTimeL.font = FOURTHTEENTEXTFONTSIZE;
+        self.severTimeL.text = @"店主服务中，预计 05:12 结束";
+        [_severceView addSubview:self.severTimeL];
+        
+        [self addSubview:_severceView];
+    }
+    return _severceView;
 }
 
 - (void)setGoodsNum:(NSInteger)goodsNum{
@@ -271,7 +302,7 @@
         
         [_workIngView addSubview:label];
         
-        [self addSubview:_workIngView];
+        [self.backcontentView addSubview:_workIngView];
     }
     return _workIngView;
 }

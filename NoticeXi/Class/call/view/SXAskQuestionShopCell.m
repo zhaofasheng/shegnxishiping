@@ -75,6 +75,10 @@
         self.markImageView.image = UIImageNamed(@"sxrenztub_img1");
         [self.backView addSubview:self.markImageView];
         self.markImageView.hidden = YES;
+        
+        self.sexImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.nickNameL.frame)+2, self.nickNameL.frame.origin.y+3, 16, 16)];
+        self.sexImageView.image = UIImageNamed(@"sx_shop_male");//sx_shop_fale女
+        [self.backView addSubview:self.sexImageView];
     }
     return self;
 }
@@ -83,6 +87,10 @@
     _shopM = shopM;
     
     self.nickNameL.text = shopM.shop_name;
+    self.sexImageView.image = shopM.sex.intValue == 2 ? UIImageNamed(@"sx_shop_fale") : UIImageNamed(@"sx_shop_male");
+    self.nickNameL.frame = CGRectMake((self.backView.frame.size.width-18-GET_STRWIDTH(self.nickNameL.text, 15, 22))/2, CGRectGetMaxY(self.iconImageView.frame)+8, GET_STRWIDTH(self.nickNameL.text, 15, 22), 22);
+    self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame)+2, self.nickNameL.frame.origin.y+3, 16, 16);
+    
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:shopM.shop_avatar_url] placeholderImage:UIImageNamed(@"sxshopdefaulticon_img")];
     
     if (self.isFree) {//体验版

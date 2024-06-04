@@ -13,7 +13,7 @@
 #import "JXPagerListRefreshView.h"
 #import "NoticeXi-Swift.h"
 #import "NoticeJieYouGoodsComController.h"
-
+#import "NoticeMoreClickView.h"
 #import "NoticeActShowView.h"
 #import "NoticeOtherShopCardController.h"
 #import "NoticeJieYouShopHeaderView.h"
@@ -39,7 +39,9 @@
 @property (nonatomic, strong) UIImageView *backImageView;
 @property (nonatomic, strong) NoticeJieYouShopHeaderView *shopHeaderView;
 @property (nonatomic, strong) UIView *sectionView;
+@property (nonatomic, strong) UIButton *likeBtn;
 
+@property (nonatomic, strong) UIView *noWorkingView;
 @end
 
 @implementation NoticdShopDetailForUserController
@@ -54,7 +56,6 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if (appdel.floatView.isPlaying) {
         appdel.floatView.noRePlay = YES;
@@ -116,7 +117,6 @@
     
     self.sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 10)];
 
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hasKillApp) name:@"APPWASKILLED" object:nil];
     [self getShopRequest];
     [self getTime];
@@ -133,6 +133,16 @@
     [backBtn setImage:UIImageNamed(@"backwhtiess") forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backBtn];
+    
+    UIButton *shareBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-32, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2,32, 32)];
+    [shareBtn setImage:UIImageNamed(@"sx_shareshop_img") forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:shareBtn];
+    
+    self.likeBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-32-20-32, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2,32, 32)];
+    [self.likeBtn setImage:UIImageNamed(@"sx_likeshop_img") forState:UIControlStateNormal];
+    [self.likeBtn addTarget:self action:@selector(likeClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.likeBtn];
     
     self.startView = [[UIView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-40-10, DR_SCREEN_WIDTH, 40)];
     [self.view addSubview:self.startView];
@@ -166,6 +176,43 @@
 
 }
 
+- (UIView *)noWorkingView{
+    if (!_noWorkingView) {
+        _noWorkingView = [[UIView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, TAB_BAR_HEIGHT)];
+        _noWorkingView.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.8];
+        [self.view addSubview:_noWorkingView];
+        
+        UILabel *label = [[UILabel  alloc] initWithFrame:CGRectMake(0, 10, DR_SCREEN_WIDTH, 25)];
+        label.text = @"店铺休息中，可先收藏店铺噢";
+        label.font = EIGHTEENTEXTFONTSIZE;
+        label.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        label.textAlignment = NSTextAlignmentCenter;
+        [_noWorkingView addSubview:label];
+    }
+    return _noWorkingView;
+}
+
+//分享店铺
+- (void)shareClick{
+    if (!self.shopModel) {
+        return;
+    }
+    
+    NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    moreView.isShare = YES;
+    moreView.image = self.cardVC.headerView.iconImageView.image;
+    moreView.name = @"快来声昔找我聊聊吧";
+    moreView.title = [NSString stringWithFormat:@"%@的咨询主页",self.shopModel.shop_name];
+    [moreView showTost];
+    
+
+}
+
+//收藏店铺
+- (void)likeClick{
+    
+}
+
 - (void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -196,7 +243,6 @@
                 self.isBuying = NO;
             }
         } fail:^(NSError * _Nullable error) {
-            
         }];
     }
 }
@@ -212,7 +258,14 @@
             self.shopHeaderView.shopModel = self.shopDetailM;
             self.shopHeaderView.labelArr = self.shopDetailM.labelArr;
             self.cardVC.shopModel = self.shopDetailM;
-   
+            
+            if (self.shopModel.operate_status.intValue > 1) {
+                _noWorkingView.hidden = YES;
+                self.startView.hidden = NO;
+            }else{
+                self.noWorkingView.hidden = NO;
+                self.startView.hidden = YES;
+            }
         }
         [self hideHUD];
     } fail:^(NSError * _Nullable error) {
@@ -456,7 +509,10 @@
             weakSelf.goodsArr = goodsArr;
             
             if (weakSelf.goodsArr.count) {
-                weakSelf.startView.hidden = NO;
+                if (weakSelf.shopDetailM.myShopM.operate_status.intValue > 1) {
+                    weakSelf.startView.hidden = NO;
+                }
+                
                 BOOL hasFree = NO;
                 for (NoticeGoodsModel *goods in goodsArr) {
                     if (goods.is_experience.boolValue) {

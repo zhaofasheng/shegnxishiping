@@ -18,7 +18,7 @@
 #import "NoticeJieYouGoodsComController.h"
 #import "NoticeJieYouGoodsController.h"
 #import "SXShopOpenTypeView.h"
-
+#import "NoticeMoreClickView.h"
 @interface NoticeMyJieYouShopController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NoticeShopCardController *cardVC;
@@ -105,6 +105,10 @@
         [weakSelf getShopRequest];
     };
     
+    self.shopHeaderView.detailHeader.editshShopModel = ^(BOOL edit) {
+        [weakSelf editClick];
+    };
+    
     CGFloat width1 = GET_STRWIDTH(@"个人资料", 16, 50);
     
     _categoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0,0,width1*2+40,51)];
@@ -168,14 +172,29 @@
     [backBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backBtn];
     
-    UIButton *ruleBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-50, STATUS_BAR_HEIGHT,50, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
+    UIButton *ruleBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-32-15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2,32, 32)];
     [ruleBtn setImage:UIImageNamed(@"sxwhiteshoprule_img") forState:UIControlStateNormal];
     [ruleBtn addTarget:self action:@selector(ruleClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:ruleBtn];
     
+    UIButton *shareBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-32-20-32, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2,32, 32)];
+    [shareBtn setImage:UIImageNamed(@"sx_shareshop_img") forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:shareBtn];
+    
+
+    
     [self.sectionView addSubview:self.infoButton];
     [self.sectionView addSubview:self.orderButton];
     [self.sectionView addSubview:self.comButton];
+}
+
+- (void)shareClick{
+    NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    moreView.isShare = YES;
+    moreView.name = @"快来声昔找我聊聊吧";
+    moreView.title = [NSString stringWithFormat:@"%@的咨询主页",self.shopModel.myShopM.shop_name];
+    [moreView showTost];
 }
 
 - (void)editClick{
@@ -204,7 +223,7 @@
         if(success){
             
             self.shopModel = [NoticeMyShopModel mj_objectWithKeyValues:dict[@"data"]];
-           
+        
             self.shopHeaderView.shopModel = self.shopModel;
             self.shopHeaderView.detailHeader.shopModel = self.shopModel;
             self.cardVC.shopModel = self.shopModel;
@@ -577,4 +596,6 @@
     }
     return _typeView;
 }
+
+
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "NoticeOtherShopCardController.h"
-#import "NoticerUserShopDetailHeaderView.h"
+
 #import "NoticeShopChatCommentCell.h"
 #import "NoticeShopDetailSection.h"
 #import "NoticeJieYouGoodsComController.h"
@@ -15,7 +15,7 @@
 @interface NoticeOtherShopCardController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NoticerUserShopDetailHeaderView *headerView;
+
 
 @property (nonatomic, strong) NSMutableArray *comArr;
 
@@ -82,7 +82,12 @@
         }
     };
     if (section == 0) {
-        headV.mainTitleLabel.text = @"咨询服务";
+        if (self.shopModel.myShopM.operate_status.intValue > 1) {
+            headV.mainTitleLabel.text = @"咨询服务";
+        }else{
+            headV.mainTitleLabel.text = @"";
+        }
+        
     }else{
         headV.mainTitleLabel.text = @"评价";
         headV.subTitleLabel.hidden = NO;
@@ -99,6 +104,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        if (self.shopModel.myShopM.operate_status.intValue > 1) {
+            return 37;
+        }else{
+            return 0;
+        }
+    }
 
     return 37;
 }
@@ -226,7 +238,10 @@
         NoticeChatVoiceShopCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
         cell.noneedEdit = YES;
         cell.isOtherLook = YES;
-        cell.goodModel = self.goodssellArr[indexPath.row];
+        if (self.shopModel.myShopM.operate_status.intValue > 1) {
+            cell.goodModel = self.goodssellArr[indexPath.row];
+        }
+   
         return cell;
         
     }else{
@@ -256,16 +271,24 @@
     if (section == 1) {
         return self.comArr.count;
     }
-    return self.goodssellArr.count;
+    if (self.shopModel.myShopM.operate_status.intValue > 1) {
+        return self.goodssellArr.count;
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        NoticeGoodsModel *goods = self.goodssellArr[indexPath.row];
-        if (goods.is_experience.boolValue) {
-            return 101+8;
+        if (self.shopModel.myShopM.operate_status.intValue > 1) {
+            NoticeGoodsModel *goods = self.goodssellArr[indexPath.row];
+            if (goods.is_experience.boolValue) {
+                return 101+8;
+            }
+            return goods.nameHeight+92+15+8-45;
+        }else{
+            return 0;
         }
-        return goods.nameHeight+92+15+8-45;
+     
     }
     NoticeShopCommentModel *model = self.comArr[indexPath.row];
 

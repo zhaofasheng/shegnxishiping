@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)shareWithurl:(NSString *)urlStr type:(SSDKPlatformType)type;
 + (void)shareWithurl:(NSString *)urlStr type:(SSDKPlatformType)type title:(NSString *)title name:(NSString *)name;
 + (void)inivteWithurl:(NSString *)urlStr type:(SSDKPlatformType)type;
++ (void)shareWithurl:(NSString *)urlStr type:(SSDKPlatformType)type title:(NSString *)title name:(NSString *)name image:(UIImage *)image;
 @end
 
 NS_ASSUME_NONNULL_END

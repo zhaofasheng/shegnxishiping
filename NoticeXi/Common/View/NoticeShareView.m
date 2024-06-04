@@ -28,6 +28,22 @@
     }];
 }
 
++ (void)shareWithurl:(NSString *)urlStr type:(SSDKPlatformType)type title:(NSString *)title name:(NSString *)name image:(UIImage *)image{
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    [shareParams SSDKSetupShareParamsByText:name images:image? image : UIImageNamed(@"sharesdk") url:[NSURL URLWithString:urlStr] title:title type:SSDKContentTypeWebPage];
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NoticeTabbarController *tabBar = (NoticeTabbarController *)appdel.window.rootViewController;//获取window的跟视图,并进行强制转换
+    BaseNavigationController *nav = nil;
+    if ([tabBar isKindOfClass:[UITabBarController class]]) {//判断是否是当前根视图
+        nav = tabBar.selectedViewController;//获取到当前视图的导航视图
+    }
+    [ShareSDK share:type parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+        if (state == SSDKResponseStateSuccess) {
+          //  [nav.topViewController showToastWithText:@"分享成功"];
+        }
+    }];
+}
+
 + (void)shareWithurl:(NSString *)urlStr type:(SSDKPlatformType)type{
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
     

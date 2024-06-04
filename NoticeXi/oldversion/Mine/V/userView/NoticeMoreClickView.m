@@ -91,8 +91,8 @@
     self.cancelBtn.frame = CGRectMake(0,self.keyView.frame.size.height-BOTTOM_HEIGHT-50-10, DR_SCREEN_WIDTH, 50);
     self.movieTableView.frame = CGRectMake(0,20+40,DR_SCREEN_WIDTH, 70);
     self.movieTableView.rowHeight = DR_SCREEN_WIDTH/4;
-    self.imgArr = @[@"Image_shareweix",@"Image_sharepyq",@"Image_sharewb",@"Image_shareQQ"];
-    self.titleArr = @[[NoticeTools getLocalStrWith:@"shanrev.wx"],[NoticeTools getLocalStrWith:@"shanrev.pyq"],[NoticeTools getLocalStrWith:@"shanrev.wb"],@"QQ"];
+    self.imgArr = @[@"Image_shareweix",@"Image_sharepyq",@"Image_shareQQ",@"Image_sharewb"];
+    self.titleArr = @[[NoticeTools getLocalStrWith:@"shanrev.wx"],[NoticeTools getLocalStrWith:@"shanrev.pyq"],@"QQ",[NoticeTools getLocalStrWith:@"shanrev.wb"]];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 50)];
     label.textAlignment = NSTextAlignmentCenter;
@@ -134,28 +134,15 @@
         return;
     }
     if (self.isShare) {
-        if (self.bokeId) {
-            
-            NSString *url = [NSString stringWithFormat:@"http://priapi.byebyetext.com/share3/index.html?id=%@",self.bokeId];
-            if(indexPath.row == 0){
-                [NoticeShareView shareWithurl:url type:SSDKPlatformSubTypeWechatSession title:self.name name:self.title];
-            }else if(indexPath.row == 1){
-                [NoticeShareView shareWithurl:url type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title];
-            }else if(indexPath.row == 2){
-                [NoticeShareView shareWithurl:url type:SSDKPlatformTypeSinaWeibo title:self.name name:self.title];
-            }else if(indexPath.row == 3){
-                [NoticeShareView shareWithurl:url type:SSDKPlatformSubTypeQQFriend title:self.name name:self.title];
-            }
-            return;
-        }
+  
         if(indexPath.row == 0){
             [NoticeShareView shareWithurl:@"http://priapi.byebyetext.com/share2/index.html?type=shengxi1" type:SSDKPlatformSubTypeWechatSession title:self.name name:self.title];
         }else if(indexPath.row == 1){
             [NoticeShareView shareWithurl:@"http://priapi.byebyetext.com/share2/index.html?type=shengxi1" type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title];
         }else if(indexPath.row == 2){
-            [NoticeShareView shareWithurl:@"http://priapi.byebyetext.com/share2/index.html?type=shengxi1" type:SSDKPlatformTypeSinaWeibo title:self.name name:self.title];
-        }else if(indexPath.row == 3){
             [NoticeShareView shareWithurl:@"http://priapi.byebyetext.com/share2/index.html?type=shengxi1" type:SSDKPlatformSubTypeQQFriend title:self.name name:self.title];
+        }else if(indexPath.row == 3){
+        
         }
         return;
     }
@@ -206,7 +193,7 @@
     if (self.isVideo) {
         return self.titleArr.count;
     }
-    return self.isShare? 4: 1;
+    return self.isShare? 3: 1;
 }
 
 

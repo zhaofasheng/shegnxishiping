@@ -16,7 +16,7 @@
         self.contentView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20,0, 200,37)];
         label.font = XGFifthBoldFontSize;
-        label.textColor =[UIColor colorWithHexString:@"#25262E"];
+        label.textColor =[UIColor colorWithHexString:@"#14151A"];
         [self.contentView addSubview:label];
         _mainTitleLabel = label;
         

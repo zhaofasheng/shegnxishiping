@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NoticeShopDetailHeader : UIView<NoticeRecordDelegate>
 @property (nonatomic, strong) NoticeMyShopModel *shopModel;
 @property (nonatomic, copy) void(^refreshShopModel)(BOOL refresh);
-
+@property (nonatomic, copy) void(^editshShopModel)(BOOL edit);
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *shopNameL;
 @property (nonatomic, strong) UIImageView *playImageV;
@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *photoView;
 @property (nonatomic, strong) UIImageView *photoImageView;
 
+@property (nonatomic, strong) UIImageView *sexImageView;
 
 @property (nonatomic, strong) UIView *voiceView;
 @property (nonatomic, strong) UIView *storyView;

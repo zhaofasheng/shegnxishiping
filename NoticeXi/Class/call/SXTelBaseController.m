@@ -15,8 +15,10 @@
 #import "SXTeleListBaseController.h"
 #import "NoticeLoginViewController.h"
 #import "SXsearchShopController.h"
+#import "SXShopInfoTosatView.h"
+#import "SXLeaderViewController.h"
 @interface SXTelBaseController ()
-
+@property (nonatomic, strong) SXShopInfoTosatView *infoView;
 @property (nonatomic, strong) NoticeTelController *freeVC;
 @property (nonatomic, strong) SXTeleListBaseController *payVC;
 @property (nonatomic, strong) SXSpulyShopView *supplyView;
@@ -113,6 +115,14 @@
     }
     
     [self  getStatusRequest];
+    
+    if ([NoticeTools getuserId]) {
+        if ([SXTools isFirstuseOnThisDeveice]) {//执行引导页
+            SXLeaderViewController *ctl = [[SXLeaderViewController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+        }
+    }
+    
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForMenuView:(WMMenuView *)menuView{
@@ -169,6 +179,13 @@
     return _payVC;
 }
 
+- (void)clickmyShopTap{
+    [self.infoView showInfoView];
+    __weak typeof(self) weakSelf = self;
+    self.infoView.clickIconBlock = ^(BOOL clickIcon) {
+        [weakSelf myShopTap];
+    };
+}
 
 - (void)myShopTap{
     if (self.applyModel.status == 6) {//有店铺了
@@ -178,7 +195,6 @@
         self.supplyView.canSupply = NO;
         [self.supplyView showSupplyView];
     }else if(self.applyModel.status < 4 || self.applyModel.status == 5){//没店铺
-        
         self.supplyView.canSupply = YES;
         [self.supplyView showSupplyView];
     }
@@ -200,7 +216,7 @@
         _shopStatusView = [[UIView  alloc] initWithFrame:CGRectZero];
         _shopStatusView.userInteractionEnabled = YES;
         
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(myShopTap)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickmyShopTap)];
         [_shopStatusView addGestureRecognizer:tap];
         
         self.shopIconImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(0, (NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-24)/2, 24, 24)];
@@ -243,10 +259,12 @@
             if(self.applyModel.status < 4 || self.applyModel.status == 5){//1未实名 2未绑定提现方式 3未设置店名 4待审核 5审核失败 6审核通过
                 //没有申请店铺，或者店铺审核失败，申请店铺
                 [self refreshShopStatus];
+                self.infoView.noShop = YES;
             }else if (self.applyModel.status == 4) {//待审核
                 [self refreshShopStatus];
+                self.infoView.noShop = YES;
             }else if (self.applyModel.status == 6) {//审核通过
-        
+                self.infoView.noShop = NO;
                 [self getShopRequest];
             }
             
@@ -287,7 +305,7 @@
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/ByUser" Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if(success){
             self.shopModel = [NoticeMyShopModel mj_objectWithKeyValues:dict[@"data"]];
-            
+            self.infoView.shopModel = self.shopModel;
             [self refreshShopStatus];
         }
     } fail:^(NSError * _Nullable error) {
@@ -298,4 +316,10 @@
     
 }
 
+- (SXShopInfoTosatView *)infoView{
+    if (!_infoView) {
+        _infoView = [[SXShopInfoTosatView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    }
+    return _infoView;
+}
 @end

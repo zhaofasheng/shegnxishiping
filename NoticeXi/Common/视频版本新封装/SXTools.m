@@ -349,4 +349,23 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObjectForKey:[NSString stringWithFormat:@"callorderinfo%@",[NoticeTools getuserId]]];
 }
+
++ (BOOL)isFirstuseOnThisDeveice{
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+    if (![[NoticeSaveModel getUserInfo] user_id]) {
+        return NO;
+    }
+    if ([[cache objectForKey:[NSString stringWithFormat:@"firstin%@",[[NoticeSaveModel getUserInfo] user_id]]] isEqualToString:@"1"]) {
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
++ (void)setMarkFornofirst{
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+    [cache setObject:@"1" forKey:[NSString stringWithFormat:@"firstin%@",[[NoticeSaveModel getUserInfo] user_id]]];
+    [cache synchronize];
+}
+
 @end

@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *text1_jinbi;//文字鲸币
 @property (nonatomic, strong) NSString *text2;//语音聊天文案
 @property (nonatomic, strong) NSString *text2_jinbi;//语音聊天鲸币/分钟
-
+@property (nonatomic, strong) NSString *sex;//1男2女
 @property (nonatomic, strong) NSArray *label_list;
 @property (nonatomic, strong) NSMutableArray *labelArr;
 
