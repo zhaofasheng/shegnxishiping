@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isUser;//是否是买家
 @property (nonatomic, strong) UIImageView *intoImageView;
 @property (nonatomic, strong) UIView *backV;
+@property (nonatomic, strong) UIButton *chatTouseBtn;
 @end
 
 NS_ASSUME_NONNULL_END

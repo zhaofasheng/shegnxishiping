@@ -676,28 +676,6 @@
                 }
             }
             
-            //加载缓存数据
-//            if (self.isFirst) {
-//                NSMutableArray *localArr = [NoticeTools getChatArrarychatId:self.toUserId];
-//                if ([localArr count]) {
-//                    NoticeUserInfoModel *selfUser = [NoticeSaveModel getUserInfo];
-//                    for (NoticeChatSaveModel *chatM in localArr) {
-//                        NoticeChats *locaChat = [[NoticeChats alloc] init];
-//                        locaChat.from_user_id = selfUser.user_id;
-//                        locaChat.content_type = chatM.type;
-//                        locaChat.resource_url = chatM.type.intValue==1? chatM.voiceFilePath:chatM.imgUpPath;
-//                        locaChat.isSaveCace = YES;
-//                        locaChat.avatar_url = selfUser.avatar_url;
-//                        locaChat.resource_type = chatM.type;
-//                        locaChat.resource_len = chatM.voiceTimeLen;
-//                        locaChat.isText = chatM.type.intValue==2?@"1":@"0";
-//                        locaChat.saveId = chatM.saveId;
-//                        locaChat.text = chatM.text;
-//                        [self.localdataArr addObject:locaChat];
-//                    }
-//                }
-//            }
-
             [self.tableView reloadData];
             if (self.isDown && !self.isFirst) {
                 if (newArr.count) {
@@ -716,27 +694,7 @@
         }
     } fail:^(NSError *error) {
         if ([NoticeComTools pareseError:[NSError new]]) {
-//            if (self.isFirst) {
-//                self.isFirst = NO;
-//                NSMutableArray *localArr = [NoticeTools getChatArrarychatId:self.toUserId];
-//                if ([localArr count]) {
-//                    NoticeUserInfoModel *selfUser = [NoticeSaveModel getUserInfo];
-//                    for (NoticeChatSaveModel *chatM in localArr) {
-//                        NoticeChats *locaChat = [[NoticeChats alloc] init];
-//                        locaChat.from_user_id = selfUser.user_id;
-//                        locaChat.content_type = chatM.type;
-//                        locaChat.resource_url = chatM.type.intValue==1? chatM.voiceFilePath:chatM.imgUpPath;
-//                        locaChat.isSaveCace = YES;
-//                        locaChat.avatar_url = selfUser.avatar_url;
-//                        locaChat.resource_type = chatM.type;
-//                        locaChat.resource_len = chatM.voiceTimeLen;
-//                        locaChat.isText = chatM.type.intValue==2?@"1":@"0";
-//                        locaChat.saveId = chatM.saveId;
-//                        locaChat.text = chatM.text;
-//                        [self.localdataArr addObject:locaChat];
-//                    }
-//                }
-//            }
+
         }
 
         [self.tableView reloadData];

@@ -21,6 +21,7 @@
 @property (nonatomic, strong) LGAudioPlayer *audioPlayer;
 @property (nonatomic, strong) NoiticePlayerView *currentPlayer;
 @property (nonatomic, assign) BOOL needStop;
+@property (nonatomic, assign) BOOL needPushHowuse;
 @property (nonatomic, assign) BOOL noNeedStop;
 @property (nonatomic, assign) BOOL hasShowCallView;
 @property (nonatomic, assign) BOOL isInShopChat;

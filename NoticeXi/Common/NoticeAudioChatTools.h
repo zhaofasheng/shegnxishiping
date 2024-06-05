@@ -34,7 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getOrder;
 @property (nonatomic,assign) BOOL noReClick;//防止重复点击
 @property (nonatomic,assign) BOOL hasGet;
-- (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext;
+
+- (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext averageTime:(NSInteger)averageTime;
 @property (nonatomic, strong) NoticeCallView * __nullable callingView;
 @end
 

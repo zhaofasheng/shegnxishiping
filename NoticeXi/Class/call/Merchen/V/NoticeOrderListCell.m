@@ -11,6 +11,7 @@
 #import "NoticeOrderComDetailController.h"
 #import "NoticeJuBaoBoKeTosatView.h"
 #import "NoticdShopDetailForUserController.h"
+#import "SXShoperChatToUseController.h"
 @implementation NoticeOrderListCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -76,7 +77,7 @@
         
         self.comButton = [[UIButton alloc] initWithFrame:CGRectMake(backView.frame.size.width-10-80, 110, 80, 32)];
         self.comButton.titleLabel.font = TWOTEXTFONTSIZE;
-        [self.comButton setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
+        [self.comButton setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
         [self.comButton setTitle:@"暂无评价" forState:UIControlStateNormal];
         self.comButton.layer.cornerRadius = 16;
         self.comButton.layer.masksToBounds = YES;
@@ -84,8 +85,26 @@
         self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#A1A7B3"].CGColor;
         [backView addSubview:self.comButton];
         [self.comButton addTarget:self action:@selector(comClick) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.chatTouseBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.backV.frame.size.width-10-80, 110, 80, 32)];
+        self.chatTouseBtn.titleLabel.font = TWOTEXTFONTSIZE;
+        [self.chatTouseBtn setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
+        [self.chatTouseBtn setTitle:@"联系买家" forState:UIControlStateNormal];
+        self.chatTouseBtn.layer.cornerRadius = 16;
+        self.chatTouseBtn.layer.masksToBounds = YES;
+        self.chatTouseBtn.layer.borderWidth = 1;
+        self.chatTouseBtn.layer.borderColor = [UIColor colorWithHexString:@"#A1A7B3"].CGColor;
+        [backView addSubview:self.chatTouseBtn];
+        [self.chatTouseBtn addTarget:self action:@selector(chatClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
+}
+
+- (void)chatClick{
+    SXShoperChatToUseController *ctl = [[SXShoperChatToUseController alloc] init];
+    ctl.orderModel = self.orderM;
+    ctl.isFromOver = YES;
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)shopTap{
@@ -235,6 +254,7 @@
         self.userNameL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
     }
     
+    self.chatTouseBtn.hidden = YES;
     self.payL.hidden = YES;
     self.comButton.hidden = YES;
     self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#A1A7B3"].CGColor;
@@ -248,6 +268,9 @@
                 [self.comButton setTitle:@"申请售后" forState:UIControlStateNormal];
                 self.comButton.layer.borderWidth = 0;
                 self.comButton.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
+            }else{
+                self.chatTouseBtn.hidden = NO;
+                self.chatTouseBtn.frame = CGRectMake(self.backV.frame.size.width-10-80, 110, 80, 32);
             }
         }else{
             self.statusL.text = @"售后处理中";
@@ -259,6 +282,9 @@
                 self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#EE4B4E"].CGColor;
                 self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
                 self.comButton.userInteractionEnabled = NO;
+            }else{
+                self.chatTouseBtn.hidden = NO;
+                self.chatTouseBtn.frame = CGRectMake(self.backV.frame.size.width-10-80, 110, 80, 32);
             }
         }
     }else{
@@ -291,9 +317,9 @@
                 [self.comButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
                 [self.comButton setTitle:@"给个评价" forState:UIControlStateNormal];
                 self.comButton.layer.borderWidth = 0;
-                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
+                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
             }else if(orderM.is_comment.intValue == 1){
-                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
+                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
                 [self.comButton setTitle:@"查看评价" forState:UIControlStateNormal];
                 self.comButton.layer.borderWidth = 1;
                 self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
@@ -311,16 +337,20 @@
                 [self.comButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
                 [self.comButton setTitle:@"查看评价" forState:UIControlStateNormal];
                 self.comButton.layer.borderWidth = 0;
-                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#25262E"];
+                self.comButton.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
             }else{
-                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#25262E"] forState:UIControlStateNormal];
+                [self.comButton setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
                 [self.comButton setTitle:@"暂无评价" forState:UIControlStateNormal];
                 self.comButton.layer.borderWidth = 1;
                 self.comButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
             }
+            if (!self.comButton.hidden) {
+                self.chatTouseBtn.hidden = NO;
+                self.chatTouseBtn.frame = CGRectMake(self.backV.frame.size.width-10-80-10-80, 110, 80, 32);
+            }
         }
     }
-   
+ 
 
 }
 

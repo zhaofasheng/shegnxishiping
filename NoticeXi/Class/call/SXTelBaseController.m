@@ -17,7 +17,9 @@
 #import "SXsearchShopController.h"
 #import "SXShopInfoTosatView.h"
 #import "SXLeaderViewController.h"
+
 @interface SXTelBaseController ()
+
 @property (nonatomic, strong) SXShopInfoTosatView *infoView;
 @property (nonatomic, strong) NoticeTelController *freeVC;
 @property (nonatomic, strong) SXTeleListBaseController *payVC;
@@ -29,6 +31,7 @@
 @property (nonatomic, strong) NoticeCureentShopStatusModel *applyModel;//申请状态
 @property (nonatomic, strong) UIView *redCirView;
 @property (nonatomic, assign) BOOL needAutoShowSupply;
+
 @end
 
 @implementation SXTelBaseController
@@ -53,11 +56,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"REFRESHMYWALLECT" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"HASSUPPLYSHOPNOTICE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"outLoginClearDataNOTICATION" object:nil];
-
 
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     self.menuView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
@@ -99,13 +102,12 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    
 }
 
 
 - (void)viewDidAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 
@@ -120,9 +122,9 @@
         if ([SXTools isFirstuseOnThisDeveice]) {//执行引导页
             SXLeaderViewController *ctl = [[SXLeaderViewController alloc] init];
             [self.navigationController pushViewController:ctl animated:YES];
+            [SXTools setMarkFornofirst];
         }
     }
-    
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForMenuView:(WMMenuView *)menuView{

@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeByOfOrderModel : NSObject
-
+@property (nonatomic, strong) NSString *after_sales_status;
+@property (nonatomic, strong) NSString *after_sales_time;
 @property (nonatomic, strong) NSString *user_id;//买家id
 @property (nonatomic, strong) NSString *user_nick_name;
 @property (nonatomic, strong) NSString *sn;//订单号

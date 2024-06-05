@@ -360,8 +360,10 @@
     return self;
 }
 
-- (instancetype)initWithTitle:(NSString *)title name:(NSString *)name time:(NSString *)time creatTime:(NSInteger)creatTime autoNext:(BOOL)autonext{
+- (instancetype)initWithTitle:(NSString *)title name:(NSString *)name time:(NSString *)time creatTime:(NSInteger)creatTime autoNext:(BOOL)autonext avageTime:(NSInteger)avageTime{
     if (self == [super init]) {
+        
+  
         
         self.autoNext = autonext;
         self.frame = [UIScreen mainScreen].bounds;
@@ -379,11 +381,14 @@
         self.backImageView = [[UIImageView  alloc] initWithFrame:self.alertView.bounds];
         self.backImageView.userInteractionEnabled = YES;
         [self.alertView addSubview:self.backImageView];
-        self.backImageView.image = autonext?UIImageNamed(@""):UIImageNamed(@"");
+        self.backImageView.image = autonext?UIImageNamed(@"sx_getorder_auto_img"):UIImageNamed(@"sx_getorder_1_img");
         
         self.time = time.intValue ? time.intValue: 60;
-                
+        self.alltime = self.time;
+        self.avagetime = avageTime;
         self.name = name;
+        self.waittime = 0;
+        self.firstWaittime = self.avagetime;
 
         [self timeChange];
         
@@ -427,19 +432,49 @@
 
 - (void)timeChange{
     __weak typeof(self) weakSelf = self;
-    DRLog(@"倒计时%ld",self.time);
+   
+    self.firstWaittime = self.avagetime;
+  
+    if ((self.alltime - self.avagetime) > 0) {//总时间减去平均等待时间大于0，代表有至少第二阶段时间
+        self.secondWaittime = self.alltime-self.avagetime;
+        if (self.secondWaittime > 30) {//第二阶段时间大于30，代表有第三阶段时间
+            self.secondWaittime = 30;
+            self.thirdWaittime = self.alltime - self.secondWaittime - self.avagetime;
+        }else{
+            self.thirdWaittime = 0;
+        }
+    }else{//只有一个阶段时间
+        self.secondWaittime = 0;
+        self.thirdWaittime = 0;
+    }
     
+    self.waittime2 = self.secondWaittime;
+    self.waittime3 = self.thirdWaittime;
+   
     NSTimeInterval interval = 1.0;
     self.timerName = [NoticeTimerTools timerTask:^{
         
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf.time -= (NSInteger)interval;
         if(strongSelf.time > 0){
+            strongSelf.waittime += (NSInteger)interval;
             
             if (strongSelf.autoNext) {
-                strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"上家店铺不方便接听，已为您匹配新店铺，\n等待店主接单...%lds后订单失效",strongSelf.time]];
+                strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"已找到新店主，呼叫中\n预计等待%lds",strongSelf.time]];
             }else{
-                strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"正在全力呼叫店主中\n预计等待%lds",strongSelf.time]];
+                if (strongSelf.waittime <= strongSelf.avagetime) {//如果等待时间小于平均等待时间,展示第一个阶段时间
+                    strongSelf.firstWaittime -= (NSInteger)interval;
+                    strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"正在全力呼叫店主中\n平均等待%lds",strongSelf.firstWaittime]];
+                }else if ((strongSelf.waittime > strongSelf.avagetime) && (strongSelf.waittime <= (strongSelf.avagetime + strongSelf.waittime2))){//如果等待时间大于平均等待时间，并且小于平均等待时间和第二阶段等待时间之和，则为第二阶段等待时间
+                    strongSelf.secondWaittime -= (NSInteger)interval;
+                    strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"店主正在飞奔而来路上\n不然再等%lds",strongSelf.secondWaittime]];
+                    strongSelf.backImageView.image = UIImageNamed(@"sx_getorder_2_img");
+                }else{//展示最后等待时间
+                    strongSelf.thirdWaittime -= (NSInteger)interval;
+                    strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"店家尚未回应，那来都来了\n最后再等等%lds吧",strongSelf.thirdWaittime]];
+                    strongSelf.backImageView.image = UIImageNamed(@"sx_getorder_3_img");
+                }
+            
             }
         }else{
             [strongSelf outTimeCancel];

@@ -368,4 +368,22 @@
     [cache synchronize];
 }
 
++ (BOOL)isHowTouseOnThisDeveice{
+    
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+ 
+    if ([[cache objectForKey:@"howuse"] isEqualToString:@"1"]) {
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
++ (void)setKnowUse{
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+    [cache setObject:@"1" forKey:@"howuse"];
+    [cache synchronize];
+}
+
+
 @end

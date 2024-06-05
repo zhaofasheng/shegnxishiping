@@ -57,6 +57,9 @@ typedef void (^downSuccessBlock)(BOOL success);
 
 + (BOOL)isFirstuseOnThisDeveice;
 + (void)setMarkFornofirst;
+
++ (BOOL)isHowTouseOnThisDeveice;
++ (void)setKnowUse;
 @end
 
 NS_ASSUME_NONNULL_END

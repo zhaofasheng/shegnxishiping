@@ -93,8 +93,10 @@
     }else if (section == 2){
         if (tag == 0) {
             [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"commentRemind"];
-        }else{
+        }else if(tag == 1){
             [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"likeRemind"];
+        }else{
+            
         }
     }
     [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"users/%@/setting",[[NoticeSaveModel getUserInfo] user_id]] Accept:nil parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
@@ -131,14 +133,15 @@
             cell.mainL.text = @"评论消息";
             cell.switchButton.on = self.noticeM.comment_remind.boolValue;
         }else if (indexPath.row == 1){
-            [cell.backView setCornerOnBottom:8];
             cell.mainL.text = @"点赞消息";
             cell.switchButton.on = self.noticeM.like_remind.boolValue;
+        }else if (indexPath.row == 2){
+            [cell.backView setCornerOnBottom:8];
+            cell.mainL.text = @"店铺留言消息";
+            cell.switchButton.on = self.noticeM.like_remind.boolValue;
         }
-        
-//        cell.switchButton.on = self.noticeM.sys_remind.boolValue;
-//        cell.mainL.text = @"系统消息通知";
-    }    else if (indexPath.section == 3){
+    }
+    else if (indexPath.section == 3){
         [cell.backView setAllCorner:8];
         cell.switchButton.on = self.noticeM.series_remind.boolValue;
         cell.mainL.text = @"购买课程内容有更新";
@@ -152,7 +155,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 2) {
-        return 2;
+        return 3;
     }
    return  1;
 }

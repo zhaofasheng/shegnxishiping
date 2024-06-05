@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *sysL;
 @property (nonatomic, strong) UILabel *comL;
 @property (nonatomic, strong) UILabel *likeL;
+@property (nonatomic, strong) UILabel *liuyL;
 @end
 
 NS_ASSUME_NONNULL_END

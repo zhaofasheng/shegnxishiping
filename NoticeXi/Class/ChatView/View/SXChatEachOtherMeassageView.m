@@ -10,7 +10,9 @@
 #import "NoticeSysViewController.h"
 #import "SXVideoCommentMeassageController.h"
 #import "SXVideoCommentLikeController.h"
+#import "SXShopLyListController.h"
 #import "NoticeStaySys.h"
+
 @implementation SXChatEachOtherMeassageView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -18,11 +20,11 @@
     
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor whiteColor];
-        NSArray *imageName = @[@"sxmsgsys_img",@"sxvideo_com_img",@"sxvideo_like_img"];
-        NSArray *titleArr = @[@"系统消息",@"评论",@"点赞"];
-        CGFloat space = (DR_SCREEN_WIDTH-48*5)/2;
-        for (int i = 0; i < 3; i++) {
-            UIView *tapView = [[UIView  alloc] initWithFrame:CGRectMake(48+(48+space)*i, 20, 50, 48+8+17)];
+        NSArray *imageName = @[@"sxmsgsys_img",@"sxvideo_com_img",@"sxvideo_like_img",@"sx_shop_lytouse_img"];
+        NSArray *titleArr = @[@"系统消息",@"评论",@"点赞",@"店铺留言"];
+        CGFloat space = (DR_SCREEN_WIDTH-48*4)/5;
+        for (int i = 0; i < 4; i++) {
+            UIView *tapView = [[UIView  alloc] initWithFrame:CGRectMake(space+(48+space)*i, 20, 50, 48+8+17)];
             tapView.userInteractionEnabled = YES;
             tapView.tag = i;
             [self addSubview:tapView];
@@ -55,11 +57,12 @@
                 self.sysL = label1;
             }else if (i == 1){
                 self.comL = label1;
-            }else{
+            }else if(i == 2){
                 self.likeL = label1;
+            }else{
+                self.liuyL = label1;
             }
         }
-    
     }
     return self;
 }
@@ -134,6 +137,9 @@
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
     }else if (tapV.tag == 2){
         SXVideoCommentLikeController *ctl = [[SXVideoCommentLikeController alloc] init];
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }else if (tapV.tag == 3){
+        SXShopLyListController *ctl = [[SXShopLyListController alloc] init];
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
     }
 }

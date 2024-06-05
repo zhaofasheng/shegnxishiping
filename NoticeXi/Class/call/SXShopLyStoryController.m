@@ -7,7 +7,7 @@
 //
 
 #import "SXShopLyStoryController.h"
-
+#import "SXShopLyStoryCell.h"
 @interface SXShopLyStoryController ()
 
 @end
@@ -17,16 +17,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navBarView.titleL.text = @"留言记录";
+    
+    [self.tableView registerClass:[SXShopLyStoryCell class] forCellReuseIdentifier:@"cell"];
+    self.tableView.rowHeight = 117;
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    SXShopLyStoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    return cell;
 }
-*/
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 10;self.dataArr.count;
+}
 @end

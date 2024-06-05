@@ -374,6 +374,9 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 
 //微信支付相关
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options{
+    
+    DRLog(@"%@---%@---%@",url.scheme,url.host,url.query);
+    
     [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
         DRLog(@"result = %@",resultDic);
         // 解析 auth code
@@ -397,7 +400,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         [[AlipaySDK defaultService]
          processOrderWithPaymentResult:url
          standbyCallback:^(NSDictionary *resultDic) {
-             
              NSLog(@"AppDelegate result = %@", resultDic);
              //status: 9000 支付成功
              //        6001 取消支付

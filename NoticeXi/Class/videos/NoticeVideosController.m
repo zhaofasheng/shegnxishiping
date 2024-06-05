@@ -12,8 +12,8 @@
 #import "NoticeLoginViewController.h"
 #import "SXPlayFullListController.h"
 #import "SXPlayDetailController.h"
-
-
+#import "SXUserHowController.h"
+#import "SXHowToUseView.h"
 static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCell";
 
 @interface NoticeVideosController ()
@@ -66,6 +66,24 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     //谁在首页谁需要实现这个功能
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin) name:@"outLoginClearDataNOTICATION" object:nil];
     [self request];
+    
+    if ([SXTools isHowTouseOnThisDeveice]) {//执行引导页
+        SXHowToUseView *useView = [[SXHowToUseView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+        [useView showInfoView];
+        [SXTools setKnowUse];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if ([NoticeTools getuserId]) {
+        AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        if (appdel.needPushHowuse) {
+            SXUserHowController *ctl = [[SXUserHowController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+            appdel.needPushHowuse = NO;
+        }
+    }
 }
 
 - (void)searchClick{
@@ -75,8 +93,8 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         [self.navigationController pushViewController:ctl animated:YES];
         return;
     }
+    
     SXSearchVideoController *ctl = [[SXSearchVideoController alloc] init];
- 
     CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
                                                                     withSubType:kCATransitionFromLeft
                                                                        duration:0.3f

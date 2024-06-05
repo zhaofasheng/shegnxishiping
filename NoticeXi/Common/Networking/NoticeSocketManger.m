@@ -7,7 +7,7 @@
 //
 
 #import "NoticeSocketManger.h"
-
+#import "SXShoperChatToUseController.h"
 #import "DRNetWorking.h"
 #import "NoticeChats.h"
 #import "NoticeShopChatController.h"
@@ -16,7 +16,7 @@
 #import "BaseNavigationController.h"
 #import "NoticeTabbarController.h"
 #import "NoticeGoToComShopController.h"
-
+#import "NoticeOrderListModel.h"
 #define TYPECHAT @"singleChat"
 
 @implementation NoticeSocketManger
@@ -371,12 +371,46 @@
         [_callView dissMiseeShow];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
         if ([orderM.resultModel.shop_user_id isEqualToString:[NoticeTools getuserId]]) {//如果自己是店主
+            NoticeOrderListModel *orderModel = [[NoticeOrderListModel alloc] init];
+            orderModel.goods_img_url = orderM.resultModel.goods_img_url;
+            orderModel.orderId = orderM.resultModel.orderId;
+            orderModel.goods_name = orderM.resultModel.goods_name;
+            orderModel.sn = orderM.resultModel.sn;
+            orderModel.voice_duration = orderM.resultModel.second;
+            orderModel.after_sales_time = orderM.resultModel.after_sales_time;
+            orderModel.after_sales_status = orderM.resultModel.after_sales_status;
+            orderModel.order_type = @"6";
+            orderModel.shop_user_id = orderM.resultModel.shop_user_id;
+            orderModel.created_at = orderM.resultModel.created_at;
+            orderModel.duration = orderM.resultModel.duration;
+            orderModel.is_experience = orderM.resultModel.is_experience;
+            orderModel.unit_price = orderM.resultModel.price;
+            orderModel.income = orderM.resultModel.reality_jingbi;
+            orderModel.room_id = orderM.resultModel.room_id;
             if (orderM.resultModel.is_experience.boolValue && (orderM.resultModel.reality_jingbi.floatValue <= 0)) {
-                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话仅试聊%d分钟，收入0鲸币。",orderM.resultModel.experience_time.intValue/60] cancleBtn:@"知道了"];
-                [alerView showXLAlertView];
+           
+                XLAlertView *alerView1 = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话仅试聊%d分钟，收入0鲸币。",orderM.resultModel.experience_time.intValue/60]  sureBtn:@"我知道了" cancleBtn:@"联系买家" right:NO];
+                alerView1.resultIndex = ^(NSInteger index1) {
+                    if (index1 == 2) {
+                        SXShoperChatToUseController *ctl = [[SXShoperChatToUseController alloc] init];
+                        ctl.orderModel = orderModel;
+                        ctl.isFromOver = YES;
+                        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+                    }
+                };
+                [alerView1 showXLAlertView];
             }else{
-                XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话预计收款%.2f鲸币，实收款为扣除%.f%%声昔服务费后的费用",orderM.resultModel.reality_jingbi.floatValue,orderM.resultModel.ratio.floatValue*100] cancleBtn:@"知道了"];
-                [alerView showXLAlertView];
+                XLAlertView *alerView1 = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话预计收款%.2f鲸币，实收款为扣除%.f%%声昔服务费后的费用",orderM.resultModel.reality_jingbi.floatValue,orderM.resultModel.ratio.floatValue*100]  sureBtn:@"我知道了" cancleBtn:@"联系买家" right:NO];
+                alerView1.resultIndex = ^(NSInteger index1) {
+                    if (index1 == 2) {
+                        SXShoperChatToUseController *ctl = [[SXShoperChatToUseController alloc] init];
+                        ctl.orderModel = orderModel;
+                        ctl.isFromOver = YES;
+                        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+                    }
+                };
+                [alerView1 showXLAlertView];
+            
             }
             
         }else{//如果自己是买家

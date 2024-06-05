@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeStayCell : BaseCell
 @property (nonatomic, strong) UIImageView *iconImageView;
-@property (nonatomic, strong) UIImageView *iconMarkView;
+
 @property (nonatomic, strong) UIImageView *markImage;
 @property (nonatomic, strong) UILabel *timeL;
 @property (nonatomic, strong) UILabel *nickNameL;
@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isSys;
 @property (nonatomic, assign) BOOL needTm;
 @property (nonatomic, strong) UIView *mbView;
-
+@property (nonatomic, strong) UIImageView *iconMarkView;
 @property (nonatomic, strong) NoticeManagerGroupReplyModel *groupModel;
 @property (nonatomic, strong) NoticeStaySys *tuyaModel;
 @property (nonatomic, strong) UIImageView *subImageV;

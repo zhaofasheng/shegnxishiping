@@ -1470,6 +1470,12 @@
 		FE96C49C2C0EFD51005AB5FE /* SXShopLikelistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C49B2C0EFD51005AB5FE /* SXShopLikelistCell.m */; };
 		FE96C49F2C0F10F7005AB5FE /* SXLeaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C49E2C0F10F7005AB5FE /* SXLeaderViewController.m */; };
 		FE96C4A22C0F1C14005AB5FE /* SXUserHowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4A12C0F1C14005AB5FE /* SXUserHowController.m */; };
+		FE96C4A52C0FF5A8005AB5FE /* SXHowToUseView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4A42C0FF5A8005AB5FE /* SXHowToUseView.m */; };
+		FE96C4A82C103EF4005AB5FE /* SXShoperChatToUseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4A72C103EF4005AB5FE /* SXShoperChatToUseController.m */; };
+		FE96C4AB2C104686005AB5FE /* SXShopChatTouserHeadere.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4AA2C104686005AB5FE /* SXShopChatTouserHeadere.m */; };
+		FE96C4AE2C1050D1005AB5FE /* SXShopLyStoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4AD2C1050D1005AB5FE /* SXShopLyStoryCell.m */; };
+		FE96C4B12C10548A005AB5FE /* SXShopLyListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B02C10548A005AB5FE /* SXShopLyListController.m */; };
+		FE96C4B42C1054CB005AB5FE /* SXShopsliuyanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B32C1054CB005AB5FE /* SXShopsliuyanCell.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -4358,6 +4364,18 @@
 		FE96C49E2C0F10F7005AB5FE /* SXLeaderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXLeaderViewController.m; sourceTree = "<group>"; };
 		FE96C4A02C0F1C14005AB5FE /* SXUserHowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXUserHowController.h; sourceTree = "<group>"; };
 		FE96C4A12C0F1C14005AB5FE /* SXUserHowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXUserHowController.m; sourceTree = "<group>"; };
+		FE96C4A32C0FF5A8005AB5FE /* SXHowToUseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHowToUseView.h; sourceTree = "<group>"; };
+		FE96C4A42C0FF5A8005AB5FE /* SXHowToUseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHowToUseView.m; sourceTree = "<group>"; };
+		FE96C4A62C103EF4005AB5FE /* SXShoperChatToUseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShoperChatToUseController.h; sourceTree = "<group>"; };
+		FE96C4A72C103EF4005AB5FE /* SXShoperChatToUseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShoperChatToUseController.m; sourceTree = "<group>"; };
+		FE96C4A92C104686005AB5FE /* SXShopChatTouserHeadere.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopChatTouserHeadere.h; sourceTree = "<group>"; };
+		FE96C4AA2C104686005AB5FE /* SXShopChatTouserHeadere.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopChatTouserHeadere.m; sourceTree = "<group>"; };
+		FE96C4AC2C1050D1005AB5FE /* SXShopLyStoryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopLyStoryCell.h; sourceTree = "<group>"; };
+		FE96C4AD2C1050D1005AB5FE /* SXShopLyStoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopLyStoryCell.m; sourceTree = "<group>"; };
+		FE96C4AF2C10548A005AB5FE /* SXShopLyListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopLyListController.h; sourceTree = "<group>"; };
+		FE96C4B02C10548A005AB5FE /* SXShopLyListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopLyListController.m; sourceTree = "<group>"; };
+		FE96C4B22C1054CB005AB5FE /* SXShopsliuyanCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopsliuyanCell.h; sourceTree = "<group>"; };
+		FE96C4B32C1054CB005AB5FE /* SXShopsliuyanCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopsliuyanCell.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -9064,6 +9082,8 @@
 				FE41C3BF2BD0EB8B00BAD263 /* SXVideoLikeComCell.m */,
 				FE41C3C12BD0FFE500BAD263 /* SXVideoBeReplyComCell.h */,
 				FE41C3C22BD0FFE500BAD263 /* SXVideoBeReplyComCell.m */,
+				FE96C4A32C0FF5A8005AB5FE /* SXHowToUseView.h */,
+				FE96C4A42C0FF5A8005AB5FE /* SXHowToUseView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9086,6 +9106,12 @@
 			children = (
 				FE9C40972B9AE11F008C3A22 /* SXShopCheckTypeCell.h */,
 				FE9C40982B9AE11F008C3A22 /* SXShopCheckTypeCell.m */,
+				FE96C4AC2C1050D1005AB5FE /* SXShopLyStoryCell.h */,
+				FE96C4AD2C1050D1005AB5FE /* SXShopLyStoryCell.m */,
+				FE96C4B22C1054CB005AB5FE /* SXShopsliuyanCell.h */,
+				FE96C4B32C1054CB005AB5FE /* SXShopsliuyanCell.m */,
+				FE96C4A92C104686005AB5FE /* SXShopChatTouserHeadere.h */,
+				FE96C4AA2C104686005AB5FE /* SXShopChatTouserHeadere.m */,
 				FE96C49A2C0EFD51005AB5FE /* SXShopLikelistCell.h */,
 				FE96C49B2C0EFD51005AB5FE /* SXShopLikelistCell.m */,
 				FE96C4912C0EE4B8005AB5FE /* SXShopInfoTosatView.h */,
@@ -9309,6 +9335,10 @@
 				FE96C4952C0EF993005AB5FE /* SXLikeShopListController.m */,
 				FE96C4972C0EFA44005AB5FE /* SXShopLyStoryController.h */,
 				FE96C4982C0EFA44005AB5FE /* SXShopLyStoryController.m */,
+				FE96C4A62C103EF4005AB5FE /* SXShoperChatToUseController.h */,
+				FE96C4A72C103EF4005AB5FE /* SXShoperChatToUseController.m */,
+				FE96C4AF2C10548A005AB5FE /* SXShopLyListController.h */,
+				FE96C4B02C10548A005AB5FE /* SXShopLyListController.m */,
 				FE6CF96C2B872532005EE663 /* view */,
 				A4E962AB2A69141E00AE022E /* Merchen */,
 				FEBCADD32B83615F0048F5A1 /* NoticeShopGetOrderTostView.h */,
@@ -9832,6 +9862,7 @@
 				A4E9661D2A69142300AE022E /* NoticeBoKeCell.m in Sources */,
 				A4E966D62A69142400AE022E /* NoticeAllTieTieController.m in Sources */,
 				A4E9669F2A69142300AE022E /* NoticeClockDayChoice.m in Sources */,
+				FE96C4A82C103EF4005AB5FE /* SXShoperChatToUseController.m in Sources */,
 				A4E968B72A69142600AE022E /* NoticeAddSellMerchantController.m in Sources */,
 				A4E9692A2A69142700AE022E /* NoticeCustumButton.m in Sources */,
 				A4E965192A69142200AE022E /* NSString+NCDate.m in Sources */,
@@ -10320,6 +10351,7 @@
 				A4E967E32A69142500AE022E /* NoticeCacheManagerController.m in Sources */,
 				A4E9648C2A69142100AE022E /* UIViewController+ToastAndHUD.m in Sources */,
 				FE44F2012BB29FAB004ECF11 /* GlobeConst.m in Sources */,
+				FE96C4A52C0FF5A8005AB5FE /* SXHowToUseView.m in Sources */,
 				A4E966952A69142300AE022E /* ZFSIsMute.m in Sources */,
 				A4E965CA2A69142200AE022E /* CustomBtn.m in Sources */,
 				A4E964C42A69142100AE022E /* RateTransposer.cpp in Sources */,
@@ -10410,6 +10442,7 @@
 				A4E968A12A69142600AE022E /* NoticeTeamMemberListController.m in Sources */,
 				A4E966CF2A69142300AE022E /* NoticeCollectionVoiceController.m in Sources */,
 				A4E968C82A69142600AE022E /* NoticePayReodModel.m in Sources */,
+				FE96C4B12C10548A005AB5FE /* SXShopLyListController.m in Sources */,
 				FE9C3FB42B907B52008C3A22 /* SXGoPayView.m in Sources */,
 				A4E966552A69142300AE022E /* NoticeHotMovieCell.m in Sources */,
 				A4E967702A69142400AE022E /* NoticeSendSysMessageManagerController.m in Sources */,
@@ -10436,6 +10469,7 @@
 				A4E9695D2A69142700AE022E /* NoticeLookPhotoRecCell.m in Sources */,
 				A4E965562A69142200AE022E /* NoticeCallVoiceModel.m in Sources */,
 				A46F54062AA7056800A22D48 /* NoticeVipUpRuleController.m in Sources */,
+				FE96C4AB2C104686005AB5FE /* SXShopChatTouserHeadere.m in Sources */,
 				A4E967BF2A69142500AE022E /* NoticeDepartureCell.m in Sources */,
 				A4E964B32A69142100AE022E /* YYPhotoGroupView.m in Sources */,
 				A4E9660B2A69142300AE022E /* NoticeSendBoKeController.m in Sources */,
@@ -10994,6 +11028,7 @@
 				A4E966492A69142300AE022E /* NoticeMovieDetailViewController.m in Sources */,
 				FE48C1532B4B9F940069D1A6 /* NoticeShopCardController.m in Sources */,
 				A4E968D12A69142600AE022E /* NoticeComLabelModel.m in Sources */,
+				FE96C4AE2C1050D1005AB5FE /* SXShopLyStoryCell.m in Sources */,
 				A4E966972A69142300AE022E /* NoticeClockBdModel.m in Sources */,
 				A4E967E62A69142500AE022E /* NoticeChatStyleSetController.m in Sources */,
 				FEE562F12B8CA1FD0004CC11 /* NSBundle+TZImagePicker.m in Sources */,
@@ -11023,6 +11058,7 @@
 				A4E9652F2A69142200AE022E /* JHShimmer.m in Sources */,
 				A4E965082A69142200AE022E /* JXCategoryListContainerView.m in Sources */,
 				A4E967AA2A69142500AE022E /* NoticeNewTestRegController.m in Sources */,
+				FE96C4B42C1054CB005AB5FE /* SXShopsliuyanCell.m in Sources */,
 				A4E966102A69142300AE022E /* NoticePointView.m in Sources */,
 				FEB61BFD2B4D18B900B128FA /* NoticeShopPhotosWall.m in Sources */,
 				A4E969A22A69142800AE022E /* AppDelegate.m in Sources */,
