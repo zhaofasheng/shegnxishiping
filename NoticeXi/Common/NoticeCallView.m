@@ -301,8 +301,6 @@
         [self.mirButton setTitle:@"扩音" forState:UIControlStateNormal];
         [[NERtcEngine sharedEngine] setLoudspeakerMode:false];
     }
-    
-    
 }
 
 //是否关麦
@@ -368,6 +366,8 @@
      //   self.endButton.hidden = YES;
     }
     [self creatShowAnimation];
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{
@@ -397,7 +397,7 @@
 }
 
 - (void)dissMiseeShow{
-
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [NoticeTimerTools deleteTimer:self.timerName];
     self.timerName = nil;
     [self removeFromSuperview];
@@ -432,7 +432,6 @@
                 }
                 if(((weakSelf.chatInfoModel.goods_duration.intValue*60) - strongSelf.totalTime) <= 1){
                     [weakSelf hanUp];
-
                     [weakSelf dissMiseeShow];
                 }
             }

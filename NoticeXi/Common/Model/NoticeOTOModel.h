@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *app_content;
 @property (nonatomic, strong) NSString *forced_update;
 @property (nonatomic, strong) NSString *stop_at;
-
+@property (nonatomic, strong) NSString *shopId;
 @property (nonatomic, strong) NSDictionary *matchInfo;
 @end
 

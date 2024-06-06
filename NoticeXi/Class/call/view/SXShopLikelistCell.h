@@ -21,6 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *markImageView;
 @property (nonatomic, strong) UITableView *movieTableView;
 @property (nonatomic, strong) UIImageView *sexImageView;
+
+@property (nonatomic, strong) UILabel *serverL;
+@property (nonatomic, strong) UILabel *goodsNumL;
+@property (nonatomic, strong) UILabel *comNumL;
 @end
 
 NS_ASSUME_NONNULL_END

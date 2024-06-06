@@ -57,8 +57,8 @@
     
     NSString *url = @"";
     
-    url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%ld&categoryId=%@",@"2",self.pageNo,@"0"];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    url = [NSString stringWithFormat:@"shopCollection?pageNo=%ld",self.pageNo];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         if (success) {
@@ -70,23 +70,31 @@
                 self.isDown = NO;
             }
          
-            
             for (NSDictionary *dic in dict[@"data"]) {
                 NoticeMyShopModel *shopM = [NoticeMyShopModel mj_objectWithKeyValues:dic];
+                if (GET_STRWIDTH(shopM.tale, 15, 20) > (DR_SCREEN_WIDTH-30-97-15)) {
+                    shopM.taleLikeHeight = 42;
+                }else{
+                    shopM.taleLikeHeight = 20;
+                }
+                if (shopM.is_stop.intValue > 1) {
+                    shopM.operate_status = @"1";
+                }
                 [self.dataArr addObject:shopM];
             }
+            
             if (self.dataArr.count) {
                 self.tableView.tableFooterView = nil;
             }else{
                 self.tableView.tableFooterView = self.defaultL;
             }
+            
             [self.tableView reloadData];
         }
     } fail:^(NSError *error) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     }];
-    
 }
 
 
@@ -95,7 +103,21 @@
     __weak typeof(self) weakSelf = self;
     NoticeMyShopModel *shopM= self.dataArr[indexPath.row];
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"取消收藏" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+   
         
+        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+        [parm setObject:shopM.shopId forKey:@"shopId"];
+        [parm setObject:@"2" forKey:@"type"];
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopCollection/collect" Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        } fail:^(NSError * _Nullable error) {
+         
+        }];
+        
+        [weakSelf.dataArr removeObject:shopM];
+        [weakSelf.tableView reloadData];
+        if (!weakSelf.dataArr.count) {
+            weakSelf.tableView.tableFooterView = weakSelf.defaultL;
+        }
     }];
     deleteAction.backgroundColor = [UIColor colorWithHexString:@"#EBB817"];
     
@@ -105,7 +127,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 185+8;
+    NoticeMyShopModel *shopM = self.dataArr[indexPath.row];
+    return  (shopM.operate_status.intValue == 1 ? 83 : 145)+shopM.taleLikeHeight+8;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -120,11 +143,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NoticeMyShopModel *shopM = self.dataArr[indexPath.row];
+    if (shopM.is_stop.intValue == 1) {
+        [self showToastWithText:@"店铺已不存在"];
+        return;
+    }
+    
     NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
-    ctl.shopModel = self.dataArr[indexPath.row];
-
+    ctl.shopModel = shopM;
     ctl.currentPlayIndex = indexPath.row;
-
     [self.navigationController pushViewController:ctl animated:YES];
 }
 

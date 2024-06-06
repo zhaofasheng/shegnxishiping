@@ -59,24 +59,31 @@
         UITapGestureRecognizer *checkTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkShopTap)];
         [self.checkL addGestureRecognizer:checkTap];
         
-        self.goodsNumL = [[UILabel  alloc] initWithFrame:CGRectMake(20,CGRectGetMaxY(self.iconImageView.frame)+20, GET_STRWIDTH(@"咨询服务 2", 12, 19)+30, 19)];
+        CGFloat width = (DR_SCREEN_WIDTH-25)/4;
+        
+        self.goodsNumL = [[UILabel  alloc] initWithFrame:CGRectMake(20,CGRectGetMaxY(self.iconImageView.frame)+20, width, 19)];
         self.goodsNumL.font = TWOTEXTFONTSIZE;
         self.goodsNumL.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
         self.goodsNumL.text = @"咨询服务 0";
         [self addSubview:self.goodsNumL];
         
-        self.searvNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.goodsNumL.frame), CGRectGetMaxY(self.iconImageView.frame)+20, GET_STRWIDTH(@"被咨询 999", 12, 19)+47, 19)];
+        self.searvNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.goodsNumL.frame), CGRectGetMaxY(self.iconImageView.frame)+20, width, 19)];
         self.searvNumL.font = TWOTEXTFONTSIZE;
         self.searvNumL.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self addSubview:self.searvNumL];
         self.searvNumL.userInteractionEnabled = YES;
         
-        self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.searvNumL.frame), CGRectGetMaxY(self.iconImageView.frame)+20, GET_STRWIDTH(@"评价 9999", 12, 19)+10, 19)];
+        self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.searvNumL.frame), CGRectGetMaxY(self.iconImageView.frame)+20, width, 19)];
         self.comNumL.font = TWOTEXTFONTSIZE;
         self.comNumL.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
         [self addSubview:self.comNumL];
         self.comNumL.userInteractionEnabled = YES;
         
+        self.likeNumL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.comNumL.frame), CGRectGetMaxY(self.iconImageView.frame)+20, width, 19)];
+        self.likeNumL.font = TWOTEXTFONTSIZE;
+        self.likeNumL.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        [self addSubview:self.likeNumL];
+        self.likeNumL.userInteractionEnabled = YES;
     }
     return self;
 }
@@ -128,6 +135,11 @@
     NSString *str4 = @"评价 ";
     NSString *allStr1 = [NSString stringWithFormat:@"%@%@",str4,str3];
     self.comNumL.attributedText = [DDHAttributedMode setSizeAndColorString:allStr1 setColor:[UIColor colorWithHexString:@"#FFFFFF"] setSize:16 setLengthString:str3 beginSize:allStr1.length-str3.length];
+    
+    NSString *str5 = shopModel.myShopM.collection_num.intValue?shopModel.myShopM.collection_num:@"0";
+    NSString *str6 = @"被收藏 ";
+    NSString *allStr5 = [NSString stringWithFormat:@"%@%@",str6,str5];
+    self.likeNumL.attributedText = [DDHAttributedMode setSizeAndColorString:allStr5 setColor:[UIColor colorWithHexString:@"#FFFFFF"] setSize:16 setLengthString:str5 beginSize:allStr5.length-str5.length];
 }
 
 - (void)setGoodsNum:(NSInteger)goodsNum{

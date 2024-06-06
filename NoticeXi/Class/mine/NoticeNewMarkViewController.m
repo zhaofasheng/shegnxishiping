@@ -83,13 +83,10 @@
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     if (section == 0) {
         [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"chatPriRemind"];
-
     }else if (section == 1){
         [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"sysRemind"];
- 
     }else if (section == 3){
         [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"seriesRemind"];
- 
     }else if (section == 2){
         if (tag == 0) {
             [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"commentRemind"];

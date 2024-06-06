@@ -192,7 +192,9 @@
 - (void)shareClick{
     NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
     moreView.isShare = YES;
+    moreView.shareUrl = self.shopModel.myShopM.shopShareUrl;
     moreView.name = @"快来声昔找我聊聊吧";
+    moreView.imgUrl = self.shopModel.myShopM.shop_avatar_url;
     moreView.title = [NSString stringWithFormat:@"%@的咨询主页",self.shopModel.myShopM.shop_name];
     [moreView showTost];
 }

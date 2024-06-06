@@ -80,6 +80,21 @@
         self.sexImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.nickNameL.frame)+2, self.nickNameL.frame.origin.y+1, 20, 20)];
         self.sexImageView.image = UIImageNamed(@"sx_shop_male");//sx_shop_fale女
         [self.backView addSubview:self.sexImageView];
+        
+        CGFloat width = (self.backView.frame.size.width-97)/3;
+        for (int i = 0; i < 3; i++) {
+            UILabel *label = [[UILabel  alloc] initWithFrame:CGRectMake(97+width*i, 46, width, 17)];
+            label.font = TWOTEXTFONTSIZE;
+            label.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
+            [self.backView addSubview:label];
+            if (i == 0) {
+                self.goodsNumL = label;
+            }else if (i == 1){
+                self.serverL = label;
+            }else{
+                self.comNumL = label;
+            }
+        }
     }
     return self;
 }
@@ -89,6 +104,9 @@
     _shopM = shopM;
     
     self.nickNameL.text = shopM.shop_name;
+    
+    self.movieTableView.hidden = shopM.operate_status.intValue == 1?YES:NO;
+    self.callView.hidden = self.movieTableView.hidden;
     
     self.nickNameL.frame = CGRectMake(97, 15, GET_STRWIDTH(self.nickNameL.text, 16, 16), 22);
     
@@ -105,20 +123,45 @@
     
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:shopM.shop_avatar_url] placeholderImage:UIImageNamed(@"sxshopdefaulticon_img")];
     
-    self.callView.hidden = NO;
-    NSString *allStr = [NSString stringWithFormat:@"%@鲸币起",shopM.min_price];
-    NSString *money = shopM.min_price;
-    self.moneyL.attributedText = [DDHAttributedMode setString:allStr setSize:12 setLengthString:@"鲸币起" beginSize:money.length];
+    if (!self.callView.hidden) {
+        NSString *allStr = [NSString stringWithFormat:@"%@鲸币起",shopM.min_price];
+        NSString *money = shopM.min_price;
+        self.moneyL.attributedText = [DDHAttributedMode setString:allStr setSize:12 setLengthString:@"鲸币起" beginSize:money.length];
+    }
+
     
     if (shopM.tale) {
         self.contentL.text = shopM.tale;
     }else{
         self.contentL.text = @"";
     }
-    if (self.shopM.categoryNameArr.count) {
+    self.contentL.frame = CGRectMake(97,shopM.operate_status.intValue == 1 ? 73 : 101, self.backView.frame.size.width-97-15, shopM.taleLikeHeight);
+    
+    if (self.shopM.categoryNameArr.count && !self.movieTableView.hidden) {
         [self.movieTableView reloadData];
     }
 
+    self.goodsNumL.hidden = self.movieTableView.hidden;
+    if (self.goodsNumL.hidden) {
+        self.serverL.frame = CGRectMake(97, 46, self.serverL.frame.size.width, 20);
+        self.comNumL.frame = CGRectMake(CGRectGetMaxX(self.serverL.frame), 46, self.serverL.frame.size.width, 20);
+    }else{
+        self.goodsNumL.frame = CGRectMake(97, 46, self.serverL.frame.size.width, 20);
+        self.serverL.frame = CGRectMake(CGRectGetMaxX(self.goodsNumL.frame), 46, self.serverL.frame.size.width, 20);
+        self.comNumL.frame = CGRectMake(CGRectGetMaxX(self.serverL.frame), 46, self.serverL.frame.size.width, 20);
+    }
+    
+    NSString *goodsNum = [NSString stringWithFormat:@"咨询服务 %@",shopM.goods_num];
+    self.goodsNumL.attributedText = [DDHAttributedMode setSizeAndColorString:goodsNum setColor:[UIColor colorWithHexString:@"#8A8F99"] setSize:14 setLengthString:shopM.goods_num beginSize:5];
+    
+    NSString *seversNum = [NSString stringWithFormat:@"被咨询 %@",shopM.order_num];
+    self.serverL.attributedText = [DDHAttributedMode setSizeAndColorString:seversNum setColor:[UIColor colorWithHexString:@"#8A8F99"] setSize:14 setLengthString:shopM.order_num beginSize:4];
+    
+    NSString *comNum = [NSString stringWithFormat:@"评价 %@",shopM.comment_num];
+    self.comNumL.attributedText = [DDHAttributedMode setSizeAndColorString:comNum setColor:[UIColor colorWithHexString:@"#8A8F99"] setSize:14 setLengthString:shopM.comment_num beginSize:3];
+    
+    self.backView.frame = CGRectMake(15, 0, DR_SCREEN_WIDTH-30, (shopM.operate_status.intValue == 1 ? 83 : 145)+shopM.taleLikeHeight);
+    self.callView.frame = CGRectMake(self.backView.frame.size.width-100, self.backView.frame.size.height-32, 100, 32);
 }
 
 

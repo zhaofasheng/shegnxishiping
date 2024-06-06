@@ -53,7 +53,7 @@
     CGRect frame = self.frame;
     self.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
     
-    frame.size = CGSizeMake(size.width + 20, size.height + 10);
+    frame.size = CGSizeMake((NSInteger)size.width + 20, 32);
     
     self.frame = frame;
     [self setAllCorner:self.frame.size.height/2];

@@ -262,6 +262,7 @@
         };
         cell.sexBlock = ^(BOOL boy) {
             weakSelf.isBoy = boy;
+            [weakSelf setSext];
         };
         cell.shopModel = self.shopModel;
         return cell;
@@ -303,6 +304,22 @@
         };
         return cell;
     }
+}
+
+- (void)setSext{
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.isBoy?@"1":@"2" forKey:@"sex"];
+    [[NoticeTools getTopViewController] showHUD];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/%@",self.shopModel.myShopM.shopId] Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success1) {
+        [[NoticeTools getTopViewController] hideHUD];
+
+        if (success1) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
+        }
+    } fail:^(NSError * _Nullable error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
 }
 
 - (void)ptl_TagListView:(KMTagListView*)tagListView didSelectTagViewAtIndex:(NSInteger)index selectContent:(NSString *)content{

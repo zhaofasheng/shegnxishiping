@@ -19,7 +19,7 @@
 #import "NoticeJieYouShopHeaderView.h"
 
 
-@interface NoticdShopDetailForUserController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
+@interface NoticdShopDetailForUserController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate,NoticeReceveMessageSendMessageDelegate>
 @property (nonatomic, strong) NoticeMyShopModel *timeModel;
 @property (nonatomic, strong) NoticeMyShopModel *shopDetailM;
 @property (nonatomic, strong) NoticeGoodsModel *choiceGoods;
@@ -128,7 +128,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(overFinish) name:@"SHOPHASJUBAOED" object:nil];//举报结束
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(overFinish) name:@"SHOPFINISHED" object:nil];//买家结束
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequest) name:@"REFRESHMYWALLECT" object:nil];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequest) name:@"REFRESHSHOPDETAIL" object:nil];
     UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT,50, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
     [backBtn setImage:UIImageNamed(@"backwhtiess") forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
@@ -140,7 +141,7 @@
     [self.view addSubview:shareBtn];
     
     self.likeBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-32-20-32, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2,32, 32)];
-    [self.likeBtn setImage:UIImageNamed(@"sx_likeshop_img") forState:UIControlStateNormal];
+    [self.likeBtn setImage:UIImageNamed(@"sx_likeshop_img") forState:UIControlStateNormal];//sx_likeshopn_img
     [self.likeBtn addTarget:self action:@selector(likeClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.likeBtn];
     
@@ -173,7 +174,16 @@
     self.workButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
     [self.startView addSubview:self.workButton];
     [self.workButton addTarget:self action:@selector(startClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdel.socketManager.shopOrderDelegate = self;
 
+}
+
+- (void)didReceiveShopOrderStatus:(NSString *)shopId{
+    if ([shopId isEqualToString:self.shopModel.shopId]) {
+        [self getShopRequest];
+    }
 }
 
 - (UIView *)noWorkingView{
@@ -194,23 +204,54 @@
 
 //分享店铺
 - (void)shareClick{
-    if (!self.shopModel) {
+    if (!self.shopDetailM) {
         return;
     }
     
     NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
     moreView.isShare = YES;
+    moreView.imgUrl = self.shopModel.shop_avatar_url;
+    moreView.shareUrl = self.shopModel.shopShareUrl;
     moreView.image = self.cardVC.headerView.iconImageView.image;
     moreView.name = @"快来声昔找我聊聊吧";
     moreView.title = [NSString stringWithFormat:@"%@的咨询主页",self.shopModel.shop_name];
     [moreView showTost];
-    
 
 }
 
 //收藏店铺
 - (void)likeClick{
-    
+    if (!self.shopDetailM) {
+        return;
+    }
+    if ([self.shopModel.user_id isEqualToString:[NoticeTools getuserId]]) {
+        [self showToastWithText:@"不能收藏自己的店铺哦~"];
+        return;
+    }
+    [self showHUD];
+    self.shopModel.is_collection = self.shopModel.is_collection.boolValue?@"0":@"1";
+    [self.likeBtn setImage:self.shopModel.is_collection.boolValue?UIImageNamed(@"sx_likeshopn_img"): UIImageNamed(@"sx_likeshop_img") forState:UIControlStateNormal];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.shopModel.shopId forKey:@"shopId"];
+    [parm setObject:self.shopModel.is_collection.boolValue?@"1":@"2" forKey:@"type"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopCollection/collect" Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            if (self.shopModel.is_collection.boolValue) {
+                [self showToastWithText:@"收藏成功"];
+            }
+        }
+        [self hideHUD];
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
+}
+
+- (void)dealloc{
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"leaveShopInfo/%@",self.shopModel.shopId] Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+       
+    } fail:^(NSError * _Nullable error) {
+     
+    }];
 }
 
 - (void)backClick{
@@ -258,7 +299,7 @@
             self.shopHeaderView.shopModel = self.shopDetailM;
             self.shopHeaderView.labelArr = self.shopDetailM.labelArr;
             self.cardVC.shopModel = self.shopDetailM;
-            
+            [self.likeBtn setImage:self.shopModel.is_collection.boolValue?UIImageNamed(@"sx_likeshopn_img"): UIImageNamed(@"sx_likeshop_img") forState:UIControlStateNormal];
             if (self.shopModel.operate_status.intValue > 1) {
                 _noWorkingView.hidden = YES;
                 self.startView.hidden = NO;

@@ -32,7 +32,6 @@
         self.playerFatherView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT)];
         [self.contentView addSubview:self.playerFatherView];
       
-   
     }
     return self;
 }

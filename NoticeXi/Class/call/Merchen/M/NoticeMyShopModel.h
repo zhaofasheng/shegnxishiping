@@ -58,9 +58,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *text2;//语音聊天文案
 @property (nonatomic, strong) NSString *text2_jinbi;//语音聊天鲸币/分钟
 @property (nonatomic, strong) NSString *sex;//1男2女
+@property (nonatomic, strong) NSString *is_collection;//1收藏0无
+@property (nonatomic, strong) NSString *shopShareUrl;//店铺分享链接
+@property (nonatomic, strong) NSString *surplusTime;//服务所剩秒数
 @property (nonatomic, strong) NSArray *label_list;
 @property (nonatomic, strong) NSMutableArray *labelArr;
-
+@property (nonatomic, assign) CGFloat taleLikeHeight;
 @property (nonatomic, strong) NSString *tale;//我的故事
 @property (nonatomic, assign) CGFloat taleHeight;//故事文案高度
 @property (nonatomic, strong) NSMutableAttributedString *taleAtstr;
@@ -70,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *tagsArr;//标签数组
 @property (nonatomic, strong) NSMutableArray *tagsTextArr;//标签数组
 @property (nonatomic, strong) NSString *tagString;//所有标签整合在一起的文案
-
+@property (nonatomic, strong) NSString *collection_num;//店铺被收藏数量
 @property (nonatomic, strong) NSString *is_certified;//是否认证通过 1是0否
 @property (nonatomic, strong) NSString *is_submit_authentication;//是否提交过认证审核 1是0否
 @property (nonatomic, strong) NSDictionary *authentication_info;//认证信息
@@ -83,6 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *category_list;
 @property (nonatomic, strong) NSMutableArray *categoryNameArr;
 
+@property (nonatomic, strong) NSString *goods_num;//商品数量
 @end
 
 NS_ASSUME_NONNULL_END

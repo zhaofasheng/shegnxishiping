@@ -8,10 +8,12 @@
 
 #import "NoticerUserShopDetailHeaderView.h"
 #import "NoticeJieYouGoodsComController.h"
+#import "NoticeTimerTools.h"
 @implementation NoticerUserShopDetailHeaderView
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
+        
         self.userInteractionEnabled = YES;
         self.backgroundColor = [UIColor whiteColor];
         
@@ -227,22 +229,17 @@
             
             self.tagsL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, tagHeight);
             self.tagsL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tagString];
-            
             self.lineView.hidden = YES;
             
         }else if (shopModel.tale && shopModel.tale.length){
             CGFloat taleHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tale isJiacu:NO];
-            
             self.contentView.hidden = NO;
             self.contentView.frame = CGRectMake(15, 156+15+ (shopModel.operate_status.intValue == 3 ? 30 : 0), DR_SCREEN_WIDTH-30, taleHeight+30);
-            
             self.lineView.hidden = YES;
-            
             self.stroryL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, taleHeight);
             self.stroryL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tale];
         }
     }
-    
     
     if (_contentView.hidden) {
         self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+15+ (shopModel.operate_status.intValue == 3 ? 30 : 0));
@@ -258,7 +255,59 @@
     }else{
         self.yhImageView.hidden = YES;
     }
+    
+    if (!_workIngView.hidden && shopModel.surplusTime.intValue > 0) {
+        self.allTime = shopModel.surplusTime.intValue;
+        [self timerAction];
+    }
 }
+
+- (void)timerAction{
+    if (self.allTime > 0) {
+        [NoticeTimerTools deleteTimer:self.timerName];
+        self.timerName = nil;
+        __weak typeof(self) weakSelf = self;
+        self.timerName = [NoticeTimerTools timerTask:^{
+            
+            if (weakSelf.allTime > 0) {
+                weakSelf.allTime -= 1;
+                NSString *times = [NSString stringWithFormat:@"%@",[weakSelf getMMSSFromSS:weakSelf.allTime]];
+                NSString *timeStr = [NSString stringWithFormat:@"店主服务中，预计 %@ 结束",times];
+                weakSelf.severTimeL.attributedText = [DDHAttributedMode setColorString:timeStr setColor:[UIColor colorWithHexString:@"#EE4B4E"] setLengthString:times beginSize:9];
+            }else{
+                [NoticeTimerTools deleteTimer:self.timerName];
+                self.timerName = nil;
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHSHOPDETAIL" object:nil];
+            }
+         
+            
+        } start:0 interval:1 repeats:YES async:NO];
+        
+    }else{
+        [NoticeTimerTools deleteTimer:self.timerName];
+        self.timerName = nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHSHOPDETAIL" object:nil];
+    }
+}
+
+-(NSString *)getMMSSFromSS:(NSInteger)totalTime{
+ 
+    NSInteger seconds = totalTime;
+ 
+    //format of hour
+    NSString *str_hour = [NSString stringWithFormat:@"%02ld",seconds/3600];
+    //format of minute
+    NSString *str_minute = [NSString stringWithFormat:@"%02ld",(seconds%3600)/60];
+    //format of second
+    NSString *str_second = [NSString stringWithFormat:@"%02ld",seconds%60];
+    //format of time
+    if(str_hour.intValue){
+        return [NSString stringWithFormat:@"%@:%@:%@",str_hour.intValue?str_hour:@"0",str_minute.intValue?str_minute:@"00",str_second.intValue?str_second:@"00"];
+    }else{
+        return [NSString stringWithFormat:@"%@:%@",str_minute.intValue?str_minute:@"00",str_second.intValue?str_second:@"00"];
+    }
+}
+
 
 - (UIView *)severceView{
     if (!_severceView) {
@@ -270,7 +319,6 @@
         self.severTimeL = [[UILabel  alloc] initWithFrame:CGRectMake(28, 0, _severceView.frame.size.width-28, 20)];
         self.severTimeL.textColor = [UIColor colorWithHexString:@"#14151A"];
         self.severTimeL.font = FOURTHTEENTEXTFONTSIZE;
-        self.severTimeL.text = @"店主服务中，预计 05:12 结束";
         [_severceView addSubview:self.severTimeL];
         
         [self addSubview:_severceView];

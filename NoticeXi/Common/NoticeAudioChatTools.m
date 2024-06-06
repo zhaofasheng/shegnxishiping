@@ -80,12 +80,10 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
                     }
                 }
             }];
-       
         }else{
             NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@给%@拨打电话失败\n房间号%@\n时间%@\n原因%@",[NoticeTools getuserId],userId,self.roomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
         
-            
             [[NoticeTools getTopViewController] showToastWithText:[NSString stringWithFormat:@"拨打失败，请稍后重试%@",error.description]];
             if(weakSelf.cancelBlcok){
                 weakSelf.cancelBlcok(YES);
@@ -579,7 +577,6 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     self.currentRoomId = callinfo.rtcInfo.channelName;
     DRLog(@"收到%@的通话请求\n房间号%@",info.callerAccId,callinfo.rtcInfo.channelName);
     
-
     self.fromUserId = info.extraInfo;
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@收到%@通话请求\n房间号%@\n时间%@\n",[NoticeTools getuserId],info.callerAccId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
     [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];

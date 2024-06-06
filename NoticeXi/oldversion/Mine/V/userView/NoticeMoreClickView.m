@@ -136,11 +136,11 @@
     if (self.isShare) {
   
         if(indexPath.row == 0){
-            [NoticeShareView shareWithurl:@"http://priapi.byebyetext.com/share2/index.html?type=shengxi1" type:SSDKPlatformSubTypeWechatSession title:self.name name:self.title];
+            [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeWechatSession title:self.name name:self.title imageUrl:self.imgUrl];
         }else if(indexPath.row == 1){
-            [NoticeShareView shareWithurl:@"http://priapi.byebyetext.com/share2/index.html?type=shengxi1" type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title];
+            [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){
-            [NoticeShareView shareWithurl:@"http://priapi.byebyetext.com/share2/index.html?type=shengxi1" type:SSDKPlatformSubTypeQQFriend title:self.name name:self.title];
+            [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeQQFriend title:self.name name:self.title imageUrl:self.imgUrl];
         }else if(indexPath.row == 3){
         
         }

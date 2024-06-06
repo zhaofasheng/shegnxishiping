@@ -356,7 +356,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     if (!_noVoicePlayer) {
         _noVoicePlayer = [[LGAudioPlayer alloc] init];
         _noVoicePlayer.playingBlock = ^(CGFloat currentTime) {
-            DRLog(@"播放无声音频%.f",currentTime);
+       
         };
         _noVoicePlayer.playComplete = ^{
             DRLog(@"无声音频播放停止");

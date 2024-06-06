@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *cover;
 
+@property (nonatomic, strong) NSString *cover_url;
+@property (nonatomic, strong) NSString *title;
+
 @property (nonatomic, strong) NSString *sn;
 
 @property (nonatomic, strong) NSString *directions;

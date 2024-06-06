@@ -11,6 +11,8 @@
 #import "SXSearchThinkCell.h"
 #import "SXSearchModel.h"
 #import "SXSearchShopCell.h"
+#import "SXShopLikelistCell.h"
+#import "NoticdShopDetailForUserController.h"
 @interface SXsearchShopController ()<UITextFieldDelegate,KMTagListViewDelegate>
 
 @property (nonatomic, strong) UITextField *topicField;
@@ -76,6 +78,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
     
     [self.tableView registerClass:[SXSearchThinkCell class] forCellReuseIdentifier:@"cell"];
+    [self.shopTableView registerClass:[SXShopLikelistCell class] forCellReuseIdentifier:@"cell1"];
     self.tableView.rowHeight = 40;
 }
 
@@ -142,8 +145,8 @@
 
 //获取联想词汇
 - (void)requestLoacal:(NSString *)str{
-   NSString *url = [NSString stringWithFormat:@"video/search/entry?keyword=%@",[str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<>"]]];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+   NSString *url = [NSString stringWithFormat:@"shop/search/entry?keyword=%@",[str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<>"]]];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             SXSearchModel *model = [SXSearchModel mj_objectWithKeyValues:dict];
             if (model.data.count) {
@@ -258,8 +261,8 @@
     [self showHUD];
     [self creatchreresh];
     NSString *url = @"";
-    url = [NSString stringWithFormat:@"video/search?pageNo=%ld&keyword=%@",self.pageNo,[self.keyword stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<>"]]];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    url = [NSString stringWithFormat:@"shop/search?pageNo=%ld&keyword=%@",self.pageNo,[self.keyword stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<>"]]];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [self.shopTableView.mj_header endRefreshing];
         [self.shopTableView.mj_footer endRefreshing];
         [self hideHUD];
@@ -269,10 +272,18 @@
                 [self.dataArr removeAllObjects];
             }
             
+                    
             for (NSDictionary *dic in dict[@"data"]) {
-                SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
-                videoM.textContent = [NSString stringWithFormat:@"%@\n%@",videoM.title,videoM.introduce];
-                [self.dataArr addObject:videoM];
+                NoticeMyShopModel *shopM = [NoticeMyShopModel mj_objectWithKeyValues:dic];
+                if (GET_STRWIDTH(shopM.tale, 15, 20) > (DR_SCREEN_WIDTH-30-97-15)) {
+                    shopM.taleLikeHeight = 42;
+                }else{
+                    shopM.taleLikeHeight = 20;
+                }
+                if (shopM.is_stop.intValue > 1) {
+                    shopM.operate_status = @"1";
+                }
+                [self.dataArr addObject:shopM];
             }
             
             if (self.dataArr.count) {
@@ -340,6 +351,7 @@
         _shopTableView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
         _shopTableView.showsVerticalScrollIndicator = NO;
         _shopTableView.showsHorizontalScrollIndicator = NO;
+        _shopTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_shopTableView registerClass:[SXSearchShopCell class] forCellReuseIdentifier:@"searchCell"];
         [self.view addSubview:_shopTableView];
     }
@@ -355,16 +367,45 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == self.shopTableView) {
+        SXShopLikelistCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+        cell1.shopM = self.dataArr[indexPath.row];
+        return cell1;
+    }
     SXSearchThinkCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.titleL.text = self.localArr[indexPath.row];
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == self.tableView) {
+        return 40;
+    }
+    NoticeMyShopModel *shopM = self.dataArr[indexPath.row];
+    return  (shopM.operate_status.intValue == 1 ? 83 : 145)+shopM.taleLikeHeight+8;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (tableView == self.shopTableView) {
+        return self.dataArr.count;
+    }
     return self.localArr.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == self.shopTableView) {
+        NoticeMyShopModel *shopM = self.dataArr[indexPath.row];
+        if (shopM.is_stop.intValue == 1) {
+            [self showToastWithText:@"店铺已不存在"];
+            return;
+        }
+        
+        NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+        ctl.shopModel = shopM;
+        ctl.currentPlayIndex = indexPath.row;
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
     if (indexPath.row < self.localArr.count) {
         NSString *str = self.localArr[indexPath.row];
         [self searchWith:str needSave:YES];

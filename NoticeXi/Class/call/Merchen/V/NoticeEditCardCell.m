@@ -132,6 +132,27 @@
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
     self.nameL.text = shopModel.myShopM.shop_name;
+    if (shopModel.myShopM.sex.intValue == 1) {
+        self.boyL.textColor = [UIColor colorWithHexString:@"#72B4FF"];
+        self.maleButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        self.boyImageV.image = UIImageNamed(@"sx_shop_male");
+        self.maleButton.layer.borderColor = [UIColor colorWithHexString:@"#72B4FF"].CGColor;
+        
+        self.girlL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        self.girlImageV.image = UIImageNamed(@"sx_shop_falegray");
+        self.faleButton.layer.borderColor = [UIColor colorWithHexString:@"#F7F8FC"].CGColor;
+        self.faleButton.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+    }else{
+        self.boyL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        self.maleButton.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        self.boyImageV.image = UIImageNamed(@"sx_shop_malegray");
+        self.maleButton.layer.borderColor = [UIColor colorWithHexString:@"#F7F8FC"].CGColor;
+        
+        self.faleButton.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        self.girlL.textColor = [UIColor colorWithHexString:@"#FF7D9E"];
+        self.girlImageV.image = UIImageNamed(@"sx_shop_fale");
+        self.faleButton.layer.borderColor = [UIColor colorWithHexString:@"#FF7D9E"].CGColor;
+    }
 }
 
 - (void)awakeFromNib {

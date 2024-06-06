@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didReceiveVoiceGroupChat:(id)message;
 - (void)didReceiveListGroupChat:(NoticeOneToOne *)message;
 - (void)didReceiveMemberOutOrJoinTeamChat:(NoticeOneToOne *)message;
+- (void)didReceiveShopOrderStatus:(NSString *)shopId;
 @end
 
 @interface NoticeSocketManger : NSObject<SRWebSocketDelegate>
@@ -42,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id <NoticeReceveMessageSendMessageDelegate>groupDelegate;
 @property (nonatomic, weak) id <NoticeReceveMessageSendMessageDelegate>listDelegate;
 @property (nonatomic, weak) id <NoticeReceveMessageSendMessageDelegate>memberDelegate;
+@property (nonatomic, weak) id <NoticeReceveMessageSendMessageDelegate>shopOrderDelegate;
 @property (nonatomic, strong) NoticeShopGetOrderTostView *callView;
 
 @end

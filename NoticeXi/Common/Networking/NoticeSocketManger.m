@@ -89,6 +89,13 @@
     if ([model.flag isEqualToString:@"shopOrder"]) {//店铺相关
         NoticeByOfOrderModel *orderM = [NoticeByOfOrderModel mj_objectWithKeyValues:model.data];
         [self isCall:orderM];
+        ////77689表示店铺被下单  77690表示店铺完成上个订单 //77687表示上个订单已取消 //77688表示上个订单已接单
+        if (orderM.type.intValue == 77689 || orderM.type.intValue == 77690 || orderM.type.intValue == 77687 || orderM.type.intValue == 77688) {
+            if (self.shopOrderDelegate && [self.shopOrderDelegate respondsToSelector:@selector(didReceiveShopOrderStatus:)]) {
+                [self.shopOrderDelegate didReceiveShopOrderStatus:model.chatM.shopId];
+            }
+        }
+       
         return;
     }
     

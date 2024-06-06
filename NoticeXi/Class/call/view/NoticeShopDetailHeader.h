@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *goodsNumL;
 @property (nonatomic, strong) UILabel *searvNumL;
 @property (nonatomic, strong) UILabel *comNumL;
-
+@property (nonatomic, strong) UILabel *likeNumL;
 @property (nonatomic, strong) UIView *photoView;
 @property (nonatomic, strong) UIImageView *photoImageView;
 

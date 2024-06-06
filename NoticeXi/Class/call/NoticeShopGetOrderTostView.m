@@ -62,6 +62,7 @@
 }
 
 - (void)dissMiseeShow{
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appdel.hasShowCallView = NO;
     [self removeFromSuperview];
@@ -104,7 +105,7 @@
 }
 
 - (void)showCallView{
-    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:self];
     self.hasShow = YES;
