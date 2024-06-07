@@ -30,6 +30,7 @@
 
 + (void)shareWithurl:(NSString *)urlStr type:(SSDKPlatformType)type title:(NSString *)title name:(NSString *)name imageUrl:(NSString *)imgUrl{
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    
     [shareParams SSDKSetupShareParamsByText:name images:imgUrl url:[NSURL URLWithString:urlStr] title:title type:SSDKContentTypeWebPage];
 
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;

@@ -1041,7 +1041,7 @@
     }else{
         if (chat.content_type.intValue == 3) {//图片
             arr = @[[RXPopMenuItem itemTitle:@"添加表情"],[RXPopMenuItem itemTitle:@"举报"]];
-        }if (self.tapChat.content_type.intValue == 11) {
+        }else if (self.tapChat.content_type.intValue == 11) {
             arr = @[[RXPopMenuItem itemTitle:@"举报"],[RXPopMenuItem itemTitle:@"复制"]];
         }
         else{

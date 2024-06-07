@@ -71,7 +71,6 @@
 
 - (void)setGoodModel:(NoticeGoodsModel *)goodModel{
     _goodModel = goodModel;
-    
     self.choiceImageView.image = UIImageNamed(goodModel.choice.boolValue?@"Image_choicesh":@"Image_nochoicesh");
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:goodModel.goods_img_url]];
     
@@ -80,14 +79,14 @@
     self.changePriceBtn.hidden = goodModel.is_experience.boolValue?YES:NO;
     self.deleteBtn.hidden = self.changePriceBtn.hidden;
     
-    if (goodModel.is_experience.boolValue) {
+    if (goodModel.is_experience.boolValue && !self.isOtherLook) {
         self.markL.hidden = NO;
     }else{
         self.markL.hidden = YES;
     }
     
     _tagL.hidden = YES;
-    if (goodModel.is_experience.boolValue) {
+    if (goodModel.is_experience.boolValue && !self.isOtherLook) {
         self.backView.frame = CGRectMake(15, 0, DR_SCREEN_WIDTH-30, 101);
         self.priceL.frame = CGRectMake(81, 60, 200, 26);
         self.titleL.frame = CGRectMake(81, 15, DR_SCREEN_WIDTH-96-60, 20);
@@ -95,7 +94,7 @@
         self.titleL.attributedText = [SXTools getStringWithLineHight:3 string:goodModel.goods_name];;
     }else{
         self.backView.frame = CGRectMake(15, 0, DR_SCREEN_WIDTH-30, goodModel.nameHeight+92+15 - (self.noneedEdit?45:0));
-        if (goodModel.tagString) {
+        if (goodModel.tagString && !goodModel.is_experience.intValue) {
             self.tagL.hidden = NO;
             self.tagL.text = goodModel.tagString;
             self.tagL.frame = CGRectMake(81, 18, GET_STRWIDTH(goodModel.tagString, 11, 20)+10, 18);

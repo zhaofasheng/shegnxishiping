@@ -89,6 +89,7 @@
         self.tableView.tableHeaderView = nil;
     }else{
         self.tableView.tableHeaderView = self.searchHistoryArr.count? self.headerView : nil;
+        [self refreshHistory];
     }
 }
 
@@ -226,7 +227,18 @@
             self.labeView.frame = rect;
             self.headerView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH, 40+rect.size.height);
         }
+    }else{
+        if (self.searchHistoryArr.count) {
+            for (int i = 0;i < self.searchHistoryArr.count;i++) {
+                NSString *oldStr = self.searchHistoryArr[i];
+                if ([oldStr isEqualToString:key]) {
+                    [self.searchHistoryArr exchangeObjectAtIndex:i withObjectAtIndex:0];
+                    break;
+                }
+            }
+        }
     }
+
     
     self.isDown = YES;
     self.pageNo = 1;
@@ -260,6 +272,9 @@
     }
     [self showHUD];
     [self creatchreresh];
+    self.tableView.tableHeaderView = nil;
+    self.tableView.hidden = YES;
+    self.shopTableView.hidden = NO;
     NSString *url = @"";
     url = [NSString stringWithFormat:@"shop/search?pageNo=%ld&keyword=%@",self.pageNo,[self.keyword stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<>"]]];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
@@ -286,15 +301,18 @@
                 [self.dataArr addObject:shopM];
             }
             
+            self.tableView.hidden = YES;
+            self.shopTableView.hidden = NO;
+            
             if (self.dataArr.count) {
                 self.tableView.hidden = YES;
+                self.shopTableView.tableFooterView = nil;
                 self.shopTableView.hidden = NO;
                 [self.shopTableView reloadData];
             }else{
-                self.shopTableView.hidden = YES;
-                self.tableView.tableHeaderView = nil;
-                self.tableView.tableFooterView = self.defaultL;
-                self.tableView.hidden = NO;
+     
+                self.shopTableView.tableFooterView = self.defaultL;
+     
             }
         }
     } fail:^(NSError * _Nullable error) {
@@ -395,11 +413,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.shopTableView) {
         NoticeMyShopModel *shopM = self.dataArr[indexPath.row];
-        if (shopM.is_stop.intValue == 1) {
+        if (shopM.is_stop.intValue == 1 || shopM.status.intValue >= 2) {
             [self showToastWithText:@"店铺已不存在"];
             return;
         }
-        
         NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
         ctl.shopModel = shopM;
         ctl.currentPlayIndex = indexPath.row;

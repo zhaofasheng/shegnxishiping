@@ -1476,6 +1476,7 @@
 		FE96C4AE2C1050D1005AB5FE /* SXShopLyStoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4AD2C1050D1005AB5FE /* SXShopLyStoryCell.m */; };
 		FE96C4B12C10548A005AB5FE /* SXShopLyListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B02C10548A005AB5FE /* SXShopLyListController.m */; };
 		FE96C4B42C1054CB005AB5FE /* SXShopsliuyanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B32C1054CB005AB5FE /* SXShopsliuyanCell.m */; };
+		FE96C4B72C12F776005AB5FE /* SXShopListBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -4376,6 +4377,8 @@
 		FE96C4B02C10548A005AB5FE /* SXShopLyListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopLyListController.m; sourceTree = "<group>"; };
 		FE96C4B22C1054CB005AB5FE /* SXShopsliuyanCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopsliuyanCell.h; sourceTree = "<group>"; };
 		FE96C4B32C1054CB005AB5FE /* SXShopsliuyanCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopsliuyanCell.m; sourceTree = "<group>"; };
+		FE96C4B52C12F776005AB5FE /* SXShopListBaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopListBaseModel.h; sourceTree = "<group>"; };
+		FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopListBaseModel.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -9169,6 +9172,8 @@
 				FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */,
 				FE07BE092BF481D200E6812A /* SXGoodsInfoModel.h */,
 				FE07BE0A2BF481D200E6812A /* SXGoodsInfoModel.m */,
+				FE96C4B52C12F776005AB5FE /* SXShopListBaseModel.h */,
+				FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -10659,6 +10664,7 @@
 				A4E966432A69142300AE022E /* NoticeMyMovieComController.m in Sources */,
 				A4E9680F2A69142500AE022E /* NoticeAddZjController.m in Sources */,
 				A4E964C92A69142100AE022E /* sse_optimized.cpp in Sources */,
+				FE96C4B72C12F776005AB5FE /* SXShopListBaseModel.m in Sources */,
 				A4E9679F2A69142500AE022E /* NoticeViewModel.m in Sources */,
 				A4E966292A69142300AE022E /* NoticeRightNow.m in Sources */,
 				FEE562EF2B8CA1FD0004CC11 /* TZVideoPlayerController.m in Sources */,

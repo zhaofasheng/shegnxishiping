@@ -96,6 +96,7 @@
         self.tableView.tableHeaderView = nil;
     }else{
         self.tableView.tableHeaderView = self.searchHistoryArr.count? self.headerView : nil;
+        [self refreshHistory];
     }
     
 }
@@ -235,10 +236,18 @@
             CGRect rect = self.labeView.frame;
             rect.size.height = self.labeView.contentSize.height+5;
             self.labeView.frame = rect;
-            
             self.headerView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH, 40+rect.size.height);
         }
-
+    }else{
+        if (self.searchHistoryArr.count) {
+            for (int i = 0;i < self.searchHistoryArr.count;i++) {
+                NSString *oldStr = self.searchHistoryArr[i];
+                if ([oldStr isEqualToString:key]) {
+                    [self.searchHistoryArr exchangeObjectAtIndex:i withObjectAtIndex:0];
+                    break;
+                }
+            }
+        }
     }
     
     self.isDown = YES;
@@ -247,9 +256,7 @@
     [self request];
 }
 
-
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    
     [textField resignFirstResponder];
 }
 
@@ -261,7 +268,6 @@
             weakSelf.isDown = NO;
             weakSelf.pageNo++;
             [weakSelf request];
-            
         }];
     }
 }
@@ -271,6 +277,9 @@
     if (!self.keyword) {
         return;
     }
+    [self.localArr removeAllObjects];
+    [self.tableView reloadData];
+    self.tableView.tableHeaderView = nil;
     [self showHUD];
     [self creatchreresh];
     NSString *url = @"";
@@ -297,6 +306,7 @@
                 self.collectionView.hidden = NO;
                 [self.collectionView reloadData];
             }else{
+            
                 self.collectionView.hidden = YES;
                 self.tableView.tableHeaderView = nil;
                 self.tableView.tableFooterView = self.defaultL;
@@ -332,13 +342,11 @@
 - (UIView *)headerView{
     if (!_headerView) {
         _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 40)];
-        
         UILabel *titL = [[UILabel alloc] initWithFrame:CGRectMake(15, 4,100, 40)];
         titL.text = @"最近搜索";
         titL.font = FIFTHTEENTEXTFONTSIZE;
         titL.textColor = [[UIColor colorWithHexString:@"#25262E"] colorWithAlphaComponent:1];
         [_headerView addSubview:titL];
-        
         UIButton *deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-40, 0, 40, 40)];
         [deleteBtn addTarget:self action:@selector(deleteLocalClick) forControlEvents:UIControlEventTouchUpInside];
         [deleteBtn setImage:UIImageNamed( @"img_deletetopictm") forState:UIControlStateNormal];
@@ -365,7 +373,6 @@
     if (!_collectionView) {
         //1.初始化layout
         CYWWaterFallLayout *flowLayout = [[CYWWaterFallLayout alloc] init];
-
         self.layout = flowLayout;
         flowLayout.columnCount = 2;
         flowLayout.itemWidth = (DR_SCREEN_WIDTH-15)/2;
@@ -374,7 +381,6 @@
         flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
         // 垂直方向滑动
         flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        
         //2.初始化collectionView
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT -  NAVIGATION_BAR_HEIGHT) collectionViewLayout:flowLayout];
         _collectionView.dataSource = self;
@@ -416,7 +422,6 @@
     if (self.dataArr.count > indexPath.row) {
         merchentCell.videoModel = self.dataArr[indexPath.row];
     }
-    
     return merchentCell;
 }
 

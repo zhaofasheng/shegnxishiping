@@ -311,7 +311,11 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
     [JPUSHService setBadge:0];
     
-
+    if ([NoticeTools getuserId]) {
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopUserInApp/2" Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        } fail:^(NSError * _Nullable error) {
+        }];
+    }
     [self beginTask];
 }
 
@@ -332,6 +336,12 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     } fail:^(NSError * _Nullable error) {
     }];
     
+    if ([NoticeTools getuserId]) {
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopUserInApp/1" Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        } fail:^(NSError * _Nullable error) {
+        }];
+    }
+  
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

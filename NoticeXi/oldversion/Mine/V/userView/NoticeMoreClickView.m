@@ -52,7 +52,6 @@
         self.movieTableView.rowHeight = 70;
         [self.keyView addSubview:self.movieTableView];
         self.dataArr = [[NSMutableArray alloc] init];
-
     }
     return self;
 }
@@ -136,7 +135,7 @@
     if (self.isShare) {
   
         if(indexPath.row == 0){
-            [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeWechatSession title:self.name name:self.title imageUrl:self.imgUrl];
+            [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeWechatSession title:self.title name:self.name imageUrl:self.imgUrl];
         }else if(indexPath.row == 1){
             [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){

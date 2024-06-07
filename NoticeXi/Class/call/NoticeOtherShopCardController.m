@@ -281,9 +281,7 @@
     if (indexPath.section == 0) {
         if (self.shopModel.myShopM.operate_status.intValue > 1) {
             NoticeGoodsModel *goods = self.goodssellArr[indexPath.row];
-            if (goods.is_experience.boolValue) {
-                return 101+8;
-            }
+   
             return goods.nameHeight+92+15+8-45;
         }else{
             return 0;

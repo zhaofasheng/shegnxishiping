@@ -7,8 +7,10 @@
 //
 
 #import "SXUserHowController.h"
+
 #import "SXSetCell.h"
 #import "NoticeShopRuleController.h"
+
 #import "NoticeOpenTbModel.h"
 
 @interface SXUserHowController ()

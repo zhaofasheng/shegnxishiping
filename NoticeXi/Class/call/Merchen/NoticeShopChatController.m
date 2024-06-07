@@ -101,7 +101,6 @@
         [appdel.floatView.audioPlayer stopPlaying];
     }
     appdel.floatView.hidden = YES;
-    
 }
 
 - (void)viewDidLoad {
@@ -203,7 +202,6 @@
                 [weakSelf.navigationController popViewControllerAnimated:YES]; 
             };
             [alerView showXLAlertView];
-            
             [self complete];
 
         }else{

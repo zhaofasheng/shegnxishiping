@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSDictionary *goods;
 @property (nonatomic, strong) NoticeGoodsModel *goodsM;
-
+@property (nonatomic, strong) NSString *status;
 @property (nonatomic, strong) NSString *certification_title;//认证信息
 @property (nonatomic, strong) NSString *min_price;//最低商品价格
 @property (nonatomic, strong) NSDictionary *shop;

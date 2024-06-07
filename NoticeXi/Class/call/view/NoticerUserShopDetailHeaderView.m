@@ -169,10 +169,10 @@
         }else if (verifyModel.authentication_type.intValue == 3){
             self.checkL.text = [NSString stringWithFormat:@"%@",verifyModel.credentials_name];
         }
-        self.checkL.frame = CGRectMake(20, 69, DR_SCREEN_WIDTH-125, GET_STRHEIGHT(self.checkL.text, 13, DR_SCREEN_WIDTH-125));
+        self.checkL.frame = CGRectMake(20, CGRectGetMaxY(self.shopNameL.frame)+8, DR_SCREEN_WIDTH-125, GET_STRHEIGHT(self.checkL.text, 13, DR_SCREEN_WIDTH-125));
         self.markImageView.hidden = NO;
         
-       self.markImageView.frame = CGRectMake(20+GET_STRWIDTH(shopModel.shop_name, 21, 28),self.shopNameL.frame.origin.y+4, 20, 20);
+        self.markImageView.frame = CGRectMake(20+GET_STRWIDTH(shopModel.shop_name, 21, 28),self.shopNameL.frame.origin.y+4, 20, 20);
     }
     
     self.shopNameL.text = shopModel.shop_name;

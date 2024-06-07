@@ -144,7 +144,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NoticeMyShopModel *shopM = self.dataArr[indexPath.row];
-    if (shopM.is_stop.intValue == 1) {
+    if (shopM.is_stop.intValue == 1 || shopM.status.intValue >= 2) {
         [self showToastWithText:@"店铺已不存在"];
         return;
     }

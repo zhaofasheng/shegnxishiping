@@ -10,7 +10,7 @@
 #import "SXAskQuestionShopCell.h"
 #import "NoticdShopDetailForUserController.h"
 #import "NoticeLoginViewController.h"
-
+#import "SXShopListBaseModel.h"
 @interface NoticeTelController ()
 
 @property (nonatomic, assign) NSInteger noLoginDevice;
@@ -100,15 +100,23 @@
     }
     
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             
             if (self.isDown) {
                 [self.dataArr removeAllObjects];
                 self.isDown = NO;
             }
+            SXShopListBaseModel *baseM = [SXShopListBaseModel mj_objectWithKeyValues:dict[@"data"]];
             
-            for (NSDictionary *dic in dict[@"data"]) {
+            if (self.pageNo == 1) {
+                for (NSDictionary *dic in baseM.top_shop_list) {
+                    NoticeMyShopModel *shopM = [NoticeMyShopModel mj_objectWithKeyValues:dic];
+                    [self.dataArr addObject:shopM];
+                }
+            }
+           
+            for (NSDictionary *dic in baseM.shop_list) {
                 NoticeMyShopModel *shopM = [NoticeMyShopModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:shopM];
             }

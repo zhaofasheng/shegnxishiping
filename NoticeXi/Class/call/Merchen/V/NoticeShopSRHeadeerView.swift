@@ -118,7 +118,7 @@ class NoticeShopSRHeadeerView: UIView {
         self.weChatChangeButton?.addTarget(self, action: #selector(bangdingWeChat), for: .touchUpInside)
         webackView.addSubview(self.weChatChangeButton!)
         self.weChatChangeButton?.setTitle("绑定", for: .normal)
-        self.weChatChangeButton?.setTitleColor(UIColor.init(hexString: "#0099E6"), for: .normal)
+        self.weChatChangeButton?.setTitleColor(UIColor.init(hexString: "#1FC7FF"), for: .normal)
         self.weChatChangeButton?.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         
         let ailbackView = UIView.init(frame: CGRect(x: 20, y: CGRectGetMaxY(webackView.frame)+10, width: NoticeSwiftFile.screenWidth-40, height: 100))
@@ -152,7 +152,7 @@ class NoticeShopSRHeadeerView: UIView {
         self.ailChangeButton?.addTarget(self, action: #selector(bangdingali), for: .touchUpInside)
         ailbackView.addSubview(self.ailChangeButton!)
         self.ailChangeButton?.setTitle("绑定", for: .normal)
-        self.ailChangeButton?.setTitleColor(UIColor.init(hexString: "#0099E6"), for: .normal)
+        self.ailChangeButton?.setTitleColor(UIColor.init(hexString: "#1FC7FF"), for: .normal)
         self.ailChangeButton?.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         
         let getButton = UIButton.init(frame: CGRect(x: 20, y: CGRectGetMaxY(ailbackView.frame)+30, width: NoticeSwiftFile.screenWidth-40, height: 40))
@@ -285,7 +285,7 @@ class NoticeShopSRHeadeerView: UIView {
                 self.weChatButton?.setImage(UIImage.init(named: "Image_choicesh"), for: .normal)
                 self.aliButton?.setImage(UIImage.init(named: "Image_nochoicesh"), for: .normal)
                 if self.canTixian {
-                    self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#0099E6")
+                    self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#1FC7FF")
                     self.tixianBtn?.setTitleColor(UIColor.init(hexString: "#FFFFFF"), for: .normal)
                 }else{
                     self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#A1A7B3")
@@ -307,7 +307,7 @@ class NoticeShopSRHeadeerView: UIView {
                 self.aliButton?.setImage(UIImage.init(named: "Image_choicesh"), for: .normal)
                 self.weChatButton?.setImage(UIImage.init(named: "Image_nochoicesh"), for: .normal)
                 if self.canTixian {
-                    self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#0099E6")
+                    self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#1FC7FF")
                     self.tixianBtn?.setTitleColor(UIColor.init(hexString: "#FFFFFF"), for: .normal)
                 }else{
                     self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#A1A7B3")
@@ -363,7 +363,7 @@ class NoticeShopSRHeadeerView: UIView {
                 else{
                     self.canTixian = true
                     if self.tixianType > 0 {
-                        self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#0099E6")
+                        self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#1FC7FF")
                         self.tixianBtn?.setTitleColor(UIColor.init(hexString: "#FFFFFF"), for: .normal)
                     }
                     self.markL?.textColor = UIColor.init(hexString: "#8A8F99")
