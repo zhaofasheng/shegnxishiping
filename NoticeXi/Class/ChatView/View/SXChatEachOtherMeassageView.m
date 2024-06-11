@@ -122,6 +122,22 @@
             }else{
                 self.likeL.hidden = YES;
             }
+            
+            if (stay.orderComNum.num.intValue) {
+                self.liuyL.hidden = NO;
+                if (stay.orderComNum.num.intValue > 99) {
+                    stay.orderComNum.num = @"99+";
+                }
+                self.liuyL.text = stay.orderComNum.num;
+              
+                CGFloat width = GET_STRWIDTH(self.liuyL.text, 9, 14)+8;
+                if (width < 14) {
+                    width = 14;
+                }
+                self.liuyL.frame = CGRectMake(34, 0, width, 14);
+            }else{
+                self.liuyL.hidden = YES;
+            }
         }
     } fail:^(NSError *error) {
     }];

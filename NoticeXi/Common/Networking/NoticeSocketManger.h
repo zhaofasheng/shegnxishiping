@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 - (void)didLXAndMoFa:(id)message;
 - (void)didReceiveMessage:(id)message;
+- (void)didReceiveOrderChatMessage:(id)message;
 - (void)didReceiveGroupMessage:(id)message;
 - (void)didReceiveGroupMainPageMessage:(NoticeOneToOne *)message;
 - (void)didReceiveHdMessage:(id)message;
@@ -37,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendMessage:(NSMutableDictionary *)messageDic;
 - (void)reConnect;
 @property (nonatomic, strong,nullable) NSMutableDictionary *sendMessageDic;
+@property (nonatomic,weak) id<NoticeReceveMessageSendMessageDelegate>orderChatDelegate;
 @property (nonatomic, weak) id <NoticeReceveMessageSendMessageDelegate>delegate;
 @property (nonatomic, weak) id <NoticeReceveMessageSendMessageDelegate>chatDelegate;
 @property (nonatomic, weak) id <NoticeReceveMessageSendMessageDelegate>shopChatDelegate;

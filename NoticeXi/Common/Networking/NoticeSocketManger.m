@@ -75,7 +75,7 @@
     NSDictionary *dic = [NoticeTools dictionaryWithJsonString:message];
     
     DRLog(@"收到消息%@",dic);
-  
+  //orderComment
     NoticeOneToOne *model = [NoticeOneToOne mj_objectWithKeyValues:dic];
     if (model.code.intValue == 77) {
         [NoticeComTools beCheckWithReason:model.msg];
@@ -83,6 +83,13 @@
     }
     if ([model.flag isEqualToString:@"shopOrderRoom"] && model.orderType.intValue != 5) {//语音通话不等于5的时候代表需要结束订单
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NEEDOVERVOICECHAT" object:nil];
+        return;
+    }
+    
+    if ([model.flag isEqualToString:@"orderComment"]) {
+        if (self.orderChatDelegate && [self.orderChatDelegate respondsToSelector:@selector(didReceiveOrderChatMessage:)]) {
+            [self.orderChatDelegate didReceiveOrderChatMessage:dic];
+        }
         return;
     }
     

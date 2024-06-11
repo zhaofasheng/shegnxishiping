@@ -26,6 +26,11 @@
     self.videoCommentNumM = [NoticeStayMesssage mj_objectWithKeyValues:videoCommentNum];
 }
 
+- (void)setOrder_comment:(NSDictionary *)order_comment{
+    _order_comment = order_comment;
+    self.orderComNum = [NoticeStayMesssage mj_objectWithKeyValues:order_comment];
+}
+
 - (void)setChar_pri:(NSDictionary *)char_pri{
     _char_pri = char_pri;
     self.char_priM = [NoticeStayMesssage mj_objectWithKeyValues:char_pri];

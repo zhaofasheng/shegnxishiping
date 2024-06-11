@@ -148,10 +148,19 @@
         [self showToastWithText:@"店铺已不存在"];
         return;
     }
-    
+    __weak typeof(self) weakSelf = self;
     NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
     ctl.shopModel = shopM;
     ctl.currentPlayIndex = indexPath.row;
+    ctl.cancelLikeBolck = ^(NSString * _Nonnull shopId) {
+        for (NoticeMyShopModel *model in weakSelf.dataArr) {
+            if ([model.shopId isEqualToString:shopId]) {
+                [weakSelf.dataArr removeObject:model];
+                [weakSelf.tableView reloadData];
+                break;
+            }
+        }
+    };
     [self.navigationController pushViewController:ctl animated:YES];
 }
 

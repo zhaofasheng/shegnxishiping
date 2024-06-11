@@ -1477,6 +1477,7 @@
 		FE96C4B12C10548A005AB5FE /* SXShopLyListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B02C10548A005AB5FE /* SXShopLyListController.m */; };
 		FE96C4B42C1054CB005AB5FE /* SXShopsliuyanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B32C1054CB005AB5FE /* SXShopsliuyanCell.m */; };
 		FE96C4B72C12F776005AB5FE /* SXShopListBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */; };
+		FE96C4BA2C184477005AB5FE /* SXOrderChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B92C184477005AB5FE /* SXOrderChatCell.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -4379,6 +4380,8 @@
 		FE96C4B32C1054CB005AB5FE /* SXShopsliuyanCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopsliuyanCell.m; sourceTree = "<group>"; };
 		FE96C4B52C12F776005AB5FE /* SXShopListBaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopListBaseModel.h; sourceTree = "<group>"; };
 		FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopListBaseModel.m; sourceTree = "<group>"; };
+		FE96C4B82C184477005AB5FE /* SXOrderChatCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXOrderChatCell.h; sourceTree = "<group>"; };
+		FE96C4B92C184477005AB5FE /* SXOrderChatCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXOrderChatCell.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -9109,6 +9112,8 @@
 			children = (
 				FE9C40972B9AE11F008C3A22 /* SXShopCheckTypeCell.h */,
 				FE9C40982B9AE11F008C3A22 /* SXShopCheckTypeCell.m */,
+				FE96C4B82C184477005AB5FE /* SXOrderChatCell.h */,
+				FE96C4B92C184477005AB5FE /* SXOrderChatCell.m */,
 				FE96C4AC2C1050D1005AB5FE /* SXShopLyStoryCell.h */,
 				FE96C4AD2C1050D1005AB5FE /* SXShopLyStoryCell.m */,
 				FE96C4B22C1054CB005AB5FE /* SXShopsliuyanCell.h */,
@@ -10680,6 +10685,7 @@
 				A4E9648A2A69142100AE022E /* UIView+YGPulseView.m in Sources */,
 				A4E969872A69142700AE022E /* NoticeWhiteVoiceListCell.m in Sources */,
 				A4E967A02A69142500AE022E /* NoticePiPeiFriendListViewController.m in Sources */,
+				FE96C4BA2C184477005AB5FE /* SXOrderChatCell.m in Sources */,
 				A4E969732A69142700AE022E /* NoticeBgmHasChoiceShowView.m in Sources */,
 				A4E968E82A69142600AE022E /* NoticeJBChoiceView.swift in Sources */,
 				A4E965062A69142200AE022E /* JXCategoryNumberCell.m in Sources */,

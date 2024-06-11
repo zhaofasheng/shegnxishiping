@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NoticeMyShopModel *shopModel;
 @property (nonatomic, assign) NSInteger currentPlayIndex;
+@property (nonatomic,copy) void(^cancelLikeBolck)(NSString *shopId);
+
 @end
 
 NS_ASSUME_NONNULL_END

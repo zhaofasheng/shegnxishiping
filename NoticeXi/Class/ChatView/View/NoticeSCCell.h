@@ -11,11 +11,7 @@
 #import "NoticeChats.h"
 #import "NoticeChangeTextView.h"
 
-#import "NoticeShareLinkCell.h"
-#import "NoticeWhiteCardChatView.h"
-#import "NoticeShareVoiceChatView.h"
-#import "NoticeSharePyChatView.h"
-#import "NoticeShareLineChatView.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol NoticeSCDeledate <NSObject>
@@ -53,14 +49,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSIndexPath *currentPath;
 @property (nonatomic, strong) NSMutableArray *lagerPhotoArr;
 @property (nonatomic,copy) void (^refreshHeightBlock)(NSIndexPath *indxPath);
-@property (nonatomic, strong) NoticeShareLinkCell *linkView;
+
 @property (nonatomic, strong) UILabel *contentL;
 @property (nonatomic, strong) UIView *contentVL;
 
-@property (nonatomic, strong) NoticeWhiteCardChatView *cardView;
-@property (nonatomic, strong) NoticeShareVoiceChatView *shareVoiceView;
-@property (nonatomic, strong) NoticeShareLineChatView *shareLineView;
-@property (nonatomic, strong) NoticeSharePyChatView *sharepyView;
 
 @property (nonatomic, strong) UIView *sendLevelView;
 @property (nonatomic, strong) UIImageView *sendIconImageView;

@@ -8,7 +8,7 @@
 
 #import "SXShoperChatToUseController.h"
 #import "SXShopChatTouserHeadere.h"
-#import "NoticeSCCell.h"
+#import "SXOrderChatCell.h"
 #import "NoticeXi-Swift.h"
 #import "NoticeYuSetModel.h"
 #import "NoticeAction.h"
@@ -22,7 +22,7 @@
 #import "SXChatInputView.h"
 #import "RXPopMenu.h"
 #import "SXSendChatTools.h"
-@interface SXShoperChatToUseController ()<NoticeReceveMessageSendMessageDelegate,NoticeSCDeledate,LCActionSheetDelegate,NewSendTextDelegate,UINavigationControllerDelegate>
+@interface SXShoperChatToUseController ()<NoticeReceveMessageSendMessageDelegate,NoticeOrderChatDeledate,LCActionSheetDelegate,NewSendTextDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong) SXShopChatTouserHeadere *headerView;
 @property (nonatomic, strong) SXChatInputView *chatInputView;
 
@@ -34,7 +34,6 @@
 @property (nonatomic, strong) NSMutableArray *localdataArr;
 @property (nonatomic, assign) BOOL isFirst;
 @property (nonatomic, strong) NSString *chatId;
-@property (nonatomic, assign) BOOL hasTips;
 @property (nonatomic, assign) BOOL hasHobbys;
 @property (nonatomic, strong) NoticeChats *tapChat;
 @property (nonatomic, strong) NoticeChats *oldModel;
@@ -49,7 +48,6 @@
 @property (nonatomic, assign) NSInteger reSendTime;
 @property (nonatomic, strong) NSString *autoId;
 @property (nonatomic, assign) BOOL firstIn;
-@property (nonatomic, strong) UILabel *infoL;
 @property (nonatomic, assign) BOOL isTap;
 @property (nonatomic, assign) NSInteger sendTimeNum;
 @property (nonatomic, assign) BOOL isClickChongBo;
@@ -70,13 +68,7 @@
 
 @property (nonatomic, assign) CGFloat tableViewOrinY;
 @property (nonatomic, strong) NoticeChats *reSendChat;
-@property (nonatomic, assign) BOOL isLinkUrl;
-@property (nonatomic, strong)UIImagePickerController *imagePickerController;
 
-
-@property (nonatomic, strong) NSMutableArray *yuseArr;
-@property (nonatomic, strong) NSString *yuseLastId;
-@property (nonatomic, strong) NSMutableArray *yuseImgArr;
 
 @property (nonatomic, assign) NSInteger oldSelectIndex;
 @property (nonatomic, assign) BOOL isReplay;
@@ -94,7 +86,6 @@
     self.tableView.tableHeaderView = self.headerView;
     
     self.canLoad = YES;
-    [self request];
     self.view.backgroundColor = [UIColor whiteColor];
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
         DRLog(@"%@",granted ? @"麦克风准许":@"麦克风不准许");
@@ -109,7 +100,7 @@
     self.localdataArr = [NSMutableArray new];
     
 
-    [self.tableView registerClass:[NoticeSCCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[SXOrderChatCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.backgroundColor = self.view.backgroundColor;
     
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91-NAVIGATION_BAR_HEIGHT);
@@ -119,12 +110,13 @@
     
     [self funForInputView];
     
+    self.pageNo = 1;
     [self createRefesh];
-
+    [self requestData];
 
     
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    appdel.socketManager.chatDelegate = self;
+    appdel.socketManager.orderChatDelegate = self;
     
     if ([self.toUserId isEqualToString:@"1"]) {//如果是客服，则不显示举报按钮
         self.navigationItem.title = @"声昔小二";
@@ -138,7 +130,8 @@
 - (SXSendChatTools *)sendTools{
     if (!_sendTools) {
         _sendTools = [[SXSendChatTools alloc] init];
-        _sendTools.toUser = self.toUser;
+        _sendTools.orderId = self.orderModel.orderId;
+        _sendTools.toUser = self.orderModel.user_id;
     }
     return _sendTools;
 }
@@ -361,62 +354,29 @@
     }
         
     if (chat.contentText && chat.contentText.length) {//显示文案
-        
-        if (chat.content_type.intValue == 9 && chat.toUserInfo) {//有文案
-            return 28+chat.textHeight+58+16+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-        }
-        
-        return 28+chat.textHeight+16+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
+
+        return 28+chat.textHeight+16;
     }
     
-    if (chat.content_type.intValue == 5) {//显示分享链接
-        return 28+53+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-    }
-    if (chat.content_type.intValue == 6){//显示分享的心情
-        if (chat.shareVoiceM.show_status.intValue > 1 ) {
-            return 28+98+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-        }
-        
-        if (chat.shareVoiceM.voiceM.img_list.count) {
-            if (chat.shareVoiceM.voiceM.img_list.count == 3) {
-                return 28+166+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-            }else if (chat.shareVoiceM.voiceM.img_list.count == 2){
-                return 28+186+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-            }else{
-                return 28+226+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-            }
-        }else{
-            return 28+98+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-        }
-    }
-    if (chat.content_type.intValue == 4) {//显示白噪声卡
-        return 28+260+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-    }
-    if (chat.content_type.intValue == 7) {//显示配音
-        return 28+120+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-    }
-    if (chat.content_type.intValue == 8) {//显示台词
-        return 28+117+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-    }
+   
     if (chat.isShowTime) {
-      
-        if (chat.content_type.intValue == 1) {
-            return 45+28+16+(chat.needMarkAuto ? 30 : 0) + (chat.offline_prompt ? 55 : 0) + ([[[NoticeSaveModel getUserInfo] user_id] isEqualToString:@"1"] ? ((chat.dialog_content.length? (chat.contentHeight+15) : 0)) : 0);
+        if (chat.resource_type.intValue == 3) {
+            return 45+28+16;
             
         }
-        return 28+(chat.imgCellHeight?chat.imgCellHeight: 138)+16+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
+        return 28+(chat.imgCellHeight?chat.imgCellHeight: 138)+16;
     }
     
 
-    if (chat.content_type.intValue == 1) {
-        return 35+28+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);//最后一个表示是客服的同时，存在语音转文字
+    if (chat.resource_type.intValue == 3) {
+        return 35+28;
     }
-    return 28+ (chat.imgCellHeight?chat.imgCellHeight: 138) +(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
+    return 28+ (chat.imgCellHeight?chat.imgCellHeight: 138);
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NoticeSCCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    SXOrderChatCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.currentPath = indexPath;
     __weak typeof(self) weakSelf = self;
     cell.refreshHeightBlock = ^(NSIndexPath * _Nonnull indxPath) {
@@ -513,44 +473,15 @@
     return 0;
 }
 
-//等待时间超过五秒标记为失败
-- (void)waitMessage{
-    self.sendTimeNum++;
-    if (self.sendTimeNum == 5) {
-        for (NoticeChats *chat in self.localdataArr) {
-            if (chat.isLocal) {
-                chat.isFailed = YES;
-            }
-        }
-        [self.tableView reloadData];
-        self.sendTimeNum = 0;
-        [self.timer invalidate];
-    }
-}
-
 
 - (void)requestData{
     NSString *url = nil;
 
-    if (!self.isFirst && !self.toUserId) {
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-        return;
-    }
-    
+  
     if (self.isFirst) {
-        url = [NSString stringWithFormat:@"chats/2/%@/0",self.toUserId];
+        url = [NSString stringWithFormat:@"orderComment/%@?pageNo=1",self.orderModel.orderId];
     }else{
-        if (!self.isDown) {
-            url = [NSString stringWithFormat:@"chats/2/%@/0",self.toUserId];
-        }else{
-            if (self.lastId) {
-                url = [NSString stringWithFormat:@"chats/2/%@/0?lastId=%@",self.toUserId,self.lastId];
-            }else{
-                self.isDown = NO;
-                url = [NSString stringWithFormat:@"chats/2/%@/0",self.toUserId];
-            }
-        }
+        url = [NSString stringWithFormat:@"orderComment/%@?pageNo=%ld",self.orderModel.orderId,self.pageNo];
     }
     
     [self requestWith:url];
@@ -558,7 +489,7 @@
 
 - (void)requestWith:(NSString *)url{
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.0.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
@@ -570,13 +501,11 @@
             NSMutableArray *newArr = [NSMutableArray new];
             for (NSDictionary *dic in dict[@"data"]) {
                 NoticeChats *model = [NoticeChats mj_objectWithKeyValues:dic];
-                
-                if (model.globText && model.globText.length && model.content_type.intValue != 2) {
-                    model.contentText = model.globText;
+                if (model.resource_type.intValue == 1) {
+                    model.contentText = model.resource_uri;
                 }
-                
-                if (model.content_type.intValue > 11) {
-                    model.content_type = @"10";
+                if (model.resource_type.intValue > 3) {
+                    model.resource_type = @"1";
                     model.contentText = @"请更新到最新版本";
                 }
 
@@ -598,29 +527,6 @@
                 //2.倒序的数组
                 NSArray *reversedArray = [[self.nolmorLdataArr reverseObjectEnumerator] allObjects];
                 self.dataArr = [NSMutableArray arrayWithArray:reversedArray];
-                NoticeChats *lastM = self.dataArr[0];
-                self.chatId = lastM.chat_id;
-                self.lastId = lastM.dialog_id;
-                
-                if (self.isAuto) {//判断对方是否在线
-                    if (self.firstIn) {//第一次进来获取第一个id
-                        NoticeChats *newM = self.dataArr[self.dataArr.count-1];
-                        newM.needMarkAuto = YES;
-                        self.autoId = newM.dialog_id;
-                        self.firstIn = NO;
-                    }else{
-                        for (NoticeChats *allM in self.dataArr) {
-                            if ([allM.dialog_id isEqualToString:self.autoId]) {
-                                allM.needMarkAuto = YES;
-                                break;
-                            }
-                        }
-                    }
-                }else{
-                    for (NoticeChats *allM in self.dataArr) {
-                        allM.needMarkAuto = NO;
-                    }
-                }
             }
             
             [self.tableView reloadData];
@@ -634,10 +540,7 @@
                 self.isFirst = NO;
                 [self scroToBottom];
             }
-            if (!self.chatTiemId) {
-                self.chatTiemId = self.chatId;
-                [self getTimeLast];
-            }
+         
         }
     } fail:^(NSError *error) {
         if ([NoticeComTools pareseError:[NSError new]]) {
@@ -650,17 +553,12 @@
     }];
 }
 
-- (void)getTimeLast{
-    if ([self.navigationItem.title isEqualToString:@"私聊完整对话"] || [self.navigationItem.title isEqualToString:@"悄悄话完整对话"] || self.toUserId.intValue == 1) {
-        return;
-    }
-}
-
 - (void)createRefesh{
     
     __weak SXShoperChatToUseController *ctl = self;
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         ctl.isDown = YES;
+        ctl.pageNo ++;
         [ctl requestData];
     }];
     // 设置颜色
@@ -733,7 +631,7 @@
     self.audioPlayer.playingBlock = ^(CGFloat currentTime) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:weakSelf.currentIndex inSection:weakSelf.currentSection];
         
-        NoticeSCCell *cell = [weakSelf.tableView cellForRowAtIndexPath:indexPath];
+        SXOrderChatCell *cell = [weakSelf.tableView cellForRowAtIndexPath:indexPath];
         if ([[NSString stringWithFormat:@"%.f",currentTime]integerValue] > model.resource_len.integerValue) {
             currentTime = model.resource_len.integerValue;
         }
@@ -861,38 +759,34 @@
     self.noAuto = YES;
     
     NSMutableDictionary * dsendDic = [NSMutableDictionary new];
-    [dsendDic setObject:self.toUserId forKey:@"to"];
-    [dsendDic setObject:@"singleChat" forKey:@"flag"];
+    [dsendDic setObject:[NSString stringWithFormat:@"%@%@",socketADD,self.orderModel.user_id] forKey:@"to"];
+    [dsendDic setObject:@"orderComment" forKey:@"flag"];
     [dsendDic setObject:@"delete" forKey:@"action"];
     
     NSMutableDictionary *messageDic = [NSMutableDictionary new];
-    [messageDic setObject:@"2" forKey:@"chatType"];
-    [messageDic setObject:@"0" forKey:@"voiceId"];
-    [messageDic setObject:self.tapChat.chat_id?self.tapChat.chat_id:@"7777777" forKey:@"chatId"];
-    [messageDic setObject:self.tapChat.dialog_id forKey:@"dialogId"];
+
+    [messageDic setObject:self.tapChat.tuyaDiaLogId forKey:@"id"];
     [dsendDic setObject:messageDic forKey:@"data"];
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [appdel.socketManager sendMessage:dsendDic];
     
     
     for (NoticeChats *chatAll in self.dataArr) {
-        if ([chatAll.dialog_id isEqualToString:self.tapChat.dialogId] || [chatAll.dialog_id isEqualToString:self.tapChat.dialog_id]) {
+        if ([chatAll.tuyaDiaLogId isEqualToString:self.tapChat.tuyaDiaLogId] || [chatAll.tuyaDiaLogId isEqualToString:self.tapChat.tuyaDiaLogId]) {
             [self.dataArr removeObject:chatAll];
- 
             break;
         }
     }
     
     for (NoticeChats *chatAll in self.localdataArr) {
-        if ([chatAll.dialog_id isEqualToString:self.tapChat.dialog_id] || [chatAll.dialog_id isEqualToString:self.tapChat.dialogId]) {
+        if ([chatAll.tuyaDiaLogId isEqualToString:self.tapChat.tuyaDiaLogId] || [chatAll.tuyaDiaLogId isEqualToString:self.tapChat.tuyaDiaLogId]) {
             [self.localdataArr removeObject:chatAll];
-   
             break;
         }
     }
     
     for (NoticeChats *norChat in self.nolmorLdataArr) {
-        if ([norChat.dialog_id isEqualToString:self.tapChat.dialog_id] || [norChat.dialog_id isEqualToString:self.tapChat.dialogId]) {
+        if ([norChat.tuyaDiaLogId isEqualToString:self.tapChat.tuyaDiaLogId] || [norChat.tuyaDiaLogId isEqualToString:self.tapChat.tuyaDiaLogId]) {
             [self.nolmorLdataArr removeObject:norChat];
             break;
         }
@@ -926,13 +820,11 @@
 
     if (chat.is_self.intValue) {//自己的消息
         arr = @[[RXPopMenuItem itemTitle:@"撤回"]];
-        if (self.tapChat.content_type.intValue == 11) {
+        if (self.tapChat.resource_type.intValue == 1) {
             arr = @[[RXPopMenuItem itemTitle:@"撤回"],[RXPopMenuItem itemTitle:@"复制"]];
         }
     }else{
-        if (chat.content_type.intValue == 3) {//图片
-            arr = @[[RXPopMenuItem itemTitle:@"添加表情"],[RXPopMenuItem itemTitle:@"举报"]];
-        }if (self.tapChat.content_type.intValue == 11) {
+        if (self.tapChat.resource_type.intValue == 1) {
             arr = @[[RXPopMenuItem itemTitle:@"举报"],[RXPopMenuItem itemTitle:@"复制"]];
         }
         else{
@@ -947,11 +839,9 @@
     menu.itemActions = ^(RXPopMenuItem *item) {
         if([item.title isEqualToString:@"撤回"]){
             [weak backChatMsg];
-        }else if([item.title isEqualToString:@"添加表情"]){
-            [NoticeAddEmtioTools addEmtionWithUri:weak.tapChat.resource_uri bucktId:weak.tapChat.bucket_id url:weak.tapChat.resource_url];
         }else if([item.title isEqualToString:@"举报"]){
             NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
-            juBaoView.reouceId = weak.tapChat.dialog_id;
+            juBaoView.reouceId = weak.tapChat.tuyaDiaLogId;
             juBaoView.reouceType = @"3";
             [juBaoView showView];
         }else if([item.title isEqualToString:@"复制"]){
@@ -960,62 +850,6 @@
             [pastboard setString:self.tapChat.contentText];
         }
     };
-}
-
-
-
-- (void)clearMemory{
-    __weak typeof(self) weakSelf = self;
-    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:[NoticeTools getLocalStrWith:@"songList.suredele"] message:nil sureBtn:[NoticeTools getLocalStrWith:@"sure.comgir"] cancleBtn:[NoticeTools getLocalStrWith:@"main.cancel"]];
-    alerView.resultIndex = ^(NSInteger index) {
-        if (index == 1) {
- 
-            [weakSelf showHUD];
-            [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"chats/%@",weakSelf.chatId] Accept:nil parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-                [weakSelf hideHUD];
-                if (success) {
-                    [weakSelf showToastWithText:[NoticeTools getLocalStrWith:@"zj.delsus"]];
-                    [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-                }
-            } fail:^(NSError *error) {
-                [weakSelf hideHUD];
-            }];
-        }
-    };
-    [alerView showXLAlertView];
-}
-
-- (void)lahei{
-    __weak typeof(self) weakSelf = self;
-    NoticePinBiView *pinView = [[NoticePinBiView alloc] initWithPinBiView];
-    pinView.ChoiceType = ^(NSInteger type) {
-        [weakSelf showHUD];
-        NSMutableDictionary *parm = [NSMutableDictionary new];
-        [parm setObject:self.toUserId forKey:@"toUserId"];
-        [parm setObject:[NSString stringWithFormat:@"%ld",(long)type] forKey:@"reasonType"];
-        [parm setObject:@"4" forKey:@"resourceType"];
-        [parm setObject:self.toUserId forKey:@"resourceId"];
-        
-        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@/shield",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v3.4+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
-            [weakSelf hideHUD];
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHCHATLISTNOTICION" object:nil];//刷新私聊会话列表
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHCHATLISTNOTICIONHS" object:nil];//刷新悄悄话会话列表
-                [weakSelf showToastWithText:[NoticeTools getLocalStrWith:@"intro.yibp"]];
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"pingbiNotification" object:self userInfo:@{@"userId":self.toUserId}];
-                NoticePinBiView *pinTostView = [[NoticePinBiView alloc] initWithTostViewType:type];
-                pinTostView.ChoiceType = ^(NSInteger types) {
-                    if (types == 5) {
-                        [weakSelf.navigationController popViewControllerAnimated:YES];
-                    }
-                };
-                [pinTostView showTostView];
-            }
-        } fail:^(NSError *error) {
-            [weakSelf hideHUD];
-        }];
-    };
-    [pinView showPinbView];
 }
 
 - (void)setAleryRead:(NoticeChats *)chat{
@@ -1045,74 +879,15 @@
     }
 }
 
-- (void)backClick{
-    BOOL hasFail = NO;
-    for (NoticeChats *chat in self.localdataArr) {
-        if (chat.isFailed) {
-            hasFail = YES;
-            break;
-        }
-    }
-    if (hasFail) {
-        __weak typeof(self) weakSelf = self;
-         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"离开对话后，发送失败的语音将不会保存" message:nil sureBtn:[NoticeTools getLocalStrWith:@"sure.comgir"] cancleBtn:[NoticeTools getLocalStrWith:@"groupManager.rethink"] right:YES];
-        alerView.resultIndex = ^(NSInteger index) {
-            if (index == 1) {
-                [weakSelf.navigationController popViewControllerAnimated:YES];
-            }
-        };
-        
-        [alerView showXLAlertView];
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-- (void)request{
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:nil isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict1, BOOL success) {
-        if (success) {
-            NoticeUserInfoModel *userIn = [NoticeUserInfoModel mj_objectWithKeyValues:dict1[@"data"]];
-            [NoticeSaveModel saveUserInfo:userIn];
-        }
-    } fail:^(NSError *error) {
-    }];
-}
-
-- (void)didReceiveMessage:(id)message{
+- (void)didReceiveOrderChatMessage:(id)message{
   
     NoticeAction *ifDelegate = [NoticeAction mj_objectWithKeyValues:message];
     NoticeChats *chat = [ NoticeChats mj_objectWithKeyValues:message[@"data"]];
-    if (chat.globText && chat.globText.length) {
-        chat.contentText = chat.globText;
-    }
-    if (chat.dialog_content_type.intValue > 11) {
-        chat.dialog_content_type = @"10";
-        chat.contentText = @"请更新到最新版本";
-    }
-    
+  
     if ([chat.flag isEqualToString:@"1"]) {
         return;
     }
-    if ([ifDelegate.flag isEqualToString:@"receiveCard"]) {//领取白噪声
-        if ([chat.from_user_id isEqualToString:[NoticeTools getuserId]] || [chat.to_user_id isEqualToString:[NoticeTools getuserId]]) {
-            for (NoticeChats *achat in self.localdataArr) {
-                if ([achat.dialog_id isEqualToString:chat.dialog_id]) {
-                    achat.whiteModel.receive_status = chat.receive_status;
-                    [self.tableView reloadData];
-                    break;
-                }
-            }
-            for (NoticeChats *achat in self.dataArr) {
-                if ([achat.dialog_id isEqualToString:chat.dialog_id]) {
-                    achat.whiteModel.receive_status = chat.receive_status;
-                    [self.tableView reloadData];
-                    break;
-                }
-            }
-        }
-
-        return;
-    }
+    
     if ([ifDelegate.action isEqualToString:@"delete"]) {
 
         self.noAuto = YES;//收到对方删除的时候，停止自动播放语音
@@ -1144,9 +919,6 @@
         return;
     }
     
-    if (![chat.chat_type isEqualToString:@"2"]) {
-        return;
-    }
     
     chat.read_at = @"0";
     if (![chat.from_user_id isEqualToString:[[NoticeSaveModel getUserInfo]user_id]]) {//当发送人不是自己的时候，需要判断是否是当前会话人发来的消息，不然容易消息错误
@@ -1160,7 +932,7 @@
     
     BOOL alerady = NO;
     for (NoticeChats *olM in self.localdataArr) {//判断是否有重复数据
-        if ([olM.dialog_id isEqualToString:chat.dialog_id]) {
+        if ([olM.tuyaDiaLogId isEqualToString:chat.tuyaDiaLogId]) {
             alerady = YES;
             break;
         }
@@ -1168,15 +940,9 @@
     
     if (!alerady) {
         self.chatId = chat.chat_id;
-        for (int i = 0; i < self.localdataArr.count; i++) {//替代本地音频
-            NoticeChats *localChat = self.localdataArr[i];
-            if (localChat.isLocal && [localChat.dialog_content_uri isEqualToString:chat.dialog_content_uri]) {
-                [self.localdataArr removeObjectAtIndex:i];
-                break;
-            }
-        }
-        if(chat.resource_uri.length < 10 && chat.dialog_content_uri.length > 10){
-            chat.resource_uri = chat.dialog_content_uri;
+
+        if(chat.resource_type.intValue == 1){
+            chat.contentText = chat.resource_uri;
         }
         [self.localdataArr addObject:chat];
         [self.tableView reloadData];
@@ -1185,12 +951,6 @@
             self.messageNum++;
         }
     }
-    
-    if (!self.chatTiemId) {
-        self.chatTiemId = self.chatId;
-        [self getTimeLast];
-    }
-    
     [self scroToBottom];
 }
 
@@ -1201,12 +961,6 @@
     }
     return _cacheArr;
 }
-
-- (void)dealloc{
-    //
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CHANGEYUSEREPLAY" object:nil];
-}
-
 
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{

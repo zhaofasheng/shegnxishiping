@@ -120,42 +120,6 @@
     return self;
 }
 
-- (NoticeShareLineChatView*)shareLineView{
-    if (!_shareLineView) {
-        _shareLineView = [[NoticeShareLineChatView alloc] initWithFrame:CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 117)];
-        [self.contentView addSubview:_shareLineView];
-    }
-    return _shareLineView;
-}
-
-- (NoticeSharePyChatView *)sharepyView{
-    if (!_sharepyView) {
-        _sharepyView = [[NoticeSharePyChatView alloc] initWithFrame:CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 120)];
-        [self.contentView addSubview:_sharepyView];
-    }
-    return _sharepyView;
-}
-
-- (NoticeWhiteCardChatView *)cardView{
-    if (!_cardView) {
-        _cardView = [[NoticeWhiteCardChatView alloc] initWithFrame:CGRectMake(62,_iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 260)];
-        [self.contentView addSubview:_cardView];
-    }
-    return _cardView;
-}
-
-- (NoticeShareLinkCell *)linkView{
-    if (!_linkView) {
-        _linkView = [[NoticeShareLinkCell alloc] initWithFrame:CGRectMake(0, 0, 205, 53)];
-        [self.contentView addSubview:_linkView];
-        _linkView.hidden = YES;
-        UILongPressGestureRecognizer *longPressDeleT3 = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(deleTapT:)];
-        longPressDeleT3.minimumPressDuration = 0.5;
-        [_linkView addGestureRecognizer:longPressDeleT3];
-    }
-    return _linkView;
-}
-
 - (UIView *)sendLevelView{
     if (!_sendLevelView) {
         _sendLevelView = [[UIView alloc] initWithFrame:CGRectMake(self.contentL.frame.origin.x,CGRectGetMaxY(self.contentL.frame), self.contentVL.frame.size.width-self.contentL.frame.origin.x*2, 48)];
@@ -180,13 +144,7 @@
     return _sendLevelView;
 }
 
-- (NoticeShareVoiceChatView *)shareVoiceView{
-    if (!_shareVoiceView) {
-        _shareVoiceView = [[NoticeShareVoiceChatView alloc] initWithFrame:CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 98)];
-        [self.contentView addSubview:_shareVoiceView];
-    }
-    return _shareVoiceView;
-}
+
 
 - (void)deleTapT:(UILongPressGestureRecognizer *)tap{
     if (self.chat.isSaveCace) {
@@ -285,13 +243,7 @@
     
     [self refreshImgUI:chat];
     
-    [self refreshCard];
-    
-    [self refreshShareVoice];
-    
-    [self refreshSharePy];
-    
-    [self refreshShareLine];
+
     //官方标识
     if ([_chat.from_user_id isEqualToString:@"1"] || _chat.from_user_id.intValue == 684699) {
         self.markImage.hidden = NO;
@@ -308,88 +260,11 @@
     //声昔卫士
     [self refreshWeiShi:chat];
     
-    //分享链接
-    [self refreLink];
-    
     if (!self.markImage.hidden) {
         self.markImage.frame = CGRectMake(22+_iconImageView.frame.origin.x, 22+_iconImageView.frame.origin.y,15, 15);
     }
     
 }
-
-//分享的台词
-- (void)refreshShareLine{
-    if (self.chat.content_type.intValue == 8) {
-        self.shareLineView.hidden = NO;
-        self.shareLineView.chat = self.chat;
-        self.shareLineView.frame = CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 117);
-    }else{
-        _shareLineView.hidden = YES;
-    }
-}
-
-//分享的配音
-- (void)refreshSharePy{
-    if (self.chat.content_type.intValue == 7) {
-        self.sharepyView.hidden = NO;
-        self.sharepyView.chat = self.chat;
-        self.sharepyView.frame = CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 120);
-    }else{
-        _sharepyView.hidden = YES;
-    }
-}
-
-//分享的心情
-- (void)refreshShareVoice{
-    if (self.chat.content_type.intValue == 6) {
-        
-        self.shareVoiceView.chat = self.chat;
-        if (self.chat.shareVoiceM.show_status.intValue > 1) {
-            self.shareVoiceView.frame = CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 98);
-        }else{
-            if (self.chat.shareVoiceM.voiceM.img_list.count == 3) {
-                self.shareVoiceView.frame = CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 166);
-            }else if (self.chat.shareVoiceM.voiceM.img_list.count == 2){
-                self.shareVoiceView.frame = CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 186);
-            }else if (self.chat.shareVoiceM.voiceM.img_list.count == 1){
-                self.shareVoiceView.frame = CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 226);
-            }else{
-                self.shareVoiceView.frame = CGRectMake(62, _iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 98);
-            }
-        }
-        self.shareVoiceView.hidden = NO;
-    }else{
-        _shareVoiceView.hidden = YES;
-    }
-}
-
-//赠送的白噪声
-- (void)refreshCard{
-    if (self.chat.content_type.intValue == 4) {
-        self.cardView.hidden = NO;
-        self.cardView.chat = self.chat;
-        self.cardView.frame = CGRectMake(62,_iconImageView.frame.origin.y, DR_SCREEN_WIDTH-62*2, 260);
-    }else{
-        _cardView.hidden = YES;
-    }
-}
-
-//分享的链接
-- (void)refreLink{
-    if (self.chat.content_type.intValue == 5) {
-        self.linkView.shareUrl = self.chat.share_url;
-        self.linkView.hidden = NO;
-        _chat.imgCellHeight = 53;
-        if (self.chat.is_self.integerValue) {
-            self.linkView.frame = CGRectMake(_iconImageView.frame.origin.x-12-205, _iconImageView.frame.origin.y, 205, 53);
-        }else{
-            self.linkView.frame = CGRectMake(CGRectGetMaxX(self.iconImageView.frame)+12, _iconImageView.frame.origin.y, 205, 53);
-        }
-    }else{
-        _linkView.hidden = YES;
-    }
-}
-
 
 //声昔小卫士
 - (void)refreshWeiShi:(NoticeChats *)chat{
@@ -693,15 +568,6 @@
     }else{
         NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
         ctl.userId = _chat.from_user_id;
-        ctl.isOther = YES;
-        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-    }
-}
-
-- (void)sendPeopleTap{
-    if (_chat.content_type.intValue == 9 && _chat.sendUserM && _chat.sendUserM.user_id) {
-        NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
-        ctl.userId = _chat.sendUserM.user_id;
         ctl.isOther = YES;
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
     }

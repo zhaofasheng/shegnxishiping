@@ -71,6 +71,13 @@
     appdel.noPop = NO;
     [self.shopHeaderView.timer invalidate];
     self.shopHeaderView.timer = nil;
+    
+    if (!self.shopModel.is_collection.boolValue) {
+        if (self.cancelLikeBolck) {
+            self.cancelLikeBolck(self.shopModel.shopId);
+        }
+    }
+    
 }
 
 - (void)viewDidLoad {
@@ -216,7 +223,6 @@
     moreView.name = @"快来声昔找我聊聊吧";
     moreView.title = [NSString stringWithFormat:@"%@的咨询主页",self.shopModel.shop_name];
     [moreView showTost];
-
 }
 
 //收藏店铺
@@ -224,10 +230,12 @@
     if (!self.shopDetailM) {
         return;
     }
+    
     if ([self.shopModel.user_id isEqualToString:[NoticeTools getuserId]]) {
         [self showToastWithText:@"不能收藏自己的店铺哦~"];
         return;
     }
+    
     [self showHUD];
     self.shopModel.is_collection = self.shopModel.is_collection.boolValue?@"0":@"1";
     [self.likeBtn setImage:self.shopModel.is_collection.boolValue?UIImageNamed(@"sx_likeshopn_img"): UIImageNamed(@"sx_likeshop_img") forState:UIControlStateNormal];
@@ -248,9 +256,7 @@
 
 - (void)dealloc{
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"leaveShopInfo/%@",self.shopModel.shopId] Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-       
     } fail:^(NSError * _Nullable error) {
-     
     }];
 }
 

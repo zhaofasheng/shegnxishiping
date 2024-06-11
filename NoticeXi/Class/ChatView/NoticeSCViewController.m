@@ -9,8 +9,6 @@
 #import "NoticeSCViewController.h"
 #import "NoticeSCCell.h"
 #import "NoticeXi-Swift.h"
-#import "NoticeSetYuReplyController.h"
-#import "NoticeYuSetModel.h"
 #import "NoticeChatTitleView.h"
 #import "NoticeAction.h"
 #import "NoticeClipImage.h"
@@ -18,12 +16,11 @@
 #import "NoticeNoReandView.h"
 #import "NoticeSaveVoiceTools.h"
 #import "NoticeHasCenterData.h"
-#import "NoticeDefaultMessageView.h"
 #import "NoticeAddEmtioTools.h"
 #import "SXChatInputView.h"
 #import "RXPopMenu.h"
 #import "SXSendChatTools.h"
-@interface NoticeSCViewController ()<NoticeReceveMessageSendMessageDelegate,NoticeSCDeledate,LCActionSheetDelegate,NewSendTextDelegate,NoticeSendDefaultClickDelegate,UINavigationControllerDelegate>
+@interface NoticeSCViewController ()<NoticeReceveMessageSendMessageDelegate,NoticeSCDeledate,LCActionSheetDelegate,NewSendTextDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong) SXChatInputView *chatInputView;
 
 @property (nonatomic, strong) SXSendChatTools *sendTools;
@@ -72,7 +69,6 @@
 @property (nonatomic, assign) CGFloat tableViewOrinY;
 @property (nonatomic, strong) NoticeChats *reSendChat;
 @property (nonatomic, assign) BOOL isLinkUrl;
-@property (nonatomic, strong)UIImagePickerController *imagePickerController;
 
 
 @property (nonatomic, strong) NSMutableArray *yuseArr;
@@ -404,38 +400,8 @@
         
         return 28+chat.textHeight+16+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
     }
-    
-    if (chat.content_type.intValue == 5) {//显示分享链接
-        return 28+53+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-    }
-    if (chat.content_type.intValue == 6){//显示分享的心情
-        if (chat.shareVoiceM.show_status.intValue > 1 ) {
-            return 28+98+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-        }
-        
-        if (chat.shareVoiceM.voiceM.img_list.count) {
-            if (chat.shareVoiceM.voiceM.img_list.count == 3) {
-                return 28+166+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-            }else if (chat.shareVoiceM.voiceM.img_list.count == 2){
-                return 28+186+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-            }else{
-                return 28+226+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-            }
-        }else{
-            return 28+98+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-        }
-    }
-    if (chat.content_type.intValue == 4) {//显示白噪声卡
-        return 28+260+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-    }
-    if (chat.content_type.intValue == 7) {//显示配音
-        return 28+120+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-    }
-    if (chat.content_type.intValue == 8) {//显示台词
-        return 28+117+(chat.needMarkAuto ? 30 : 0)+ (chat.offline_prompt ? 55 : 0);
-    }
+
     if (chat.isShowTime) {
-      
         if (chat.content_type.intValue == 1) {
             return 45+28+16+(chat.needMarkAuto ? 30 : 0) + (chat.offline_prompt ? 55 : 0) + ([[[NoticeSaveModel getUserInfo] user_id] isEqualToString:@"1"] ? ((chat.dialog_content.length? (chat.contentHeight+15) : 0)) : 0);
             
@@ -907,14 +873,7 @@
 }
 
 - (void)actionClick{
-    if([[NoticeTools getuserId] isEqualToString:@"1"]){
-        LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
-        } otherButtonTitleArray:@[@"预设回复语",@"发送密码"]];
-        self.moreSheet = sheet;
-        sheet.delegate = self;
-        [sheet show];
-        return;
-    }
+
     if (self.isKeFu) {
         LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
         } otherButtonTitleArray:@[@"删除交流记录(对方记录也会删除)"]];
@@ -937,15 +896,6 @@
     if (actionSheet == self.failSheet) {
         return;
     }
-    if([[NoticeTools getuserId] isEqualToString:@"1"] && actionSheet == self.moreSheet){
-        if(buttonIndex == 1){
-            [self sendDefault];
-        }else if (buttonIndex == 2){
-            [self sendpasswordMsg];
-        }
-        return;
-    }
-
 
     if (self.isKeFu) {
         if (buttonIndex == 1) {
@@ -1094,38 +1044,6 @@
     [alerView showXLAlertView];
 }
 
-- (void)lahei{
-    __weak typeof(self) weakSelf = self;
-    NoticePinBiView *pinView = [[NoticePinBiView alloc] initWithPinBiView];
-    pinView.ChoiceType = ^(NSInteger type) {
-        [weakSelf showHUD];
-        NSMutableDictionary *parm = [NSMutableDictionary new];
-        [parm setObject:self.toUserId forKey:@"toUserId"];
-        [parm setObject:[NSString stringWithFormat:@"%ld",(long)type] forKey:@"reasonType"];
-        [parm setObject:@"4" forKey:@"resourceType"];
-        [parm setObject:self.toUserId forKey:@"resourceId"];
-        
-        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@/shield",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v3.4+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
-            [weakSelf hideHUD];
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHCHATLISTNOTICION" object:nil];//刷新私聊会话列表
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHCHATLISTNOTICIONHS" object:nil];//刷新悄悄话会话列表
-                [weakSelf showToastWithText:[NoticeTools getLocalStrWith:@"intro.yibp"]];
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"pingbiNotification" object:self userInfo:@{@"userId":self.toUserId}];
-                NoticePinBiView *pinTostView = [[NoticePinBiView alloc] initWithTostViewType:type];
-                pinTostView.ChoiceType = ^(NSInteger types) {
-                    if (types == 5) {
-                        [weakSelf.navigationController popViewControllerAnimated:YES];
-                    }
-                };
-                [pinTostView showTostView];
-            }
-        } fail:^(NSError *error) {
-            [weakSelf hideHUD];
-        }];
-    };
-    [pinView showPinbView];
-}
 
 - (void)setAleryRead:(NoticeChats *)chat{
     if (self.chatDetailId) {
@@ -1338,123 +1256,6 @@
         }
     } fail:^(NSError * _Nullable error) {
     }];
-}
-
-- (void)sendpasswordMsg{
-   
-}
-
-//发送预设语音
-- (void)sendDefault{
-    NoticeDefaultMessageView *defautView = [[NoticeDefaultMessageView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-    defautView.delegate = self;
-    defautView.dataArr = self.yuseArr;
-    defautView.imgArr = self.yuseImgArr;
-    [defautView.tableView reloadData];
-    [defautView show];
-}
-
-- (void)sendMessageWithDefault:(NoticeYuSetModel *)model{
-    NSMutableDictionary *messageDic = [NSMutableDictionary new];
-    [messageDic setObject:@"0" forKey:@"voiceId"];
-    [messageDic setObject:model.bucket_id?model.bucket_id:@"0" forKey:@"bucketId"];
-    [messageDic setObject:model.resource_type forKey:@"dialogContentType"];
-    [messageDic setObject:model.resource_uri forKey:@"dialogContentUri"];
-    [messageDic setObject:model.resource_len forKey:@"dialogContentLen"];
-    [self.sendTools.sendDic setObject:messageDic forKey:@"data"];
-    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [appdel.socketManager sendMessage:self.sendTools.sendDic];
-}
-
-
-//加载预设数据
-- (void)requestYUse:(BOOL)neeShow{
-    if (![[[NoticeSaveModel getUserInfo] user_id] isEqualToString:@"1"]) {
-        return;
-    }
-    if (neeShow) {
-        [self showHUD];
-    }
-    self.yuseImgArr = [[NSMutableArray alloc] init];
-    self.yuseArr = [NSMutableArray new];
-    self.yuseStrArr = [NSMutableArray new];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"user/%@/defaultReply",[[NoticeSaveModel getUserInfo] user_id]] Accept:nil isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-        [self hideHUD];
-        if (success) {
-            if ([dict[@"data"] isEqual:[NSNull null]]) {
-                return ;
-            }
-            [self.yuseImgArr removeAllObjects];
-            [self.yuseArr removeAllObjects];
-            BOOL hasData = NO;
-            for (NSDictionary *dic in dict[@"data"]){
-                NoticeYuSetModel *model = [NoticeYuSetModel mj_objectWithKeyValues:dic];
-                model.isTrueStr = YES;
-                if (model.resource_type.intValue == 1) {
-                    [self.yuseArr addObject:model];
-                }else{
-                    [self.yuseImgArr addObject:model];
-                }
-                [self.yuseStrArr addObject:model];
-                hasData = YES;
-            }
-            
-            if (self.yuseStrArr.count) {
-                NoticeYuSetModel *lastM = self.yuseStrArr[self.yuseStrArr.count-1];
-                self.yuseLastId = lastM.reply_sort;
-            }
-            if (hasData) {
-                [self getMore];
-            }
-            [self.tableView reloadData];
-        }
-    } fail:^(NSError *error) {
-        [self hideHUD];
-    }];
-}
-
-- (void)getMore{
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"user/%@/defaultReply?lastSort=%@",[[NoticeSaveModel getUserInfo] user_id],self.yuseLastId] Accept:nil isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-        [self hideHUD];
-        if (success) {
-            if ([dict[@"data"] isEqual:[NSNull null]]) {
-                return ;
-            }
-            BOOL hasData = NO;
-            for (NSDictionary *dic in dict[@"data"]){
-                NoticeYuSetModel *model = [NoticeYuSetModel mj_objectWithKeyValues:dic];
-                model.isTrueStr = YES;
-                [self.yuseStrArr addObject:model];
-                if (model.resource_type.intValue == 1) {
-                    [self.yuseArr addObject:model];
-                }else{
-                    [self.yuseImgArr addObject:model];
-                }
-                hasData = YES;
-            }
-            
-            if (self.yuseStrArr.count) {
-                NoticeYuSetModel *lastM = self.yuseStrArr[self.yuseStrArr.count-1];
-                self.yuseLastId = lastM.reply_sort;
-            }
-            if (hasData) {
-                [self getMore];
-            }
-            [self.tableView reloadData];
-        }
-    } fail:^(NSError *error) {
-        [self hideHUD];
-    }];
-}
-
-- (void)setYuseClick{
-    NoticeSetYuReplyController *ctl = [[NoticeSetYuReplyController alloc] init];
-    [self.navigationController pushViewController:ctl animated:YES];
-}
-
-
-- (void)requestReplay{
-    [self requestYUse:NO];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{

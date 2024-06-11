@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *sys;
 @property (nonatomic, strong) NoticeStayMesssage *sysM;
 
+@property (nonatomic, strong) NSDictionary *order_comment;
+@property (nonatomic, strong) NoticeStayMesssage *orderComNum;
+
 @property (nonatomic, strong) NSDictionary *bbs;
 @property (nonatomic, strong) NoticeStayMesssage *bbsM;
 

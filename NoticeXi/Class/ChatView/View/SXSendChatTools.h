@@ -47,9 +47,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///   - text: 文本内容
 ///   - chatM: 引用消息，如果存在，代表是引用谁的消息
 - (void)sendTextWith:(NSString *)text;
-
+@property (nonatomic, strong) NSMutableDictionary *sendOrderComDic;
 @property (nonatomic, strong) NSMutableDictionary *sendDic;
 @property (nonatomic, strong) NSString *toUser;
+@property (nonatomic, strong) NSString *orderId;
 @end
 
 NS_ASSUME_NONNULL_END

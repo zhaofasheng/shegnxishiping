@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat cellHeihgt;
 @property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, assign) BOOL isFinish;//是否加载完图片
-@property (nonatomic, strong) NSString *tuyaDiaLogId;//只限涂鸦对话操作使用
+@property (nonatomic, strong) NSString *tuyaDiaLogId;//只限涂鸦和订单留言对话操作使用
 @property (nonatomic, strong) NSString *chat_type;
 @property (nonatomic, strong) NSString *dialog_content_uri;//校验数据
 @property (nonatomic, strong) NSString *offline_prompt;
@@ -104,6 +104,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSDictionary *toUserInfo;
 @property (nonatomic, strong) NoticeUserInfoModel *sendUserM;
+
+@property (nonatomic, strong) NSString *shop_id;
+@property (nonatomic, strong) NSString *shop_avatar;
 @end
 
 NS_ASSUME_NONNULL_END

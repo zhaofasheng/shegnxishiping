@@ -1,0 +1,62 @@
+//
+//  SXOrderChatCell.h
+//  NoticeXi
+//
+//  Created by 赵小二 on 2024/6/11.
+//  Copyright © 2024 zhaoxiaoer. All rights reserved.
+//
+
+#import "BaseCell.h"
+#import "NoiticePlayerView.h"
+#import "NoticeChats.h"
+#import "NoticeChangeTextView.h"
+NS_ASSUME_NONNULL_BEGIN
+
+@protocol NoticeOrderChatDeledate <NSObject>
+
+@optional
+- (void)longTapCancelWithSection:(NSInteger)section tag:(NSInteger)tag tapView:(UIView *)tapView;
+- (void)startPlayAndStop:(NSInteger)tag section:(NSInteger)section;
+- (void)startRePlayAndStop:(NSInteger)tag section:(NSInteger)section;
+- (void)beginDrag:(NSInteger)tag section:(NSInteger)section;
+- (void)endDrag:(NSInteger)tag section:(NSInteger)section;
+- (void)dragingFloat:(CGFloat)dratNum index:(NSInteger)tag section:(NSInteger)section;
+- (void)failReSend:(NSInteger)section row:(NSInteger)row chatM:(NoticeChats *)chat;
+
+
+@end
+
+@interface SXOrderChatCell : BaseCell<NoticePlayerNumbersDelegate>
+@property (nonatomic, weak) id<NoticeOrderChatDeledate>delegate;
+@property (nonatomic, strong) YYAnimatedImageView *sendImageView;
+@property (nonatomic, strong) UIImageView *iconImageView;
+@property (nonatomic, strong) UIImageView *iconMarkView;
+@property (nonatomic, strong) UIImageView *markImage;
+@property (nonatomic, strong) UIButton *failButton;
+@property (nonatomic, strong) UILabel *timeL;
+@property (nonatomic, strong) UIView *redView;
+@property (nonatomic, strong) NoiticePlayerView *playerView;
+@property (nonatomic, strong) NoticeChats *chat;
+@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, assign) NSInteger section;
+@property (nonatomic, strong) NSString *toUserId;
+@property (nonatomic, assign) BOOL needHelp;
+@property (nonatomic, assign) BOOL noLongTap;
+@property (nonatomic, assign) BOOL isServeChat;
+@property (nonatomic, assign) BOOL isLead;//新手指南
+@property (nonatomic, strong) NSIndexPath *currentPath;
+@property (nonatomic, strong) NSMutableArray *lagerPhotoArr;
+@property (nonatomic,copy) void (^refreshHeightBlock)(NSIndexPath *indxPath);
+
+@property (nonatomic, strong) UILabel *contentL;
+@property (nonatomic, strong) UIView *contentVL;
+
+
+@property (nonatomic, strong) UIView *sendLevelView;
+@property (nonatomic, strong) UIImageView *sendIconImageView;
+@property (nonatomic, strong) UILabel *sendNameL;
+
+@property (nonatomic, strong) NSString *mangagerCode;
+@end
+
+NS_ASSUME_NONNULL_END
