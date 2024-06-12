@@ -27,10 +27,6 @@
         [self.iconImageView setAllCorner:4];
         [backView addSubview:self.iconImageView];
         
-        self.shopNameL = [[UILabel  alloc] initWithFrame:CGRectMake(80, 43, DR_SCREEN_WIDTH-30-80,21)];
-        self.shopNameL.font = FIFTHTEENTEXTFONTSIZE;
-        self.shopNameL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        [backView addSubview:self.shopNameL];
         
         self.timeL = [[UILabel  alloc] initWithFrame:CGRectMake(80, 72, DR_SCREEN_WIDTH-30-80,18)];
         self.timeL.font = THRETEENTEXTFONTSIZE;
@@ -45,9 +41,45 @@
         self.chatTouseBtn.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
         [backView addSubview:self.chatTouseBtn];
         [self.chatTouseBtn addTarget:self action:@selector(chatClick) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.shopNameL = [[UILabel  alloc] initWithFrame:CGRectMake(80, 43, DR_SCREEN_WIDTH-80-30-95,21)];
+        self.shopNameL.font = FIFTHTEENTEXTFONTSIZE;
+        self.shopNameL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [backView addSubview:self.shopNameL];
     }
     return self;
 }
+
+- (void)setLyModel:(NoticeOrderListModel *)lyModel{
+    _lyModel = lyModel;
+    self.orderL.text = [NSString stringWithFormat:@"订单编号：%@",lyModel.sn];
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:lyModel.goods_img_url]];
+    self.shopNameL.text = lyModel.goods_name;
+    self.timeL.text =  [self getMMSSFromSS:lyModel.voice_duration];
+}
+
+-(NSString *)getMMSSFromSS:(NSString *)totalTime{
+ 
+    NSInteger seconds = [totalTime integerValue];
+ 
+    //format of hour
+    NSString *str_hour = [NSString stringWithFormat:@"%02ld",seconds/3600];
+    //format of minute
+    NSString *str_minute = [NSString stringWithFormat:@"%02ld",(seconds%3600)/60];
+    //format of second
+    NSString *str_second = [NSString stringWithFormat:@"%02ld",seconds%60];
+    //format of time
+    if(str_hour.intValue){
+        return [NSString stringWithFormat:@"%@时%@分%@秒",str_hour.intValue?str_hour:@"0",str_minute.intValue?str_minute:@"0",str_second.intValue?str_second:@"0"];
+    }else{
+        if(str_minute.intValue){
+            return [NSString stringWithFormat:@"%@分%@秒",str_minute.intValue?str_minute:@"0",str_second.intValue?str_second:@"0"];
+        }else{
+            return [NSString stringWithFormat:@"%@秒",str_second.intValue?str_second:@"0"];
+        }
+    }
+}
+
 
 - (void)chatClick{
     

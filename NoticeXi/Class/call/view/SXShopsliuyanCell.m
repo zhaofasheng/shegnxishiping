@@ -26,7 +26,7 @@
         [self.contentView addSubview:_iconImageView];
         
         self.markImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)-14, CGRectGetMaxY(_iconImageView.frame)-14,14, 14)];
-        self.markImage.image = UIImageNamed(@"jlzb_img");
+        self.markImage.image = UIImageNamed(@"sxrenztub_img");
         [self.contentView addSubview:self.markImage];
         self.markImage.hidden = YES;
                 
@@ -63,6 +63,21 @@
 
     }
     return self;
+}
+
+- (void)setLyModel:(NoticeOrderListModel *)lyModel{
+    _lyModel = lyModel;
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:lyModel.shop_avatar_url]];
+    self.nickNameL.text = lyModel.shop_name;
+    
+    self.infoL.text = lyModel.liuyModel.resource_type.intValue == 1 ? lyModel.liuyModel.resource_uri : (lyModel.liuyModel.resource_type.intValue==3?@"[语音]":@"[图片]");
+    self.timeL.text = lyModel.liuyModel.created_at;
+    
+    _numL.frame = CGRectMake(DR_SCREEN_WIDTH-((GET_STRWIDTH(lyModel.unread_comment_num, 9, 14)+5)>14?(GET_STRWIDTH(lyModel.unread_comment_num, 9, 14)+5):14)-15, 39, ((GET_STRWIDTH(lyModel.unread_comment_num, 9, 14)+5)>14?(GET_STRWIDTH(lyModel.unread_comment_num, 9, 14)+5):14), 14);
+    _numL.hidden = !lyModel.unread_comment_num.intValue;
+    _numL.text = lyModel.unread_comment_num;
+    
+    self.markImage.hidden = lyModel.is_certified.boolValue?NO:YES;
 }
 
 - (void)userInfoTap{

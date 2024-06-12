@@ -57,6 +57,12 @@
         self.marksL.font = FOURTHTEENTEXTFONTSIZE;
         self.marksL.textColor = [UIColor colorWithHexString:@"#25262E"];
         [backView addSubview:self.marksL];
+        
+        if ([NoticeTools isManager]) {
+            UILongPressGestureRecognizer *longPressDeleT = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(deleTapT:)];
+            longPressDeleT.minimumPressDuration = 0.5;
+            [self.contentView addGestureRecognizer:longPressDeleT];
+        }
     }
     return self;
 }
@@ -114,6 +120,14 @@
         self.deleteSureBlock(self.commentModel);
     }
 }
+
+- (void)deleTapT:(UILongPressGestureRecognizer *)tap{
+   
+    if (tap.state == UIGestureRecognizerStateBegan) {
+        [self deleteClick];
+    }
+}
+
 
 - (UIButton *)deleteButton{
     if(!_deleteButton){

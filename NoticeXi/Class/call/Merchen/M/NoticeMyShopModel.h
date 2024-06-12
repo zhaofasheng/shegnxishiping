@@ -87,6 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *categoryNameArr;
 
 @property (nonatomic, strong) NSString *goods_num;//商品数量
+@property (nonatomic, strong) NSString *top_time;//置顶状态(大于0 表示已置顶)
 @end
 
 NS_ASSUME_NONNULL_END

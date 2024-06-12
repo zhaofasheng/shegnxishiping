@@ -26,4 +26,8 @@
     }
 }
 
+- (void)setOrder_comment:(NSDictionary *)order_comment{
+    _order_comment = order_comment;
+    self.liuyModel = [SXShopLyStoryModel mj_objectWithKeyValues:order_comment];
+}
 @end

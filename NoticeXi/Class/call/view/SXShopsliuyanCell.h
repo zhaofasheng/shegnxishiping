@@ -7,14 +7,15 @@
 //
 
 #import "BaseCell.h"
-
+#import "NoticeOrderListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXShopsliuyanCell : BaseCell
-@property (nonatomic, strong) UIImageView *iconImageView;
 
+@property (nonatomic, strong) NoticeOrderListModel *lyModel;
 @property (nonatomic, strong) UIImageView *markImage;
 @property (nonatomic, strong) UILabel *timeL;
+@property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *nickNameL;
 @property (nonatomic, strong) UILabel *infoL;
 @property (nonatomic, strong) UILabel *numL;

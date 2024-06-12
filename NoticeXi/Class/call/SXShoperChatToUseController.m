@@ -22,6 +22,7 @@
 #import "SXChatInputView.h"
 #import "RXPopMenu.h"
 #import "SXSendChatTools.h"
+#import "NoticdShopDetailForUserController.h"
 @interface SXShoperChatToUseController ()<NoticeReceveMessageSendMessageDelegate,NoticeOrderChatDeledate,LCActionSheetDelegate,NewSendTextDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong) SXShopChatTouserHeadere *headerView;
 @property (nonatomic, strong) SXChatInputView *chatInputView;
@@ -69,6 +70,10 @@
 @property (nonatomic, assign) CGFloat tableViewOrinY;
 @property (nonatomic, strong) NoticeChats *reSendChat;
 
+@property (nonatomic, strong) UIView *userView;
+@property (nonatomic, strong) UIImageView *markImage;
+@property (nonatomic, strong) UIImageView *iconImageView;
+@property (nonatomic, strong) UILabel *nickNameL;
 
 @property (nonatomic, assign) NSInteger oldSelectIndex;
 @property (nonatomic, assign) BOOL isReplay;
@@ -103,10 +108,59 @@
     [self.tableView registerClass:[SXOrderChatCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.backgroundColor = self.view.backgroundColor;
     
-    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91-NAVIGATION_BAR_HEIGHT);
+    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
     self.chatInputView = [[SXChatInputView alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91, DR_SCREEN_WIDTH, 91)];
 
     [self.view addSubview:self.chatInputView];
+    
+    if (self.isbuyer) {
+        UILabel *markL = [[UILabel  alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT+8, DR_SCREEN_WIDTH, 32)];
+        markL.text = @"添加陌生人聊天账号需谨慎，请勿随意向陌生人转账";
+        markL.textAlignment = NSTextAlignmentCenter;
+        markL.font = TWOTEXTFONTSIZE;
+        markL.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        markL.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
+        [self.view addSubview:markL];
+        
+        _userView = [[UIView  alloc] initWithFrame:CGRectMake(59, STATUS_BAR_HEIGHT, DR_SCREEN_WIDTH-69, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
+        [self.navBarView addSubview:_userView];
+        
+        //头像
+        _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,(_userView.frame.size.height-44)/2,44, 44)];
+        _iconImageView.layer.cornerRadius = 22;
+        _iconImageView.layer.masksToBounds = YES;
+        _iconImageView.userInteractionEnabled = YES;
+        [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.orderModel.shop_avatar_url]];
+        [_userView addSubview:_iconImageView];
+        
+        self.markImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)-16, CGRectGetMaxY(_iconImageView.frame)-16,16, 16)];
+        self.markImage.image = UIImageNamed(@"sxrenztub_img");
+        [_userView addSubview:self.markImage];
+        self.markImage.hidden = self.orderModel.is_certified.boolValue?NO:YES;
+                
+        //昵称
+        _nickNameL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)+8,0,180, _userView.frame.size.height)];
+        _nickNameL.font = XGEightBoldFontSize;
+        _nickNameL.text = self.orderModel.shop_user_id;
+        _nickNameL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [_userView addSubview:_nickNameL];
+        
+        UIButton *lookBtn = [[UIButton  alloc] initWithFrame:CGRectMake(_userView.frame.size.width-72-15, (_userView.frame.size.height-32)/2, 72, 32)];
+        lookBtn.layer.cornerRadius = 16;
+        lookBtn.layer.masksToBounds = YES;
+        //渐变色
+        CAGradientLayer *gradientLayer = [[CAGradientLayer alloc] init];
+        gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FFA2CC"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#FF60B3"].CGColor];//#FF3C92
+        gradientLayer.startPoint = CGPointMake(0, 1);
+        gradientLayer.endPoint = CGPointMake(1, 1);
+        gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(lookBtn.frame), CGRectGetHeight(lookBtn.frame));
+        [lookBtn.layer addSublayer:gradientLayer];
+        [lookBtn setTitle:@"进店看看" forState:UIControlStateNormal];
+        [lookBtn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
+        lookBtn.titleLabel.font = TWOTEXTFONTSIZE;
+        [_userView addSubview:lookBtn];
+        [lookBtn addTarget:self action:@selector(lookClick) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     [self funForInputView];
     
@@ -125,6 +179,14 @@
     if (self.toUserId) {
         [self.tableView.mj_header beginRefreshing];
     }
+}
+
+- (void)lookClick{
+    NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+    NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
+    model.shopId = self.orderModel.shop_id;
+    ctl.shopModel = model;
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 - (SXSendChatTools *)sendTools{
@@ -250,7 +312,7 @@
 
     
     self.chatInputView.orignYBlock = ^(CGFloat y) {
-        weakSelf.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, y-NAVIGATION_BAR_HEIGHT);
+        weakSelf.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, y-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
         weakSelf.canLoad = YES;
         [weakSelf scroToBottom];
     };
@@ -842,7 +904,7 @@
         }else if([item.title isEqualToString:@"举报"]){
             NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
             juBaoView.reouceId = weak.tapChat.tuyaDiaLogId;
-            juBaoView.reouceType = @"3";
+            juBaoView.reouceType = @"150";
             [juBaoView showView];
         }else if([item.title isEqualToString:@"复制"]){
             [self showToastWithText:@"已复制"];
@@ -856,9 +918,8 @@
    
     chat.read_at = [NoticeTools getNowTimeTimestamp];
     [self.tableView reloadData];
-    NSMutableDictionary *parm = [NSMutableDictionary new];
-    [parm setObject:chat.read_at forKey:@"readAt"];
-    [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"chats/%@/%@",chat.chat_id,chat.dialog_id] Accept:nil parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
+
+    [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"orderComment/read/%@",chat.tuyaDiaLogId] Accept:@"application/vnd.shengxi.v5.8.3+json" parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
     } fail:^(NSError *error) {
         
     }];
@@ -883,7 +944,7 @@
   
     NoticeAction *ifDelegate = [NoticeAction mj_objectWithKeyValues:message];
     NoticeChats *chat = [ NoticeChats mj_objectWithKeyValues:message[@"data"]];
-  
+
     if ([chat.flag isEqualToString:@"1"]) {
         return;
     }
@@ -922,7 +983,7 @@
     
     chat.read_at = @"0";
     if (![chat.from_user_id isEqualToString:[[NoticeSaveModel getUserInfo]user_id]]) {//当发送人不是自己的时候，需要判断是否是当前会话人发来的消息，不然容易消息错误
-        if (![chat.from_user_id isEqualToString:self.toUserId]) {//别人发来的消息，判断是否是当前对话人
+        if (![chat.to_user_id isEqualToString:[NoticeTools getuserId]]) {//别人发来的消息，判断是否是当前对话人
    
             return;
         }
@@ -966,7 +1027,7 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
 
     [self.chatInputView regFirst];
-    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91-NAVIGATION_BAR_HEIGHT);
+    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{

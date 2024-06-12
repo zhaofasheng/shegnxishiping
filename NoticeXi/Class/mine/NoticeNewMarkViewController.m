@@ -62,6 +62,8 @@
         str = @"关闭后，手机将不再接收视频评论消息通知";
         if (tag == 1) {
             str = @"关闭后，手机将不再接收视频评论的点赞消息通知";
+        }else if (tag == 2){
+            str = @"关闭后，手机将不再接收店铺留言的消息通知";
         }
     }else if(section == 3){
         str = @"关闭后，购买课程内容更新时不再接受推送提醒";
@@ -93,7 +95,7 @@
         }else if(tag == 1){
             [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"likeRemind"];
         }else{
-            
+            [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"orderCommentRemind"];
         }
     }
     [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"users/%@/setting",[[NoticeSaveModel getUserInfo] user_id]] Accept:nil parmaer:parm page:0 success:^(NSDictionary *dict, BOOL success) {
@@ -135,7 +137,7 @@
         }else if (indexPath.row == 2){
             [cell.backView setCornerOnBottom:8];
             cell.mainL.text = @"店铺留言消息";
-            cell.switchButton.on = self.noticeM.like_remind.boolValue;
+            cell.switchButton.on = self.noticeM.order_comment.boolValue;
         }
     }
     else if (indexPath.section == 3){

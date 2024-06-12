@@ -79,8 +79,39 @@
         self.sexImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.nickNameL.frame)+2, self.nickNameL.frame.origin.y+3, 16, 16)];
         self.sexImageView.image = UIImageNamed(@"sx_shop_male");//sx_shop_fale女
         [self.backView addSubview:self.sexImageView];
+        
+        if ([NoticeTools isManager]) {
+            UILongPressGestureRecognizer *longPressDeleT = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(deleTapT:)];
+            longPressDeleT.minimumPressDuration = 0.5;
+            [self.contentView addGestureRecognizer:longPressDeleT];
+        }
     }
     return self;
+}
+
+- (void)deleTapT:(UILongPressGestureRecognizer *)tap{
+   
+    if (tap.state == UIGestureRecognizerStateBegan) {
+        LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
+        } otherButtonTitleArray:@[self.shopM.top_time.intValue?@"取消置顶店铺":@"设为置顶店铺"]];
+        sheet.delegate = self;
+        [sheet show];
+    }
+}
+
+
+- (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/%@/top/%@",self.shopM.shopId,self.shopM.top_time.intValue?@"2":@"1"] Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            
+            if (success) {
+                self.shopM.top_time = self.shopM.top_time.intValue?@"0":@"68";
+                [[NoticeTools getTopViewController] showToastWithText:self.shopM.top_time.intValue?@"已置顶":@"已取消置顶"];
+            }
+        } fail:^(NSError * _Nullable error) {
+            
+        }];
+    }
 }
 
 - (void)setShopM:(NoticeMyShopModel *)shopM{

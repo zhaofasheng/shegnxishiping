@@ -201,7 +201,34 @@
     NoticeShopChatCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.isUserView = self.isUserLookShop;
     cell.commentModel = self.comArr[indexPath.row];
+    __weak typeof(self) weakSelf = self;
+    cell.deleteSureBlock = ^(NoticeShopCommentModel * _Nonnull commentM) {
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定删除当前评价吗？" message:nil sureBtn:@"再想想" cancleBtn:@"删除" right:YES];
+       alerView.resultIndex = ^(NSInteger index) {
+           if (index == 2) {
+               [weakSelf deleteCom:commentM];
+           }
+       };
+       [alerView showXLAlertView];
+    };
     return cell;
+}
+
+- (void)deleteCom:(NoticeShopCommentModel *)model{
+    
+    [self showHUD];
+    [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"shopGoodsOrder/delComment/%@",model.comId] Accept:@"application/vnd.shengxi.v5.5.0+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if(success){
+            [self showToastWithText:@"已删除"];
+           
+            [self.comArr removeObject:model];
+            [self.tableView reloadData];
+           
+        }
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

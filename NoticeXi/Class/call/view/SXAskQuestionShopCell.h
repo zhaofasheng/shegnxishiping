@@ -10,7 +10,7 @@
 #import "NoticeMyShopModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SXAskQuestionShopCell : UICollectionViewCell<UITableViewDelegate,UITableViewDataSource>
+@interface SXAskQuestionShopCell : UICollectionViewCell<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate>
 @property (nonatomic, strong) UIView *callView;
 @property (nonatomic, strong) UILabel *tagL;
 @property (nonatomic, strong) UILabel *moneyL;

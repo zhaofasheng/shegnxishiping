@@ -7,13 +7,13 @@
 //
 
 #import "SXOrderChatCell.h"
-
+#import "NoticdShopDetailForUserController.h"
+#import "NoticeMyJieYouShopController.h"
 @implementation SXOrderChatCell
 {
     UIButton *_rePlayView;//重播点击,点击重播，就重头开始播放
     UIButton *_tapBtn;
 }
-
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     
@@ -30,7 +30,6 @@
         [_iconImageView addGestureRecognizer:iconTap];
         [self.contentView addSubview:_iconImageView];
         
-
         
         self.contentVL = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame), _iconImageView.frame.origin.y, 0, 0)];
         self.contentVL.backgroundColor = [NoticeTools getWhiteColor:@"#F7F7F7" NightColor:@"#212137"];
@@ -92,7 +91,6 @@
         
         self.userInteractionEnabled = YES;
    
-      
         UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGestureRecognized:)];
         longPress.minimumPressDuration = 0.5;
         [self.playerView addGestureRecognizer:longPress];
@@ -285,7 +283,7 @@
                 self.contentL.textColor = [UIColor colorWithHexString:@"#14151A"];
                 self.contentVL.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
                 _iconImageView.frame = CGRectMake(15,30, 35, 35);
-                self.contentVL.frame = CGRectMake(CGRectGetMaxX(_iconImageView.frame)+10, _iconImageView.frame.origin.y, _chat.textWidth+15, _chat.textHeight+58);
+                self.contentVL.frame = CGRectMake(CGRectGetMaxX(_iconImageView.frame)+10, _iconImageView.frame.origin.y, _chat.textWidth+15, _chat.textHeight);
                 self.contentL.frame = CGRectMake(_chat.contentText.length<4?7: 10,0, _chat.textWidth, _chat.textHeight);
             }
             self.sendLevelView.frame = CGRectMake(self.contentL.frame.origin.x,CGRectGetMaxY(self.contentL.frame), self.contentVL.frame.size.width-self.contentL.frame.origin.x*2, 48);
@@ -496,7 +494,6 @@
         return;
     }
    
-
     YYPhotoGroupItem *item = [YYPhotoGroupItem new];
     item.thumbView         = self.sendImageView;
     item.largeImageURL     = [NSURL URLWithString:array[0]];
@@ -507,6 +504,16 @@
 
 //点击头像
 - (void)userInfoTap{
+    if (!self.chat.is_self.intValue) {
+        NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+        NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
+        model.shopId = self.chat.shop_id;
+        ctl.shopModel = model;
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }else{
+        NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }
 
 }
 

@@ -1478,6 +1478,7 @@
 		FE96C4B42C1054CB005AB5FE /* SXShopsliuyanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B32C1054CB005AB5FE /* SXShopsliuyanCell.m */; };
 		FE96C4B72C12F776005AB5FE /* SXShopListBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */; };
 		FE96C4BA2C184477005AB5FE /* SXOrderChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B92C184477005AB5FE /* SXOrderChatCell.m */; };
+		FE96C4BD2C194320005AB5FE /* SXShopLyStoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4BC2C194320005AB5FE /* SXShopLyStoryModel.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -4382,6 +4383,8 @@
 		FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopListBaseModel.m; sourceTree = "<group>"; };
 		FE96C4B82C184477005AB5FE /* SXOrderChatCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXOrderChatCell.h; sourceTree = "<group>"; };
 		FE96C4B92C184477005AB5FE /* SXOrderChatCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXOrderChatCell.m; sourceTree = "<group>"; };
+		FE96C4BB2C194320005AB5FE /* SXShopLyStoryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopLyStoryModel.h; sourceTree = "<group>"; };
+		FE96C4BC2C194320005AB5FE /* SXShopLyStoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopLyStoryModel.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -7908,8 +7911,6 @@
 				A4E962E52A69141E00AE022E /* M */,
 				FE48C1572B4BF9F50069D1A6 /* NoticeShopRainCallController.h */,
 				FE48C1582B4BF9F50069D1A6 /* NoticeShopRainCallController.m */,
-				A4E962CA2A69141E00AE022E /* NoticeBuyOrderListController.h */,
-				A4E962AF2A69141E00AE022E /* NoticeBuyOrderListController.m */,
 				A4E962B72A69141E00AE022E /* NoticeChangeRecoderDetailController.h */,
 				A4E962D22A69141E00AE022E /* NoticeChangeRecoderDetailController.m */,
 				A4E962DC2A69141E00AE022E /* NoticeChongzhiShopController.swift */,
@@ -7938,12 +7939,6 @@
 				A4E962C42A69141E00AE022E /* NoticeMyShopController.swift */,
 				A4E962DF2A69141E00AE022E /* NoticeOrderComDetailController.h */,
 				A4E962BB2A69141E00AE022E /* NoticeOrderComDetailController.m */,
-				A4E962AE2A69141E00AE022E /* NoticeOrderDetailController.h */,
-				A4E962CC2A69141E00AE022E /* NoticeOrderDetailController.m */,
-				A4E962BC2A69141E00AE022E /* NoticeOrderListBaseController.h */,
-				A4E962DE2A69141E00AE022E /* NoticeOrderListBaseController.m */,
-				A4E962D32A69141E00AE022E /* NoticeOrderListController.h */,
-				A4E962B82A69141E00AE022E /* NoticeOrderListController.m */,
 				A4E962BF2A69141E00AE022E /* NoticePayAndSendRecoderController.h */,
 				A4E962DA2A69141E00AE022E /* NoticePayAndSendRecoderController.m */,
 				A4E962CD2A69141E00AE022E /* NoticePayRecodController.h */,
@@ -9179,6 +9174,8 @@
 				FE07BE0A2BF481D200E6812A /* SXGoodsInfoModel.m */,
 				FE96C4B52C12F776005AB5FE /* SXShopListBaseModel.h */,
 				FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */,
+				FE96C4BB2C194320005AB5FE /* SXShopLyStoryModel.h */,
+				FE96C4BC2C194320005AB5FE /* SXShopLyStoryModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -9349,6 +9346,14 @@
 				FE96C4A72C103EF4005AB5FE /* SXShoperChatToUseController.m */,
 				FE96C4AF2C10548A005AB5FE /* SXShopLyListController.h */,
 				FE96C4B02C10548A005AB5FE /* SXShopLyListController.m */,
+				A4E962CA2A69141E00AE022E /* NoticeBuyOrderListController.h */,
+				A4E962AF2A69141E00AE022E /* NoticeBuyOrderListController.m */,
+				A4E962AE2A69141E00AE022E /* NoticeOrderDetailController.h */,
+				A4E962CC2A69141E00AE022E /* NoticeOrderDetailController.m */,
+				A4E962BC2A69141E00AE022E /* NoticeOrderListBaseController.h */,
+				A4E962DE2A69141E00AE022E /* NoticeOrderListBaseController.m */,
+				A4E962D32A69141E00AE022E /* NoticeOrderListController.h */,
+				A4E962B82A69141E00AE022E /* NoticeOrderListController.m */,
 				FE6CF96C2B872532005EE663 /* view */,
 				A4E962AB2A69141E00AE022E /* Merchen */,
 				FEBCADD32B83615F0048F5A1 /* NoticeShopGetOrderTostView.h */,
@@ -10882,6 +10887,7 @@
 				A4E966F02A69142400AE022E /* NoticeNeedHelpHeadView.m in Sources */,
 				A4E9699F2A69142800AE022E /* HWCircleView.m in Sources */,
 				A4E9685A2A69142600AE022E /* NoticeTagChoiceView.m in Sources */,
+				FE96C4BD2C194320005AB5FE /* SXShopLyStoryModel.m in Sources */,
 				A4E965022A69142200AE022E /* JXCategoryImageView.m in Sources */,
 				A4E9668F2A69142300AE022E /* NoticeSetVoiceController.m in Sources */,
 				A4E969792A69142700AE022E /* NoticeReadHeJiCell.m in Sources */,

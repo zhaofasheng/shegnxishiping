@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "SXShopLyStoryModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeOrderListModel : NSObject
@@ -37,8 +37,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *is_experience;
 @property (nonatomic, strong) NSString *experience_time;
 
+@property (nonatomic, strong) NSString *is_certified;//1是认证 0未认证
+
 @property (nonatomic, strong) NSString *after_sales_time;//服务保障有效期(大于0表示还在有效期)
 @property (nonatomic, strong) NSString *after_sales_status;//售后状态 0未申请售后 1售后处理中 2已完成售后
+
+@property (nonatomic, strong) NSString *unread_comment_num;//未读留言数
+@property (nonatomic, strong) NSDictionary *order_comment;
+@property (nonatomic, strong) SXShopLyStoryModel *liuyModel;
 @end
 
 NS_ASSUME_NONNULL_END

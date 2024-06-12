@@ -22,7 +22,7 @@
 #import "BaseNavigationController.h"
 #import "NoticePushModel.h"
 #import <NIMSDK/NIMSDK.h>
-
+#import "SXShopLyListController.h"
 #import "NoticeSCViewController.h"
 
 @interface AppDelegate ()<JPUSHRegisterDelegate>
@@ -177,7 +177,7 @@
                                                                  timingFunction:kCAMediaTimingFunctionDefault
                                                                            view:nav.topViewController.navigationController.view];
     [nav.topViewController.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
-    
+    //
     if (model.push_type.intValue == 10) {//私聊
         NoticeSCViewController *vc = [[NoticeSCViewController alloc] init];
         vc.toUser = [NSString stringWithFormat:@"%@%@",socketADD,model.push_user_id];
@@ -187,7 +187,11 @@
     }else if (model.push_type.intValue == 1){//系统消息
         NoticeSysViewController *ctl = [[NoticeSysViewController alloc] init];
         [nav.topViewController.navigationController pushViewController:ctl animated:NO];
-    }else if (model.push_type.intValue == 20001 || model.push_type.intValue == 20002){//视频评论回复消息
+    }else if (model.push_type.intValue == 2025){//店铺留言消息
+        SXShopLyListController *ctl = [[SXShopLyListController alloc] init];
+        [nav.topViewController.navigationController pushViewController:ctl animated:NO];
+    }
+    else if (model.push_type.intValue == 20001 || model.push_type.intValue == 20002){//视频评论回复消息
         SXVideoCommentMeassageController *ctl = [[SXVideoCommentMeassageController alloc] init];
         [nav.topViewController.navigationController pushViewController:ctl animated:NO];
     }else if (model.push_type.intValue == 20003){//视频评论回复的点赞消息

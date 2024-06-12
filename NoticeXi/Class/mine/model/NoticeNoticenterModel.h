@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *auto_reply;//是否开启自动回复
 @property (nonatomic, strong) NSString *close_border;//是否处于闭关模式
 @property (nonatomic, strong) NSString *shop_comment_remind;//解忧订单评价通知
+@property (nonatomic, strong) NSString *order_comment;//订单留言：1开启0关闭
 @property (nonatomic, strong) NSString *music_push;
 @property (nonatomic, strong) NSString *admirers_renew;
 @property (nonatomic, strong) NSString *display_same_topic;
