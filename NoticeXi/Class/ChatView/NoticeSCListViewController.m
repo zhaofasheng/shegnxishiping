@@ -166,6 +166,7 @@
                                                                  timingFunction:kCAMediaTimingFunctionLinear
                                                                            view:self.navigationController.view];
     [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
+    
     NoticeSCViewController *ctl = [[NoticeSCViewController alloc] init];
     ctl.toUserId = model.with_user_id;
     ctl.lelve = model.levelImgName;

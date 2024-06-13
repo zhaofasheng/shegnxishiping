@@ -822,7 +822,6 @@
         [self.tableView.mj_footer endRefreshing];
         if([NoticeComTools pareseError:error]){
             [self.noNetWorkView show];
-            
         }
     }];
 }

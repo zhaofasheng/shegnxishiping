@@ -89,7 +89,7 @@
     self.headerView = [[SXShopChatTouserHeadere  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 117)];
     self.headerView.orderModel = self.orderModel;
     self.tableView.tableHeaderView = self.headerView;
-    
+
     self.canLoad = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
@@ -103,17 +103,21 @@
     self.dataArr = [NSMutableArray new];
     self.nolmorLdataArr = [NSMutableArray new];
     self.localdataArr = [NSMutableArray new];
-    
 
     [self.tableView registerClass:[SXOrderChatCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.backgroundColor = self.view.backgroundColor;
     
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
-    self.chatInputView = [[SXChatInputView alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91, DR_SCREEN_WIDTH, 91)];
+    
+    if (!self.isbuyer) {
+        self.chatInputView = [[SXChatInputView alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91, DR_SCREEN_WIDTH, 91)];
+        [self.view addSubview:self.chatInputView];
+    }
 
-    [self.view addSubview:self.chatInputView];
     
     if (self.isbuyer) {
+        self.headerView.orderL.text = [NSString stringWithFormat:@"下单时间：%@",self.orderModel.created_at];
+        self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-(self.isbuyer?0:91)-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
         UILabel *markL = [[UILabel  alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT+8, DR_SCREEN_WIDTH, 32)];
         markL.text = @"添加陌生人聊天账号需谨慎，请勿随意向陌生人转账";
         markL.textAlignment = NSTextAlignmentCenter;
@@ -312,7 +316,7 @@
 
     
     self.chatInputView.orignYBlock = ^(CGFloat y) {
-        weakSelf.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, y-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
+        weakSelf.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-(self.isbuyer?0:91)-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
         weakSelf.canLoad = YES;
         [weakSelf scroToBottom];
     };
@@ -1027,7 +1031,7 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
 
     [self.chatInputView regFirst];
-    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-91-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
+    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-(self.isbuyer?0:91)-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{

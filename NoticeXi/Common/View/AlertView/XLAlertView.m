@@ -7,7 +7,7 @@
 //
 
 #import "XLAlertView.h"
-#import "NoticeTimerTools.h"
+#import "SXGetOrderTimer.h"
 ///alertView 宽
 #define AlertW 260
 ///各个栏目之间的距离
@@ -452,8 +452,8 @@
     self.waittime3 = self.thirdWaittime;
    
     NSTimeInterval interval = 1.0;
-    self.timerName = [NoticeTimerTools timerTask:^{
-        
+    self.timerName = [SXGetOrderTimer timerTask:^{
+   
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf.time -= (NSInteger)interval;
         if(strongSelf.time > 0){
@@ -461,6 +461,7 @@
             
             if (strongSelf.autoNext) {
                 strongSelf.titleLbl.attributedText = [NoticeTools getStringWithLineHight:3 string:[NSString stringWithFormat:@"已找到新店主，呼叫中\n预计等待%lds",strongSelf.time]];
+                strongSelf.backImageView.image = UIImageNamed(@"sx_getorder_auto_img");
             }else{
                 if (strongSelf.waittime <= strongSelf.avagetime) {//如果等待时间小于平均等待时间,展示第一个阶段时间
                     strongSelf.firstWaittime -= (NSInteger)interval;
@@ -483,8 +484,11 @@
 }
 
 - (void)outTimeCancel{
-    [NoticeTimerTools deleteTimer:self.timerName];
+    [SXGetOrderTimer deleteTimer:self.timerName];
     self.timerName = nil;
+    
+    [self.timer invalidate];
+    self.timer = nil;
     if (self.orderId) {
         NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
         [parm setObject:self.orderId forKey:@"orderId"];
@@ -500,6 +504,8 @@
 }
 
 - (void)hasKillApp{
+    [SXGetOrderTimer deleteTimer:self.timerName];
+    self.timerName = nil;
     [self.timer invalidate];
     self.timer = nil;
     if (self.resultIndex) {
@@ -518,8 +524,10 @@
 }
 
 - (void)cancelOrder{
-    [NoticeTimerTools deleteTimer:self.timerName];
+    [SXGetOrderTimer deleteTimer:self.timerName];
     self.timerName = nil;
+    [self.timer invalidate];
+    self.timer = nil;
     [self removeFromSuperview];
 }
 
@@ -703,6 +711,8 @@
 #pragma mark - 回调 -设置只有2 -- > 确定才回调
 - (void)buttonEvent:(UIButton *)sender
 {
+    [SXGetOrderTimer deleteTimer:self.timerName];
+    self.timerName = nil;
     [self.timer invalidate];
     self.timer = nil;
     if (self.resultIndex) {

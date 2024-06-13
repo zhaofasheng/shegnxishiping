@@ -403,7 +403,6 @@
             orderModel.room_id = orderM.resultModel.room_id;
             orderModel.user_id = orderM.resultModel.user_id;
             if (orderM.resultModel.is_experience.boolValue && (orderM.resultModel.reality_jingbi.floatValue <= 0)) {
-           
                 XLAlertView *alerView1 = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话仅试聊%d分钟，收入0鲸币。",orderM.resultModel.experience_time.intValue/60]  sureBtn:@"我知道了" cancleBtn:@"联系买家" right:NO];
                 alerView1.resultIndex = ^(NSInteger index1) {
                     if (index1 == 2) {
@@ -425,9 +424,7 @@
                     }
                 };
                 [alerView1 showXLAlertView];
-            
             }
-            
         }else{//如果自己是买家
             if (orderM.resultModel.is_experience.boolValue) {//如果是体验商品
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已结束" message:[NSString stringWithFormat:@"本次通话时长「%@」，免费试聊%d分钟，无需支付鲸币。",[self getMMSSFromSS:orderM.resultModel.second],orderM.resultModel.experience_time.intValue/60] sureBtn:@"我知道了" cancleBtn:@"给个评价" right:YES];

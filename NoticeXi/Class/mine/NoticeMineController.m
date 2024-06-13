@@ -92,7 +92,7 @@
             }
             
             NoticeStaySys *stay1 = [NoticeStaySys mj_objectWithKeyValues:dict1[@"data"]];
-            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.char_priM.num.intValue + stay1.sysM.num.intValue+stay1.likeModel.num.intValue+stay1.videoCommentNumM.num.intValue];
+            NSString *allRedNum = [NSString stringWithFormat:@"%d",stay1.char_priM.num.intValue + stay1.sysM.num.intValue+stay1.likeModel.num.intValue+stay1.videoCommentNumM.num.intValue+stay1.orderComNum.num.intValue];
             self.navView.allNumL.hidden = allRedNum.intValue?NO:YES;
             CGFloat strWidth = GET_STRWIDTH(allRedNum, 9, 14);
             if (allRedNum.intValue < 10) {
@@ -105,7 +105,6 @@
         }
     } fail:^(NSError *error) {
     }];
- 
 }
 
 - (void)getwallect{
@@ -151,7 +150,6 @@
             [self.tableView reloadData];
         }
     } fail:^(NSError * _Nullable error) {
-        
     }];
 }
 
@@ -160,12 +158,10 @@
 - (void)getStatusRequest{
     
     if (![NoticeTools getuserId]) {
-    
         return;
     }
     
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/getApplyStage" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-
         if(success){
             self.applyModel = [NoticeCureentShopStatusModel mj_objectWithKeyValues:dict[@"data"]];
         }

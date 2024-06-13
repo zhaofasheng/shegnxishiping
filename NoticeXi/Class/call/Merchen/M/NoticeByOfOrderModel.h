@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
  //订单完成
  const TYPE_COMPLETE = 77672;
  */
-
+@property (nonatomic, strong) NSString *average_waiting_time;//店铺平均接单时长 (秒)
 @property (nonatomic, strong) NSString *type;//推送类型
 @property (nonatomic, strong) NSDictionary *result;
 @property (nonatomic, strong) NoticeByOfOrderModel *resultModel;

@@ -45,6 +45,7 @@ dispatch_semaphore_t callKitTimerSemaphore1;
         }
     });
     dispatch_resume(timer);
+    DRLog(@"开启定时器%@",timerName);
     return timerName;
 }
 
@@ -52,7 +53,7 @@ dispatch_semaphore_t callKitTimerSemaphore1;
     if (timerName.length == 0) {
         return;
     }
-    DRLog(@"取消计时器");
+    DRLog(@"取消计时器%@",timerName);
     dispatch_semaphore_wait(callKitTimerSemaphore1, DISPATCH_TIME_FOREVER);
     dispatch_source_t timer = gCallKitTimers1[timerName];
     

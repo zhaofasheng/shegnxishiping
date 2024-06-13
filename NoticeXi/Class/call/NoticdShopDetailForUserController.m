@@ -421,7 +421,7 @@
                 appdel.audioChatTools.autoCallNext = YES;
             }
             
-            [appdel.audioChatTools callToUserId:[NSString stringWithFormat:@"%@%@",socketADD,autoNext?weakSelf.choiceGoods.shop_user_id: weakSelf.shopDetailM.myShopM.user_id] roomId:weakSelf.orderM.room_id.intValue getOrderTime:autoNext?weakSelf.choiceGoods.match_time : weakSelf.orderM.get_order_time nickName:weakSelf.orderM.user_nick_name autoNext:autoNext averageTime:120];
+            [appdel.audioChatTools callToUserId:[NSString stringWithFormat:@"%@%@",socketADD,autoNext?weakSelf.choiceGoods.shop_user_id: weakSelf.shopDetailM.myShopM.user_id] roomId:weakSelf.orderM.room_id.intValue getOrderTime:autoNext?weakSelf.choiceGoods.match_time : weakSelf.orderM.get_order_time nickName:weakSelf.orderM.user_nick_name autoNext:autoNext averageTime:weakSelf.orderM.average_waiting_time.intValue>0?weakSelf.orderM.average_waiting_time.intValue:120];
             
             appdel.audioChatTools.cancelBlcok = ^(BOOL cancel) {
                 [weakSelf cancelOrder];

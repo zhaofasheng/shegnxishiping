@@ -52,6 +52,8 @@
 @property (nonatomic, assign) CGFloat alphaValue;
 @property (nonatomic, strong) NSString *appdefaultvideo;
 @property (nonatomic, strong) NSString *currentGudeId;
+@property (nonatomic, strong) NSString *shopid;
+@property (nonatomic, strong) NSString *userid;
 @property (nonatomic, strong) UIImage *custumeImg;
 @property (nonatomic, strong) UIImage *backImg;
 @property (nonatomic, strong) UIImage *backDefaultImg;

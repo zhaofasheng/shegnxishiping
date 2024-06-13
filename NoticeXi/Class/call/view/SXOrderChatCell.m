@@ -504,6 +504,7 @@
 
 //点击头像
 - (void)userInfoTap{
+
     if (!self.chat.is_self.intValue) {
         NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
         NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
@@ -514,7 +515,6 @@
         NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
     }
-
 }
 
 

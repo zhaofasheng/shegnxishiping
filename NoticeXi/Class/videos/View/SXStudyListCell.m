@@ -52,7 +52,7 @@
 - (void)setStudyModel:(SXPayForVideoModel *)studyModel{
     _studyModel = studyModel;
     self.titleL.text = _studyModel.series_name;
-    self.moneyL.text = _studyModel.original_price;
+    self.moneyL.text = _studyModel.price;
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:_studyModel.simple_cover_url]];
 }
 

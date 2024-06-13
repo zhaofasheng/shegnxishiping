@@ -111,6 +111,7 @@
             if (self.clickIconBlock) {
                 self.clickIconBlock(YES);
             }
+            [self cancelClick];
             return;
         }
         if (self.shopModel) {

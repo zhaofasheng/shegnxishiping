@@ -1479,6 +1479,7 @@
 		FE96C4B72C12F776005AB5FE /* SXShopListBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */; };
 		FE96C4BA2C184477005AB5FE /* SXOrderChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B92C184477005AB5FE /* SXOrderChatCell.m */; };
 		FE96C4BD2C194320005AB5FE /* SXShopLyStoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4BC2C194320005AB5FE /* SXShopLyStoryModel.m */; };
+		FE96C4C02C1ACEE1005AB5FE /* SXGetOrderTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4BF2C1ACEE1005AB5FE /* SXGetOrderTimer.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -4385,6 +4386,8 @@
 		FE96C4B92C184477005AB5FE /* SXOrderChatCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXOrderChatCell.m; sourceTree = "<group>"; };
 		FE96C4BB2C194320005AB5FE /* SXShopLyStoryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopLyStoryModel.h; sourceTree = "<group>"; };
 		FE96C4BC2C194320005AB5FE /* SXShopLyStoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopLyStoryModel.m; sourceTree = "<group>"; };
+		FE96C4BE2C1ACEE1005AB5FE /* SXGetOrderTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXGetOrderTimer.h; sourceTree = "<group>"; };
+		FE96C4BF2C1ACEE1005AB5FE /* SXGetOrderTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXGetOrderTimer.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -9176,6 +9179,8 @@
 				FE96C4B62C12F776005AB5FE /* SXShopListBaseModel.m */,
 				FE96C4BB2C194320005AB5FE /* SXShopLyStoryModel.h */,
 				FE96C4BC2C194320005AB5FE /* SXShopLyStoryModel.m */,
+				FE96C4BE2C1ACEE1005AB5FE /* SXGetOrderTimer.h */,
+				FE96C4BF2C1ACEE1005AB5FE /* SXGetOrderTimer.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -10081,6 +10086,7 @@
 				A4E9690C2A69142700AE022E /* NoticrBBSManagerController.m in Sources */,
 				FE07BDEA2BF2F34200E6812A /* SXStudyListView.m in Sources */,
 				A4E967992A69142400AE022E /* LHEditTextView.m in Sources */,
+				FE96C4C02C1ACEE1005AB5FE /* SXGetOrderTimer.m in Sources */,
 				FE2B934B2BA053F9002698AF /* SXSettingController.m in Sources */,
 				FEE562ED2B8CA1FD0004CC11 /* TZVideoEditedPreviewController.m in Sources */,
 				A4E967CA2A69142500AE022E /* NoticeStatus.m in Sources */,

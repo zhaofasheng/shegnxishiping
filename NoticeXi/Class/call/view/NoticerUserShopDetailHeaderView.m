@@ -9,6 +9,7 @@
 #import "NoticerUserShopDetailHeaderView.h"
 #import "NoticeJieYouGoodsComController.h"
 #import "NoticeTimerTools.h"
+#import "NoticeUserInfoCenterController.h"
 @implementation NoticerUserShopDetailHeaderView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -24,6 +25,10 @@
         [self.iconImageView setAllCorner:40];
         self.iconImageView.userInteractionEnabled = YES;
         [self.backcontentView addSubview:self.iconImageView];
+        if ([NoticeTools isManager]) {
+            UITapGestureRecognizer *manageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(iconTap)];
+            [self.iconImageView addGestureRecognizer:manageTap];
+        }
         
         UIImageView *imageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.iconImageView.frame)-32,CGRectGetMaxY(self.iconImageView.frame)-32, 32, 32)];
         imageView.userInteractionEnabled = YES;
@@ -79,6 +84,13 @@
         //UIImageNamed(@"sx_shop_male");//sx_shop_fale女
     }
     return self;
+}
+
+- (void)iconTap{
+    NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
+    ctl.userId = self.shopModel.user_id;
+    ctl.isOther = YES;
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 - (UIView *)contentView{
@@ -279,8 +291,6 @@
                 self.timerName = nil;
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHSHOPDETAIL" object:nil];
             }
-         
-            
         } start:0 interval:1 repeats:YES async:NO];
         
     }else{
@@ -288,6 +298,10 @@
         self.timerName = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHSHOPDETAIL" object:nil];
     }
+}
+
+- (void)dealloc{
+    [NoticeTimerTools deleteTimer:self.timerName];
 }
 
 -(NSString *)getMMSSFromSS:(NSInteger)totalTime{

@@ -25,7 +25,9 @@
 #import "NoticeDevoiceM.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "JPUSHService.h"
-
+#import "NoticdShopDetailForUserController.h"
+#import "NoticeMyJieYouShopController.h"
+#import "NoticeLoginViewController.h"
 NSString* const yunAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
 //  在APPDelegate.m中声明一个通知事件的key
@@ -172,6 +174,21 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         [self.audioChatTools regTencent];
         
         [self getOrder];
+        
+        if (self.shopid && self.userid) {
+            if ([self.userid isEqualToString:[NoticeTools getuserId]]) {//自己的店铺
+                NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
+                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+            }else{
+                NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+                NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
+                model.shopId = self.shopid;
+                ctl.shopModel = model;
+                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+            }
+            self.shopid = nil;
+            self.userid = nil;
+        }
     }
 }
 
@@ -302,7 +319,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     self.needStop = YES;
     [NoticeTools setneedConnect:NO];
 
-
     if (@available(iOS 16.0, *)) {
         [[UNUserNotificationCenter currentNotificationCenter] setBadgeCount:0 withCompletionHandler:nil];
     }else {
@@ -316,6 +332,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         } fail:^(NSError * _Nullable error) {
         }];
     }
+    
     [self beginTask];
 }
 
@@ -327,6 +344,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     if (![NoticeSaveModel getUserInfo]) {
         return;
     }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICENOREADNUMMESSAGE" object:nil];
     //进前台，检查socket
     [NoticeTools setneedConnect:YES];
@@ -384,8 +402,36 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 
 //微信支付相关
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options{
-    
-    DRLog(@"%@---%@---%@",url.scheme,url.host,url.query);
+
+    NSURLComponents *components = [[NSURLComponents alloc] initWithString:url.absoluteString];
+     
+    if (components.queryItems.count == 2) {
+        NSURLQueryItem *item1 = components.queryItems[0];
+        NSURLQueryItem *item2 = components.queryItems[1];
+        
+        if ([item1.name isEqualToString:@"shopid"]) {
+            if ([NoticeTools getuserId]) {
+                if ([item2.value isEqualToString:[NoticeTools getuserId]]) {//自己的店铺
+                    NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
+                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+                }else{
+                    NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+                    NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
+                    model.shopId = item1.value;
+                    ctl.shopModel = model;
+                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+                }
+            }else{
+                self.shopid = item1.value;
+                self.userid = item2.value;
+                NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+            }
+        }
+    }
+
+    // 打印查询参数
+    DRLog(@"Query parameters: %@", components.queryItems);
     
     [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
         DRLog(@"result = %@",resultDic);
