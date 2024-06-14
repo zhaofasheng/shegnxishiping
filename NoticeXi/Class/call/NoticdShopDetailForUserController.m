@@ -18,8 +18,8 @@
 #import "NoticeOtherShopCardController.h"
 #import "NoticeJieYouShopHeaderView.h"
 
-
 @interface NoticdShopDetailForUserController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate,NoticeReceveMessageSendMessageDelegate>
+
 @property (nonatomic, strong) NoticeMyShopModel *timeModel;
 @property (nonatomic, strong) NoticeMyShopModel *shopDetailM;
 @property (nonatomic, strong) NoticeGoodsModel *choiceGoods;
@@ -40,8 +40,8 @@
 @property (nonatomic, strong) NoticeJieYouShopHeaderView *shopHeaderView;
 @property (nonatomic, strong) UIView *sectionView;
 @property (nonatomic, strong) UIButton *likeBtn;
-
 @property (nonatomic, strong) UIView *noWorkingView;
+
 @end
 
 @implementation NoticdShopDetailForUserController

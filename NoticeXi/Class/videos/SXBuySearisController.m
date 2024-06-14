@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [WXApi registerApp:@"wx7204a9a3e7196dd7"];
     self.navBarView.titleL.text = @"确认下单";
     
     self.headerView = [[SXSureBuySearisView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT)];
@@ -92,10 +92,16 @@
 }
 
 - (void)buyClick{
+    [self sureApplePay];
+//    NoticeUserInfoModel *userInfo = [NoticeSaveModel getUserInfo];
+//  
+//    if ([[NoticeTools getuserId] isEqualToString:@"2"] || userInfo.comeHereDays.intValue < 7) {
+//        [self sureApplePay];
+//        return;
+//    }
+//    
 //    self.payView.money = self.paySearModel.price;
 //    [self.payView showPayView];
-
-    [self sureApplePay];
 }
 
 - (void)sureApplePay{

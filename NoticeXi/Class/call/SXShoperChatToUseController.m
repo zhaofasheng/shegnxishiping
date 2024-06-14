@@ -145,7 +145,7 @@
         //昵称
         _nickNameL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)+8,0,180, _userView.frame.size.height)];
         _nickNameL.font = XGEightBoldFontSize;
-        _nickNameL.text = self.orderModel.shop_user_id;
+        _nickNameL.text = self.orderModel.shop_name;
         _nickNameL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [_userView addSubview:_nickNameL];
         
@@ -958,23 +958,21 @@
         self.noAuto = YES;//收到对方删除的时候，停止自动播放语音
         [self.audioPlayer stopPlaying];
         for (NoticeChats *chatAll in self.dataArr) {
-            if ([chatAll.dialog_id isEqualToString:chat.dialogId] || [chatAll.dialog_id isEqualToString:chat.dialogId]) {
+            if ([chatAll.tuyaDiaLogId isEqualToString:chat.tuyaDiaLogId]) {
                 [self.dataArr removeObject:chatAll];
-     
                 break;
             }
         }
         
         for (NoticeChats *chatAll in self.localdataArr) {
-            if ([chatAll.dialog_id isEqualToString:chat.dialog_id] || [chatAll.dialog_id isEqualToString:chat.dialogId]) {
+            if ([chatAll.tuyaDiaLogId isEqualToString:chat.tuyaDiaLogId]) {
                 [self.localdataArr removeObject:chatAll];
-       
                 break;
             }
         }
         
         for (NoticeChats *norChat in self.nolmorLdataArr) {
-            if ([norChat.dialog_id isEqualToString:chat.dialog_id] || [norChat.dialog_id isEqualToString:chat.dialogId]) {
+            if ([norChat.tuyaDiaLogId isEqualToString:chat.tuyaDiaLogId]) {
                 [self.nolmorLdataArr removeObject:norChat];
                 break;
             }
@@ -986,11 +984,8 @@
     
     
     chat.read_at = @"0";
-    if (![chat.from_user_id isEqualToString:[[NoticeSaveModel getUserInfo]user_id]]) {//当发送人不是自己的时候，需要判断是否是当前会话人发来的消息，不然容易消息错误
-        if (![chat.to_user_id isEqualToString:[NoticeTools getuserId]]) {//别人发来的消息，判断是否是当前对话人
-   
-            return;
-        }
+    if (![chat.order_id isEqualToString:self.orderModel.orderId]) {//当发送人不是自己的时候，需要判断是否是当前会话人发来的消息，不然容易消息错误
+        return;
     }else{//发送人是自己的时候
         self.noAuto = NO;
     }

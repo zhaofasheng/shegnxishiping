@@ -1480,6 +1480,7 @@
 		FE96C4BA2C184477005AB5FE /* SXOrderChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4B92C184477005AB5FE /* SXOrderChatCell.m */; };
 		FE96C4BD2C194320005AB5FE /* SXShopLyStoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4BC2C194320005AB5FE /* SXShopLyStoryModel.m */; };
 		FE96C4C02C1ACEE1005AB5FE /* SXGetOrderTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4BF2C1ACEE1005AB5FE /* SXGetOrderTimer.m */; };
+		FE96C4C32C1C12B4005AB5FE /* SXTcallTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4C22C1C12B4005AB5FE /* SXTcallTimer.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -4388,6 +4389,8 @@
 		FE96C4BC2C194320005AB5FE /* SXShopLyStoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopLyStoryModel.m; sourceTree = "<group>"; };
 		FE96C4BE2C1ACEE1005AB5FE /* SXGetOrderTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXGetOrderTimer.h; sourceTree = "<group>"; };
 		FE96C4BF2C1ACEE1005AB5FE /* SXGetOrderTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXGetOrderTimer.m; sourceTree = "<group>"; };
+		FE96C4C12C1C12B4005AB5FE /* SXTcallTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXTcallTimer.h; sourceTree = "<group>"; };
+		FE96C4C22C1C12B4005AB5FE /* SXTcallTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXTcallTimer.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -4840,18 +4843,16 @@
 		A4E95A842A69141A00AE022E /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				FE44F0FF2BB29FAA004ECF11 /* VideoPlayer */,
-				A4E95AE62A69141A00AE022E /* Third */,
-				A4E962E02A69141E00AE022E /* applePay */,
-				FE6CF93F2B847474005EE663 /* 视频版本新封装 */,
-				FEBCADE32B8443770048F5A1 /* 文字滚动 */,
-				A43BB0452ADF79C1006F4571 /* leftView */,
-				A48E62022A7C919C00C06969 /* 图片裁剪 */,
 				A4E95A852A69141A00AE022E /* 弹幕 */,
+				FE6CF93F2B847474005EE663 /* 视频版本新封装 */,
+				A48E62022A7C919C00C06969 /* 图片裁剪 */,
+				FEBCADE32B8443770048F5A1 /* 文字滚动 */,
 				A4E95A982A69141A00AE022E /* ADBannerScroll */,
+				A4E962E02A69141E00AE022E /* applePay */,
 				A4E95BE92A69141B00AE022E /* call */,
 				A4E95BEE2A69141B00AE022E /* HDAlertView */,
 				A4E95BDB2A69141B00AE022E /* JHShimmer */,
+				A43BB0452ADF79C1006F4571 /* leftView */,
 				A4E95C152A69141B00AE022E /* Model */,
 				A4E95BCF2A69141B00AE022E /* Networking */,
 				A4E95AE52A69141A00AE022E /* NoticeAudioChatTools.h */,
@@ -4865,7 +4866,11 @@
 				A4E95BE52A69141B00AE022E /* RickLabel */,
 				A4E95A8E2A69141A00AE022E /* SoundTouchOperation.h */,
 				A4E95D0A2A69141B00AE022E /* SoundTouchOperation.mm */,
+				FE96C4C12C1C12B4005AB5FE /* SXTcallTimer.h */,
+				FE96C4C22C1C12B4005AB5FE /* SXTcallTimer.m */,
+				A4E95AE62A69141A00AE022E /* Third */,
 				A4E95AA02A69141A00AE022E /* Tools */,
+				FE44F0FF2BB29FAA004ECF11 /* VideoPlayer */,
 				A4E95C242A69141B00AE022E /* View */,
 				A4E95C142A69141B00AE022E /* WaveHeader.h */,
 			);
@@ -10198,6 +10203,7 @@
 				A4E9660A2A69142300AE022E /* NoticeBoKeDocumController.m in Sources */,
 				A4E967952A69142400AE022E /* NoticeReadEveryDayCell.m in Sources */,
 				A4354C3E2A9F1C6A00454D23 /* NoticeVipLelveCell.swift in Sources */,
+				FE96C4C32C1C12B4005AB5FE /* SXTcallTimer.m in Sources */,
 				FEE2DD132B90571D008AAB53 /* SXNoBuySearisListCell.m in Sources */,
 				A4E966D72A69142400AE022E /* JWProgressView.m in Sources */,
 				FE44F2152BB29FAB004ECF11 /* ZFPlayerView.m in Sources */,

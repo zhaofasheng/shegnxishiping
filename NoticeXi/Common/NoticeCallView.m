@@ -12,9 +12,10 @@
 #import "NoticeXi-Swift.h"
 #import "NoticeShopJubaoView.h"
 #import "NoticeShopjuBuView.h"
-#import "NoticeTimerTools.h"
+#import "SXTcallTimer.h"
 #import <NERtcSDK/NERtcSDK.h>
 #import <Bugly/Bugly.h>
+
 @interface NoticeCallView()
 
 @property (nonatomic, strong) StarsOverlay *starsView;
@@ -398,7 +399,7 @@
 
 - (void)dissMiseeShow{
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-    [NoticeTimerTools deleteTimer:self.timerName];
+    [SXTcallTimer deleteTimer:self.timerName];
     self.timerName = nil;
     [self removeFromSuperview];
 
@@ -408,7 +409,7 @@
     self.totalTime = 0;
     NSTimeInterval interval = 1.0;
     __weak typeof(self) weakSelf = self;
-    self.timerName = [NoticeTimerTools timerTask:^{
+    self.timerName = [SXTcallTimer timerTask:^{
         
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf.totalTime += (NSInteger)interval;

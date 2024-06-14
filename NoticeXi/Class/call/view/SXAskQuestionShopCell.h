@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UITableView *movieTableView;
 @property (nonatomic, strong) UIImageView *sexImageView;
 @property (nonatomic, strong) NoticeMyShopModel *shopM;
+@property (nonatomic, strong) UIView *redView;
 @property (nonatomic, assign) BOOL isFree;
 @end
 

@@ -112,7 +112,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *onceKey = @"HWProjectOnceKey";
     if (![defaults boolForKey:onceKey]) {
-        // 初始化下载最大并发数为1，默认允许蜂窝网络下载
+        // 初始化下载最大并发数为1，默认允许蜂窝网络下载1
         [defaults setInteger:1 forKey:HWDownloadMaxConcurrentCountKey];
         [defaults setBool:YES forKey:HWDownloadAllowsCellularAccessKey];
         [defaults setBool:YES forKey:onceKey];
@@ -359,7 +359,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         } fail:^(NSError * _Nullable error) {
         }];
     }
-  
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

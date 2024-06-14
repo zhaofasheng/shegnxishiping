@@ -28,6 +28,11 @@
         self.iconImageView.image = UIImageNamed(@"noImage_jynohe");
         self.iconImageView.userInteractionEnabled = YES;
         
+        self.redView = [[UIView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.iconImageView.frame)-10, 42, 10, 10)];
+        self.redView.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
+        [self.redView setAllCorner:5];
+        [self.backView addSubview:self.redView];
+        
         self.nickNameL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.iconImageView.frame)+8, self.backView.frame.size.width,22)];
         self.nickNameL.font = FIFTHTEENTEXTFONTSIZE;
         self.nickNameL.textColor = [UIColor colorWithHexString:@"#14151A"];
@@ -109,13 +114,18 @@
                 [[NoticeTools getTopViewController] showToastWithText:self.shopM.top_time.intValue?@"已置顶":@"已取消置顶"];
             }
         } fail:^(NSError * _Nullable error) {
-            
         }];
     }
 }
 
 - (void)setShopM:(NoticeMyShopModel *)shopM{
     _shopM = shopM;
+    
+    self.redView.hidden = YES;
+    if ([shopM.shopId isEqualToString:@"2370"]) {
+        self.redView.hidden = NO;
+        self.redView.backgroundColor = shopM.operate_status.intValue == 1?[UIColor colorWithHexString:@"#A1A7B3"]:[UIColor colorWithHexString:@"#EE4B4E"];
+    }
     
     self.nickNameL.text = shopM.shop_name;
     self.sexImageView.image = shopM.sex.intValue == 2 ? UIImageNamed(@"sx_shop_fale") : UIImageNamed(@"sx_shop_male");
