@@ -128,7 +128,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NoticeMyShopModel *shopM = self.dataArr[indexPath.row];
-    if (shopM.status.intValue != 1) {
+    if (shopM.status.intValue == 2 || shopM.status.intValue==3) {
         return 112;
     }
     return  (shopM.operate_status.intValue == 1 ? 83 : 145)+shopM.taleLikeHeight+8;

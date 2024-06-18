@@ -122,9 +122,9 @@
     _shopM = shopM;
     
     self.redView.hidden = YES;
-    if ([shopM.shopId isEqualToString:@"2370"]) {
+    if ([shopM.shopId isEqualToString:@"2370"] && (shopM.operate_status.intValue == 1 || shopM.operate_status.intValue == 3)) {
         self.redView.hidden = NO;
-        self.redView.backgroundColor = shopM.operate_status.intValue == 1?[UIColor colorWithHexString:@"#A1A7B3"]:[UIColor colorWithHexString:@"#EE4B4E"];
+        self.redView.backgroundColor = shopM.operate_status.intValue  == 3 ?[UIColor colorWithHexString:@"#EE4B4E"] : [UIColor colorWithHexString:@"#A1A7B3"];
     }
     
     self.nickNameL.text = shopM.shop_name;

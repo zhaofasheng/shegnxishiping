@@ -17,6 +17,7 @@
 #import "NoticeTabbarController.h"
 #import "NoticeGoToComShopController.h"
 #import "NoticeOrderListModel.h"
+
 #define TYPECHAT @"singleChat"
 
 @implementation NoticeSocketManger

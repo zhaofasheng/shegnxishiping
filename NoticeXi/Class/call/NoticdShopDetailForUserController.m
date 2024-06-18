@@ -176,7 +176,7 @@
     gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.workButton.frame), CGRectGetHeight(self.workButton.frame));
     self.gradientLayer = gradientLayer;
     [self.workButton.layer addSublayer:self.gradientLayer];
-    [self.workButton setTitle:@"请选择付费服务" forState:UIControlStateNormal];
+    [self.workButton setTitle:@"请选择付费咨询" forState:UIControlStateNormal];
     [self.workButton setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     self.workButton.titleLabel.font = SIXTEENTEXTFONTSIZE;
     [self.startView addSubview:self.workButton];
@@ -184,7 +184,6 @@
     
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appdel.socketManager.shopOrderDelegate = self;
-
 }
 
 - (void)didReceiveShopOrderStatus:(NSString *)shopId{

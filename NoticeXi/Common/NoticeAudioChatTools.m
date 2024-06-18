@@ -601,7 +601,6 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     return _callPlayer;
 }
 
-
 - (void)clearCallWaitView{
     [self.callView removeFromSuperview];
     self.callingWindow.hidden = YES;

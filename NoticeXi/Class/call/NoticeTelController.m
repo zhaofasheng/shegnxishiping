@@ -99,7 +99,6 @@
         }
     }
     
-    
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             
@@ -107,8 +106,8 @@
                 [self.dataArr removeAllObjects];
                 self.isDown = NO;
             }
-            SXShopListBaseModel *baseM = [SXShopListBaseModel mj_objectWithKeyValues:dict[@"data"]];
             
+            SXShopListBaseModel *baseM = [SXShopListBaseModel mj_objectWithKeyValues:dict[@"data"]];
             if (self.pageNo == 1) {
                 for (NSDictionary *dic in baseM.top_shop_list) {
                     NoticeMyShopModel *shopM = [NoticeMyShopModel mj_objectWithKeyValues:dic];
@@ -123,16 +122,21 @@
             self.layout.telList = self.dataArr;
             [self.collectionView reloadData];
         }
+        
         if (self.dataArr.count) {
             [_defaultL removeFromSuperview];
         }else{
             [self.collectionView addSubview:self.defaultL];
         }
+        
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
+        
     } fail:^(NSError * _Nullable error) {
+        
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
+        
     }];
 }
 

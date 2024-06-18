@@ -102,7 +102,7 @@
 - (void)setShopM:(NoticeMyShopModel *)shopM{
     _shopM = shopM;
     
-    if (shopM.status.intValue != 1) {
+    if (shopM.status.intValue == 2 || shopM.status.intValue == 3) {
         self.iconImageView.backgroundColor = [UIColor colorWithHexString:@"#E1E2E6"];
         [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:@"https://lanhuapp.com"]];
         self.nickNameL.text = @"店铺已不存在";

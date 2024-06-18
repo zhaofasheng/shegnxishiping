@@ -287,14 +287,15 @@
                 [self.dataArr removeAllObjects];
             }
             
-                    
             for (NSDictionary *dic in dict[@"data"]) {
                 NoticeMyShopModel *shopM = [NoticeMyShopModel mj_objectWithKeyValues:dic];
+                
                 if (GET_STRWIDTH(shopM.tale, 15, 20) > (DR_SCREEN_WIDTH-30-97-15)) {
                     shopM.taleLikeHeight = 42;
                 }else{
                     shopM.taleLikeHeight = 20;
                 }
+                
                 if (shopM.is_stop.intValue > 1) {
                     shopM.operate_status = @"1";
                 }

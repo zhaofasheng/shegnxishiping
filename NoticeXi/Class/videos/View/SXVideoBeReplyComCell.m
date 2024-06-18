@@ -9,6 +9,7 @@
 #import "SXVideoBeReplyComCell.h"
 #import "NoticeUserInfoCenterController.h"
 #import "SXVideoUserCenterController.h"
+#import "YYPersonItem.h"
 @implementation SXVideoBeReplyComCell
 
 
@@ -150,6 +151,21 @@
 - (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId linkArr:(nonnull NSMutableArray *)linkArr{
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:comment forKey:@"content"];
+    
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    for (YYPersonItem *item in linkArr) {
+        if (item.user_id && item.name) {
+            NSMutableDictionary *parm1 = [[NSMutableDictionary alloc] init];
+            [parm1 setObject:item.user_id forKey:@"id"];
+            [parm1 setObject:item.name forKey:@"name"];
+            [arr addObject:parm1];
+        }
+    }
+    
+    if (arr.count) {
+        [parm setObject:[NoticeTools arrayToJSONString:arr] forKey:@"toSeries"];
+    }
+    
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoCommont/%@/%@",self.likeComM.videoModel.vid,commentId.intValue?commentId:@"0"] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             [[NoticeTools getTopViewController] showToastWithText:@"发送成功"];

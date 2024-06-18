@@ -323,6 +323,9 @@
     NEHangupParam *hangupParam = [[NEHangupParam alloc] init];
     [[NECallEngine sharedInstance] hangup:hangupParam completion:^(NSError * _Nullable error) {
         if (!error) {
+            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@挂断成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
+            [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+            DRLog(@"挂断云信电话");
             DRLog(@"挂断云信电话");
         }else{
             DRLog(@"挂断云信失败%@",error.description);

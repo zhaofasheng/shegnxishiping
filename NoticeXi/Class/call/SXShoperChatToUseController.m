@@ -23,7 +23,9 @@
 #import "RXPopMenu.h"
 #import "SXSendChatTools.h"
 #import "NoticdShopDetailForUserController.h"
+
 @interface SXShoperChatToUseController ()<NoticeReceveMessageSendMessageDelegate,NoticeOrderChatDeledate,LCActionSheetDelegate,NewSendTextDelegate,UINavigationControllerDelegate>
+
 @property (nonatomic, strong) SXShopChatTouserHeadere *headerView;
 @property (nonatomic, strong) SXChatInputView *chatInputView;
 
@@ -79,6 +81,7 @@
 @property (nonatomic, assign) BOOL isReplay;
 @property (nonatomic, assign) BOOL isPasue;
 @property (nonatomic, strong,nullable) LGAudioPlayer *audioPlayer;
+
 @end
 
 @implementation SXShoperChatToUseController
@@ -228,7 +231,6 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
 
-
     if (![[[NoticeSaveModel getUserInfo] user_id] isEqualToString:@"1"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHCHATLISTNOTICION" object:nil];//刷新私聊会话列表
     }
@@ -313,10 +315,8 @@
         [weakSelf.sendTools sendTextWith:sendText];
     };
 
-
-    
     self.chatInputView.orignYBlock = ^(CGFloat y) {
-        weakSelf.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-(self.isbuyer?0:91)-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
+        weakSelf.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+(self.isbuyer?50:0), DR_SCREEN_WIDTH, y-NAVIGATION_BAR_HEIGHT-(self.isbuyer?50:0));
         weakSelf.canLoad = YES;
         [weakSelf scroToBottom];
     };
