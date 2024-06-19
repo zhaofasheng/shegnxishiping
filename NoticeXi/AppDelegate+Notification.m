@@ -163,7 +163,7 @@
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler  API_AVAILABLE(ios(10.0)){
 	NSDictionary * userInfo = response.notification.request.content.userInfo;
     NoticePushModel *model = [NoticePushModel mj_objectWithKeyValues:userInfo];
-    
+
     BaseNavigationController *nav = nil;
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NoticeTabbarController *tabBar = (NoticeTabbarController *)appdel.window.rootViewController;//获取window的跟视图,并进行强制转换

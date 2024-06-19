@@ -54,6 +54,8 @@
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:model.simple_cover_url]];
     if (model.updateM && model.updateM.title) {
         self.markL.text = [NSString stringWithFormat:@"更新：%@",model.updateM.title];
+    }else{
+        self.markL.text = @"";
     }
     
     NSString *str = [SXTools getPayPlayLastsearisId:model.seriesId];

@@ -33,8 +33,8 @@
 
     if (self.url) {
         self.navBarView.titleL.text = self.navigationItem.title;
-        SDWebImageOptions newOptions = SDWebImageAvoidDecodeImage | SDWebImageScaleDownLargeImages;
-        [imageView sd_setImageWithURL:[NSURL URLWithString:self.url] placeholderImage:nil options:newOptions completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+
+        [imageView sd_setImageWithURL:[NSURL URLWithString:self.url] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             if(image && image.size.width * image.size.height > 0){
                 CGFloat height = DR_SCREEN_WIDTH /image.size.width*image.size.height;
                 self.tabHeadView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, height);

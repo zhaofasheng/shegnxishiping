@@ -17,7 +17,7 @@
 #import "NoticeTabbarController.h"
 #import "NoticeGoToComShopController.h"
 #import "NoticeOrderListModel.h"
-
+#import <Bugly/Bugly.h>
 #define TYPECHAT @"singleChat"
 
 @implementation NoticeSocketManger
@@ -353,7 +353,6 @@
             [requestss setValue:userInfo.socket_id forHTTPHeaderField:@"socket-id"];
             [requestss setValue:[DDHAttributedMode md5:[NSString stringWithFormat:@"%@%@",userInfo.socket_token,userInfo.socket_id]] forHTTPHeaderField:@"socket-signature"];
         }
-    
         _webSocket = [[SRWebSocket alloc] initWithURLRequest:requestss];
         _webSocket.delegate = self;
         [_webSocket open];
@@ -468,6 +467,9 @@
     }else if (orderM.type.intValue == 77683){//后台告知超时结束(新版这个之前是有前端是否给了后台心跳作为判断，后面由订单接单后，是否聊天超过半小时之后前端没有做挂断接口操作进行判断)
         [_callView dissMiseeShow];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPFINISHEDHOUTAI" object:nil];
+        
+        NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@收到77683被动挂断电话时间%@",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
+        [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
     }
 }
 
