@@ -456,7 +456,8 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     [self.callPlayer stopPlaying];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self clearCallWaitView];
-    
+    NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:%ld",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime],info.reasonCode] userInfo:nil];//数据上报
+    [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
     DRLog(@"通话结束回调的当前通话房间号信息%@",self.currentRoomId);
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPOVERCHATORDER" object:nil];

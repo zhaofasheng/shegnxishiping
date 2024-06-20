@@ -111,10 +111,7 @@
 }
 
 - (void)incomeTap{
-    if ([[NoticeTools getuserId] isEqualToString:@"2"]) {
-        [[NoticeTools getTopViewController] showToastWithText:@"当前暂无收入，请踊跃开启店铺接单"];
-        return;
-    }
+   
     NoticeShouRuShopController *ctl = [[NoticeShouRuShopController alloc] init];
     [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }

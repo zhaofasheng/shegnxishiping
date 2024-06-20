@@ -111,7 +111,7 @@
     return self;
 }
 
-- (void)setPayStatusModel:(SXWeiXinPayModel *)payStatusModel{
+- (void)setPayStatusModel:(SXOrderStatusModel *)payStatusModel{
     
     self.orderNoL.text = [NSString stringWithFormat:@"订单编号：%@",payStatusModel.sn];
     self.orderCopyBtn.frame = CGRectMake(20+GET_STRWIDTH(self.orderNoL.text, 12, 36), 8, 20, 20);

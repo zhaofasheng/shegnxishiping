@@ -12,10 +12,10 @@
 #import <AdSupport/AdSupport.h>
 #import "DDHAttributedMode.h"
 #import "NoticePsyModel.h"
-#import <AlipaySDK/AlipaySDK.h>
+#import <AFServiceSDK/AFServiceSDK.h>
 #import "NoticeTabbarController.h"
 #import "BaseNavigationController.h"
-#import "APAuthInfo.h"
+
 #import "NoticeTeamChatModel.h"
 NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
 #define FileHashDefaultChunkSizeForReadingData 1024*8
@@ -98,6 +98,7 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     {
         return;
     }
+    
     [ShareSDK getUserInfo:SSDKPlatformTypeWechat
            onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
      {
@@ -111,7 +112,6 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
              [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat result:^(NSError *error) {
                  
              }];
-             
              success(user.uid,1,user.nickname,user.icon);
              DRLog(@"%@",user.rawData);
          }
@@ -123,44 +123,24 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
 }
 
 + (void)getAlisuccess:(SuccessGetAliBlock)success{
-    //生成 auth info 对象
-    APAuthInfo *authInfo = [APAuthInfo new];
-    authInfo.pid = @"2088141386296446";
-    authInfo.appID = @"2021003133627311";
-    authInfo.targetID = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
-    
-    //auth type
-    NSString *authType = @"AUTHACCOUNT";
-    authInfo.authType = authType;
-    //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
-    NSString *appScheme = @"alisdkdemo";
-    
-    // 将授权信息拼接成字符串
-    NSString *authInfoStr = [authInfo description];
-    
-    
-    [[AlipaySDK defaultService] auth_V2WithInfo:authInfoStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-        DRLog(@"支付宝%@",resultDic);
-        
-        NoticeMJIDModel *model = [NoticeMJIDModel mj_objectWithKeyValues:resultDic];
-        
-        if (model.resultStatus.intValue==9000) {
-            
-            NSArray *array = [model.result componentsSeparatedByString:@"&"];
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            for (NSString *str in array) {
-                NSArray *array =[str componentsSeparatedByString:@"="];
-                dict[array.firstObject] = array.lastObject;
-            }
 
-            NoticeMJIDModel *resultM = [NoticeMJIDModel mj_objectWithKeyValues:dict];
-            if (resultM.result_code.intValue==200) {
-                success(resultM);
-            }
+    NSString *url = @"";  //登陆授权或别的需要跳转到支付宝完成操作的Url
+    NSDictionary *params = @{kAFServiceOptionBizParams: @{
+        @"url" :  @"https://authweb.alipay.com/auth?auth_type=PURE_OAUTH_SDK&app_id=2021003133627311&scope=auth_user&state=xxx"
+                                     },
+                             kAFServiceOptionCallbackScheme: @"apsdkdemo",
+                             };
+    
+    [AFServiceCenter callService:AFServiceAuth withParams:params andCompletion:^(AFAuthServiceResponse *response) {
+        if (response.responseCode == AFAuthResSuccess) {
+            NoticeMJIDModel *resultM = [NoticeMJIDModel mj_objectWithKeyValues:response.result];
+            success(resultM);
         }else{
-            [YZC_AlertView showViewWithTitleMessage:@"授权失败，请重试"];
+            [[NoticeTools getTopViewController] showToastWithText:@"绑定失败，请联系客服"];
         }
+        DRLog(@"授权结果:%@", response.result);
     }];
+
 }
 
 +(BOOL)isWhetherNoUrl:(NSString *)urlStr{

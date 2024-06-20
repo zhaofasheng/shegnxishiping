@@ -81,7 +81,7 @@
         }else{
   
             titleL.text = @"支付宝";
-            titleImageV.image = UIImageNamed(@"Image_alipay");
+            titleImageV.image = UIImageNamed(@"Image_ali");
             self.choiceImage2 = subImageV;
         }
     }

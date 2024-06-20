@@ -18,6 +18,7 @@
 #import "NoticeGoToComShopController.h"
 #import "NoticeOrderListModel.h"
 #import <Bugly/Bugly.h>
+
 #define TYPECHAT @"singleChat"
 
 @implementation NoticeSocketManger

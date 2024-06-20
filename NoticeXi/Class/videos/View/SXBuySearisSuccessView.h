@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *payTimeL;
 
 @property (nonatomic, strong) UIView *subBackView;
-@property (nonatomic, strong) SXWeiXinPayModel *payStatusModel;
+@property (nonatomic, strong) SXOrderStatusModel *payStatusModel;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *total;
 @property (nonatomic, strong) NSArray *list;
 @property (nonatomic, strong) NSArray *replys;
-
+@property (nonatomic, strong) NSString *identity_id;
 @property (nonatomic, strong) NSString *result;
 @property (nonatomic, strong) NSString *success;
 @property (nonatomic, strong) NSString *user_id;

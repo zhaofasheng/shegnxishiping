@@ -19,16 +19,14 @@ target ‘NoticeXi’ do
   pod 'JCore', '4.4.2-noidfa'
   pod 'JPush' 
   pod 'ReactiveObjC'
-  pod 'mob_sharesdk/ShareSDKPlatforms/WeChatFull',:inhibit_warnings => true
+  pod 'mob_sharesdk/ShareSDKPlatforms/WeChat',:inhibit_warnings => true
   pod 'mob_sharesdk', '~> 4.2.0',:inhibit_warnings => true
   pod 'mob_sharesdk/ShareSDKUI',:inhibit_warnings => true
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ', '~> 4.2.0',:inhibit_warnings => true
-  pod 'mob_sharesdk/ShareSDKPlatforms/SinaWeibo', '~> 4.2.0',:inhibit_warnings => true
   pod 'FMDB'
   pod 'SocketRocket',:inhibit_warnings => true
   pod 'Bugly'
   pod 'SVGAPlayer'
-  pod  'AlipaySDK-iOS'
   pod 'SDWebImage','~> 5.15.5',:inhibit_warnings => true
 
   pod 'NIMSDK_LITE', '9.16.0'

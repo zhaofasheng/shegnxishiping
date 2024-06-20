@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <AFServiceSDK/AFServiceSDK.h>
 
-//微信SDK头文件
 #import "WXApi.h"
 #import <Bugly/Bugly.h>
 #import "NoticeTabbarController.h"
@@ -23,7 +23,6 @@
 #import "ZFSDateFormatUtil.h"
 #import "AFNetworking.h"
 #import "NoticeDevoiceM.h"
-#import <AlipaySDK/AlipaySDK.h>
 #import "JPUSHService.h"
 #import "NoticdShopDetailForUserController.h"
 #import "NoticeMyJieYouShopController.h"
@@ -99,12 +98,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     return YES;
 }
 
-- (void)registerWeixin{
-    /**
-     *  向微信终端注册ID，这里的APPID一般建议写成宏,容易维护。@“测试demo”不需用管。这里的id是假的，需要改这里还有target里面的URL Type
-     */
-    [WXApi registerApp:@"wx7204a9a3e7196dd7"];
-}
 
 // 一次性代码
 - (void)projectOnceCode
@@ -399,7 +392,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     _backgroundSessionCompletionHandler = completionHandler;
 }
 
-//微信支付相关
+//微信相关相关
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options{
 
     NSURLComponents *components = [[NSURLComponents alloc] initWithString:url.absoluteString];
@@ -428,84 +421,21 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
             }
         }
     }
-
+    if ([url.host isEqualToString:@"apmqpdispatch"]) {
+        [AFServiceCenter handleResponseURL:url withCompletion:^(AFAuthServiceResponse *response) {
+            DRLog(@"授权结果%@", response.result);
+            if (AFAuthResSuccess == response.responseCode) {
+                DRLog(@"授权结果%@", response.result);
+            }
+        }];
+    }
     // 打印查询参数
     DRLog(@"Query parameters: %@", components.queryItems);
     
-    [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
-        DRLog(@"result = %@",resultDic);
-        // 解析 auth code
-        NSString *result = resultDic[@"result"];
-        NSString *authCode = nil;
-        if (result.length>0) {
-            NSArray *resultArr = [result componentsSeparatedByString:@"&"];
-            for (NSString *subResult in resultArr) {
-                if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
-                    authCode = [subResult substringFromIndex:10];
-                    break;
-                }
-            }
-        }
-        DRLog(@"授权结果 authCode = %@", authCode?:@"");
-    }];
-    
-    //跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给SDK
-    if ([url.host isEqualToString:@"safepay"]) {
-        
-        [[AlipaySDK defaultService]
-         processOrderWithPaymentResult:url
-         standbyCallback:^(NSDictionary *resultDic) {
-             NSLog(@"AppDelegate result = %@", resultDic);
-             //status: 9000 支付成功
-             //        6001 取消支付
-             NSString *status = resultDic[@"resultStatus"];
-             int sta = (int)[status integerValue];
-             NSString *strMsg = nil;
-             switch (sta) {
-                 case 9000:
-                     strMsg = @"支付成功";
-                     [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
-                     break;
-                     
-                 default:
-                     strMsg = @"支付失败";
-                     [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
-                     break;
-             }
-            DRLog(@"支付宝支付%@",strMsg);
-         }];
-        return YES;
-    }
-    
-    //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
-    return  [WXApi handleOpenURL:url delegate:self];
-}
 
-- (void)onResp:(BaseResp *)resp{
-    //启动微信支付的response
-    NSString *payResoult = @"";
-    if([resp isKindOfClass:[PayResp class]]){
-        //支付返回结果，实际支付结果需要去微信服务器端查询
-        switch (resp.errCode) {
-            case 0:
-                payResoult = @"支付结果：成功！";
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
-                break;
-            case -1:
-                payResoult = @"支付结果：失败！";
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
-                break;
-            case -2:
-                payResoult = @"用户已经退出支付！";
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
-                break;
-            default:
-                payResoult = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISFAILD" object:nil];
-                break;
-        }
-    }
-    DRLog(@"%@",payResoult);
+
+    //这里判断是否发起的请求为微信相关，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
+    return  [WXApi handleOpenURL:url delegate:self];
 }
 
 

@@ -31,7 +31,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     SXBuyVideoOrderList *model = self.dataArr[indexPath.row];
-    SXWeiXinPayModel *payStatusM = [[SXWeiXinPayModel alloc] init];
+    SXOrderStatusModel *payStatusM = [[SXOrderStatusModel alloc] init];
     payStatusM.sn = model.sn;
     payStatusM.pay_time = model.pay_time;
     payStatusM.pay_status = model.pay_status;

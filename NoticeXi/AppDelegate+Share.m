@@ -15,8 +15,6 @@
 #import <TencentOpenAPI/QQApiInterface.h>
 //微信SDK头文件
 #import "WXApi.h"
-//新浪微博SDK头文件
-#import "WeiboSDK.h"
 @implementation AppDelegate (Share)
 
 - (void)regreiteShare{
@@ -27,8 +25,6 @@
        
         //微信
         [platformsRegister setupWeChatWithAppId:@"wx1c7709f7121a6877" appSecret:@"ad861fb8d0c1d534b488b18b1057945d"];//登录用的
-        //新浪
-        [platformsRegister setupSinaWeiboWithAppkey:@"3779229073" appSecret:@"578f92af2e698698cab1cf03ffcb009e" redirectUrl:@"http://www.sharesd.cn"];
         
     }];
 }

@@ -128,7 +128,7 @@ class NoticeShopSRHeadeerView: UIView {
         self.addSubview(ailbackView)
         
         let aliImge = UIImageView.init(frame: CGRect(x: 12, y: 12, width: 32, height: 32))
-        aliImge.image = UIImage.init(named: "Image_alipay")
+        aliImge.image = UIImage.init(named: "Image_ali")
         ailbackView.addSubview(aliImge)
         
         let subTitleL3 = UILabel.init(frame: CGRect(x: 52, y: 0, width:100, height: 50))
@@ -240,7 +240,7 @@ class NoticeShopSRHeadeerView: UIView {
         }
     }
 
-    //绑定支付方式
+    //绑定提现方式
     @objc func bangding(bangdId :String?, bangType :String?, bangName:String?, bangIcon :String?){
         let sureView = NoticeSureSendUserTostView.init(frame: CGRect(x: 0, y: 0, width: NoticeSwiftFile.screenWidth, height: NoticeSwiftFile.screenHeight))
         sureView.nameL.text = bangName
@@ -330,7 +330,7 @@ class NoticeShopSRHeadeerView: UIView {
                 if success == true{
                     let nsDict = dict! as NSDictionary
                     let nameModel = NoticeMJIDModel.mj_object(withKeyValues: nsDict["data"])
-                    self?.bangding(bangdId: backM.user_id, bangType: "2", bangName: nameModel?.identity_name, bangIcon: nameModel?.identity_img_url)
+                    self?.bangding(bangdId: nameModel?.identity_id, bangType: "2", bangName: nameModel?.identity_name, bangIcon: nameModel?.identity_img_url)
                 }
             }, fail: {(error) in
                 NoticeOcToSwift.topViewController().hideHUD()

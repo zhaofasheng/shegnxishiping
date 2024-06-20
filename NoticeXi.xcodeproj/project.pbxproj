@@ -682,7 +682,6 @@
 		A4E967002A69142400AE022E /* NoticeDdcirHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95F672A69141C00AE022E /* NoticeDdcirHeaderView.m */; };
 		A4E967012A69142400AE022E /* NoticeSupportFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95F682A69141C00AE022E /* NoticeSupportFootView.m */; };
 		A4E967022A69142400AE022E /* NoticeNowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95F6C2A69141C00AE022E /* NoticeNowViewController.m */; };
-		A4E967032A69142400AE022E /* APAuthInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95F702A69141C00AE022E /* APAuthInfo.m */; };
 		A4E967042A69142400AE022E /* NoticeTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95F712A69141C00AE022E /* NoticeTabbarController.m */; };
 		A4E967052A69142400AE022E /* BaseTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95F722A69141C00AE022E /* BaseTabBar.m */; };
 		A4E967062A69142400AE022E /* NoticeYunXin.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95F752A69141C00AE022E /* NoticeYunXin.m */; };
@@ -1437,7 +1436,6 @@
 		FE6686802BA082FE006DBDF2 /* AxcAE_TabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FE66867C2BA082FE006DBDF2 /* AxcAE_TabBarItem.m */; };
 		FE6CF93E2B84553A005EE663 /* SXVideosModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF93D2B84553A005EE663 /* SXVideosModel.m */; };
 		FE6CF9422B847491005EE663 /* SXTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9412B847491005EE663 /* SXTools.m */; };
-		FE6CF9482B859C92005EE663 /* SXWeiXinPayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9472B859C92005EE663 /* SXWeiXinPayModel.m */; };
 		FE6CF94C2B85DB14005EE663 /* SXUserCenterHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF94B2B85DB14005EE663 /* SXUserCenterHeader.m */; };
 		FE6CF9512B85EB64005EE663 /* SXMineSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9502B85EB64005EE663 /* SXMineSetCell.m */; };
 		FE6CF9532B85EC85005EE663 /* D-DIN-PRO-500-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = FE6CF9522B85EC85005EE663 /* D-DIN-PRO-500-Medium.otf */; };
@@ -1459,6 +1457,7 @@
 		FE7440C92BA7D470007EE4A6 /* SXStudyBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440C62BA7D470007EE4A6 /* SXStudyBaseController.m */; };
 		FE7440CA2BA7D470007EE4A6 /* SXPayVideoListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440C72BA7D470007EE4A6 /* SXPayVideoListController.m */; };
 		FE8B48772B8EDEAC004C3965 /* SXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */; };
+		FE8D89F42C23BB13006EFEB6 /* SXOrderStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8D89F22C23BB13006EFEB6 /* SXOrderStatusModel.m */; };
 		FE953C802B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C7F2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m */; };
 		FE953C832B68D3420098F0A2 /* NoticeDownloadVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C822B68D3420098F0A2 /* NoticeDownloadVoiceCell.m */; };
 		FE96C48A2C082327005AB5FE /* SXVideoCommentJubaoController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4892C082327005AB5FE /* SXVideoCommentJubaoController.m */; };
@@ -1485,7 +1484,6 @@
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
 		FE9C3FB12B90708F008C3A22 /* SXBuySearisSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FB02B90708F008C3A22 /* SXBuySearisSuccessView.m */; };
-		FE9C3FB42B907B52008C3A22 /* SXGoPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FB32B907B52008C3A22 /* SXGoPayView.m */; };
 		FE9C3FB72B908AEF008C3A22 /* SXHasGetSearisListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FB62B908AEF008C3A22 /* SXHasGetSearisListCell.m */; };
 		FE9C3FBA2B908F8D008C3A22 /* SXPlayPayVideoDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FB92B908F8D008C3A22 /* SXPlayPayVideoDetailHeaderView.m */; };
 		FE9C3FBD2B9093AA008C3A22 /* SXplayPayVideoDetailSection.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FBC2B9093AA008C3A22 /* SXplayPayVideoDetailSection.m */; };
@@ -1511,6 +1509,7 @@
 		FE9DF2032BD8D48100EB9CB2 /* UIWindow+TUICalling.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9DF2012BD8D47F00EB9CB2 /* UIWindow+TUICalling.m */; };
 		FE9DF2062BD8D5E200EB9CB2 /* UIView+TUIToast.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9DF2052BD8D5E200EB9CB2 /* UIView+TUIToast.m */; };
 		FE9DF2092BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9DF2082BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m */; };
+		FEA753552C23D8C800DC6807 /* AFServiceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */; };
 		FEB130222BEB56F7005E7FC7 /* sx.byebyetext.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */; };
 		FEB61BEB2B4CE0CF00B128FA /* NoticeShopDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61BEA2B4CE0CF00B128FA /* NoticeShopDetailHeader.m */; };
 		FEB61BEE2B4CE43F00B128FA /* NoticeShopDetailSection.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61BED2B4CE43F00B128FA /* NoticeShopDetailSection.m */; };
@@ -2857,10 +2856,8 @@
 		A4E95F6C2A69141C00AE022E /* NoticeNowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeNowViewController.m; sourceTree = "<group>"; };
 		A4E95F6E2A69141C00AE022E /* NoticeTabbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeTabbarController.h; sourceTree = "<group>"; };
 		A4E95F6F2A69141C00AE022E /* BaseTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTabBar.h; sourceTree = "<group>"; };
-		A4E95F702A69141C00AE022E /* APAuthInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAuthInfo.m; sourceTree = "<group>"; };
 		A4E95F712A69141C00AE022E /* NoticeTabbarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeTabbarController.m; sourceTree = "<group>"; };
 		A4E95F722A69141C00AE022E /* BaseTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTabBar.m; sourceTree = "<group>"; };
-		A4E95F732A69141C00AE022E /* APAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAuthInfo.h; sourceTree = "<group>"; };
 		A4E95F752A69141C00AE022E /* NoticeYunXin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeYunXin.m; sourceTree = "<group>"; };
 		A4E95F762A69141C00AE022E /* NoticeYunXin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeYunXin.h; sourceTree = "<group>"; };
 		A4E95F782A69141C00AE022E /* UITabBar+XSDExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+XSDExt.m"; sourceTree = "<group>"; };
@@ -4304,8 +4301,6 @@
 		FE6CF93D2B84553A005EE663 /* SXVideosModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideosModel.m; sourceTree = "<group>"; };
 		FE6CF9402B847491005EE663 /* SXTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXTools.h; sourceTree = "<group>"; };
 		FE6CF9412B847491005EE663 /* SXTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXTools.m; sourceTree = "<group>"; };
-		FE6CF9462B859C92005EE663 /* SXWeiXinPayModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXWeiXinPayModel.h; sourceTree = "<group>"; };
-		FE6CF9472B859C92005EE663 /* SXWeiXinPayModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXWeiXinPayModel.m; sourceTree = "<group>"; };
 		FE6CF94A2B85DB14005EE663 /* SXUserCenterHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXUserCenterHeader.h; sourceTree = "<group>"; };
 		FE6CF94B2B85DB14005EE663 /* SXUserCenterHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXUserCenterHeader.m; sourceTree = "<group>"; };
 		FE6CF94F2B85EB64005EE663 /* SXMineSetCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXMineSetCell.h; sourceTree = "<group>"; };
@@ -4347,6 +4342,8 @@
 		FE7440C72BA7D470007EE4A6 /* SXPayVideoListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPayVideoListController.m; sourceTree = "<group>"; };
 		FE8B48752B8EDEAC004C3965 /* SXWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXWebViewController.h; sourceTree = "<group>"; };
 		FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXWebViewController.m; sourceTree = "<group>"; };
+		FE8D89F22C23BB13006EFEB6 /* SXOrderStatusModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXOrderStatusModel.m; sourceTree = "<group>"; };
+		FE8D89F32C23BB13006EFEB6 /* SXOrderStatusModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXOrderStatusModel.h; sourceTree = "<group>"; };
 		FE953C7E2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeVoiceDownLoadController.h; sourceTree = "<group>"; };
 		FE953C7F2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeVoiceDownLoadController.m; sourceTree = "<group>"; };
 		FE953C812B68D3420098F0A2 /* NoticeDownloadVoiceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeDownloadVoiceCell.h; sourceTree = "<group>"; };
@@ -4399,8 +4396,6 @@
 		FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisSuccessController.m; sourceTree = "<group>"; };
 		FE9C3FAF2B90708F008C3A22 /* SXBuySearisSuccessView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisSuccessView.h; sourceTree = "<group>"; };
 		FE9C3FB02B90708F008C3A22 /* SXBuySearisSuccessView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisSuccessView.m; sourceTree = "<group>"; };
-		FE9C3FB22B907B52008C3A22 /* SXGoPayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXGoPayView.h; sourceTree = "<group>"; };
-		FE9C3FB32B907B52008C3A22 /* SXGoPayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXGoPayView.m; sourceTree = "<group>"; };
 		FE9C3FB52B908AEF008C3A22 /* SXHasGetSearisListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHasGetSearisListCell.h; sourceTree = "<group>"; };
 		FE9C3FB62B908AEF008C3A22 /* SXHasGetSearisListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHasGetSearisListCell.m; sourceTree = "<group>"; };
 		FE9C3FB82B908F8D008C3A22 /* SXPlayPayVideoDetailHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayPayVideoDetailHeaderView.h; sourceTree = "<group>"; };
@@ -4451,6 +4446,7 @@
 		FE9DF2052BD8D5E200EB9CB2 /* UIView+TUIToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TUIToast.m"; sourceTree = "<group>"; };
 		FE9DF2072BD8D7A400EB9CB2 /* TUICallKitGCDTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUICallKitGCDTimer.h; sourceTree = "<group>"; };
 		FE9DF2082BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUICallKitGCDTimer.m; sourceTree = "<group>"; };
+		FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFServiceSDK.framework; sourceTree = "<group>"; };
 		FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sx.byebyetext.com.cer; sourceTree = "<group>"; };
 		FEB61BE92B4CE0CF00B128FA /* NoticeShopDetailHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeShopDetailHeader.h; sourceTree = "<group>"; };
 		FEB61BEA2B4CE0CF00B128FA /* NoticeShopDetailHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeShopDetailHeader.m; sourceTree = "<group>"; };
@@ -4598,6 +4594,7 @@
 				A49B544E21AD1C7B0072EA30 /* AudioToolbox.framework in Frameworks */,
 				A47D36D7218AF0E500002AFB /* CoreLocation.framework in Frameworks */,
 				A4134A7621886E92004E1E06 /* SystemConfiguration.framework in Frameworks */,
+				FEA753552C23D8C800DC6807 /* AFServiceSDK.framework in Frameworks */,
 				A4134A7421886E8B004E1E06 /* CoreTelephony.framework in Frameworks */,
 				A4134A7221886E80004E1E06 /* libresolv.tbd in Frameworks */,
 				ED4752A19A8FCE52C09D6FBA /* libPods-NoticeXi.a in Frameworks */,
@@ -4843,12 +4840,13 @@
 		A4E95A842A69141A00AE022E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */,
 				A4E95A852A69141A00AE022E /* 弹幕 */,
 				FE6CF93F2B847474005EE663 /* 视频版本新封装 */,
 				A48E62022A7C919C00C06969 /* 图片裁剪 */,
 				FEBCADE32B8443770048F5A1 /* 文字滚动 */,
 				A4E95A982A69141A00AE022E /* ADBannerScroll */,
-				A4E962E02A69141E00AE022E /* applePay */,
+				A4E962E02A69141E00AE022E /* apple */,
 				A4E95BE92A69141B00AE022E /* call */,
 				A4E95BEE2A69141B00AE022E /* HDAlertView */,
 				A4E95BDB2A69141B00AE022E /* JHShimmer */,
@@ -6773,8 +6771,6 @@
 			isa = PBXGroup;
 			children = (
 				A4E962A82A69141E00AE022E /* Nav */,
-				A4E95F732A69141C00AE022E /* APAuthInfo.h */,
-				A4E95F702A69141C00AE022E /* APAuthInfo.m */,
 				A4E95F6F2A69141C00AE022E /* BaseTabBar.h */,
 				A4E95F722A69141C00AE022E /* BaseTabBar.m */,
 				A4E95F742A69141C00AE022E /* m */,
@@ -7973,17 +7969,17 @@
 			path = Merchen;
 			sourceTree = "<group>";
 		};
-		A4E962E02A69141E00AE022E /* applePay */ = {
+		A4E962E02A69141E00AE022E /* apple */ = {
 			isa = PBXGroup;
 			children = (
+				FE8D89F32C23BB13006EFEB6 /* SXOrderStatusModel.h */,
+				FE8D89F22C23BB13006EFEB6 /* SXOrderStatusModel.m */,
 				A4E962E22A69141E00AE022E /* NoticePaySaveModel.h */,
 				A4E962E42A69141E00AE022E /* NoticePaySaveModel.m */,
-				FE6CF9462B859C92005EE663 /* SXWeiXinPayModel.h */,
-				FE6CF9472B859C92005EE663 /* SXWeiXinPayModel.m */,
 				A4E962E12A69141E00AE022E /* STRIAPManager.h */,
 				A4E962E32A69141E00AE022E /* STRIAPManager.m */,
 			);
-			path = applePay;
+			path = apple;
 			sourceTree = "<group>";
 		};
 		A4E962E52A69141E00AE022E /* M */ = {
@@ -9075,8 +9071,6 @@
 				FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */,
 				FE9C3FAF2B90708F008C3A22 /* SXBuySearisSuccessView.h */,
 				FE9C3FB02B90708F008C3A22 /* SXBuySearisSuccessView.m */,
-				FE9C3FB22B907B52008C3A22 /* SXGoPayView.h */,
-				FE9C3FB32B907B52008C3A22 /* SXGoPayView.m */,
 				FE9C3FB52B908AEF008C3A22 /* SXHasGetSearisListCell.h */,
 				FE9C3FB62B908AEF008C3A22 /* SXHasGetSearisListCell.m */,
 				FE9C3FB82B908F8D008C3A22 /* SXPlayPayVideoDetailHeaderView.h */,
@@ -10470,7 +10464,6 @@
 				A4E966CF2A69142300AE022E /* NoticeCollectionVoiceController.m in Sources */,
 				A4E968C82A69142600AE022E /* NoticePayReodModel.m in Sources */,
 				FE96C4B12C10548A005AB5FE /* SXShopLyListController.m in Sources */,
-				FE9C3FB42B907B52008C3A22 /* SXGoPayView.m in Sources */,
 				A4E966552A69142300AE022E /* NoticeHotMovieCell.m in Sources */,
 				A4E967702A69142400AE022E /* NoticeSendSysMessageManagerController.m in Sources */,
 				A4E967142A69142400AE022E /* NoticeChats.m in Sources */,
@@ -10503,7 +10496,6 @@
 				A4E966452A69142300AE022E /* NoticeHandAddMovieController.m in Sources */,
 				A4E968EA2A69142600AE022E /* NoticeChangeShopNameView.swift in Sources */,
 				FE41C3B42BCFA1F900BAD263 /* SXVideoCommentJson.m in Sources */,
-				FE6CF9482B859C92005EE663 /* SXWeiXinPayModel.m in Sources */,
 				A4E966F62A69142400AE022E /* NoticeWhtieSelfVoiceCellCell.m in Sources */,
 				A4E966A62A69142300AE022E /* NoticeWhiteTcCell.m in Sources */,
 				A4E9679E2A69142400AE022E /* NoticePiPeiSet.m in Sources */,
@@ -11008,7 +11000,6 @@
 				A4E965B02A69142200AE022E /* NoticeListenLocalVoiceView.m in Sources */,
 				A4E965F22A69142300AE022E /* NoticeSCCell.m in Sources */,
 				A4E969222A69142700AE022E /* NoticeManagerBBSCell.m in Sources */,
-				A4E967032A69142400AE022E /* APAuthInfo.m in Sources */,
 				A4E968112A69142500AE022E /* NoticeZJSelectSetController.m in Sources */,
 				A4E966672A69142300AE022E /* NoticeTuYaChatController.m in Sources */,
 				A4E966B82A69142300AE022E /* NoticeLyCell.m in Sources */,
@@ -11024,6 +11015,7 @@
 				FE9C40A52B9AF09D008C3A22 /* SXUpIdentyController.m in Sources */,
 				A4E967C22A69142500AE022E /* NoticeSysCell.m in Sources */,
 				A4E9685B2A69142600AE022E /* NoticePhotoToolsView.m in Sources */,
+				FE8D89F42C23BB13006EFEB6 /* SXOrderStatusModel.m in Sources */,
 				A4E966232A69142300AE022E /* NoticeWebViewController.m in Sources */,
 				A4E9675E2A69142400AE022E /* NoticeUserQuestionModel.m in Sources */,
 				A4E965F62A69142300AE022E /* NoticeChatToKfController.m in Sources */,
@@ -11394,7 +11386,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 99;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
@@ -11404,6 +11396,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/NoticeXi/Class/Merchen/V",
 					"$(PROJECT_DIR)/NoticeXi/Common/LMPlayer",
+					"$(PROJECT_DIR)/NoticeXi/Common",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/NoticeXi/PrefixHeader.pch";
@@ -11451,8 +11444,6 @@
 					"-l\"SVProgressHUD\"",
 					"-l\"SocketRocket\"",
 					"-l\"Toast\"",
-					"-l\"WeChatSDKFull\"",
-					"-l\"WeiboSDK\"",
 					"-l\"YYKit\"",
 					"-l\"c++\"",
 					"-l\"c++.1\"",
@@ -11468,8 +11459,6 @@
 					"\"AVFoundation\"",
 					"-framework",
 					"\"Accelerate\"",
-					"-framework",
-					"\"AlipaySDK\"",
 					"-framework",
 					"\"AssetsLibrary\"",
 					"-framework",
@@ -11507,8 +11496,6 @@
 					"-framework",
 					"\"MOBFoundation\"",
 					"-framework",
-					"\"MOBFoundationEx\"",
-					"-framework",
 					"\"MetalKit\"",
 					"-framework",
 					"\"MobileCoreServices\"",
@@ -11526,8 +11513,6 @@
 					"\"ShareSDKConnector\"",
 					"-framework",
 					"\"ShareSDKUI\"",
-					"-framework",
-					"\"SinaWeiboConnector\"",
 					"-framework",
 					"\"StoreKit\"",
 					"-framework",
@@ -11581,7 +11566,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 99;
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = XD7545Y7QW;
@@ -11590,6 +11575,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/NoticeXi/Class/Merchen/V",
 					"$(PROJECT_DIR)/NoticeXi/Common/LMPlayer",
+					"$(PROJECT_DIR)/NoticeXi/Common",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/NoticeXi/PrefixHeader.pch";
@@ -11637,8 +11623,6 @@
 					"-l\"SVProgressHUD\"",
 					"-l\"SocketRocket\"",
 					"-l\"Toast\"",
-					"-l\"WeChatSDKFull\"",
-					"-l\"WeiboSDK\"",
 					"-l\"YYKit\"",
 					"-l\"c++\"",
 					"-l\"c++.1\"",
@@ -11654,8 +11638,6 @@
 					"\"AVFoundation\"",
 					"-framework",
 					"\"Accelerate\"",
-					"-framework",
-					"\"AlipaySDK\"",
 					"-framework",
 					"\"AssetsLibrary\"",
 					"-framework",
@@ -11693,8 +11675,6 @@
 					"-framework",
 					"\"MOBFoundation\"",
 					"-framework",
-					"\"MOBFoundationEx\"",
-					"-framework",
 					"\"MetalKit\"",
 					"-framework",
 					"\"MobileCoreServices\"",
@@ -11712,8 +11692,6 @@
 					"\"ShareSDKConnector\"",
 					"-framework",
 					"\"ShareSDKUI\"",
-					"-framework",
-					"\"SinaWeiboConnector\"",
 					"-framework",
 					"\"StoreKit\"",
 					"-framework",

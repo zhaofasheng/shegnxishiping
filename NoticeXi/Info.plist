@@ -77,7 +77,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>alisdkdemo</string>
+				<string>apsdkdemo</string>
 			</array>
 		</dict>
 		<dict>
@@ -107,7 +107,7 @@
 	<array>
 		<string>snssdk1128</string>
 		<string>kwai</string>
-		<string>alipay</string>
+		<string>alis</string>
 		<string>wechat</string>
 		<string>weixin</string>
 		<string>mqqapi</string>
@@ -138,9 +138,6 @@
 		<string>mttbrowser</string>
 		<string>fbauth2</string>
 		<string>fbauth</string>
-		<string>sinaweibo</string>
-		<string>sinaweibohd</string>
-		<string>weibosdk</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
