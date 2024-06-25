@@ -98,6 +98,16 @@
 				<string>wx7204a9a3e7196dd7</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>sx</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>js.byebyetext.com</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -110,6 +120,8 @@
 		<string>alis</string>
 		<string>wechat</string>
 		<string>weixin</string>
+		<string>weixinULAPI</string>
+		<string>weixinURLParamsAPI</string>
 		<string>mqqapi</string>
 		<string>mqq</string>
 		<string>tim</string>

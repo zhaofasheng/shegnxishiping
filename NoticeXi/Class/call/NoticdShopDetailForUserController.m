@@ -218,6 +218,7 @@
     moreView.isShare = YES;
     moreView.imgUrl = self.shopModel.shop_avatar_url;
     moreView.shareUrl = self.shopModel.shopShareUrl;
+    moreView.wechatShareUrl = self.shopModel.wechatShareUrl;
     moreView.image = self.cardVC.headerView.iconImageView.image;
     moreView.name = @"快来声昔找我聊聊吧";
     moreView.title = [NSString stringWithFormat:@"%@的咨询主页",self.shopModel.shop_name];
@@ -280,6 +281,7 @@
 
 //取消订单
 - (void)cancelOrder{
+    
     if(self.isBuying && self.orderM.room_id){
         NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
         [parm setObject:@"2" forKey:@"orderType"];
@@ -291,6 +293,7 @@
         } fail:^(NSError * _Nullable error) {
         }];
     }
+    
 }
 
 //获取店铺信息

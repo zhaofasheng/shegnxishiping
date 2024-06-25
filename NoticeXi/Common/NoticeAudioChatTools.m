@@ -296,6 +296,19 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     }];
 }
 
+//用户杀死app的时候或者挂断的时候，调用用户取消订单
+- (void)userCancelOrder{
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject: @"2" forKey:@"orderType"];
+    [parm setObject:self.orderModel.room_id forKey:@"roomId"];
+    [[DRNetWorking shareInstance] requestWithPatchPath:@"shopGoodsOrder" Accept:@"application/vnd.shengxi.v5.5.0+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+          
+        }
+    } fail:^(NSError * _Nullable error) {
+    }];
+}
+
 //拒绝
 - (void)repject:(BOOL)close{
     [self.callPlayer stopPlaying];
@@ -430,10 +443,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@和%@通话建立成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.fromUserId,info.rtcInfo.channelName,[SXTools getCurrentTime]] userInfo:nil];//数据上报
     [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
-    
-    
 }
-
 
 - (void)onNetworkQuality:(NSArray<NERtcNetworkQualityStats *> *)stats{
    
@@ -445,10 +455,8 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
                 [[NoticeTools getTopViewController] showToastWithText:@"当前网络环境较差"];
             }
         }
-     
     }
 }
-
 
 /// 通话结束
 /// @param info 通话结束携带信息
@@ -502,6 +510,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
         [[NoticeTools getTopViewController] hideHUD];
         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"对方取消了订单" message:nil cancleBtn:@"好的，知道了"];
         [alerView showXLAlertView];
+        [self userCancelOrder];
         
         NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:拨打的人取消了通话，也就是呼叫被取消",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
         [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];

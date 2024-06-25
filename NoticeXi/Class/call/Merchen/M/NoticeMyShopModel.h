@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *role_listArr;
 @property (nonatomic, strong) NSString *role_img_url;
 @property (nonatomic, strong) NSString *shop_avatar_url;
-
+@property (nonatomic, strong) NSString *wechatShareUrl;
 @property (nonatomic, strong) NSMutableArray *goods_list;
 @property (nonatomic, strong) NSMutableArray *goods_listArr;
 

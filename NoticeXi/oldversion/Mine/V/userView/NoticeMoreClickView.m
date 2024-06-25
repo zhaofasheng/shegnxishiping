@@ -118,7 +118,6 @@
     }else{
         self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img"];
         self.titleArr = @[@"举报",@"缓存"];
-
     }
 
     [self.movieTableView reloadData];
@@ -133,11 +132,11 @@
         return;
     }
     if (self.isShare) {
-  
+
         if(indexPath.row == 0){
-            [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeWechatSession title:self.title name:self.name imageUrl:self.imgUrl];
+            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title name:self.name imageUrl:self.imgUrl];
         }else if(indexPath.row == 1){
-            [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title imageUrl:self.imgUrl];
+            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){
             [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeQQFriend title:self.name name:self.title imageUrl:self.imgUrl];
         }else if(indexPath.row == 3){

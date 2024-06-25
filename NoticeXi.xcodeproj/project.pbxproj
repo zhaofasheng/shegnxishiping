@@ -387,7 +387,6 @@
 		A4E965D82A69142200AE022E /* NoticeAudioChatTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95D092A69141B00AE022E /* NoticeAudioChatTools.m */; };
 		A4E965D92A69142200AE022E /* SoundTouchOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = A4E95D0A2A69141B00AE022E /* SoundTouchOperation.mm */; };
 		A4E965DA2A69142200AE022E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95D0D2A69141B00AE022E /* main.m */; };
-		A4E965DB2A69142200AE022E /* AppDelegate+Share.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95D0F2A69141B00AE022E /* AppDelegate+Share.m */; };
 		A4E965DC2A69142200AE022E /* GenerateTestUserSig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E95D122A69141B00AE022E /* GenerateTestUserSig.swift */; };
 		A4E965DD2A69142200AE022E /* NoticeGroupJuBaoSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E95D132A69141B00AE022E /* NoticeGroupJuBaoSwift.swift */; };
 		A4E965DE2A69142200AE022E /* NoticeSwiftFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E95D142A69141B00AE022E /* NoticeSwiftFile.swift */; };
@@ -1568,6 +1567,7 @@
 		FEE563102B8EC86B0004CC11 /* SXVideoUserCenterController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE5630F2B8EC86B0004CC11 /* SXVideoUserCenterController.m */; };
 		FEE563132B8EC9F30004CC11 /* SXVideoUserCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE563122B8EC9F30004CC11 /* SXVideoUserCenterView.m */; };
 		FEE563162B8ED08A0004CC11 /* SXUserCenterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE563152B8ED08A0004CC11 /* SXUserCenterCell.m */; };
+		FEF0A2832C2A61A10085AD65 /* AppDelegate+Share.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95D0F2A69141B00AE022E /* AppDelegate+Share.m */; };
 		FEFAB1B42B8C265A009EE42C /* SXPlayDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFAB1B32B8C265A009EE42C /* SXPlayDetailController.m */; };
 		FEFAB1B72B8C266C009EE42C /* SXPlayDetailListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFAB1B62B8C266C009EE42C /* SXPlayDetailListController.m */; };
 		FEFAB1BA2B8C3444009EE42C /* SXVideoHeaderDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFAB1B92B8C3444009EE42C /* SXVideoHeaderDetailView.m */; };
@@ -10685,7 +10685,6 @@
 				A4E968CC2A69142600AE022E /* NoticeMerchantModel.m in Sources */,
 				A46F540C2AA7122F00A22D48 /* NoticeSendVipCardView.m in Sources */,
 				A4E9695E2A69142700AE022E /* NoticeSendStatusView.m in Sources */,
-				A4E965DB2A69142200AE022E /* AppDelegate+Share.m in Sources */,
 				A4E969762A69142700AE022E /* NoticeVoiceReadMoreCell.m in Sources */,
 				FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */,
 				A4E966032A69142300AE022E /* NoticeHeaderView.m in Sources */,
@@ -10734,6 +10733,7 @@
 				FE96C4A22C0F1C14005AB5FE /* SXUserHowController.m in Sources */,
 				A4E966392A69142300AE022E /* NoticeSongDetailController.m in Sources */,
 				A4E965BD2A69142200AE022E /* JJCTextField.m in Sources */,
+				FEF0A2832C2A61A10085AD65 /* AppDelegate+Share.m in Sources */,
 				A48E62182A8226C400C06969 /* NoticeRiLiForOneWeek.m in Sources */,
 				A4E968F62A69142700AE022E /* NoticePayjbView.swift in Sources */,
 				FEE563072B8DC7220004CC11 /* SXSearchThinkCell.m in Sources */,
@@ -11425,7 +11425,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.8.7;
+				MARKETING_VERSION = 5.8.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -11604,7 +11604,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.8.7;
+				MARKETING_VERSION = 5.8.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

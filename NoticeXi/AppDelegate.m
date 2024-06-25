@@ -67,7 +67,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
     [NoticeSaveModel setUUIDIFNO];
     
-    [self regreiteShare];
 
     [Bugly startWithAppId:@"7342677883"];
 
@@ -94,7 +93,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [SDImageCache sharedImageCache].config.maxMemoryCost = 130*1000*1000;
     
     [self changeRootVC];
-
+    [self regreiteShare];
     return YES;
 }
 
@@ -357,6 +356,8 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 - (void)applicationWillTerminate:(UIApplication *)application {
     self.hasShowCallView = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"APPWASKILLED" object:nil];//程序杀死，挂断电话
+    NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@杀死app%@",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
+    [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
 }
 
 
@@ -385,6 +386,36 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     return _noVoicePlayer;
 }
 
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler{
+
+    NSURLComponents *components = [[NSURLComponents alloc] initWithString:userActivity.webpageURL.absoluteString];
+     
+    if (components.queryItems.count == 2) {
+        NSURLQueryItem *item1 = components.queryItems[0];
+        NSURLQueryItem *item2 = components.queryItems[1];
+        
+        if ([item1.name isEqualToString:@"shopid"]) {
+            if ([NoticeTools getuserId]) {
+                if ([item2.value isEqualToString:[NoticeTools getuserId]]) {//自己的店铺
+                    NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
+                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+                }else{
+                    NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+                    NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
+                    model.shopId = item1.value;
+                    ctl.shopModel = model;
+                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+                }
+            }else{
+                self.shopid = item1.value;
+                self.userid = item2.value;
+                NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+            }
+        }
+    }
+    return YES;
+}
 
 // 应用处于后台，所有下载任务完成调用
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler

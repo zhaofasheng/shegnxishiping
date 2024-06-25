@@ -140,10 +140,9 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
         }
         DRLog(@"授权结果:%@", response.result);
     }];
-
 }
 
-+(BOOL)isWhetherNoUrl:(NSString *)urlStr{
++ (BOOL)isWhetherNoUrl:(NSString *)urlStr{
     if(urlStr == nil) {
         return NO;
     }
