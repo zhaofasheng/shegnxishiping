@@ -93,9 +93,6 @@ static NSString* ZipFileName = @"OTKLog.zip";
  */
 - (void)logInfo:(NSString*)module logStr:(NSString*)logStr{
     
-
-#pragma mark - 写入日志
-    
     // 异步执行
     dispatch_async(dispatch_queue_create("writeLog", nil), ^{
         
@@ -214,7 +211,6 @@ static NSString* ZipFileName = @"OTKLog.zip";
     // 压缩包文件路径
     NSString * zipFile = [self.basePath stringByAppendingString:ZipFileName] ;
 
-    
     return [SSZipArchive createZipFileAtPath:zipFile withContentsOfDirectory:self.basePath];
 }
 
