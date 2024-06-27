@@ -1448,6 +1448,8 @@
 		FE6CF9782B88A358005EE663 /* SXDownVideoheaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF9772B88A358005EE663 /* SXDownVideoheaderView.m */; };
 		FE6CF97B2B88A450005EE663 /* SXPlayChcahVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF97A2B88A450005EE663 /* SXPlayChcahVideoController.m */; };
 		FE6CF97E2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6CF97D2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.m */; };
+		FE718FB22C2D4A4900F59785 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FE718FB12C2D4A4900F59785 /* libc++.tbd */; };
+		FE718FB52C2D4BC700F59785 /* LogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE718FB42C2D4BC700F59785 /* LogManager.m */; };
 		FE7440352BA17A00007EE4A6 /* SXVerifyShopModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */; };
 		FE7440382BA2A595007EE4A6 /* SXBuyVideoOrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440372BA2A595007EE4A6 /* SXBuyVideoOrderList.m */; };
 		FE74403B2BA2C4E1007EE4A6 /* SXHisToryDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE74403A2BA2C4E1007EE4A6 /* SXHisToryDownLoadController.m */; };
@@ -4326,6 +4328,9 @@
 		FE6CF97A2B88A450005EE663 /* SXPlayChcahVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlayChcahVideoController.m; sourceTree = "<group>"; };
 		FE6CF97C2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlaySaveVideoBaseController.h; sourceTree = "<group>"; };
 		FE6CF97D2B88CFCB005EE663 /* SXPlaySaveVideoBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlaySaveVideoBaseController.m; sourceTree = "<group>"; };
+		FE718FB12C2D4A4900F59785 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		FE718FB32C2D4BC700F59785 /* LogManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogManager.h; sourceTree = "<group>"; };
+		FE718FB42C2D4BC700F59785 /* LogManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogManager.m; sourceTree = "<group>"; };
 		FE7440332BA17A00007EE4A6 /* SXVerifyShopModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVerifyShopModel.h; sourceTree = "<group>"; };
 		FE7440342BA17A00007EE4A6 /* SXVerifyShopModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVerifyShopModel.m; sourceTree = "<group>"; };
 		FE7440362BA2A595007EE4A6 /* SXBuyVideoOrderList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuyVideoOrderList.h; sourceTree = "<group>"; };
@@ -4580,6 +4585,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE718FB22C2D4A4900F59785 /* libc++.tbd in Frameworks */,
 				FE35EA952B62386000524991 /* AVFoundation.framework in Frameworks */,
 				FE35EA932B62385200524991 /* CoreGraphics.framework in Frameworks */,
 				FE35EA912B62384A00524991 /* CoreMedia.framework in Frameworks */,
@@ -4621,6 +4627,7 @@
 		767EE0F291DE8CB6C56B85E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FE718FB12C2D4A4900F59785 /* libc++.tbd */,
 				FE35EA942B62386000524991 /* AVFoundation.framework */,
 				FE35EA922B62385200524991 /* CoreGraphics.framework */,
 				FE35EA902B62384A00524991 /* CoreMedia.framework */,
@@ -8991,6 +8998,8 @@
 				FE9DF2082BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m */,
 				FE6CF9402B847491005EE663 /* SXTools.h */,
 				FE6CF9412B847491005EE663 /* SXTools.m */,
+				FE718FB32C2D4BC700F59785 /* LogManager.h */,
+				FE718FB42C2D4BC700F59785 /* LogManager.m */,
 			);
 			path = "视频版本新封装";
 			sourceTree = "<group>";
@@ -10064,6 +10073,7 @@
 				A4E967052A69142400AE022E /* BaseTabBar.m in Sources */,
 				A4E966DC2A69142400AE022E /* NoticeHelpListModel.m in Sources */,
 				A4E967652A69142400AE022E /* NoticeManagerGroupReplyModel.m in Sources */,
+				FE718FB52C2D4BC700F59785 /* LogManager.m in Sources */,
 				A4E964932A69142100AE022E /* UIButton+Badge.m in Sources */,
 				FE9C40B42B9B33C1008C3A22 /* SXWorkCheckView.m in Sources */,
 				FE44F2252BB29FAB004ECF11 /* MMMaterialDesignSpinner.m in Sources */,

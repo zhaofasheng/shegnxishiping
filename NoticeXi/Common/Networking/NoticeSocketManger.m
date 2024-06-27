@@ -471,6 +471,8 @@
         
         NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@收到77683被动挂断电话时间%@",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
         [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+        
+        [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@收到77683被动挂断电话时间%@",[NoticeTools getuserId],[SXTools getCurrentTime]]];
     }
 }
 

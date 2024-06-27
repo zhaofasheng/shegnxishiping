@@ -14,6 +14,9 @@
 #import "SXPlayDetailController.h"
 #import "SXUserHowController.h"
 #import "SXHowToUseView.h"
+
+
+
 static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCell";
 
 @interface NoticeVideosController ()
@@ -30,6 +33,8 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     [super viewDidLoad];
     self.navBarView.hidden = YES;
     self.pageNo = 1;
+    
+    [[LogManager sharedInstance] checkLogNeedUpload];
     
     [self.collectionView registerClass:[NoticeVideoCollectionViewCell class] forCellWithReuseIdentifier:DRMerchantCollectionViewCellID];
     
@@ -158,7 +163,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
 
     if (![NoticeTools getuserId]) {
         NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];

@@ -22,10 +22,8 @@
     [ShareSDK registPlatforms:^(SSDKRegister *platformsRegister) {
         //QQ
         [platformsRegister setupQQWithAppId:@"101461065" appkey:@"459701b937fc61ac1bbad1a0be2c46ce"];
-       
         //微信
         [platformsRegister setupWeChatWithAppId:@"wx1c7709f7121a6877" appSecret:@"ad861fb8d0c1d534b488b18b1057945d"];//登录用的
-        
     }];
 }
 

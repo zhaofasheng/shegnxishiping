@@ -708,6 +708,7 @@
             });
             return;
         }
+        [nav.topViewController hideHUD];
     } fail:^(NSError *error) {
 
         dispatch_async(dispatch_get_main_queue(), ^{

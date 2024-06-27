@@ -119,7 +119,6 @@
         self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img"];
         self.titleArr = @[@"举报",@"缓存"];
     }
-
     [self.movieTableView reloadData];
 }
 
@@ -131,8 +130,8 @@
         }
         return;
     }
+    
     if (self.isShare) {
-
         if(indexPath.row == 0){
             [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title name:self.name imageUrl:self.imgUrl];
         }else if(indexPath.row == 1){

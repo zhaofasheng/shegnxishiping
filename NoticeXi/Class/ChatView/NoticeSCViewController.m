@@ -62,14 +62,12 @@
 @property (nonatomic, strong) NSString *chatTiemId;
 @property (nonatomic, strong) NoticeChatTitleView *ttitleV;
 
-
 @property (nonatomic, assign) BOOL canLoad;
 @property (nonatomic, assign) NSInteger messageNum;
 
 @property (nonatomic, assign) CGFloat tableViewOrinY;
 @property (nonatomic, strong) NoticeChats *reSendChat;
 @property (nonatomic, assign) BOOL isLinkUrl;
-
 
 @property (nonatomic, strong) NSMutableArray *yuseArr;
 @property (nonatomic, strong) NSString *yuseLastId;
@@ -79,6 +77,7 @@
 @property (nonatomic, assign) BOOL isReplay;
 @property (nonatomic, assign) BOOL isPasue;
 @property (nonatomic, strong,nullable) LGAudioPlayer *audioPlayer;
+
 @end
 
 @implementation NoticeSCViewController
@@ -116,7 +115,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-
 
     if (![[[NoticeSaveModel getUserInfo] user_id] isEqualToString:@"1"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHCHATLISTNOTICION" object:nil];//刷新私聊会话列表
@@ -173,14 +171,13 @@
     //发送音频
     self.chatInputView.uploadVoiceBlock = ^(NSString * _Nonnull localPath, NSString * _Nonnull timeLength, NSString * _Nonnull upSuccessPath, BOOL upSuccess,NSString *bucketId) {
      
-     
         if(upSuccess){
             [weakSelf.sendTools sendVocieWith:localPath time:timeLength upSuccessPath:upSuccessPath success:upSuccess bucketid:bucketId];
         }else{
             [weakSelf showToastWithText:@"上传失败，请重试"];
         }
-        
     };
+    
     //发送图片
     self.chatInputView.uploadimgBlock = ^(NSData * _Nonnull imgData, NSString * _Nonnull upSuccessPath, BOOL upSuccess, NSString * _Nonnull bucketId) {
         if(upSuccess){
@@ -1255,6 +1252,7 @@
             self.deveceinfoL.text = [NSString stringWithFormat:@"对方类型: %@/%@\n\n学号:%@ 来了%@天",model.last_login_device,model.app_version,model.frequency_no,model.comeHereTime];
         }
     } fail:^(NSError * _Nullable error) {
+        
     }];
 }
 

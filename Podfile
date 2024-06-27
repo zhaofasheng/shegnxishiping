@@ -28,7 +28,6 @@ target ‘NoticeXi’ do
   pod 'Bugly'
   pod 'SVGAPlayer'
   pod 'SDWebImage','~> 5.15.5',:inhibit_warnings => true
-
   pod 'NIMSDK_LITE', '9.16.0'
   pod 'NERtcCallKit/NOS_Special', '2.3.0'
   pod 'NERtcSDK', '5.5.21', :subspecs => ['RtcBasic']

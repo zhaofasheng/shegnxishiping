@@ -297,11 +297,14 @@
         [self.mirButton setImage:UIImageNamed(@"tencent_closemirimg") forState:UIControlStateNormal];//
         [self.mirButton setTitle:@"已扩音" forState:UIControlStateNormal];
         [[NERtcEngine sharedEngine] setLoudspeakerMode:true];
+        [[LogManager sharedInstance] logInfo:@"扬声器相关" logStr:[NSString stringWithFormat:@"%@扩音操作",[NoticeTools getuserId]]];
     }else{
         [self.mirButton setImage:UIImageNamed(@"tencent_openmirimg") forState:UIControlStateNormal];//tencent_closemirimg
         [self.mirButton setTitle:@"扩音" forState:UIControlStateNormal];
         [[NERtcEngine sharedEngine] setLoudspeakerMode:false];
+        [[LogManager sharedInstance] logInfo:@"扬声器相关" logStr:[NSString stringWithFormat:@"%@关扩音操作",[NoticeTools getuserId]]];
     }
+    
 }
 
 //是否关麦
@@ -317,6 +320,7 @@
         [self.muteButton setTitle:@"关麦" forState:UIControlStateNormal];
         [[NECallEngine sharedInstance] muteLocalAudio:NO];
     }
+    [[LogManager sharedInstance] logInfo:@"麦克风相关" logStr:[NSString stringWithFormat:@"%@%@",[NoticeTools getuserId],self.closeMicrophone?@"关麦了":@"开麦了"]];
 }
 
 - (void)hanUp{
@@ -325,6 +329,8 @@
         if (!error) {
             NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@挂断成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+            
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@挂断成功房间号%@时间%@",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]]];
             DRLog(@"挂断云信电话");
         }else{
             DRLog(@"挂断云信失败%@",error.description);
@@ -339,7 +345,7 @@
     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:self.chatInfoModel.is_experience.boolValue? @"确定结束通话吗？" : @"提前结束通话，费用不退回，确定结束吗？" message:nil sureBtn:@"再想想" cancleBtn:@"结束" right:YES];
     alerView.resultIndex = ^(NSInteger index) {
         if (index == 2) {
-            
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@手动挂断电话房间号%@时间%@",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]]];
             [self hanUp];
             [weakSelf dissMiseeShow];
         }
@@ -348,9 +354,11 @@
 }
 
 - (void)hasKillApp{
+    
     [self hanUp];
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@杀死app挂电话\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
     [Bugly reportException:exception];
+    [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@杀死app挂断电话房间号%@时间%@",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]]];
 }
 
 - (void)otherlogin{

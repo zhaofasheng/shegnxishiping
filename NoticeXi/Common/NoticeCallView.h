@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FSCustomButton.h"
 #import "NoticeChatingInfoModel.h"
+#import "LogManager.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeCallView : UIView

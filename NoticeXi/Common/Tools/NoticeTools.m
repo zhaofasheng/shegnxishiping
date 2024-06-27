@@ -85,7 +85,6 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
 + (NSString *)getDaoishi:(NSString *)getTime{
     
     NSInteger times = getTime.intValue -  [NoticeTools getNowTimeStamp].intValue;
-    
     NSString *hours = [NSString stringWithFormat:@"%02ld",times/3600];
     NSString *minss = [NSString stringWithFormat:@"%02ld",(times%3600)/60];
     NSString *sec = [NSString stringWithFormat:@"%02ld",times%60];

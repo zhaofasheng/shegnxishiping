@@ -55,6 +55,8 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
             NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@给%@拨打电话成功\n房间号%@\n时间%@",[NoticeTools getuserId],userId,self.roomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
             
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@给%@拨打电话成功房间号%@时间%@",[NoticeTools getuserId],userId,self.roomId,[SXTools getCurrentTime]]];
+            
             [NoticeQiaojjieTools showWithJieDanTitle:nickName roomId:self.roomId time:getOrderTime?getOrderTime: @"120" creatTime:@"0" autoNext:autonext avageTime:averageTime clickBlcok:^(NSInteger tag) {
                 [weakSelf hanupyunxin];
                 if(tag == 1){//自己直接取消
@@ -83,6 +85,9 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
         }else{
             NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@给%@拨打电话失败\n房间号%@\n时间%@\n原因%@",[NoticeTools getuserId],userId,self.roomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+            
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@给%@拨打电话失败房间号%@时间%@原因%@",[NoticeTools getuserId],userId,self.roomId,[SXTools getCurrentTime],error.description]];
+            [[LogManager sharedInstance] checkLogNeedUpload];
         
             [[NoticeTools getTopViewController] showToastWithText:[NSString stringWithFormat:@"拨打失败，请稍后重试%@",error.description]];
             if(weakSelf.cancelBlcok){
@@ -225,10 +230,18 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
             if(accept){
                 NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@点击接听按钮\n房间号%@\n时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
                 [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+                
+                [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@点击接听按钮房间号%@时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]]];
+                
                 [weakSelf accept];
             }else{
                 NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@点击拒接按钮\n房间号%@\n时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
                 [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+                
+                [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@点击拒接按钮房间号%@时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]]];
+                
+                [[LogManager sharedInstance] checkLogNeedUpload];
+                
                 [weakSelf repject:NO];
             }
         };
@@ -256,16 +269,26 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
                     if(success){
                         NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@点击接听按钮调用接听接口成功\n房间号%@\n时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
                         [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+                        
+                        [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@点击接听按钮调用接听接口成功房间号%@时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]]];
+                        
                         [weakSelf acceptCall];
                     }else{
                         NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@点击接听按钮调用接听接口失败\n房间号%@\n时间%@\n失败理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],dict.description] userInfo:nil];//数据上报
                         [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+                        
+                        [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@点击接听按钮调用接听接口失败房间号%@时间%@失败理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],dict.description]];
+                        [[LogManager sharedInstance] checkLogNeedUpload];
+                        
                         [weakSelf hanupyunxin];
                     }
                     [[NoticeTools getTopViewController] hideHUD];
                 } fail:^(NSError * _Nullable error) {
                     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@点击接听按钮调用接听接口请求失败\n房间号%@\n时间%@\n失败理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
                     [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+                    
+                    [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@点击接听按钮调用接听接口请求失败房间号%@时间%@失败理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description]];
+                    [[LogManager sharedInstance] checkLogNeedUpload];
                     
                     [weakSelf hanupyunxin];
                     [[NoticeTools getTopViewController] hideHUD];
@@ -274,6 +297,10 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
             }else { // 没有麦克风权限
                 NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@点击接听按钮没有麦克风权限\n房间号%@\n时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
                 [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+                
+                [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@点击接听按钮没有麦克风权限房间号%@时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]]];
+                [[LogManager sharedInstance] checkLogNeedUpload];
+                
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:[NoticeTools getLocalStrWith:@"recoder.kaiqire"] message:@"有麦克风权限才可以语音通话功能哦~" sureBtn:[NoticeTools getLocalStrWith:@"recoder.kaiqi"] cancleBtn:[NoticeTools getLocalStrWith:@"main.cancel"] right:YES];
                 alerView.resultIndex = ^(NSInteger index) {
                     if (index == 1) {
@@ -344,9 +371,15 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
             DRLog(@"接听成功");
             NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@点击接听按钮接听成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+            
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@点击接听按钮接听成功房间号%@时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]]];
         }else{
             NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@点击接听按钮接听失败\n房间号%@\n时间%@\n理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+            
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@点击接听按钮接听失败房间号%@时间%@理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description]];
+            [[LogManager sharedInstance] checkLogNeedUpload];
+            
             if (error.code == 20017) {
                 [[NoticeTools getTopViewController] showToastWithText:@"对方已挂断"];
                 return;
@@ -364,10 +397,16 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
         if (!error) {
             NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@挂断成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+            
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@挂断成功房间号%@时间%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime]]];
             DRLog(@"挂断云信电话");
         }else{
             NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@挂断失败\n房间号%@\n时间%@\n理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+            
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@挂断失败房间号%@时间%@理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description]];
+            [[LogManager sharedInstance] checkLogNeedUpload];
+            
             DRLog(@"挂断云信失败%@",error.description);
         }
     }];
@@ -392,6 +431,8 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
             NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@获取等待中的订单成功\n房间号%@\n时间%@\n电话来自%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],self.fromUserId] userInfo:nil];//数据上报
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
             
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@获取等待中的订单成功房间号%@时间%@电话来自%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],self.fromUserId]];
+            
             self.callView.titleL.text = [NSString stringWithFormat:@"店铺有新的订单(%@分钟%@)来了",self.orderModel.duration,self.orderModel.is_experience.boolValue?@"体验通话":@"收费通话"];
             UIViewController *viewController = [[UIViewController alloc] init];
             [viewController.view addSubview:self.callView];
@@ -413,6 +454,8 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
         [self repject:NO];
         NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@获取等待中的订单请求失败\n房间号%@\n时间%@\n理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description] userInfo:nil];//数据上报
         [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+        
+        [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@获取等待中的订单请求失败房间号%@时间%@理由%@",[NoticeTools getuserId],weakSelf.currentRoomId,[SXTools getCurrentTime],error.description]];
     }];
 }
 
@@ -443,6 +486,8 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@和%@通话建立成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.fromUserId,info.rtcInfo.channelName,[SXTools getCurrentTime]] userInfo:nil];//数据上报
     [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+    
+    [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@和%@通话建立成功房间号%@时间%@",[NoticeTools getuserId],self.fromUserId,info.rtcInfo.channelName,[SXTools getCurrentTime]]];
 }
 
 - (void)onNetworkQuality:(NSArray<NERtcNetworkQualityStats *> *)stats{
@@ -450,9 +495,10 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     for (NERtcNetworkQualityStats *state in stats) {
         if (state.txQuality == kNERtcNetworkQualityDown || state.rxQuality == kNERtcNetworkQualityDown) {
             [[NoticeTools getTopViewController] showToastWithText:@"网络已断开"];
+            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:@"网络已断开"];
         }else{
             if (state.txQuality > 3 || state.rxQuality > 3) {
-                [[NoticeTools getTopViewController] showToastWithText:@"当前网络环境较差"];
+                [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:@"网络环境差"];
             }
         }
     }
@@ -466,6 +512,9 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     [self clearCallWaitView];
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@和%@通话结束\n房间号%@\n时间%@\n理由:%ld",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime],info.reasonCode] userInfo:nil];//数据上报
     [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
+    
+    [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@和%@通话结束房间号%@时间%@理由:%ld",[NoticeTools getuserId],self.fromUserId,self.currentRoomId,[SXTools getCurrentTime],info.reasonCode]];
+    
     DRLog(@"通话结束回调的当前通话房间号信息%@",self.currentRoomId);
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOPOVERCHATORDER" object:nil];
@@ -561,6 +610,8 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     self.autoCallNexting = NO;
     self.fromUserId = nil;
     self.toUserId = nil;
+    
+    [[LogManager sharedInstance] checkLogNeedUpload];
 }
 
 - (void)orderFinish{
@@ -592,7 +643,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
     //正式需要打开这里，调试的时候注释了
     [self getOrder];
-
+    [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@收到%@通话请求房间号%@时间%@",[NoticeTools getuserId],info.callerAccId,self.currentRoomId,[SXTools getCurrentTime]]];
     [self.callPlayer startPlayWithUrlandRecoding:[[NSBundle mainBundle] pathForResource:@"avchat_ring" ofType:@"mp3"] isLocalFile:YES];
 }
 

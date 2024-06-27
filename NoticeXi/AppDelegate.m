@@ -389,8 +389,8 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler{
 
     NSURLComponents *components = [[NSURLComponents alloc] initWithString:userActivity.webpageURL.absoluteString];
-     
-    if (components.queryItems.count == 2) {
+    DRLog(@"%@===%@",userActivity.webpageURL,userActivity.referrerURL);
+    if (components.queryItems.count >= 2) {
         NSURLQueryItem *item1 = components.queryItems[0];
         NSURLQueryItem *item2 = components.queryItems[1];
         
