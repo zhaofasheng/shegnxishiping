@@ -7,7 +7,7 @@
 //
 
 #import "SXVideosComClickView.h"
-
+#import "NoticeMoreClickView.h"
 @implementation SXVideosComClickView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -15,7 +15,7 @@
         self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0];
         
         CGFloat strWidth = GET_STRWIDTH(@"评论", 14, self.frame.size.height);
-        self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(self.frame.size.width-strWidth, 0, strWidth, self.frame.size.height)];
+        self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(self.frame.size.width-strWidth-54, 0, strWidth, self.frame.size.height)];
         self.comNumL.font = FOURTHTEENTEXTFONTSIZE;
         self.comNumL.textColor = [UIColor whiteColor];
         [self addSubview:self.comNumL];
@@ -30,6 +30,11 @@
         self.comImageView.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(comClick)];
         [self.comImageView addGestureRecognizer:tap1];
+        
+        UIButton *shareBtn = [[UIButton  alloc] initWithFrame:CGRectMake(self.frame.size.width-24-15, 8, 24, 24)];
+        [shareBtn setBackgroundImage:UIImageNamed(@"sxsharevideo_img") forState:UIControlStateNormal];
+        [shareBtn addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:shareBtn];
         
         self.markView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, self.comImageView.frame.origin.x-15, 40)];
         self.markView.backgroundColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:0.15];
@@ -50,6 +55,16 @@
     return self;
 }
 
+- (void)shareClick{
+    NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    moreView.isShare = YES;
+    moreView.shareUrl = @"www.baidu.com";
+    moreView.wechatShareUrl = @"www.baidu.com";;
+    moreView.name =self.videoModel.introduce;
+    moreView.imgUrl = self.videoModel.video_cover_url;
+    moreView.title = self.videoModel.title;
+    [moreView showTost];
+}
 
 - (void)comClick{
     if (self.comClickBlock) {
@@ -87,7 +102,7 @@
     
     self.markL.text = _videoModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论...";
     
-    self.comNumL.frame = CGRectMake(self.frame.size.width-strWidth, 0, strWidth, self.frame.size.height);
+    self.comNumL.frame = CGRectMake(self.frame.size.width-strWidth-54, 0, strWidth, self.frame.size.height);
     self.comImageView.frame = CGRectMake(self.comNumL.frame.origin.x-28, 8, 24, 24);
     self.markView.frame = CGRectMake(0, 0, self.comImageView.frame.origin.x-15, 40);
 }

@@ -101,12 +101,25 @@
                 juBaoView.reouceId = currentPlaySmallVideoModel.vid;
                 juBaoView.reouceType = @"148";
                 [juBaoView showView];
+            }else if(buttonIndex == 2){
+                [weakSelf rateClick];
             }
         }
     };
     [moreView showTost];
 }
 
+- (void)rateClick{
+    LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
+        if (buttonIndex > 0) {
+            [NoticeTools voicePlayRate:[NSString stringWithFormat:@"%ld",buttonIndex]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PLAYRATENTTOTICE" object:nil];
+        }
+    } otherButtonTitleArray:@[@"1.0x",@"1.25x",@"1.5x",@"2.0x"]];
+    sheet.needSelect = YES;
+    [sheet show];
+    
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.modelArray.count;
@@ -276,12 +289,13 @@
     self.videoPlayerManager.playerModel.videoURL         = videoURL;
     self.videoPlayerManager.originVideoURL = originVideoURL;
     self.videoPlayerManager.playerModel.useDownAndPlay = YES;
+    
     //如果设备存储空间不足200M,那么不要边下边播
     if([self deviceFreeMemorySize] < 200) {
         self.videoPlayerManager.playerModel.useDownAndPlay = NO;
     }
     [self.videoPlayerManager resetToPlayNewVideo];
-    
+    self.videoPlayerManager.playerView.isCurrent = YES;
     if (self.needPopCom && self.noRequest) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0];
         SXFullPlayCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -346,7 +360,7 @@
     self.preloadVideoPlayerManager.playerModel.useDownAndPlay = YES;
     self.preloadVideoPlayerManager.playerModel.isAutoPlay = NO;
     [self.preloadVideoPlayerManager resetToPlayNewVideo];
-    
+    self.preloadVideoPlayerManager.playerView.isCurrent = NO;
 }
 
 - (void)backClick{

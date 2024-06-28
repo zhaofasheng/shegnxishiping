@@ -849,6 +849,11 @@
     return self.otherButtonTitles.count;
 }
 
+- (void)setNeedSelect:(BOOL)needSelect{
+    _needSelect = needSelect;
+    [self.tableView reloadData];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellID = @"LCActionSheetCell";
     LCActionSheetCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
@@ -860,6 +865,15 @@
     [cell setButtonEdgeInsets:self.buttonEdgeInsets];
     cell.titleLabel.font      = SIXTEENTEXTFONTSIZE;
     cell.titleLabel.textColor = [UIColor colorWithHexString:@"#25262E"];
+    
+    if (self.needSelect) {
+        if (indexPath.row == ([NoticeTools voicePlayRate]-1)) {
+            cell.titleLabel.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+        }else{
+            cell.titleLabel.textColor = [UIColor colorWithHexString:@"#25262E"];
+        }
+    }
+    
     cell.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     
     cell.titleLabel.text = self.otherButtonTitles[indexPath.row];

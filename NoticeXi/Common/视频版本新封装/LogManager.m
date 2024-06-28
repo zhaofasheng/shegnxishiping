@@ -150,7 +150,6 @@ static NSString* ZipFileName = @"OTKLog.zip";
 
         NSString* zipFilePath = [self.basePath stringByAppendingString:ZipFileName];
         
-        
         NSFileHandle *handle = [NSFileHandle fileHandleForReadingAtPath:zipFilePath];
         NSData *fileData = [handle readDataToEndOfFile];
         [handle closeFile];

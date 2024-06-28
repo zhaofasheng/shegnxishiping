@@ -94,6 +94,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
     [self changeRootVC];
     [self regreiteShare];
+    
     return YES;
 }
 

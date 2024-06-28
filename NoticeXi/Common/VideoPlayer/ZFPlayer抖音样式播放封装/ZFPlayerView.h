@@ -60,6 +60,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 @interface ZFPlayerView : UIView
 
 @property (nonatomic, assign) BOOL isFirstAlloc;
+@property (nonatomic, strong) AVPlayer               *player;
 /** playerLayer */
 @property (nonatomic, strong) AVPlayerLayer          *playerLayer;
 @property (nonatomic, strong) SXPlayVideoFullControllView                 *controlView;
@@ -69,6 +70,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 
 //是否是竖屏
 @property (nonatomic, assign) BOOL screen;
+@property (nonatomic, assign) BOOL isCurrent;//当前播放的视频
 /** 是否为全屏 */
 @property (nonatomic, assign) BOOL                   isFullScreen;
 /** 设置playerLayer的填充模式 */

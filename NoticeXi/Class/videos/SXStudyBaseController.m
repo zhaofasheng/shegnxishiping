@@ -7,7 +7,7 @@
 //
 
 #import "SXStudyBaseController.h"
-
+#import "SXPayVideoComController.h"
 #import "SXPayVideoListController.h"
 #import "SXKchengIntroController.h"
 #import "XLCycleCollectionView.h"
@@ -15,16 +15,18 @@
 #import "JXPagerView.h"
 #import "JXPagerListRefreshView.h"
 #import "SXBuySearisController.h"
-
+#import "NoticeMoreClickView.h"
 @interface SXStudyBaseController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) UIView *sectionView;
+
 @property (nonatomic, strong) NSArray <NSString *> *titles;
 @property (nonatomic, strong) JXCategoryTitleView *categoryView;
 @property (nonatomic, strong) JXPagerListRefreshView *pagerView;
-
+@property (nonatomic, strong) SXPayVideoComController *comVC;
 @property (nonatomic, strong) SXPayVideoListController *videoVC;
 @property (nonatomic, strong) SXKchengIntroController *kcVC;
+
+@property (nonatomic, strong) UIView *line;
 
 @property (nonatomic, strong) UIView *imgListView;
 @property (nonatomic, strong) UIImageView *priceBtn;
@@ -33,6 +35,10 @@
 
 @property (nonatomic, strong) UIView *zeroView;
 
+@property (nonatomic, strong) UILabel *infoButton;
+@property (nonatomic, strong) UILabel *orderButton;
+@property (nonatomic, strong) UILabel *comButton;
+@property (nonatomic, strong) UIView *sectionView;
 @property (nonatomic, strong) XLCycleCollectionView *cyleView;
 @end
 
@@ -41,19 +47,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.titles = @[@"课程目录",@"课程简介"];
+    self.titles = @[@"",@"",@""];
     self.navBarView.titleL.text = self.paySearModel.series_name;
     self.navBarView.titleL.alpha = 0;
+    
 
     _categoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0,0,DR_SCREEN_WIDTH,40)];
     self.categoryView.titles = self.titles;
     self.categoryView.delegate = self;
-    self.categoryView.titleSelectedColor = [UIColor colorWithHexString:@"#14151A"];
-    self.categoryView.titleColor = [[UIColor colorWithHexString:@"#14151A"] colorWithAlphaComponent:0.8];
-    self.categoryView.titleColorGradientEnabled = YES;
-    self.categoryView.titleFont = SIXTEENTEXTFONTSIZE;
-    self.categoryView.titleSelectedFont = XGSIXBoldFontSize;
-    self.categoryView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+
     
     _pagerView = [[JXPagerListRefreshView alloc] initWithDelegate:self];
     self.pagerView.mainTableView.gestureDelegate = self;
@@ -66,22 +68,40 @@
     self.categoryView.listContainer = (id<JXCategoryViewListContainer>)self.pagerView.listContainerView;
     self.navigationController.interactivePopGestureRecognizer.enabled = (self.categoryView.selectedIndex == 0);
     
-    self.sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 40)];
+    self.sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 50)];
     [self.sectionView addSubview:_categoryView];
-    
-    JXCategoryIndicatorLineView *lineView = [[JXCategoryIndicatorLineView alloc] init];
-    lineView.lineStyle = JXCategoryIndicatorLineStyle_LengthenOffset;
-    lineView.lineScrollOffsetX = 2;
-    lineView.indicatorHeight = 2;
-    lineView.indicatorColor = [UIColor colorWithHexString:@"#1FC7FF"];
-    lineView.indicatorWidth = 50;
-    self.categoryView.indicators = @[lineView];
+
 
     if (self.paySearModel.carousel_images.count) {
         self.imgListView.hidden = NO;
         self.cyleView.data = self.paySearModel.carousel_images;
     }
 
+    UIButton *shanreBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-24, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-24)/2, 24, 24)];
+    [shanreBtn setBackgroundImage:UIImageNamed(@"sx_shanrestudyvideo_img") forState:UIControlStateNormal];
+    [self.navBarView addSubview:shanreBtn];
+    [shanreBtn addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.sectionView addSubview:self.infoButton];
+    [self.sectionView addSubview:self.orderButton];
+    [self.sectionView addSubview:self.comButton];
+    
+    self.line = [[UIView  alloc] initWithFrame:CGRectMake(self.infoButton.frame.origin.x, 30, self.infoButton.frame.size.width, 4)];
+    self.line.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+    self.line.layer.cornerRadius = 2;
+    self.line.layer.masksToBounds = YES;
+    [self.sectionView addSubview:self.line];
+}
+
+- (void)shareClick{
+    NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    moreView.isShare = YES;
+    moreView.shareUrl = @"www.baidu.com";
+    moreView.wechatShareUrl = @"www.baidu.com";
+    moreView.name = self.paySearModel.series_name;
+    moreView.imgUrl = self.paySearModel.cover_url;
+    moreView.title = self.paySearModel.series_name;
+    [moreView showTost];
 }
 
 - (UIView *)zeroView{
@@ -111,11 +131,11 @@
 }
 
 - (NSUInteger)tableHeaderViewHeightInPagerView:(JXPagerView *)pagerView {
-    return self.paySearModel.hasBuy?0: self.imgListView.frame.size.height;
+    return self.paySearModel.hasBuy?0: self.imgListView.frame.size.height+1;
 }
 
 - (NSUInteger)heightForPinSectionHeaderInPagerView:(JXPagerView *)pagerView {
-    return 40;
+    return self.sectionView.frame.size.height;
 }
 
 - (UIView *)viewForPinSectionHeaderInPagerView:(JXPagerView *)pagerView {
@@ -130,8 +150,11 @@
 - (id<JXPagerViewListViewDelegate>)pagerView:(JXPagerView *)pagerView initListAtIndex:(NSInteger)index {
     if (index == 0) {
         return self.videoVC;
-    }else{
+    }else if (index == 1){
         return self.kcVC;
+    }
+    else{
+        return self.comVC;
     }
 }
 
@@ -144,10 +167,17 @@
             if (weakSelf.buySuccessBlock) {
                 weakSelf.buySuccessBlock(searisID);
             }
-          
         };
     }
     return _videoVC;
+}
+
+- (SXPayVideoComController *)comVC{
+    if (!_comVC) {
+        _comVC = [[SXPayVideoComController alloc] init];
+        _comVC.paySearModel = self.paySearModel;
+    }
+    return _comVC;
 }
 
 - (SXKchengIntroController *)kcVC{
@@ -277,4 +307,74 @@
     CGFloat value = scrollView.contentOffset.y * progress;
     self.navBarView.titleL.alpha = value;
 }
+
+
+- (UILabel *)infoButton{
+    if (!_infoButton) {
+        _infoButton = [[UILabel  alloc] initWithFrame:CGRectMake(15, 0, GET_STRWIDTH(@"课程", 16, 50), 40)];
+        _infoButton.font = SIXTEENTEXTFONTSIZE;
+        _infoButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+        _infoButton.userInteractionEnabled = YES;
+        _infoButton.tag = 0;
+        _infoButton.text = @"课程";
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
+        [_infoButton addGestureRecognizer:tap];
+    }
+    return _infoButton;
+}
+
+- (UILabel *)orderButton{
+    if (!_orderButton) {
+        _orderButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.infoButton.frame)+40, 0, GET_STRWIDTH(@"简介", 16, 40), 40)];
+        _orderButton.font = SIXTEENTEXTFONTSIZE;
+        _orderButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+        _orderButton.userInteractionEnabled = YES;
+        _orderButton.tag = 1;
+        _orderButton.text = @"简介";
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
+        [_orderButton addGestureRecognizer:tap];
+    }
+    return _orderButton;
+}
+
+- (UILabel *)comButton{
+    if (!_comButton) {
+        _comButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.orderButton.frame)+40, 0, GET_STRWIDTH(@"评价", 16, 40),40)];
+        _comButton.font = SIXTEENTEXTFONTSIZE;
+        _comButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+        _comButton.userInteractionEnabled = YES;
+        _comButton.tag = 2;
+        _comButton.text = @"评论";
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
+        [_comButton addGestureRecognizer:tap];
+    }
+    return _comButton;
+}
+
+- (void)indexTap:(UITapGestureRecognizer *)tap{
+    UILabel *tapV = (UILabel *)tap.view;
+    
+    self.categoryView.defaultSelectedIndex = tapV.tag;
+    [self categoryCurentIndex:tapV.tag];
+    [self.categoryView reloadData];
+}
+
+- (void)categoryCurentIndex:(NSInteger)index{
+
+    self.comButton.font = SIXTEENTEXTFONTSIZE;
+    self.infoButton.font = SIXTEENTEXTFONTSIZE;
+    self.orderButton.font = SIXTEENTEXTFONTSIZE;
+    if (index == 0) {
+        self.infoButton.font = XGSIXBoldFontSize;
+        self.line.frame = CGRectMake(self.infoButton.frame.origin.x, 30, self.infoButton.frame.size.width, 4);
+    }else if (index == 1){
+        self.orderButton.font = XGSIXBoldFontSize;
+        self.line.frame = CGRectMake(self.orderButton.frame.origin.x, 30, self.orderButton.frame.size.width, 4);
+    }else if (index == 2){
+        self.comButton.font = XGSIXBoldFontSize;
+        self.line.frame = CGRectMake(self.comButton.frame.origin.x, 30, self.comButton.frame.size.width, 4);
+    }
+
+}
+
 @end

@@ -116,8 +116,16 @@
         }
       
     }else{
-        self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img"];
-        self.titleArr = @[@"举报",@"缓存"];
+        self.imgArr = @[@"sxjubaovideo_img", @"sxhuancun_img",[NoticeTools voicePlayRate] > 1?@"sxbeisuplays_img": @"sxbeisuplay_img"];
+        NSString *beisu = @"倍速";
+       if ([NoticeTools voicePlayRate] == 2){
+            beisu = @"1.25x";
+        }else if ([NoticeTools voicePlayRate] == 3){
+            beisu = @"1.5x";
+        }else if ([NoticeTools voicePlayRate] == 4){
+            beisu = @"2.0x";
+        }
+        self.titleArr = @[@"举报",@"缓存",beisu];
     }
     [self.movieTableView reloadData];
 }
@@ -212,6 +220,10 @@
         cell.iconImageView.image = UIImageNamed(self.imgArr[indexPath.row]);
         cell.iconImageView.frame = CGRectMake((DR_SCREEN_WIDTH/4-44)/2, 0, 44, 44);
         cell.nameL.frame = CGRectMake(0,CGRectGetMaxY(cell.iconImageView.frame)+3,DR_SCREEN_WIDTH/4,17);
+        cell.nameL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        if (self.isVideo && indexPath.row == 2 && [NoticeTools voicePlayRate] > 1) {
+            cell.nameL.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+        }
     }else{
         cell.moreL.hidden = YES;
         cell.nameL.text = [NoticeTools getLocalType]==1?@"Past": ([NoticeTools getLocalType]==2?@"過去": @"书影音画");

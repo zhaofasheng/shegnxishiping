@@ -77,6 +77,8 @@
 /** 滑块 */
 @property (nonatomic, strong) UIButton *sliderBtn;
 
+- (void)sliderBtnDragMoving:(UIButton *)btn point:(CGPoint)touchPoint;
+
 /**
  *  Starts animation of the spinner.
  */

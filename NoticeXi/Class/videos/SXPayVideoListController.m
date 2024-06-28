@@ -44,8 +44,7 @@
     
     self.navBarView.hidden = YES;
 
-    
-    
+
     if (self.paySearModel.published_episodes.intValue < self.paySearModel.episodes.intValue) {
         self.tableView.tableFooterView = self.footView;
     }else{
@@ -59,8 +58,6 @@
     
     [self request];
 }
-
-
 
 - (void)request{
     
@@ -77,9 +74,7 @@
             for (NSDictionary *dic in dict[@"data"]) {
                 SXSearisVideoListModel *model = [SXSearisVideoListModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:model];
-          
             }
-         
             [self.tableView reloadData];
         }
     } fail:^(NSError *error) {

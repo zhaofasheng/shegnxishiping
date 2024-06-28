@@ -614,7 +614,10 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     if (![[NoticeSaveModel getUserInfo] user_id]) {
         return 0;
     }
-    return [[cache objectForKey:[NSString stringWithFormat:@"voicePlayRate%@",[[NoticeSaveModel getUserInfo] user_id]]] intValue];
+    
+    NSInteger rate = [[cache objectForKey:[NSString stringWithFormat:@"voicePlayRate%@",[[NoticeSaveModel getUserInfo] user_id]]] intValue];
+    
+    return rate > 0 ? rate : 1;
 }
 
 + (void)voicePlayRate:(NSString *)type{

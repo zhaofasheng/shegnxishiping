@@ -16,7 +16,7 @@
 @interface ZFPlayerView () <UIGestureRecognizerDelegate,UIAlertViewDelegate,SXControllerPlayDelegate>
 
 /** 播放属性 */
-@property (nonatomic, strong) AVPlayer               *player;
+
 @property (nonatomic, strong) AVPlayerItem           *playerItem;
 @property (nonatomic, strong) AVURLAsset             *urlAsset;
 /**
@@ -156,7 +156,9 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
 
     //来了语音通话
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pausePlay) name:@"HASGETSHOPVOICECHANTTOTICE" object:nil];
-    
+    //播放速度
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(palyRate) name:@"PLAYRATENTTOTICE" object:nil];
+
     // app退到后台
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:UIApplicationWillResignActiveNotification object:nil];
     // app进入前台
@@ -445,9 +447,41 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
  */
 - (void)play {
 
+    
     if (self.state == ZFPlayerStatePause) { self.state = ZFPlayerStatePlaying; }
     self.isPauseByUser = NO;
     [_player play];
+    
+    
+    if ([NoticeTools voicePlayRate] == 1) {
+        self.player.rate = 1.0;
+    }else if ([NoticeTools voicePlayRate] == 2){
+        self.player.rate = 1.25;
+    }else if ([NoticeTools voicePlayRate] == 3){
+        self.player.rate = 1.5;
+    }else if ([NoticeTools voicePlayRate] == 4){
+        self.player.rate = 2;
+    }
+    else{
+        self.player.rate = 1;
+    }
+}
+
+- (void)palyRate{
+    if (self.state == ZFPlayerStatePlaying && self.isCurrent) {
+        if ([NoticeTools voicePlayRate] == 1) {
+            self.player.rate = 1.0;
+        }else if ([NoticeTools voicePlayRate] == 2){
+            self.player.rate = 1.25;
+        }else if ([NoticeTools voicePlayRate] == 3){
+            self.player.rate = 1.5;
+        }else if ([NoticeTools voicePlayRate] == 4){
+            self.player.rate = 2;
+        }
+        else{
+            self.player.rate = 1;
+        }
+    }
 }
 
 /**
@@ -491,6 +525,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
  *  设置Player相关参数
  */
 - (void)configZFPlayer {
+   
     if ([self.videoURL.scheme isEqualToString:@"file"]) {
         [self configPlayerWithLocal];
     } else {
@@ -501,6 +536,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
 - (void)configPlayerWithLocal {
     self.urlAsset = [AVURLAsset assetWithURL:self.videoURL];
     [self playResource];
+
 }
 
 
@@ -511,7 +547,7 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
 }
 
 - (void)configPlayerWithWeb {
-
+ 
     if(!self.playerModel.useDownAndPlay) {
         //如果不需要边下边播
         self.urlAsset = [AVURLAsset URLAssetWithURL:self.videoURL options:nil];
@@ -534,8 +570,10 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
     
     // 初始化playerItem
     self.playerItem = [AVPlayerItem playerItemWithAsset:self.urlAsset];
+    self.playerItem.audioTimePitchAlgorithm = AVAudioTimePitchAlgorithmTimeDomain;
     // 每次都重新创建Player，替换replaceCurrentItemWithPlayerItem:，该方法阻塞线程
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
+ 
     // 初始化playerLayer
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     self.playerLayer.frame = self.bounds;
@@ -583,8 +621,9 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
             if (weakSelf.isFullScreen) {
                 weakSelf.controlView.playTimeLabel.text = str1;
                 weakSelf.controlView.totalTimeLabel.text = [weakSelf getMMSSFromSS:totalTime];
+                weakSelf.controlView.totalTime = totalTime;
             }
-            
+           
             [weakSelf.controlView.activity stopAnimating];
         }
     }];

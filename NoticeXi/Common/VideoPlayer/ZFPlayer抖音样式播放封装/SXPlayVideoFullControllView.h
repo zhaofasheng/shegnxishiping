@@ -30,7 +30,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXPlayVideoFullControllView : UIView
-
+@property (nonatomic, assign) CGFloat totalTime;
 @property (nonatomic, strong) ZFSliderView *slider;
 
 @property (nonatomic, strong) UIImageView *playImageView;

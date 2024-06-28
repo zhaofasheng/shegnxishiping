@@ -103,7 +103,7 @@ typedef void(^LCActionSheetDidDismissHandler)(LCActionSheet *actionSheet, NSInte
  Title.
  */
 @property (nullable, nonatomic, copy) NSString *title;
-
+@property (nonatomic, assign) BOOL needSelect;
 /**
  Cancel button's title.
  */

@@ -11,7 +11,7 @@
 
 #import "SXplayPayVideoDetailSection.h"
 #import "SXPlayPayVideoDetailHeaderView.h"
-
+#import "SXPayVideoComController.h"
 #import "JXCategoryView.h"
 #import "JXPagerView.h"
 #import "JXPagerListRefreshView.h"
@@ -30,11 +30,18 @@
 /** 加载指示器 */
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, strong) SXPlayPayVideoDetailHeaderView *videoHeaderView;
-@property (nonatomic, strong) SXplayPayVideoDetailSection *sectionView;
+@property (nonatomic, strong) SXplayPayVideoDetailSection *sectionView1;
 @property (nonatomic, strong) UIView *balckView;
 @property (nonatomic, strong) NSArray *arr;
 @property (nonatomic, assign) BOOL isPause;
 @property (nonatomic, assign) BOOL isFullPlay;
+@property (nonatomic, strong) UIView *line;
+@property (nonatomic, strong) SXPayVideoComController *comVC;
+@property (nonatomic, strong) UILabel *infoButton;
+@property (nonatomic, strong) UILabel *comButton;
+@property (nonatomic, strong) UIView *sectionView;
+
+@property (nonatomic, strong) UIView *zeroView;
 @end
 
 @implementation SXPayVideoPlayDetailBaseController
@@ -50,14 +57,9 @@
     
     self.videoHeaderView.model = self.paySearModel;
     self.videoHeaderView.videoModel = self.currentPlayModel;
-    CGFloat videoHeaderHeight = 90+self.currentPlayModel.titleHeight;
  
-    if (self.currentPlayModel.screen.intValue == 2) {//如果是竖屏
-        self.videoHeaderView.frame =  CGRectMake(0, 0, 0, (DR_SCREEN_WIDTH*4/3)-(DR_SCREEN_WIDTH/16*9)+videoHeaderHeight);
-    }else{
-        self.videoHeaderView.frame =  CGRectMake(0, 0, 0, videoHeaderHeight);
-    }
-
+    self.listVC.tableView.tableHeaderView = self.videoHeaderView;
+    
     [self.pagerView removeFromSuperview];
     self.pagerView = nil;
     
@@ -82,6 +84,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.zeroView = [[UIView  alloc] initWithFrame:CGRectZero];
     
     self.navBarView.hidden = YES;
     
@@ -89,17 +92,28 @@
     [self.view addSubview:balckView];
     balckView.backgroundColor = [UIColor blackColor];
     
-    self.sectionView = [[SXplayPayVideoDetailSection alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 40)];
-    self.sectionView.model = self.paySearModel;
+    self.sectionView1 = [[SXplayPayVideoDetailSection alloc] initWithFrame:CGRectMake(0, 120, DR_SCREEN_WIDTH, 40)];
+    self.sectionView1.model = self.paySearModel;
     
-    self.videoHeaderView = [[SXPlayPayVideoDetailHeaderView alloc] init];
-    
+    self.videoHeaderView = [[SXPlayPayVideoDetailHeaderView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 160)];
+    [self.videoHeaderView addSubview:self.sectionView1];
     
     _categoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0,0,GET_STRWIDTH(@"商品的", 18, 50)*2+40,0)];
     self.categoryView.titles = @[@"",@"",@""];;
     self.categoryView.delegate = self;
     
 
+    self.sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 50)];
+    [self.sectionView addSubview:_categoryView];
+    [self.sectionView addSubview:self.infoButton];
+    [self.sectionView addSubview:self.comButton];
+    
+    self.line = [[UIView  alloc] initWithFrame:CGRectMake(self.infoButton.frame.origin.x, 30, self.infoButton.frame.size.width, 4)];
+    self.line.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+    self.line.layer.cornerRadius = 2;
+    self.line.layer.masksToBounds = YES;
+    [self.sectionView addSubview:self.line];
+    
     self.navigationController.interactivePopGestureRecognizer.enabled = (self.categoryView.selectedIndex == 0);
     
     if (self.searisArr.count) {
@@ -132,6 +146,9 @@
             NSString *oldPlayVideoName = [SXTools getPayPlayLastsearisId:self.paySearModel.seriesId];
             for (NSDictionary *dic in dict[@"data"]) {
                 SXSearisVideoListModel *model = [SXSearisVideoListModel mj_objectWithKeyValues:dic];
+                if (model.screen.intValue == 2) {
+                    model.screen = @"1";
+                }
                 if (oldPlayVideoName) {
                     if ([model.title isEqualToString:oldPlayVideoName]) {
                         self.currentPlayModel = model;
@@ -261,27 +278,6 @@
 }
 
 
-- (SXPayVideoPlayDetailListController *)listVC{
-    if(!_listVC){
-        _listVC = [[SXPayVideoPlayDetailListController alloc] init];
-        _listVC.currentPlayModel = self.currentPlayModel;
-        _listVC.searisArr = self.searisArr;
-        __weak typeof(self) weakSelf = self;
-        _listVC.choiceVideoBlock = ^(SXSearisVideoListModel * _Nonnull videoModel) {
-            
-            if (weakSelf.refreshPlayTimeBlock) {
-                weakSelf.refreshPlayTimeBlock(weakSelf.currentPlayModel);
-            }
-            
-            weakSelf.currentPlayModel = videoModel;
-            [weakSelf destroyOldplay];
-            [weakSelf setPlayView];
-        };
-
-    }
-    return _listVC;
-}
-
 
 
 - (void)viewDidLayoutSubviews {
@@ -299,11 +295,11 @@
 #pragma mark - JXPagerViewDelegate
 
 - (UIView *)tableHeaderViewInPagerView:(JXPagerView *)pagerView {
-    return self.videoHeaderView;
+    return self.zeroView;
 }
 
 - (NSUInteger)tableHeaderViewHeightInPagerView:(JXPagerView *)pagerView {
-    return self.videoHeaderView.frame.size.height;
+    return self.zeroView.frame.size.height;
 }
 
 - (NSUInteger)heightForPinSectionHeaderInPagerView:(JXPagerView *)pagerView {
@@ -315,10 +311,13 @@
 }
 
 - (NSInteger)numberOfListsInPagerView:(JXPagerView *)pagerView {
-    return 1;
+    return 2;
 }
 
 - (id<JXPagerViewListViewDelegate>)pagerView:(JXPagerView *)pagerView initListAtIndex:(NSInteger)index {
+    if (index == 1) {
+        return self.comVC;
+    }
     return self.listVC;
 }
 
@@ -398,9 +397,89 @@
     } else {
         // Fallback on earlier versions
     }
-
 }
 
+
+- (SXPayVideoPlayDetailListController *)listVC{
+    if(!_listVC){
+        _listVC = [[SXPayVideoPlayDetailListController alloc] init];
+        _listVC.currentPlayModel = self.currentPlayModel;
+        _listVC.searisArr = self.searisArr;
+        __weak typeof(self) weakSelf = self;
+        _listVC.choiceVideoBlock = ^(SXSearisVideoListModel * _Nonnull videoModel) {
+            
+            if (weakSelf.refreshPlayTimeBlock) {
+                weakSelf.refreshPlayTimeBlock(weakSelf.currentPlayModel);
+            }
+            
+            weakSelf.currentPlayModel = videoModel;
+            [weakSelf destroyOldplay];
+            [weakSelf setPlayView];
+        };
+
+    }
+    return _listVC;
+}
+
+
+- (SXPayVideoComController *)comVC{
+    if (!_comVC) {
+        _comVC = [[SXPayVideoComController alloc] init];
+        _comVC.paySearModel = self.paySearModel;
+    }
+    return _comVC;
+}
+
+- (UILabel *)infoButton{
+    if (!_infoButton) {
+        _infoButton = [[UILabel  alloc] initWithFrame:CGRectMake(15, 0, GET_STRWIDTH(@"课程", 16, 50), 40)];
+        _infoButton.font = SIXTEENTEXTFONTSIZE;
+        _infoButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+        _infoButton.userInteractionEnabled = YES;
+        _infoButton.tag = 0;
+        _infoButton.text = @"课程";
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
+        [_infoButton addGestureRecognizer:tap];
+    }
+    return _infoButton;
+}
+
+
+- (UILabel *)comButton{
+    if (!_comButton) {
+        _comButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.infoButton.frame)+40, 0, GET_STRWIDTH(@"评价", 16, 40),40)];
+        _comButton.font = SIXTEENTEXTFONTSIZE;
+        _comButton.textColor = [UIColor colorWithHexString:@"#14151A"];
+        _comButton.userInteractionEnabled = YES;
+        _comButton.tag = 1;
+        _comButton.text = @"评论";
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
+        [_comButton addGestureRecognizer:tap];
+    }
+    return _comButton;
+}
+
+- (void)indexTap:(UITapGestureRecognizer *)tap{
+    UILabel *tapV = (UILabel *)tap.view;
+    
+    self.categoryView.defaultSelectedIndex = tapV.tag;
+    [self categoryCurentIndex:tapV.tag];
+    [self.categoryView reloadData];
+}
+
+- (void)categoryCurentIndex:(NSInteger)index{
+
+    self.comButton.font = SIXTEENTEXTFONTSIZE;
+    self.infoButton.font = SIXTEENTEXTFONTSIZE;
+    if (index == 0) {
+        self.infoButton.font = XGSIXBoldFontSize;
+        self.line.frame = CGRectMake(self.infoButton.frame.origin.x, 30, self.infoButton.frame.size.width, 4);
+    }else if (index == 1){
+        self.comButton.font = XGSIXBoldFontSize;
+        self.line.frame = CGRectMake(self.comButton.frame.origin.x, 30, self.comButton.frame.size.width, 4);
+    }
+
+}
 
 
 @end

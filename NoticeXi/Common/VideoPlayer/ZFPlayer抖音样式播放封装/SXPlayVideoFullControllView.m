@@ -1,11 +1,27 @@
 
 #import "SXPlayVideoFullControllView.h"
+#import "SXDragChangeValueView.h"
+#import <MediaPlayer/MPVolumeView.h>
+// 枚举值，包含水平移动方向和垂直移动方向
+typedef NS_ENUM(NSInteger, PanDirection){
+    PanDirectionHorizontalMoved, // 横向移动
+    PanDirectionVerticalMoved    // 纵向移动
+};
 
 
-@interface SXPlayVideoFullControllView()<ZFSliderViewDelegate>
-
+@interface SXPlayVideoFullControllView()<ZFSliderViewDelegate,UIGestureRecognizerDelegate>
+/** 用来保存pan手势快进的总时长 */
+@property (nonatomic, assign) CGFloat sumTime;
+/** 滑动 */
+@property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, strong) UIView *blackView;
-
+@property (nonatomic, strong) SXDragChangeValueView *volumeProress;
+/** 定义一个实例变量，保存枚举值 */
+@property (nonatomic, assign) PanDirection panDirection;
+/** 是否在调节音量 */
+@property (nonatomic, assign) BOOL isVolume;
+/** 声音滑杆 */
+@property (nonatomic, strong) UISlider *volumeViewSlider;
 @end
 
 @implementation SXPlayVideoFullControllView
@@ -53,6 +69,14 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playOrPauseTap)];
         [self addGestureRecognizer:tap];
         self.userInteractionEnabled = YES;
+        
+        // 添加平移手势，用来控制音量、亮度、快进快退
+        self.panRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panDirection:)];
+        self.panRecognizer.delegate = self;
+        [self.panRecognizer setMaximumNumberOfTouches:1];
+        [self.panRecognizer setDelaysTouchesBegan:YES];
+        [self.panRecognizer setDelaysTouchesEnded:YES];
+        [self.panRecognizer setCancelsTouchesInView:YES];
     }
     return self;
 }
@@ -69,6 +93,9 @@
         self.totalTimeLabel.frame = CGRectMake(self.frame.size.width-TAB_BAR_HEIGHT-GET_STRWIDTH(self.totalTimeLabel.text, 11, 44), self.frame.size.height-44,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
         self.slider.frame = CGRectMake(CGRectGetMaxX(self.playTimeLabel.frame)+8, self.playTimeLabel.frame.origin.y+14, self.totalTimeLabel.frame.origin.x-CGRectGetMaxX(self.playTimeLabel.frame)-16, 16);
         self.fastLabel.frame = CGRectMake((self.frame.size.width-self.fastLabel.frame.size.width)/2, self.slider.frame.origin.y-30, self.fastLabel.frame.size.width, 28);
+        
+        [self configureVolume];
+        [self addGestureRecognizer:self.panRecognizer];
     }else{
         self.slider.frame = CGRectMake(15, self.frame.size.height-8, self.frame.size.width-30, 16);
         self.playTimeLabel.hidden = YES;
@@ -76,13 +103,148 @@
         self.nomerLabel.hidden = NO;
         self.fastLabel.frame = CGRectMake((self.frame.size.width-self.fastLabel.frame.size.width)/2, self.slider.frame.origin.y-20-60, self.fastLabel.frame.size.width, 28);
         _backBtn.hidden = YES;
-        
+        [self removeGestureRecognizer:self.panRecognizer];
+        _volumeProress.hidden = YES;
     }
 
     self.playImageView.frame = CGRectMake((self.frame.size.width-64)/2, (self.frame.size.height-64)/2, 64, 64);
     self.activity.frame = CGRectMake((self.frame.size.width-45)/2, (self.frame.size.height-45)/2, 45, 45);
 
     self.blackView.frame = self.bounds;
+}
+
+
+#pragma mark - UIPanGestureRecognizer手势方法
+/**
+ *  pan手势事件
+ *
+ *  @param pan UIPanGestureRecognizer
+ */
+- (void)panDirection:(UIPanGestureRecognizer *)pan {
+    // 根据在view上Pan的位置，确定是调音量还是亮度
+    CGPoint locationPoint = [pan locationInView:self];
+    
+    // 我们要响应水平移动和垂直移动
+    // 根据上次和本次移动的位置，算出一个速率的point
+    CGPoint veloctyPoint = [pan velocityInView:self];
+    
+    // 判断是垂直移动还是水平移动
+    switch (pan.state) {
+        case UIGestureRecognizerStateBegan:{ // 开始移动
+            // 使用绝对值来判断移动的方向
+            CGFloat x = fabs(veloctyPoint.x);
+            CGFloat y = fabs(veloctyPoint.y);
+            if (x > y) { // 水平移动
+                self.panDirection = PanDirectionHorizontalMoved;
+                [self sliderTouchBegan:self.slider.value];
+            }
+            else if (x < y){ // 垂直移动
+                self.panDirection = PanDirectionVerticalMoved;
+                // 开始滑动的时候,状态改为正在控制音量
+                if (locationPoint.x > self.bounds.size.width / 2) {
+                    self.isVolume = YES;
+                    self.volumeProress.isBright = NO;
+                }else { // 状态改为显示亮度调节
+                    self.isVolume = NO;
+                    self.volumeProress.isBright = YES;
+                }
+                self.volumeProress.hidden = NO;
+            }
+            break;
+        }
+        case UIGestureRecognizerStateChanged:{ // 正在移动
+            switch (self.panDirection) {
+                case PanDirectionHorizontalMoved:{
+                    [self panHorizontalMoving:veloctyPoint.x];
+                    break;
+                }
+                case PanDirectionVerticalMoved:{
+                    [self verticalMoved:veloctyPoint.y]; // 垂直移动方法只要y方向的值
+                    break;
+                }
+                default:
+                    break;
+            }
+            break;
+        }
+        case UIGestureRecognizerStateEnded:{ // 移动停止
+            // 移动结束也需要判断垂直或者平移
+            // 比如水平移动结束时，要快进到指定位置，如果这里没有判断，当我们调节音量完之后，会出现屏幕跳动的bug
+            switch (self.panDirection) {
+                case PanDirectionHorizontalMoved:{
+                    [self sliderTouchEnded:self.slider.value];
+                    break;
+                }
+                case PanDirectionVerticalMoved:{
+                    _volumeProress.hidden = YES;
+                    // 垂直移动结束后，把状态改为不再控制音量
+                    self.isVolume = NO;
+                    break;
+                }
+                default:
+                    break;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)verticalMoved:(CGFloat)value {
+    if (self.isVolume) {
+        //改变音量
+        [self volumeValueChange:value];
+    } else {
+        //改变屏幕亮度
+        ([UIScreen mainScreen].brightness -= value / 10000);
+        self.volumeProress.progress.progress  -= value / 10000;
+    }
+}
+
+- (void)volumeValueChange:(CGFloat)value{
+    self.volumeViewSlider.value -= value / 10000;
+    self.volumeProress.progress.progress -= value / 10000;
+    
+}
+
+- (void)configureVolume {
+    MPVolumeView *volumeView = [[MPVolumeView alloc] init];
+    
+    _volumeViewSlider = nil;
+    for (UIView *view in [volumeView subviews]){
+        if ([view.class.description isEqualToString:@"MPVolumeSlider"]){
+            _volumeViewSlider = (UISlider *)view;
+            break;
+        }
+    }
+    
+    //若要关掉volumeView，需将volumeView添加至当前视图，如不需要volumeView，可以将它设置到视图外，隐藏掉它：
+    [volumeView setFrame:CGRectMake(-1000, -100, 100, 100)];
+    [self addSubview:volumeView];
+    // 使用这个category的应用不会随着手机静音键打开而静音，可在手机静音下播放声音
+    NSError *setCategoryError = nil;
+    BOOL success = [[AVAudioSession sharedInstance]
+                    setCategory: AVAudioSessionCategoryPlayback
+                    error: &setCategoryError];
+    
+    if (!success) { /* handle the error in setCategoryError */ }
+    
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+//        if (self.isBottomVideo && !self.isFullScreen) {
+//            return NO;
+//        }
+    }
+    if ([touch.view isKindOfClass:[UISlider class]]) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (UILabel *)fastLabel{
@@ -139,6 +301,7 @@
 
 // 滑块滑动开始
 - (void)sliderTouchBegan:(float)value{
+   
     self.blackView.frame = self.bounds;
     [self sendSubviewToBack:self.blackView];
     [UIView animateWithDuration:0.15 animations:^{
@@ -154,11 +317,35 @@
 }
 // 滑块滑动中
 - (void)sliderValueChanged:(float)value{
-    
+  
     if (self.delegate && [self.delegate respondsToSelector:@selector(sliderValueChanged:)]) {
         [self.delegate sliderValueChanged:value];
     }
 }
+
+//拖动中
+- (void)panHorizontalMoving:(CGFloat)value{
+    CGFloat totalTime = self.totalTime;
+    if (totalTime <= 0) {//没有获取的视频总时长则不执行
+        return;
+    }
+    self.sumTime += value/200;
+    // 需要限定sumTime的范围
+    CGFloat totalMovieDuration = totalTime;
+    if (self.sumTime > totalMovieDuration) { self.sumTime = totalMovieDuration;}//拖动时长大于视频时长，则拖动时长等于视频时长
+    if (self.sumTime < 0) { self.sumTime = 0; }//拖动时长小于0则拖动时长等于0
+    
+    BOOL style = false;
+    if (value > 0) { style = YES; }
+    if (value < 0) { style = NO; }
+    if (value == 0) { return; }
+    
+    CGFloat draggedValue = (CGFloat)self.sumTime/(CGFloat)totalMovieDuration;
+    self.slider.value = draggedValue;
+    [self sliderValueChanged:draggedValue];
+}
+
+
 // 滑块滑动结束
 - (void)sliderTouchEnded:(float)value{
     self.blackView.hidden = YES;
@@ -211,4 +398,14 @@
     }
     return _activity;
 }
+
+- (SXDragChangeValueView *)volumeProress{
+    if (!_volumeProress) {
+        _volumeProress = [[SXDragChangeValueView alloc] initWithFrame:CGRectMake((self.frame.size.width-175)/2, 32, 175, 32)];
+        [self addSubview:_volumeProress];
+        _volumeProress.hidden = YES;
+    }
+    return _volumeProress;
+}
+
 @end

@@ -1536,6 +1536,7 @@
 		FEBCADE22B8437130048F5A1 /* NoticeBaseCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBCADE12B8437130048F5A1 /* NoticeBaseCellController.m */; };
 		FEBF80C62B50CD9E0086A94B /* NoticeShopDataIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBF80C52B50CD9E0086A94B /* NoticeShopDataIdModel.m */; };
 		FEBF80C92B5123ED0086A94B /* NoticeShopRuleController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBF80C82B5123ED0086A94B /* NoticeShopRuleController.m */; };
+		FED9A37C2C2EBA11003C81AD /* SXPayVideoComController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED9A37B2C2EBA11003C81AD /* SXPayVideoComController.m */; };
 		FEE2DD0D2B905115008AAB53 /* SXHasBuyPayVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD0C2B905115008AAB53 /* SXHasBuyPayVideoController.m */; };
 		FEE2DD102B90524F008AAB53 /* SXSearisHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD0F2B90524F008AAB53 /* SXSearisHeaderView.m */; };
 		FEE2DD132B90571D008AAB53 /* SXNoBuySearisListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD122B90571D008AAB53 /* SXNoBuySearisListCell.m */; };
@@ -4501,6 +4502,8 @@
 		FEBF80C52B50CD9E0086A94B /* NoticeShopDataIdModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeShopDataIdModel.m; sourceTree = "<group>"; };
 		FEBF80C72B5123ED0086A94B /* NoticeShopRuleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeShopRuleController.h; sourceTree = "<group>"; };
 		FEBF80C82B5123ED0086A94B /* NoticeShopRuleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeShopRuleController.m; sourceTree = "<group>"; };
+		FED9A37A2C2EBA11003C81AD /* SXPayVideoComController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPayVideoComController.h; sourceTree = "<group>"; };
+		FED9A37B2C2EBA11003C81AD /* SXPayVideoComController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPayVideoComController.m; sourceTree = "<group>"; };
 		FEE2DD0B2B905115008AAB53 /* SXHasBuyPayVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHasBuyPayVideoController.h; sourceTree = "<group>"; };
 		FEE2DD0C2B905115008AAB53 /* SXHasBuyPayVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHasBuyPayVideoController.m; sourceTree = "<group>"; };
 		FEE2DD0E2B90524F008AAB53 /* SXSearisHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSearisHeaderView.h; sourceTree = "<group>"; };
@@ -9234,6 +9237,8 @@
 				FE7440C72BA7D470007EE4A6 /* SXPayVideoListController.m */,
 				FE7440C52BA7D46F007EE4A6 /* SXStudyBaseController.h */,
 				FE7440C62BA7D470007EE4A6 /* SXStudyBaseController.m */,
+				FED9A37A2C2EBA11003C81AD /* SXPayVideoComController.h */,
+				FED9A37B2C2EBA11003C81AD /* SXPayVideoComController.m */,
 				FE6CF9542B85F68D005EE663 /* SXPayForVideosController.h */,
 				FE6CF9552B85F68D005EE663 /* SXPayForVideosController.m */,
 				FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */,
@@ -9908,6 +9913,7 @@
 				A4E967C62A69142500AE022E /* NoticeDepartureController.m in Sources */,
 				A4E969992A69142800AE022E /* CLGCDTimerManager.m in Sources */,
 				FE07BDF62BF35EA900E6812A /* SXAddNewsGoods2Cell.m in Sources */,
+				FED9A37C2C2EBA11003C81AD /* SXPayVideoComController.m in Sources */,
 				A4E967A22A69142500AE022E /* NoticeCardInfoModel.m in Sources */,
 				FE6686802BA082FE006DBDF2 /* AxcAE_TabBarItem.m in Sources */,
 				A4E965E12A69142200AE022E /* NoticeGetUserSig.swift in Sources */,
