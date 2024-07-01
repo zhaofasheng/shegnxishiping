@@ -874,6 +874,14 @@
         }
     }
     
+    if (self.needSelectkc) {
+        if (indexPath.row == (self.rate-1)) {
+            cell.titleLabel.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+        }else{
+            cell.titleLabel.textColor = [UIColor colorWithHexString:@"#25262E"];
+        }
+    }
+    
     cell.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     
     cell.titleLabel.text = self.otherButtonTitles[indexPath.row];

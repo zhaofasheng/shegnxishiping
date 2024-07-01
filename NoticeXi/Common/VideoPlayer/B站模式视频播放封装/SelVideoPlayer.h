@@ -32,6 +32,8 @@
 /** 播放器item */
 @property (nonatomic, strong) AVPlayer *player;
 
+@property (nonatomic, assign) NSInteger rate;
+
 - (void)_videoZoomInWithDirection:(UIInterfaceOrientation)orientation;
 
 /** 播放器layer */

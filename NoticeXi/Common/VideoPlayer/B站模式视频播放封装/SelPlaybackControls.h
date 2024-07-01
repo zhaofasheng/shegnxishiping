@@ -10,6 +10,7 @@
 #import "SelVideoSlider.h"
 #import "SelPlayerConfiguration.h"
 #import "SXScrollLabel.h"
+#import "SXChoiceVideoToPlayView.h"
 #import "SXDragChangeValueView.h"
 // 枚举值，包含水平移动方向和垂直移动方向
 typedef NS_ENUM(NSInteger, PanDirection){
@@ -53,15 +54,19 @@ typedef NS_ENUM(NSInteger, PanDirection){
 /** 音量改变 */
 - (void)volumeValueChange:(CGFloat)value;
 
-
+/** 倍速播放 */
+- (void)palyWithRate:(CGFloat)rate;
 @end
 
 @interface SelPlaybackControls : UIView<UIGestureRecognizerDelegate>
-
+@property (nonatomic,copy) void(^rateClickBlock)(NSInteger rate);
+@property (nonatomic, strong) SXChoiceVideoToPlayView *choiceView;
 @property (nonatomic, strong) SXDragChangeValueView *volumeProress;
-
+@property (nonatomic, strong) UIButton *rateBtn;
+@property (nonatomic, strong) UIButton *choiceBtn;
 @property (nonatomic, strong) UIButton *backBtn;
 @property (nonatomic, strong) UIButton *downloadBtn;
+@property (nonatomic, assign) NSInteger rate;
 //是否是播放本地视频
 @property (nonatomic, assign) BOOL isPlayLocalVideo;
 /** 底部控制栏 */

@@ -9,7 +9,7 @@
 
 #import "SelPlaybackControls.h"
 #import <Masonry.h>
-
+#import "SXPlayRateView.h"
 static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
 @interface SelPlaybackControls()
 
@@ -24,6 +24,8 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
 @property (nonatomic, assign) CGFloat sumTime;
 @property (nonatomic, strong) CAGradientLayer *gradientLayer1;
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
+
+@property (nonatomic, strong) SXPlayRateView *rateView;
 @end
 
 @implementation SelPlaybackControls
@@ -68,16 +70,42 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
 }
 
 - (void)refreshTimeLtime{
+    
+    [self.rateBtn setTitle:@"倍速" forState:UIControlStateNormal];
+    if (self.rate == 1) {
+        [self.rateBtn setTitle:@"倍速" forState:UIControlStateNormal];
+     
+    }else if (self.rate == 2){
+        [self.rateBtn setTitle:@"1.25x" forState:UIControlStateNormal];
+   
+    }else if (self.rate == 3){
+        [self.rateBtn setTitle:@"1.5x" forState:UIControlStateNormal];
+  
+    }else if (self.rate == 4){
+        [self.rateBtn setTitle:@"2.0x" forState:UIControlStateNormal];
+    
+    }
+  
     if (self.isFullScreen) {
         if (self.screen) {//是否是竖屏
             self.playTimeLabel.frame = CGRectMake(15, 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
             self.totalTimeLabel.frame = CGRectMake(_bottomControlsBar.frame.size.width-15-GET_STRWIDTH(self.totalTimeLabel.text, 11, 44), 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
             
         }else{
+            
+            CGFloat rateWidth = GET_STRWIDTH(@"1.25x", 14, 44);
+            self.choiceBtn.frame = CGRectMake(_bottomControlsBar.frame.size.width-TAB_BAR_HEIGHT-15-rateWidth, 0,rateWidth, 44);
+            self.rateBtn.frame = CGRectMake(_bottomControlsBar.frame.size.width-TAB_BAR_HEIGHT-15-rateWidth-15-rateWidth, 0, rateWidth, 44);
+            
             self.playTimeLabel.frame = CGRectMake(NAVIGATION_BAR_HEIGHT, 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
-            self.totalTimeLabel.frame = CGRectMake(_bottomControlsBar.frame.size.width-TAB_BAR_HEIGHT-GET_STRWIDTH(self.totalTimeLabel.text, 11, 44), 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
+            self.totalTimeLabel.frame = CGRectMake(_bottomControlsBar.frame.size.width-TAB_BAR_HEIGHT-15-rateWidth-15-rateWidth-15-GET_STRWIDTH(self.totalTimeLabel.text, 11, 44), 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
         }
     }else{
+        
+        CGFloat rateWidth = GET_STRWIDTH(@"1.25x", 14, 44);
+        
+        self.rateBtn.frame = CGRectMake(_bottomControlsBar.frame.size.width-rateWidth-50, 0, rateWidth, 44);
+        
         self.playTimeLabel.frame = CGRectMake(15, 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
         self.totalTimeLabel.frame = CGRectMake(_bottomControlsBar.frame.size.width-50-50-GET_STRWIDTH(self.totalTimeLabel.text, 11, 44), 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
 
@@ -154,7 +182,6 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
         [_wanPlayLabel setAllCorner:10];
     }
     
-    
     _volumeProress.frame = CGRectMake((self.frame.size.width-175)/2, 32, 175, 32);
 }
 
@@ -173,6 +200,11 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
 
     self.activityIndicatorView.center = self.center;
     [self refreshBottomFrame];
+    
+    if (self.isFullScreen) {
+        self.rateView.frame = self.bounds;
+        self.choiceView.frame = self.bounds;
+    }
 }
 
 -(NSString *)getMMSSFromSS:(NSInteger)totalTime{
@@ -328,6 +360,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
     _isFullScreen = isFullScreen;
     self.fullScreenButton.selected = _isFullScreen;
     self.fullScreenButton.hidden = isFullScreen;
+    self.choiceBtn.hidden = !isFullScreen;
     [self makeConstraints];
 }
 
@@ -351,16 +384,26 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
     [self addSubview:self.volumeProress];
     
     [_bottomControlsBar addSubview:self.fullScreenButton];
+    [_bottomControlsBar addSubview:self.rateBtn];
+    [_bottomControlsBar addSubview:self.choiceBtn];
     [_bottomControlsBar addSubview:self.playTimeLabel];
     [_bottomControlsBar addSubview:self.totalTimeLabel];
     [_bottomControlsBar addSubview:self.progress];
     [_bottomControlsBar addSubview:self.videoSlider];
+    
     
     [self makeConstraints];
     [self _resetPlaybackControls];
     [self addGesture];
     
     [self bringSubviewToFront:self.topControlsBar];
+    
+    [self addSubview:self.rateView];
+    [self addSubview:self.choiceView];
+    [self bringSubviewToFront:self.choiceView];
+    self.choiceView.hidden = YES;
+    [self bringSubviewToFront:self.rateView];
+    self.rateView.hidden = YES;
 }
 
 - (UILabel *)userIdL{
@@ -384,11 +427,13 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
     //单击手势
     UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap:)];
     [self addGestureRecognizer:singleTapGesture];
+    singleTapGesture.delegate = self;
     
     //双击手势
     UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTap:)];
     doubleTapGesture.numberOfTapsRequired = 2;
     [self addGestureRecognizer:doubleTapGesture];
+    doubleTapGesture.delegate = self;
     
     //当系统检测不到双击手势时执行再识别单击手势，解决单双击收拾冲突
     [singleTapGesture requireGestureRecognizerToFail:doubleTapGesture];
@@ -401,6 +446,59 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
     [self.panRecognizer setDelaysTouchesEnded:YES];
     [self.panRecognizer setCancelsTouchesInView:YES];
     [self addGestureRecognizer:self.panRecognizer];
+}
+
+//播放倍速点击相关
+- (void)rateClick{
+    __weak typeof(self) weakSelf = self;
+    if (self.isFullScreen) {
+        self.rateView.rate = self.rate;
+        self.rateView.rateBlock = ^(NSInteger rate) {
+            [weakSelf rateChoice:rate];
+        };
+        [self.rateView show];
+        return;
+    }
+ 
+    LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
+        if (buttonIndex > 0 && buttonIndex <= 4) {
+            
+            [weakSelf rateChoice:buttonIndex];
+        }
+    } otherButtonTitleArray:@[@"1.0x",@"1.25x",@"1.5x",@"2.0x"]];
+    sheet.rate = self.rate;
+    sheet.needSelectkc = YES;
+    [sheet show];
+}
+
+- (void)rateChoice:(NSInteger )rate{
+    self.rate = rate;
+    CGFloat rates = 1.0;
+    [self.rateBtn setTitle:@"倍速" forState:UIControlStateNormal];
+    if (self.rate == 1) {
+        [self.rateBtn setTitle:@"倍速" forState:UIControlStateNormal];
+        rates = 1.0;
+    }else if (self.rate == 2){
+        [self.rateBtn setTitle:@"1.25x" forState:UIControlStateNormal];
+        rates = 1.25;
+    }else if (self.rate == 3){
+        [self.rateBtn setTitle:@"1.5x" forState:UIControlStateNormal];
+        rates = 1.5;
+    }else if (self.rate == 4){
+        [self.rateBtn setTitle:@"2.0x" forState:UIControlStateNormal];
+        rates = 2.0;
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(palyWithRate:)]) {
+        [self.delegate palyWithRate:rates];
+    }
+    if (self.rateClickBlock) {
+        self.rateClickBlock(rate);
+    }
+}
+
+//选集
+- (void)choiceClick{
+    [self.choiceView show];
 }
 
 #pragma mark - UIPanGestureRecognizer手势方法
@@ -506,6 +604,10 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
 
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+
     if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
         if (self.playDidEnd){
             return NO;
@@ -679,6 +781,43 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
     return _retryButton;
 }
 
+- (UIButton *)rateBtn{
+    if (!_rateBtn) {
+        _rateBtn = [[UIButton  alloc] init];
+        _rateBtn.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
+        [_rateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_rateBtn addTarget:self action:@selector(rateClick) forControlEvents:UIControlEventTouchUpInside];
+        [_rateBtn setTitle:@"倍速" forState:UIControlStateNormal];
+    }
+    return _rateBtn;
+}
+
+- (UIButton *)choiceBtn{
+    if (!_choiceBtn) {
+        _choiceBtn = [[UIButton  alloc] init];
+        _choiceBtn.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
+        [_choiceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_choiceBtn addTarget:self action:@selector(choiceClick) forControlEvents:UIControlEventTouchUpInside];
+        [_choiceBtn setTitle:@"选集" forState:UIControlStateNormal];
+        _choiceBtn.hidden = YES;
+    }
+    return _choiceBtn;
+}
+
+- (SXPlayRateView *)rateView{
+    if (!_rateView) {
+        _rateView = [[SXPlayRateView  alloc] initWithFrame:self.bounds];
+    }
+    return _rateView;
+}
+
+- (SXChoiceVideoToPlayView *)choiceView{
+    if (!_choiceView) {
+        _choiceView = [[SXChoiceVideoToPlayView  alloc] initWithFrame:self.bounds];
+    }
+    return _choiceView;
+}
+
 /** 播放进度条 */
 - (UIProgressView *)progress
 {
@@ -749,6 +888,8 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
         
         [self addSubview:_scrollLabel];
         [self bringSubviewToFront:self.topControlsBar];
+        [self bringSubviewToFront:self.rateView];
+        [self bringSubviewToFront:self.choiceView];
     }
     return _scrollLabel;
 }

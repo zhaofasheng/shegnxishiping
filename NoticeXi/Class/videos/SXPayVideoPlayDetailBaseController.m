@@ -40,7 +40,7 @@
 @property (nonatomic, strong) UILabel *infoButton;
 @property (nonatomic, strong) UILabel *comButton;
 @property (nonatomic, strong) UIView *sectionView;
-
+@property (nonatomic, assign) NSInteger rate;
 @property (nonatomic, strong) UIView *zeroView;
 @end
 
@@ -76,12 +76,15 @@
     self.categoryView.listContainer = (id<JXCategoryViewListContainer>)self.pagerView.listContainerView;
     [self.categoryView reloadData];
     [self.view bringSubviewToFront:self.player];
+    
 }
 
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.rate = 1;
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.zeroView = [[UIView  alloc] initWithFrame:CGRectZero];
@@ -166,6 +169,7 @@
                 self.listVC.currentPlayModel = self.currentPlayModel;
                 self.listVC.dataArr = self.searisArr;
                 self.paySearModel.searisVideoList = self.searisArr;
+                
                 [self refresUI];
                 [self setPlayView];
             }
@@ -181,7 +185,7 @@
     __weak typeof(self) weakSelf = self;
     SelPlayerConfiguration *configuration = [[SelPlayerConfiguration alloc]init];
     configuration.isAutoFull = self.isFullPlay;
-   
+    configuration.rate = self.rate;
     configuration.screen = self.currentPlayModel.screen.intValue==2?YES:NO;
     configuration.shouldAutoPlay = YES;     //自动播放
     configuration.supportedDoubleTap = YES;     //支持双击播放暂停
@@ -193,12 +197,23 @@
     configuration.videoGravity = SelVideoGravityResizeAspect;   //拉伸方式
     configuration.defalutPlayTime = self.currentPlayModel.schedule.intValue;
     _player = [[SelVideoPlayer alloc]initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT, DR_SCREEN_WIDTH, (self.currentPlayModel.screen.intValue==2? DR_SCREEN_WIDTH*4/3 : DR_SCREEN_WIDTH*9/16)) configuration:configuration];
+    _player.playbackControls.rate = self.rate;
+    _player.playbackControls.choiceView.currentModel = self.currentPlayModel;
+    _player.playbackControls.choiceView.searisArr = self.searisArr;
     _player.currentPlayTimeBlock = ^(NSInteger currentTime) {
         if (currentTime >= 5) {
             weakSelf.currentPlayModel.schedule = [NSString stringWithFormat:@"%ld",currentTime];
         }else{
             weakSelf.currentPlayModel.schedule = @"0";
         }
+    };
+    
+    _player.playbackControls.choiceView.choiceVideoBlock = ^(SXSearisVideoListModel * _Nonnull choiceModel) {
+        [weakSelf.listVC refreshCurrentModel:choiceModel needScro:YES];
+    };
+    
+    _player.playbackControls.rateClickBlock = ^(NSInteger rate) {
+        weakSelf.rate = rate;
     };
 
     _player.fullBlock = ^(BOOL isFull) {

@@ -36,12 +36,26 @@
     if ([model.videoId isEqualToString:self.currentPlayModel.videoId]){
         return;
     }
-    self.currentPlayModel = model;
+    [self refreshCurrentModel:model needScro:NO];
+   
+}
+
+- (void)refreshCurrentModel:(SXSearisVideoListModel *)currentM needScro:(BOOL)needScrolle{
+    self.currentPlayModel = currentM;
     [self.tableView reloadData];
-    if (self.choiceVideoBlock) {
-        self.choiceVideoBlock(model);
+    if (needScrolle) {
+        for (int i = 0; i < self.searisArr.count; i++) {
+            SXSearisVideoListModel *model = self.searisArr[i];
+            if ([model.videoId isEqualToString:self.currentPlayModel.videoId]) {
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+                break;
+            }
+        }
     }
-    
+
+    if (self.choiceVideoBlock) {
+        self.choiceVideoBlock(currentM);
+    }
 }
 
 - (void)playNext{

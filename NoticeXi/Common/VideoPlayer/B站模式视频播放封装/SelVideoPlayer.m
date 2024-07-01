@@ -65,6 +65,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
             self.isSetDefaultPlaytime = NO;
         }
         if (!configuration.justShow) {
+            self.rate = configuration.rate;
             [self _setupPlayer];
             [self _setupPlayControls];
             [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -243,6 +244,20 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         if (self.playerState == SelVideoPlayerStatePause) {
             self.playerState = SelVideoPlayerStatePlaying;
         }
+    }
+    
+    [self playrateset];
+}
+
+- (void)playrateset{
+    if (self.rate == 1) {
+        self.player.rate = 1.0;
+    }else if (self.rate == 2){
+        self.player.rate = 1.25;
+    }else if (self.rate == 3){
+        self.player.rate = 1.5;
+    }else if (self.rate == 4){
+        self.player.rate = 2.0;
     }
 }
 
@@ -508,6 +523,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 - (void)_setupPlayControls
 {
 
+    self.playbackControls.rate = self.playerConfiguration.rate;
     [self addSubview:self.playbackControls];
  
     if(self.isSetDefaultPlaytime){
@@ -819,6 +835,15 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 }
 
 #pragma mark 播放器控制面板代理
+
+//倍速播放
+- (void)palyWithRate:(CGFloat)rate{
+    self.rate = self.playbackControls.rate;
+    if (self.playerState == SelVideoPlayerStatePlaying) {
+        [self playrateset];
+    }
+}
+
 /**
  播放按钮点击事件
  @param selected 播放按钮选中状态

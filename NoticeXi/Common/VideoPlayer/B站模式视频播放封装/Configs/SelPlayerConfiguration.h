@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, SelStatusBarHideState)
 };
 
 @interface SelPlayerConfiguration : NSObject
+//倍速
+@property (nonatomic, assign) NSInteger rate;
 //是否是收费视频
 @property (nonatomic, assign) BOOL isPay;
 /** 视频数据源 */

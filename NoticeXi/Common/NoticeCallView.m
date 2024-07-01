@@ -21,6 +21,7 @@
 @property (nonatomic, strong) StarsOverlay *starsView;
 @property (nonatomic, strong) NSMutableDictionary *parm;
 @property (nonatomic, strong) UILabel *jubaoL;
+@property (nonatomic, strong) UILabel *markLabel;
 
 @end
 
@@ -115,7 +116,22 @@
         self.timeL.text = @"00:00:00";
         [self addSubview:self.timeL];
         
-        self.timeOutL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.timeL.frame)+10, DR_SCREEN_WIDTH, 22)];
+        UIView *markView = [[UIView  alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.timeL.frame)+32, DR_SCREEN_WIDTH-60, 56)];
+        markView.backgroundColor = [UIColor whiteColor];
+        [markView setAllCorner:16];
+        [self addSubview:markView];
+        
+        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(12, markView.frame.origin.y-16, 80, 80)];
+        imageV.image = UIImageNamed(@"sx_voicechatmark_img");
+        [self addSubview:imageV];
+        
+        self.markLabel = [[UILabel  alloc] initWithFrame:CGRectMake(62, 8, markView.frame.size.width-65, 40)];
+        self.markLabel.numberOfLines = 2;
+        self.markLabel.font = THRETEENTEXTFONTSIZE;
+        self.markLabel.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [markView addSubview:self.markLabel];
+        
+        self.timeOutL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.timeL.frame)+10, DR_SCREEN_WIDTH, 20)];
         self.timeOutL.textColor = [UIColor colorWithHexString:@"#DB6E6E"];
         self.timeOutL.font = FOURTHTEENTEXTFONTSIZE;
         self.timeOutL.textAlignment = NSTextAlignmentCenter;
@@ -162,7 +178,10 @@
     }
     if([_fromUserId isEqualToString:[NoticeTools getuserId]]){//如果来电者是自己的，那么自己是买家，否则自己是卖家
         self.endButton.hidden = NO;
+        self.markLabel.attributedText = [SXTools getStringWithLineHight:3 string:@"如遇异常情况，通话结束后，可在【买过的】找到此订单，点击「申请售后」"];
     }else{
+        self.markLabel.attributedText = [SXTools getStringWithLineHight:3 string:@"订单结束后，如还有想对买家说的话\n可在【服务过的】找到订单「联系买家」"];
+        
         self.endButton.hidden = YES;
         self.jubaoL.frame = CGRectMake(DR_SCREEN_WIDTH-15-102, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2, 102, 32);
         self.jubaoL.backgroundColor = [UIColor colorWithHexString:@"#DB6E6E"];
@@ -185,6 +204,7 @@
         self.jubaoL.text = @"举报并结束";
         self.jubaoL.textAlignment = NSTextAlignmentCenter;
         [self.jubaoL setAllCorner:16];
+        self.markLabel.attributedText = [SXTools getStringWithLineHight:3 string:@"订单结束后，如还有想对买家说的话\n可在【服务过的】找到订单「联系买家」"];
     }else{
         self.endButton.hidden = NO;
     }
@@ -248,6 +268,7 @@
             [self.shopIconImageView sd_setImageWithURL:[NSURL URLWithString:self.chatInfoModel.seller_img_url]];
             self.markL.text = [NSString stringWithFormat:@"可通话%@分钟 已通话",self.chatInfoModel.goods_duration];
             if (self.fromUserId){//有来电者，说明自己是店主
+                self.markLabel.attributedText = [SXTools getStringWithLineHight:3 string:@"订单结束后，如还有想对买家说的话\n可在【服务过的】找到订单「联系买家」"];
                 if (self.chatInfoModel.is_experience.boolValue) {
                     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:[NSString stringWithFormat:@"当前通话为“语音通话·体验版”，用户可免费试聊%@分钟",self.chatInfoModel.goods_duration] message:nil cancleBtn:@"我知道了"];
                     [alerView showXLAlertView];
@@ -257,7 +278,7 @@
                 self.noticeL.frame = CGRectMake(15,(106-height)/2, DR_SCREEN_WIDTH-90, height);
                 self.noticeL.text = str;
             }else if(self.toUserId){//有去电者，说明自己是买家
-                
+                self.markLabel.attributedText = [SXTools getStringWithLineHight:3 string:@"如遇异常情况，通话结束后，可在【买过的】找到此订单，点击「申请售后」"];
                 if (self.chatInfoModel.is_experience.boolValue) {//如果是免费时长，第一次没充值和付费之前聊天时长赋值为免费时长
                     self.chatInfoModel.second = self.chatInfoModel.experience_time;
                 }

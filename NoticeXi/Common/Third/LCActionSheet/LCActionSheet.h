@@ -104,6 +104,8 @@ typedef void(^LCActionSheetDidDismissHandler)(LCActionSheet *actionSheet, NSInte
  */
 @property (nullable, nonatomic, copy) NSString *title;
 @property (nonatomic, assign) BOOL needSelect;
+@property (nonatomic, assign) BOOL needSelectkc;
+@property (nonatomic, assign) NSInteger rate;
 /**
  Cancel button's title.
  */
