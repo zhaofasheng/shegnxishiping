@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXVideoCommentModel : NSObject
-
+@property (nonatomic, strong) NSString *video_title;//视频标题
 @property (nonatomic, strong) NSString *commentId;//评论id
 @property (nonatomic, strong) NSString *video_id;//视频ID
 @property (nonatomic, strong) NSString *content;//评论内容
@@ -39,6 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *to_user;//被回复人信息
 @property (nonatomic, strong) SXUserModel *toUserInfo;
 
+@property (nonatomic, strong) NSDictionary *auth_user;
+@property (nonatomic, strong) SXUserModel *authUserInfo;//作者用户信息
+
 @property (nonatomic, strong) NSDictionary *reply;//第一条回复数据
 @property (nonatomic, strong) SXVideoCommentModel *firstReplyModel;//回复数组 非定位列表和正常列表的时候都可能有这个
 
@@ -55,6 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL hasGetMore;//已经获取过更多回复数据
 
 @property (nonatomic, strong) NSString *top_at;//置顶时间大于0表示置顶
+
+@property (nonatomic, strong) NSString *series_id;//课程id
 
 @property (nonatomic, strong) NSString *to_series;
 @property (nonatomic, strong) NSMutableArray *seariesArr;

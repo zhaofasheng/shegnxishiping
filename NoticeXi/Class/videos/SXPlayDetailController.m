@@ -281,6 +281,7 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     if (self.isPause) {
+        DRLog(@"进入视频调用播放");
         [self.player _playVideo];
         self.isPause = NO;
     }

@@ -1540,6 +1540,8 @@
 		FED9A37F2C325499003C81AD /* SXPlayRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED9A37E2C325499003C81AD /* SXPlayRateView.m */; };
 		FED9A3822C327815003C81AD /* SXChoiceVideoToPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED9A3812C327815003C81AD /* SXChoiceVideoToPlayView.m */; };
 		FED9A3852C327A2E003C81AD /* SXChoiceVideoToPlayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED9A3842C327A2E003C81AD /* SXChoiceVideoToPlayCell.m */; };
+		FED9A3882C33CAA6003C81AD /* SXPayKCDetailComController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED9A3872C33CAA6003C81AD /* SXPayKCDetailComController.m */; };
+		FED9A38B2C33D323003C81AD /* SXKCcomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED9A38A2C33D323003C81AD /* SXKCcomCell.m */; };
 		FEE2DD0D2B905115008AAB53 /* SXHasBuyPayVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD0C2B905115008AAB53 /* SXHasBuyPayVideoController.m */; };
 		FEE2DD102B90524F008AAB53 /* SXSearisHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD0F2B90524F008AAB53 /* SXSearisHeaderView.m */; };
 		FEE2DD132B90571D008AAB53 /* SXNoBuySearisListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DD122B90571D008AAB53 /* SXNoBuySearisListCell.m */; };
@@ -4513,6 +4515,10 @@
 		FED9A3812C327815003C81AD /* SXChoiceVideoToPlayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXChoiceVideoToPlayView.m; sourceTree = "<group>"; };
 		FED9A3832C327A2E003C81AD /* SXChoiceVideoToPlayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXChoiceVideoToPlayCell.h; sourceTree = "<group>"; };
 		FED9A3842C327A2E003C81AD /* SXChoiceVideoToPlayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXChoiceVideoToPlayCell.m; sourceTree = "<group>"; };
+		FED9A3862C33CAA6003C81AD /* SXPayKCDetailComController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPayKCDetailComController.h; sourceTree = "<group>"; };
+		FED9A3872C33CAA6003C81AD /* SXPayKCDetailComController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPayKCDetailComController.m; sourceTree = "<group>"; };
+		FED9A3892C33D323003C81AD /* SXKCcomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKCcomCell.h; sourceTree = "<group>"; };
+		FED9A38A2C33D323003C81AD /* SXKCcomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKCcomCell.m; sourceTree = "<group>"; };
 		FEE2DD0B2B905115008AAB53 /* SXHasBuyPayVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHasBuyPayVideoController.h; sourceTree = "<group>"; };
 		FEE2DD0C2B905115008AAB53 /* SXHasBuyPayVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHasBuyPayVideoController.m; sourceTree = "<group>"; };
 		FEE2DD0E2B90524F008AAB53 /* SXSearisHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSearisHeaderView.h; sourceTree = "<group>"; };
@@ -9048,6 +9054,8 @@
 				FE44F1892BB29FAA004ECF11 /* TCCommentsPopView.m */,
 				FE44F18C2BB29FAA004ECF11 /* MyCommentCell.h */,
 				FE44F1972BB29FAA004ECF11 /* MyCommentCell.m */,
+				FED9A3892C33D323003C81AD /* SXKCcomCell.h */,
+				FED9A38A2C33D323003C81AD /* SXKCcomCell.m */,
 				FE44F1872BB29FAA004ECF11 /* MyCommentView.h */,
 				FE44F1952BB29FAA004ECF11 /* MyCommentView.m */,
 				FE41C3B52BCFA5C400BAD263 /* SXVideoCmmentFirstCell.h */,
@@ -9254,6 +9262,8 @@
 				FE7440C62BA7D470007EE4A6 /* SXStudyBaseController.m */,
 				FED9A37A2C2EBA11003C81AD /* SXPayVideoComController.h */,
 				FED9A37B2C2EBA11003C81AD /* SXPayVideoComController.m */,
+				FED9A3862C33CAA6003C81AD /* SXPayKCDetailComController.h */,
+				FED9A3872C33CAA6003C81AD /* SXPayKCDetailComController.m */,
 				FE6CF9542B85F68D005EE663 /* SXPayForVideosController.h */,
 				FE6CF9552B85F68D005EE663 /* SXPayForVideosController.m */,
 				FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */,
@@ -10212,6 +10222,7 @@
 				A4E968192A69142500AE022E /* NoticeEditViewController.m in Sources */,
 				A4E968142A69142500AE022E /* NoticeSeasonViewController.m in Sources */,
 				FE6686492BA06F06006DBDF2 /* SXTitleAndSwitchCell.m in Sources */,
+				FED9A3882C33CAA6003C81AD /* SXPayKCDetailComController.m in Sources */,
 				A4E964A72A69142100AE022E /* CoreAnimationEffect.m in Sources */,
 				A4E9648F2A69142100AE022E /* MBProgressHUD+Extension.m in Sources */,
 				FE44F1FC2BB29FAB004ECF11 /* HTTPServer.m in Sources */,
@@ -11193,6 +11204,7 @@
 				A4E967CB2A69142500AE022E /* NoticeChatStatus.m in Sources */,
 				A4E965BC2A69142200AE022E /* VBAddStatusInputView.m in Sources */,
 				A4E968F82A69142700AE022E /* NoticeChatVoiceShopCell.m in Sources */,
+				FED9A38B2C33D323003C81AD /* SXKCcomCell.m in Sources */,
 				A4E965072A69142200AE022E /* JXCategoryNumberCellModel.m in Sources */,
 				A4E967A92A69142500AE022E /* NoticeMoreWantController.m in Sources */,
 				A4E969022A69142700AE022E /* NoticeSureSendUserTostView.m in Sources */,

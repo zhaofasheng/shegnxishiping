@@ -9,11 +9,11 @@
 #import "MyCommentView.h"
 #import "MyCommentCell.h"
 #import "SXVideoCmmentFirstCell.h"
-#import "Masonry.h"
 #import "SXVideoCommentJson.h"
 #import "SXVideoCommentMoreView.h"
 #import "YYPersonItem.h"
 #import "SXStudyBaseController.h"
+#import "Masonry.h"
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 
 @interface MyCommentView ()<UITableViewDataSource,UITableViewDelegate>
@@ -38,7 +38,6 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 - (void)setupBaseView {
     self.backgroundColor = [UIColor whiteColor];
     
-
     self.pageNo = 1;
     self.isDown = YES;
     

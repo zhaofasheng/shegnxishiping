@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *video_url;
 @property (nonatomic, strong) NSString *is_new;
 @property (nonatomic, strong) NSDictionary *user_info;//用户信息
-
+@property (nonatomic, strong) NSString *commentCt;
 @property (nonatomic, strong) SXUserModel  *userModel;
 @end
 

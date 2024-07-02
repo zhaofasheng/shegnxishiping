@@ -56,17 +56,33 @@
         self.titleL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
         self.totalTimeL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
         self.statusL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
+        self.statusL.frame = CGRectMake(95, 36, 100, 17);
+        _comimageV.hidden = YES;
+        _comL.hidden = YES;
     }
     else if (videoModel.schedule.intValue || videoModel.is_finished.boolValue) {
         self.titleL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         self.totalTimeL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         self.statusL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
-    
+        self.comL.textColor = self.statusL.textColor;
+        self.comimageV.image = UIImageNamed(@"sxsearcomnumh_img");
+        self.comL.text = [NSString stringWithFormat:@"%d",videoModel.commentCt.intValue];
+        self.comL.frame = CGRectMake(CGRectGetMaxX(self.comimageV.frame)+2, 36, GET_STRWIDTH(self.comL.text, 12, 17), 17);
+        self.statusL.frame = CGRectMake(CGRectGetMaxX(self.comL.frame)+32, 36, 100, 17);
+        self.comimageV.hidden = NO;
+        self.comL.hidden = NO;
     }else{
    
         self.titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
         self.totalTimeL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         self.statusL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        self.comL.textColor = self.statusL.textColor;
+        self.comimageV.image = UIImageNamed(@"sxsearcomnum_img");
+        self.comL.text = [NSString stringWithFormat:@"%d",videoModel.commentCt.intValue];
+        self.comL.frame = CGRectMake(CGRectGetMaxX(self.comimageV.frame)+2, 36, GET_STRWIDTH(self.comL.text, 12, 17), 17);
+        self.statusL.frame = CGRectMake(CGRectGetMaxX(self.comL.frame)+32, 36, 100, 17);
+        self.comimageV.hidden = NO;
+        self.comL.hidden = NO;
     }
     
     if ([videoModel.videoId isEqualToString:self.currentVideo.videoId]) {
@@ -80,6 +96,25 @@
         self.statusL.text = @"待观看";
     }
         
+}
+
+- (UIImageView *)comimageV{
+    if (!_comimageV) {
+        _comimageV = [[UIImageView  alloc] initWithFrame:CGRectMake(95, 38.5, 12, 12)];
+        _comimageV.image = UIImageNamed(@"sxsearcomnum_img");
+        [self.backView addSubview:_comimageV];
+    }
+    return _comimageV;
+}
+
+- (UILabel *)comL{
+    if (!_comL) {
+        _comL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_comimageV.frame)+2, 36, 0, 17)];
+        _comL.font = TWOTEXTFONTSIZE;
+        _comL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        [self.backView addSubview:_comL];
+    }
+    return _comL;
 }
 
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{

@@ -221,6 +221,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 /** 播放视频 */
 - (void)_playVideo
 {
+    DRLog(@"播放视频");
     AVAudioSession*session=[AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     UIScreen *screen =[UIScreen mainScreen];
@@ -232,7 +233,6 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         return;
     }
 
-    
     if (self.playDidEnd && self.playbackControls.videoSlider.value == 1.0) {
         //若播放已结束重新播放
         [self _replayVideo];
@@ -244,12 +244,12 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         if (self.playerState == SelVideoPlayerStatePause) {
             self.playerState = SelVideoPlayerStatePlaying;
         }
+        
     }
-    
-    [self playrateset];
 }
 
 - (void)playrateset{
+    DRLog(@"设置倍速");
     if (self.rate == 1) {
         self.player.rate = 1.0;
     }else if (self.rate == 2){
@@ -277,6 +277,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 {
     self.playDidEnd = NO;
     [_player seekToTime:CMTimeMake(0, 1) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+    DRLog(@"重新播放调用播放");
     [self _playVideo];
 }
 
@@ -318,8 +319,25 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
             [self refreshUI];
             [self.layer insertSublayer:_playerLayer atIndex:0];
             self.playerState = SelVideoPlayerStatePlaying;
+         
             if (self.isAutoFull) {
                 [self _videoZoomInWithDirection:UIInterfaceOrientationLandscapeRight];
+            }
+            DRLog(@"是否需要跳%d",self.isSetDefaultPlaytime);
+            if (self.isSetDefaultPlaytime) {
+                self.isSetDefaultPlaytime = NO;
+                [self seekToTime:CMTimeMake(self.playerConfiguration.defalutPlayTime, 1) completionHandler:nil];
+                
+                self.playbackControls.lastPlayLocationLabel.hidden = NO;
+                
+                CGFloat width = GET_STRWIDTH(self.playbackControls.lastPlayLocationLabel.text, 11, 16)+24;
+                
+                self.playbackControls.lastPlayLocationLabel.frame = CGRectMake(0, self.playbackControls.frame.size.height-35-30, width, 32);
+                [self.playbackControls.lastPlayLocationLabel setCornerOnRight:16];
+                
+                [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideLocation) object:nil];
+                [self performSelector:@selector(hideLocation) withObject:nil afterDelay:2];
+                
             }
             
         }
@@ -357,7 +375,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     // 需要先暂停一小会之后再播放，否则网络状况不好的时候时间在走，声音播放不出来
     [self _pauseVideo];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
+        DRLog(@"缓冲差调用播放");
         [self _playVideo];
         // 如果执行了play还是没有播放则说明还没有缓存好，则再次缓存一段时间
         isBuffering = NO;
@@ -399,6 +417,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
             appdel.pipVC.delegate = self;
         }
     }
+    DRLog(@"进入前台调用播放");
     [self _playVideo];
     [self.playbackControls _playerShowOrHidePlaybackControls];
 }
@@ -458,6 +477,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     [self createTimer];
     
     if (_playerConfiguration.shouldAutoPlay) {
+        DRLog(@"创建资源调用播放");
         [self _playVideo];
     }
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -615,11 +635,10 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
                 weakSelf.currentPlayTimeBlock(currentTime);
             }
           
-            if (weakSelf.isSetDefaultPlaytime) {
-                weakSelf.isSetDefaultPlaytime = NO;
-                [weakSelf _setDefaultPlayTime:weakSelf.playerConfiguration.defalutPlayTime/totalTime];
-            }
-            
+//            if (weakSelf.isSetDefaultPlaytime) {
+//                weakSelf.isSetDefaultPlaytime = NO;
+//                [weakSelf _setDefaultPlayTime:weakSelf.playerConfiguration.defalutPlayTime/totalTime];
+//            }
             if (weakSelf.hasShowActivity) {
                 weakSelf.hasShowActivity = NO;
                 [weakSelf.playbackControls  _activityIndicatorViewShow:NO];
@@ -628,23 +647,15 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     }];
 }
 
-- (void)_setDefaultPlayTime:(CGFloat)value{
-    self.playbackControls.videoSlider.value = value;
-    [self videoSliderTouchBegan:self.playbackControls.videoSlider];
-    [self videoSliderValueChanged:self.playbackControls.videoSlider];
-    [self videoSliderTouchEnded:self.playbackControls.videoSlider];
-    
-    self.playbackControls.lastPlayLocationLabel.hidden = NO;
-    
-    CGFloat width = GET_STRWIDTH(self.playbackControls.lastPlayLocationLabel.text, 11, 16)+24;
-    
-    self.playbackControls.lastPlayLocationLabel.frame = CGRectMake(0, self.playbackControls.frame.size.height-35-30, width, 32);
-    [self.playbackControls.lastPlayLocationLabel setCornerOnRight:16];
-   // [self.playbackControls _playerShowOrHidePlaybackControls];
-    
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideLocation) object:nil];
-    [self performSelector:@selector(hideLocation) withObject:nil afterDelay:2];
+/**
+ *  从xx秒开始播放视频跳转
+ *
+ 
+ */
+- (void)seekToTime:(CMTime)time completionHandler:(void (^)(BOOL finished))completionHandler {
+    [_player seekToTime:time toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero completionHandler:completionHandler];
 }
+
 
 //演示隐藏当前播放位置
 - (void)hideLocation{
@@ -690,9 +701,10 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         case SelVideoPlayerStatePlaying:
         {
             if (!self.hasShowActivity) {//这个为yes，代表是第一次加载，第一次加载的时候需要时间在走动才消失指示器
-                DRLog(@"播放中");
+                DRLog(@"播放中1");
                 [_playbackControls _activityIndicatorViewShow:NO];
             }
+ 
         }
             break;
         case SelVideoPlayerStateFailed:
@@ -853,6 +865,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     if (selected){
         [self _pauseVideo];
     }else{
+        DRLog(@"点击播放调用播放");
         [self _playVideo];
     }
 }
@@ -891,6 +904,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         }
         else if (self.playerState == SelVideoPlayerStatePause)
         {
+            DRLog(@"点击控制面板调用播放");
             [self _playVideo];
         }
     }
@@ -902,6 +916,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     [_playbackControls _retryButtonShow:NO];
     [_playbackControls _activityIndicatorViewShow:YES];
     [self _setupPlayer];
+    DRLog(@"重新加载视频调用播放");
     [self _playVideo];
 }
 
@@ -968,6 +983,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         [self bufferingSomeSecond];
     }else{
         //继续播放
+        DRLog(@"拖动结束调用播放");
         [self _playVideo];
     }
     [_playbackControls _playerAutoHidePlaybackControls];

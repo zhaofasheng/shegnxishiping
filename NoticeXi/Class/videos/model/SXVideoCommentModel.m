@@ -40,6 +40,11 @@
 }
 
 
+- (void)setAuth_user:(NSDictionary *)auth_user{
+    _auth_user = auth_user;
+    self.authUserInfo = [SXUserModel mj_objectWithKeyValues:auth_user];
+}
+
 - (void)setContent:(NSString *)content{
     _content = content;
     self.firstAttr = [SXTools getStringWithLineHight:3 string:content];

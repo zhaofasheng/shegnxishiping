@@ -98,7 +98,6 @@
     self.nickNameL.text = commentM.fromUserInfo.nick_name;
     self.nickNameL.frame = CGRectMake(88, 10, GET_STRWIDTH(self.nickNameL.text, 12, 17), 17);
 
-    
     self.contentL.text = commentM.content;
     self.contentL.frame = CGRectMake(88, 30, DR_SCREEN_WIDTH-88-15, commentM.secondContentHeight);
     
@@ -221,6 +220,7 @@
         [[NoticeTools getTopViewController] hideHUD];
     }];
 }
+
 
 - (void)replyClick{
     if (self.replyClickBlock) {

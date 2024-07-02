@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *carousel_images;//轮播图
 @property (nonatomic, strong) NSDictionary *update_video;
 @property (nonatomic, strong) SXSearisVideoListModel *updateM;
-
+@property (nonatomic, strong) NSString *commentCt;
 @property (nonatomic, strong) NSString *name;
 @end
 

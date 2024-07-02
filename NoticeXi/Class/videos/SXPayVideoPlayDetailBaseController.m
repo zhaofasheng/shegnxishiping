@@ -42,6 +42,9 @@
 @property (nonatomic, strong) UIView *sectionView;
 @property (nonatomic, assign) NSInteger rate;
 @property (nonatomic, strong) UIView *zeroView;
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, strong) UILabel *markL;
+@property (nonatomic, strong) UIView *markView;
 @end
 
 @implementation SXPayVideoPlayDetailBaseController
@@ -125,6 +128,28 @@
     }else{
         [self getVideoList];
     }
+    
+    
+    self.markView = [[UIView  alloc] initWithFrame:CGRectMake(15,DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT+5,DR_SCREEN_WIDTH-30, 40)];
+    self.markView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+    self.markView.layer.cornerRadius = 20;
+    self.markView.layer.masksToBounds = YES;
+    self.markView.hidden = YES;
+    [self.view addSubview:self.markView];
+    self.markView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendComClick)];
+    [self.markView addGestureRecognizer:tap2];
+    
+    self.markL = [[UILabel  alloc] initWithFrame:CGRectMake(10, 0, 180, 40)];
+    self.markL.font = FIFTHTEENTEXTFONTSIZE;
+    self.markL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
+    self.markL.text = @"成为第一条评论…";
+    [self.markView addSubview:self.markL];
+}
+
+//发送评论
+- (void)sendComClick{
+    [self.comVC sendComClick];
 }
 
 - (NSMutableArray *)searisArr{
@@ -155,6 +180,7 @@
                 if (oldPlayVideoName) {
                     if ([model.title isEqualToString:oldPlayVideoName]) {
                         self.currentPlayModel = model;
+                        
                     }
                 }
                 [self.searisArr addObject:model];
@@ -165,13 +191,15 @@
                 if (!self.currentPlayModel) {
                     self.currentPlayModel = self.searisArr[0];
                 }
-                
+                self.comVC.currentPlayModel = self.currentPlayModel;
                 self.listVC.currentPlayModel = self.currentPlayModel;
                 self.listVC.dataArr = self.searisArr;
                 self.paySearModel.searisVideoList = self.searisArr;
                 
                 [self refresUI];
                 [self setPlayView];
+                
+                [self refreshTitle];
             }
         }
         [self hideHUD];
@@ -212,9 +240,9 @@
         [weakSelf.listVC refreshCurrentModel:choiceModel needScro:YES];
     };
     
-    _player.playbackControls.rateClickBlock = ^(NSInteger rate) {
-        weakSelf.rate = rate;
-    };
+//    _player.playbackControls.rateClickBlock = ^(NSInteger rate) {
+//        weakSelf.rate = rate;
+//    };
 
     _player.fullBlock = ^(BOOL isFull) {
         weakSelf.isFullPlay = isFull;
@@ -291,9 +319,6 @@
     }
     return _activityIndicatorView;
 }
-
-
-
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -404,6 +429,7 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     if (self.isPause) {
+        DRLog(@"进入视频调用播放");
         [self.player _playVideo];
         self.isPause = NO;
     }
@@ -426,23 +452,43 @@
             if (weakSelf.refreshPlayTimeBlock) {
                 weakSelf.refreshPlayTimeBlock(weakSelf.currentPlayModel);
             }
-            
+       
             weakSelf.currentPlayModel = videoModel;
+            weakSelf.comVC.currentPlayModel = weakSelf.currentPlayModel;
             [weakSelf destroyOldplay];
             [weakSelf setPlayView];
+            
+            weakSelf.categoryView.defaultSelectedIndex = weakSelf.currentIndex;
+            [weakSelf categoryCurentIndex:weakSelf.currentIndex];
+            [weakSelf.categoryView reloadData];
+            
+            [weakSelf refreshTitle];
         };
 
     }
     return _listVC;
 }
 
-
 - (SXPayVideoComController *)comVC{
     if (!_comVC) {
         _comVC = [[SXPayVideoComController alloc] init];
         _comVC.paySearModel = self.paySearModel;
+        _comVC.isVideoCom = YES;
+        _comVC.currentPlayModel = self.currentPlayModel;
+        __weak typeof(self) weakSelf = self;
+        _comVC.refreshCommentCountBlock = ^(NSString * _Nonnull commentCount) {
+            weakSelf.currentPlayModel.commentCt = commentCount;
+            [weakSelf refreshTitle];
+            [weakSelf.listVC.tableView reloadData];
+        };
     }
     return _comVC;
+}
+
+- (void)refreshTitle{
+    self.markL.text = self.currentPlayModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论…";
+    self.comButton.text = [NSString stringWithFormat:@"评论%@",self.currentPlayModel.commentCt.intValue?self.currentPlayModel.commentCt:@""];
+    self.comButton.frame =  CGRectMake(CGRectGetMaxX(self.infoButton.frame)+40, 0, GET_STRWIDTH(self.comButton.text, 16, 40),40);
 }
 
 - (UILabel *)infoButton{
@@ -483,17 +529,20 @@
 }
 
 - (void)categoryCurentIndex:(NSInteger)index{
-
+    self.currentIndex = index;
     self.comButton.font = SIXTEENTEXTFONTSIZE;
     self.infoButton.font = SIXTEENTEXTFONTSIZE;
     if (index == 0) {
+        self.markView.hidden = YES;
         self.infoButton.font = XGSIXBoldFontSize;
         self.line.frame = CGRectMake(self.infoButton.frame.origin.x, 30, self.infoButton.frame.size.width, 4);
     }else if (index == 1){
+        self.markView.hidden = NO;
         self.comButton.font = XGSIXBoldFontSize;
         self.line.frame = CGRectMake(self.comButton.frame.origin.x, 30, self.comButton.frame.size.width, 4);
     }
 
+    [self.view bringSubviewToFront:self.markView];
 }
 
 

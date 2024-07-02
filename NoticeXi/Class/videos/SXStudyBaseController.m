@@ -7,7 +7,7 @@
 //
 
 #import "SXStudyBaseController.h"
-#import "SXPayVideoComController.h"
+#import "SXPayKCDetailComController.h"
 #import "SXPayVideoListController.h"
 #import "SXKchengIntroController.h"
 #import "XLCycleCollectionView.h"
@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSArray <NSString *> *titles;
 @property (nonatomic, strong) JXCategoryTitleView *categoryView;
 @property (nonatomic, strong) JXPagerListRefreshView *pagerView;
-@property (nonatomic, strong) SXPayVideoComController *comVC;
+@property (nonatomic, strong) SXPayKCDetailComController *comVC;
 @property (nonatomic, strong) SXPayVideoListController *videoVC;
 @property (nonatomic, strong) SXKchengIntroController *kcVC;
 
@@ -85,6 +85,7 @@
     [self.sectionView addSubview:self.infoButton];
     [self.sectionView addSubview:self.orderButton];
     [self.sectionView addSubview:self.comButton];
+    [self refreshTitle:self.paySearModel.commentCt];
     
     self.line = [[UIView  alloc] initWithFrame:CGRectMake(self.infoButton.frame.origin.x, 30, self.infoButton.frame.size.width, 4)];
     self.line.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
@@ -172,12 +173,22 @@
     return _videoVC;
 }
 
-- (SXPayVideoComController *)comVC{
+- (SXPayKCDetailComController *)comVC{
     if (!_comVC) {
-        _comVC = [[SXPayVideoComController alloc] init];
+        _comVC = [[SXPayKCDetailComController alloc] init];
         _comVC.paySearModel = self.paySearModel;
+        __weak typeof(self) weakSelf = self;
+        _comVC.refreshCommentCountBlock = ^(NSString * _Nonnull commentCount) {
+            [weakSelf refreshTitle:commentCount];
+        };
     }
     return _comVC;
+}
+
+- (void)refreshTitle:(NSString *)commentCoount{
+    self.paySearModel.commentCt = commentCoount;
+    self.comButton.text = [NSString stringWithFormat:@"评论%@",commentCoount.intValue?commentCoount:@""];
+    self.comButton.frame =  CGRectMake(CGRectGetMaxX(self.orderButton.frame)+40, 0, GET_STRWIDTH(self.comButton.text, 16, 40),40);
 }
 
 - (SXKchengIntroController *)kcVC{
@@ -198,7 +209,6 @@
       _pagerView.mainTableView.sectionHeaderTopPadding = 0;
     }
 }
-
 
 #pragma mark - JXPagerMainTableViewGestureDelegate
 
@@ -287,7 +297,9 @@
         if ([searisID isEqualToString:weakSelf.paySearModel.seriesId]) {
             weakSelf.paySearModel.is_bought = @"1";
             weakSelf.videoVC.paySearModel = weakSelf.paySearModel;
+            weakSelf.comVC.paySearModel = weakSelf.paySearModel;
             [weakSelf.videoVC refreshStatus];
+            [weakSelf.comVC refreshStatus];
             [weakSelf refreshStatus];
             weakSelf.categoryView.defaultSelectedIndex = 0;
             [weakSelf.categoryView reloadData];
@@ -345,6 +357,7 @@
         _comButton.userInteractionEnabled = YES;
         _comButton.tag = 2;
         _comButton.text = @"评论";
+        
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
         [_comButton addGestureRecognizer:tap];
     }
