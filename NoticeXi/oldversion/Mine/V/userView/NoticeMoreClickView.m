@@ -139,6 +139,17 @@
         return;
     }
     
+    if (self.isShareSerise) {
+        if(indexPath.row == 0){
+            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title name:self.name imageUrl:self.imgUrl];
+        }else if(indexPath.row == 1){
+            [NoticeShareView shareWithurl:self.friendShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title imageUrl:self.imgUrl];
+        }else if(indexPath.row == 2){
+            [NoticeShareView shareWithurl:self.qqShareUrl type:SSDKPlatformSubTypeQQFriend title:self.title name:self.name imageUrl:self.imgUrl];
+        }
+        return;
+    }
+    
     if (self.isShare) {
         if(indexPath.row == 0){
             [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title name:self.name imageUrl:self.imgUrl];
@@ -146,8 +157,6 @@
             [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){
             [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeQQFriend title:self.name name:self.title imageUrl:self.imgUrl];
-        }else if(indexPath.row == 3){
-        
         }
         return;
     }

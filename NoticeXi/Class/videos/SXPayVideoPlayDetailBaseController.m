@@ -246,9 +246,9 @@
         [weakSelf.listVC refreshCurrentModel:choiceModel needScro:YES];
     };
     
-//    _player.playbackControls.rateClickBlock = ^(NSInteger rate) {
-//        weakSelf.rate = rate;
-//    };
+    _player.playbackControls.rateClickBlock = ^(NSInteger rate) {
+        weakSelf.rate = rate;
+    };
 
     _player.fullBlock = ^(BOOL isFull) {
         weakSelf.isFullPlay = isFull;

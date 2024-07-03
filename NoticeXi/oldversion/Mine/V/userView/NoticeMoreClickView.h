@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *keyView;
 @property (nonatomic, strong) UIButton *cancelBtn;
 @property (nonatomic, assign) BOOL isShare;
+@property (nonatomic, assign) BOOL isShareSerise;
 @property (nonatomic, assign) BOOL isVideo;
 @property (nonatomic, assign) BOOL isPayVideo;
 @property (nonatomic, assign) BOOL isShareBoKeAndMore;
@@ -35,6 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void(^clickIndexBlock)(NSInteger index);
 @property (nonatomic, strong) NSArray *buttonNameArr;
 @property (nonatomic, strong) NSArray *buttonImgArr;
+
+@property (nonatomic, strong) NSString *qqShareUrl;//qq分享链接
+@property (nonatomic, strong) NSString *friendShareUrl;//朋友圈分享链接
+@property (nonatomic, strong) NSString *appletId;//小程序Id
+@property (nonatomic, strong) NSString *appletPage;//小程序跳转页面
+
 - (void)showTost;
 @end
 

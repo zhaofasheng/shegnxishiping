@@ -36,11 +36,11 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 
 /** 用来保存pan手势快进的总时长 */
 @property (nonatomic, assign) CGFloat sumTime;
-
+@property (nonatomic, assign) NSInteger setRateTime;
 @property (nonatomic, strong) XLAlertView *alerView;
 
 @property (nonatomic, assign) BOOL hasShowActivity;
-
+@property (nonatomic, assign) BOOL needSetRate;
 @end
 
 @implementation SelVideoPlayer
@@ -240,6 +240,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     {
         self.playbackControls.playButton.hidden = YES;
         [_player play];
+        
         [self.playbackControls _setPlayButtonSelect:YES];
         if (self.playerState == SelVideoPlayerStatePause) {
             self.playerState = SelVideoPlayerStatePlaying;
@@ -249,15 +250,18 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 }
 
 - (void)playrateset{
+    if (self.playerState != SelVideoPlayerStatePlaying) {
+        return;
+    }
     DRLog(@"设置倍速");
     if (self.rate == 1) {
-        self.player.rate = 1.0;
+        _player.rate = 1.0;
     }else if (self.rate == 2){
-        self.player.rate = 1.25;
+        _player.rate = 1.25;
     }else if (self.rate == 3){
-        self.player.rate = 1.5;
+        _player.rate = 1.5;
     }else if (self.rate == 4){
-        self.player.rate = 2.0;
+        _player.rate = 2.0;
     }
 }
 
@@ -270,6 +274,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     if (self.playerState == SelVideoPlayerStatePlaying) {
         self.playerState = SelVideoPlayerStatePause;
     }
+    self.needSetRate = YES;
 }
 
 /** 重新播放 */
@@ -477,6 +482,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     [self createTimer];
     
     if (_playerConfiguration.shouldAutoPlay) {
+        self.needSetRate = YES;
         DRLog(@"创建资源调用播放");
         [self _playVideo];
     }
@@ -634,17 +640,24 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
             if (weakSelf.currentPlayTimeBlock) {
                 weakSelf.currentPlayTimeBlock(currentTime);
             }
-          
-//            if (weakSelf.isSetDefaultPlaytime) {
-//                weakSelf.isSetDefaultPlaytime = NO;
-//                [weakSelf _setDefaultPlayTime:weakSelf.playerConfiguration.defalutPlayTime/totalTime];
-//            }
+            
+            if (weakSelf.needSetRate && weakSelf.playerState == SelVideoPlayerStatePlaying) {
+                weakSelf.needSetRate = NO;
+                
+                [NSObject cancelPreviousPerformRequestsWithTarget:weakSelf selector:@selector(afterSetRate) object:nil];
+                [weakSelf performSelector:@selector(afterSetRate) withObject:nil afterDelay:2];
+            }
+            
             if (weakSelf.hasShowActivity) {
                 weakSelf.hasShowActivity = NO;
                 [weakSelf.playbackControls  _activityIndicatorViewShow:NO];
             }
         }
     }];
+}
+
+- (void)afterSetRate{
+    [self playrateset];
 }
 
 /**

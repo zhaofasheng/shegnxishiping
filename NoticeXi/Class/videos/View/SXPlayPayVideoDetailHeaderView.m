@@ -84,10 +84,15 @@
 - (void)shareClick{
     NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
     moreView.isShare = YES;
-    moreView.shareUrl = @"www.baidu.com";
-    moreView.wechatShareUrl = @"www.baidu.com";
-    moreView.name = self.model.series_name;
-    moreView.imgUrl = self.model.cover_url;
+    moreView.isShareSerise = YES;
+    moreView.qqShareUrl = self.model.qqShareUrl;
+    moreView.wechatShareUrl = self.model.wechatShareUrl;
+    moreView.friendShareUrl = self.model.friendShareUrl;
+    moreView.appletId = self.model.appletId;
+    moreView.appletPage = self.model.appletPage;
+    
+    moreView.name = [NSString stringWithFormat:@"共%@课时",self.model.episodes];
+    moreView.imgUrl = self.model.carousel_images.count?self.model.carousel_images[0]: self.model.cover_url;
     moreView.title = self.model.series_name;
     [moreView showTost];
 }

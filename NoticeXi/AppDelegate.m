@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import <AFServiceSDK/AFServiceSDK.h>
-
+#import "SXStudyBaseController.h"
 #import "WXApi.h"
 #import <Bugly/Bugly.h>
 #import "NoticeTabbarController.h"
@@ -428,7 +428,29 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options{
 
     NSURLComponents *components = [[NSURLComponents alloc] initWithString:url.absoluteString];
-     
+    DRLog(@"===%@",url.absoluteString);
+    
+    if (components.queryItems.count) {
+        NSURLQueryItem *item1 = components.queryItems[0];
+        if ([item1.name isEqualToString:@"series_id"]) {
+            //push_series_id（课程ID）
+            [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",item1.value] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+                if (success) {
+                    if ([dict[@"data"] isEqual:[NSNull null]]) {
+                        return;
+                    }
+                    SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
+                    if (!searismodel) {
+                        return;
+                    }
+                    SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
+                    ctl.paySearModel = searismodel;
+                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+                }
+            } fail:^(NSError *error) {
+            }];
+        }
+    }
     if (components.queryItems.count == 2) {
         NSURLQueryItem *item1 = components.queryItems[0];
         NSURLQueryItem *item2 = components.queryItems[1];
