@@ -8,6 +8,7 @@
 
 #import "NoticeBaseCellController.h"
 #import "SXPayForVideoModel.h"
+#import "SXVideoCommentModel.h"
 #import "JXPagerView.h"
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *type;//1=普通类型列表2=定位类型列表
 @property (nonatomic, strong) NSString *commentId;//评论定位类型 必传 评论ID 没有传0
 @property (nonatomic, strong) NSString *replyId;//评论定位类型 必传 回复ID 没有传0
+@property (nonatomic, strong) NSString *topVideoId;//置顶评论的视频id
 @property (nonatomic, strong) SXUserModel *videoUser;//视频作者的信息
+@property (nonatomic,copy) void(^deleteClickBlock)(SXVideoCommentModel *commentM);
 - (void)sendComClick;
 @end
 

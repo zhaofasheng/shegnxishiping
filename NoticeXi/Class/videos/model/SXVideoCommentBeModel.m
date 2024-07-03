@@ -30,11 +30,13 @@
     _commentContent = commentContent;
     self.commentAtt = [SXTools getStringWithLineHight:3 string:commentContent];
     self.commentHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-56-78 string:commentContent isJiacu:NO];
+    self.commentHeight1 = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-56-15 string:commentContent isJiacu:NO];
 }
 
 - (void)setReplyContent:(NSString *)replyContent{
     _replyContent = replyContent;
     self.replyAtt = [SXTools getStringWithLineHight:3 string:replyContent];
     self.replytHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-56-78 string:replyContent isJiacu:NO];
+    self.replytHeight1 = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-56-15 string:replyContent isJiacu:NO];
 }
 @end

@@ -13,7 +13,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.contentView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
        
         //头像
         _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 32, 32)];
@@ -29,10 +29,9 @@
         _nickNameL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.contentView addSubview:_nickNameL];
         
-        self.contentL = [[GZLabel alloc] initWithFrame:CGRectMake(56, 37, DR_SCREEN_WIDTH-56-15, 0)];
+        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(56, 37, DR_SCREEN_WIDTH-56-15, 0)];
         self.contentL.font = FOURTHTEENTEXTFONTSIZE;
-        self.contentL.GZLabelNormalColor = [UIColor colorWithHexString:@"#25262E"];
-        [self.contentL setHightLightLabelColor:[UIColor colorWithHexString:@"#FF4B98"] forGZLabelStyle:GZLabelStyleTopic];
+        self.contentL.textColor = [UIColor colorWithHexString:@"#25262E"];
         self.contentL.numberOfLines = 0;
         [self.contentView addSubview:self.contentL];
         self.contentL.userInteractionEnabled = YES;
@@ -46,8 +45,12 @@
         self.videView.layer.masksToBounds = YES;
         [self.bottomView addSubview:self.videView];
         
+        UITapGestureRecognizer *voiceTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(voideClick)];
+        [self.videView addGestureRecognizer:voiceTap];
+        
         UIImageView *videoImg = [[UIImageView  alloc] initWithFrame:CGRectMake(8, 6, 16, 16)];
         videoImg.image = UIImageNamed(@"sx_video_img");
+        videoImg.userInteractionEnabled = YES;
         [self.videView addSubview:videoImg];
         
         self.viedoNameL = [[UILabel  alloc] initWithFrame:CGRectMake(28, 0, 100, 28)];
@@ -66,15 +69,13 @@
         _comNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.bottomView addSubview:_comNumL];
         _comNumL.userInteractionEnabled = YES;
-        UITapGestureRecognizer *comTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(comClick)];
-        [_comNumL addGestureRecognizer:comTap];
+
         
         self.comImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(self.bottomView.frame.size.width-20, 0, 20, 20)];
         self.comImageView.userInteractionEnabled = YES;
         self.comImageView.image = UIImageNamed(@"sx_com_markimg");
         [self.bottomView addSubview:self.comImageView];
-        UITapGestureRecognizer *comTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(comClick)];
-        [self.comImageView addGestureRecognizer:comTap1];
+
         
         _likeL = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 0, 20)];
         _likeL.font = FOURTHTEENTEXTFONTSIZE;
@@ -110,8 +111,14 @@
         self.authorL.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame), 16, 30, 15);
     }
     
-    self.contentL.text = comModel.content;
-    self.contentL.frame = CGRectMake(56, 37, DR_SCREEN_WIDTH-56-15, comModel.firstContentHeight);
+    if (!self.hasBuy && comModel.isMoreFiveLines) {
+        self.contentL.attributedText = comModel.fiveAttTextStr;
+        self.contentL.frame = CGRectMake(56, 37, DR_SCREEN_WIDTH-56-15, comModel.fiveTextHeight);
+    }else{
+        self.contentL.attributedText = comModel.firstAttr;
+        self.contentL.frame = CGRectMake(56, 37, DR_SCREEN_WIDTH-56-15, comModel.firstContentHeight);
+    }
+
     
     self.viedoNameL.text = comModel.video_title;
     self.viedoNameL.frame = CGRectMake(28, 0, GET_STRWIDTH(self.viedoNameL.text, 13, 28), 28);
@@ -121,6 +128,20 @@
     
     self.timeL.text = comModel.created_at;
     self.bottomView.frame = CGRectMake(56, CGRectGetMaxY(self.contentL.frame), DR_SCREEN_WIDTH-56, 56);
+    
+    if (!self.hasBuy) {
+        self.comNumL.userInteractionEnabled = NO;
+        self.comImageView.userInteractionEnabled = NO;
+        self.likeL.userInteractionEnabled = NO;
+        self.likeImageView.userInteractionEnabled = NO;
+        self.videView.userInteractionEnabled = NO;
+    }else{
+        self.comNumL.userInteractionEnabled = YES;
+        self.comImageView.userInteractionEnabled = YES;
+        self.likeL.userInteractionEnabled = YES;
+        self.likeImageView.userInteractionEnabled = YES;
+        self.videView.userInteractionEnabled = YES;
+    }
 }
 
 - (UILabel *)authorL{
@@ -137,8 +158,10 @@
     return _authorL;
 }
 
-- (void)comClick{
-    
+- (void)voideClick{
+    if (self.clickVideoIdBlock) {
+        self.clickVideoIdBlock(self.comModel.video_id);
+    }
 }
 
 - (void)userInfoTap{

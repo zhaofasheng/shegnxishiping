@@ -34,7 +34,7 @@
 @property (nonatomic, strong) UIView *backView;
 
 @property (nonatomic, strong) UIView *zeroView;
-
+@property (nonatomic, assign) BOOL shoCom;
 @property (nonatomic, strong) UILabel *infoButton;
 @property (nonatomic, strong) UILabel *orderButton;
 @property (nonatomic, strong) UILabel *comButton;
@@ -92,6 +92,27 @@
     self.line.layer.cornerRadius = 2;
     self.line.layer.masksToBounds = YES;
     [self.sectionView addSubview:self.line];
+    
+    self.comVC.paySearModel = self.paySearModel;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buySuccess) name:@"BUYSEARISSUCCESS" object:nil];
+}
+
+- (void)buySuccess{
+    [self.backView removeFromSuperview];
+    self.paySearModel.is_bought = @"1";
+    if (self.shoCom) {
+        self.categoryView.defaultSelectedIndex = 2;
+        [self categoryCurentIndex:2];
+        self.shoCom = NO;
+    }
+    self.comVC.paySearModel = self.paySearModel;
+    [self.comVC.tableView reloadData];
+    self.videoVC.paySearModel = self.paySearModel;
+    [self.videoVC.tableView reloadData];
+    [self.categoryView reloadData];
+    [self.pagerView reloadData];
+    [self refreshStatus];
 }
 
 - (void)shareClick{
@@ -169,6 +190,9 @@
                 weakSelf.buySuccessBlock(searisID);
             }
         };
+        _videoVC.deleteClickBlock = ^(SXVideoCommentModel * _Nonnull commentM) {
+            [weakSelf.comVC deleteCommentWith:commentM.commentId];
+        };
     }
     return _videoVC;
 }
@@ -181,6 +205,14 @@
         _comVC.refreshCommentCountBlock = ^(NSString * _Nonnull commentCount) {
             [weakSelf refreshTitle:commentCount];
         };
+        _comVC.clickVideoIdBlock = ^(NSString * _Nonnull videoId, NSString * _Nonnull commentId) {
+            [weakSelf.videoVC gotoPlayViewWith:videoId commentId:commentId];
+        };
+        _comVC.buyBlock = ^(BOOL buy) {
+            weakSelf.shoCom = YES;
+            [weakSelf buyClick];
+        };
+    
     }
     return _comVC;
 }

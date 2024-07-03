@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *video_download_url;//视频下载地址
 @property (nonatomic, strong) NSString *screen;//屏幕信息 0未知 1横屏 2竖屏
 @property (nonatomic, strong) NSString *video_cover_url;//视频封面
+@property (nonatomic, strong) NSString *series_images;
 @property (nonatomic, strong) NSDictionary *user_info;//用户信息
 @property (nonatomic, strong) SXUserModel  *userModel;
 /** 从xx秒开始播放视频(默认0) */
@@ -39,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *first_frame_url;//第一帧图片
 
 @property (nonatomic, strong) NSString *commentCt;//视频评论数量
-
+@property (nonatomic, strong) NSString *series_id;//课程id
 //内容是否展开（默认不设置，都是NO，收起状态）
 @property (nonatomic, assign) BOOL isOpen;
 

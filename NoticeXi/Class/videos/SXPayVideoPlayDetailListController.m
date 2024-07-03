@@ -10,7 +10,7 @@
 #import "SXPlayPayVideoDetailListCell.h"
 @interface SXPayVideoPlayDetailListController ()
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
-
+@property (nonatomic, assign) NSInteger isfirstin;
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @end
 
@@ -23,10 +23,10 @@
     
     self.navBarView.hidden = YES;
     
-    self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-STATUS_BAR_HEIGHT-(DR_SCREEN_WIDTH/16*9)-40);
+    self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-STATUS_BAR_HEIGHT-(DR_SCREEN_WIDTH/16*9)-50);
     
     [self.tableView registerClass:[SXPlayPayVideoDetailListCell class] forCellReuseIdentifier:@"cell"];
-    
+    self.isfirstin = YES;
     self.tableView.rowHeight = 65;
 }
 

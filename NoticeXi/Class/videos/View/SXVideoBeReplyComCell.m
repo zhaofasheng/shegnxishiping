@@ -75,6 +75,8 @@
         [self.contentView addSubview:self.likeImageView];
         UITapGestureRecognizer *likeTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeClick)];
         [self.likeImageView addGestureRecognizer:likeTap1];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getlikeNotice:) name:@"COMMENTLIKENotification" object:nil];
     }
     return self;
 }
@@ -147,6 +149,24 @@
         [[NoticeTools getTopViewController] hideHUD];
     }];
 }
+
+- (void)getlikeNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *comId = nameDictionary[@"commentId"];
+    NSString *isLike = nameDictionary[@"is_like"];
+    
+    NSString *commentId = nil;
+    if (self.likeComM.replyId.intValue) {
+        commentId = self.likeComM.replyId;
+    }else if (self.likeComM.commentId.intValue){
+        commentId = self.likeComM.commentId;
+    }
+    if ([commentId isEqualToString:comId]) {
+        self.likeComM.is_like = isLike;
+        self.likeImageView.image = self.likeComM.is_like.boolValue?UIImageNamed(@"sx_like_img"): UIImageNamed(@"sx_like_noimg");
+    }
+}
+
 
 - (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId linkArr:(nonnull NSMutableArray *)linkArr{
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];

@@ -63,6 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *to_series;
 @property (nonatomic, strong) NSMutableArray *seariesArr;
+
+@property (nonatomic, strong) NSAttributedString *fiveAttTextStr;
+@property (nonatomic, assign) BOOL isMoreFiveLines;//是否超过五行文字
+@property (nonatomic, assign) CGFloat fiveTextHeight;
 @end
 
 NS_ASSUME_NONNULL_END

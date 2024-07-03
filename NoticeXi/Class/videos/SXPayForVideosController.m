@@ -11,12 +11,26 @@
 #import "SXStudyBaseController.h"
 #import "SXHasBuyPayVideoController.h"
 #import "NoticeLoginViewController.h"
+#import "SXHasGetComController.h"
+#import "SXKcHasGetLikeController.h"
+#import "NoticeStaySys.h"
 @interface SXPayForVideosController ()
 @property (nonatomic, strong) UIView *footView;
 
+@property (nonatomic, strong) UIButton *hasBuyBtn;
+@property (nonatomic, strong) UIButton *comBtn;
+@property (nonatomic, strong) UIButton *likeBtn;
+@property (nonatomic, strong) UILabel *zanNumL;
+@property (nonatomic, strong) UILabel *comNumL;
 @end
 
 @implementation SXPayForVideosController
+
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self requestNoread];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,24 +45,48 @@
     label.textColor = [UIColor colorWithHexString:@"#14151A"];
     [self.view addSubview:label];
     
-    CGFloat width = GET_STRWIDTH(@"已购", 14, 24);
-    UIView *buttonView = [[UIView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-width-24-15-4, (NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-24)/2+STATUS_BAR_HEIGHT, width+24+4, 24)];
-    buttonView.userInteractionEnabled = YES;
-    UIImageView *buttonImgV = [[UIImageView  alloc] initWithFrame:CGRectMake(2, 0, 24, 24)];
-    buttonImgV.image = UIImageNamed(@"sxhasbuybtn_img");
-    buttonImgV.userInteractionEnabled = YES;
-    [buttonView addSubview:buttonImgV];
+    UIView *headerView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 80)];
+    self.tableView.tableHeaderView = headerView;
     
-    UILabel *btnlabel = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(buttonImgV.frame),0, width+2, 24)];
-    btnlabel.text = @"已购";
-    btnlabel.font = XGFourthBoldFontSize;
-    btnlabel.textColor = [UIColor colorWithHexString:@"#14151A"];
-    [buttonView addSubview:btnlabel];
+    NSArray *titleArr = @[@"已购课程",@"课程评论",@"点赞消息"];
+    NSArray *imgArr = @[@"sx_hasbuy_img1",@"sx_hasbuy_img2",@"sx_hasbuy_img3"];
+    CGFloat width = (DR_SCREEN_WIDTH-44)/3;
+    for (int i = 0; i < 3; i++) {
+        UIButton *btns = [[UIButton  alloc] initWithFrame:CGRectMake(10+(width+12)*i, 8, width, 56)];
+        [btns setAllCorner:8];
+        btns.backgroundColor = [UIColor whiteColor];
+        btns.tag = i;
+        btns.titleLabel.font = XGFourthBoldFontSize;
+        [btns setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
+        [headerView addSubview:btns];
+        [btns setTitle:titleArr[i] forState:UIControlStateNormal];
+        [btns setImage:UIImageNamed(imgArr[i]) forState:UIControlStateNormal];
+        [btns addTarget:self action:@selector(funClick:) forControlEvents:UIControlEventTouchUpInside];
+        if (i==0) {
+            self.hasBuyBtn = btns;
+        }else if (i==1){
+            self.comBtn = btns;
+        }else{
+            self.likeBtn = btns;
+        }
+    }
+    self.comNumL = [[UILabel  alloc] initWithFrame:CGRectZero];
+    self.comNumL.layer.cornerRadius = 8;
+    self.comNumL.layer.masksToBounds = YES;
+    self.comNumL.textColor = [UIColor whiteColor];
+    self.comNumL.font = ELEVENTEXTFONTSIZE;
+    self.comNumL.textAlignment = NSTextAlignmentCenter;
+    self.comNumL.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
+    [headerView addSubview:self.comNumL];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hasbbuyTap)];
-    [buttonView addGestureRecognizer:tap];
-    
-    [self.view addSubview:buttonView];
+    self.zanNumL = [[UILabel  alloc] initWithFrame:CGRectZero];
+    self.zanNumL.layer.cornerRadius = 8;
+    self.zanNumL.layer.masksToBounds = YES;
+    self.zanNumL.textColor = [UIColor whiteColor];
+    self.zanNumL.font = ELEVENTEXTFONTSIZE;
+    self.zanNumL.textAlignment = NSTextAlignmentCenter;
+    self.zanNumL.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
+    [headerView addSubview:self.zanNumL];
     
     self.tableView.rowHeight = 10+(DR_SCREEN_WIDTH-20)/355*232;
     
@@ -64,6 +102,63 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     //用户退出登录通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"outLoginClearDataNOTICATION" object:nil];
+}
+
+- (void)funClick:(UIButton *)button{
+    if (button.tag == 0) {
+        [self hasbbuyTap];
+    }else if (button.tag == 1){
+        SXHasGetComController *ctl = [[SXHasGetComController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+    }else{
+        SXKcHasGetLikeController *ctl = [[SXKcHasGetLikeController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+    }
+}
+
+- (void)requestNoread{
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return ;
+            }
+            NoticeStaySys *stay = [NoticeStaySys mj_objectWithKeyValues:dict[@"data"]];
+
+            if (stay.series_commentM.num.intValue) {
+                self.comNumL.hidden = NO;
+                if (stay.series_commentM.num.intValue > 99) {
+                    stay.series_commentM.num = @"99+";
+                }
+                self.comNumL.text = stay.series_commentM.num;
+              
+                CGFloat width = GET_STRWIDTH(self.comNumL.text, 9, 14)+8;
+                if (width < 16) {
+                    width = 16;
+                }
+                self.comNumL.frame = CGRectMake(CGRectGetMaxX(self.comBtn.frame)-width-4, self.comBtn.frame.origin.y-4, width, 16);
+            }else{
+                self.comNumL.hidden = YES;
+            }
+            
+            if (stay.series_zan_numM.num.intValue) {
+                self.zanNumL.hidden = NO;
+                if (stay.series_zan_numM.num.intValue > 99) {
+                    stay.series_zan_numM.num = @"99+";
+                }
+                self.zanNumL.text = stay.series_zan_numM.num;
+              
+                CGFloat width = GET_STRWIDTH(self.zanNumL.text, 9, 14)+8;
+                if (width < 16) {
+                    width = 16;
+                }
+                self.zanNumL.frame = CGRectMake(CGRectGetMaxX(self.likeBtn.frame)-width-4, self.comBtn.frame.origin.y-4, width, 16);
+            }else{
+                self.zanNumL.hidden = YES;
+            }
+           
+        }
+    } fail:^(NSError *error) {
+    }];
 }
 
 - (void)refreshList{

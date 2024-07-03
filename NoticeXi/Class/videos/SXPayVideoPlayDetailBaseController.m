@@ -145,6 +145,12 @@
     self.markL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
     self.markL.text = @"成为第一条评论…";
     [self.markView addSubview:self.markL];
+    
+    if (self.commentId.intValue > 0) {
+        self.categoryView.defaultSelectedIndex = 1;
+        [self categoryCurentIndex:1];
+        [self.categoryView reloadData];
+    }
 }
 
 //发送评论
@@ -474,12 +480,24 @@
         _comVC = [[SXPayVideoComController alloc] init];
         _comVC.paySearModel = self.paySearModel;
         _comVC.isVideoCom = YES;
+        
+        if (self.commentId.intValue > 0) {
+            _comVC.type = @"2";
+            _comVC.commentId = self.commentId;
+            _comVC.topVideoId = self.currentPlayModel.videoId;
+            _comVC.replyId = self.replyId;
+        }
         _comVC.currentPlayModel = self.currentPlayModel;
         __weak typeof(self) weakSelf = self;
         _comVC.refreshCommentCountBlock = ^(NSString * _Nonnull commentCount) {
             weakSelf.currentPlayModel.commentCt = commentCount;
             [weakSelf refreshTitle];
             [weakSelf.listVC.tableView reloadData];
+        };
+        _comVC.deleteClickBlock = ^(SXVideoCommentModel * _Nonnull commentM) {
+            if (weakSelf.deleteClickBlock) {
+                weakSelf.deleteClickBlock(commentM);
+            }
         };
     }
     return _comVC;

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isDown;
 @property (nonatomic, assign) NSInteger pageNo;
 @property (nonatomic, strong) UILabel *defaultL;
+@property (nonatomic, strong) UILabel *marksL;
 @property (nonatomic, strong) NSMutableArray *dataArr;
 @end
 

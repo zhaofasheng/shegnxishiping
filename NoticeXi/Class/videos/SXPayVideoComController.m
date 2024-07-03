@@ -46,7 +46,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     [self.tableView registerClass:[MyCommentCell class] forCellReuseIdentifier:commentCellIdentifier];
     [self.tableView registerClass:[SXVideoCmmentFirstCell class] forHeaderFooterViewReuseIdentifier:@"headerView"];
     [self.tableView registerClass:[SXVideoCommentMoreView class] forHeaderFooterViewReuseIdentifier:@"footView"];
-    self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-STATUS_BAR_HEIGHT-(DR_SCREEN_WIDTH/16*9)-40-TAB_BAR_HEIGHT);
+    self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-STATUS_BAR_HEIGHT-(DR_SCREEN_WIDTH/16*9)-50-TAB_BAR_HEIGHT);
     [self createRefesh];
 }
 
@@ -164,6 +164,12 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 - (void)createRefesh{
     
     __weak SXPayVideoComController *ctl = self;
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        ctl.isDown = YES;
+        ctl.pageNo = 1;
+        [ctl requestCom];
+    }];
+    self.tableView.mj_header = header;
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         //上拉
         ctl.isDown = NO;
@@ -178,7 +184,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     if (!self.currentPlayModel) {
         return;
     }
-    if ((self.commentId.intValue || self.replyId.intValue) && self.type.intValue == 2) {
+    if ((self.commentId.intValue || self.replyId.intValue) && self.type.intValue == 2 && [self.currentPlayModel.videoId isEqualToString:self.topVideoId]) {
         url = [NSString stringWithFormat:@"videoCommont/%@/%@?commentId=%@&replyId=%@&pageNo=%ld",self.currentPlayModel.videoId,@"2",self.commentId.intValue?self.commentId:@"0",self.replyId.intValue?self.replyId:@"0",self.pageNo];
     }else{
         url = [NSString stringWithFormat:@"videoCommont/%@/%@?commentId=%@&replyId=%@&pageNo=%ld",self.currentPlayModel.videoId,@"1",@"0",@"0",self.pageNo];
@@ -186,7 +192,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
   
     
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-    
+        [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         if (success) {
             if ([dict[@"data"] isEqual:[NSNull null]]) {
@@ -222,7 +228,6 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
             if (jsonModel.list.count) {
                 for (NSDictionary *dic in jsonModel.list) {//普通列表
                     SXVideoCommentModel *commentM = [SXVideoCommentModel mj_objectWithKeyValues:dic];
-                
                     if (commentM.comment_type.intValue > 1) {
                         commentM.content = @"请更新到最新版本";
                     }
@@ -232,7 +237,24 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     if (commentM.firstReplyModel) {//如果存在第一条回复数据
                         [commentM.replyArr addObject:commentM.firstReplyModel];
                     }
-                    [self.dataArr addObject:commentM];
+                    
+                    if (self.pageNo == 1) {
+                        BOOL hasSave = NO;
+                        for (SXVideoCommentModel *oldm in self.dataArr) {//去重
+                            if ([oldm.commentId isEqualToString:commentM.commentId]) {
+                                hasSave = YES;
+                                break;
+                            }
+                        }
+                        
+                        if (!hasSave) {
+                            [self.dataArr addObject:commentM];
+                        }
+                    }else{
+                        [self.dataArr addObject:commentM];
+                    }
+                    
+               
                 }
                 if (self.pageNo == 1) {
                  
@@ -252,6 +274,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
             [self.tableView reloadData];
         }
     } fail:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     }];
 }
@@ -369,6 +392,9 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     
     headV.deleteClickBlock = ^(SXVideoCommentModel * _Nonnull commentM) {
         [weakSelf requestComCount];
+        if (weakSelf.deleteClickBlock) {
+            weakSelf.deleteClickBlock(commentM);
+        }
         for (int i = 0; i < weakSelf.dataArr.count; i++) {
             SXVideoCommentModel *oldM = weakSelf.dataArr[i];
             if ([oldM.commentId isEqualToString:commentM.commentId]) {

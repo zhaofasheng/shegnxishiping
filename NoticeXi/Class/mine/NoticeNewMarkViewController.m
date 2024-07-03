@@ -66,7 +66,14 @@
             str = @"关闭后，手机将不再接收店铺留言的消息通知";
         }
     }else if(section == 3){
-        str = @"关闭后，购买课程内容更新时不再接受推送提醒";
+        if (tag == 0) {
+            str = @"关闭后，购买课程内容更新时不再接受推送提醒";
+        }else if (tag == 1){
+            str = @"关闭后，课程评论和回复不再接受推送提醒";
+        }else if (tag == 2){
+            str = @"关闭后，课程评论和回复的点赞消息不再接受推送提醒";
+        }
+        
     }
     
     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:str message:nil sureBtn:[NoticeTools getLocalStrWith:@"main.cancel"] cancleBtn:[NoticeTools getLocalStrWith:@"recoder.sureclose"] right:YES];
@@ -88,7 +95,14 @@
     }else if (section == 1){
         [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"sysRemind"];
     }else if (section == 3){
-        [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"seriesRemind"];
+        if (tag == 0) {
+            [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"seriesRemind"];
+        }else if (tag == 1){
+            [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"seriesCommentRemind"];
+        }else{
+            [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"seriesZanRemind"];
+        }
+        
     }else if (section == 2){
         if (tag == 0) {
             [parm setObject:[NSString stringWithFormat:@"%d",isOn] forKey:@"commentRemind"];
@@ -141,9 +155,19 @@
         }
     }
     else if (indexPath.section == 3){
-        [cell.backView setAllCorner:8];
-        cell.switchButton.on = self.noticeM.series_remind.boolValue;
-        cell.mainL.text = @"购买课程内容有更新";
+        if (indexPath.row == 0) {
+            [cell.backView setCornerOnTop:8];
+            cell.switchButton.on = self.noticeM.series_remind.boolValue;
+            cell.mainL.text = @"购买课程内容有更新";
+        }else if (indexPath.row == 1){
+            cell.switchButton.on = self.noticeM.series_comment_remind.boolValue;
+            cell.mainL.text = @"课程评论消息";
+        }else if (indexPath.row == 2){
+            cell.switchButton.on = self.noticeM.series_zan_remind.boolValue;
+            cell.mainL.text = @"课程点赞消息";
+            [cell.backView setCornerOnBottom:8];
+        }
+       
     }
     return cell;
 }
@@ -154,6 +178,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 2) {
+        return 3;
+    }
+    if(section == 3){
         return 3;
     }
    return  1;

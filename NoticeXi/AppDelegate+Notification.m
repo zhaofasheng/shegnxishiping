@@ -24,7 +24,8 @@
 #import <NIMSDK/NIMSDK.h>
 #import "SXShopLyListController.h"
 #import "NoticeSCViewController.h"
-
+#import "SXKcHasGetLikeController.h"
+#import "SXHasGetComController.h"
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 
 @end
@@ -214,6 +215,12 @@
             }
         } fail:^(NSError *error) {
         }];
+    } else if (model.push_type.intValue == 20004 || model.push_type.intValue == 20005){//课程评论回复消息
+        SXHasGetComController *ctl = [[SXHasGetComController alloc] init];
+        [nav.topViewController.navigationController pushViewController:ctl animated:NO];
+    }else if (model.push_type.intValue == 20006){//课程点赞消息
+        SXKcHasGetLikeController *ctl = [[SXKcHasGetLikeController alloc] init];
+        [nav.topViewController.navigationController pushViewController:ctl animated:NO];
     }
     
     if (@available(iOS 10.0, *)) {

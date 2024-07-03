@@ -210,6 +210,7 @@
                 }
             }
             [self refreshLikeUI:self.commentM];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"COMMENTLIKENotification" object:self userInfo:@{@"commentId":self.commentM.commentId,@"is_like":self.commentM.is_like,@"zan_num":self.commentM.zan_num}];
         }
         [[NoticeTools getTopViewController] hideHUD];
     } fail:^(NSError * _Nullable error) {

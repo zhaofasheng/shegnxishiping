@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic,copy) void(^refreshCommentCountBlock)(NSString *commentCount);
 - (void)refreshStatus;
+@property (nonatomic,copy) void(^clickVideoIdBlock)(NSString *videoId,NSString *commentId);
+@property (nonatomic,copy) void(^buyBlock)(BOOL buy);
+- (void)deleteCommentWith:(NSString *)commentModel;
 @end
 
 NS_ASSUME_NONNULL_END

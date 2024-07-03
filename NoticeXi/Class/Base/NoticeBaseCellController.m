@@ -74,6 +74,7 @@
         labelL.font = FOURTHTEENTEXTFONTSIZE;
         labelL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
         labelL.text = @"欸 这里空空的";
+        self.marksL = labelL;
         [_defaultL addSubview:labelL];
     }
     return _defaultL;

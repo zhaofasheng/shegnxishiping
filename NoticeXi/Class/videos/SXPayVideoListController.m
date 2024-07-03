@@ -36,7 +36,7 @@
     self.headerView.choiceBeforeLookBlock = ^(NSString * _Nonnull videoName) {
         for (SXSearisVideoListModel *model in weakSelf.dataArr) {
             if ([model.title isEqualToString:videoName]) {
-                [weakSelf gotoPlayView:model];
+                [weakSelf gotoPlayView:model commentId:nil];
                 break;
             }
         }
@@ -84,25 +84,42 @@
     
 }
 
+- (void)gotoPlayViewWith:(NSString *)videoId commentId:(nonnull NSString *)commentId{
+    for (SXSearisVideoListModel *videoM in self.dataArr) {
+        if ([videoM.videoId isEqualToString:videoId]) {
+            videoM.is_new = @"0";
+            [self.tableView reloadData];
+            [self gotoPlayView:videoM commentId:commentId];
+            break;
+        }
+    }
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.paySearModel.hasBuy) {
         SXSearisVideoListModel *videoM = self.dataArr[indexPath.row];
         videoM.is_new = @"0";
         [self.tableView reloadData];
-        [self gotoPlayView:videoM];
-        
+        [self gotoPlayView:videoM commentId:nil];
     }
 }
 
-- (void)gotoPlayView:(SXSearisVideoListModel *)model{
+- (void)gotoPlayView:(SXSearisVideoListModel *)model commentId:(NSString *)commentId{
     SXPayVideoPlayDetailBaseController *ctl = [[SXPayVideoPlayDetailBaseController alloc] init];
+    if (commentId.intValue > 0) {
+        ctl.commentId = commentId;
+    }
     ctl.paySearModel = self.paySearModel;
     ctl.searisArr = self.dataArr;
     ctl.currentPlayModel = model;
     __weak typeof(self) weakSelf = self;
     ctl.refreshPlayTimeBlock = ^(SXSearisVideoListModel * _Nonnull currentModel) {
         [weakSelf refreshModelTime:currentModel];
+    };
+    ctl.deleteClickBlock = ^(SXVideoCommentModel * _Nonnull commentM) {
+        if (weakSelf.deleteClickBlock) {
+            weakSelf.deleteClickBlock(commentM);
+        }
     };
     CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
                                                                     withSubType:kCATransitionFromLeft
@@ -139,7 +156,7 @@
 - (void)refreshStatus{
 
     [self.headerView refresUI];
-    self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-(self.paySearModel.is_bought.boolValue?0:TAB_BAR_HEIGHT));
+    self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-50-(self.paySearModel.is_bought.boolValue?0:TAB_BAR_HEIGHT));
     [self.tableView reloadData];
 }
 

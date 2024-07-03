@@ -31,6 +31,16 @@
     self.orderComNum = [NoticeStayMesssage mj_objectWithKeyValues:order_comment];
 }
 
+- (void)setSeries_comment_num:(NSDictionary *)series_comment_num{
+    _series_comment_num = series_comment_num;
+    self.series_commentM = [NoticeStayMesssage mj_objectWithKeyValues:series_comment_num];
+}
+
+- (void)setSeries_zan_num:(NSDictionary *)series_zan_num{
+    _series_zan_num = series_zan_num;
+    self.series_zan_numM = [NoticeStayMesssage mj_objectWithKeyValues:series_zan_num];
+}
+
 - (void)setChar_pri:(NSDictionary *)char_pri{
     _char_pri = char_pri;
     self.char_priM = [NoticeStayMesssage mj_objectWithKeyValues:char_pri];

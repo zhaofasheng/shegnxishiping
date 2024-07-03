@@ -19,9 +19,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[SXVideoBeReplyComCell class] forCellReuseIdentifier:@"cell"];
+    self.navBarView.titleL.text = @"评论消息";
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = self.view.backgroundColor;
-    self.navBarView.titleL.text = @"评论消息";
+
     [self createRefesh];
     self.pageNo = 1;
     self.isDown = YES;

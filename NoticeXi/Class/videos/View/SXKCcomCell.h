@@ -8,18 +8,19 @@
 
 #import "BaseCell.h"
 #import "SXVideoCommentModel.h"
-#import "GZLabel.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXKCcomCell : BaseCell
 @property (nonatomic, assign) BOOL hasBuy;
 @property (nonatomic, strong) SXVideoCommentModel *comModel;
 @property (nonatomic, strong) SXUserModel *videoUser;//视频作者的信息
+@property (nonatomic,copy) void(^clickVideoIdBlock)(NSString *videoId);
 
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *timeL;
 @property (nonatomic, strong) UILabel *nickNameL;
-@property (nonatomic, strong) GZLabel *contentL;
+@property (nonatomic, strong) UILabel *contentL;
 @property (nonatomic, strong) UIView *videView;
 @property (nonatomic, strong) UILabel *viedoNameL;
 @property (nonatomic, strong) UILabel *comNumL;
