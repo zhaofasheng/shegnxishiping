@@ -100,8 +100,9 @@
     NSDictionary *nameDictionary = [notification userInfo];
     NSString *shopid = nameDictionary[@"shop_id"];
     NSString *status = nameDictionary[@"operate_status"];
-    if ([self.shopM.shopId isEqualToString:shopid]) {
-        if ([self.shopM.shopId isEqualToString:@"2370"] && (self.shopM.operate_status.intValue == 1 || self.shopM.operate_status.intValue == 3)) {
+    if ([self.shopM.shopId isEqualToString:shopid] && [shopid isEqualToString:@"2370"]) {
+        self.shopM.operate_status = status;
+        if ((self.shopM.operate_status.intValue == 1 || self.shopM.operate_status.intValue == 3)) {
             self.redView.hidden = NO;
             self.redView.backgroundColor = self.shopM.operate_status.intValue  == 3 ?[UIColor colorWithHexString:@"#EE4B4E"] : [UIColor colorWithHexString:@"#A1A7B3"];
         }else{

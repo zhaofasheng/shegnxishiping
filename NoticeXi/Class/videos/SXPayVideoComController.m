@@ -48,13 +48,19 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     [self.tableView registerClass:[SXVideoCommentMoreView class] forHeaderFooterViewReuseIdentifier:@"footView"];
     self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-STATUS_BAR_HEIGHT-(DR_SCREEN_WIDTH/16*9)-50-TAB_BAR_HEIGHT);
     [self createRefesh];
+    
+    [self refreshData];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
+    [self refreshData];
+}
+
+- (void)refreshData{
     self.tableView.tableFooterView = self.currentPlayModel.commentCt.intValue?nil:self.defaultL1;
-    if (!self.currentPlayModel.commentCt.intValue || self.refresh) {
+    if (!self.dataArr.count || self.refresh) {
         [self.dataArr removeAllObjects];
         [self.tableView reloadData];
         self.refresh = NO;
@@ -154,12 +160,10 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     }];
 }
 
-
 - (void)sendComClick{
-    self.inputView.plaStr = @"成为第一条评论…";
+    self.inputView.plaStr = self.currentPlayModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论…";
     [self.inputView showJustComment:nil];
 }
-
 
 - (void)createRefesh{
     

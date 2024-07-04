@@ -26,7 +26,6 @@ static NSInteger const advertScrollViewMaxSections = 100;
 -(instancetype)initWithFrame:(CGRect)frame{
     self =[super initWithFrame:frame];
     if (self) {
-        
         [self setup];
     }
     return self;

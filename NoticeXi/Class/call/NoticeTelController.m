@@ -114,7 +114,6 @@
                 url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%ld&categoryId=%@",self.isFree?@"1":@"2",self.pageNo,self.category_Id];
             }
         }
-       
     }
     
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
@@ -201,27 +200,26 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat hight = scrollView.frame.size.height;
-       CGFloat contentOffset = scrollView.contentOffset.y;
-       CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
+    CGFloat contentOffset = scrollView.contentOffset.y;
+    CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
     CGFloat offset = contentOffset - self.lastContentOffsetY;
     self.lastContentOffsetY = contentOffset;
-
-       if (offset > 0 && contentOffset > 0) {
-          DRLog(@"上拉行为");
-           self.isUpScro = YES;
-       }
-       if (offset < 0 && distanceFromBottom > hight) {
-           DRLog(@"下拉行为");
-           self.isUpScro = NO;
-       }
-       if (contentOffset == 0) {
-           DRLog(@"滑动到顶部");
-           self.isUpScro = NO;
-       }
-       if (distanceFromBottom < hight) {
-             DRLog(@"滑动到底部");
-       }
-
+    
+    if (offset > 0 && contentOffset > 0) {
+        DRLog(@"上拉行为");
+        self.isUpScro = YES;
+    }
+    if (offset < 0 && distanceFromBottom > hight) {
+        DRLog(@"下拉行为");
+        self.isUpScro = NO;
+    }
+    if (contentOffset == 0) {
+        DRLog(@"滑动到顶部");
+        self.isUpScro = NO;
+    }
+    if (distanceFromBottom < hight) {
+        DRLog(@"滑动到底部");
+    }
 }
 
 
