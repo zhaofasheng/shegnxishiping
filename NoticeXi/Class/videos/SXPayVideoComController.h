@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *topVideoId;//置顶评论的视频id
 @property (nonatomic, strong) SXUserModel *videoUser;//视频作者的信息
 @property (nonatomic,copy) void(^deleteClickBlock)(SXVideoCommentModel *commentM);
+- (void)refreshData;
 - (void)sendComClick;
 @end
 

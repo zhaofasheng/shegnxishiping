@@ -560,6 +560,7 @@
         self.markView.hidden = NO;
         self.comButton.font = XGSIXBoldFontSize;
         self.line.frame = CGRectMake(self.comButton.frame.origin.x, 30, self.comButton.frame.size.width, 4);
+        [self.comVC refreshData];
     }
 
     [self.view bringSubviewToFront:self.markView];
