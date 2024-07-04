@@ -124,7 +124,7 @@
     moreView.friendShareUrl = self.paySearModel.friendShareUrl;
     moreView.appletId = self.paySearModel.appletId;
     moreView.appletPage = self.paySearModel.appletPage;
-    
+    moreView.share_img_url = self.paySearModel.share_img_url;
     moreView.name = [NSString stringWithFormat:@"共%@课时",self.paySearModel.episodes];
     moreView.imgUrl = self.paySearModel.carousel_images.count?self.paySearModel.carousel_images[0]: self.paySearModel.cover_url;
     moreView.title = self.paySearModel.series_name;

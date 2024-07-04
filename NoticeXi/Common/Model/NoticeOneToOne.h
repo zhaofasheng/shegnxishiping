@@ -20,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *data;
 @property (nonatomic, strong) NSString *orderType;
 @property (nonatomic, strong) NoticeOTOModel *chatM;
+
+@property (nonatomic, strong) NSString *shop_id;
+@property (nonatomic, strong) NSString *operate_status;
 @end
 
 NS_ASSUME_NONNULL_END

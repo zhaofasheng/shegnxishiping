@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIButton *likeBtn;
 @property (nonatomic, strong) UILabel *zanNumL;
 @property (nonatomic, strong) UILabel *comNumL;
+@property (nonatomic, strong) UILabel *updateL;
 @end
 
 @implementation SXPayForVideosController
@@ -88,12 +89,22 @@
     self.zanNumL.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
     [headerView addSubview:self.zanNumL];
     
+    self.updateL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.hasBuyBtn.frame)-46-4, self.comBtn.frame.origin.y-4, 46, 16)];
+    self.updateL.layer.cornerRadius = 8;
+    self.updateL.layer.masksToBounds = YES;
+    self.updateL.text = @"有更新";
+    self.updateL.hidden = YES;
+    self.updateL.textColor = [UIColor whiteColor];
+    self.updateL.font = ELEVENTEXTFONTSIZE;
+    self.updateL.textAlignment = NSTextAlignmentCenter;
+    self.updateL.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
+    [headerView addSubview:self.updateL];
+    
     self.tableView.rowHeight = 10+(DR_SCREEN_WIDTH-20)/355*232;
     
     [self.tableView registerClass:[SXPayForVideoCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.tableFooterView = self.footView;
     
-
     [self createRefesh];
     
     [self request];
@@ -155,7 +166,16 @@
             }else{
                 self.zanNumL.hidden = YES;
             }
+            
+            self.updateL.hidden = stay.series_updateM.num.boolValue?NO:YES;
            
+            NSString *allRedNum1 = [NSString stringWithFormat:@"%d",stay.series_updateM.num.intValue + stay.series_zan_numM.num.intValue+stay.series_commentM.num.intValue];
+            if (allRedNum1.intValue) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOWBUDGENOTICE" object:nil];
+            }else{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"HIDEBUDGENOTICE" object:nil];
+            }
+            //
         }
     } fail:^(NSError *error) {
     }];

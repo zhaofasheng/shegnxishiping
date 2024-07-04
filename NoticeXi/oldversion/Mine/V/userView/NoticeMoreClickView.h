@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *imgArr;
 @property (nonatomic, strong) NSArray *titleArr;
 @property (nonatomic, strong) UIView *line;
+@property (nonatomic, strong) NSString *share_img_url;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) NSString *title;

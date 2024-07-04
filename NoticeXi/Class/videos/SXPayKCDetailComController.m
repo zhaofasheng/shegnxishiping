@@ -40,11 +40,9 @@
     [self.tableView registerClass:[SXKCcomCell class] forCellReuseIdentifier:@"cell"];
     if (!self.dataArr.count) {
         [self request];
-    }else{
-        [self.tableView reloadData];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getlikeNotice:) name:@"COMMENTLIKENotification" object:nil];
-
+    [self refreshStatus];
 }
 
 - (void)getlikeNotice:(NSNotification*)notification{

@@ -9,7 +9,11 @@
 #import "SXShopLyListController.h"
 #import "SXShopsliuyanCell.h"
 #import "SXShoperChatToUseController.h"
-@interface SXShopLyListController ()
+#import "NoticeAction.h"
+
+@interface SXShopLyListController ()<NoticeReceveMessageSendMessageDelegate>
+
+@property (nonatomic, strong) NoticeOrderListModel *liuyanModel;
 
 @end
 
@@ -29,8 +33,40 @@
     self.pageNo = 1;
     self.isDown = YES;
     [self request];
+    
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdel.socketManager.shopOrderlistDelegate = self;
 }
 
+- (void)didReceiveShopLiuyan:(NSDictionary *)message{
+    
+    NoticeAction *ifDelegate = [NoticeAction mj_objectWithKeyValues:message];
+    NoticeOrderListModel *shopM = [NoticeOrderListModel mj_objectWithKeyValues:message[@"data"]];
+    
+    if ([ifDelegate.action isEqualToString:@"delete"]) {
+        return;
+    }
+    
+    BOOL already = NO;
+    for (NoticeOrderListModel *orderModel in self.dataArr) {
+        if ([orderModel.orderId isEqualToString:shopM.orderId]) {
+            [self.dataArr removeObject:orderModel];
+            [self.dataArr insertObject:shopM atIndex:0];
+            [self.tableView reloadData];
+            already = YES;
+            break;
+        }
+    }
+    if (!already) {
+        [self.dataArr insertObject:shopM atIndex:0];
+    }
+}
+
+- (void)refreshChatList{
+    self.isDown = YES;
+    self.pageNo = 1;
+    [self request];
+}
 
 - (void)createRefesh{
     
@@ -58,9 +94,16 @@
     SXShoperChatToUseController *ctl = [[SXShoperChatToUseController alloc] init];
     ctl.orderModel = self.dataArr[indexPath.row];
     ctl.isbuyer = YES;
+    self.liuyanModel = self.dataArr[indexPath.row];
     [self.navigationController pushViewController:ctl animated:YES];
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if (self.liuyanModel) {
+        [self refreshChatList];
+    }
+}
 
 - (void)request{
     

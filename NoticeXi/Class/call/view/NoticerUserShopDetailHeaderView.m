@@ -364,7 +364,7 @@
         
         [_workIngView addSubview:label];
         
-        [self.backcontentView addSubview:_workIngView];
+        //[self.backcontentView addSubview:_workIngView];
     }
     return _workIngView;
 }

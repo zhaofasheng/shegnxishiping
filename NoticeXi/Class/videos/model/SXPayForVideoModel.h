@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) SXSearisVideoListModel *updateM;
 @property (nonatomic, strong) NSString *commentCt;
 @property (nonatomic, strong) NSString *name;
-
+@property (nonatomic, strong) NSString *share_img_url;
 @property (nonatomic, strong) NSString *qqShareUrl;//qq分享链接
 @property (nonatomic, strong) NSString *wechatShareUrl;//微信分享链接
 @property (nonatomic, strong) NSString *friendShareUrl;//朋友圈分享链接

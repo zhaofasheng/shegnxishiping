@@ -391,31 +391,61 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 
     NSURLComponents *components = [[NSURLComponents alloc] initWithString:userActivity.webpageURL.absoluteString];
     DRLog(@"%@===%@",userActivity.webpageURL,userActivity.referrerURL);
+    
+    if (components.queryItems.count) {
+        NSURLQueryItem *item1 = components.queryItems[0];
+        if ([item1.name isEqualToString:@"seriesId"]) {
+            [self pushToKc:item1];
+        }
+    }
+    
     if (components.queryItems.count >= 2) {
         NSURLQueryItem *item1 = components.queryItems[0];
         NSURLQueryItem *item2 = components.queryItems[1];
-        
-        if ([item1.name isEqualToString:@"shopid"]) {
-            if ([NoticeTools getuserId]) {
-                if ([item2.value isEqualToString:[NoticeTools getuserId]]) {//自己的店铺
-                    NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
-                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-                }else{
-                    NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
-                    NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
-                    model.shopId = item1.value;
-                    ctl.shopModel = model;
-                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-                }
-            }else{
-                self.shopid = item1.value;
-                self.userid = item2.value;
-                NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
-                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-            }
-        }
+        [self pushToShop:item1 item2:item2];
     }
     return YES;
+}
+
+- (void)pushToShop:(NSURLQueryItem *)item1 item2:(NSURLQueryItem *)item2{
+    if ([item1.name isEqualToString:@"shopid"]) {
+        if ([NoticeTools getuserId]) {
+            if ([item2.value isEqualToString:[NoticeTools getuserId]]) {//自己的店铺
+                NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
+                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+            }else{
+                NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+                NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
+                model.shopId = item1.value;
+                ctl.shopModel = model;
+                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+            }
+        }else{
+            self.shopid = item1.value;
+            self.userid = item2.value;
+            NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+            [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+        }
+    }
+}
+
+- (void)pushToKc:(NSURLQueryItem *)item1{
+    //push_series_id（课程ID）
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",item1.value] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return;
+            }
+            SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
+            if (!searismodel) {
+                return;
+            }
+            SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
+            ctl.paySearModel = searismodel;
+            [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+        }
+    } fail:^(NSError *error) {
+    }];
 }
 
 // 应用处于后台，所有下载任务完成调用
@@ -432,48 +462,17 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
     if (components.queryItems.count) {
         NSURLQueryItem *item1 = components.queryItems[0];
-        if ([item1.name isEqualToString:@"series_id"]) {
-            //push_series_id（课程ID）
-            [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",item1.value] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-                if (success) {
-                    if ([dict[@"data"] isEqual:[NSNull null]]) {
-                        return;
-                    }
-                    SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
-                    if (!searismodel) {
-                        return;
-                    }
-                    SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
-                    ctl.paySearModel = searismodel;
-                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-                }
-            } fail:^(NSError *error) {
-            }];
+        if ([item1.name isEqualToString:@"seriesId"]) {
+            [self pushToKc:item1];
+     
         }
     }
     if (components.queryItems.count == 2) {
+        
         NSURLQueryItem *item1 = components.queryItems[0];
         NSURLQueryItem *item2 = components.queryItems[1];
-        
-        if ([item1.name isEqualToString:@"shopid"]) {
-            if ([NoticeTools getuserId]) {
-                if ([item2.value isEqualToString:[NoticeTools getuserId]]) {//自己的店铺
-                    NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
-                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-                }else{
-                    NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
-                    NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
-                    model.shopId = item1.value;
-                    ctl.shopModel = model;
-                    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-                }
-            }else{
-                self.shopid = item1.value;
-                self.userid = item2.value;
-                NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
-                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-            }
-        }
+        [self pushToShop:item1 item2:item2];
+
     }
     if ([url.host isEqualToString:@"apmqpdispatch"]) {
         [AFServiceCenter handleResponseURL:url withCompletion:^(AFAuthServiceResponse *response) {

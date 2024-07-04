@@ -12,7 +12,8 @@
 #import "NoticeLoginViewController.h"
 #import "SXShopListBaseModel.h"
 @interface NoticeTelController ()
-
+@property (nonatomic, assign) BOOL canLoad;
+@property (nonatomic, assign) BOOL isLoading;
 @property (nonatomic, assign) NSInteger noLoginDevice;
 @property (nonatomic, strong) UILabel *defaultL;
 @end
@@ -84,7 +85,13 @@
 
 
 - (void)request{
-
+    if (self.isLoading) {
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
+        return;
+    }
+    self.isLoading = YES;
+    
     NSString *url = @"";
 
     if (![NoticeTools getuserId]) {//没登录的时候
@@ -100,6 +107,7 @@
     }
     
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        self.isLoading = NO;
         if (success) {
             
             if (self.isDown) {
@@ -128,12 +136,12 @@
         }else{
             [self.collectionView addSubview:self.defaultL];
         }
-        
+        self.canLoad = YES;
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
         
     } fail:^(NSError * _Nullable error) {
-        
+        self.isLoading = NO;
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
         
@@ -161,5 +169,45 @@
   //  self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     
 }
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    // 停止类型1、停止类型2
+    BOOL scrollToScrollStop = !scrollView.tracking && !scrollView.dragging &&    !scrollView.decelerating;
+    if (scrollToScrollStop) {
+        [self scrollViewDidEndScroll];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        // 停止类型3
+        BOOL dragToDragStop = scrollView.tracking && !scrollView.dragging && !scrollView.decelerating;
+        if (dragToDragStop) {
+            [self scrollViewDidEndScroll];
+        }
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self scrollViewDidEndScroll];
+}
+
+
+#pragma mark - scrollView 停止滚动监测
+- (void)scrollViewDidEndScroll {
+    NSArray *indexPaths = [self.collectionView indexPathsForVisibleItems];
+    NSIndexPath *indexPath = indexPaths.lastObject;
+    DRLog(@"%ld===%ld",self.dataArr.count,indexPath.row);
+    if (self.dataArr.count - indexPath.row < 8) {
+        DRLog(@"达到预加载条件");
+        if (self.canLoad) {
+            self.canLoad = NO;
+            self.pageNo++;
+            self.isDown = NO;
+            [self request];
+        }
+    }
+}
+
 
 @end

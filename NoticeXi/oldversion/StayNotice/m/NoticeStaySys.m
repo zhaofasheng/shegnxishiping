@@ -41,6 +41,11 @@
     self.series_zan_numM = [NoticeStayMesssage mj_objectWithKeyValues:series_zan_num];
 }
 
+- (void)setSeries_update:(NSDictionary *)series_update{
+    _series_update = series_update;
+    self.series_updateM = [NoticeStayMesssage mj_objectWithKeyValues:series_update];
+}
+
 - (void)setChar_pri:(NSDictionary *)char_pri{
     _char_pri = char_pri;
     self.char_priM = [NoticeStayMesssage mj_objectWithKeyValues:char_pri];

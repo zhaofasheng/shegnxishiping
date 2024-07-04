@@ -178,6 +178,7 @@
                 self.tableView.tableFooterView = nil;
             }else{
                 self.tableView.tableFooterView = self.defaultL;
+                self.marksL.text = @"购买课程后解锁相关消息";
             }
             [self.tableView reloadData];
         }

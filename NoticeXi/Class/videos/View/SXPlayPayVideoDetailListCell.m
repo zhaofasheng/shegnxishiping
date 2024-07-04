@@ -16,7 +16,7 @@
         self.backgroundColor = [UIColor whiteColor];
         
         self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15, 0, DR_SCREEN_WIDTH-30, 65)];
-        self.backView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+        self.backView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];//#F7F8FC
         [self.contentView addSubview:self.backView];
         
         self.titleL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 12, self.backView.frame.size.width-15-50, 20)];
@@ -59,6 +59,7 @@
         self.statusL.frame = CGRectMake(95, 36, 100, 17);
         _comimageV.hidden = YES;
         _comL.hidden = YES;
+        self.backView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
     }
     else if (videoModel.schedule.intValue || videoModel.is_finished.boolValue) {
         self.titleL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
@@ -71,6 +72,7 @@
         self.statusL.frame = CGRectMake(CGRectGetMaxX(self.comL.frame)+32, 36, 100, 17);
         self.comimageV.hidden = NO;
         self.comL.hidden = NO;
+        self.backView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     }else{
    
         self.titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
@@ -83,12 +85,17 @@
         self.statusL.frame = CGRectMake(CGRectGetMaxX(self.comL.frame)+32, 36, 100, 17);
         self.comimageV.hidden = NO;
         self.comL.hidden = NO;
+        self.backView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     }
+    
+    self.fgView.backgroundColor = self.backView.backgroundColor;
+    self.fgView1.backgroundColor = self.backView.backgroundColor;
     
     if ([videoModel.videoId isEqualToString:self.currentVideo.videoId]) {
         self.statusL.text = @"观看中";
     }
     else if (videoModel.is_finished.boolValue) {
+        
         self.statusL.text = @"已看完";
     }else if (videoModel.schedule.intValue){
         self.statusL.text = [NSString stringWithFormat:@"已观看%.f%%",((CGFloat)(videoModel.schedule.floatValue/videoModel.video_len.floatValue))*100];

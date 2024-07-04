@@ -36,12 +36,23 @@
     //退出登录监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSelectForOutLogin) name:@"GPTPFIRSTNOTICE" object:nil];
     [self redCirRequest];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redCirRequest) name:@"NOTICENOREADNUMMESSAGE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redCirRequest) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     //
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redCirRequest) name:@"outLoginClearDataNOTICATION" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTwoBdge) name:@"SHOWBUDGENOTICE" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideTwoBdge) name:@"HIDEBUDGENOTICE" object:nil];
+
 }
 
+- (void)showTwoBdge{
+    [self.tabBar showBadgeOnItemIndex:1];
+}
+
+- (void)hideTwoBdge{
+    [self.tabBar hideBadgeOnItemIndex:1];
+}
 
 - (void)changeSelectForOutLogin{
  
@@ -146,6 +157,7 @@
 - (void)redCirRequest{
     if (![NoticeTools getuserId]) {
         [self.tabBar hideBadgeOnItemIndex:4];
+        [self.tabBar hideBadgeOnItemIndex:1];
         return;
     }
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict1, BOOL success1) {
@@ -160,6 +172,13 @@
                 [self.tabBar showBadgeOnItemIndex:4];
             }else{
                 [self.tabBar hideBadgeOnItemIndex:4];
+            }
+            
+            NSString *allRedNum1 = [NSString stringWithFormat:@"%d",stay1.series_updateM.num.intValue + stay1.series_zan_numM.num.intValue+stay1.series_commentM.num.intValue];
+            if (allRedNum1.intValue) {
+                [self.tabBar showBadgeOnItemIndex:1];
+            }else{
+                [self.tabBar hideBadgeOnItemIndex:1];
             }
         }
     } fail:^(NSError *error) {

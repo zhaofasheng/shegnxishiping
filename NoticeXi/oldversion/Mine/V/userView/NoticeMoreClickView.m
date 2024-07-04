@@ -12,6 +12,9 @@
 #import "BaseNavigationController.h"
 #import "NoticeTabbarController.h"
 #import <AVKit/AVKit.h>
+#import "WXApi.h"
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
 @implementation NoticeMoreClickView
 
 
@@ -131,7 +134,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     [self removeFromSuperview];
+    
     if(tableView == self.funTableView || self.isVideo){
         if(self.clickIndexBlock){
             self.clickIndexBlock(indexPath.row);
@@ -141,22 +146,44 @@
     
     if (self.isShareSerise) {
         if(indexPath.row == 0){
-            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title name:self.name imageUrl:self.imgUrl];
+
+            /**
+             v4.1.2 为微信小程序分享增加
+              title 标题
+              description 详细说明
+              webpageUrl 网址（6.5.6以下版本微信会自动转化为分享链接 必填）
+              path 跳转到页面路径
+              thumbImage 缩略图 , 旧版微信客户端（6.5.8及以下版本）小程序类型消息卡片使用小图卡片样式 要求图片数据小于32k
+              hdThumbImage 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
+              userName 小程序的userName （必填）
+              withShareTicket 是否使用带 shareTicket 的转发
+              type 分享小程序的版本（0-正式，1-开发，2-体验）
+              platformSubType 分享自平台 微信小程序暂只支持 SSDKPlatformSubTypeWechatSession（微信好友分享)
+             */
+            NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+            [shareParams SSDKSetupWeChatMiniProgramShareParamsByTitle:self.title description:self.name webpageUrl:[NSURL URLWithString:@"www.baidu.com"] path:self.appletPage thumbImage:nil hdThumbImage:self.share_img_url userName:self.appletId withShareTicket:YES miniProgramType:0 forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+
+            [ShareSDK share:SSDKPlatformSubTypeWechatSession parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+                if (state == SSDKResponseStateSuccess) {
+                  //  [nav.topViewController showToastWithText:@"分享成功"];
+                }
+            }];
+            
         }else if(indexPath.row == 1){
-            [NoticeShareView shareWithurl:self.friendShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title imageUrl:self.imgUrl];
+            [NoticeShareView shareWithurl:self.friendShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){
-            [NoticeShareView shareWithurl:self.qqShareUrl type:SSDKPlatformSubTypeQQFriend title:self.title name:self.name imageUrl:self.imgUrl];
+            [NoticeShareView shareWithurl:self.qqShareUrl type:SSDKPlatformSubTypeQQFriend title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }
         return;
     }
     
     if (self.isShare) {
         if(indexPath.row == 0){
-            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title name:self.name imageUrl:self.imgUrl];
+            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }else if(indexPath.row == 1){
-            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.name name:self.title imageUrl:self.imgUrl];
+            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){
-            [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeQQFriend title:self.name name:self.title imageUrl:self.imgUrl];
+            [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeQQFriend title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }
         return;
     }

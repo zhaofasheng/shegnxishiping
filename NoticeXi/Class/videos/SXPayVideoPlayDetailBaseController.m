@@ -151,6 +151,8 @@
         [self categoryCurentIndex:1];
         [self.categoryView reloadData];
     }
+    
+    [self refreshTitle];
 }
 
 //发送评论

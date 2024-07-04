@@ -18,6 +18,7 @@
 #import "NoticeManagerJuBaoModel.h"
 #import <MJExtension/MJExtension.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "GZLabel.h"
 #import "NoticeMovie.h"
 #import "NoticeManagerController.h"
 #import "NoticeOtherUserInfoViewController.h"

@@ -90,8 +90,24 @@
             longPressDeleT.minimumPressDuration = 0.5;
             [self.contentView addGestureRecognizer:longPressDeleT];
         }
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getlikeNotice:) name:@"shopOperateStatusNotify" object:nil];
+
     }
     return self;
+}
+
+- (void)getlikeNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *shopid = nameDictionary[@"shop_id"];
+    NSString *status = nameDictionary[@"operate_status"];
+    if ([self.shopM.shopId isEqualToString:shopid]) {
+        if ([self.shopM.shopId isEqualToString:@"2370"] && (self.shopM.operate_status.intValue == 1 || self.shopM.operate_status.intValue == 3)) {
+            self.redView.hidden = NO;
+            self.redView.backgroundColor = self.shopM.operate_status.intValue  == 3 ?[UIColor colorWithHexString:@"#EE4B4E"] : [UIColor colorWithHexString:@"#A1A7B3"];
+        }else{
+            self.redView.hidden = YES;
+        }
+    }
 }
 
 - (void)deleTapT:(UILongPressGestureRecognizer *)tap{

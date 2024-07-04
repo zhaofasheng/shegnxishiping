@@ -83,6 +83,13 @@
         [NoticeComTools beCheckWithReason:model.msg];
         return;
     }
+    
+    if ([model.flag isEqualToString:@"shopOperateStatusNotify"]) {//店铺实时状态
+        NoticeOneToOne *shopStatus = [NoticeOneToOne mj_objectWithKeyValues:model.data];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"shopOperateStatusNotify" object:self userInfo:@{@"shop_id":shopStatus.shop_id,@"operate_status":shopStatus.operate_status}];
+        return;
+    }
+    
     if ([model.flag isEqualToString:@"shopOrderRoom"] && model.orderType.intValue != 5) {//语音通话不等于5的时候代表需要结束订单
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NEEDOVERVOICECHAT" object:nil];
         return;
@@ -94,6 +101,15 @@
         }
         return;
     }
+    
+    if ([model.flag isEqualToString:@"orderComments"]) {
+
+        if (self.shopOrderlistDelegate && [self.shopOrderlistDelegate respondsToSelector:@selector(didReceiveShopLiuyan:)]) {
+            [self.shopOrderlistDelegate didReceiveShopLiuyan:dic];
+        }
+        return;
+    }
+
     
     if ([model.flag isEqualToString:@"shopOrder"]) {//店铺相关
         NoticeByOfOrderModel *orderM = [NoticeByOfOrderModel mj_objectWithKeyValues:model.data];
