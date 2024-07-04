@@ -13,9 +13,11 @@
 #import "SXShopListBaseModel.h"
 @interface NoticeTelController ()
 @property (nonatomic, assign) BOOL canLoad;
+@property (nonatomic, assign) BOOL isUpScro;
 @property (nonatomic, assign) BOOL isLoading;
 @property (nonatomic, assign) NSInteger noLoginDevice;
 @property (nonatomic, strong) UILabel *defaultL;
+@property (nonatomic, assign) CGFloat lastContentOffsetY;
 @end
 
 @implementation NoticeTelController
@@ -41,6 +43,7 @@
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         weakSelf.isDown = YES;
         weakSelf.pageNo = 1;
+        self.isLoading = NO;
         [weakSelf request];
     }];
     
@@ -100,14 +103,22 @@
         }
         url = [NSString stringWithFormat:@"shop/list?isExperience=%@&userDevice=%ld&pageNo=%ld",self.isFree?@"1":@"2",self.noLoginDevice,self.pageNo];
     }else{
-        url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%ld",self.isFree?@"1":@"2",self.pageNo];
-        if (!self.isFree) {
-            url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%ld&categoryId=%@",self.isFree?@"1":@"2",self.pageNo,self.category_Id];
+        if (self.isDown) {
+            url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%d",self.isFree?@"1":@"2",1];
+            if (!self.isFree) {
+                url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%d&categoryId=%@",self.isFree?@"1":@"2",1,self.category_Id];
+            }
+        }else{
+            url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%ld",self.isFree?@"1":@"2",self.pageNo];
+            if (!self.isFree) {
+                url = [NSString stringWithFormat:@"shop/list?isExperience=%@&pageNo=%ld&categoryId=%@",self.isFree?@"1":@"2",self.pageNo,self.category_Id];
+            }
         }
+       
     }
     
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-        self.isLoading = NO;
+        
         if (success) {
             
             if (self.isDown) {
@@ -139,7 +150,7 @@
         self.canLoad = YES;
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
-        
+        self.isLoading = NO;
     } fail:^(NSError * _Nullable error) {
         self.isLoading = NO;
         [self.collectionView.mj_header endRefreshing];
@@ -189,7 +200,28 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self scrollViewDidEndScroll];
+    CGFloat hight = scrollView.frame.size.height;
+       CGFloat contentOffset = scrollView.contentOffset.y;
+       CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
+    CGFloat offset = contentOffset - self.lastContentOffsetY;
+    self.lastContentOffsetY = contentOffset;
+
+       if (offset > 0 && contentOffset > 0) {
+          DRLog(@"上拉行为");
+           self.isUpScro = YES;
+       }
+       if (offset < 0 && distanceFromBottom > hight) {
+           DRLog(@"下拉行为");
+           self.isUpScro = NO;
+       }
+       if (contentOffset == 0) {
+           DRLog(@"滑动到顶部");
+           self.isUpScro = NO;
+       }
+       if (distanceFromBottom < hight) {
+             DRLog(@"滑动到底部");
+       }
+
 }
 
 
@@ -198,6 +230,9 @@
     NSArray *indexPaths = [self.collectionView indexPathsForVisibleItems];
     NSIndexPath *indexPath = indexPaths.lastObject;
     DRLog(@"%ld===%ld",self.dataArr.count,indexPath.row);
+    if (!self.dataArr.count || (indexPath.row < 3) || !self.isUpScro) {
+        return;
+    }
     if (self.dataArr.count - indexPath.row < 8) {
         DRLog(@"达到预加载条件");
         if (self.canLoad) {
