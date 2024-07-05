@@ -103,19 +103,19 @@ class NoticeManagerMBSController: UIViewController ,UITableViewDelegate,UITableV
         DRNetWorking.shareInstance()?.requestNoNeedLogin(withPath: String(format: "admin/%@/point/entryPoint", NoticeSaveModel.getUserInfo().user_id), accept: nil, isPost: false, parmaer: nil, page: 0, success: { [weak self] (dict, success) in
             if success {
                 let nsDict = dict! as NSDictionary
-     
+                
                 let model = NoticeManagerCiTiaoM.mj_object(withKeyValues: nsDict["data"])
                 self?.readId = model?.pointValue
                 self?.hasRead = (model?.hasRead)!
-       
+                
                 if (model?.hasRead)! {
                     self?.lastId = self?.readId
                     self?.isDwon = true
                     self?.request()
                 }
             }
-
-            }, fail: { (error) in
+            
+        }, fail: { (error) in
         })
     }
 

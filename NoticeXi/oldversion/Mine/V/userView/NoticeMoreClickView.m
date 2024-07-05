@@ -177,6 +177,17 @@
         return;
     }
     
+    if (self.isShareFreeVideo) {
+        if(indexPath.row == 0){
+            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
+        }else if(indexPath.row == 1){
+            [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
+        }else if(indexPath.row == 2){
+            [NoticeShareView shareWithurl:self.qqShareUrl type:SSDKPlatformSubTypeQQFriend title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
+        }
+        return;
+    }
+    
     if (self.isShare) {
         if(indexPath.row == 0){
             [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];

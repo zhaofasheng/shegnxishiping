@@ -56,6 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat textHeight;
 @property (nonatomic, strong) NSString *showText;
 
+@property (nonatomic, strong) NSString *qqShareUrl;
+@property (nonatomic, strong) NSString *wechatShareUrl;
 @end
 
 NS_ASSUME_NONNULL_END

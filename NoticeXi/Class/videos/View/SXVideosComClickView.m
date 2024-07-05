@@ -56,10 +56,32 @@
 }
 
 - (void)shareClick{
+    if (self.videoModel.qqShareUrl && self.videoModel.qqShareUrl.length > 6) {
+        [self canShare];
+    }else{
+        [[NoticeTools getTopViewController] showHUD];
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"getShare/%@",self.videoModel.vid] Accept:@"application/vnd.shengxi.v5.8.4+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if (success) {
+                SXVideosModel *model = [SXVideosModel mj_objectWithKeyValues:dict[@"data"]];
+                if (model.qqShareUrl) {
+                    self.videoModel.qqShareUrl = model.qqShareUrl;
+                    self.videoModel.wechatShareUrl = model.wechatShareUrl;
+                    [self canShare];
+                }
+            }
+            [[NoticeTools getTopViewController] hideHUD];
+        } fail:^(NSError * _Nullable error) {
+            [[NoticeTools getTopViewController] hideHUD];
+        }];
+    }
+}
+
+- (void)canShare{
     NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    moreView.isShareFreeVideo = YES;
     moreView.isShare = YES;
-    moreView.shareUrl = @"www.baidu.com";
-    moreView.wechatShareUrl = @"www.baidu.com";;
+    moreView.qqShareUrl = self.videoModel.qqShareUrl;
+    moreView.wechatShareUrl = self.videoModel.wechatShareUrl;
     moreView.name =self.videoModel.introduce;
     moreView.imgUrl = self.videoModel.video_cover_url;
     moreView.title = self.videoModel.title;

@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isShareSerise;
 @property (nonatomic, assign) BOOL isVideo;
 @property (nonatomic, assign) BOOL isPayVideo;
+@property (nonatomic, assign) BOOL isShareFreeVideo;
 @property (nonatomic, assign) BOOL isShareBoKeAndMore;
 @property (nonatomic, strong) NSString *wechatShareUrl;
 @property (nonatomic, strong) NSArray *imgArr;

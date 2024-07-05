@@ -24,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *created_at;
 @property (nonatomic, assign) BOOL hasRead;
 @property (nonatomic, strong) NSString *pointValue;
+
+@property (nonatomic, strong) NSString *recharge_tip;
+@property (nonatomic, strong) NSString *site_url;
 @end
 
 NS_ASSUME_NONNULL_END

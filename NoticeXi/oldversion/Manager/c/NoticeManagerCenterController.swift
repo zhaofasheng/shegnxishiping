@@ -172,7 +172,7 @@ class NoticeManagerCenterController: UIViewController,UITableViewDelegate,UITabl
                 }
             }
             
-            }, fail: nil)
+        }, fail: nil)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 

@@ -14,6 +14,7 @@
 #import "YYPersonItem.h"
 #import "SXVideoComInputView.h"
 #import "SXStudyBaseController.h"
+
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 
 @interface SXPayVideoComController ()<NoticeVideoComentInputDelegate>
@@ -24,6 +25,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 @property (nonatomic, assign) BOOL refresh;
 @property (nonatomic, strong) NSString *currentComCount;
 @property (nonatomic, strong) SXVideoCommentModel *currentTopModel;//当前置顶的评论
+
 @end
 
 @implementation SXPayVideoComController
@@ -80,9 +82,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     }
     self.inputView.saveKey = [NSString stringWithFormat:@"videoLy%@%@",[NoticeTools getuserId],currentPlayModel.videoId];
     self.inputView.plaStr = currentPlayModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论…";
-    
 }
-
 
 //发送评论或者回复
 - (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId linkArr:(nonnull NSMutableArray *)linkArr{
@@ -156,7 +156,6 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
             }
         }
     } fail:^(NSError * _Nullable error) {
-        
     }];
 }
 
@@ -173,6 +172,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
         ctl.pageNo = 1;
         [ctl requestCom];
     }];
+    
     self.tableView.mj_header = header;
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         //上拉
@@ -225,7 +225,22 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     if (topCommentModel.comment_type.intValue > 1) {
                         topCommentModel.content = @"请更新到最新版本";
                     }
-                    [self.dataArr addObject:topCommentModel];
+                 
+                    if (self.pageNo == 1) {
+                        BOOL hasSave = NO;
+                        for (SXVideoCommentModel *oldm in self.dataArr) {//去重
+                            if ([oldm.commentId isEqualToString:topCommentModel.commentId]) {
+                                hasSave = YES;
+                                break;
+                            }
+                        }
+                        
+                        if (!hasSave) {
+                            [self.dataArr addObject:topCommentModel];
+                        }
+                    }else{
+                        [self.dataArr addObject:topCommentModel];
+                    }
                 }
             }
             

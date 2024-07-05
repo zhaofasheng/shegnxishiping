@@ -14,6 +14,7 @@
 #import "SXPlayFullListController.h"
 #import "NoticeSysMeassageTostView.h"
 #import "SXStudyBaseController.h"
+
 @interface NoticeSysViewController ()
 
 @property (nonatomic, strong) NSString *lastId;

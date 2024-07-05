@@ -121,7 +121,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     }
 }
 
-
 - (void)request{
 
     if (self.isRequesting) {
@@ -137,7 +136,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         [self.collectionView.mj_footer endRefreshing];
         
         if (success) {
-            
             if (self.isDown) {
                 self.isDown = NO;
                 [self.dataArr removeAllObjects];
