@@ -196,7 +196,7 @@
         self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.markImageView.frame)+2,self.shopNameL.frame.origin.y+4, 20, 20);
     }
     
-    if (shopModel.operate_status.intValue == 3) {
+    if (shopModel.operate_status.intValue == 3 && (![shopModel.user_id isEqualToString:[NoticeTools getuserId]])) {
         self.workIngView.hidden = NO;
         self.workIngView.frame = CGRectMake(CGRectGetMaxX(self.sexImageView.frame)+5, self.shopNameL.frame.origin.y, 57, 28);
         self.severceView.hidden = NO;

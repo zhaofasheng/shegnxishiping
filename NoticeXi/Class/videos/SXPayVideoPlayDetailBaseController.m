@@ -232,6 +232,7 @@
     configuration.sourceUrl = [NSURL URLWithString:self.currentPlayModel.video_url];     //设置播放数据源
     configuration.videoGravity = SelVideoGravityResizeAspect;   //拉伸方式
     configuration.defalutPlayTime = self.currentPlayModel.schedule.intValue;
+    self.currentPlayModel.screen = @"1";
     _player = [[SelVideoPlayer alloc]initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT, DR_SCREEN_WIDTH, (self.currentPlayModel.screen.intValue==2? DR_SCREEN_WIDTH*4/3 : DR_SCREEN_WIDTH*9/16)) configuration:configuration];
     _player.playbackControls.rate = self.rate;
     _player.playbackControls.choiceView.currentModel = self.currentPlayModel;

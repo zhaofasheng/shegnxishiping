@@ -7,8 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <AFServiceSDK/AFServiceSDK.h>
-#import "SXStudyBaseController.h"
+
 #import "WXApi.h"
 #import <Bugly/Bugly.h>
 #import "NoticeTabbarController.h"
@@ -22,12 +21,10 @@
 #import "UNNotificationsManager.h"
 #import "ZFSDateFormatUtil.h"
 #import "AFNetworking.h"
-#import "NoticeDevoiceM.h"
+
 #import "JPUSHService.h"
-#import "NoticdShopDetailForUserController.h"
-#import "NoticeMyJieYouShopController.h"
-#import "SXPlayFullListController.h"
 #import "NoticeLoginViewController.h"
+
 NSString* const yunAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
 //  在APPDelegate.m中声明一个通知事件的key
@@ -38,6 +35,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 @property (nonatomic, assign) NSInteger outTime;
 @property (nonatomic, strong) UILabel *dismissLabel;
 @property (nonatomic, strong,nullable) LGAudioPlayer *noVoicePlayer;
+
 
 @end
 
@@ -170,18 +168,11 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         [self getOrder];
         
         if (self.shopid && self.userid) {
-            if ([self.userid isEqualToString:[NoticeTools getuserId]]) {//自己的店铺
-                NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
-                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-            }else{
-                NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
-                NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
-                model.shopId = self.shopid;
-                ctl.shopModel = model;
-                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-            }
-            self.shopid = nil;
-            self.userid = nil;
+            [self pushToShop:self.shopid userId:self.userid];
+        }else if (self.pushSeriseId){
+            [self pushToKc:self.pushSeriseId];
+        }else if (self.videoId){
+            [self pushVideoDetail:self.videoId];
         }
     }
 }
@@ -213,81 +204,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     return _audioChatTools;
 }
 
-
-- (void)mustExit{
-    [self hsUpdateApp];
-}
-
-- (void)hsUpdateApp{
-    NSString *url = @"http://itunes.apple.com/cn/lookup?id=1358222995";
-    [[AFHTTPSessionManager manager] POST:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-
-        NSArray *results = responseObject[@"results"];
-
-        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"apps/2/5.3.2" Accept:@"application/vnd.shengxi.v5.3.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-            if (success) {
-                NoticeDevoiceM *deviceM = [NoticeDevoiceM mj_objectWithKeyValues:dict[@"data"]];
-                if (deviceM.forced_update.boolValue) {//需要强制更新的时候判断版本号
-                    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];// 软件的当前版本
-                    if ([deviceM.app_version compare:currentVersion] == NSOrderedDescending) {//如果当前版本号小于强制更新版本号
-                        NSDictionary *response = results.firstObject;
-                        // 给出提示是否前往 AppStore 更新
-                         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"强制更新" message:deviceM.app_content sureBtn:@"退出" cancleBtn:@"更新" right:YES];
-                        alerView.resultIndex = ^(NSInteger index) {
-                            if (index == 2) {
-                                NSString *trackViewUrl = response[@"trackViewUrl"];// AppStore 上软件的地址
-                                if (trackViewUrl) {
-                                    NSURL *appStoreURL = [NSURL URLWithString:trackViewUrl];
-                                    if ([[UIApplication sharedApplication] canOpenURL:appStoreURL]) {
-                                        [[UIApplication sharedApplication] openURL:appStoreURL options:@{} completionHandler:nil];
-                                    }
-                                }
-                            }else if (index == 1){
-                                exit(0);
-                            }
-                        };
-                        [alerView showXLAlertView];
-                    }else{
-                        [self autoToNewest:results];
-                    }
-                }else{
-                    [self autoToNewest:results];
-                }
-            }else{
-                [self autoToNewest:results];
-            }
-        } fail:^(NSError * _Nullable error) {
-            [self autoToNewest:results];
-        }];
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-    }];
-}
-
-- (void)autoToNewest:(NSArray *)results{
-    if (results && results.count > 0) {
-        NSDictionary *response = results.firstObject;
-        NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];// 软件的当前版本
-        NSString *lastestVersion = response[@"version"];// AppStore 上软件的最新版本
-        NSString *newMessage = response[@"releaseNotes"];
-        if ([lastestVersion compare:currentVersion] == NSOrderedDescending) {
-            // 给出提示是否前往 AppStore 更新
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"版本有更新" message:newMessage preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:@"前往" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                NSString *trackViewUrl = response[@"trackViewUrl"];// AppStore 上软件的地址
-                if (trackViewUrl) {
-                    NSURL *appStoreURL = [NSURL URLWithString:trackViewUrl];
-                    if ([[UIApplication sharedApplication] canOpenURL:appStoreURL]) {
-                        [[UIApplication sharedApplication] openURL:appStoreURL options:@{} completionHandler:nil];
-                    }
-                }
-            }]];
-            
-            [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-            [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
-            
-        }
-    }
-}
 
 /// app进入后台后保持运行
 - (void)beginTask {
@@ -389,133 +305,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 }
 
 
-//相关相关
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options{
-
-    NSURLComponents *components = [[NSURLComponents alloc] initWithString:url.absoluteString];
-    DRLog(@"===%@",url.absoluteString);
-    
-    if (components.queryItems.count) {
-        NSURLQueryItem *item1 = components.queryItems[0];
-        if ([item1.name isEqualToString:@"seriesId"]) {
-            [self pushToKc:item1];
-        }else if ([item1.name isEqualToString:@"videoId"]){
-            [self pushVideoDetail:item1.value];
-        }
-    }
-    if (components.queryItems.count == 2) {
-        
-        NSURLQueryItem *item1 = components.queryItems[0];
-        NSURLQueryItem *item2 = components.queryItems[1];
-        [self pushToShop:item1 item2:item2];
-
-    }
-    if ([url.host isEqualToString:@"apmqpdispatch"]) {
-        [AFServiceCenter handleResponseURL:url withCompletion:^(AFAuthServiceResponse *response) {
-            DRLog(@"授权结果%@", response.result);
-            if (AFAuthResSuccess == response.responseCode) {
-                DRLog(@"授权结果%@", response.result);
-            }
-        }];
-    }
-    // 打印查询参数
-    DRLog(@"Query parameters: %@", components.queryItems);
-    
-    //这里判断是否发起的请求为微信相关，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
-    return  [WXApi handleOpenURL:url delegate:self];
-}
-
-
-- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler{
-
-    NSURLComponents *components = [[NSURLComponents alloc] initWithString:userActivity.webpageURL.absoluteString];
-    DRLog(@"%@===%@",userActivity.webpageURL,userActivity.referrerURL);
-    
-    if (components.queryItems.count) {
-        NSURLQueryItem *item1 = components.queryItems[0];
-        if ([item1.name isEqualToString:@"seriesId"]) {
-            [self pushToKc:item1];
-        }else if ([item1.name isEqualToString:@"videoId"]){
-            [self pushVideoDetail:item1.value];
-        }
-    }
-    
-    if (components.queryItems.count >= 2) {
-        NSURLQueryItem *item1 = components.queryItems[0];
-        NSURLQueryItem *item2 = components.queryItems[1];
-        [self pushToShop:item1 item2:item2];
-    }
-    return YES;
-}
-
-- (void)pushToShop:(NSURLQueryItem *)item1 item2:(NSURLQueryItem *)item2{
-    if ([item1.name isEqualToString:@"shopid"]) {
-        if ([NoticeTools getuserId]) {
-            if ([item2.value isEqualToString:[NoticeTools getuserId]]) {//自己的店铺
-                NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
-                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-            }else{
-                NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
-                NoticeMyShopModel *model = [[NoticeMyShopModel alloc] init];
-                model.shopId = item1.value;
-                ctl.shopModel = model;
-                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-            }
-        }else{
-            self.shopid = item1.value;
-            self.userid = item2.value;
-            NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
-            [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-        }
-    }
-}
-
-- (void)pushToKc:(NSURLQueryItem *)item1{
-    //push_series_id（课程ID）
-    [[NoticeTools getTopViewController] showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",item1.value] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-        if (success) {
-            if ([dict[@"data"] isEqual:[NSNull null]]) {
-                return;
-            }
-            SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
-            if (!searismodel) {
-                return;
-            }
-            SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
-            ctl.paySearModel = searismodel;
-            [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-        }
-        [[NoticeTools getTopViewController] hideHUD];
-    } fail:^(NSError *error) {
-        [[NoticeTools getTopViewController] hideHUD];
-    }];
-}
-
-- (void)pushVideoDetail:(NSString *)videoId{
-    [[NoticeTools getTopViewController] showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"video/appletDetail/%@",videoId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-        if (success) {
-            if ([dict[@"data"] isEqual:[NSNull null]]) {
-                return;
-            }
-            SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dict[@"data"]];
-            
-            if (!videoM) {
-                return;
-            }
-            videoM.textContent = [NSString stringWithFormat:@"%@\n%@",videoM.title,videoM.introduce];
-            SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
-            ctl.modelArray = [NSMutableArray arrayWithArray:@[videoM]];
-            ctl.currentPlayIndex = 0;
-            ctl.noRequest = YES;
-            [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-        }
-        [[NoticeTools getTopViewController] hideHUD];
-    } fail:^(NSError *error) {
-        [[NoticeTools getTopViewController] hideHUD];
-    }];
-}
 
 // 应用处于后台，所有下载任务完成调用
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler

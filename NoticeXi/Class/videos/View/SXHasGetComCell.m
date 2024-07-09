@@ -43,10 +43,11 @@
         self.contentL.numberOfLines = 0;
         self.contentL.userInteractionEnabled = NO;
         
-        self.content1L = [[UILabel alloc] initWithFrame:CGRectMake(56, 54, DR_SCREEN_WIDTH-56-17, 20)];
+        self.content1L = [[GZLabel alloc] initWithFrame:CGRectMake(56, 54, DR_SCREEN_WIDTH-56-17, 20)];
         self.content1L.font = FIFTHTEENTEXTFONTSIZE;
         [self.contentView addSubview:self.content1L];
-        self.content1L.textColor = [UIColor colorWithHexString:@"#25262E"];
+        self.content1L.GZLabelNormalColor = [UIColor colorWithHexString:@"#25262E"];
+        [self.content1L setHightLightLabelColor:[UIColor colorWithHexString:@"#FF2A6F"] forGZLabelStyle:GZLabelStyleTopic];
         self.content1L.userInteractionEnabled = NO;
         [self.contentView addSubview:self.content1L];
         
@@ -114,6 +115,7 @@
         self.contentL.hidden = NO;
         self.content1L.hidden = YES;
     }
+    
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:likeComM.fromUserInfo.avatar_url]];
 
     self.nickNameL.text = likeComM.fromUserInfo.nick_name;
@@ -121,6 +123,7 @@
     self.timeL.text = likeComM.created_at;
     
     self.videoNameL.text = likeComM.videoModel.title;
+    
     if (likeComM.sysStatus.intValue == 1) {
         self.replyL.hidden = NO;
         self.likeImageView.hidden = NO;

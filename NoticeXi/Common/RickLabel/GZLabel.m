@@ -63,6 +63,7 @@
 @property(nonatomic, strong)NSArray *userDefineRangesArr;
 
 @end
+
 @implementation GZLabel
 
 
@@ -226,7 +227,7 @@ static NSString *GZColor = @"gzcolor";
 
 // 准备文本
 -(void)prepareText{
-    
+
     // 1.准备字符串
     NSAttributedString *attrString = nil;
     if (self.attributedText != nil) {
@@ -263,35 +264,35 @@ static NSString *GZColor = @"gzcolor";
     // 4.设置GZTextString的内容
     [self.GZTextString setAttributedString:attrStringM];
     
-    // 5.匹配URL
-    NSArray *linkRanges = [self getLinkRanges];
-    self.linkRangesArr = linkRanges;
-    for (NSValue *value in linkRanges) {
-        NSRange range;
-        [value getValue:&range];
-        
-        [self.GZTextString addAttribute:NSForegroundColorAttributeName value:self.linkHightColor range:range];
-    }
-    
-    // 6.匹配电话号码
-    NSArray *phoneNumberRanges = [self getPhoneNumberRanges];
-    self.PhoneNumberRangesArr = phoneNumberRanges;
-    for (NSValue *value in phoneNumberRanges) {
-        NSRange range;
-        [value getValue:&range];
-        [self.GZTextString addAttribute:NSForegroundColorAttributeName value:self.PhoneNumberHightColor range:range];
-    }
-
-    
-    // 7.匹配@用户
-    NSArray *userRanges = [self getRanges:@"@[\\u4e00-\\u9fa5a-zA-Z0-9_-]*"];
-    self.userRangesArr = userRanges;
-    for (NSValue *value in userRanges) {
-        NSRange range;
-        [value getValue:&range];
-        [self.GZTextString addAttribute:NSForegroundColorAttributeName value:self.userHightColor range:range];
-    }
-    
+//    // 5.匹配URL
+//    NSArray *linkRanges = [self getLinkRanges];
+//    self.linkRangesArr = linkRanges;
+//    for (NSValue *value in linkRanges) {
+//        NSRange range;
+//        [value getValue:&range];
+//        
+//        [self.GZTextString addAttribute:NSForegroundColorAttributeName value:self.linkHightColor range:range];
+//    }
+//    
+//    // 6.匹配电话号码
+//    NSArray *phoneNumberRanges = [self getPhoneNumberRanges];
+//    self.PhoneNumberRangesArr = phoneNumberRanges;
+//    for (NSValue *value in phoneNumberRanges) {
+//        NSRange range;
+//        [value getValue:&range];
+//        [self.GZTextString addAttribute:NSForegroundColorAttributeName value:self.PhoneNumberHightColor range:range];
+//    }
+//
+//    
+//    // 7.匹配@用户
+//    NSArray *userRanges = [self getRanges:@"@[\\u4e00-\\u9fa5a-zA-Z0-9_-]*"];
+//    self.userRangesArr = userRanges;
+//    for (NSValue *value in userRanges) {
+//        NSRange range;
+//        [value getValue:&range];
+//        [self.GZTextString addAttribute:NSForegroundColorAttributeName value:self.userHightColor range:range];
+//    }
+//    
     // 8.匹配话题##
     NSArray *topicRanges = [self getRanges:@"「.*?」"];
     self.topicRangesArr = topicRanges;
@@ -301,31 +302,31 @@ static NSString *GZColor = @"gzcolor";
         [self.GZTextString addAttribute:NSForegroundColorAttributeName value:self.topicHightColor range:range];
     }
     
-    // 9.匹配协议/政策 << >>
-    NSArray *agreementRanges = [self getRanges:@"《([^》]*)》"];
-    self.agreementRangesArr = agreementRanges;
-    for (NSValue *value in agreementRanges) {
-        NSRange range;
-        [value getValue:&range];
-        [self.GZTextString addAttribute:NSForegroundColorAttributeName value:self.agreementHightColor range:range];
-    }
-    
-    // 10.匹配用户自定义的字符串
-    if (self.GZLabelMatchArr.count > 0) {
-        NSArray<NSDictionary *> *userDefineRangeDicts = [self getUserDefineStringsRange];
-        if (userDefineRangeDicts.count > 0) {
-            NSMutableArray *arrM = [NSMutableArray array];
-            for (NSDictionary *dict in userDefineRangeDicts) {
-                NSValue *value = dict[GZRange];
-                [arrM addObject:value];
-                UIColor *color = dict[GZColor];
-                NSRange range;
-                [value getValue:&range];
-                [self.GZTextString addAttribute:NSForegroundColorAttributeName value:color range:range];
-            }
-            self.userDefineRangesArr = [arrM copy];
-        }
-    }
+//    // 9.匹配协议/政策 << >>
+//    NSArray *agreementRanges = [self getRanges:@"《([^》]*)》"];
+//    self.agreementRangesArr = agreementRanges;
+//    for (NSValue *value in agreementRanges) {
+//        NSRange range;
+//        [value getValue:&range];
+//        [self.GZTextString addAttribute:NSForegroundColorAttributeName value:self.agreementHightColor range:range];
+//    }
+//    
+//    // 10.匹配用户自定义的字符串
+//    if (self.GZLabelMatchArr.count > 0) {
+//        NSArray<NSDictionary *> *userDefineRangeDicts = [self getUserDefineStringsRange];
+//        if (userDefineRangeDicts.count > 0) {
+//            NSMutableArray *arrM = [NSMutableArray array];
+//            for (NSDictionary *dict in userDefineRangeDicts) {
+//                NSValue *value = dict[GZRange];
+//                [arrM addObject:value];
+//                UIColor *color = dict[GZColor];
+//                NSRange range;
+//                [value getValue:&range];
+//                [self.GZTextString addAttribute:NSForegroundColorAttributeName value:color range:range];
+//            }
+//            self.userDefineRangesArr = [arrM copy];
+//        }
+//    }
     
     // 11.更新显示，重新绘制
     [self setNeedsDisplay];

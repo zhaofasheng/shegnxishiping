@@ -7,14 +7,12 @@
 //
 
 #import "SXVideoComInputView.h"
-
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "YYPersonItem.h"
 #import "YYTextAttachmentManager.h"
 #import "NSAttributedString+YY.h"
 
 @implementation SXVideoComInputView
-
 {
     CGFloat kebordHeight;
 }
@@ -39,7 +37,7 @@
         self.contentView.backgroundColor = [[UIColor colorWithHexString:@"#F7F8FC"] colorWithAlphaComponent:1];
         self.contentView.delegate = self;
         self.contentView.font = FIFTHTEENTEXTFONTSIZE;
-        self.contentView.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        self.contentView.textColor = [UIColor colorWithHexString:@"#14151A"];
         self.contentView.layer.cornerRadius = 34/2;
         self.contentView.layer.masksToBounds = YES;
         self.contentView.showsVerticalScrollIndicator = NO;
@@ -179,18 +177,17 @@
         return;
     }
     
-    self.hasClick = YES;
-    
     if(self.saveKey){
         [NoticeComTools removeWithKey:self.saveKey];
     }
     
     NSInteger num = self.limitNum?self.limitNum:500;
-    if (str.length > num) {
-        str = [str substringToIndex:num];
-        //self.contentView.text = [self.contentView.text substringToIndex:num];
+    if (self.contentView.text.length > num) {
+        [[NoticeTools getTopViewController] showToastWithText:[NSString stringWithFormat:@"最多允许发送%ld字哦",num]];
+        return;
     }
     
+    self.hasClick = YES;
     self.currentSelectedPersonItems = [NSMutableArray arrayWithArray:[self.contentView.attributedText getCurrentAtPersonItems]];
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(sendWithComment: commentId: linkArr:)]) {
@@ -282,12 +279,12 @@
         _plaL.text = self.plaStr;
     }
     CGRect frame = textView.frame;
-    
-    NSInteger num = self.limitNum?self.limitNum:500;
+    DRLog(@"%ld",self.contentView.text.length);
+   // NSInteger num = self.limitNum?self.limitNum:500;
 
-    if (textView.text.length > num) {
-        textView.text = [textView.text substringToIndex:num];
-    }
+//    if (textView.text.length > num) {
+//        textView.text = [textView.text substringToIndex:num];
+//    }
     float height;
     height = [self heightForTextView:textView WithText:[YYTextAttachmentManager attributedStringToString:self.contentView.attributedText]];
     if (height > 70) {

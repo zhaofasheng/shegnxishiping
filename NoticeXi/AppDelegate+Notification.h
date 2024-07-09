@@ -13,7 +13,7 @@
 - (void)configurationJPushWithLaunchOptions:(NSDictionary *)launchOptions;
 - (void)jpushSetAlias;
 - (void)deleteAlias;
-
+- (void)mustExit;
 @end
 
 

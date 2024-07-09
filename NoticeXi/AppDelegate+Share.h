@@ -11,5 +11,7 @@
 @interface AppDelegate (Share)
 
 - (void)regreiteShare;
-
+- (void)pushVideoDetail:(NSString *)videoId;
+- (void)pushToKc:(NSString *)seriseId;
+- (void)pushToShop:(NSString *)shopId userId:(NSString *)userId;
 @end

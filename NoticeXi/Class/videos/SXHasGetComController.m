@@ -51,9 +51,9 @@
     }
     CGFloat height = 168;
     if (model.replyContent) {
-        height = 148+model.replytHeight;
+        height = 148+model.replytHeight1;
     }else{
-        height = 148+model.commentHeight;
+        height = 148+model.commentHeight1;
     }
     if (height < 168) {
         height = 168;
@@ -99,7 +99,15 @@
             
             for (NSDictionary *dic in dict[@"data"]) {
                 SXVideoCommentBeModel *model = [SXVideoCommentBeModel mj_objectWithKeyValues:dic];
+                if (model.sysStatus.intValue > 1) {
+                    if (model.replyContent) {
+                        model.replyContent = @"该内容已删除";
+                    }else{
+                        model.commentContent = @"该内容已删除";
+                    }
+                }
                 [self.dataArr addObject:model];
+                
             }
          
             if (self.dataArr.count) {

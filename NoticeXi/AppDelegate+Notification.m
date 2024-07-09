@@ -26,6 +26,8 @@
 #import "NoticeSCViewController.h"
 #import "SXKcHasGetLikeController.h"
 #import "SXHasGetComController.h"
+#import "AFHTTPSessionManager.h"
+#import "NoticeDevoiceM.h"
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 
 @end
@@ -229,6 +231,83 @@
 		}
 	}
 	completionHandler();// 系统要求执行这个方法
+}
+
+
+
+- (void)mustExit{
+    [self hsUpdateApp];
+}
+
+- (void)hsUpdateApp{
+    NSString *url = @"http://itunes.apple.com/cn/lookup?id=1358222995";
+    [[AFHTTPSessionManager manager] POST:url parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+
+        NSArray *results = responseObject[@"results"];
+
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"apps/2/5.3.2" Accept:@"application/vnd.shengxi.v5.3.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if (success) {
+                NoticeDevoiceM *deviceM = [NoticeDevoiceM mj_objectWithKeyValues:dict[@"data"]];
+                if (deviceM.forced_update.boolValue) {//需要强制更新的时候判断版本号
+                    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];// 软件的当前版本
+                    if ([deviceM.app_version compare:currentVersion] == NSOrderedDescending) {//如果当前版本号小于强制更新版本号
+                        NSDictionary *response = results.firstObject;
+                        // 给出提示是否前往 AppStore 更新
+                         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"强制更新" message:deviceM.app_content sureBtn:@"退出" cancleBtn:@"更新" right:YES];
+                        alerView.resultIndex = ^(NSInteger index) {
+                            if (index == 2) {
+                                NSString *trackViewUrl = response[@"trackViewUrl"];// AppStore 上软件的地址
+                                if (trackViewUrl) {
+                                    NSURL *appStoreURL = [NSURL URLWithString:trackViewUrl];
+                                    if ([[UIApplication sharedApplication] canOpenURL:appStoreURL]) {
+                                        [[UIApplication sharedApplication] openURL:appStoreURL options:@{} completionHandler:nil];
+                                    }
+                                }
+                            }else if (index == 1){
+                                exit(0);
+                            }
+                        };
+                        [alerView showXLAlertView];
+                    }else{
+                        [self autoToNewest:results];
+                    }
+                }else{
+                    [self autoToNewest:results];
+                }
+            }else{
+                [self autoToNewest:results];
+            }
+        } fail:^(NSError * _Nullable error) {
+            [self autoToNewest:results];
+        }];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+    }];
+}
+
+- (void)autoToNewest:(NSArray *)results{
+    if (results && results.count > 0) {
+        NSDictionary *response = results.firstObject;
+        NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];// 软件的当前版本
+        NSString *lastestVersion = response[@"version"];// AppStore 上软件的最新版本
+        NSString *newMessage = response[@"releaseNotes"];
+        if ([lastestVersion compare:currentVersion] == NSOrderedDescending) {
+            // 给出提示是否前往 AppStore 更新
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"版本有更新" message:newMessage preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"前往" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSString *trackViewUrl = response[@"trackViewUrl"];// AppStore 上软件的地址
+                if (trackViewUrl) {
+                    NSURL *appStoreURL = [NSURL URLWithString:trackViewUrl];
+                    if ([[UIApplication sharedApplication] canOpenURL:appStoreURL]) {
+                        [[UIApplication sharedApplication] openURL:appStoreURL options:@{} completionHandler:nil];
+                    }
+                }
+            }]];
+            
+            [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+            [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
+            
+        }
+    }
 }
 
 @end
