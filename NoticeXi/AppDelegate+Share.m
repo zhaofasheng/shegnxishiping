@@ -39,7 +39,6 @@
     }];
 }
 
-
 //相关相关
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options{
 
@@ -53,7 +52,6 @@
                 NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
                 [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
                 self.pushSeriseId = item1.value;
-              
             }else{
                 [self pushToKc:item1.value];
             }

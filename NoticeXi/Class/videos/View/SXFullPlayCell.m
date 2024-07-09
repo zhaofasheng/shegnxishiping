@@ -39,7 +39,6 @@
 - (void)setVideoModel:(SXVideosModel *)videoModel{
     _videoModel = videoModel;
 
-
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.first_frame_url]];
     
     self.clickView.videoModel = videoModel;
@@ -191,7 +190,6 @@
             weakSelf.fatherBlock(weakSelf.playerFatherView.bounds);
         }
     }completion:^(BOOL finished) {
-        
     }];
 }
 

@@ -52,7 +52,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-
     // 启动图片延时: 1秒
     [NSThread sleepForTimeInterval:1];
     [NoticeTools changeThemeWith:@"whiteColor"];
@@ -65,7 +64,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [UIApplication sharedApplication].statusBarHidden = NO;
     
     [NoticeSaveModel setUUIDIFNO];
-    
+    [self regreiteShare];
 
     [Bugly startWithAppId:@"7342677883"];
 
@@ -92,11 +91,9 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [SDImageCache sharedImageCache].config.maxMemoryCost = 130*1000*1000;
     
     [self changeRootVC];
-    [self regreiteShare];
-    
+
     return YES;
 }
-
 
 // 一次性代码
 - (void)projectOnceCode

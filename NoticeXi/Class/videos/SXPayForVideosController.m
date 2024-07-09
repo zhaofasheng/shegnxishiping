@@ -116,6 +116,11 @@
 }
 
 - (void)funClick:(UIButton *)button{
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
     if (button.tag == 0) {
         [self hasbbuyTap];
     }else if (button.tag == 1){
@@ -280,11 +285,7 @@
 }
 
 - (void)hasbbuyTap{
-    if (![NoticeTools getuserId]) {
-        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
-        [self.navigationController pushViewController:ctl animated:YES];
-        return;
-    }
+
     SXHasBuyPayVideoController *ctl = [[SXHasBuyPayVideoController alloc] init];
     [self.navigationController pushViewController:ctl animated:YES];
 }
