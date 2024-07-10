@@ -11,11 +11,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXVideoCommentJubaoController : NoticeBaseCellController
-@property (nonatomic, strong) NSString *managerCode;
+
 @property (nonatomic, strong) NSMutableArray *jubArr;
 @property (nonatomic, strong) NSMutableArray *reoceArr;
 @property (nonatomic, strong) SXVideosModel *videoM;
-
+@property (nonatomic, strong) NSString *jubaoId;
+@property (nonatomic, strong) NSString *managerCode;
 @end
 
 NS_ASSUME_NONNULL_END

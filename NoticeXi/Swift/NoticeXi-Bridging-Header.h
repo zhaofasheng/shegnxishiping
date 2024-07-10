@@ -69,3 +69,4 @@
 #import "JXPagerView.h"
 #import "UIView+CLSetRect.h"
 #import "SXVideoCommentJubaoController.h"
+#import "SXShoperChatToUseController.h"

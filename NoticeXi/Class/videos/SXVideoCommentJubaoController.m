@@ -11,6 +11,7 @@
 #import "SXVideoCmmentFirstCell.h"
 #import "SXVideoCommentMoreView.h"
 #import "SXPlayFullListController.h"
+#import "SXPayVideoPlayDetailBaseController.h"
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 @interface SXVideoCommentJubaoController ()
 @property (nonatomic, strong) UIButton *deleteBtn;
@@ -21,7 +22,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navBarView.titleL.text = @"被举报的视频评论";
+    self.navBarView.titleL.text = self.videoM.series_id.intValue?@"被举报的课程评论": @"被举报的视频评论";
     
     [self.tableView registerClass:[MyCommentCell class] forCellReuseIdentifier:commentCellIdentifier];
     [self.tableView registerClass:[SXVideoCmmentFirstCell class] forHeaderFooterViewReuseIdentifier:@"headerView"];
@@ -62,19 +63,45 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定删除吗？" message:@"该内容下的回复内容也会被删除" sureBtn:@"取消" cancleBtn:@"删除" right:YES];
     alerView.resultIndex = ^(NSInteger index) {
         if (index == 2) {
-            [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"videoCommont/%@",commentM.commentId] Accept:@"application/vnd.shengxi.v5.8.1+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+            [parm setObject:self.managerCode forKey:@"confirmPasswd"];
+            [parm setObject:@"5" forKey:@"reportStatus"];
+            [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"admin/reports/%@",self.jubaoId] Accept:nil parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                 if (success) {
                     commentM.comment_status = @"3";
                     [weakSelf.deleteBtn setTitle:@"已删除" forState:UIControlStateNormal];
                 }
             } fail:^(NSError * _Nullable error) {
+                
             }];
+    
         }
     };
     [alerView showXLAlertView];
 }
 
 - (void)clickFun{
+    if (self.videoM.series_id.intValue) {
+        [[NoticeTools getTopViewController] showHUD];
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",self.videoM.series_id] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+            [[NoticeTools getTopViewController] hideHUD];
+            if (success) {
+                if ([dict[@"data"] isEqual:[NSNull null]]) {
+                    return;
+                }
+                SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
+                if (!searismodel) {
+                    return;
+                }
+                [self getVideosSearise:searismodel commentId:nil replyId:nil videoId:self.videoM.vid];
+            }
+            
+        } fail:^(NSError *error) {
+            [[NoticeTools getTopViewController] hideHUD];
+        }];
+        return;
+    }
+    
     SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
     ctl.modelArray = [NSMutableArray arrayWithArray:@[self.videoM]];
     ctl.currentPlayIndex = 0;
@@ -86,8 +113,65 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                                                                            view:self.navigationController.view];
     [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
     [self.navigationController pushViewController:ctl animated:NO];
-    
+}
 
+
+- (void)getVideosSearise:(SXPayForVideoModel *)searModel commentId:(NSString *)commentId replyId:(NSString *)replyId videoId:(NSString *)videoId{
+    
+    
+    NSString *url = @"";
+    
+    [self showHUD];
+    url = [NSString stringWithFormat:@"series/%@/video",searModel.seriesId];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+      
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return ;
+            }
+     
+            NSMutableArray *videoList = [[NSMutableArray alloc] init];
+            for (NSDictionary *dic in dict[@"data"]) {
+                SXSearisVideoListModel *model = [SXSearisVideoListModel mj_objectWithKeyValues:dic];
+                if (model.screen.intValue == 2) {
+                    model.screen = @"1";
+                }
+                [videoList addObject:model];
+            }
+         
+            if (videoList.count) {
+                for (SXSearisVideoListModel *video in videoList) {
+                    if ([video.videoId isEqualToString:videoId]) {
+                        SXPayVideoPlayDetailBaseController *ctl = [[SXPayVideoPlayDetailBaseController alloc] init];
+                        if (commentId.intValue > 0) {
+                            ctl.commentId = commentId;
+                        }
+                        if (replyId.intValue > 0) {
+                            ctl.replyId = replyId;
+                        }
+                        ctl.paySearModel = searModel;
+                        ctl.searisArr = videoList;
+                        ctl.currentPlayModel = video;
+
+                        CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
+                                                                                        withSubType:kCATransitionFromLeft
+                                                                                           duration:0.3f
+                                                                                     timingFunction:kCAMediaTimingFunctionLinear
+                                                                                               view:self.navigationController.view];
+                        [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
+                        [self.navigationController pushViewController:ctl animated:NO];
+                        break;
+                    }
+                }
+                
+          
+            }
+        }
+        [self hideHUD];
+    } fail:^(NSError *error) {
+        [self hideHUD];
+    }];
+  
 }
 
 

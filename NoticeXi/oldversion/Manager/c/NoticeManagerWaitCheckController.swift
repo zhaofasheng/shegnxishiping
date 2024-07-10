@@ -319,6 +319,22 @@ class NoticeManagerWaitCheckController: UIViewController,UITableViewDelegate,UIT
             comView.titleL.text = "心情评论"
             comView.inputView.removeFromSuperview()
             comView.show()
+        }else if model.resource_type == "149"{
+            let ctl = SXVideoCommentJubaoController()
+            ctl.jubArr = model.jubaArr
+            ctl.reoceArr = model.resoceArr
+            ctl.managerCode = self.mangagerCode!
+            ctl.videoM = model.videoM;
+            ctl.jubaoId = model.jubaoId;
+            self.navigationController?.pushViewController(ctl, animated: true)
+        }else if model.resource_type == "150"{
+            let ctl = SXShoperChatToUseController()
+            ctl.orderModel = model.orderModel;
+            ctl.isbuyer = true
+            ctl.orderCommentInfo = model.orderCommentInfo
+            ctl.managerCode = self.mangagerCode!
+            ctl.jubaoId = model.jubaoId
+            self.navigationController?.pushViewController(ctl, animated: true)
         }
     }
     deinit {

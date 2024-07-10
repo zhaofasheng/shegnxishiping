@@ -310,8 +310,18 @@ class NoticeManagerWaitWorkController: UIViewController,UITableViewDelegate,UITa
             ctl.reoceArr = model.resoceArr
             ctl.managerCode = self.mangagerCode!
             ctl.videoM = model.videoM;
+            ctl.jubaoId = model.jubaoId;
+            self.navigationController?.pushViewController(ctl, animated: true)
+        }else if model.resource_type == "150"{
+            let ctl = SXShoperChatToUseController()
+            ctl.orderModel = model.orderModel;
+            ctl.isbuyer = true
+            ctl.orderCommentInfo = model.orderCommentInfo
+            ctl.managerCode = self.mangagerCode!
+            ctl.jubaoId = model.jubaoId
             self.navigationController?.pushViewController(ctl, animated: true)
         }
+        //
     }
     
     deinit {

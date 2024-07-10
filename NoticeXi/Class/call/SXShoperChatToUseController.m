@@ -82,6 +82,9 @@
 @property (nonatomic, assign) BOOL isPasue;
 @property (nonatomic, strong,nullable) LGAudioPlayer *audioPlayer;
 
+@property (nonatomic, strong) NoticeChats *jubaoChat;
+@property (nonatomic, strong) UIView *manageView;
+@property (nonatomic, strong) UIButton *deleteButton;
 @end
 
 @implementation SXShoperChatToUseController
@@ -171,10 +174,24 @@
     
     [self funForInputView];
     
-    self.pageNo = 1;
-    [self createRefesh];
-    [self requestData];
+    if (!self.managerCode && !self.orderCommentInfo) {
+        self.pageNo = 1;
+        [self createRefesh];
+        [self requestData];
 
+    }else{//如果是处理举报进来
+        
+        NoticeChats *chat = [NoticeChats mj_objectWithKeyValues:self.orderCommentInfo];
+        if (chat.resource_type.intValue == 1) {
+            chat.contentText = chat.resource_uri;
+        }
+        self.jubaoChat = chat;
+        [self.dataArr addObject:chat];
+        [self.tableView reloadData];
+        
+        [self.view addSubview:self.manageView];
+    }
+   
     
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appdel.socketManager.orderChatDelegate = self;
@@ -186,6 +203,63 @@
     if (self.toUserId) {
         [self.tableView.mj_header beginRefreshing];
     }
+}
+
+- (void)clickFun{
+    self.manageView.hidden = YES;
+    self.pageNo = 1;
+    [self createRefesh];
+    [self requestData];
+}
+
+- (void)deleteFun{
+
+    __weak typeof(self) weakSelf = self;
+    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定删除吗？" message:@"" sureBtn:@"取消" cancleBtn:@"删除" right:YES];
+    alerView.resultIndex = ^(NSInteger index) {
+        if (index == 2) {
+            NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+            [parm setObject:self.managerCode forKey:@"confirmPasswd"];
+            [parm setObject:@"5" forKey:@"reportStatus"];
+            [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"admin/reports/%@",self.jubaoId] Accept:nil parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+                if (success) {
+                    [weakSelf.deleteButton setTitle:@"已删除" forState:UIControlStateNormal];
+                }
+            } fail:^(NSError * _Nullable error) {
+                
+            }];
+    
+        }
+    };
+    [alerView showXLAlertView];
+}
+
+- (UIView *)manageView{
+    if (!_manageView) {
+        
+        _manageView = [[UIView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, TAB_BAR_HEIGHT)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(15, 0, 120, 40)];
+        button.layer.cornerRadius = 20;
+        button.layer.masksToBounds = YES;
+        button.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitle:@"完整对话" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(clickFun) forControlEvents:UIControlEventTouchUpInside];
+        [_manageView addSubview:button];
+        
+        UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-135, 0, 120, 40)];
+        button1.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
+        [button1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button1 setTitle:@"删除" forState:UIControlStateNormal];
+        [button1 addTarget:self action:@selector(deleteFun) forControlEvents:UIControlEventTouchUpInside];
+       
+        if (self.jubaoChat.dialog_status.intValue > 1) {
+            [button1 setTitle:@"已删除" forState:UIControlStateNormal];
+        }
+        self.deleteButton = button1;
+        [_manageView addSubview:button1];
+    }
+    return _manageView;
 }
 
 - (void)lookClick{

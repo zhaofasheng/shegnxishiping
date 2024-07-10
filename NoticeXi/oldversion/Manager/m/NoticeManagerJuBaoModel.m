@@ -98,6 +98,8 @@
         self.resourceTypeName = @"举报视频";
     }else if ([resource_type isEqualToString:@"149"]){
         self.resourceTypeName = @"视频评论";
+    }else if ([resource_type isEqualToString:@"150"]){
+        self.resourceTypeName = @"店主留言";
     }
     else{
         DRLog(@"举报类型%@",resource_type);
@@ -122,6 +124,12 @@
     self.jubaArr = [[NSMutableArray alloc] init];
     [self.jubaArr addObject:self.reportCommentM];
 }
+
+- (void)setOrder:(NSDictionary *)order{
+    _order = order;
+    self.orderModel = [NoticeOrderListModel mj_objectWithKeyValues:order];
+}
+
 
 - (void)setMass_member:(NSDictionary *)mass_member{
     _mass_member = mass_member;

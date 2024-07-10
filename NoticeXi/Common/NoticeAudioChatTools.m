@@ -423,7 +423,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
         self.hasGet = NO;
         if (success) {
             DRLog(@"当前进行中等待中的订单%@",dict);
-       
+            [self.callPlayer startPlayWithUrlandRecoding:[[NSBundle mainBundle] pathForResource:@"callVoice" ofType:@"caf"] isLocalFile:YES];
             self.orderModel = [NoticeByOfOrderModel mj_objectWithKeyValues:dict[@"data"]];
             self.fromUserId = self.orderModel.user_id;
             
@@ -461,6 +461,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 /// 通话建立的回调
 /// @param info 通话建立回调信息
 - (void)onCallConnected:(NECallInfo *)info{
+    [self.callPlayer stopPlaying];
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     self.calleruid = info.calleeInfo.uid;
     [self clearCallWaitView];
@@ -643,7 +644,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     //正式需要打开这里，调试的时候注释了
     [self getOrder];
     [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@收到%@通话请求房间号%@时间%@",[NoticeTools getuserId],info.callerAccId,self.currentRoomId,[SXTools getCurrentTime]]];
-    [self.callPlayer startPlayWithUrlandRecoding:[[NSBundle mainBundle] pathForResource:@"avchat_ring" ofType:@"mp3"] isLocalFile:YES];
+
 }
 
 //这个是用来保持app活跃在后台

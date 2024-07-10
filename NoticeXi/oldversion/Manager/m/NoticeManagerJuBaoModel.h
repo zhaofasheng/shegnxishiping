@@ -20,6 +20,8 @@
 #import "NoticeTeamChatModel.h"
 #import "SXVideosModel.h"
 #import "SXVideoCommentModel.h"
+#import "NoticeOrderListModel.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeManagerJuBaoModel : NSObject
@@ -115,6 +117,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSDictionary *video;
 @property (nonatomic, strong) SXVideosModel *videoM;
+
+@property (nonatomic, strong) NoticeOrderListModel *orderModel;
+@property (nonatomic, strong) NSDictionary *order;
+
+@property (nonatomic, strong) NSDictionary *orderCommentInfo;
+
 @end
 
 NS_ASSUME_NONNULL_END

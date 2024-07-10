@@ -90,6 +90,13 @@ class NoticeManagerWorkCell: UITableViewCell {
         self.numL?.text = model.jubaoId
         self.timeL?.text = model.created_at
         self.dataTypeBtn?.setTitle(model.resourceTypeName, for:.normal)
+        
+        if model.resource_type == "149" {
+            if (model.videoM.series_id as NSString).intValue > 0 {
+                self.dataTypeBtn?.setTitle("课程评论", for:.normal)
+            }
+        }
+        
         self.typeBtn?.setTitle(model.typeName, for: .normal)
         if self.isCenter {
             self.dataTypeBtn?.isHidden = true
