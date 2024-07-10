@@ -126,7 +126,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
-
+    DRLog(@"鼎折覆餗");
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
@@ -309,5 +309,6 @@
         }
     }
 }
+
 
 @end
