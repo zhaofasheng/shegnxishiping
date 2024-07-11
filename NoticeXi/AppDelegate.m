@@ -52,8 +52,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    // 启动图片延时: 1秒
-    [NSThread sleepForTimeInterval:1];
+   
     [NoticeTools changeThemeWith:@"whiteColor"];
     
     if(@available(iOS 13.0, *)) {
@@ -91,7 +90,9 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [SDImageCache sharedImageCache].config.maxMemoryCost = 130*1000*1000;
     
     [self changeRootVC];
-
+    
+    AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
+    
     return YES;
 }
 
@@ -151,6 +152,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 - (void)changeRootVC{
     
     if ([NoticeSaveModel getUserInfo]) {//已经登录
+        
         [self.noVoicePlayer stopPlaying];
         [self jpushSetAlias];
         [self regsigerTencent];
@@ -244,8 +246,12 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-
+    
     [_noVoicePlayer stopPlaying];
+    
+    //来电推送相关
+    AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
+  
     // 进前台 设置不接受远程控制
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     if (![NoticeSaveModel getUserInfo]) {
@@ -270,6 +276,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     self.hasShowCallView = NO;
+    AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"APPWASKILLED" object:nil];//程序杀死，挂断电话
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@杀死app%@",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报
     [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];

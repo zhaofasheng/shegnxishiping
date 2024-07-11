@@ -29,7 +29,7 @@
 #import "AFHTTPSessionManager.h"
 #import "NoticeDevoiceM.h"
 @interface AppDelegate ()<JPUSHRegisterDelegate>
-
+@property (nonatomic, copy) NSString * __nullable timerName;
 @end
 
 @implementation AppDelegate (Notification)
@@ -124,13 +124,16 @@
     [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {}];
 }
 
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    DRLog(@"静默推送%@",userInfo);
+
+    //这个只有静默推送的时候才会执行，可以离线的时候执行持续震动
+
     
-    DRLog(@"鼎折覆餗");
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
-
 
 /** 远程通知注册成功委托 */
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -165,6 +168,7 @@
 // iOS 10 Support
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler  API_AVAILABLE(ios(10.0)){
 	NSDictionary * userInfo = response.notification.request.content.userInfo;
+    DRLog(@"推送内容%@",userInfo);
     NoticePushModel *model = [NoticePushModel mj_objectWithKeyValues:userInfo];
 
     BaseNavigationController *nav = nil;

@@ -1283,6 +1283,7 @@
 		ED4752A19A8FCE52C09D6FBA /* libPods-NoticeXi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0825C7A307206BC0F78C701F /* libPods-NoticeXi.a */; };
 		FE0093D92C3E1F2400D7509A /* callVoice.caf in Resources */ = {isa = PBXBuildFile; fileRef = FE0093D82C3E1F2400D7509A /* callVoice.caf */; };
 		FE0093DB2C3E1F6400D7509A /* custumvoice.caf in Resources */ = {isa = PBXBuildFile; fileRef = FE0093DA2C3E1F6400D7509A /* custumvoice.caf */; };
+		FE0093DE2C3F74C600D7509A /* SXZhendongTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0093DD2C3F74C600D7509A /* SXZhendongTimer.m */; };
 		FE07BDEA2BF2F34200E6812A /* SXStudyListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDE92BF2F34100E6812A /* SXStudyListView.m */; };
 		FE07BDED2BF2F3BE00E6812A /* SXStudyListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDEC2BF2F3BE00E6812A /* SXStudyListCell.m */; };
 		FE07BDF02BF35D6A00E6812A /* SXAddNewGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE07BDEF2BF35D6A00E6812A /* SXAddNewGoodsController.m */; };
@@ -4013,6 +4014,8 @@
 		B0264C4AA5A1898E8831E9DD /* Pods-NoticeXi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoticeXi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoticeXi/Pods-NoticeXi.debug.xcconfig"; sourceTree = "<group>"; };
 		FE0093D82C3E1F2400D7509A /* callVoice.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = callVoice.caf; sourceTree = "<group>"; };
 		FE0093DA2C3E1F6400D7509A /* custumvoice.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = custumvoice.caf; sourceTree = "<group>"; };
+		FE0093DC2C3F74C600D7509A /* SXZhendongTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXZhendongTimer.h; sourceTree = "<group>"; };
+		FE0093DD2C3F74C600D7509A /* SXZhendongTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXZhendongTimer.m; sourceTree = "<group>"; };
 		FE07BDE82BF2F34100E6812A /* SXStudyListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXStudyListView.h; sourceTree = "<group>"; };
 		FE07BDE92BF2F34100E6812A /* SXStudyListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXStudyListView.m; sourceTree = "<group>"; };
 		FE07BDEB2BF2F3BE00E6812A /* SXStudyListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXStudyListCell.h; sourceTree = "<group>"; };
@@ -4905,6 +4908,8 @@
 				A4E95D0A2A69141B00AE022E /* SoundTouchOperation.mm */,
 				FE96C4C12C1C12B4005AB5FE /* SXTcallTimer.h */,
 				FE96C4C22C1C12B4005AB5FE /* SXTcallTimer.m */,
+				FE0093DC2C3F74C600D7509A /* SXZhendongTimer.h */,
+				FE0093DD2C3F74C600D7509A /* SXZhendongTimer.m */,
 				A4E95AE62A69141A00AE022E /* Third */,
 				A4E95AA02A69141A00AE022E /* Tools */,
 				FE44F0FF2BB29FAA004ECF11 /* VideoPlayer */,
@@ -10029,6 +10034,7 @@
 				A4E967FA2A69142500AE022E /* NoticeVoiceListModel.m in Sources */,
 				FE74403E2BA31CF2007EE4A6 /* SXHistoryModel.m in Sources */,
 				A4E9663B2A69142300AE022E /* NoticeHotSongController.m in Sources */,
+				FE0093DE2C3F74C600D7509A /* SXZhendongTimer.m in Sources */,
 				FE41C3A82BCD14FE00BAD263 /* SXChatEachOtherMeassageView.m in Sources */,
 				A4E9676D2A69142400AE022E /* NoticeAddReadController.m in Sources */,
 				A4E966112A69142300AE022E /* NoticeBoKeDocumCell.m in Sources */,

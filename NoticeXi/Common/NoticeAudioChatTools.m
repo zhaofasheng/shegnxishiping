@@ -254,6 +254,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
 //接听
 - (void)accept{
+  
     [self.callPlayer stopPlaying];
     if (self.noReClick) {
         return;
@@ -337,6 +338,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
 //拒绝
 - (void)repject:(BOOL)close{
+  
     [self.callPlayer stopPlaying];
     if (!self.orderModel.room_id || !self.orderModel) {
         if (close) {
@@ -461,6 +463,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 /// 通话建立的回调
 /// @param info 通话建立回调信息
 - (void)onCallConnected:(NECallInfo *)info{
+
     [self.callPlayer stopPlaying];
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     self.calleruid = info.calleeInfo.uid;
@@ -507,6 +510,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 /// 通话结束
 /// @param info 通话结束携带信息
 - (void)onCallEnd:(NECallEndInfo *)info{
+ 
     [self.callPlayer stopPlaying];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self clearCallWaitView];

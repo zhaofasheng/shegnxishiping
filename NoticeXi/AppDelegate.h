@@ -66,5 +66,7 @@
 @property (nonatomic, strong) NoticeFloatView *floatView;
 
 @property(strong,nonatomic) AVPictureInPictureController *pipVC;
+
+
 @end
 

@@ -45,7 +45,6 @@ class NoticeChongzhiJbView: UIView {
         self.addSubview(self.payJBView!)
         
         //
-        
         if NoticeTools.getuserId() == "2" {
             self.allL = GZLabel.init(frame: CGRect(x: 20, y: (self.payJBView?.frame.origin.y ?? 0)+292+20, width: NoticeSwiftFile.screenWidth-30, height: NoticeTools.getHeightWithLineHight(3, font: 14, width: NoticeSwiftFile.screenWidth-30, string: "说明:\n1.充值鲸币，不支持提现\n2.充值24小时未到账，请联系声昔客服小二")))
             self.allL?.gzLabelNormalColor = UIColor.init(hexString: "#5C5F66")
