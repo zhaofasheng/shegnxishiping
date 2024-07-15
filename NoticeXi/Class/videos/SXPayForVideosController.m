@@ -113,6 +113,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     //用户退出登录通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"outLoginClearDataNOTICATION" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestNoread) name:@"NOTICENOREADNUMMESSAGE" object:nil];
 }
 
 - (void)funClick:(UIButton *)button{

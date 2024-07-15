@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NoticeMessage.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeSysMeassageTostView : UIView
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UILabel *contentL;
 @property (nonatomic, strong) UIImageView *logoImageView;
+@property (nonatomic, strong) UIView *line;
 - (void)showActiveView;
 @end
 

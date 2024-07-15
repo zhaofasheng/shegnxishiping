@@ -92,7 +92,7 @@
     moreView.appletPage = self.model.appletPage;
     moreView.share_img_url = self.model.share_img_url;
     moreView.name = [NSString stringWithFormat:@"共%@课时",self.model.episodes];
-    moreView.imgUrl = self.model.carousel_images.count?self.model.carousel_images[0]: self.model.cover_url;
+    moreView.imgUrl = self.model.simple_cover_url;
     moreView.title = self.model.series_name;
     [moreView showTost];
 }

@@ -109,7 +109,6 @@
             } fail:^(NSError * _Nullable error) {
                 [weakSelf hideHUD];
             }];
-        
         }
     };
     [alerView showXLAlertView];

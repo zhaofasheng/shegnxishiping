@@ -37,11 +37,26 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     self.toUserId = userId;
     __weak typeof(self) weakSelf = self;
     
+
+    NSMutableDictionary *pushDic = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *subDic = [NSMutableDictionary new];
+    NSMutableDictionary *subDic1 = [NSMutableDictionary new];
+    
+    [subDic1 setObject:@"语音电话" forKey:@"title"];
+    [subDic1 setObject:@"你有新的语音通话" forKey:@"body"];
+    
+    [subDic setObject:subDic1 forKey:@"alert"];
+    [subDic setObject:@"callVoice.caf" forKey:@"sound"];
+    
+    [pushDic setObject:subDic forKey:@"apsField"];
+ 
+    
     NECallParam *callParam = [[NECallParam alloc] initWithAccId:userId withCallType:NECallTypeAudio];
     NECallPushConfig *pushConfig = [[NECallPushConfig alloc] init];
+    pushConfig.pushPayload = pushDic;
     callParam.pushConfig = pushConfig;
-    callParam.pushConfig.pushContent = @"你有新的语音通话";
-    callParam.pushConfig.pushTitle = @"语音电话";
+
+    
     callParam.extraInfo = [NoticeTools getuserId];//自定义信息为拨打者的用户id
     callParam.rtcChannelName = self.roomId;
     [[NECallEngine sharedInstance] call:callParam completion:^(NSError * _Nullable error, NECallInfo * _Nullable callInfo) {

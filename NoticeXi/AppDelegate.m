@@ -92,7 +92,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     [self changeRootVC];
     
     AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
-    
+    AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
     return YES;
 }
 
@@ -251,6 +251,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     
     //来电推送相关
     AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
+    AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
   
     // 进前台 设置不接受远程控制
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
@@ -276,6 +277,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     self.hasShowCallView = NO;
+    AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
     AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"APPWASKILLED" object:nil];//程序杀死，挂断电话
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@杀死app%@",[NoticeTools getuserId],[SXTools getCurrentTime]] userInfo:nil];//数据上报

@@ -1233,7 +1233,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CHANGEYUSEREPLAY" object:nil];
 }
 
-//客服相关模块
 //获取设备信息
 - (void)requestDevoice{
     

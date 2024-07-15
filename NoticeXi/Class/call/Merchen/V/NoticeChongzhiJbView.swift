@@ -73,7 +73,6 @@ class NoticeChongzhiJbView: UIView {
         // 需要打开的网页链接
         let urlString = "https://www.byebyetext.com/"
         guard let url = URL(string: urlString) else { return }
-        
         if UIApplication.shared.canOpenURL(url) {
             // 可以打开URL
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

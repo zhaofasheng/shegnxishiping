@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *code;
 @property (nonatomic, strong) NSDictionary *data;
+@property (nonatomic, strong) NSString *push_type;
 @property (nonatomic, strong) NSString *orderType;
 @property (nonatomic, strong) NoticeOTOModel *chatM;
 

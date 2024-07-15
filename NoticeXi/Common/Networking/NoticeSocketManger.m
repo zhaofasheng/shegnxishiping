@@ -145,6 +145,11 @@
     
     if ([model.flag isEqualToString:@"systemMsg"]) {//系统消息
         NoticeUserInfoModel *userHd = [NoticeUserInfoModel mj_objectWithKeyValues:dic[@"data"]];
+        NoticeOneToOne *pushTypeModel = [NoticeOneToOne mj_objectWithKeyValues:model.data];
+        if (pushTypeModel.push_type.intValue >= 20004 && pushTypeModel.push_type.intValue <= 20006) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICENOREADNUMMESSAGE" object:nil];
+            return;
+        }
         if ([userHd.type isEqualToString:@"15"]) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveHduserInfo:)]) {
                 [self.delegate didReceiveHduserInfo:dic[@"data"]];

@@ -106,6 +106,7 @@
 
 - (void)showCallView{
     AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
+    AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:self];

@@ -28,27 +28,6 @@
         [self addSubview:imageView];
         _logoImageView = imageView;
         
-        self.titleL = [[UILabel alloc] initWithFrame:CGRectMake(20, 46, contentView.frame.size.width-30, 28)];
-        self.titleL.textColor = [UIColor colorWithHexString:@"#25262E"];
-        self.titleL.font = XGEightBoldFontSize;
-        [contentView addSubview:self.titleL];
-        
-        self.typeL = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.titleL.frame)+10, (contentView.frame.size.width-40)/2, 17)];
-        self.typeL.font = TWOTEXTFONTSIZE;
-        self.typeL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
-        self.typeL.text = [NoticeTools getLocalStrWith:@"system.mark"];
-        [self.contentView addSubview:self.typeL];
-        
-        self.timeL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.typeL.frame), self.typeL.frame.origin.y, self.typeL.frame.size.width, 17)];
-        self.timeL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
-        self.timeL.font = TWOTEXTFONTSIZE;
-        self.timeL.textAlignment = NSTextAlignmentRight;
-        [self.contentView addSubview:self.timeL];
-        
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.timeL.frame)+9, contentView.frame.size.width-40, 0.5)];
-        line.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-        [self.contentView addSubview:line];
-        
         self.bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.contentView.frame.size.height-45-1, self.contentView.frame.size.width, 1)];
         self.bottomLine.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
         [self.contentView addSubview:self.bottomLine];
@@ -63,12 +42,35 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dissTap)];
         [self.bottomL addGestureRecognizer:tap];
         
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(20, 120, self.contentView.frame.size.width-40, self.contentView.frame.size.height-120-55)];
+        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(20, 46, self.contentView.frame.size.width-40, self.contentView.frame.size.height-46-55)];
         [self.contentView addSubview:self.scrollView];
         self.scrollView.showsVerticalScrollIndicator = NO;
         self.scrollView.showsHorizontalScrollIndicator = NO;
         
-        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width,0)];
+        self.titleL = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, self.contentView.frame.size.width-30, 28)];
+        self.titleL.textColor = [UIColor colorWithHexString:@"#25262E"];
+        self.titleL.font = XGEightBoldFontSize;
+        self.titleL.numberOfLines = 0;
+        [self.scrollView addSubview:self.titleL];
+        
+        self.typeL = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.titleL.frame)+10, (self.contentView.frame.size.width-40)/2, 17)];
+        self.typeL.font = TWOTEXTFONTSIZE;
+        self.typeL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        self.typeL.text = [NoticeTools getLocalStrWith:@"system.mark"];
+        [self.scrollView addSubview:self.typeL];
+        
+        self.timeL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.typeL.frame), self.typeL.frame.origin.y, self.typeL.frame.size.width, 17)];
+        self.timeL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        self.timeL.font = TWOTEXTFONTSIZE;
+        self.timeL.textAlignment = NSTextAlignmentRight;
+        [self.scrollView addSubview:self.timeL];
+        
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.timeL.frame)+9, contentView.frame.size.width-40, 0.5)];
+        line.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        [self.scrollView addSubview:line];
+        self.line = line;
+        
+        self.contentL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.line.frame)+5, self.scrollView.frame.size.width,0)];
         self.contentL.numberOfLines = 0;
         self.contentL.textColor = [UIColor colorWithHexString:@"#25262E"];
         self.contentL.font = FOURTHTEENTEXTFONTSIZE;
@@ -84,15 +86,16 @@
         _logoImageView.hidden = YES;
     }
     self.timeL.text = message.created_at;
-    if (GET_STRWIDTH(message.title, 18, 28) > self.titleL.frame.size.width) {
-        self.titleL.adjustsFontSizeToFitWidth = YES;
-    }else{
-        self.titleL.adjustsFontSizeToFitWidth = NO;
-    }
+
     self.titleL.text = message.title;
     
-    self.contentL.frame = CGRectMake(0, 0, self.scrollView.frame.size.width,[self getSpaceLabelHeight:message.content withFont:FOURTHTEENTEXTFONTSIZE withWidth:self.scrollView.frame.size.width]);
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, [self getSpaceLabelHeight:message.content withFont:FOURTHTEENTEXTFONTSIZE withWidth:self.scrollView.frame.size.width]);
+    self.titleL.frame = CGRectMake(0, 0, self.contentView.frame.size.width-30, GET_STRHEIGHT(self.titleL.text, 19, self.contentView.frame.size.width-30));
+    self.typeL.frame = CGRectMake(0, CGRectGetMaxY(self.titleL.frame)+10, (self.contentView.frame.size.width-40)/2, 17);
+    self.timeL.frame = CGRectMake(CGRectGetMaxX(self.typeL.frame), self.typeL.frame.origin.y, self.typeL.frame.size.width, 17);
+    self.line.frame = CGRectMake(0, CGRectGetMaxY(self.timeL.frame)+9, self.contentView.frame.size.width-40, 0.5);
+    self.contentL.frame = CGRectMake(0, CGRectGetMaxY(self.line.frame)+5, self.scrollView.frame.size.width,[self getSpaceLabelHeight:message.content withFont:FOURTHTEENTEXTFONTSIZE withWidth:self.scrollView.frame.size.width]);
+ 
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,CGRectGetMaxY(self.contentL.frame));
     self.contentL.attributedText = [self setLabelSpacewithValue:message.content withFont:FOURTHTEENTEXTFONTSIZE];
 }
 
