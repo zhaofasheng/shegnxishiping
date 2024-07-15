@@ -50,6 +50,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     
     [pushDic setObject:subDic forKey:@"apsField"];
  
+    DRLog(@"推送字典%@",subDic);
     
     NECallParam *callParam = [[NECallParam alloc] initWithAccId:userId withCallType:NECallTypeAudio];
     NECallPushConfig *pushConfig = [[NECallPushConfig alloc] init];
@@ -116,7 +117,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
     //推荐在程序启动的时候初始化 NIMSDK 注册云信
     NSString *appKey        = yunxinAppKey;//云信分配的 appKey
     NIMSDKOption *option    = [NIMSDKOption optionWithAppKey:appKey];
-    option.apnsCername      = @"prPush";//APNs 推送证书名 正式环境prPush 测试环境devPush
+    //option.apnsCername      = @"prPush";//APNs 推送证书名 正式环境prPush 测试环境devPush
     [[NIMSDK sharedSDK] registerWithOption:option];
     [self setupSDK];
 }
