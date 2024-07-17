@@ -111,6 +111,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *last_dialog;
 @property (nonatomic, strong) NSString *voice_cover_img;
 @property (nonatomic, strong) NSString *voice_user_id;//发心情的用户id
+
+@property (nonatomic, strong) NSString *is_register;//是否用设备注册过
 @end
 
 NS_ASSUME_NONNULL_END

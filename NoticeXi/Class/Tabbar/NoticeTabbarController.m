@@ -14,12 +14,15 @@
 #import "NoticeYunXin.h"
 #import "SXPayForVideosController.h"
 #import "NoticeStaySys.h"
+
 //获取全局并发队列和主队列的宏定义
 #define globalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define mainQueue dispatch_get_main_queue()
 
 @interface NoticeTabbarController ()<AxcAE_TabBarDelegate>
+
 @property (nonatomic,strong)UIButton *button;
+
 @end
 
 @implementation NoticeTabbarController
@@ -43,7 +46,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redCirRequest) name:@"outLoginClearDataNOTICATION" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTwoBdge) name:@"SHOWBUDGENOTICE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideTwoBdge) name:@"HIDEBUDGENOTICE" object:nil];
-
+    
 }
 
 - (void)showTwoBdge{
@@ -213,7 +216,6 @@
     [super viewDidLayoutSubviews];
    // self.axcTabBar.selectIndex = self.oldSelectIndex;
     self.axcTabBar.frame = self.tabBar.bounds;
- 
     [self.axcTabBar viewDidLayoutItems];
 }
 

@@ -1459,6 +1459,9 @@
 		FE7440C82BA7D470007EE4A6 /* SXKchengIntroController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440C42BA7D46F007EE4A6 /* SXKchengIntroController.m */; };
 		FE7440C92BA7D470007EE4A6 /* SXStudyBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440C62BA7D470007EE4A6 /* SXStudyBaseController.m */; };
 		FE7440CA2BA7D470007EE4A6 /* SXPayVideoListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7440C72BA7D470007EE4A6 /* SXPayVideoListController.m */; };
+		FE7988B02C4655BE000DA69C /* CMKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7988AF2C4655BE000DA69C /* CMKeyChain.m */; };
+		FE7988B32C4655E9000DA69C /* CMUUIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7988B22C4655E9000DA69C /* CMUUIDManager.m */; };
+		FE7988B62C475D3B000DA69C /* SXKCBuyTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7988B52C475D3B000DA69C /* SXKCBuyTypeView.m */; };
 		FE8B48772B8EDEAC004C3965 /* SXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */; };
 		FE8D89F42C23BB13006EFEB6 /* SXOrderStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8D89F22C23BB13006EFEB6 /* SXOrderStatusModel.m */; };
 		FE953C802B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C7F2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m */; };
@@ -4360,6 +4363,12 @@
 		FE7440C52BA7D46F007EE4A6 /* SXStudyBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXStudyBaseController.h; sourceTree = "<group>"; };
 		FE7440C62BA7D470007EE4A6 /* SXStudyBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXStudyBaseController.m; sourceTree = "<group>"; };
 		FE7440C72BA7D470007EE4A6 /* SXPayVideoListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXPayVideoListController.m; sourceTree = "<group>"; };
+		FE7988AE2C4655BE000DA69C /* CMKeyChain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CMKeyChain.h; sourceTree = "<group>"; };
+		FE7988AF2C4655BE000DA69C /* CMKeyChain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CMKeyChain.m; sourceTree = "<group>"; };
+		FE7988B12C4655E9000DA69C /* CMUUIDManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CMUUIDManager.h; sourceTree = "<group>"; };
+		FE7988B22C4655E9000DA69C /* CMUUIDManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CMUUIDManager.m; sourceTree = "<group>"; };
+		FE7988B42C475D3B000DA69C /* SXKCBuyTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKCBuyTypeView.h; sourceTree = "<group>"; };
+		FE7988B52C475D3B000DA69C /* SXKCBuyTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKCBuyTypeView.m; sourceTree = "<group>"; };
 		FE8B48752B8EDEAC004C3965 /* SXWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXWebViewController.h; sourceTree = "<group>"; };
 		FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXWebViewController.m; sourceTree = "<group>"; };
 		FE8D89F22C23BB13006EFEB6 /* SXOrderStatusModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXOrderStatusModel.m; sourceTree = "<group>"; };
@@ -9044,6 +9053,10 @@
 				FE6CF9412B847491005EE663 /* SXTools.m */,
 				FE718FB32C2D4BC700F59785 /* LogManager.h */,
 				FE718FB42C2D4BC700F59785 /* LogManager.m */,
+				FE7988AE2C4655BE000DA69C /* CMKeyChain.h */,
+				FE7988AF2C4655BE000DA69C /* CMKeyChain.m */,
+				FE7988B12C4655E9000DA69C /* CMUUIDManager.h */,
+				FE7988B22C4655E9000DA69C /* CMUUIDManager.m */,
 			);
 			path = "视频版本新封装";
 			sourceTree = "<group>";
@@ -9146,6 +9159,8 @@
 				FED9A38D2C34EF20003C81AD /* SXBuyToastKcView.m */,
 				FED9A3952C35273E003C81AD /* SXHasGetComCell.h */,
 				FED9A3962C35273E003C81AD /* SXHasGetComCell.m */,
+				FE7988B42C475D3B000DA69C /* SXKCBuyTypeView.h */,
+				FE7988B52C475D3B000DA69C /* SXKCBuyTypeView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -10164,6 +10179,7 @@
 				A4E968F92A69142700AE022E /* NoticeChatTextCell.m in Sources */,
 				FE6CF9782B88A358005EE663 /* SXDownVideoheaderView.m in Sources */,
 				A4E9652E2A69142200AE022E /* XGUploadDateManager.m in Sources */,
+				FE7988B02C4655BE000DA69C /* CMKeyChain.m in Sources */,
 				A4E968B42A69142600AE022E /* NoticeMyShopController.swift in Sources */,
 				A4E968262A69142500AE022E /* CalenderHeaderView.m in Sources */,
 				A4E968CE2A69142600AE022E /* NoticeMyShopModel.m in Sources */,
@@ -10412,6 +10428,7 @@
 				A4E966A32A69142300AE022E /* LXAdvertScrollview.m in Sources */,
 				A4E969922A69142800AE022E /* BaseCell.m in Sources */,
 				A4E964BD2A69142100AE022E /* CLLocation+Sino.m in Sources */,
+				FE7988B32C4655E9000DA69C /* CMUUIDManager.m in Sources */,
 				A4E966B52A69142300AE022E /* NoticeTestLyModel.m in Sources */,
 				A4E968952A69142600AE022E /* RXPopBoxCell.m in Sources */,
 				A4E966602A69142300AE022E /* NoticeSearchBookResultController.m in Sources */,
@@ -10455,6 +10472,7 @@
 				A4E968992A69142600AE022E /* SCIndexViewConfiguration.m in Sources */,
 				FEB61BF42B4CEF6600B128FA /* NoticeShopStroyCell.m in Sources */,
 				A4E9680D2A69142500AE022E /* NoticeVoiceViewController.m in Sources */,
+				FE7988B62C475D3B000DA69C /* SXKCBuyTypeView.m in Sources */,
 				A4E9687E2A69142600AE022E /* NoticeZjCell.m in Sources */,
 				A4E969602A69142700AE022E /* NoticeTagScrollView.m in Sources */,
 				FE44F1F52BB29FAB004ECF11 /* MultipartMessageHeaderField.m in Sources */,
@@ -11466,7 +11484,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 99;
+				CURRENT_PROJECT_VERSION = 102;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
@@ -11646,7 +11664,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 99;
+				CURRENT_PROJECT_VERSION = 102;
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = XD7545Y7QW;

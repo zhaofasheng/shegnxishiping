@@ -160,6 +160,7 @@
               type 分享小程序的版本（0-正式，1-开发，2-体验）
               platformSubType 分享自平台 微信小程序暂只支持 SSDKPlatformSubTypeWechatSession（微信好友分享)
              */
+       
             NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
             [shareParams SSDKSetupWeChatMiniProgramShareParamsByTitle:self.title description:self.name webpageUrl:[NSURL URLWithString:@"www.baidu.com"] path:self.appletPage thumbImage:nil hdThumbImage:self.share_img_url userName:self.appletId withShareTicket:YES miniProgramType:0 forPlatformSubType:SSDKPlatformSubTypeWechatSession];
 
@@ -170,8 +171,10 @@
             }];
             
         }else if(indexPath.row == 1){
+        
             [NoticeShareView shareWithurl:self.friendShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){
+        
             [NoticeShareView shareWithurl:self.qqShareUrl type:SSDKPlatformSubTypeQQFriend title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }
         return;
@@ -179,10 +182,13 @@
     
     if (self.isShareFreeVideo) {
         if(indexPath.row == 0){
+         
             [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }else if(indexPath.row == 1){
+         
             [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){
+         
             [NoticeShareView shareWithurl:self.qqShareUrl type:SSDKPlatformSubTypeQQFriend title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }
         return;
@@ -190,10 +196,13 @@
     
     if (self.isShare) {
         if(indexPath.row == 0){
+        
             [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatSession title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }else if(indexPath.row == 1){
+        
             [NoticeShareView shareWithurl:self.wechatShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){
+      
             [NoticeShareView shareWithurl:self.shareUrl type:SSDKPlatformSubTypeQQFriend title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }
         return;

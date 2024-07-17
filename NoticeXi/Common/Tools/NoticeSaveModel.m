@@ -135,6 +135,7 @@ static NSString *const KFToken = @"KFToken";
     [userDefaults setObject:token forKey:KFToken];
     [userDefaults synchronize];
 }
+
 + (NSString *)getToken{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *userInfoDic  = [userDefaults objectForKey:KFToken];

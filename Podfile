@@ -23,6 +23,7 @@ target ‘NoticeXi’ do
   pod 'mob_sharesdk', '~> 4.2.0',:inhibit_warnings => true
   pod 'mob_sharesdk/ShareSDKUI',:inhibit_warnings => true
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ', '~> 4.2.0',:inhibit_warnings => true
+  pod 'mob_sharesdk/ShareSDKPlatforms/SinaWeibo',:inhibit_warnings => true
   pod 'FMDB'
   pod 'SocketRocket',:inhibit_warnings => true
   pod 'Bugly'

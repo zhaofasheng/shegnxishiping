@@ -14,6 +14,7 @@
 #import "SXHasGetComController.h"
 #import "SXKcHasGetLikeController.h"
 #import "NoticeStaySys.h"
+#import "CMUUIDManager.h"
 @interface SXPayForVideosController ()
 @property (nonatomic, strong) UIView *footView;
 
@@ -31,7 +32,60 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self requestNoread];
+    
+    if (![NoticeTools getuserId]) {//没登录的话监测是否需要游客登录
+        NSUUID *UUID=[UIDevice currentDevice].identifierForVendor;
+        NSString *uuid = [CMUUIDManager readUUID];
+        
+        if (uuid==nil) {
+            [CMUUIDManager deleteUUID];
+            [CMUUIDManager saveUUID:UUID.UUIDString];
+            uuid = UUID.UUIDString;
+        }
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/checkUuid?uuid=%@",uuid] Accept:@"application/vnd.shengxi.v5.8.4+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if (success) {
+                NoticeStaySys *regsModel = [NoticeStaySys mj_objectWithKeyValues:dict[@"data"]];
+                if (regsModel.is_register.boolValue) {//注册过，设备登录token获取
+                    DRLog(@"设备注册过");
+                    [self getuuidLoginToken];
+                }
+            }
+        } fail:^(NSError * _Nullable error) {
+            
+        }];
+    }
 }
+
+- (void)getuuidLoginToken{
+    //获得UUID存入keyChain中
+    NSUUID *UUID=[UIDevice currentDevice].identifierForVendor;
+    NSString *uuid = [CMUUIDManager readUUID];
+    
+    if (uuid==nil) {
+        [CMUUIDManager deleteUUID];
+        [CMUUIDManager saveUUID:UUID.UUIDString];
+        uuid = UUID.UUIDString;
+    }
+    DRLog(@"uuid==%@",uuid);
+    
+    //设备登录
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:uuid forKey:@"uuid"];
+    [parm setObject:[NoticeSaveModel getVersion] forKey:@"appVersion"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"users/loginByUuid" Accept:@"application/vnd.shengxi.v5.8.4+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (success) {
+            NoticeUserInfoModel *userM = [NoticeUserInfoModel mj_objectWithKeyValues:dict[@"data"]];
+            if (userM.token && userM.token.length > 10) {
+                [SXTools saveLocalToken:userM.token];
+                [self refreshList];
+            }
+        }
+    } fail:^(NSError * _Nullable error) {
+    
+    }];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -116,18 +170,25 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestNoread) name:@"NOTICENOREADNUMMESSAGE" object:nil];
 }
 
+
 - (void)funClick:(UIButton *)button{
-    if (![NoticeTools getuserId]) {
-        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
-        [self.navigationController pushViewController:ctl animated:YES];
-        return;
-    }
+  
     if (button.tag == 0) {
         [self hasbbuyTap];
     }else if (button.tag == 1){
+        if (![NoticeTools getuserId]) {
+            NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+            return;
+        }
         SXHasGetComController *ctl = [[SXHasGetComController alloc] init];
         [self.navigationController pushViewController:ctl animated:YES];
     }else{
+        if (![NoticeTools getuserId]) {
+            NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+            return;
+        }
         SXKcHasGetLikeController *ctl = [[SXKcHasGetLikeController alloc] init];
         [self.navigationController pushViewController:ctl animated:YES];
     }
@@ -254,12 +315,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (![NoticeTools getuserId]) {
-        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
-        [self.navigationController pushViewController:ctl animated:YES];
-        return;
-    }
-    
+
     SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
     SXPayForVideoModel *model = self.dataArr[indexPath.row];
     ctl.paySearModel = model;

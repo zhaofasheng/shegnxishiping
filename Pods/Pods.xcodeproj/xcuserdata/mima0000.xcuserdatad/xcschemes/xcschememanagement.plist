@@ -164,6 +164,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>mob_sharesdk-ShareSDK_JS_SinaWeibo.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>mob_sharesdk-ShareSDK_JS_WeChat.xcscheme</key>
 		<dict>
 			<key>isShown</key>

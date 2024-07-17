@@ -591,12 +591,39 @@ API_AVAILABLE(ios(13.0)){
     }
 }
 
+- (void)qqClick{
+
+    [self showHUD];
+    BOOL wechat = [[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"mqqapi://"]];
+    if (!wechat) {
+        [self hideHUD];
+    }
+    [ShareSDK getUserInfo:SSDKPlatformTypeQQ
+           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
+     {
+        [self hideHUD];
+        if (state == SSDKResponseStateSuccess)
+        {
+            if (!user.credential) {
+                return;
+            }
+            [self checkIsExit:user type:@"2"];
+            [ShareSDK cancelAuthorize:SSDKPlatformTypeQQ result:^(NSError *error) {
+            }];
+        }
+        else
+        {
+        }
+    }];
+}
+
 - (void)weiboClick{
     [self showHUD];
 
     if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"Sinaweibo://"]]) {
         [self hideHUD];
     }
+    
     [ShareSDK getUserInfo:SSDKPlatformTypeSinaWeibo
            onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
      {
@@ -619,6 +646,7 @@ API_AVAILABLE(ios(13.0)){
     if(![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"weixin://"]])
     {
         [self hideHUD];
+
     }
     [ShareSDK getUserInfo:SSDKPlatformTypeWechat
            onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
@@ -670,6 +698,9 @@ API_AVAILABLE(ios(13.0)){
                 }else if (type.intValue == 3){
                     title = @"未注册或微博绑定已过期?";
                     message = @"如果您没有绑定手机号，可使用手机号注册，然后自动绑定微博，已绑定手机号则使用手机号登录后去重新绑定微博登录即可";
+                }else if (type.intValue == 4){
+                    title = @"未注册或苹果登录绑定已过期?";
+                    message = @"如果您没有绑定手机号，可使用手机号注册，然后自动绑定苹果账号，已绑定手机号则使用手机号登录后去重新绑定苹果登录即可";
                 }
                 __weak typeof(self) weakSelf = self;
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:title message:message sureBtn:@"取消" cancleBtn:@"手机号注册/登录" right:YES];
@@ -775,33 +806,7 @@ API_AVAILABLE(ios(13.0)){
     }];
 }
 
-- (void)qqClick{
 
-    [self showHUD];
-    BOOL wechat = [[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"mqqapi://"]];
-    if (!wechat) {
-        [self hideHUD];
-    }
-    [ShareSDK getUserInfo:SSDKPlatformTypeQQ
-           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
-     {
-    
-        [self hideHUD];
-        if (state == SSDKResponseStateSuccess)
-        {
-            if (!user.credential) {
-                return;
-            }
-            [self checkIsExit:user type:@"2"];
-            [ShareSDK cancelAuthorize:SSDKPlatformTypeQQ result:^(NSError *error) {
-                
-            }];
-        }
-        else
-        {
-        }
-    }];
-}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -832,9 +837,7 @@ API_AVAILABLE(ios(13.0)){
 
 
 - (void)fastLoginClick{
-
     NoticeSaveLoginStory *info = [NoticeSaveModel getLoginInfo];
-
     [self fastrequestLogin:info];
 }
 

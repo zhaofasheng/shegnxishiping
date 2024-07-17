@@ -156,7 +156,13 @@
 }
 
 - (void)request{
-    
+    if (![NoticeTools getuserId] && ![SXTools getLocalToken]) {
+        self.tableView.tableFooterView = self.defaultL1;
+        _defaultL1.text = @"登录账号或者购买课程之后才能跟用户互动哦~";
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        return;
+    }
     NSString *url = @"";
     
     url = [NSString stringWithFormat:@"videoComment/%@?pageNo=%ld",self.paySearModel.seriesId,self.pageNo];
@@ -208,6 +214,7 @@
             }
         
             self.tableView.tableFooterView = self.dataArr.count?nil:self.defaultL1;
+            _defaultL1.text = @"还没有评论，发条评论抢占第一";
             [self.tableView reloadData];
         }
     } fail:^(NSError *error) {
@@ -233,7 +240,7 @@
 
 - (UILabel *)defaultL1{
     if (!_defaultL1) {
-        _defaultL1 = [[UILabel  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-40-TAB_BAR_HEIGHT-(DR_SCREEN_WIDTH*9/16))];
+        _defaultL1 = [[UILabel  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-40-TAB_BAR_HEIGHT-(DR_SCREEN_WIDTH*9/16)-100)];
         _defaultL1.text = @"还没有评论，发条评论抢占第一";
         _defaultL1.font = FOURTHTEENTEXTFONTSIZE;
         _defaultL1.textColor = [UIColor colorWithHexString:@"#A1A7B3"];

@@ -74,7 +74,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     //用户退出登录通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin) name:@"outLoginClearDataNOTICATION" object:nil];
  
-
+    self.payManager = [STRIAPManager shareSIAPManager];
     NoticeTabbarController *tabbarVC = [[NoticeTabbarController alloc] init];
     self.window.rootViewController = tabbarVC;
 
@@ -101,6 +101,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *onceKey = @"HWProjectOnceKey";
+    
     if (![defaults boolForKey:onceKey]) {
         // 初始化下载最大并发数为1，默认允许蜂窝网络下载1
         [defaults setInteger:1 forKey:HWDownloadMaxConcurrentCountKey];
@@ -152,7 +153,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 - (void)changeRootVC{
     
     if ([NoticeSaveModel getUserInfo]) {//已经登录
-        
+        //[SXTools removeLocalToken];
         [self.noVoicePlayer stopPlaying];
         [self jpushSetAlias];
         [self regsigerTencent];
@@ -161,7 +162,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         self.socketManager = socketManger;
         [self.socketManager reConnect];
         
-        self.payManager = [STRIAPManager shareSIAPManager];
         [self.audioChatTools regTencent];
         
         [self getOrder];
@@ -183,11 +183,11 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         __weak typeof(self) weakSelf = self;
         _audioPlayer.startPlaying = ^(AVPlayerItemStatus status, CGFloat duration) {
             if (status == AVPlayerItemStatusReadyToPlay) {
-                if (weakSelf.audioPlayer.isLocalFile) {
+                if (weakSelf.audioPlayer.isLocalFile){
                     //录音
                 }
-            } else {
-                if (status == AVPlayerItemStatusFailed) {
+            }else {
+                if (status == AVPlayerItemStatusFailed){
                     [YZC_AlertView showViewWithTitleMessage:@"播放失败，请重试"];
                 }
             }

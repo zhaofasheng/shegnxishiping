@@ -385,5 +385,20 @@
     [cache synchronize];
 }
 
++ (void)saveLocalToken:(NSString *)token{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:token forKey:@"localtoken"];
+    [userDefaults synchronize];
+}
 
++ (NSString *)getLocalToken{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *userInfoDic  = [userDefaults objectForKey:@"localtoken"];
+    return userInfoDic;
+}
+
++ (void)removeLocalToken{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:@"localtoken"];
+}
 @end

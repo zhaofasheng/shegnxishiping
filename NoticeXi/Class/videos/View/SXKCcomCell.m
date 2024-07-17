@@ -165,7 +165,10 @@
 }
 
 - (void)userInfoTap{
-
+    if (![NoticeTools getuserId]) {
+        [[NoticeTools getTopViewController] showToastWithText:@"没有登录或者游客账号无法查看用户信息哦"];
+        return;
+    }
     if ([self.comModel.from_user_id isEqualToString:[NoticeTools getuserId]]) {
         NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];

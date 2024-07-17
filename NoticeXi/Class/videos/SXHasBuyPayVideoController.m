@@ -52,7 +52,12 @@
 }
 
 - (void)request{
-    
+    if ([NoticeTools getuserId]) {
+        self.tableView.tableFooterView = self.defaultL;
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        return;
+    }
     NSString *url = @"";
     
     url = [NSString stringWithFormat:@"user/video/series?pageNo=%ld",self.pageNo];

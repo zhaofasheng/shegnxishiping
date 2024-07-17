@@ -60,6 +60,12 @@ typedef void (^downSuccessBlock)(BOOL success);
 
 + (BOOL)isHowTouseOnThisDeveice;
 + (void)setKnowUse;
+
+//设备登录token
++ (void)saveLocalToken:(NSString *)token;
+//设备登录token
++ (NSString *)getLocalToken;
++ (void)removeLocalToken;
 @end
 
 NS_ASSUME_NONNULL_END

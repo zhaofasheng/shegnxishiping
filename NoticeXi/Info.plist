@@ -115,6 +115,9 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>weibosdk</string>
+		<string>sinaweibohd</string>
+		<string>sinaweibo</string>
 		<string>snssdk1128</string>
 		<string>kwai</string>
 		<string>alis</string>
