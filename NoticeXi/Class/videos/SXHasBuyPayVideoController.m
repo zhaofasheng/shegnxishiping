@@ -52,7 +52,7 @@
 }
 
 - (void)request{
-    if ([NoticeTools getuserId]) {
+    if (![NoticeTools getuserId] && ![SXTools getLocalToken]) {
         self.tableView.tableFooterView = self.defaultL;
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];

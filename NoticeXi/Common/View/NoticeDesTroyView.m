@@ -8,6 +8,7 @@
 
 #import "NoticeDesTroyView.h"
 #import "JJCPayCodeTextField.h"
+
 @implementation NoticeDesTroyView
 {
     UILabel *_titleL;
@@ -61,7 +62,6 @@
 
 - (void)getrule{
     NSString *url = @"getTextRule";
-   
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.5.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
       
         if (success) {

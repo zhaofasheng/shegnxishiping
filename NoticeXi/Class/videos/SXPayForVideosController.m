@@ -51,7 +51,6 @@
                 }
             }
         } fail:^(NSError * _Nullable error) {
-            
         }];
     }
 }
