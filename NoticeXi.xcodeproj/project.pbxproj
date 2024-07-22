@@ -1486,6 +1486,7 @@
 		FE96C4BD2C194320005AB5FE /* SXShopLyStoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4BC2C194320005AB5FE /* SXShopLyStoryModel.m */; };
 		FE96C4C02C1ACEE1005AB5FE /* SXGetOrderTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4BF2C1ACEE1005AB5FE /* SXGetOrderTimer.m */; };
 		FE96C4C32C1C12B4005AB5FE /* SXTcallTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4C22C1C12B4005AB5FE /* SXTcallTimer.m */; };
+		FE979D5C2C4E55CF00161B7B /* SXBandKcToAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D5B2C4E55CF00161B7B /* SXBandKcToAccountView.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -1591,6 +1592,9 @@
 		FEFAB1BD2B8C6626009EE42C /* SXTosatView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFAB1BC2B8C6626009EE42C /* SXTosatView.m */; };
 		FEFAB1C02B8C7FAC009EE42C /* SXChatInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFAB1BF2B8C7FAC009EE42C /* SXChatInputView.m */; };
 		FEFAB1C32B8C82F0009EE42C /* SXSendChatTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFAB1C22B8C82F0009EE42C /* SXSendChatTools.m */; };
+		FEFE543B2C4E2F8B0007FA30 /* SXHasBuyKcHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFE543A2C4E2F8B0007FA30 /* SXHasBuyKcHeaderView.m */; };
+		FEFE543E2C4E3DAF0007FA30 /* SXFreeVideoBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFE543D2C4E3DAF0007FA30 /* SXFreeVideoBaseController.m */; };
+		FEFE54412C4E414C0007FA30 /* SXVideoTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFE54402C4E414C0007FA30 /* SXVideoTagsView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4417,6 +4421,8 @@
 		FE96C4BF2C1ACEE1005AB5FE /* SXGetOrderTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXGetOrderTimer.m; sourceTree = "<group>"; };
 		FE96C4C12C1C12B4005AB5FE /* SXTcallTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXTcallTimer.h; sourceTree = "<group>"; };
 		FE96C4C22C1C12B4005AB5FE /* SXTcallTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXTcallTimer.m; sourceTree = "<group>"; };
+		FE979D5A2C4E55CF00161B7B /* SXBandKcToAccountView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBandKcToAccountView.h; sourceTree = "<group>"; };
+		FE979D5B2C4E55CF00161B7B /* SXBandKcToAccountView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBandKcToAccountView.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -4622,6 +4628,12 @@
 		FEFAB1BF2B8C7FAC009EE42C /* SXChatInputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXChatInputView.m; sourceTree = "<group>"; };
 		FEFAB1C12B8C82F0009EE42C /* SXSendChatTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSendChatTools.h; sourceTree = "<group>"; };
 		FEFAB1C22B8C82F0009EE42C /* SXSendChatTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXSendChatTools.m; sourceTree = "<group>"; };
+		FEFE54392C4E2F8B0007FA30 /* SXHasBuyKcHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHasBuyKcHeaderView.h; sourceTree = "<group>"; };
+		FEFE543A2C4E2F8B0007FA30 /* SXHasBuyKcHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHasBuyKcHeaderView.m; sourceTree = "<group>"; };
+		FEFE543C2C4E3DAF0007FA30 /* SXFreeVideoBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXFreeVideoBaseController.h; sourceTree = "<group>"; };
+		FEFE543D2C4E3DAF0007FA30 /* SXFreeVideoBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXFreeVideoBaseController.m; sourceTree = "<group>"; };
+		FEFE543F2C4E414C0007FA30 /* SXVideoTagsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoTagsView.h; sourceTree = "<group>"; };
+		FEFE54402C4E414C0007FA30 /* SXVideoTagsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoTagsView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -9161,6 +9173,12 @@
 				FED9A3962C35273E003C81AD /* SXHasGetComCell.m */,
 				FE7988B42C475D3B000DA69C /* SXKCBuyTypeView.h */,
 				FE7988B52C475D3B000DA69C /* SXKCBuyTypeView.m */,
+				FEFE54392C4E2F8B0007FA30 /* SXHasBuyKcHeaderView.h */,
+				FEFE543A2C4E2F8B0007FA30 /* SXHasBuyKcHeaderView.m */,
+				FEFE543F2C4E414C0007FA30 /* SXVideoTagsView.h */,
+				FEFE54402C4E414C0007FA30 /* SXVideoTagsView.m */,
+				FE979D5A2C4E55CF00161B7B /* SXBandKcToAccountView.h */,
+				FE979D5B2C4E55CF00161B7B /* SXBandKcToAccountView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9291,6 +9309,8 @@
 				FE6CF93B2B84550D005EE663 /* model */,
 				FEBCADCA2B8361580048F5A1 /* NoticeVideosController.h */,
 				FEBCADC92B8361580048F5A1 /* NoticeVideosController.m */,
+				FEFE543C2C4E3DAF0007FA30 /* SXFreeVideoBaseController.h */,
+				FEFE543D2C4E3DAF0007FA30 /* SXFreeVideoBaseController.m */,
 				FE44F29D2BB43391004ECF11 /* SXPlayFullListController.h */,
 				FE44F29E2BB43392004ECF11 /* SXPlayFullListController.m */,
 				FE7440C22BA7D46E007EE4A6 /* SXKchengIntroController.h */,
@@ -9887,6 +9907,7 @@
 				A4E969282A69142700AE022E /* NoticeRoundArmView.m in Sources */,
 				A4E967172A69142400AE022E /* NoticeReplyVoiceCell.m in Sources */,
 				A4E967B42A69142500AE022E /* NoticeVoiceCommentNewsController.m in Sources */,
+				FEFE543B2C4E2F8B0007FA30 /* SXHasBuyKcHeaderView.m in Sources */,
 				A4E967D12A69142500AE022E /* NoticeMoveBookSonPrivayController.m in Sources */,
 				FE44F29F2BB43392004ECF11 /* SXPlayFullListController.m in Sources */,
 				A4E965552A69142200AE022E /* NoticeOTOModel.m in Sources */,
@@ -10380,6 +10401,7 @@
 				FE9C3FC02B9094BA008C3A22 /* SXPayVideoPlayDetailListController.m in Sources */,
 				A4E9678F2A69142400AE022E /* NoticeJuBaoShopChatCell.m in Sources */,
 				A4E968B12A69142600AE022E /* NoticeOrderListController.m in Sources */,
+				FEFE543E2C4E3DAF0007FA30 /* SXFreeVideoBaseController.m in Sources */,
 				A4E967742A69142400AE022E /* NoticeManageBoKeBaseController.m in Sources */,
 				A4E968022A69142500AE022E /* NoticeVoiceAlbumAndChatAlbumController.m in Sources */,
 				FE9C3FBA2B908F8D008C3A22 /* SXPlayPayVideoDetailHeaderView.m in Sources */,
@@ -11075,6 +11097,7 @@
 				FEB61C122B4D4C8A00B128FA /* NoticeWallCollectionViewCell.m in Sources */,
 				A4E9655F2A69142200AE022E /* NoticeTextView.m in Sources */,
 				A4E966662A69142300AE022E /* NoticeHandAddBookController.m in Sources */,
+				FE979D5C2C4E55CF00161B7B /* SXBandKcToAccountView.m in Sources */,
 				A4E964F82A69142200AE022E /* JXCategoryIndicatorView.m in Sources */,
 				A4E968882A69142600AE022E /* YYTextAttachmentManager.m in Sources */,
 				A4E967A52A69142500AE022E /* NoticeSorryController.m in Sources */,
@@ -11212,6 +11235,7 @@
 				A4E968372A69142500AE022E /* NoticeTimeList.m in Sources */,
 				FE44F2132BB29FAB004ECF11 /* MyCommentCell.m in Sources */,
 				FEE563042B8DC4560004CC11 /* SXSearchModel.m in Sources */,
+				FEFE54412C4E414C0007FA30 /* SXVideoTagsView.m in Sources */,
 				A4E966F72A69142400AE022E /* NoticeArcPlayView.m in Sources */,
 				A4E9683C2A69142500AE022E /* NoticeUserCenter.m in Sources */,
 				A44FBFAB2AF4BFF100D49DB5 /* NoticeBokeReusableView.m in Sources */,
@@ -11523,7 +11547,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.9.2;
+				MARKETING_VERSION = 5.9.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -11702,7 +11726,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.9.2;
+				MARKETING_VERSION = 5.9.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

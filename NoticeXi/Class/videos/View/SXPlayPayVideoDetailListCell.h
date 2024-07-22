@@ -14,14 +14,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) SXSearisVideoListModel *videoModel;
 @property (nonatomic, strong) SXSearisVideoListModel *currentVideo;
 @property (nonatomic, strong) UILabel *titleL;
+@property (nonatomic, strong) UIView *backView;
+
 @property (nonatomic, strong) UIImageView *comimageV;
 @property (nonatomic, strong) UILabel *comL;
-@property (nonatomic, strong) UIView *backView;
+@property (nonatomic, strong) UILabel *totalTimeL;
+@property (nonatomic, strong) UILabel *statusL;
 
 @property (nonatomic, strong) UIView *fgView;
 @property (nonatomic, strong) UIView *fgView1;
-@property (nonatomic, strong) UILabel *totalTimeL;
-@property (nonatomic, strong) UILabel *statusL;
+
 @end
 
 NS_ASSUME_NONNULL_END

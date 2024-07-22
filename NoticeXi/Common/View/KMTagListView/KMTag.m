@@ -59,6 +59,38 @@
     [self setAllCorner:self.frame.size.height/2];
 }
 
+- (void)setupVideoWithText:(NSString*)text{
+
+    NSString *showText = text;
+    if (text.length > 10) {
+        showText = [NSString stringWithFormat:@"%@...",[text substringToIndex:10]];
+    }
+    
+    
+    self.layer.masksToBounds = YES;
+    self.text = showText;
+
+    self.font = [UIFont systemFontOfSize:16];
+    UIFont* font = self.font;
+    CGSize size = [showText sizeWithAttributes:@{NSFontAttributeName: font}];
+    CGRect frame = self.frame;
+    
+
+    if (self.isChoice) {
+        self.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
+        self.textColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+    }else{
+        self.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        self.textColor = [[UIColor colorWithHexString:@"#14151A"] colorWithAlphaComponent:1];
+    }
+    
+    frame.size = CGSizeMake((NSInteger)size.width + 20, 32);
+    
+    self.frame = frame;
+    [self setAllCorner:self.frame.size.height/2];
+}
+
+
 - (void)setupCousTumeWithText:(NSString *)text{
     self.text = text;
     self.textColor = [[UIColor colorWithHexString:@"#14151A"] colorWithAlphaComponent:1];

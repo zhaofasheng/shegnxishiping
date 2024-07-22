@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *totalTimeL;
 @property (nonatomic, strong) UILabel *statusL;
 
+@property (nonatomic, strong) UIImageView *comimageV;
+@property (nonatomic, strong) UILabel *comL;
+
 @property (nonatomic, strong) UILabel *newVideoMarkL;
 @end
 

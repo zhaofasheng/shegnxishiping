@@ -9,6 +9,8 @@
 #import "SXBuySearisSuccessController.h"
 #import "SXBuySearisSuccessView.h"
 #import "SXStudyBaseController.h"
+#import "NoticeAreaViewController.h"
+#import "SXBandKcToAccountView.h"
 @interface SXBuySearisSuccessController ()
 @property (nonatomic, strong) SXBuySearisSuccessView *headerView;
 @end
@@ -64,6 +66,10 @@
         return;
     }
     
+    if (![NoticeTools getuserId]) {
+        [self bandingWith:nil];
+        return;
+    }
     __block UIViewController *pushVC;
     __weak typeof(self) weakSelf = self;
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -73,6 +79,22 @@
             return ;
         }
     }];
+}
+
+- (void)bandingWith:(NoticeAreaModel *)areaModel{
+    __weak typeof(self) weakSelf = self;
+    SXBandKcToAccountView *bandView = [[SXBandKcToAccountView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    if (areaModel) {
+        bandView.areaModel = areaModel;
+    }
+    bandView.choiceAreaBolck = ^(BOOL choiceArea) {
+        NoticeAreaViewController *ctl = [[NoticeAreaViewController alloc] init];
+        ctl.adressBlock = ^(NoticeAreaModel *adressModel) {
+            [weakSelf bandingWith:adressModel];
+        };
+        [weakSelf.navigationController pushViewController:ctl animated:YES];
+    };
+    [bandView showView];
 }
 
 @end

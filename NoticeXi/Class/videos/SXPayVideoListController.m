@@ -10,9 +10,9 @@
 #import "SXSearisHeaderView.h"
 #import "SXHasBuySearisListCell.h"
 #import "SXNoBuySearisListCell.h"
-
+#import "NoticeAreaViewController.h"
 #import "SXPayVideoPlayDetailBaseController.h"
-
+#import "SXBandKcToAccountView.h"
 @interface SXPayVideoListController ()
 @property (nonatomic, strong) SXSearisHeaderView *headerView;
 @property (nonatomic, strong) UIView *footView;
@@ -101,7 +101,25 @@
         videoM.is_new = @"0";
         [self.tableView reloadData];
         [self gotoPlayView:videoM commentId:nil];
+    }else{
+        [self bandingWith:nil];
     }
+}
+
+- (void)bandingWith:(NoticeAreaModel *)areaModel{
+    __weak typeof(self) weakSelf = self;
+    SXBandKcToAccountView *bandView = [[SXBandKcToAccountView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    if (areaModel) {
+        bandView.areaModel = areaModel;
+    }
+    bandView.choiceAreaBolck = ^(BOOL choiceArea) {
+        NoticeAreaViewController *ctl = [[NoticeAreaViewController alloc] init];
+        ctl.adressBlock = ^(NoticeAreaModel *adressModel) {
+            [weakSelf bandingWith:adressModel];
+        };
+        [weakSelf.navigationController pushViewController:ctl animated:YES];
+    };
+    [bandView showView];
 }
 
 - (void)gotoPlayView:(SXSearisVideoListModel *)model commentId:(NSString *)commentId{
@@ -171,13 +189,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return self.paySearModel.hasBuy? 85 : 60;
+    return self.paySearModel.hasBuy? 85 : 82;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.paySearModel.hasBuy) {
         SXHasBuySearisListCell *buyedCell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    
         buyedCell.videoModel = self.dataArr[indexPath.row];
         return buyedCell;
     }else{

@@ -20,7 +20,10 @@
 @property (nonatomic, weak)id<KMTagListViewDelegate> delegate_;
 @property (nonatomic, assign) BOOL hasImge;//带图片的标签
 @property (nonatomic, assign) BOOL isChoiceTap;
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, assign) CGFloat ySpace;
 - (void)setupSubViewsWithTitles:(NSArray *)titles;
+- (void)setupVideoSubViewsWithTitles:(NSArray *)titles;
 @property (nonatomic, strong) NSMutableArray *labelItems;
 - (void)setupCustomeSubViewsWithTitles:(NSArray *)titles;//
 - (void)setupCustomeSubViewsWithTitles:(NSArray *)titles defaultStr:(NSString *)defaultStr;

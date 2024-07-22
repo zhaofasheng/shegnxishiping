@@ -222,14 +222,14 @@
     SelPlayerConfiguration *configuration = [[SelPlayerConfiguration alloc]init];
     configuration.isAutoFull = self.isFullPlay;
     configuration.rate = self.rate;
-    configuration.screen = self.currentPlayModel.screen.intValue==2?YES:NO;
+    configuration.screen = self.currentPlayModel.screen.intValue == 2 ? YES : NO;
     configuration.shouldAutoPlay = YES;     //自动播放
-    configuration.supportedDoubleTap = YES;     //支持双击播放暂停
+    configuration.supportedDoubleTap = YES; //支持双击播放暂停
     configuration.shouldAutorotate = YES;   //自动旋转
     configuration.isPay = YES;
-    configuration.repeatPlay = NO;     //重复播放
-    configuration.statusBarHideState = SelStatusBarHideStateAlways;     //设置状态栏隐藏
-    configuration.sourceUrl = [NSURL URLWithString:self.currentPlayModel.video_url];     //设置播放数据源
+    configuration.repeatPlay = NO;  //重复播放
+    configuration.statusBarHideState = SelStatusBarHideStateAlways;  //设置状态栏隐藏
+    configuration.sourceUrl = [NSURL URLWithString:self.currentPlayModel.video_url];  //设置播放数据源
     configuration.videoGravity = SelVideoGravityResizeAspect;   //拉伸方式
     configuration.defalutPlayTime = self.currentPlayModel.schedule.intValue;
     self.currentPlayModel.screen = @"1";
@@ -238,6 +238,7 @@
     _player.playbackControls.choiceView.currentModel = self.currentPlayModel;
     _player.playbackControls.choiceView.searisArr = self.searisArr;
     _player.currentPlayTimeBlock = ^(NSInteger currentTime) {
+        DRLog(@"播放进度");
         if (currentTime >= 5) {
             weakSelf.currentPlayModel.schedule = [NSString stringWithFormat:@"%ld",currentTime];
         }else{

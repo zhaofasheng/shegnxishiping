@@ -10,8 +10,8 @@
 #import "SXSureBuySearisView.h"
 #import "SXBuySearisSuccessController.h"
 #import "NoticeLoginViewController.h"
-#import "CMUUIDManager.h"
-#import "SXKCBuyTypeView.h"
+
+
 @interface SXBuySearisController ()
 @property (nonatomic, strong) SXSureBuySearisView *headerView;
 @property (nonatomic, strong) NSString *ordersn;
@@ -92,63 +92,8 @@
 }
 
 - (void)buyClick{
+    [self sureApplePay];
     
-    if ([NoticeTools getuserId]) {
-        [self sureApplePay];
-    }else{
-        [self showHUD];
-        //获得UUID存入keyChain中
-        NSUUID *UUID=[UIDevice currentDevice].identifierForVendor;
-        NSString *uuid = [CMUUIDManager readUUID];
-        
-        if (uuid==nil) {
-            [CMUUIDManager deleteUUID];
-            [CMUUIDManager saveUUID:UUID.UUIDString];
-            uuid = UUID.UUIDString;
-        }
-        DRLog(@"uuid==%@",uuid);
-        
-        //设备登录
-        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-        [parm setObject:uuid forKey:@"uuid"];
-        [parm setObject:[NoticeSaveModel getVersion] forKey:@"appVersion"];
-        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"users/loginByUuid" Accept:@"application/vnd.shengxi.v5.8.4+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-            [self hideHUD];
-            if (success) {
-                NoticeUserInfoModel *userM = [NoticeUserInfoModel mj_objectWithKeyValues:dict[@"data"]];
-                if (userM.token && userM.token.length > 10) {
-                    [self loginOrNoLoginBuy:userM.token];
-                }else{
-                    [self login];
-                }
-                
-            }else{
-                [self login];
-            }
-        } fail:^(NSError * _Nullable error) {
-            [self hideHUD];
-            [self login];
-        }];
-    }
-}
-
-- (void)loginOrNoLoginBuy:(NSString *)token{
-    __weak typeof(self) weakSelf = self;
-    SXKCBuyTypeView *buyTypeView = [[SXKCBuyTypeView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-    buyTypeView.buyTypeBlock = ^(NSInteger type) {
-        if (type == 0) {
-            [weakSelf login];
-        }else{
-            [SXTools saveLocalToken:token];
-            [self sureApplePay];
-        }
-    };
-    [buyTypeView showTost];
-}
-
-- (void)login{
-    NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
-    [self.navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)sureApplePay{

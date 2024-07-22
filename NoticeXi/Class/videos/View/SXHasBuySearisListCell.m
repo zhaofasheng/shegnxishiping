@@ -24,12 +24,12 @@
         self.titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self.backView addSubview:self.titleL];
         
-        self.totalTimeL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 43, 80, 20)];
+        self.totalTimeL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 44, 80, 17)];
         self.totalTimeL.font = TWOTEXTFONTSIZE;
         self.totalTimeL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         [self.backView addSubview:self.totalTimeL];
         
-        self.statusL = [[UILabel  alloc] initWithFrame:CGRectMake(95, 43, 100, 20)];
+        self.statusL = [[UILabel  alloc] initWithFrame:CGRectMake(95, 44, 100, 20)];
         self.statusL.font = TWOTEXTFONTSIZE;
         self.statusL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         [self.backView addSubview:self.statusL];
@@ -46,17 +46,27 @@
     _videoModel = videoModel;
     self.titleL.text = videoModel.title;
     self.totalTimeL.text = [self getMMSSFromSS:videoModel.video_len];
+    
+    self.comimageV.hidden = NO;
+    self.comL.text = [NSString stringWithFormat:@"%d",videoModel.commentCt.intValue];
+    self.comL.frame = CGRectMake(CGRectGetMaxX(self.comimageV.frame)+2, 44, GET_STRWIDTH(self.comL.text, 12, 17), 17);
+    self.statusL.frame = CGRectMake(CGRectGetMaxX(self.comL.frame)+30, 44, 100, 17);
 
     if (videoModel.schedule.intValue || videoModel.is_finished.boolValue) {
         self.titleL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         self.totalTimeL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         self.statusL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         self.lookImageView.hidden = YES;
+        self.comL.textColor = self.statusL.textColor;
+        self.comimageV.image = UIImageNamed(@"sxsearcomnumh_img");
     }else{
         self.lookImageView.hidden = NO;
         self.titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
         self.totalTimeL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         self.statusL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        
+        self.comL.textColor = self.statusL.textColor;
+        self.comimageV.image = UIImageNamed(@"sxsearcomnum_img");
     }
     
     if (videoModel.is_finished.boolValue) {
@@ -73,6 +83,25 @@
         _newVideoMarkL.hidden = YES;
     }
     
+}
+
+- (UIImageView *)comimageV{
+    if (!_comimageV) {
+        _comimageV = [[UIImageView  alloc] initWithFrame:CGRectMake(95, 46, 12, 12)];
+        _comimageV.image =  UIImageNamed(@"sxsearcomnumh_img");
+        [self.backView addSubview:_comimageV];
+    }
+    return _comimageV;
+}
+
+- (UILabel *)comL{
+    if (!_comL) {
+        _comL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_comimageV.frame)+2, 41, 50, 16)];
+        _comL.font = TWOTEXTFONTSIZE;
+        _comL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        [self.backView addSubview:_comL];
+    }
+    return _comL;
 }
 
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{

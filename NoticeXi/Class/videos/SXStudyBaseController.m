@@ -16,6 +16,10 @@
 #import "JXPagerListRefreshView.h"
 #import "SXBuySearisController.h"
 #import "NoticeMoreClickView.h"
+#import "SXHasBuyKcHeaderView.h"
+#import "SXKCBuyTypeView.h"
+#import "NoticeLoginViewController.h"
+#import "CMUUIDManager.h"
 @interface SXStudyBaseController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 
@@ -29,11 +33,10 @@
 @property (nonatomic, strong) UIView *line;
 
 @property (nonatomic, strong) UIView *imgListView;
-@property (nonatomic, strong) UIImageView *priceBtn;
 @property (nonatomic, strong) UIButton *buyBtn;
 @property (nonatomic, strong) UIView *backView;
 
-@property (nonatomic, strong) UIView *zeroView;
+@property (nonatomic, strong) SXHasBuyKcHeaderView *zeroView;
 @property (nonatomic, assign) BOOL shoCom;
 @property (nonatomic, strong) UILabel *infoButton;
 @property (nonatomic, strong) UILabel *orderButton;
@@ -106,6 +109,7 @@
         [self categoryCurentIndex:2];
         self.shoCom = NO;
     }
+    self.zeroView.paySearModel = self.paySearModel;
     self.comVC.paySearModel = self.paySearModel;
     [self.comVC.tableView reloadData];
     self.videoVC.paySearModel = self.paySearModel;
@@ -131,9 +135,10 @@
     [moreView showTost];
 }
 
-- (UIView *)zeroView{
+- (SXHasBuyKcHeaderView *)zeroView{
     if (!_zeroView) {
-        _zeroView = [[UIView  alloc] initWithFrame:CGRectZero];
+        _zeroView = [[SXHasBuyKcHeaderView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 178)];
+        _zeroView.paySearModel = self.paySearModel;
     }
     return _zeroView;
 }
@@ -158,7 +163,7 @@
 }
 
 - (NSUInteger)tableHeaderViewHeightInPagerView:(JXPagerView *)pagerView {
-    return self.paySearModel.hasBuy?0: self.imgListView.frame.size.height+1;
+    return self.paySearModel.hasBuy ? self.zeroView.frame.size.height: (self.imgListView.frame.size.height+1);
 }
 
 - (NSUInteger)heightForPinSectionHeaderInPagerView:(JXPagerView *)pagerView {
@@ -279,44 +284,42 @@
     [self.view addSubview:backView];
     self.backView = backView;
     
-    self.priceBtn = [[UIImageView  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-335)/2,5, 234, 40)];
-    self.priceBtn.image = UIImageNamed(@"sxpricebak_img");
-    [backView addSubview:self.priceBtn];
+    if ([NoticeTools getuserId]) {
+        UIButton *sendBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-144-80,5, 80, 40)];
+        [sendBtn setBackgroundImage:UIImageNamed(@"sxpricebak_img") forState:UIControlStateNormal];
+        [sendBtn setTitle:@"赠送" forState:UIControlStateNormal];
+        sendBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
+        [sendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [backView addSubview:sendBtn];
+        [sendBtn addTarget:self action:@selector(sendVideoClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+
     
     NSString *price = [NSString stringWithFormat:@"¥%@",self.paySearModel.price];
     NSString *oriprice = [NSString stringWithFormat:@"¥%@",self.paySearModel.original_price];
     
-    CGFloat markWidth = GET_STRWIDTH(@"", 15, 40);
-    CGFloat realPriceWidth = GET_STRWIDTH(price, 21, 40);
+ 
+    CGFloat realPriceWidth = GET_STRWIDTH(price, 20, 40);
     CGFloat oriPriceWidth = GET_STRWIDTH(oriprice, 14, 40);
-    CGFloat orSpace = (self.priceBtn.frame.size.width - markWidth-realPriceWidth-oriPriceWidth-2)/2;
     
-    UILabel *markL = [[UILabel alloc] initWithFrame:CGRectMake(orSpace, 0, markWidth, 40)];
-    markL.font = FIFTHTEENTEXTFONTSIZE;
-    markL.textColor = [UIColor whiteColor];
-    markL.text = @"";
-    markL.textAlignment = NSTextAlignmentCenter;
-    [self.priceBtn addSubview:markL];
-    
-    UILabel *realPriceL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(markL.frame)+2, 0, realPriceWidth, 40)];
+
+    UILabel *realPriceL = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, realPriceWidth, 35)];
     realPriceL.font = SXNUMBERFONT(20);
-    realPriceL.textColor = [UIColor whiteColor];
+    realPriceL.textColor = [UIColor colorWithHexString:@"#FF4B98"];
     realPriceL.text = price;
-    realPriceL.textAlignment = NSTextAlignmentCenter;
-    [self.priceBtn addSubview:realPriceL];
+    [self.backView addSubview:realPriceL];
     
-    UILabel *oripriceL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(realPriceL.frame), 0, oriPriceWidth, 40)];
+    UILabel *oripriceL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(realPriceL.frame), 5, oriPriceWidth, 35)];
     oripriceL.font = SXNUMBERFONT(14);
-    oripriceL.textColor = [UIColor whiteColor];
+    oripriceL.textColor = [UIColor colorWithHexString:@"#FF4B98"];
     oripriceL.text = oriprice;
-    oripriceL.textAlignment = NSTextAlignmentCenter;
-    [self.priceBtn addSubview:oripriceL];
+    [self.backView addSubview:oripriceL];
     
-    UIView *line = [[UIView  alloc] initWithFrame:CGRectMake(0, 39/2, oriPriceWidth, 1)];
-    line.backgroundColor = [UIColor whiteColor];
+    UIView *line = [[UIView  alloc] initWithFrame:CGRectMake(0, 34/2, oriPriceWidth-2, 1)];
+    line.backgroundColor = [UIColor colorWithHexString:@"#FF4B98"];
     [oripriceL addSubview:line];
     
-    self.buyBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-self.priceBtn.frame.origin.x-116, self.priceBtn.frame.origin.y, 116, 40)];
+    self.buyBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-20-112, 5, 112, 40)];
     [self.buyBtn setBackgroundImage:UIImageNamed(@"sxbuyBtn_img") forState:UIControlStateNormal];
     self.buyBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
     [self.buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -325,8 +328,56 @@
     [self.buyBtn addTarget:self action:@selector(buyClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)buyClick{
+//赠送课程
+- (void)sendVideoClick{
+    
+}
 
+//购买课程
+- (void)buyClick{
+    
+    if ([NoticeTools getuserId]) {
+        [self sureApplePay];
+    }else{
+        [self showHUD];
+        //获得UUID存入keyChain中
+        NSUUID *UUID=[UIDevice currentDevice].identifierForVendor;
+        NSString *uuid = [CMUUIDManager readUUID];
+        
+        if (uuid==nil) {
+            [CMUUIDManager deleteUUID];
+            [CMUUIDManager saveUUID:UUID.UUIDString];
+            uuid = UUID.UUIDString;
+        }
+        DRLog(@"uuid==%@",uuid);
+        
+        //设备登录
+        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+        [parm setObject:uuid forKey:@"uuid"];
+        [parm setObject:[NoticeSaveModel getVersion] forKey:@"appVersion"];
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"users/loginByUuid" Accept:@"application/vnd.shengxi.v5.8.4+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            [self hideHUD];
+            if (success) {
+                NoticeUserInfoModel *userM = [NoticeUserInfoModel mj_objectWithKeyValues:dict[@"data"]];
+                if (userM.token && userM.token.length > 10) {
+                    [self loginOrNoLoginBuy:userM.token];
+                }else{
+                    [self login];
+                }
+                
+            }else{
+                [self login];
+            }
+        } fail:^(NSError * _Nullable error) {
+            [self hideHUD];
+            [self login];
+        }];
+    }
+
+}
+
+- (void)sureApplePay{
+    
     SXBuySearisController *ctl = [[SXBuySearisController alloc] init];
     ctl.paySearModel = self.paySearModel;
     __weak typeof(self) weakSelf = self;
@@ -350,8 +401,28 @@
     [self.navigationController pushViewController:ctl animated:YES];
 }
 
+- (void)loginOrNoLoginBuy:(NSString *)token{
+    __weak typeof(self) weakSelf = self;
+    SXKCBuyTypeView *buyTypeView = [[SXKCBuyTypeView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    buyTypeView.buyTypeBlock = ^(NSInteger type) {
+        if (type == 0) {
+            [weakSelf login];
+        }else{
+            [SXTools saveLocalToken:token];
+            [self sureApplePay];
+        }
+    };
+    [buyTypeView showTost];
+}
+
+- (void)login{
+    NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+    [self.navigationController pushViewController:ctl animated:YES];
+}
+
+
 - (void)mainTableViewDidScroll:(UIScrollView *)scrollView{
-    DRLog(@"%.f",scrollView.contentOffset.y);
+   
     CGFloat progress = 1/self.imgListView.frame.size.height;
     CGFloat value = scrollView.contentOffset.y * progress;
     self.navBarView.titleL.alpha = value;

@@ -12,7 +12,7 @@
 @property (nonatomic, assign) BOOL isChoice;
 - (void)setupWithColorText:(NSString*)text;
 - (void)setupWithText:(NSString*)text;
-
+- (void)setupVideoWithText:(NSString*)text;
 - (void)setupCousTumeWithText:(NSString*)text;
 
 @end

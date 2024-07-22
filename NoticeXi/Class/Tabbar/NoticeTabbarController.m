@@ -8,7 +8,7 @@
 
 #import "NoticeTabbarController.h"
 #import "BaseNavigationController.h"
-#import "NoticeVideosController.h"
+#import "SXFreeVideoBaseController.h"
 #import "SXTelBaseController.h"
 #import "NoticeMineController.h"
 #import "NoticeYunXin.h"
@@ -75,11 +75,11 @@
 
 - (void)addChildViewControllers{
 // 创建选项卡的数据 想怎么写看自己，这块我就写笨点了
-//#import "NoticeVideosController.h"
+//#import "SXFreeVideoBaseController.h"
 //#import "SXTelBaseController.h"
 //#import "NoticeMineController.h"
 
-    NSArray *arr = @[[[BaseNavigationController alloc] initWithRootViewController:[[NoticeVideosController alloc] init]],
+    NSArray *arr = @[[[BaseNavigationController alloc] initWithRootViewController:[[SXFreeVideoBaseController alloc] init]],
                      [[BaseNavigationController alloc] initWithRootViewController:[[SXPayForVideosController alloc] init]],
                      [[BaseNavigationController alloc] initWithRootViewController:[[SXTelBaseController alloc] init]],
                      [[BaseNavigationController alloc] initWithRootViewController:[[NoticeMineController alloc] init]]];

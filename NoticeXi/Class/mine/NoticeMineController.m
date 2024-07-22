@@ -321,6 +321,15 @@
         [_noLoginView addSubview:button];
         [button addTarget:self action:@selector(loginClick) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_noLoginView];
+        
+        UILabel *connectL = [[UILabel  alloc] initWithFrame:CGRectMake(15, STATUS_BAR_HEIGHT+20, DR_SCREEN_WIDTH-30, 44)];
+        connectL.text = @"有问题请联系：邮箱xxxxxxxx";
+        connectL.font = FIFTHTEENTEXTFONTSIZE;
+        connectL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        connectL.textAlignment = NSTextAlignmentCenter;
+        connectL.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+        [connectL setAllCorner:8];
+        [_noLoginView addSubview:connectL];
     }
     return _noLoginView;
 }

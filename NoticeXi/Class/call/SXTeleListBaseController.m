@@ -9,7 +9,6 @@
 #import "SXTeleListBaseController.h"
 #import "NoticeTelController.h"
 #import "SXGoodsInfoModel.h"
-#import "SXGoodsInfoModel.h"
 @interface SXTeleListBaseController ()
 @property (nonatomic, strong) NSMutableArray *titleArr;
 @property (nonatomic, strong) NSMutableArray *controllArr;

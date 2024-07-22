@@ -110,10 +110,16 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 
 //用户录屏的时候暂停播放视频
 - (void)screenshots{
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdel.pipVC.isPictureInPictureActive) {
+        //关闭画中画
+        DRLog(@"监听到录屏关闭画中画");
+        [appdel.pipVC stopPictureInPicture];
+        appdel.pipVC = [[AVPictureInPictureController alloc] initWithPlayerLayer:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)].layer];
+    }
     [self _pauseVideo];
     [self.alerView removeFromSuperview];
     [self.alerView showXLAlertView];
-
 }
 
 /** 屏幕翻转监听事件 */

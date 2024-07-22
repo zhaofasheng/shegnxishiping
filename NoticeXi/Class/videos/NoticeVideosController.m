@@ -8,14 +8,11 @@
 
 #import "NoticeVideosController.h"
 #import "NoticeVideoCollectionViewCell.h"
-#import "SXSearchVideoController.h"
+
 #import "NoticeLoginViewController.h"
 #import "SXPlayFullListController.h"
 #import "SXPlayDetailController.h"
 #import "SXUserHowController.h"
-#import "SXHowToUseView.h"
-
-
 
 static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCell";
 
@@ -34,7 +31,8 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     self.navBarView.hidden = YES;
     self.pageNo = 1;
     
-    [[LogManager sharedInstance] checkLogNeedUpload];
+
+    self.collectionView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-43);
     
     [self.collectionView registerClass:[NoticeVideoCollectionViewCell class] forCellWithReuseIdentifier:DRMerchantCollectionViewCellID];
     
@@ -52,31 +50,8 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         [weakSelf request];
     }];
     
-    UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-30, 36)];
-    [searchBtn setAllCorner:18];
-    searchBtn.backgroundColor = [[UIColor colorWithHexString:@"#F0F1F5"] colorWithAlphaComponent:1];
-    UIImageView *searImg = [[UIImageView alloc] initWithFrame:CGRectMake(15, 8, 20, 20)];
-    searImg.image = UIImageNamed(@"Image_newsearchss");
-    [searchBtn addSubview:searImg];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(36, 0, searchBtn.frame.size.width-40, 36)];
-    label.text = @"搜索视频";
-    label.font = FOURTHTEENTEXTFONTSIZE;
-    label.textColor = [[UIColor colorWithHexString:@"#8A8F99"] colorWithAlphaComponent:1];
-    [searchBtn addSubview:label];
-    [searchBtn addTarget:self action:@selector(searchClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:searchBtn];
-    
-    //谁在首页谁需要实现这个功能
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin) name:@"outLoginClearDataNOTICATION" object:nil];
     [self request];
-    
-    if ([SXTools isHowTouseOnThisDeveice]) {//执行引导页
-        SXHowToUseView *useView = [[SXHowToUseView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-        [useView showInfoView];
-        [SXTools setKnowUse];
-    }
+
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -89,28 +64,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             appdel.needPushHowuse = NO;
         }
     }
-}
-
-- (void)searchClick{
-
-    if (![NoticeTools getuserId]) {
-        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
-        [self.navigationController pushViewController:ctl animated:YES];
-        return;
-    }
-    
-    SXSearchVideoController *ctl = [[SXSearchVideoController alloc] init];
-    CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
-                                                                    withSubType:kCATransitionFromLeft
-                                                                       duration:0.3f
-                                                                 timingFunction:kCAMediaTimingFunctionLinear
-                                                                           view:self.navigationController.view];
-    [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
-    [self.navigationController pushViewController:ctl animated:NO];
-}
-
-- (void)outLogin{
-    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)hasNetWork{
