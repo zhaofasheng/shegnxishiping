@@ -40,6 +40,22 @@
         UITapGestureRecognizer *userCenterTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userCenter)];
         [self.infoView addGestureRecognizer:userCenterTap];
         
+        _likeL = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 0, 40)];
+        _likeL.font = FOURTHTEENTEXTFONTSIZE;
+        _likeL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        [self.infoView addSubview:_likeL];
+        _likeL.hidden = YES;
+        _likeL.userInteractionEnabled = YES;
+        UITapGestureRecognizer *likeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeClick)];
+        [_likeL addGestureRecognizer:likeTap];
+        
+        self.likeImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(self.infoView.frame.size.width-8-16,12, 16, 16)];
+        self.likeImageView.userInteractionEnabled = YES;
+        self.likeImageView.image = UIImageNamed(@"sx_like_noimg");
+        [self.infoView addSubview:self.likeImageView];
+        UITapGestureRecognizer *likeTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeClick)];
+        [self.likeImageView addGestureRecognizer:likeTap1];
+        
         self.timeL = [[UILabel alloc] init];
         self.timeL.font = [UIFont systemFontOfSize:11];
         self.timeL.textColor = [UIColor whiteColor];
@@ -83,6 +99,32 @@
     CGFloat width = GET_STRWIDTH(self.timeL.text, 11, 16)+6;
     self.timeL.frame = CGRectMake(self.frame.size.width-width-8, 8, width, 16);
     [self.videoCoverImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.video_cover_url]];
+}
+
+- (void)likeClick{
+    
+}
+
+- (void)setShowSCbutton:(BOOL)showSCbutton{
+    _showSCbutton = showSCbutton;
+    if (showSCbutton) {
+        self.scButton.hidden = NO;
+    }
+}
+
+- (UIButton *)scButton{
+    if (!_scButton) {
+        _scButton = [[UIButton  alloc] initWithFrame:CGRectMake(8, 8, 32, 32)];
+        [self.contentView addSubview:_scButton];
+        
+        [_scButton setBackgroundImage:UIImageNamed(@"sx_scvideos_img") forState:UIControlStateNormal];
+        [_scButton addTarget:self action:@selector(scClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _scButton;
+}
+
+- (void)scClick{
+    
 }
 
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{

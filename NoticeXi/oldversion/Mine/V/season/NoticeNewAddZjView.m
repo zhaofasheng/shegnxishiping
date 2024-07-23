@@ -145,7 +145,7 @@
     self.backView.frame = CGRectMake(0, DR_SCREEN_HEIGHT, DR_SCREEN_WIDTH, self.backView.frame.size.height);
 }
 
-- (void) textFieldDidChange:(id) sender {
+- (void)textFieldDidChange:(id) sender {
     UITextField *_field = (UITextField *)sender;
     self.numL.text = [NSString stringWithFormat:@"%ld",_field.text.length];
     self.markL.hidden = _field.text.length>20?NO:YES;

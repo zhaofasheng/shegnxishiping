@@ -14,12 +14,18 @@
 #import "SXSearchVideoController.h"
 #import "NoticeLoginViewController.h"
 #import "SXVideoTagsView.h"
+#import "SXHasUpdateKcModel.h"
+#import "SXStudyBaseController.h"
 @interface SXFreeVideoBaseController ()
 @property (nonatomic, strong) NSMutableArray *titleArr;
 @property (nonatomic, strong) NSMutableArray *controllArr;
 @property (nonatomic, strong) NSMutableArray *cataArr;
 @property (nonatomic, strong) SXVideoTagsView *tagsView;
 @property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, strong) UILabel *newKcL;
+@property (nonatomic, strong) UIView *redView;
+@property (nonatomic, strong) UIButton *searchButton;
+@property (nonatomic, strong) SXHasUpdateKcModel *kcModel;
 @end
 
 @implementation SXFreeVideoBaseController
@@ -90,11 +96,13 @@
     
     
     UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-30, 36)];
-    [searchBtn setAllCorner:18];
+    searchBtn.layer.cornerRadius = 18;
+    searchBtn.layer.masksToBounds = YES;
     searchBtn.backgroundColor = [[UIColor colorWithHexString:@"#F0F1F5"] colorWithAlphaComponent:1];
     UIImageView *searImg = [[UIImageView alloc] initWithFrame:CGRectMake(15, 8, 20, 20)];
     searImg.image = UIImageNamed(@"Image_newsearchss");
     [searchBtn addSubview:searImg];
+    self.searchButton = searchBtn;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(36, 0, searchBtn.frame.size.width-40, 36)];
     label.text = @"搜索视频";
@@ -124,6 +132,95 @@
     tagsImg.image = UIImageNamed(@"sx_videotags_img");
     [tagsView addSubview:tagsImg];
     
+}
+
+- (UILabel *)newKcL{
+    if (!_newKcL) {
+        _newKcL = [[UILabel  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-96, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, 96, 36)];
+        _newKcL.backgroundColor = [UIColor colorWithHexString:@"#D8F361"];
+        _newKcL.font = FOURTHTEENTEXTFONTSIZE;
+        _newKcL.textAlignment = NSTextAlignmentCenter;
+        _newKcL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [_newKcL setAllCorner:18];
+        [self.view addSubview:_newKcL];
+        _newKcL.text = @"开新课程啦";
+        
+        self.redView = [[UIView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_newKcL.frame)-7.5, _newKcL.frame.origin.y, 10, 10)];
+        self.redView.backgroundColor = [UIColor colorWithHexString:@"#EE4B4E"];
+        [self.redView setAllCorner:5];
+        [self.view addSubview:self.redView];
+        
+        _newKcL.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(lookKcTap)];
+        [_newKcL addGestureRecognizer:tap];
+    }
+    return _newKcL;
+}
+
+- (void)lookKcTap{
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoSeries/readNotice" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+      
+    } fail:^(NSError * _Nullable error) {
+    }];
+    
+    self.newKcL.hidden = YES;
+    self.redView.hidden = YES;
+    if (self.kcModel.type.intValue > 0) {
+        if (self.kcModel.type.intValue == 2) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICEFORLOOKKC" object:nil];
+        }else if (self.kcModel.type.intValue == 1){
+            [self showHUD];
+            [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",self.kcModel.seriesId] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+                [self hideHUD];
+                if (success) {
+                    if ([dict[@"data"] isEqual:[NSNull null]]) {
+                        return;
+                    }
+                    SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
+                    if (!searismodel) {
+                        return;
+                    }
+          
+                    SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
+                    ctl.paySearModel = searismodel;
+                    [self.navigationController pushViewController:ctl animated:YES];
+                 
+                }
+                
+            } fail:^(NSError *error) {
+                [self hideHUD];
+            }];
+        }
+    }
+    self.kcModel.type = @"0";
+    [UIView animateWithDuration:0.3 animations:^{
+        self.searchButton.frame = CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-30, 36);
+    }];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self refreshIfHasNew];
+}
+
+- (void)refreshIfHasNew{
+
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoSeries/getNotice" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            self.kcModel = [SXHasUpdateKcModel mj_objectWithKeyValues:dict[@"data"]];
+            if (self.kcModel.type.intValue > 0) {
+                [UIView animateWithDuration:0.2 animations:^{
+                    self.searchButton.frame = CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-96-45, 36);
+                } completion:^(BOOL finished) {
+                    self.newKcL.hidden = NO;
+                    self.redView.hidden = NO;
+                }];
+            }
+        }
+    } fail:^(NSError * _Nullable error) {
+        
+    }];
 }
 
 - (void)tagsClick{

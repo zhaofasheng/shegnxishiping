@@ -97,7 +97,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
         [self configureVolume];
         [self addGestureRecognizer:self.panRecognizer];
     }else{
-        self.slider.frame = CGRectMake(15, self.frame.size.height-8, self.frame.size.width-30, 16);
+        self.slider.frame = CGRectMake(15, self.frame.size.height-16, self.frame.size.width-30, 16);
         self.playTimeLabel.hidden = YES;
         self.totalTimeLabel.hidden = YES;
         self.nomerLabel.hidden = NO;

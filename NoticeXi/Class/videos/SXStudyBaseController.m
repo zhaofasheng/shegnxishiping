@@ -20,6 +20,7 @@
 #import "SXKCBuyTypeView.h"
 #import "NoticeLoginViewController.h"
 #import "CMUUIDManager.h"
+#import "SXBuyKcCardController.h"
 @interface SXStudyBaseController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 
@@ -139,6 +140,14 @@
     if (!_zeroView) {
         _zeroView = [[SXHasBuyKcHeaderView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 178)];
         _zeroView.paySearModel = self.paySearModel;
+        __weak typeof(self) weakSelf = self;
+        _zeroView.buyTypeBolck = ^(BOOL isSend) {
+            if (isSend) {
+                [weakSelf sendVideoClick];
+            }else{
+                [weakSelf buyClick];
+            }
+        };
     }
     return _zeroView;
 }
@@ -330,7 +339,9 @@
 
 //赠送课程
 - (void)sendVideoClick{
-    
+    SXBuyKcCardController *ctl = [[SXBuyKcCardController alloc] init];
+    ctl.paySearModel = self.paySearModel;
+    [self.navigationController pushViewController:ctl animated:YES];
 }
 
 //购买课程

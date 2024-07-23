@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *contentL;
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *timeL;
+@property (nonatomic, assign) BOOL showSCbutton;
+@property (nonatomic, strong) UIButton *scButton;
+@property (nonatomic, strong) UIImageView *likeImageView;
+@property (nonatomic, strong) UILabel *likeL;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -29,10 +29,9 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navBarView.hidden = YES;
-    self.pageNo = 1;
-    
-
     self.collectionView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-43);
+    
+    self.pageNo = 1;
     
     [self.collectionView registerClass:[NoticeVideoCollectionViewCell class] forCellWithReuseIdentifier:DRMerchantCollectionViewCellID];
     

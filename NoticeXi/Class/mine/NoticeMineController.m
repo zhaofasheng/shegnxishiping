@@ -22,6 +22,8 @@
 #import "NoticeStaySys.h"
 #import "SXHasBuyOrderListController.h"
 #import "SXUserHowController.h"
+#import "SXCollectionedVideoController.h"
+#import "SXKcCardlistBaseController.h"
 @interface NoticeMineController ()
 @property (nonatomic, strong) NoticeNewCenterNavView *navView;
 @property (nonatomic, strong) SXUserCenterHeader *headerView;
@@ -29,6 +31,8 @@
 @property (nonatomic, strong) NSArray *section0imgArr;
 @property (nonatomic, strong) NSArray *section0titleArr;
 
+@property (nonatomic, strong) NSArray *section1imgArr;
+@property (nonatomic, strong) NSArray *section1titleArr;
 
 @property (nonatomic, strong) NSArray *section2imgArr;
 @property (nonatomic, strong) NSArray *section2titleArr;
@@ -49,10 +53,12 @@
     [super viewDidLoad];
     self.navBarView.hidden = YES;
     
-    self.section0titleArr = @[@"课程订单",@"已购课程",@"我的店铺",@"店铺认证"];
+    self.section0titleArr = @[@"课程订单",@"我的课程",@"礼品卡"];
+    self.section1titleArr = @[@"收藏的视频",@"播放记录"];
     self.section2titleArr = @[@"缓存",@"联系客服",@"声昔使用手册",@"设置"];
     
-    self.section0imgArr = @[@"sxorder_img",@"sxhasbuyed_img"];
+    self.section0imgArr = @[@"sxorder_img",@"sxhasbuyed_img",@"sx_licard_img"];
+    self.section1imgArr = @[@"sx_collvideo_img",@"sx_playrecorder_img"];
     self.section2imgArr = @[@"sxdownvideo_img",@"sxconnectkf_img",@"sx_sxuseteace_img",@"sxset_img"];
     
     
@@ -229,10 +235,18 @@
         }else if (indexPath.row == 0){
             SXHasBuyOrderListController *ctl = [[SXHasBuyOrderListController alloc] init];
             [self.navigationController pushViewController:ctl animated:YES];
+        }else if (indexPath.row == 2){
+            SXKcCardlistBaseController *ctl = [[SXKcCardlistBaseController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
         }
     }
-   
     if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            SXCollectionedVideoController *ctl = [[SXCollectionedVideoController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+        }
+    }
+    if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             NoticeVoiceDownLoadController *ctl = [[NoticeVoiceDownLoadController alloc] init];
             [self.navigationController pushViewController:ctl animated:YES];
@@ -266,12 +280,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
         return self.section0imgArr.count;
+    }else if (section == 1){
+        return self.section1imgArr.count;
     }
     return self.section2imgArr.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -288,7 +304,16 @@
         }else if(indexPath.row == self.section0imgArr.count-1){
             [cell.backView setCornerOnBottom:10];
         }
-    }else{
+    }else if (indexPath.section == 1){
+        cell.titleImageView.image = UIImageNamed(self.section1imgArr[indexPath.row]);
+        cell.titleL.text = self.section1titleArr[indexPath.row];
+        if (indexPath.row == 0) {
+            [cell.backView setCornerOnTop:10];
+        }else if(indexPath.row == self.section0imgArr.count-1){
+            [cell.backView setCornerOnBottom:10];
+        }
+    }
+    else{
         cell.titleImageView.image = UIImageNamed(self.section2imgArr[indexPath.row]);
         cell.titleL.text = self.section2titleArr[indexPath.row];
         if (indexPath.row == 0) {
@@ -323,7 +348,7 @@
         [self.view addSubview:_noLoginView];
         
         UILabel *connectL = [[UILabel  alloc] initWithFrame:CGRectMake(15, STATUS_BAR_HEIGHT+20, DR_SCREEN_WIDTH-30, 44)];
-        connectL.text = @"有问题请联系：邮箱xxxxxxxx";
+        connectL.text = @"有问题请联系：邮箱1299741779@qq.com";
         connectL.font = FIFTHTEENTEXTFONTSIZE;
         connectL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         connectL.textAlignment = NSTextAlignmentCenter;

@@ -76,6 +76,7 @@
 - (void)setVideoHeight{
     
     [_layoutAttributes removeAllObjects];
+    
     NSInteger column = self.columnCount;
     NSInteger section = 0;
     NSInteger numberOfItem = [self.collectionView numberOfItemsInSection:section];
@@ -116,6 +117,7 @@
         allColumnMaxY[itemColumn] = @(CGRectGetMaxY(itemRect));
     }
     _heightsForColumnArray = allColumnMaxY;
+    
 }
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect
@@ -148,6 +150,7 @@
     if (!_layoutAttributes)
     {
         _layoutAttributes = [NSMutableArray<UICollectionViewLayoutAttributes *> array];
+        
     }
     return _layoutAttributes;
 }

@@ -47,10 +47,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTwoBdge) name:@"SHOWBUDGENOTICE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideTwoBdge) name:@"HIDEBUDGENOTICE" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lookKc) name:@"NOTICEFORLOOKKC" object:nil];
+    
 }
 
 - (void)showTwoBdge{
     [self.tabBar showBadgeOnItemIndex:1];
+}
+
+- (void)lookKc{
+    [self axcAE_TabBar:self.axcTabBar selectIndex:1];
 }
 
 - (void)hideTwoBdge{

@@ -101,7 +101,7 @@
 
 - (SXVideosComClickView *)clickView{
     if (!_clickView) {
-        _clickView = [[SXVideosComClickView  alloc] initWithFrame:CGRectMake(15, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT+ (IPHONE_X?10:5), DR_SCREEN_WIDTH-30, 40)];
+        _clickView = [[SXVideosComClickView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, TAB_BAR_HEIGHT)];
         [self.contentView addSubview:_clickView];
         __weak typeof(self) weakSelf = self;
         _clickView.comClickBlock = ^(BOOL click) {

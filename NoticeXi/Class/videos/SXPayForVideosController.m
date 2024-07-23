@@ -102,7 +102,7 @@
     UIView *headerView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 80)];
     self.tableView.tableHeaderView = headerView;
     
-    NSArray *titleArr = @[@"已购课程",@"课程评论",@"点赞消息"];
+    NSArray *titleArr = @[@"我的课程",@"课程评论",@"点赞消息"];
     NSArray *imgArr = @[@"sx_hasbuy_img1",@"sx_hasbuy_img2",@"sx_hasbuy_img3"];
     CGFloat width = (DR_SCREEN_WIDTH-44)/3;
     for (int i = 0; i < 3; i++) {
@@ -161,12 +161,16 @@
     [self createRefesh];
     
     [self request];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lookKc) name:@"NOTICEFORLOOKKC" object:nil];
     //用户登录通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     //用户退出登录通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"outLoginClearDataNOTICATION" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestNoread) name:@"NOTICENOREADNUMMESSAGE" object:nil];
+}
+
+- (void)lookKc{
+    [self refreshList];
 }
 
 

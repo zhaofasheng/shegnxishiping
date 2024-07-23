@@ -1487,6 +1487,24 @@
 		FE96C4C02C1ACEE1005AB5FE /* SXGetOrderTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4BF2C1ACEE1005AB5FE /* SXGetOrderTimer.m */; };
 		FE96C4C32C1C12B4005AB5FE /* SXTcallTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE96C4C22C1C12B4005AB5FE /* SXTcallTimer.m */; };
 		FE979D5C2C4E55CF00161B7B /* SXBandKcToAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D5B2C4E55CF00161B7B /* SXBandKcToAccountView.m */; };
+		FE979D5F2C4F451600161B7B /* SXScVideoToAlbumView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D5E2C4F451600161B7B /* SXScVideoToAlbumView.m */; };
+		FE979D622C4F460200161B7B /* SXVideoZjToastListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D612C4F460200161B7B /* SXVideoZjToastListCell.m */; };
+		FE979D652C4F4B2700161B7B /* SXAddVideoZjView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D642C4F4B2700161B7B /* SXAddVideoZjView.m */; };
+		FE979D682C4F508100161B7B /* SXCollectionedVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D672C4F508100161B7B /* SXCollectionedVideoController.m */; };
+		FE979D6B2C4F510400161B7B /* SXScVideoAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D6A2C4F510400161B7B /* SXScVideoAlbumCell.m */; };
+		FE979D6E2C4F54ED00161B7B /* SXVideosForAlbumController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D6D2C4F54ED00161B7B /* SXVideosForAlbumController.m */; };
+		FE979D712C4F5A8E00161B7B /* SXAlbumReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D702C4F5A8E00161B7B /* SXAlbumReusableView.m */; };
+		FE979D742C4F7F3700161B7B /* SYStickHeaderWaterFallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D722C4F7F3700161B7B /* SYStickHeaderWaterFallLayout.m */; };
+		FE979D772C4F867000161B7B /* SXHasUpdateKcModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D762C4F867000161B7B /* SXHasUpdateKcModel.m */; };
+		FE979D7A2C4F8FB200161B7B /* SXBuyKcCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D792C4F8FB200161B7B /* SXBuyKcCardController.m */; };
+		FE979D7D2C4F91D000161B7B /* SXBuyKcCardHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D7C2C4F91D000161B7B /* SXBuyKcCardHeaderView.m */; };
+		FE979D802C4F998600161B7B /* SXBuyCardSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D7F2C4F998600161B7B /* SXBuyCardSuccessController.m */; };
+		FE979D832C4FA3EB00161B7B /* SXKcCardlistBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D822C4FA3EB00161B7B /* SXKcCardlistBaseController.m */; };
+		FE979D862C4FA3FE00161B7B /* SXKcCardListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D852C4FA3FE00161B7B /* SXKcCardListController.m */; };
+		FE979D892C4FA44900161B7B /* SXKcCardDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D882C4FA44900161B7B /* SXKcCardDetailController.m */; };
+		FE979D8C2C4FA78600161B7B /* SXkcCardListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D8B2C4FA78600161B7B /* SXkcCardListCell.m */; };
+		FE979D8F2C4FB33500161B7B /* SXSendWordView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D8E2C4FB33500161B7B /* SXSendWordView.m */; };
+		FE979D922C4FBA9500161B7B /* SXKcBuyChoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D912C4FBA9500161B7B /* SXKcBuyChoiceView.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -4423,6 +4441,42 @@
 		FE96C4C22C1C12B4005AB5FE /* SXTcallTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXTcallTimer.m; sourceTree = "<group>"; };
 		FE979D5A2C4E55CF00161B7B /* SXBandKcToAccountView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBandKcToAccountView.h; sourceTree = "<group>"; };
 		FE979D5B2C4E55CF00161B7B /* SXBandKcToAccountView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBandKcToAccountView.m; sourceTree = "<group>"; };
+		FE979D5D2C4F451600161B7B /* SXScVideoToAlbumView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXScVideoToAlbumView.h; sourceTree = "<group>"; };
+		FE979D5E2C4F451600161B7B /* SXScVideoToAlbumView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXScVideoToAlbumView.m; sourceTree = "<group>"; };
+		FE979D602C4F460200161B7B /* SXVideoZjToastListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideoZjToastListCell.h; sourceTree = "<group>"; };
+		FE979D612C4F460200161B7B /* SXVideoZjToastListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoZjToastListCell.m; sourceTree = "<group>"; };
+		FE979D632C4F4B2700161B7B /* SXAddVideoZjView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXAddVideoZjView.h; sourceTree = "<group>"; };
+		FE979D642C4F4B2700161B7B /* SXAddVideoZjView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXAddVideoZjView.m; sourceTree = "<group>"; };
+		FE979D662C4F508100161B7B /* SXCollectionedVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXCollectionedVideoController.h; sourceTree = "<group>"; };
+		FE979D672C4F508100161B7B /* SXCollectionedVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXCollectionedVideoController.m; sourceTree = "<group>"; };
+		FE979D692C4F510400161B7B /* SXScVideoAlbumCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXScVideoAlbumCell.h; sourceTree = "<group>"; };
+		FE979D6A2C4F510400161B7B /* SXScVideoAlbumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXScVideoAlbumCell.m; sourceTree = "<group>"; };
+		FE979D6C2C4F54ED00161B7B /* SXVideosForAlbumController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXVideosForAlbumController.h; sourceTree = "<group>"; };
+		FE979D6D2C4F54ED00161B7B /* SXVideosForAlbumController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideosForAlbumController.m; sourceTree = "<group>"; };
+		FE979D6F2C4F5A8E00161B7B /* SXAlbumReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXAlbumReusableView.h; sourceTree = "<group>"; };
+		FE979D702C4F5A8E00161B7B /* SXAlbumReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXAlbumReusableView.m; sourceTree = "<group>"; };
+		FE979D722C4F7F3700161B7B /* SYStickHeaderWaterFallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYStickHeaderWaterFallLayout.m; sourceTree = "<group>"; };
+		FE979D732C4F7F3700161B7B /* SYStickHeaderWaterFallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYStickHeaderWaterFallLayout.h; sourceTree = "<group>"; };
+		FE979D752C4F867000161B7B /* SXHasUpdateKcModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHasUpdateKcModel.h; sourceTree = "<group>"; };
+		FE979D762C4F867000161B7B /* SXHasUpdateKcModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHasUpdateKcModel.m; sourceTree = "<group>"; };
+		FE979D782C4F8FB200161B7B /* SXBuyKcCardController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuyKcCardController.h; sourceTree = "<group>"; };
+		FE979D792C4F8FB200161B7B /* SXBuyKcCardController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuyKcCardController.m; sourceTree = "<group>"; };
+		FE979D7B2C4F91D000161B7B /* SXBuyKcCardHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuyKcCardHeaderView.h; sourceTree = "<group>"; };
+		FE979D7C2C4F91D000161B7B /* SXBuyKcCardHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuyKcCardHeaderView.m; sourceTree = "<group>"; };
+		FE979D7E2C4F998600161B7B /* SXBuyCardSuccessController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuyCardSuccessController.h; sourceTree = "<group>"; };
+		FE979D7F2C4F998600161B7B /* SXBuyCardSuccessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuyCardSuccessController.m; sourceTree = "<group>"; };
+		FE979D812C4FA3EB00161B7B /* SXKcCardlistBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcCardlistBaseController.h; sourceTree = "<group>"; };
+		FE979D822C4FA3EB00161B7B /* SXKcCardlistBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcCardlistBaseController.m; sourceTree = "<group>"; };
+		FE979D842C4FA3FE00161B7B /* SXKcCardListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcCardListController.h; sourceTree = "<group>"; };
+		FE979D852C4FA3FE00161B7B /* SXKcCardListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcCardListController.m; sourceTree = "<group>"; };
+		FE979D872C4FA44900161B7B /* SXKcCardDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcCardDetailController.h; sourceTree = "<group>"; };
+		FE979D882C4FA44900161B7B /* SXKcCardDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcCardDetailController.m; sourceTree = "<group>"; };
+		FE979D8A2C4FA78600161B7B /* SXkcCardListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXkcCardListCell.h; sourceTree = "<group>"; };
+		FE979D8B2C4FA78600161B7B /* SXkcCardListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXkcCardListCell.m; sourceTree = "<group>"; };
+		FE979D8D2C4FB33500161B7B /* SXSendWordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSendWordView.h; sourceTree = "<group>"; };
+		FE979D8E2C4FB33500161B7B /* SXSendWordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXSendWordView.m; sourceTree = "<group>"; };
+		FE979D902C4FBA9500161B7B /* SXKcBuyChoiceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcBuyChoiceView.h; sourceTree = "<group>"; };
+		FE979D912C4FBA9500161B7B /* SXKcBuyChoiceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcBuyChoiceView.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -8602,6 +8656,8 @@
 				A4E9645F2A69141F00AE022E /* CLPlayer */,
 				A4E964792A69141F00AE022E /* BaseCell.h */,
 				A4E9645E2A69141F00AE022E /* BaseCell.m */,
+				FE979D732C4F7F3700161B7B /* SYStickHeaderWaterFallLayout.h */,
+				FE979D722C4F7F3700161B7B /* SYStickHeaderWaterFallLayout.m */,
 				FEBCADDA2B8361C30048F5A1 /* NoticeBaseListController.h */,
 				FEBCADDB2B8361C70048F5A1 /* NoticeBaseListController.m */,
 				FEBCADDD2B8436640048F5A1 /* NoticeBaseController.h */,
@@ -9052,6 +9108,8 @@
 				FE41C3B32BCFA1F900BAD263 /* SXVideoCommentJson.m */,
 				FE41C3BB2BD0EA5200BAD263 /* SXVideoCommentBeModel.h */,
 				FE41C3BC2BD0EA5200BAD263 /* SXVideoCommentBeModel.m */,
+				FE979D752C4F867000161B7B /* SXHasUpdateKcModel.h */,
+				FE979D762C4F867000161B7B /* SXHasUpdateKcModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -9095,6 +9153,10 @@
 		FE6CF9612B86D9E8005EE663 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FE979D7B2C4F91D000161B7B /* SXBuyKcCardHeaderView.h */,
+				FE979D7C2C4F91D000161B7B /* SXBuyKcCardHeaderView.m */,
+				FE979D8A2C4FA78600161B7B /* SXkcCardListCell.h */,
+				FE979D8B2C4FA78600161B7B /* SXkcCardListCell.m */,
 				FE44F1932BB29FAA004ECF11 /* TCCommentsPopView.h */,
 				FE44F1892BB29FAA004ECF11 /* TCCommentsPopView.m */,
 				FE44F18C2BB29FAA004ECF11 /* MyCommentCell.h */,
@@ -9179,6 +9241,20 @@
 				FEFE54402C4E414C0007FA30 /* SXVideoTagsView.m */,
 				FE979D5A2C4E55CF00161B7B /* SXBandKcToAccountView.h */,
 				FE979D5B2C4E55CF00161B7B /* SXBandKcToAccountView.m */,
+				FE979D5D2C4F451600161B7B /* SXScVideoToAlbumView.h */,
+				FE979D5E2C4F451600161B7B /* SXScVideoToAlbumView.m */,
+				FE979D602C4F460200161B7B /* SXVideoZjToastListCell.h */,
+				FE979D612C4F460200161B7B /* SXVideoZjToastListCell.m */,
+				FE979D632C4F4B2700161B7B /* SXAddVideoZjView.h */,
+				FE979D642C4F4B2700161B7B /* SXAddVideoZjView.m */,
+				FE979D692C4F510400161B7B /* SXScVideoAlbumCell.h */,
+				FE979D6A2C4F510400161B7B /* SXScVideoAlbumCell.m */,
+				FE979D6F2C4F5A8E00161B7B /* SXAlbumReusableView.h */,
+				FE979D702C4F5A8E00161B7B /* SXAlbumReusableView.m */,
+				FE979D8D2C4FB33500161B7B /* SXSendWordView.h */,
+				FE979D8E2C4FB33500161B7B /* SXSendWordView.m */,
+				FE979D902C4FBA9500161B7B /* SXKcBuyChoiceView.h */,
+				FE979D912C4FBA9500161B7B /* SXKcBuyChoiceView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9331,6 +9407,10 @@
 				FED9A3932C3524ED003C81AD /* SXKcHasGetLikeController.m */,
 				FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */,
 				FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */,
+				FE979D782C4F8FB200161B7B /* SXBuyKcCardController.h */,
+				FE979D792C4F8FB200161B7B /* SXBuyKcCardController.m */,
+				FE979D7E2C4F998600161B7B /* SXBuyCardSuccessController.h */,
+				FE979D7F2C4F998600161B7B /* SXBuyCardSuccessController.m */,
 				FE9C3FAC2B90700E008C3A22 /* SXBuySearisSuccessController.h */,
 				FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */,
 				FEE2DD0B2B905115008AAB53 /* SXHasBuyPayVideoController.h */,
@@ -9363,6 +9443,16 @@
 				FE41C3AD2BCD178E00BAD263 /* SXVideoCommentLikeController.m */,
 				FE96C4882C082327005AB5FE /* SXVideoCommentJubaoController.h */,
 				FE96C4892C082327005AB5FE /* SXVideoCommentJubaoController.m */,
+				FE979D662C4F508100161B7B /* SXCollectionedVideoController.h */,
+				FE979D672C4F508100161B7B /* SXCollectionedVideoController.m */,
+				FE979D6C2C4F54ED00161B7B /* SXVideosForAlbumController.h */,
+				FE979D6D2C4F54ED00161B7B /* SXVideosForAlbumController.m */,
+				FE979D812C4FA3EB00161B7B /* SXKcCardlistBaseController.h */,
+				FE979D822C4FA3EB00161B7B /* SXKcCardlistBaseController.m */,
+				FE979D842C4FA3FE00161B7B /* SXKcCardListController.h */,
+				FE979D852C4FA3FE00161B7B /* SXKcCardListController.m */,
+				FE979D872C4FA44900161B7B /* SXKcCardDetailController.h */,
+				FE979D882C4FA44900161B7B /* SXKcCardDetailController.m */,
 			);
 			path = videos;
 			sourceTree = "<group>";
@@ -9920,6 +10010,7 @@
 				A4E969982A69142800AE022E /* CLPlayerView.m in Sources */,
 				A4E965FC2A69142300AE022E /* NoticeWebFriendViewController.m in Sources */,
 				A4E968162A69142500AE022E /* NoticeUserInfoCenterController.m in Sources */,
+				FE979D6E2C4F54ED00161B7B /* SXVideosForAlbumController.m in Sources */,
 				A4E965AC2A69142200AE022E /* NoiticePlayerView.m in Sources */,
 				A4E9676B2A69142400AE022E /* NoticeNewReadEveryDayController.m in Sources */,
 				FED9A37F2C325499003C81AD /* SXPlayRateView.m in Sources */,
@@ -9928,6 +10019,7 @@
 				A4E966F32A69142400AE022E /* NoticeCollcetionVoiceCell.m in Sources */,
 				A4E966DA2A69142400AE022E /* NoticeHelpBaseController.m in Sources */,
 				A4E968042A69142500AE022E /* NoticeUserCenterDubbingAndTcController.m in Sources */,
+				FE979D7D2C4F91D000161B7B /* SXBuyKcCardHeaderView.m in Sources */,
 				A4E965152A69142200AE022E /* UIColor+Expanded.m in Sources */,
 				A4E9663A2A69142300AE022E /* NoticeSongComController.m in Sources */,
 				FEB61C0C2B4D31DB00B128FA /* NoticeEditCard3Cell.m in Sources */,
@@ -10001,6 +10093,7 @@
 				A4E966A12A69142300AE022E /* NoticeClockVoiceCell.m in Sources */,
 				A4E968362A69142500AE022E /* NoticeChangeNickNameView.m in Sources */,
 				A4E968C42A69142600AE022E /* NoticeOrderListBaseController.m in Sources */,
+				FE979D772C4F867000161B7B /* SXHasUpdateKcModel.m in Sources */,
 				A4E967C62A69142500AE022E /* NoticeDepartureController.m in Sources */,
 				A4E969992A69142800AE022E /* CLGCDTimerManager.m in Sources */,
 				FE07BDF62BF35EA900E6812A /* SXAddNewsGoods2Cell.m in Sources */,
@@ -10059,6 +10152,7 @@
 				FE44F1DB2BB29FAB004ECF11 /* KTVHCDataReader.m in Sources */,
 				A4E968B22A69142600AE022E /* NoticeOrderComDetailController.m in Sources */,
 				FE9C3FC62B90973E008C3A22 /* SXPayVideoPlayDetailBaseController.m in Sources */,
+				FE979D7A2C4F8FB200161B7B /* SXBuyKcCardController.m in Sources */,
 				A4E967F82A69142500AE022E /* NoticeTextZJMusicModel.m in Sources */,
 				A4E969612A69142700AE022E /* NoticeRecoderTryListenView.m in Sources */,
 				A4E9696A2A69142700AE022E /* NoticeChoiceBgmTypeView.m in Sources */,
@@ -10119,6 +10213,7 @@
 				FE44F1FA2BB29FAB004ECF11 /* DDData.m in Sources */,
 				A4E967562A69142400AE022E /* NoticeTopiceVoicesListViewController.m in Sources */,
 				A4E965C22A69142200AE022E /* NoticeShareGroupView.m in Sources */,
+				FE979D5F2C4F451600161B7B /* SXScVideoToAlbumView.m in Sources */,
 				A4E965212A69142200AE022E /* UIImage+LCActionSheet.m in Sources */,
 				A4E9698E2A69142800AE022E /* NoticeNewUserLeadViewController.m in Sources */,
 				A4E964BC2A69142100AE022E /* NoticeMJIDModel.m in Sources */,
@@ -10157,6 +10252,7 @@
 				A4E9689E2A69142600AE022E /* NoticeTeamTextView.m in Sources */,
 				A4E9678D2A69142400AE022E /* NoticeBannerCell.m in Sources */,
 				A4E967F42A69142500AE022E /* NoticeZjDialogModel.m in Sources */,
+				FE979D832C4FA3EB00161B7B /* SXKcCardlistBaseController.m in Sources */,
 				A4E966712A69142300AE022E /* NoticeNewStyleDrawCell.m in Sources */,
 				A4E967D62A69142500AE022E /* NoticeSetLikeTopicController.m in Sources */,
 				A4E966FD2A69142400AE022E /* NoticeTieTieTosat.m in Sources */,
@@ -10276,6 +10372,7 @@
 				A4E9695B2A69142700AE022E /* DrawPath.m in Sources */,
 				A4E966E92A69142400AE022E /* NoticeHasSupportHelpCell.m in Sources */,
 				A4E965642A69142200AE022E /* NSDate+CXCategory.m in Sources */,
+				FE979D682C4F508100161B7B /* SXCollectionedVideoController.m in Sources */,
 				A4E967832A69142400AE022E /* NoticeManagerMBSController.swift in Sources */,
 				A43BC4E42B318CD7003BF9EF /* NoticeChangeBokeController.m in Sources */,
 				A4E967DA2A69142500AE022E /* NoticeLangusetViewController.m in Sources */,
@@ -10339,6 +10436,7 @@
 				A4E965722A69142200AE022E /* WHWeatherView.m in Sources */,
 				A4E9666C2A69142300AE022E /* NoticeDrawListViewController.m in Sources */,
 				A4E967802A69142400AE022E /* NoticeMangerVoiceController.m in Sources */,
+				FE979D8F2C4FB33500161B7B /* SXSendWordView.m in Sources */,
 				A4E969512A69142700AE022E /* NoticeHeJiListController.m in Sources */,
 				A4E969062A69142700AE022E /* NoticeBBSComent.m in Sources */,
 				A4E966C52A69142300AE022E /* NoticeHelpQiuzhutieView.m in Sources */,
@@ -10491,6 +10589,7 @@
 				A4E964C42A69142100AE022E /* RateTransposer.cpp in Sources */,
 				FE41C3C02BD0EB8B00BAD263 /* SXVideoLikeComCell.m in Sources */,
 				A4E967E42A69142500AE022E /* NoticeUserListController.m in Sources */,
+				FE979D742C4F7F3700161B7B /* SYStickHeaderWaterFallLayout.m in Sources */,
 				A4E968992A69142600AE022E /* SCIndexViewConfiguration.m in Sources */,
 				FEB61BF42B4CEF6600B128FA /* NoticeShopStroyCell.m in Sources */,
 				A4E9680D2A69142500AE022E /* NoticeVoiceViewController.m in Sources */,
@@ -10782,6 +10881,7 @@
 				A4E967D52A69142500AE022E /* NoticeListenPriSetController.m in Sources */,
 				A4E968052A69142500AE022E /* NoticeCarePeopleController.m in Sources */,
 				FE9C409C2B9AE455008C3A22 /* SXEducationController.m in Sources */,
+				FE979D862C4FA3FE00161B7B /* SXKcCardListController.m in Sources */,
 				FE07BE0E2BF4BA8800E6812A /* SXShopOpenTypeView.m in Sources */,
 				A4E966FE2A69142400AE022E /* NoticeHelpListCell.m in Sources */,
 				A4E969712A69142700AE022E /* NoticeKeyBordTopView.m in Sources */,
@@ -10866,6 +10966,7 @@
 				FE07BDF32BF35E9600E6812A /* SXAddNewsGoods1Cell.m in Sources */,
 				A4E966BE2A69142300AE022E /* NoticeSongDetail.m in Sources */,
 				A4E9688D2A69142600AE022E /* NoticeTeamRpelyView.m in Sources */,
+				FE979D802C4F998600161B7B /* SXBuyCardSuccessController.m in Sources */,
 				A4E966042A69142300AE022E /* NoticeAreaCell.m in Sources */,
 				A4E965E02A69142200AE022E /* NoticeJuBaoSwift.swift in Sources */,
 				A4E964C62A69142100AE022E /* mmx_optimized.cpp in Sources */,
@@ -10926,6 +11027,7 @@
 				A4E968BF2A69142600AE022E /* NoticeShopChatController.m in Sources */,
 				A4E968082A69142500AE022E /* NoticeDiaDetailController.m in Sources */,
 				FE41C3BA2BCFD4AF00BAD263 /* SXVideoCommentMoreView.m in Sources */,
+				FE979D652C4F4B2700161B7B /* SXAddVideoZjView.m in Sources */,
 				FE48C14D2B492FF20069D1A6 /* NoticeNoOpenShopView.m in Sources */,
 				A4E9690D2A69142700AE022E /* NoticeBBSMarkController.m in Sources */,
 				A4E965002A69142200AE022E /* JXCategoryTitleCell.m in Sources */,
@@ -11045,6 +11147,8 @@
 				A4E966B92A69142300AE022E /* NoticeRetestHeaderView.m in Sources */,
 				A4E966162A69142300AE022E /* NoticeBoKeListCell.m in Sources */,
 				A4E964CC2A69142100AE022E /* AAFilter.cpp in Sources */,
+				FE979D922C4FBA9500161B7B /* SXKcBuyChoiceView.m in Sources */,
+				FE979D8C2C4FA78600161B7B /* SXkcCardListCell.m in Sources */,
 				A4E967D72A69142500AE022E /* NoticePrivacySetViewController.m in Sources */,
 				A4E9662F2A69142300AE022E /* NoticeFindSame.m in Sources */,
 				FEE562F52B8CA1FD0004CC11 /* TZProgressView.m in Sources */,
@@ -11164,6 +11268,7 @@
 				A4E965D12A69142200AE022E /* NoticeScroEmtionView.m in Sources */,
 				FEE562FA2B8CA1FD0004CC11 /* NoticePhotoListMarkView.m in Sources */,
 				A4E9665D2A69142300AE022E /* NoticeBookTopController.m in Sources */,
+				FE979D712C4F5A8E00161B7B /* SXAlbumReusableView.m in Sources */,
 				FE44F1E22BB29FAB004ECF11 /* KTVHCDataSourceManager.m in Sources */,
 				A4354C442AA0878800454D23 /* NoticeVipImageLabelView.m in Sources */,
 				FE44F1D32BB29FAB004ECF11 /* KTVHCPathTool.m in Sources */,
@@ -11183,6 +11288,7 @@
 				FE44F1DC2BB29FAB004ECF11 /* KTVHCDataFileSource.m in Sources */,
 				A48E620B2A7C920600C06969 /* SLGridView.m in Sources */,
 				A4E966C42A69142300AE022E /* NoticeBookDetail.m in Sources */,
+				FE979D892C4FA44900161B7B /* SXKcCardDetailController.m in Sources */,
 				A4E967752A69142400AE022E /* NoticeOrderJubaoBaseController.m in Sources */,
 				A4E968872A69142600AE022E /* NSString+Tools.m in Sources */,
 				FE9C3FD82B9864D8008C3A22 /* SXNoDataDefaultShopInfoView.m in Sources */,
@@ -11235,6 +11341,7 @@
 				A4E968372A69142500AE022E /* NoticeTimeList.m in Sources */,
 				FE44F2132BB29FAB004ECF11 /* MyCommentCell.m in Sources */,
 				FEE563042B8DC4560004CC11 /* SXSearchModel.m in Sources */,
+				FE979D622C4F460200161B7B /* SXVideoZjToastListCell.m in Sources */,
 				FEFE54412C4E414C0007FA30 /* SXVideoTagsView.m in Sources */,
 				A4E966F72A69142400AE022E /* NoticeArcPlayView.m in Sources */,
 				A4E9683C2A69142500AE022E /* NoticeUserCenter.m in Sources */,
@@ -11306,6 +11413,7 @@
 				A4E9665C2A69142300AE022E /* NoticeMyBookListController.m in Sources */,
 				FE44F1F92BB29FAB004ECF11 /* DDNumber.m in Sources */,
 				A4E964EC2A69142200AE022E /* JXCategoryTitleVerticalZoomCell.m in Sources */,
+				FE979D6B2C4F510400161B7B /* SXScVideoAlbumCell.m in Sources */,
 				A4E969842A69142700AE022E /* NoticeWhiteVoiceListModel.m in Sources */,
 				A4E967682A69142400AE022E /* NoticeManagerJuBaoModel.m in Sources */,
 				A4E9677E2A69142400AE022E /* NoticeOrderJubaoCheckController.m in Sources */,

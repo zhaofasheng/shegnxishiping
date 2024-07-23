@@ -33,4 +33,5 @@ target ‘NoticeXi’ do
   pod 'NERtcCallKit/NOS_Special', '2.3.0'
   pod 'NERtcSDK', '5.5.21', :subspecs => ['RtcBasic']
 
+
 end

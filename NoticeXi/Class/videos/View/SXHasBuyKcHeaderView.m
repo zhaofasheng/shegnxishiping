@@ -7,7 +7,7 @@
 //
 
 #import "SXHasBuyKcHeaderView.h"
-
+#import "SXKcBuyChoiceView.h"
 @implementation SXHasBuyKcHeaderView
 
 
@@ -77,7 +77,15 @@
 
 //继续购课
 - (void)buyClick{
-    
+    SXKcBuyChoiceView *choiceView = [[SXKcBuyChoiceView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    choiceView.hasBuy = self.paySearModel.hasBuy;
+    __weak typeof(self) weakSelf = self;
+    choiceView.buyTypeBolck = ^(BOOL isSend) {
+        if (weakSelf.buyTypeBolck) {
+            weakSelf.buyTypeBolck(isSend);
+        }
+    };
+    [choiceView show];
 }
 
 - (void)setPaySearModel:(SXPayForVideoModel *)paySearModel{

@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *hasBuyTimeL;
 @property (nonatomic, strong) UIImageView *buyImg;
 @property (nonatomic, strong) UIView *line;
+@property (nonatomic,copy) void(^buyTypeBolck)(BOOL isSend);
 @end
 
 NS_ASSUME_NONNULL_END

@@ -7,6 +7,7 @@
 //
 
 #import "SXVideosComClickView.h"
+#import "SXScVideoToAlbumView.h"
 #import "NoticeMoreClickView.h"
 @implementation SXVideosComClickView
 
@@ -14,29 +15,8 @@
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0];
         
-        CGFloat strWidth = GET_STRWIDTH(@"评论", 14, self.frame.size.height);
-        self.comNumL = [[UILabel  alloc] initWithFrame:CGRectMake(self.frame.size.width-strWidth-54, 0, strWidth, self.frame.size.height)];
-        self.comNumL.font = FOURTHTEENTEXTFONTSIZE;
-        self.comNumL.textColor = [UIColor whiteColor];
-        [self addSubview:self.comNumL];
-        self.comNumL.text = @"评论";
-        self.comNumL.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(comClick)];
-        [self.comNumL addGestureRecognizer:tap];
-        
-        self.comImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(self.comNumL.frame.origin.x-28, 8, 24, 24)];
-        self.comImageView.image = UIImageNamed(@"sxvideocom_img");
-        [self addSubview:self.comImageView];
-        self.comImageView.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(comClick)];
-        [self.comImageView addGestureRecognizer:tap1];
-        
-        UIButton *shareBtn = [[UIButton  alloc] initWithFrame:CGRectMake(self.frame.size.width-24-15, 8, 24, 24)];
-        [shareBtn setBackgroundImage:UIImageNamed(@"sxsharevideo_img") forState:UIControlStateNormal];
-        [shareBtn addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:shareBtn];
-        
-        self.markView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, self.comImageView.frame.origin.x-15, 40)];
+
+        self.markView = [[UIView  alloc] initWithFrame:CGRectMake(15, 5, DR_SCREEN_WIDTH-30-(44*4), 40)];
         self.markView.backgroundColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:0.15];
         self.markView.layer.cornerRadius = 20;
         self.markView.layer.masksToBounds = YES;
@@ -51,8 +31,64 @@
         self.markL.text = @"成为第一条评论…";
         [self.markView addSubview:self.markL];
         
+        NSArray *imgArr = @[@"sxvideocom_img",@"sx_videolikefull_img",@"sx_videofullsc_img",@"sxsharevideo_img"];
+        NSArray *titleArr = @[@"评论",@"点赞",@"收藏",@"分享"];
+        for (int i = 0; i < 4; i++) {
+            UIView *tapView = [[UIView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.markView.frame)+10+44*i, 5, 44, 24+17)];
+            tapView.userInteractionEnabled = YES;
+            tapView.tag = i;
+            UITapGestureRecognizer *funTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(funTaps:)];
+            [tapView addGestureRecognizer:funTap];
+            
+            UIImageView *tapImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(10,0, 24, 24)];
+            tapImageV.userInteractionEnabled = YES;
+            tapImageV.image = UIImageNamed(imgArr[i]);
+            [tapView addSubview:tapImageV];
+            
+            UILabel *tapL = [[UILabel  alloc] initWithFrame:CGRectMake(0, 24, 44, 17)];
+            tapL.textColor = [UIColor whiteColor];
+            tapL.font = TWOTEXTFONTSIZE;
+            tapL.textAlignment = NSTextAlignmentCenter;
+            [tapView addSubview:tapL];
+            tapL.text = titleArr[i];
+            
+            if (i == 0) {
+                self.comNumL = tapL;
+            }else if (i==1){
+                self.likeL = tapL;
+                self.likeImageView = tapImageV;
+            }else if (i == 2){
+                self.collectL = tapL;
+                self.collectImageView = tapImageV;
+            }
+            
+            [self addSubview:tapView];
+        }
+
     }
     return self;
+}
+
+- (void)funTaps:(UITapGestureRecognizer *)tap{
+    UIView *tapV = (UIView *)tap.view;
+    if (tapV.tag == 0) {
+        [self comClick];
+    }else if (tapV.tag == 1){
+        [self likeClick];
+    }else if (tapV.tag == 2){
+        [self collectClick];
+    }else{
+        [self shareClick];
+    }
+}
+
+- (void)likeClick{
+    
+}
+
+- (void)collectClick{
+    SXScVideoToAlbumView *albumView = [[SXScVideoToAlbumView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    [albumView show];
 }
 
 - (void)shareClick{
@@ -123,10 +159,7 @@
     CGFloat strWidth = GET_STRWIDTH(self.comNumL.text, 14, self.frame.size.height);
     
     self.markL.text = _videoModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论...";
-    
-    self.comNumL.frame = CGRectMake(self.frame.size.width-strWidth-54, 0, strWidth, self.frame.size.height);
-    self.comImageView.frame = CGRectMake(self.comNumL.frame.origin.x-28, 8, 24, 24);
-    self.markView.frame = CGRectMake(0, 0, self.comImageView.frame.origin.x-15, 40);
+
 }
 
 @end

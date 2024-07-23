@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navBarView.titleL.text = @"已购课程";
+    self.navBarView.titleL.text = @"我的课程";
     
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);
     [self.tableView registerClass:[SXHasGetSearisListCell class] forCellReuseIdentifier:@"cell"];

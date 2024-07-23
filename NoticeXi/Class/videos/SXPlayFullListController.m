@@ -390,7 +390,7 @@
     }
 }
 
-
+//播放实时进度
 - (void)zfManager_playerCurrentSliderValue:(NSInteger)value playerModel:(ZFPlayerModel *)model{
     if (self.currentPlayIndex < self.modelArray.count) {
         SXVideosModel *currentM = self.modelArray[self.currentPlayIndex];

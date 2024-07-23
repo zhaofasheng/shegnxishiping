@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *user_info;//用户信息
 @property (nonatomic, strong) NSString *commentCt;
 @property (nonatomic, strong) SXUserModel  *userModel;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
