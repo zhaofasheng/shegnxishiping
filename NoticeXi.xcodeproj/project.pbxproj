@@ -1505,6 +1505,11 @@
 		FE979D8C2C4FA78600161B7B /* SXkcCardListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D8B2C4FA78600161B7B /* SXkcCardListCell.m */; };
 		FE979D8F2C4FB33500161B7B /* SXSendWordView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D8E2C4FB33500161B7B /* SXSendWordView.m */; };
 		FE979D922C4FBA9500161B7B /* SXKcBuyChoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D912C4FBA9500161B7B /* SXKcBuyChoiceView.m */; };
+		FE979D952C50938200161B7B /* SXPlayVideoRecoderListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D942C50938200161B7B /* SXPlayVideoRecoderListController.m */; };
+		FE979D982C5093C200161B7B /* SXPlayVideoRecoderBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D972C5093C200161B7B /* SXPlayVideoRecoderBaseController.m */; };
+		FE979D9B2C50967000161B7B /* SXPlayRecoderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D9A2C50967000161B7B /* SXPlayRecoderListCell.m */; };
+		FE979D9E2C50E51D00161B7B /* SXPlayRecoderScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979D9D2C50E51D00161B7B /* SXPlayRecoderScrollView.m */; };
+		FE979DA12C50EA0400161B7B /* SXPlayRecoderScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979DA02C50EA0400161B7B /* SXPlayRecoderScrollCell.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -4477,6 +4482,16 @@
 		FE979D8E2C4FB33500161B7B /* SXSendWordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXSendWordView.m; sourceTree = "<group>"; };
 		FE979D902C4FBA9500161B7B /* SXKcBuyChoiceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcBuyChoiceView.h; sourceTree = "<group>"; };
 		FE979D912C4FBA9500161B7B /* SXKcBuyChoiceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcBuyChoiceView.m; sourceTree = "<group>"; };
+		FE979D932C50938200161B7B /* SXPlayVideoRecoderListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayVideoRecoderListController.h; sourceTree = "<group>"; };
+		FE979D942C50938200161B7B /* SXPlayVideoRecoderListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlayVideoRecoderListController.m; sourceTree = "<group>"; };
+		FE979D962C5093C200161B7B /* SXPlayVideoRecoderBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayVideoRecoderBaseController.h; sourceTree = "<group>"; };
+		FE979D972C5093C200161B7B /* SXPlayVideoRecoderBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlayVideoRecoderBaseController.m; sourceTree = "<group>"; };
+		FE979D992C50967000161B7B /* SXPlayRecoderListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayRecoderListCell.h; sourceTree = "<group>"; };
+		FE979D9A2C50967000161B7B /* SXPlayRecoderListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlayRecoderListCell.m; sourceTree = "<group>"; };
+		FE979D9C2C50E51D00161B7B /* SXPlayRecoderScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayRecoderScrollView.h; sourceTree = "<group>"; };
+		FE979D9D2C50E51D00161B7B /* SXPlayRecoderScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlayRecoderScrollView.m; sourceTree = "<group>"; };
+		FE979D9F2C50EA0400161B7B /* SXPlayRecoderScrollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayRecoderScrollCell.h; sourceTree = "<group>"; };
+		FE979DA02C50EA0400161B7B /* SXPlayRecoderScrollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlayRecoderScrollCell.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -9255,6 +9270,12 @@
 				FE979D8E2C4FB33500161B7B /* SXSendWordView.m */,
 				FE979D902C4FBA9500161B7B /* SXKcBuyChoiceView.h */,
 				FE979D912C4FBA9500161B7B /* SXKcBuyChoiceView.m */,
+				FE979D992C50967000161B7B /* SXPlayRecoderListCell.h */,
+				FE979D9A2C50967000161B7B /* SXPlayRecoderListCell.m */,
+				FE979D9C2C50E51D00161B7B /* SXPlayRecoderScrollView.h */,
+				FE979D9D2C50E51D00161B7B /* SXPlayRecoderScrollView.m */,
+				FE979D9F2C50EA0400161B7B /* SXPlayRecoderScrollCell.h */,
+				FE979DA02C50EA0400161B7B /* SXPlayRecoderScrollCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9453,6 +9474,10 @@
 				FE979D852C4FA3FE00161B7B /* SXKcCardListController.m */,
 				FE979D872C4FA44900161B7B /* SXKcCardDetailController.h */,
 				FE979D882C4FA44900161B7B /* SXKcCardDetailController.m */,
+				FE979D932C50938200161B7B /* SXPlayVideoRecoderListController.h */,
+				FE979D942C50938200161B7B /* SXPlayVideoRecoderListController.m */,
+				FE979D962C5093C200161B7B /* SXPlayVideoRecoderBaseController.h */,
+				FE979D972C5093C200161B7B /* SXPlayVideoRecoderBaseController.m */,
 			);
 			path = videos;
 			sourceTree = "<group>";
@@ -10101,6 +10126,7 @@
 				A4E967A22A69142500AE022E /* NoticeCardInfoModel.m in Sources */,
 				FE6686802BA082FE006DBDF2 /* AxcAE_TabBarItem.m in Sources */,
 				A4E965E12A69142200AE022E /* NoticeGetUserSig.swift in Sources */,
+				FE979D9E2C50E51D00161B7B /* SXPlayRecoderScrollView.m in Sources */,
 				A4E968492A69142500AE022E /* NoticememoryFootView.m in Sources */,
 				A4E9650E2A69142200AE022E /* JXCategoryBaseView.m in Sources */,
 				A4E966522A69142300AE022E /* NoticeMovieTopCell.m in Sources */,
@@ -10386,12 +10412,14 @@
 				A4E968192A69142500AE022E /* NoticeEditViewController.m in Sources */,
 				A4E968142A69142500AE022E /* NoticeSeasonViewController.m in Sources */,
 				FE6686492BA06F06006DBDF2 /* SXTitleAndSwitchCell.m in Sources */,
+				FE979D982C5093C200161B7B /* SXPlayVideoRecoderBaseController.m in Sources */,
 				FED9A3882C33CAA6003C81AD /* SXPayKCDetailComController.m in Sources */,
 				A4E964A72A69142100AE022E /* CoreAnimationEffect.m in Sources */,
 				A4E9648F2A69142100AE022E /* MBProgressHUD+Extension.m in Sources */,
 				FE44F1FC2BB29FAB004ECF11 /* HTTPServer.m in Sources */,
 				A4E968CB2A69142600AE022E /* NoticeChangeRecoderModel.m in Sources */,
 				FE44F22F2BB29FAB004ECF11 /* SelVideoSlider.m in Sources */,
+				FE979DA12C50EA0400161B7B /* SXPlayRecoderScrollCell.m in Sources */,
 				A4E968B52A69142600AE022E /* NoticeGoToComShopController.m in Sources */,
 				A4E965CF2A69142200AE022E /* NoticeEmtionCell.m in Sources */,
 				FE44F1FF2BB29FAB004ECF11 /* HWDownloadModel.m in Sources */,
@@ -10784,6 +10812,7 @@
 				A4E968062A69142500AE022E /* NoticeUserCenterVoiceController.m in Sources */,
 				FE41C3A22BCCF5D300BAD263 /* SXVideosComClickView.m in Sources */,
 				A4E964882A69142100AE022E /* YYAnimatedImageView+loadNewSys.m in Sources */,
+				FE979D952C50938200161B7B /* SXPlayVideoRecoderListController.m in Sources */,
 				A4E9656E2A69142200AE022E /* NoticePhotoListView.m in Sources */,
 				A4E9697F2A69142700AE022E /* NoticeReadAllContentView.m in Sources */,
 				A4E968D42A69142600AE022E /* NoticeChatingInfoModel.m in Sources */,
@@ -11408,6 +11437,7 @@
 				A4E968842A69142600AE022E /* NoticeSendTeamMsgTools.m in Sources */,
 				A4E966CD2A69142300AE022E /* NoticeTieTieSignController.m in Sources */,
 				A4E968B62A69142600AE022E /* NoticeOrderDetailController.m in Sources */,
+				FE979D9B2C50967000161B7B /* SXPlayRecoderListCell.m in Sources */,
 				A4E9664B2A69142300AE022E /* NoticeMyMovieListController.m in Sources */,
 				FE44F1FD2BB29FAB004ECF11 /* GCDAsyncSocket.m in Sources */,
 				A4E9665C2A69142300AE022E /* NoticeMyBookListController.m in Sources */,

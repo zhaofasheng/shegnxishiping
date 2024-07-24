@@ -153,6 +153,9 @@
     }
     
     [self refreshTitle];
+    
+    //退到后台记录播放进度
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshPlayTime) name:@"SXAPPHASINTOBACKGROUNDNOTICE" object:nil];
 }
 
 //发送评论
@@ -238,7 +241,7 @@
     _player.playbackControls.choiceView.currentModel = self.currentPlayModel;
     _player.playbackControls.choiceView.searisArr = self.searisArr;
     _player.currentPlayTimeBlock = ^(NSInteger currentTime) {
-        DRLog(@"播放进度");
+  
         if (currentTime >= 5) {
             weakSelf.currentPlayModel.schedule = [NSString stringWithFormat:@"%ld",currentTime];
         }else{
@@ -408,6 +411,12 @@
     _player = nil;
 }
 
+- (void)refreshPlayTime{
+    if (self.refreshPlayTimeBlock) {
+        self.refreshPlayTimeBlock(self.currentPlayModel);
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if (self.refreshPlayTimeBlock) {
@@ -458,7 +467,7 @@
         _listVC.searisArr = self.searisArr;
         __weak typeof(self) weakSelf = self;
         _listVC.choiceVideoBlock = ^(SXSearisVideoListModel * _Nonnull videoModel) {
-            
+      
             if (weakSelf.refreshPlayTimeBlock) {
                 weakSelf.refreshPlayTimeBlock(weakSelf.currentPlayModel);
             }

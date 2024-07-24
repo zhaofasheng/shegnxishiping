@@ -7,7 +7,7 @@
 //
 
 #import "NoticeVideoCollectionViewCell.h"
-
+#import "NoticeLoginViewController.h"
 @implementation NoticeVideoCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -41,7 +41,7 @@
         [self.infoView addGestureRecognizer:userCenterTap];
         
         _likeL = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 0, 40)];
-        _likeL.font = FOURTHTEENTEXTFONTSIZE;
+        _likeL.font = TWOTEXTFONTSIZE;
         _likeL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.infoView addSubview:_likeL];
         _likeL.hidden = YES;
@@ -99,10 +99,48 @@
     CGFloat width = GET_STRWIDTH(self.timeL.text, 11, 16)+6;
     self.timeL.frame = CGRectMake(self.frame.size.width-width-8, 8, width, 16);
     [self.videoCoverImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.video_cover_url]];
+    
+    [self refreshZanUI];
 }
 
 - (void)likeClick{
-    
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+        return;
+    }
+    [[NoticeTools getTopViewController] showHUD];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.videoModel.is_zan.boolValue ? @"2":@"1" forKey:@"type"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoZan/%@",self.videoModel.vid] Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [[NoticeTools getTopViewController] hideHUD];
+        if (success) {
+            
+            self.videoModel.is_zan = self.videoModel.is_zan.boolValue?@"0":@"1";
+            self.videoModel.zan_num = [NSString stringWithFormat:@"%d",self.videoModel.is_zan.boolValue?(self.videoModel.zan_num.intValue+1):(self.videoModel.zan_num.intValue-1)];
+            if (self.videoModel.zan_num.intValue < 0) {
+                self.videoModel.zan_num = @"0";
+            }
+            
+            [self refreshZanUI];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"SXZANvideoNotification" object:self userInfo:@{@"videoId":self.videoModel.vid,@"is_zan":self.videoModel.is_zan,@"zan_num":self.videoModel.zan_num}];
+        }
+    } fail:^(NSError * _Nullable error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
+}
+
+- (void)refreshZanUI{
+    self.likeImageView.image = self.videoModel.is_zan.boolValue? UIImageNamed(@"sx_like_img") : UIImageNamed(@"sx_like_noimg");
+    self.likeL.hidden = self.videoModel.zan_num.intValue?NO:YES;
+    self.likeL.text = self.videoModel.zan_num;
+    if (self.likeL.hidden) {
+        self.likeImageView.frame = CGRectMake(self.infoView.frame.size.width-8-16,12, 16, 16);
+    }else{
+        self.likeL.frame = CGRectMake(self.infoView.frame.size.width-8-GET_STRWIDTH(self.likeL.text, 12, 40), 0, GET_STRWIDTH(self.likeL.text, 12, 40), 40);
+        self.likeImageView.frame = CGRectMake(self.likeL.frame.origin.x-16, 12, 16, 16);
+    }
 }
 
 - (void)setShowSCbutton:(BOOL)showSCbutton{

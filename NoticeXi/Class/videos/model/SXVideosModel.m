@@ -29,6 +29,11 @@
     self.introAttStr = [SXTools getStringWithLineHight:3 string:introduce];
 }
 
+- (void)setSeries_info:(NSDictionary *)series_info{
+    _series_info = series_info;
+    self.searModel = [SXPayForVideoModel mj_objectWithKeyValues:series_info];
+}
+
 - (void)setUser_info:(NSDictionary *)user_info{
     _user_info = user_info;
     self.userModel = [SXUserModel mj_objectWithKeyValues:user_info];

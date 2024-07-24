@@ -49,7 +49,6 @@
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/category/list" Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             
-
             NoticeTelController *ctl1 = [[NoticeTelController alloc] init];
             ctl1.category_Id = @"0";
             [self.controllArr addObject:ctl1];

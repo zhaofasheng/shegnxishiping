@@ -24,6 +24,8 @@
 #import "SXUserHowController.h"
 #import "SXCollectionedVideoController.h"
 #import "SXKcCardlistBaseController.h"
+#import "SXPlayVideoRecoderBaseController.h"
+#import "SXPlayRecoderScrollView.h"
 @interface NoticeMineController ()
 @property (nonatomic, strong) NoticeNewCenterNavView *navView;
 @property (nonatomic, strong) SXUserCenterHeader *headerView;
@@ -37,6 +39,8 @@
 @property (nonatomic, strong) NSArray *section2imgArr;
 @property (nonatomic, strong) NSArray *section2titleArr;
 
+@property (nonatomic, strong) SXPlayRecoderScrollView *recderView;
+
 @property (nonatomic, strong) UIView *noLoginView;
 @property (nonatomic, strong) NoticeMyWallectModel *wallectM;
 @property (nonatomic, strong) NoticeMyShopModel *shopModel;
@@ -44,6 +48,7 @@
 @property (nonatomic, assign) BOOL needAutoShowSupply;
 @property (nonatomic, strong) SXSpulyShopView *supplyView;
 @property (nonatomic, assign) BOOL needFirst;
+
 
 @end
 
@@ -82,6 +87,13 @@
     
     
     [self getStatusRequest];
+}
+
+- (SXPlayRecoderScrollView *)recderView{
+    if (!_recderView) {
+        _recderView = [[SXPlayRecoderScrollView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 157)];
+    }
+    return _recderView;
 }
 
 - (void)loginEd{
@@ -200,6 +212,33 @@
     if (self.applyModel.status != 6) {
         [self getStatusRequest];
     }
+    
+    [self refreshIfhasPlay];
+}
+
+- (void)refreshIfhasPlay{
+    NSString *url = @"video/play/record?pageNo=1&queryType=0";
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return ;
+            }
+        
+            [self.dataArr removeAllObjects];
+            for (NSDictionary *dic in dict[@"data"]) {
+                if (self.dataArr.count < 4) {
+                    SXVideosModel *model = [SXVideosModel mj_objectWithKeyValues:dic];
+                    [self.dataArr addObject:model];
+                }
+                
+            }
+            self.recderView.dataArr = self.dataArr;
+            [self.tableView reloadData];
+        }
+    } fail:^(NSError *error) {
+    }];
 }
 
 - (void)myShopTap{
@@ -244,6 +283,9 @@
         if (indexPath.row == 0) {
             SXCollectionedVideoController *ctl = [[SXCollectionedVideoController alloc] init];
             [self.navigationController pushViewController:ctl animated:YES];
+        }else if (indexPath.row == 1){
+            SXPlayVideoRecoderBaseController *ctl = [[SXPlayVideoRecoderBaseController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
         }
     }
     if (indexPath.section == 2) {
@@ -270,10 +312,20 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 2) {
+        if (self.recderView.dataArr.count) {
+            return 157;
+        }
+    }
     return 15;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section == 2) {
+        if (self.recderView.dataArr.count) {
+            return self.recderView;
+        }
+    }
     return [UIView new];
 }
 
@@ -309,8 +361,10 @@
         cell.titleL.text = self.section1titleArr[indexPath.row];
         if (indexPath.row == 0) {
             [cell.backView setCornerOnTop:10];
-        }else if(indexPath.row == self.section0imgArr.count-1){
-            [cell.backView setCornerOnBottom:10];
+        }else if(indexPath.row == self.section1imgArr.count-1){
+            if (!self.recderView.dataArr.count) {
+                [cell.backView setCornerOnBottom:10];
+            }
         }
     }
     else{

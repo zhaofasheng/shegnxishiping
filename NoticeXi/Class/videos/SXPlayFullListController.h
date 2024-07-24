@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) void(^popbackBlock)(void);
 @property (nonatomic, copy) void(^dataBlock)(NSInteger pageNo,NSMutableArray *dataArr);
+@property (nonatomic, copy) void(^seekTimeBlock)(NSString *schele,NSString *isFinish);
+
 @end
 
 NS_ASSUME_NONNULL_END

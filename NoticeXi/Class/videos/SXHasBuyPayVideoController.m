@@ -135,7 +135,7 @@
     [parm setObject:model.schedule?model.schedule:@"0" forKey:@"schedule"];
     [parm setObject:model.is_finished?model.is_finished:@"0" forKey:@"isFinished"];
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"video/play/%@",model.videoId] Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"video/play/%@",model.videoId] Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         
     } fail:^(NSError * _Nullable error) {
         

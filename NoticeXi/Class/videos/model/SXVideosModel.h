@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SXUserModel.h"
 #import "SXPayForVideoModel.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXVideosModel : NSObject
@@ -58,6 +59,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *qqShareUrl;
 @property (nonatomic, strong) NSString *wechatShareUrl;
+
+@property (nonatomic, strong) NSString *is_zan;//是否点在 1点赞 0无
+@property (nonatomic, strong) NSString *zan_num;//点赞数量
+@property (nonatomic, strong) NSString *is_collection;//是否收藏 1收藏 0无
+@property (nonatomic, strong) NSString *collection_num;//收藏数量
+
+@property (nonatomic, strong) NSDictionary *series_info;
+@property (nonatomic, strong) SXPayForVideoModel *searModel;
+
+@property (nonatomic, strong) NSString *schedule;//播放进度
+@property (nonatomic, strong) NSString *is_finished;//播放完成
+
 @end
 
 NS_ASSUME_NONNULL_END

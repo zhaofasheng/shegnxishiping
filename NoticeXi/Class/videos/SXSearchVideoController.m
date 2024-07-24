@@ -85,7 +85,40 @@
     
     [self.tableView registerClass:[SXSearchThinkCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.rowHeight = 40;
-    
+ 
+    //获取点赞通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoZanNotice:) name:@"SXZANvideoNotification" object:nil];
+    //获取收藏通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoscNotice:) name:@"SXCOLLECTvideoNotification" object:nil];
+}
+
+- (void)getvideoZanNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *videoid = nameDictionary[@"videoId"];
+    NSString *iszan = nameDictionary[@"is_zan"];
+    NSString *zanNum = nameDictionary[@"zan_num"];
+    for (SXVideosModel *videoM in self.dataArr) {
+        if ([videoM.vid isEqualToString:videoid]) {
+            videoM.is_zan = iszan;
+            videoM.zan_num = zanNum;
+            [self.collectionView reloadData];
+            break;
+        }
+    }
+}
+
+- (void)getvideoscNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *videoid = nameDictionary[@"videoId"];
+    NSString *is_collection = nameDictionary[@"is_collection"];
+    NSString *collection_num = nameDictionary[@"collection_num"];
+    for (SXVideosModel *videoM in self.dataArr) {
+        if ([videoM.vid isEqualToString:videoid]) {
+            videoM.is_collection = is_collection;
+            videoM.collection_num = collection_num;
+            break;
+        }
+    }
 }
 
 

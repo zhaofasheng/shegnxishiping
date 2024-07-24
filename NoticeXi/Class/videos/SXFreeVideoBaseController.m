@@ -16,6 +16,7 @@
 #import "SXVideoTagsView.h"
 #import "SXHasUpdateKcModel.h"
 #import "SXStudyBaseController.h"
+#import "SXGoodsInfoModel.h"
 @interface SXFreeVideoBaseController ()
 @property (nonatomic, strong) NSMutableArray *titleArr;
 @property (nonatomic, strong) NSMutableArray *controllArr;
@@ -26,6 +27,8 @@
 @property (nonatomic, strong) UIView *redView;
 @property (nonatomic, strong) UIButton *searchButton;
 @property (nonatomic, strong) SXHasUpdateKcModel *kcModel;
+
+
 @end
 
 @implementation SXFreeVideoBaseController
@@ -34,7 +37,7 @@
     if (self = [super init]) {
        // 6.7.8  10 11 13
         self.menuViewStyle = WMMenuViewStyleLine;
-        self.menuViewLayoutMode = WMMenuViewLayoutModeCenter;
+        self.menuViewLayoutMode = WMMenuViewLayoutModeLeft;
         self.progressViewIsNaughty = true;
         self.dataSource = self;
         self.delegate = self;
@@ -59,37 +62,11 @@
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
 
-    self.controllArr = [[NSMutableArray alloc] init];
-    self.titleArr = [[NSMutableArray alloc] init];
-    self.cataArr = [[NSMutableArray alloc] init];
-    
-    self.controllArr = [[NSMutableArray alloc] init];
-    self.titleArr = [[NSMutableArray alloc] init];
-    self.cataArr = [[NSMutableArray alloc] init];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/category/list" Accept:@"application/vnd.shengxi.v5.8.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-        if (success) {
-            
 
-            NoticeVideosController *ctl1 = [[NoticeVideosController alloc] init];
-         
-            [self.controllArr addObject:ctl1];
-            [self.titleArr addObject:@"全部"];
-            
-            for (NSDictionary *dic in dict[@"data"]) {
-                SXGoodsInfoModel *cataM = [SXGoodsInfoModel mj_objectWithKeyValues:dic];
-                NoticeVideosController *ctl = [[NoticeVideosController alloc] init];
-                [self.controllArr addObject:ctl];
-                [self.titleArr addObject:cataM.category_name];
-            }
-            
-            self.titles = [NSArray arrayWithArray:self.titleArr];
-            [self.menuView reload];
-        
-            [self reloadData];
-        }
-    } fail:^(NSError * _Nullable error) {
-        
-    }];
+    self.controllArr = [[NSMutableArray alloc] init];
+    self.titleArr = [[NSMutableArray alloc] init];
+    self.cataArr = [[NSMutableArray alloc] init];
+
     
     //谁在首页谁需要实现这个功能
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin) name:@"outLoginClearDataNOTICATION" object:nil];
@@ -132,6 +109,9 @@
     tagsImg.image = UIImageNamed(@"sx_videotags_img");
     [tagsView addSubview:tagsImg];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCataName) name:@"NOTICEREFRESHCATANAME" object:nil];
+    [self refreshCataName];
 }
 
 - (UILabel *)newKcL{
@@ -202,6 +182,55 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self refreshIfHasNew];
+
+}
+
+- (void)refreshCataName{
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoCategory/get" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            NSMutableArray *arr = [[NSMutableArray alloc] init];
+            
+            for (NSDictionary *dic in dict[@"data"]) {
+                SXGoodsInfoModel *cataM = [SXGoodsInfoModel mj_objectWithKeyValues:dic];
+                [arr addObject:cataM.category_name];
+            }
+            
+            if (self.cataArr.count) {
+                if (![self.cataArr isEqualToArray:arr]) {//数组元素一样，不执行任何操作，不一样，则更新数据
+                    [self.titleArr removeAllObjects];
+                    [self.cataArr removeAllObjects];
+                    [self.controllArr removeAllObjects];
+                    self.cataArr = arr;
+                    [self refreshController];
+                    DRLog(@"元素更新");
+                }else{
+                    DRLog(@"元素一样");
+                }
+            }else{
+                self.cataArr = arr;
+                [self refreshController];
+            }
+        }
+    } fail:^(NSError * _Nullable error) {
+        
+    }];
+}
+
+- (void)refreshController{
+    NoticeVideosController *ctl1 = [[NoticeVideosController alloc] init];
+    [self.controllArr addObject:ctl1];
+    [self.titleArr addObject:@"全部"];
+    
+    for (NSString *category_name in self.cataArr) {
+        NoticeVideosController *ctl = [[NoticeVideosController alloc] init];
+        ctl.categoryName = category_name;
+        [self.controllArr addObject:ctl];
+        [self.titleArr addObject:category_name];
+    }
+    
+    self.titles = [NSArray arrayWithArray:self.titleArr];
+    [self.menuView reload];
+    [self reloadData];
 }
 
 - (void)refreshIfHasNew{

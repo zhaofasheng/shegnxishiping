@@ -23,7 +23,9 @@
     }
     [ShareSDK share:type parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
         if (state == SSDKResponseStateSuccess) {
-          //  [nav.topViewController showToastWithText:@"分享成功"];
+            [[NoticeTools getTopViewController] showToastWithText:@"分享成功"];
+        }else{
+            [[NoticeTools getTopViewController] showToastWithText:@"分享失败"];
         }
     }];
 }
@@ -41,9 +43,7 @@
     }
 
     [ShareSDK share:type parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-        if (state == SSDKResponseStateSuccess) {
-          //  [nav.topViewController showToastWithText:@"分享成功"];
-        }
+     
     }];
 }
 
@@ -58,7 +58,9 @@
     }
     [ShareSDK share:type parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
         if (state == SSDKResponseStateSuccess) {
-          //  [nav.topViewController showToastWithText:@"分享成功"];
+            [[NoticeTools getTopViewController] showToastWithText:@"分享成功"];
+        }else{
+            [[NoticeTools getTopViewController] showToastWithText:@"分享失败"];
         }
     }];
 }

@@ -41,6 +41,8 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 - (void)zf_playerControlViewWillHidden:(UIView *)controlView isFullscreen:(BOOL)fullscreen;
 /** 视频播放结束 还需要做什么事 */
 - (void)zf_playerFinished:(ZFPlayerModel *)model;
+/** 视频播放结束 还需要做什么事 */
+- (void)zf_playerEnd:(ZFPlayerModel *)model;
 /** 播放下一首 */
 - (void)zf_playerNextParter:(ZFPlayerModel *)model;
 /** 播放到百分之几 */

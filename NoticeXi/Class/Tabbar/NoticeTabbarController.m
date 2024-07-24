@@ -20,7 +20,7 @@
 #define mainQueue dispatch_get_main_queue()
 
 @interface NoticeTabbarController ()<AxcAE_TabBarDelegate>
-
+@property (nonatomic, assign) NSInteger oldIndex;
 @property (nonatomic,strong)UIButton *button;
 
 @end
@@ -48,6 +48,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideTwoBdge) name:@"HIDEBUDGENOTICE" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lookKc) name:@"NOTICEFORLOOKKC" object:nil];
+    
     
 }
 
@@ -209,6 +210,13 @@
     // 通知 切换视图控制器
     [self setSelectedIndex:index];
 
+    
+    if (index == 0 && self.oldIndex != 0) {
+        //更新首页标签
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICEREFRESHCATANAME" object:nil];
+    }
+    self.oldIndex = index;
+    
 }
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex{

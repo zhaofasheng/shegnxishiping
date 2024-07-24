@@ -165,16 +165,12 @@
             [shareParams SSDKSetupWeChatMiniProgramShareParamsByTitle:self.title description:self.name webpageUrl:[NSURL URLWithString:@"www.baidu.com"] path:self.appletPage thumbImage:nil hdThumbImage:self.share_img_url userName:self.appletId withShareTicket:YES miniProgramType:0 forPlatformSubType:SSDKPlatformSubTypeWechatSession];
 
             [ShareSDK share:SSDKPlatformSubTypeWechatSession parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-                if (state == SSDKResponseStateSuccess) {
-                  //  [nav.topViewController showToastWithText:@"分享成功"];
-                }
+              
             }];
             
         }else if(indexPath.row == 1){
-        
             [NoticeShareView shareWithurl:self.friendShareUrl type:SSDKPlatformSubTypeWechatTimeline title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }else if(indexPath.row == 2){
-        
             [NoticeShareView shareWithurl:self.qqShareUrl type:SSDKPlatformSubTypeQQFriend title:self.title?self.title:@"" name:self.name?self.name:@"" imageUrl:self.imgUrl];
         }
         return;

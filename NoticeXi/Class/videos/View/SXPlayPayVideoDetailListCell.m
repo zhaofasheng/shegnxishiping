@@ -94,11 +94,12 @@
     if ([videoModel.videoId isEqualToString:self.currentVideo.videoId]) {
         self.statusL.text = @"观看中";
     }
+    else if (videoModel.schedule.intValue){
+        self.statusL.text = [NSString stringWithFormat:@"已观看%.f%%",((CGFloat)(videoModel.schedule.floatValue/videoModel.video_len.floatValue))*100];
+    }
     else if (videoModel.is_finished.boolValue) {
         
         self.statusL.text = @"已看完";
-    }else if (videoModel.schedule.intValue){
-        self.statusL.text = [NSString stringWithFormat:@"已观看%.f%%",((CGFloat)(videoModel.schedule.floatValue/videoModel.video_len.floatValue))*100];
     }else{
         self.statusL.text = @"待观看";
     }

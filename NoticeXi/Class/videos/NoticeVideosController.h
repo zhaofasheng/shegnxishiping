@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeVideosController : SXBaseCollectionController
-
+@property (nonatomic, strong) NSString *categoryName;
 @end
 
 NS_ASSUME_NONNULL_END

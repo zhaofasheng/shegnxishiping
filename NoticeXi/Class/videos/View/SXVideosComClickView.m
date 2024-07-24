@@ -83,11 +83,32 @@
 }
 
 - (void)likeClick{
-    
+    [[NoticeTools getTopViewController] showHUD];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.videoModel.is_zan.boolValue ? @"2":@"1" forKey:@"type"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoZan/%@",self.videoModel.vid] Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [[NoticeTools getTopViewController] hideHUD];
+        if (success) {
+            
+            self.videoModel.is_zan = self.videoModel.is_zan.boolValue?@"0":@"1";
+            self.videoModel.zan_num = [NSString stringWithFormat:@"%d",self.videoModel.is_zan.boolValue?(self.videoModel.zan_num.intValue+1):(self.videoModel.zan_num.intValue-1)];
+            if (self.videoModel.zan_num.intValue < 0) {
+                self.videoModel.zan_num = @"0";
+            }
+            
+            [self refreshZanUI];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"SXZANvideoNotification" object:self userInfo:@{@"videoId":self.videoModel.vid,@"is_zan":self.videoModel.is_zan,@"zan_num":self.videoModel.zan_num}];
+        }
+    } fail:^(NSError * _Nullable error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
 }
+
 
 - (void)collectClick{
     SXScVideoToAlbumView *albumView = [[SXScVideoToAlbumView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"SXCOLLECTvideoNotification" object:self userInfo:@{@"videoId":self.videoModel.vid,@"is_collection":self.videoModel.is_collection,@"collection_num":self.videoModel.collection_num}];
     [albumView show];
 }
 
@@ -140,6 +161,12 @@
     _videoModel = videoModel;
  
     [self refreshUI];
+    [self refreshZanUI];
+}
+
+- (void)refreshZanUI{
+    self.likeImageView.image = self.videoModel.is_zan.boolValue?UIImageNamed(@"sx_like_img"):UIImageNamed(@"sx_videolikefull_img");
+    self.likeL.text = self.videoModel.zan_num.intValue?self.videoModel.zan_num:@"点赞";
 }
 
 - (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId{
@@ -156,8 +183,6 @@
 
 - (void)refreshUI{
     self.comNumL.text = _videoModel.commentCt.intValue?_videoModel.commentCt:@"评论";
-    CGFloat strWidth = GET_STRWIDTH(self.comNumL.text, 14, self.frame.size.height);
-    
     self.markL.text = _videoModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论...";
 
 }

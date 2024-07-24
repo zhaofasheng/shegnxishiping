@@ -17,6 +17,7 @@
 #import "NoticeVoiceDownLoadController.h"
 
 @interface SXPlayFullListController ()<ZFManagerPlayerDelegate>
+
 @property (nonatomic, strong) UIView *fatherView;
 //这个是播放视频的管理器
 @property (nonatomic, strong) DDVideoPlayerManager *videoPlayerManager;
@@ -27,7 +28,8 @@
 @property (nonatomic, assign) BOOL isPlayFail;
 @property (nonatomic, assign) BOOL isFirstAlloc;
 @property (nonatomic, strong) UIButton *downloadBtn;
-
+@property (nonatomic, assign) NSInteger oldIndex;
+@property (nonatomic, assign) NSInteger curentVideoPlayTime;
 @end
 
 @implementation SXPlayFullListController
@@ -143,7 +145,6 @@
         }
     };
     
-    
     cell.openMoreBlock = ^(BOOL open) {
         weakSelf.tableView.scrollEnabled = !open;
     };
@@ -248,8 +249,32 @@
     }
 }
 
-- (void)playIndex:(NSInteger)currentIndex {
+- (void)savePlayTime:(SXVideosModel *)model{
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:model.seekTime?[NSString stringWithFormat:@"%ld",model.seekTime]:@"0" forKey:@"schedule"];
+    [parm setObject:model.is_finished?model.is_finished:@"0" forKey:@"isFinished"];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"video/play/%@",model.vid] Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        
+    } fail:^(NSError * _Nullable error) {
+        
+    }];
+    if (self.seekTimeBlock) {
+        self.seekTimeBlock(model.seekTime?[NSString stringWithFormat:@"%ld",model.seekTime]:@"0", model.is_finished?model.is_finished:@"0");
+    }
+}
 
+- (void)playIndex:(NSInteger)currentIndex {
+    
+    if (self.oldIndex < self.modelArray.count) {
+        if (self.curentVideoPlayTime > 6) {//记录进度
+            [self savePlayTime:self.modelArray[self.oldIndex]];
+        }
+    }
+    
+    self.curentVideoPlayTime = 0;
+    self.oldIndex = currentIndex;
+    
     SXFullPlayCell *currentCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:currentIndex inSection:0]];
     
     NSString *artist = nil;
@@ -277,6 +302,10 @@
     
     self.fatherView = currentCell.playerFatherView;
     self.videoPlayerManager.playerModel.isFirstAlloc = self.isFirstAlloc;
+    
+    if (currentPlaySmallVideoModel.seekTime <= 0) {
+        currentPlaySmallVideoModel.seekTime = currentPlaySmallVideoModel.schedule.integerValue;
+    }
  
     self.isFirstAlloc = NO;
     self.videoPlayerManager.playerModel.screen = currentPlaySmallVideoModel.screen.intValue==1?NO:YES;
@@ -372,7 +401,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self.videoPlayerManager autoPause];
-    
+    [self savePlayTime:self.modelArray[self.currentPlayIndex]];
     if (@available(iOS 13.0, *)) {
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDarkContent;
     } else {
@@ -395,6 +424,8 @@
     if (self.currentPlayIndex < self.modelArray.count) {
         SXVideosModel *currentM = self.modelArray[self.currentPlayIndex];
         currentM.seekTime = value;
+        currentM.schedule = [NSString stringWithFormat:@"%ld",currentM.seekTime];
+        self.curentVideoPlayTime+=1;
     }
 }
 
@@ -411,6 +442,7 @@
     if (self.currentPlayIndex < self.modelArray.count) {
         SXVideosModel *currentM = self.modelArray[self.currentPlayIndex];
         currentM.seekTime = 0;
+        currentM.is_finished = @"1";
     }
 }
 
@@ -430,7 +462,7 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0];
         SXFullPlayCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         cell.infoView.hidden = NO;
-
+        self.curentVideoPlayTime = 5;
     }
 }
 

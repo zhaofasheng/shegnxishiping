@@ -158,6 +158,13 @@
     //播放结束后，允许自动播放的时候就自动重新播放
     [self.playerView _replayVideo];
 }
+
+- (void)zf_playerEnd:(ZFPlayerModel *)model{
+    if([self.managerDelegate respondsToSelector:@selector(zf_playerEnd:)]) {
+        [self.managerDelegate zf_playerEnd:model];
+    }
+}
+
 /** 播放下一首 */
 - (void)zf_playerNextParter:(ZFPlayerModel *)model {
     if([self.managerDelegate respondsToSelector:@selector(zfManager_playerNextParter:)]) {

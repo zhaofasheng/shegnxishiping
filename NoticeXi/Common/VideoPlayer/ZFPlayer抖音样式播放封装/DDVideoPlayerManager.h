@@ -31,7 +31,7 @@
 - (void)zfManager_playerPlayerStatusChange:(ZFPlayerState)statu;
 /** 前往小视频播放界面 */
 - (void)zfManager_playerPushToPlaySmallViewListVC;
-
+- (void)zf_playerEnd:(ZFPlayerModel *_Nullable)model;
 //开始拖动进度
 - (void)beginChangeVlue;
 //结束拖动进度

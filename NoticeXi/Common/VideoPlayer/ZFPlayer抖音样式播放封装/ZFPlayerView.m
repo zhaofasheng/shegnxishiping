@@ -750,7 +750,9 @@ static NSString *JPVideoPlayerURL = @"www.newpan.com";
             if([self.delegate respondsToSelector:@selector(zf_playerFinished:)]) {
                 [self.delegate zf_playerFinished:self.playerModel];
             }
-
+            if ([self.delegate respondsToSelector:@selector(zf_playerEnd:)]) {
+                [self.delegate zf_playerEnd:self.playerModel];
+            }
         }
     }
 }

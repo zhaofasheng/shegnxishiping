@@ -221,6 +221,8 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"SXAPPHASINTOBACKGROUNDNOTICE" object:nil];
+    
     //进入后台播放无声音频，保持app活跃
     [self.noVoicePlayer startPlayWithUrlandRecoding:[[NSBundle mainBundle] pathForResource:@"novoice" ofType:@"mp3"] isLocalFile:YES];
     
