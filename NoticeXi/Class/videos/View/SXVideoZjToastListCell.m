@@ -36,6 +36,12 @@
     return self;
 }
 
+- (void)setZjModel:(SXVideoZjModel *)zjModel{
+    _zjModel = zjModel;
+    self.titleL.text = zjModel.ablum_name;
+    self.numL.text = [NSString stringWithFormat:@"%d",zjModel.video_num.intValue];
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

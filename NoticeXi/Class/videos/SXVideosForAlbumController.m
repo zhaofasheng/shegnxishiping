@@ -15,7 +15,7 @@
 static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCell";
 
 @interface SXVideosForAlbumController ()<LCActionSheetDelegate,SYStickHeaderWaterFallDelegate>
-
+@property (nonatomic, strong) UILabel *defaultL;
 @property (nonatomic, strong) UILabel *numL;
 @property (nonatomic, strong) UILabel *albumL;
 
@@ -92,15 +92,35 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     NSString *videoid = nameDictionary[@"videoId"];
     NSString *is_collection = nameDictionary[@"is_collection"];
     NSString *collection_num = nameDictionary[@"collection_num"];
+    NSString *albumId = nameDictionary[@"albumId"];
     for (SXVideosModel *videoM in self.dataArr) {
         if ([videoM.vid isEqualToString:videoid]) {
             videoM.is_collection = is_collection;
             videoM.collection_num = collection_num;
+            
+            if (is_collection.boolValue) {
+                if ([albumId isEqualToString:self.zjModel.albumId]) {
+                    videoM.is_collection = @"1";
+                }
+            }else{
+                videoM.is_collection = @"0";
+            }
+            [self.collectionView reloadData];
             break;
         }
     }
 }
 
+- (UILabel *)defaultL{
+    if (!_defaultL) {
+        _defaultL = [[UILabel  alloc] initWithFrame:self.collectionView.bounds];
+        _defaultL.text = @"欸 这里空空的";
+        _defaultL.font = FOURTHTEENTEXTFONTSIZE;
+        _defaultL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
+        _defaultL.textAlignment = NSTextAlignmentCenter;
+    }
+    return _defaultL;
+}
 
 - (void)request{
 
@@ -109,9 +129,9 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     }
     self.isRequesting = YES;
     NSString *url = @"";
-    url = [NSString stringWithFormat:@"video/list?pageNo=%ld",self.pageNo];
+    url = [NSString stringWithFormat:@"videoAblum/getVideo/%@?pageNo=%ld",self.zjModel.albumId,self.pageNo];
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
@@ -130,6 +150,12 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             
             self.layout.dataList = self.dataArr;
             [self.collectionView reloadData];
+            if (!self.dataArr.count) {
+                [_defaultL removeFromSuperview];
+                [self.collectionView addSubview:self.defaultL];
+            }else{
+                [_defaultL removeFromSuperview];
+            }
         }
         self.isRequesting = NO;
         
@@ -166,10 +192,12 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 //设置cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     NoticeVideoCollectionViewCell *merchentCell = [collectionView dequeueReusableCellWithReuseIdentifier:DRMerchantCollectionViewCellID forIndexPath:indexPath];
+    merchentCell.albumId = self.zjModel.albumId;
     merchentCell.showSCbutton = YES;
     if (self.dataArr.count > indexPath.row) {
         merchentCell.videoModel = self.dataArr[indexPath.row];
     }
+
     return merchentCell;
 }
 
@@ -191,7 +219,8 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {          // Header视图
         // 从复用队列中获取HooterView
         SXAlbumReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UICollectionViewHeader" forIndexPath:indexPath];
- 
+        headerView.albumL.text = self.zjModel.ablum_name;
+        headerView.numL.text = [NSString stringWithFormat:@"%d个视频",self.zjModel.video_num.intValue];
         return headerView;
     }
     return nil;
@@ -206,43 +235,48 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 }
 
 - (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    __weak typeof(self) weakSelf = self;
     if (buttonIndex == 1) {
         SXAddVideoZjView *addView = [[SXAddVideoZjView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
         addView.isChange = YES;
         addView.addBlock = ^(NSString * _Nonnull name, BOOL isOpen) {
-          
-    //        NSMutableDictionary *parm = [NSMutableDictionary new];
-    //
-    //        if (self.isLimt) {
-    //            [parm setObject:@"0" forKey:@"bucketId"];
-    //            [parm setObject:@"0000000000" forKey:@"albumCoverUri"];
-    //            [parm setObject:name forKey:@"albumName"];
-    //        }else{
-    //            [parm setObject:name forKey:@"albumName"];
-    //            [parm setObject:isOpen?@"1":@"3" forKey:@"albumType"];
-    //        }
-    //
-    //        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:self.isLimt?@"dialogAlbums": [NSString stringWithFormat:@"user/%@/voiceAlbum",[NoticeTools getuserId]] Accept:self.isLimt?@"application/vnd.shengxi.v4.7.6+json": @"application/vnd.shengxi.v5.0.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-    //            if (success) {
-    //                [self.collectionView.mj_header beginRefreshing];
-    //            }
-    //
-    //            [self hideHUD];
-    //        } fail:^(NSError * _Nullable error) {
-    //            [self hideHUD];
-    //        }];
+            NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+            [parm setObject:name forKey:@"ablumName"];
+            [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"videoAblum/%@",self.zjModel.albumId] Accept:@"application/vnd.shengxi.v5.8.5+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+                if (success) {
+                    weakSelf.zjModel.ablum_name = name;
+                    [weakSelf.collectionView reloadData];
+                    if (weakSelf.nameChangeBlock) {
+                        weakSelf.nameChangeBlock(YES);
+                    }
+                }
+            } fail:^(NSError * _Nullable error) {
+                
+            }];
         };
         [addView show];
     }else if (buttonIndex == 2){
-        __weak typeof(self) weakSelf = self;
+        
          XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确认删除吗？" message:@"删除后，专辑下的视频将取消收藏" sureBtn:@"取消" cancleBtn:@"删除" right:YES];
         alerView.resultIndex = ^(NSInteger index) {
             if (index == 2) {
-            
+                [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"videoAblum/%@",self.zjModel.albumId] Accept:@"application/vnd.shengxi.v5.8.5+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+                    if (success) {
+                        
+                    }
+                } fail:^(NSError * _Nullable error) {
+                    
+                }];
+                if (weakSelf.deletezjBlock) {
+                    weakSelf.deletezjBlock(weakSelf.zjModel);
+                }
+                [weakSelf.navigationController popViewControllerAnimated:YES];
             }
         };
         [alerView showXLAlertView];
     }
+
+ 
 
 }
 

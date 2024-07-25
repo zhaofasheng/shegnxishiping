@@ -25,6 +25,7 @@
         btn.buttonImagePosition = FSCustomButtonImagePositionRight;
         [self addSubview:btn];
         [btn addTarget:self action:@selector(lookSave) forControlEvents:UIControlEventTouchUpInside];
+        self.button = btn;
     }
     return self;
 }

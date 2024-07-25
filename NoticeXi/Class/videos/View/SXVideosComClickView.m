@@ -9,6 +9,14 @@
 #import "SXVideosComClickView.h"
 #import "SXScVideoToAlbumView.h"
 #import "NoticeMoreClickView.h"
+#import "SXTosatView.h"
+#import "SXVideosForAlbumController.h"
+@interface SXVideosComClickView()
+
+@property (nonatomic, strong) SXScVideoToAlbumView *albumView;
+
+@end
+
 @implementation SXVideosComClickView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -107,9 +115,80 @@
 
 
 - (void)collectClick{
-    SXScVideoToAlbumView *albumView = [[SXScVideoToAlbumView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"SXCOLLECTvideoNotification" object:self userInfo:@{@"videoId":self.videoModel.vid,@"is_collection":self.videoModel.is_collection,@"collection_num":self.videoModel.collection_num}];
-    [albumView show];
+    if (self.videoModel.is_collection.boolValue) {
+        [[NoticeTools getTopViewController] showHUD];
+        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+        [parm setObject:@"2" forKey:@"type"];
+        [parm setObject:self.videoModel.vid forKey:@"videoId"];
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"video/collect" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            [[NoticeTools getTopViewController] hideHUD];
+            if (success) {
+                
+                self.videoModel.is_collection = self.videoModel.is_collection.boolValue?@"0":@"1";
+                self.videoModel.collection_num = [NSString stringWithFormat:@"%d",self.videoModel.is_collection.boolValue?(self.videoModel.collection_num.intValue+1):(self.videoModel.collection_num.intValue-1)];
+                if (self.videoModel.collection_num.intValue < 0) {
+                    self.videoModel.collection_num = @"0";
+                }
+           
+                
+                [self refreshCollectUI];
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"SXCOLLECTvideoNotification" object:self userInfo:@{@"videoId":self.videoModel.vid,@"is_collection":self.videoModel.is_collection,@"collection_num":self.videoModel.collection_num,@"albumId":@"0"}];
+            }
+        } fail:^(NSError * _Nullable error) {
+            [[NoticeTools getTopViewController] hideHUD];
+        }];
+        return;
+    }
+    [self.albumView show];
+}
+
+- (void)sureSC:(SXVideoZjModel *)zjModel{
+    [[NoticeTools getTopViewController] showHUD];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:@"1" forKey:@"type"];
+    [parm setObject:self.videoModel.vid forKey:@"videoId"];
+    [parm setObject:zjModel.albumId forKey:@"ablumId"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"video/collect" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [[NoticeTools getTopViewController] hideHUD];
+        if (success) {
+            
+            self.videoModel.is_collection = self.videoModel.is_collection.boolValue?@"0":@"1";
+            self.videoModel.collection_num = [NSString stringWithFormat:@"%d",self.videoModel.is_collection.boolValue?(self.videoModel.collection_num.intValue+1):(self.videoModel.collection_num.intValue-1)];
+            if (self.videoModel.collection_num.intValue < 0) {
+                self.videoModel.collection_num = @"0";
+            }
+            
+            SXTosatView *tosatView = [[SXTosatView  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-315)/2,(DR_SCREEN_HEIGHT-54)/2-100, 315, 54)];
+            tosatView.button.frame = tosatView.bounds;
+            NSString *name = zjModel.ablum_name.length > 10 ? [NSString stringWithFormat:@"%@...",[zjModel.ablum_name substringToIndex:9]] : zjModel.ablum_name;
+            name = [NSString stringWithFormat:@"已收藏到”%@“  查看",name];
+            [tosatView.button setTitle:name forState:UIControlStateNormal];
+            tosatView.lookSaveListBlock = ^(BOOL look) {
+                SXVideosForAlbumController *ctl = [[SXVideosForAlbumController alloc] init];
+                ctl.zjModel = zjModel;
+                [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+            };
+            [tosatView showSXToast];
+            
+            [self refreshCollectUI];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"SXCOLLECTvideoNotification" object:self userInfo:@{@"videoId":self.videoModel.vid,@"is_collection":self.videoModel.is_collection,@"collection_num":self.videoModel.collection_num,@"albumId":zjModel.albumId}];
+        }
+    } fail:^(NSError * _Nullable error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
+}
+
+- (SXScVideoToAlbumView *)albumView{
+    if (!_albumView) {
+        _albumView = [[SXScVideoToAlbumView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+        __weak typeof(self) weakSelf = self;
+        _albumView.collectBlock = ^(SXVideoZjModel * _Nonnull zjModel) {
+            [weakSelf sureSC:zjModel];
+        };
+    }
+    return _albumView;
 }
 
 - (void)shareClick{
@@ -162,11 +241,17 @@
  
     [self refreshUI];
     [self refreshZanUI];
+    [self refreshCollectUI];
 }
 
 - (void)refreshZanUI{
     self.likeImageView.image = self.videoModel.is_zan.boolValue?UIImageNamed(@"sx_like_img"):UIImageNamed(@"sx_videolikefull_img");
     self.likeL.text = self.videoModel.zan_num.intValue?self.videoModel.zan_num:@"点赞";
+}
+
+- (void)refreshCollectUI{
+    self.collectL.text = self.videoModel.collection_num.intValue?self.videoModel.collection_num:@"收藏";
+    self.collectImageView.image = self.videoModel.is_collection.boolValue?UIImageNamed(@"sx_videofullscno_img"):UIImageNamed(@"sx_videofullsc_img");
 }
 
 - (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId{

@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showSXToast;
 
 @property (nonatomic, strong) NSTimer * _Nullable timer;
-
+@property (nonatomic, strong) FSCustomButton *button;
 @property (nonatomic, assign) NSInteger time;
 
 @property (nonatomic, copy) void(^lookSaveListBlock)(BOOL look);

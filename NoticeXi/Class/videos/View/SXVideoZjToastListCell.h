@@ -7,11 +7,11 @@
 //
 
 #import "BaseCell.h"
-
+#import "SXVideoZjModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXVideoZjToastListCell : BaseCell
-
+@property (nonatomic, strong) SXVideoZjModel *zjModel;
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UILabel *titleL;
 @property (nonatomic, strong) UILabel *numL;

@@ -39,48 +39,125 @@
     addBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
     [addBtn addTarget:self action:@selector(addClick) forControlEvents:UIControlEventTouchUpInside];
     [addView addSubview:addBtn];
+    
+    [self createRefesh];
+    
+    self.pageNo = 1;
+    self.isDown = YES;
+    [self request];
+}
+
+
+- (void)createRefesh{
+    
+    __weak SXCollectionedVideoController *ctl = self;
+
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        ctl.isDown = YES;
+        ctl.pageNo = 1;
+        [ctl request];
+    }];
+    self.tableView.mj_header = header;
+    
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        //上拉
+        ctl.isDown = NO;
+        ctl.pageNo++;
+        [ctl request];
+    }];
+}
+
+- (void)request{
+    
+    NSString *url = [NSString stringWithFormat:@"videoAblum/get?pageNo=%ld",self.pageNo];
+
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept: @"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return ;
+            }
+            if (self.isDown == YES) {
+                [self.dataArr removeAllObjects];
+                self.isDown = NO;
+            }
+            for (NSDictionary *dic in dict[@"data"]) {
+                SXVideoZjModel *model = [SXVideoZjModel mj_objectWithKeyValues:dic];
+                [self.dataArr addObject:model];
+            }
+            
+            self.tableView.tableFooterView = self.dataArr.count?nil:self.defaultL;
+            self.marksL.text = @"快去收藏感兴趣的视频吧";
+            [self.tableView reloadData];
+         
+            
+        }
+    } fail:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    SXVideoZjModel *model = self.dataArr[indexPath.row];
+
     SXVideosForAlbumController *ctl = [[SXVideosForAlbumController alloc] init];
+    ctl.zjModel = model;
+    __weak typeof(self) weakSelf = self;
+    ctl.nameChangeBlock = ^(BOOL change) {
+        [weakSelf.tableView reloadData];
+    };
+    ctl.deletezjBlock = ^(SXVideoZjModel * _Nonnull model) {
+        for (SXVideoZjModel *oldmodel in weakSelf.dataArr) {
+            if ([model.albumId isEqualToString:oldmodel.albumId]) {
+                [weakSelf.dataArr removeObject:oldmodel];
+                [weakSelf.tableView reloadData];
+                break;
+            }
+        }
+    };
     [self.navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)addClick{
     SXAddVideoZjView *addView = [[SXAddVideoZjView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-
+    __weak typeof(self) weakSelf = self;
     addView.addBlock = ^(NSString * _Nonnull name, BOOL isOpen) {
       
-//        NSMutableDictionary *parm = [NSMutableDictionary new];
-//
-//        if (self.isLimt) {
-//            [parm setObject:@"0" forKey:@"bucketId"];
-//            [parm setObject:@"0000000000" forKey:@"albumCoverUri"];
-//            [parm setObject:name forKey:@"albumName"];
-//        }else{
-//            [parm setObject:name forKey:@"albumName"];
-//            [parm setObject:isOpen?@"1":@"3" forKey:@"albumType"];
-//        }
-//
-//        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:self.isLimt?@"dialogAlbums": [NSString stringWithFormat:@"user/%@/voiceAlbum",[NoticeTools getuserId]] Accept:self.isLimt?@"application/vnd.shengxi.v4.7.6+json": @"application/vnd.shengxi.v5.0.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-//            if (success) {
-//                [self.collectionView.mj_header beginRefreshing];
-//            }
-//
-//            [self hideHUD];
-//        } fail:^(NSError * _Nullable error) {
-//            [self hideHUD];
-//        }];
+        NSMutableDictionary *parm = [NSMutableDictionary new];
+        
+        [parm setObject:name forKey:@"ablumName"];
+        
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoAblum/create" Accept: @"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if (success) {
+                SXVideoZjModel *model = [SXVideoZjModel mj_objectWithKeyValues:dict[@"data"]];
+                model.ablum_name = name;
+                model.video_num = @"0";
+                if (model) {
+                    [weakSelf.dataArr insertObject:model atIndex:0];
+                    [weakSelf.tableView reloadData];
+            
+                }
+                
+            }
+        } fail:^(NSError * _Nullable error) {
+         
+        }];
     };
     [addView show];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return self.dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXScVideoAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    cell.zjModel = self.dataArr[indexPath.row];
     return cell;
 }
 @end

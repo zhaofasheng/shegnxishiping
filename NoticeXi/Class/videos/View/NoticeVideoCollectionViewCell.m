@@ -101,6 +101,12 @@
     [self.videoCoverImageView sd_setImageWithURL:[NSURL URLWithString:videoModel.video_cover_url]];
     
     [self refreshZanUI];
+    
+    _scButton.hidden = YES;
+    if (self.showSCbutton) {
+        self.scButton.hidden = NO;
+        [self.scButton setBackgroundImage:UIImageNamed(videoModel.is_collection.boolValue? @"sx_scvideos_img":@"sx_scvideosno_img") forState:UIControlStateNormal];
+    }
 }
 
 - (void)likeClick{
@@ -143,12 +149,6 @@
     }
 }
 
-- (void)setShowSCbutton:(BOOL)showSCbutton{
-    _showSCbutton = showSCbutton;
-    if (showSCbutton) {
-        self.scButton.hidden = NO;
-    }
-}
 
 - (UIButton *)scButton{
     if (!_scButton) {
@@ -162,7 +162,32 @@
 }
 
 - (void)scClick{
-    
+    [[NoticeTools getTopViewController] showHUD];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.videoModel.is_collection.boolValue?@"2" :@"1" forKey:@"type"];
+    if (!self.videoModel.is_collection.boolValue) {
+        [parm setObject:self.albumId forKey:@"ablumId"];
+    }
+    [parm setObject:self.videoModel.vid forKey:@"videoId"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"video/collect" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [[NoticeTools getTopViewController] hideHUD];
+        if (success) {
+            
+            self.videoModel.is_collection = self.videoModel.is_collection.boolValue?@"0":@"1";
+            self.videoModel.collection_num = [NSString stringWithFormat:@"%d",self.videoModel.is_collection.boolValue?(self.videoModel.collection_num.intValue+1):(self.videoModel.collection_num.intValue-1)];
+            if (self.videoModel.collection_num.intValue < 0) {
+                self.videoModel.collection_num = @"0";
+            }
+            if (self.collectBlock) {
+                self.collectBlock(self.videoModel.is_collection.boolValue);
+            }
+            [self.scButton setBackgroundImage:UIImageNamed(self.videoModel.is_collection.boolValue? @"sx_scvideos_img":@"sx_scvideosno_img") forState:UIControlStateNormal];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"SXCOLLECTvideoNotification" object:self userInfo:@{@"videoId":self.videoModel.vid,@"is_collection":self.videoModel.is_collection,@"collection_num":self.videoModel.collection_num,@"albumId":self.videoModel.is_collection.boolValue?self.albumId: @"0"}];
+        }
+    } fail:^(NSError * _Nullable error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
 }
 
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{

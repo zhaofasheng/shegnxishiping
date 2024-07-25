@@ -56,7 +56,7 @@ class NoticeChongzhiJbView: UIView {
         }else{
             self.allL = GZLabel.init(frame: CGRect(x: 20, y: (self.payJBView?.frame.origin.y ?? 0)+292+20, width: NoticeSwiftFile.screenWidth-30, height: NoticeTools.getHeightWithLineHight(3, font: 14, width: NoticeSwiftFile.screenWidth-30, string: "说明:\n1.充值鲸币，不支持提现\n 2.鲸币兑换比例：iOS版充值需扣除30%平台费，充值1元≈1.4鲸币；网页版「声昔官网」充值1元=2鲸币\n3.充值24小时未到账，请联系声昔客服小二")))
             self.allL?.gzLabelNormalColor = UIColor.init(hexString: "#5C5F66")
-            self.allL?.setHightLightLabel(UIColor.init(hexString: "#14151A"), for: GZLabelStyle.topic)
+            self.allL?.setHightLightLabel(UIColor.init(hexString: "#FF4B98"), for: GZLabelStyle.topic)
             self.allL?.font = UIFont.systemFont(ofSize: 14)
             self.allL?.numberOfLines = 0
             self.allL?.text = "说明:\n1.充值鲸币，不支持提现\n2.鲸币兑换比例：iOS版充值需扣除30%平台费，充值1元≈1.4鲸币；网页版「声昔官网」充值1元=2鲸币\n3.充值24小时未到账，请联系声昔客服小二"

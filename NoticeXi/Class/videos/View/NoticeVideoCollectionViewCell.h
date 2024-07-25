@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIButton *scButton;
 @property (nonatomic, strong) UIImageView *likeImageView;
 @property (nonatomic, strong) UILabel *likeL;
+@property (nonatomic, strong) NSString *albumId;
+@property (nonatomic,copy) void(^collectBlock)(BOOL is_collect);
+
 @end
 
 NS_ASSUME_NONNULL_END

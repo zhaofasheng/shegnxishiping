@@ -74,6 +74,7 @@
         self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
         self.panGesture.delegate = self;
         [self addGestureRecognizer:self.panGesture];
+    
     }
     return self;
 }
@@ -86,16 +87,17 @@
     
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         //上拉
+        ctl.pageNo++;
         ctl.isDown = NO;
         [ctl requestList];
     }];
 }
 
 - (void)requestList{
-    NSString *url = nil;
+    NSString *url = [NSString stringWithFormat:@"videoAblum/get?pageNo=%ld",self.pageNo];
 
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept: @"application/vnd.shengxi.v5.0.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept: @"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         
@@ -108,8 +110,9 @@
                 self.isDown = NO;
             }
             for (NSDictionary *dic in dict[@"data"]) {
-                NoticeZjModel *model = [NoticeZjModel mj_objectWithKeyValues:dic];
+                SXVideoZjModel *model = [SXVideoZjModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:model];
+                
             }
          
             [self.tableView reloadData];
@@ -122,64 +125,73 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+    if (self.collectBlock) {
+        self.collectBlock(self.dataArr[indexPath.row]);
+    }
+    [self dissMissTap];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXVideoZjToastListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-
+    cell.zjModel = self.dataArr[indexPath.row];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;//self.dataArr.count;
+    return self.dataArr.count;
 }
 
 - (void)addzjClick{
    
     SXAddVideoZjView *addView = [[SXAddVideoZjView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-
+    __weak typeof(self) weakSelf = self;
     addView.addBlock = ^(NSString * _Nonnull name, BOOL isOpen) {
       
-//        NSMutableDictionary *parm = [NSMutableDictionary new];
-//        
-//        if (self.isLimt) {
-//            [parm setObject:@"0" forKey:@"bucketId"];
-//            [parm setObject:@"0000000000" forKey:@"albumCoverUri"];
-//            [parm setObject:name forKey:@"albumName"];
-//        }else{
-//            [parm setObject:name forKey:@"albumName"];
-//            [parm setObject:isOpen?@"1":@"3" forKey:@"albumType"];
-//        }
-//        
-//        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:self.isLimt?@"dialogAlbums": [NSString stringWithFormat:@"user/%@/voiceAlbum",[NoticeTools getuserId]] Accept:self.isLimt?@"application/vnd.shengxi.v4.7.6+json": @"application/vnd.shengxi.v5.0.0+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-//            if (success) {
-//                [self.collectionView.mj_header beginRefreshing];
-//            }
-//            
-//            [self hideHUD];
-//        } fail:^(NSError * _Nullable error) {
-//            [self hideHUD];
-//        }];
+        NSMutableDictionary *parm = [NSMutableDictionary new];
+        
+        [parm setObject:name forKey:@"ablumName"];
+        
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoAblum/create" Accept: @"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if (success) {
+                SXVideoZjModel *model = [SXVideoZjModel mj_objectWithKeyValues:dict[@"data"]];
+                model.ablum_name = name;
+                model.video_num = @"0";
+                if (model) {
+                    [weakSelf.dataArr insertObject:model atIndex:0];
+                    [weakSelf.tableView reloadData];
+                    
+                    if (weakSelf.collectBlock) {
+                        weakSelf.collectBlock(model);
+                    }
+                    [weakSelf dissMissTap];
+                }
+                
+            }
+        } fail:^(NSError * _Nullable error) {
+         
+        }];
     };
     [addView show];
    
 }
 
 - (void)show{
+    self.pageNo = 1;
+    self.isDown = YES;
+    [self requestList];
     UIWindow *rootWindow = [SXTools getKeyWindow];
     [rootWindow addSubview:self];
     [UIView animateWithDuration:0.3 animations:^{
         self->_contentView.frame = CGRectMake(0, DR_SCREEN_HEIGHT-self->_contentView.frame.size.height+20, DR_SCREEN_WIDTH, self->_contentView.frame.size.height);
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
     }];
-    
+    [self.tableView reloadData];
 }
 
 - (void)dissMissTap{
  
     [UIView animateWithDuration:0.3 animations:^{
-        self->_contentView.frame = CGRectMake(0, DR_SCREEN_HEIGHT, DR_SCREEN_WIDTH, 263+44+44);
+        self->_contentView.frame = CGRectMake(0, DR_SCREEN_HEIGHT, DR_SCREEN_WIDTH, self->_contentView.frame.size.height);
         self.backgroundColor = [GetColorWithName(VBackColor) colorWithAlphaComponent:0];
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
