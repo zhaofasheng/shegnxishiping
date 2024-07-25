@@ -72,7 +72,7 @@
         [self.contentBackView addSubview:_plaL];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillShowNotification object:nil];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDiddisss) name:UIKeyboardWillHideNotification object:nil];
+
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDidHide) name:UIKeyboardDidHideNotification object:nil];
         
         UILabel *numL = [[UILabel alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-20-100,CGRectGetMaxY(self.contentBackView.frame)+10,100, 17)];
@@ -161,11 +161,6 @@
    
 }
 
-- (void)keyboardDiddisss{
-    
-    self.backView.frame = CGRectMake(0, DR_SCREEN_HEIGHT, DR_SCREEN_WIDTH, self.backView.frame.size.height);
-}
-
 - (void)keyboardDidHide{
 
     [self removeFromSuperview];
@@ -181,19 +176,11 @@
         return;
     }
     if (self.contentView.text.length) {
-        __weak typeof(self) weakSelf = self;
-         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"保存后，祝福语不可更改？" message:nil sureBtn:@"再想想" cancleBtn:@"保存" right:YES];
-        alerView.resultIndex = ^(NSInteger index) {
-            if (index == 2) {
-                if (weakSelf.jubaoBlock) {
-                    weakSelf.jubaoBlock(weakSelf.contentView.text);
-                }
-                [weakSelf cancelClick];
-            }
-        };
-        [alerView showXLAlertView];
-
-        
+        [self.contentView resignFirstResponder];
+        if (self.jubaoBlock) {
+            self.jubaoBlock(self.contentView.text);
+        }
+        [self cancelClick];
     }
 }
 

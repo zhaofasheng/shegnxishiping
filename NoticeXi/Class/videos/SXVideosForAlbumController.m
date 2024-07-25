@@ -262,7 +262,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             if (index == 2) {
                 [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"videoAblum/%@",self.zjModel.albumId] Accept:@"application/vnd.shengxi.v5.8.5+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                     if (success) {
-                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"HASDELETEZHUANJINOTICE" object:nil];
                     }
                 } fail:^(NSError * _Nullable error) {
                     

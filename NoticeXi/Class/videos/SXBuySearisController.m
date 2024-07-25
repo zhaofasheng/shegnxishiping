@@ -102,14 +102,16 @@
     [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
     [parm setObject:@"3" forKey:@"payType"];
     [parm setObject:@"2" forKey:@"platformId"];
+    [parm setObject:@"0" forKey:@"isSeriesCard"];
     [self showHUD];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [self hideHUD];
         if (success) {
             
             SXOrderStatusModel *payModel = [SXOrderStatusModel mj_objectWithKeyValues:dict[@"data"]];
-            self.ordersn = payModel.sn;
             AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            appdel.isBuyCard = NO;
+            self.ordersn = payModel.sn;
             payModel.productId = self.paySearModel.product_id;
             [appdel.payManager startSearisPay:payModel];
             

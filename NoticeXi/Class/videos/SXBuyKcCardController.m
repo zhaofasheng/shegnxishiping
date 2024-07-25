@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buySuccess) name:@"BUYSEARISSUCCESS" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buySuccess) name:@"BUYCARDSEARISSUCCESS" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buyFaild) name:@"BUYSEARISFAILD" object:nil];
     
     self.navBarView.titleL.text = @"课程礼品卡";
@@ -71,14 +71,16 @@
     [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
     [parm setObject:@"3" forKey:@"payType"];
     [parm setObject:@"2" forKey:@"platformId"];
+    [parm setObject:@"1" forKeyedSubscript:@"isSeriesCard"];
     [self showHUD];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [self hideHUD];
         if (success) {
             
+            AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            appdel.isBuyCard = YES;
             SXOrderStatusModel *payModel = [SXOrderStatusModel mj_objectWithKeyValues:dict[@"data"]];
             self.ordersn = payModel.sn;
-            AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
             payModel.productId = self.paySearModel.product_id;
             [appdel.payManager startSearisPay:payModel];
             

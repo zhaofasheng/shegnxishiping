@@ -51,10 +51,17 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     
     [self request];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"HASDELETEZHUANJINOTICE" object:nil];
     //获取点赞通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoZanNotice:) name:@"SXZANvideoNotification" object:nil];
     //获取收藏通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoscNotice:) name:@"SXCOLLECTvideoNotification" object:nil];
+}
+
+- (void)refreshList{
+    self.isDown = YES;
+    self.pageNo = 1;
+    [self request];
 }
 
 - (void)getvideoZanNotice:(NSNotification*)notification{

@@ -100,11 +100,30 @@
     self.comVC.paySearModel = self.paySearModel;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buySuccess) name:@"BUYSEARISSUCCESS" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buyCardSuccess) name:@"BUYCARDSEARISSUCCESS" object:nil];
 }
 
+//购买课程成功
 - (void)buySuccess{
     [self.backView removeFromSuperview];
     self.paySearModel.is_bought = @"1";
+    if (self.shoCom) {
+        self.categoryView.defaultSelectedIndex = 2;
+        [self categoryCurentIndex:2];
+        self.shoCom = NO;
+    }
+    self.zeroView.paySearModel = self.paySearModel;
+    self.comVC.paySearModel = self.paySearModel;
+    [self.comVC.tableView reloadData];
+    self.videoVC.paySearModel = self.paySearModel;
+    [self.videoVC.tableView reloadData];
+    [self.categoryView reloadData];
+    [self.pagerView reloadData];
+    [self refreshStatus];
+}
+
+//卡片购买成功
+- (void)buyCardSuccess{
     if (self.shoCom) {
         self.categoryView.defaultSelectedIndex = 2;
         [self categoryCurentIndex:2];

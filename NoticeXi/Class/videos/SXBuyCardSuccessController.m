@@ -7,7 +7,7 @@
 //
 
 #import "SXBuyCardSuccessController.h"
-
+#import "SXKcCardDetailController.h"
 @interface SXBuyCardSuccessController ()
 @property (nonatomic, strong) UIImageView *statusImageView;
 @property (nonatomic, strong) UILabel *statusL;
@@ -49,7 +49,7 @@
         self.markL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         self.markL.textAlignment = NSTextAlignmentCenter;
         self.markL.text = [NSString stringWithFormat:@"1张《%@》礼品卡可在「礼品卡查看」",self.paySearModel.series_name];
-        [self.view addSubview:markImageV];
+        [self.view addSubview:self.markL];
     }
     
     UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(68,CGRectGetMaxY(markImageV.frame)+100,DR_SCREEN_WIDTH-68*2, 56)];
@@ -64,7 +64,8 @@
 
 - (void)lookClick{
     if (self.payStatusModel.pay_status.intValue == 2) {
-        
+        SXKcCardDetailController *ctl = [[SXKcCardDetailController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
     }else{
         
         if (self.reBuyBlock) {
@@ -74,15 +75,5 @@
     }
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

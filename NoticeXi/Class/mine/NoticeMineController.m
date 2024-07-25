@@ -190,7 +190,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (![NoticeSaveModel getUserInfo]) {
+    if (![NoticeTools getuserId]) {
         self.noLoginView.hidden = NO;
         self.tableView.hidden = YES;
     }else{

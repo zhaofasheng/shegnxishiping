@@ -32,11 +32,20 @@ static NSString *const KFToken = @"KFToken";
 + (void)outLoginClearData{
     [NoticeTools changeThemeWith:@"whiteColor"];
 
+   
     if ([NoticeSaveModel getUserInfo]){
         [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"logout" Accept:@"application/vnd.shengxi.v5.5.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults removeObjectForKey:kXGUserInfo];
+            [userDefaults removeObjectForKey:KFToken];
+            [userDefaults removeObjectForKey:[NSString stringWithFormat:@"payinfo%@",[NoticeTools getuserId]]];
+            [userDefaults synchronize];
         } fail:^(NSError * _Nullable error) {
-            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults removeObjectForKey:kXGUserInfo];
+            [userDefaults removeObjectForKey:KFToken];
+            [userDefaults removeObjectForKey:[NSString stringWithFormat:@"payinfo%@",[NoticeTools getuserId]]];
+            [userDefaults synchronize];
         }];
     }
 
@@ -57,6 +66,7 @@ static NSString *const KFToken = @"KFToken";
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"outLoginClearDataNOTICATION" object:nil];
 }
+
 
 + (void)savePayInfo:(NoticePaySaveModel *)payInfo{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

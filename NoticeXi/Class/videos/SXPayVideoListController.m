@@ -64,7 +64,7 @@
     NSString *url = @"";
     
     url = [NSString stringWithFormat:@"series/%@/video",self.paySearModel.seriesId];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.dataArr removeAllObjects];
         if (success) {
             if ([dict[@"data"] isEqual:[NSNull null]]) {

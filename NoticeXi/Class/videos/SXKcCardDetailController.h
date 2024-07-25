@@ -7,10 +7,12 @@
 //
 
 #import "NoticeBaseCellController.h"
-
+#import "SXKcCardListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXKcCardDetailController : NoticeBaseCellController
+@property (nonatomic, strong) SXKcCardListModel *cardModel;
+@property (nonatomic, assign) BOOL isGet;
 
 @end
 

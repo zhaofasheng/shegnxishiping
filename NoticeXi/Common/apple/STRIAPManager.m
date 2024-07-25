@@ -180,7 +180,14 @@
         if (success1) {
             self.sn = nil;
             if (type.intValue == 3) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
+                //
+                AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                if (appdel.isBuyCard) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYCARDSEARISSUCCESS" object:nil];
+                }else{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
+                }
+                
             }else{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHMYWALLECT" object:nil];
                 [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.buysus"]];
@@ -247,6 +254,7 @@
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response{
     NSArray *product = response.products;
     if([product count] <= 0){
+        [self.showView disMiss];
 #if DEBUG
         DRLog(@"--------------没有商品------------------");
 #endif
