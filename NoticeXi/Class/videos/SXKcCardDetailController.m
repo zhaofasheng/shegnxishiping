@@ -9,6 +9,7 @@
 #import "SXKcCardDetailController.h"
 #import "SXSendWordView.h"
 #import "SXStudyBaseController.h"
+
 @interface SXKcCardDetailController ()
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) UIView *headerView;
@@ -29,7 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
     self.headerView = [[UIView  alloc] initWithFrame:self.tableView.bounds];
     self.tableView.tableHeaderView = self.headerView;
     

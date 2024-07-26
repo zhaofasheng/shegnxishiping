@@ -65,7 +65,6 @@
         [CMUUIDManager saveUUID:UUID.UUIDString];
         uuid = UUID.UUIDString;
     }
-    DRLog(@"uuid==%@",uuid);
     
     //设备登录
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
@@ -167,6 +166,8 @@
     //用户退出登录通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"outLoginClearDataNOTICATION" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestNoread) name:@"NOTICENOREADNUMMESSAGE" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"NOTICEBANGDINGKECHENG" object:nil];
 }
 
 - (void)lookKc{
@@ -283,8 +284,13 @@
 - (void)request{
     
     NSString *url = @"";
-    
-    url = [NSString stringWithFormat:@"video/series/list?pageNo=%ld&isLogined=%@",self.pageNo,[NoticeTools getuserId]?@"1":@"0"];
+    NSString *ifLogin = @"0";
+    if ([NoticeTools getuserId]) {
+        ifLogin = @"1";
+    }else if ([SXTools getLocalToken] && [SXTools getLocalToken].length){
+        ifLogin = @"1";
+    }
+    url = [NSString stringWithFormat:@"video/series/list?pageNo=%ld&isLogined=%@",self.pageNo,ifLogin];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];

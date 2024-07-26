@@ -21,10 +21,11 @@
 #import "UNNotificationsManager.h"
 #import "ZFSDateFormatUtil.h"
 #import "AFNetworking.h"
-
+#import "CMUUIDManager.h"
 #import "JPUSHService.h"
 #import "NoticeLoginViewController.h"
-
+#import "SXHasUpdateKcModel.h"
+#import "SXBandKcToastView.h"
 NSString* const yunAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
 //  在APPDelegate.m中声明一个通知事件的key
@@ -163,7 +164,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         [self.socketManager reConnect];
         
         [self.audioChatTools regTencent];
-        
+        [self getIfHasDeviceKc];
         [self getOrder];
         
         if (self.shopid && self.userid) {
@@ -173,7 +174,42 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
         }else if (self.videoId){
             [self pushVideoDetail:self.videoId];
         }
+        
+        
     }
+}
+
+    
+//获取设备是否存在购买课程
+- (void)getIfHasDeviceKc{
+    //获得UUID存入keyChain中
+    NSUUID *UUID=[UIDevice currentDevice].identifierForVendor;
+    NSString *uuid = [CMUUIDManager readUUID];
+    
+    if (uuid==nil) {
+        [CMUUIDManager deleteUUID];
+        [CMUUIDManager saveUUID:UUID.UUIDString];
+        uuid = UUID.UUIDString;
+    }
+    if (uuid) {
+        NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+        [parm setObject:uuid forKey:@"uuid"];
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"users/uuid/series" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if (success) {
+                SXHasUpdateKcModel *model = [SXHasUpdateKcModel mj_objectWithKeyValues:dict[@"data"]];
+                if (model.can_bind_list.count) {
+                    SXBandKcToastView *bindView = [[SXBandKcToastView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+                    bindView.canString = [model.canArr componentsJoinedByString:@" "];
+                    if (model.noCanArr.count) {
+                        bindView.noCanString = [model.noCanArr componentsJoinedByString:@" "];
+                    }
+                    [bindView showInfoView];
+                }
+            }
+        } fail:^(NSError * _Nullable error) {
+        }];
+    }
+
 }
 
 - (LGAudioPlayer *)audioPlayer
@@ -203,8 +239,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     return _audioChatTools;
 }
 
-
-/// app进入后台后保持运行
+// app进入后台后保持运行
 - (void)beginTask {
     _backIden = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         //如果在系统规定时间3分钟内任务还没有完成，在时间到之前会调用到这个方法
@@ -212,7 +247,7 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     }];
 }
  
-/// 结束后台运行，让app挂起
+// 结束后台运行，让app挂起
 - (void)endBack {
     //切记endBackgroundTask要和beginBackgroundTaskWithExpirationHandler成对出现
     [[UIApplication sharedApplication] endBackgroundTask:_backIden];
@@ -302,17 +337,9 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 {
     if (!_noVoicePlayer) {
         _noVoicePlayer = [[LGAudioPlayer alloc] init];
-        _noVoicePlayer.playingBlock = ^(CGFloat currentTime) {
-       
-        };
-        _noVoicePlayer.playComplete = ^{
-            DRLog(@"无声音频播放停止");
-        };
     }
     return _noVoicePlayer;
 }
-
-
 
 // 应用处于后台，所有下载任务完成调用
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler

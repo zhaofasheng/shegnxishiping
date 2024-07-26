@@ -9,6 +9,8 @@
 #import "SXHasBuyPayVideoController.h"
 #import "SXHasGetSearisListCell.h"
 #import "SXPayVideoPlayDetailBaseController.h"
+#import "NoticeLoginViewController.h"
+#import "SXStudyBaseController.h"
 @interface SXHasBuyPayVideoController ()
 
 @end
@@ -23,11 +25,16 @@
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);
     [self.tableView registerClass:[SXHasGetSearisListCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.rowHeight = 136;
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"NOTICEBANGDINGKECHENG" object:nil];
     [self createRefesh];
     [self request];
 }
 
+- (void)refreshList{
+    self.isDown = YES;
+    self.pageNo = 1;
+    [self request];
+}
 
 - (void)createRefesh{
     
@@ -76,6 +83,7 @@
             NSInteger num = 0;
             for (NSDictionary *dic in dict[@"data"]) {
                 SXPayForVideoModel *model = [SXPayForVideoModel mj_objectWithKeyValues:dic];
+                model.is_bought = @"1";
                 [self.dataArr addObject:model];
                 num++;
             }
@@ -97,36 +105,12 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    SXPayVideoPlayDetailBaseController *ctl = [[SXPayVideoPlayDetailBaseController alloc] init];
+
+    SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
     SXPayForVideoModel *model = self.dataArr[indexPath.row];
     ctl.paySearModel = model;
-    if (model.searisVideoList.count) {
-        SXSearisVideoListModel *currentM = model.searisVideoList[0];
-        NSString *oldPlayVideoName = [SXTools getPayPlayLastsearisId:model.seriesId];
-        if (oldPlayVideoName) {
-            for (SXSearisVideoListModel *videoM in model.searisVideoList) {
-                if ([videoM.title isEqualToString:oldPlayVideoName]) {
-                    currentM = videoM;
-                    break;
-                }
-            }
-        }
-        ctl.currentPlayModel = currentM;
-        ctl.searisArr = model.searisVideoList;
-    }
-    __weak typeof(self) weakSelf = self;
-  
-    ctl.refreshBuyPlayTimeBlock = ^(SXSearisVideoListModel * _Nonnull currentModel, SXPayForVideoModel * _Nonnull searModel) {
-        [weakSelf refreshModelTime:currentModel seaModel:searModel];
-    };
 
-    CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
-                                                                    withSubType:kCATransitionFromLeft
-                                                                       duration:0.3f
-                                                                 timingFunction:kCAMediaTimingFunctionLinear
-                                                                           view:self.navigationController.view];
-    [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
-    [self.navigationController pushViewController:ctl animated:NO];
+    [self.navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)refreshModelTime:(SXSearisVideoListModel *)model seaModel:(SXPayForVideoModel *)searisModel{

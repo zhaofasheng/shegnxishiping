@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SXPayForVideoModel : NSObject
 @property (nonatomic, strong) NSString *seriesId;//课程id
 @property (nonatomic, strong) NSString *series_name;//课程系列名称
+@property (nonatomic, strong) NSString *bookseries_name;
 @property (nonatomic, strong) NSString *cover_url;//封面
 @property (nonatomic, strong) NSString *product_id;
 @property (nonatomic, strong) NSMutableArray *searisVideoList;

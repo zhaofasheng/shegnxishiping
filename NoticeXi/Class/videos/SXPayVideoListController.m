@@ -10,7 +10,7 @@
 #import "SXSearisHeaderView.h"
 #import "SXHasBuySearisListCell.h"
 #import "SXNoBuySearisListCell.h"
-#import "NoticeAreaViewController.h"
+#import "NoticeLoginViewController.h"
 #import "SXPayVideoPlayDetailBaseController.h"
 #import "SXBandKcToAccountView.h"
 @interface SXPayVideoListController ()
@@ -97,29 +97,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.paySearModel.hasBuy) {
+        if (![NoticeTools getuserId]) {
+            [self bandingWith:nil];
+            return;
+        }
         SXSearisVideoListModel *videoM = self.dataArr[indexPath.row];
         videoM.is_new = @"0";
         [self.tableView reloadData];
         [self gotoPlayView:videoM commentId:nil];
-    }else{
-        [self bandingWith:nil];
     }
 }
 
 - (void)bandingWith:(NoticeAreaModel *)areaModel{
     __weak typeof(self) weakSelf = self;
-    SXBandKcToAccountView *bandView = [[SXBandKcToAccountView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-    if (areaModel) {
-        bandView.areaModel = areaModel;
-    }
-    bandView.choiceAreaBolck = ^(BOOL choiceArea) {
-        NoticeAreaViewController *ctl = [[NoticeAreaViewController alloc] init];
-        ctl.adressBlock = ^(NoticeAreaModel *adressModel) {
-            [weakSelf bandingWith:adressModel];
-        };
-        [weakSelf.navigationController pushViewController:ctl animated:YES];
-    };
-    [bandView showView];
+    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"未绑定账号课程易丢失，请先登录账号后进行绑定" message:nil sureBtn:@"再想想" cancleBtn:@"登录注册" right:YES];
+   alerView.resultIndex = ^(NSInteger index) {
+       if (index == 2) {
+           NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+           [weakSelf.navigationController pushViewController:ctl animated:YES];
+       }
+   };
+   [alerView showXLAlertView];
+
 }
 
 - (void)gotoPlayView:(SXSearisVideoListModel *)model commentId:(NSString *)commentId{
@@ -150,7 +149,7 @@
 
 - (void)refreshModelTime:(SXSearisVideoListModel *)model{
     
-    DRLog(@"刷新%@",model.title);
+
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:model.schedule?model.schedule:@"0" forKey:@"schedule"];
     [parm setObject:model.is_finished?model.is_finished:@"0" forKey:@"isFinished"];

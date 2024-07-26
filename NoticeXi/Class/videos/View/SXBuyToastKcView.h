@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXBuyToastKcView : UIView
+
 @property (nonatomic, strong) UIImageView *contentView;
 - (void)showInfoView;
 @property (nonatomic, strong) UIButton *buyButton;

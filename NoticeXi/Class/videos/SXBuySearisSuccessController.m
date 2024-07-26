@@ -9,8 +9,7 @@
 #import "SXBuySearisSuccessController.h"
 #import "SXBuySearisSuccessView.h"
 #import "SXStudyBaseController.h"
-#import "NoticeAreaViewController.h"
-#import "SXBandKcToAccountView.h"
+#import "NoticeLoginViewController.h"
 @interface SXBuySearisSuccessController ()
 @property (nonatomic, strong) SXBuySearisSuccessView *headerView;
 @end
@@ -83,18 +82,14 @@
 
 - (void)bandingWith:(NoticeAreaModel *)areaModel{
     __weak typeof(self) weakSelf = self;
-    SXBandKcToAccountView *bandView = [[SXBandKcToAccountView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-    if (areaModel) {
-        bandView.areaModel = areaModel;
-    }
-    bandView.choiceAreaBolck = ^(BOOL choiceArea) {
-        NoticeAreaViewController *ctl = [[NoticeAreaViewController alloc] init];
-        ctl.adressBlock = ^(NoticeAreaModel *adressModel) {
-            [weakSelf bandingWith:adressModel];
-        };
-        [weakSelf.navigationController pushViewController:ctl animated:YES];
+    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"未绑定账号课程易丢失，请先登录账号后进行绑定" message:nil sureBtn:@"再想想" cancleBtn:@"登录注册" right:YES];
+    alerView.resultIndex = ^(NSInteger index) {
+        if (index == 2) {
+            NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+            [weakSelf.navigationController pushViewController:ctl animated:YES];
+        }
     };
-    [bandView showView];
+    [alerView showXLAlertView];
 }
 
 @end

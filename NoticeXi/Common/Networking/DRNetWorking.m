@@ -125,13 +125,13 @@
     [_manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     if ([[NoticeSaveModel getToken] length] && [NoticeTools getuserId]) {//非设备登录
-        DRLog(@"手机号登录");
+        //DRLog(@"手机号登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[NoticeSaveModel getToken]] forHTTPHeaderField:@"Authorization"];
     }else if ([SXTools getLocalToken] && [SXTools getLocalToken].length){//设备登录(游客登录)
-        DRLog(@"游客登录");
+        //DRLog(@"游客登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[SXTools getLocalToken]] forHTTPHeaderField:@"Authorization"];
     }else{
-        DRLog(@"无登录");
+        //DRLog(@"无登录");
     }
     
     
@@ -195,13 +195,13 @@
     [_manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     if ([[NoticeSaveModel getToken] length] && [NoticeTools getuserId]) {//非设备登录
-        DRLog(@"手机号登录");
+        //DRLog(@"手机号登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[NoticeSaveModel getToken]] forHTTPHeaderField:@"Authorization"];
     }else if ([SXTools getLocalToken] && [SXTools getLocalToken].length){//设备登录(游客登录)
-        DRLog(@"游客登录");
+        //DRLog(@"游客登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[SXTools getLocalToken]] forHTTPHeaderField:@"Authorization"];
     }else{
-        DRLog(@"无登录");
+        //DRLog(@"无登录");
     }
     
     
@@ -292,13 +292,13 @@
     [_manager.requestSerializer setValue:language forHTTPHeaderField:@"Lang"];
     
     if ([[NoticeSaveModel getToken] length] && [NoticeTools getuserId]) {//非设备登录
-        DRLog(@"手机号登录");
+       // DRLog(@"手机号登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[NoticeSaveModel getToken]] forHTTPHeaderField:@"Authorization"];
     }else if ([SXTools getLocalToken] && [SXTools getLocalToken].length){//设备登录(游客登录)
-        DRLog(@"游客登录");
+       // DRLog(@"游客登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[SXTools getLocalToken]] forHTTPHeaderField:@"Authorization"];
     }else{
-        DRLog(@"无登录");
+       // DRLog(@"无登录");
     }
     
     
@@ -346,13 +346,13 @@
     [_manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 
     if ([[NoticeSaveModel getToken] length] && [NoticeTools getuserId]) {//非设备登录
-        DRLog(@"手机号登录");
+       // DRLog(@"手机号登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[NoticeSaveModel getToken]] forHTTPHeaderField:@"Authorization"];
     }else if ([SXTools getLocalToken] && [SXTools getLocalToken].length){//设备登录(游客登录)
-        DRLog(@"游客登录");
+       // DRLog(@"游客登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[SXTools getLocalToken]] forHTTPHeaderField:@"Authorization"];
     }else{
-        DRLog(@"无登录");
+       // DRLog(@"无登录");
     }
     
     
@@ -507,13 +507,13 @@
     [_manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 
     if ([[NoticeSaveModel getToken] length] && [NoticeTools getuserId]) {//非设备登录
-        DRLog(@"手机号登录");
+        //DRLog(@"手机号登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[NoticeSaveModel getToken]] forHTTPHeaderField:@"Authorization"];
     }else if ([SXTools getLocalToken] && [SXTools getLocalToken].length){//设备登录(游客登录)
-        DRLog(@"游客登录");
+       // DRLog(@"游客登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[SXTools getLocalToken]] forHTTPHeaderField:@"Authorization"];
     }else{
-        DRLog(@"无登录");
+       // DRLog(@"无登录");
     }
     
     
@@ -660,13 +660,13 @@
     [_manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     if ([[NoticeSaveModel getToken] length] && [NoticeTools getuserId]) {//非设备登录
-        DRLog(@"手机号登录");
+        //DRLog(@"手机号登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[NoticeSaveModel getToken]] forHTTPHeaderField:@"Authorization"];
     }else if ([SXTools getLocalToken] && [SXTools getLocalToken].length){//设备登录(游客登录)
-        DRLog(@"游客登录");
+       // DRLog(@"游客登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[SXTools getLocalToken]] forHTTPHeaderField:@"Authorization"];
     }else{
-        DRLog(@"无登录");
+       // DRLog(@"无登录");
     }
     
     
@@ -741,13 +741,13 @@
     [_manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     if ([[NoticeSaveModel getToken] length] && [NoticeTools getuserId]) {//非设备登录
-        DRLog(@"手机号登录");
+       // DRLog(@"手机号登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[NoticeSaveModel getToken]] forHTTPHeaderField:@"Authorization"];
     }else if ([SXTools getLocalToken] && [SXTools getLocalToken].length){//设备登录(游客登录)
-        DRLog(@"游客登录");
+       // DRLog(@"游客登录");
         [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[SXTools getLocalToken]] forHTTPHeaderField:@"Authorization"];
     }else{
-        DRLog(@"无登录");
+       // DRLog(@"无登录");
     }
     
     
@@ -763,7 +763,6 @@
                 success(dict,YES);
             }
             else{
-
                 if ([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"77"]) {
                     [NoticeComTools beCheckWithReason:dict[@"msg"]];
                 }else{

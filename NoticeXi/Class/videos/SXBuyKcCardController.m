@@ -67,7 +67,6 @@
 
 - (void)sureApplePay{
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-
     [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
     [parm setObject:@"3" forKey:@"payType"];
     [parm setObject:@"2" forKey:@"platformId"];

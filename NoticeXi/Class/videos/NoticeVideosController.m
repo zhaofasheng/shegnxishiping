@@ -123,7 +123,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     if (!self.categoryName) {
         url = [NSString stringWithFormat:@"videoCategory/getVideo?pageNo=%ld&userId=%@",self.pageNo,[NoticeTools getuserId]?[NoticeTools getuserId]:@"0"];
     }else{
-        url = [NSString stringWithFormat:@"videoCategory/getVideo?pageNo=%ld&categoryName=%@&userId=%@",self.pageNo,self.categoryName,[NoticeTools getuserId]?[NoticeTools getuserId]:@"0"];
+        url = [NSString stringWithFormat:@"videoCategory/getVideo?pageNo=%ld&categoryName=%@&userId=%@",self.pageNo,[self.categoryName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<>"]],[NoticeTools getuserId]?[NoticeTools getuserId]:@"0"];
     }
     
     

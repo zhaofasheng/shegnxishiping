@@ -156,9 +156,9 @@
 }
 
 - (void)request{
-    if (![NoticeTools getuserId] && ![SXTools getLocalToken]) {
+    if (![NoticeTools getuserId]) {
         self.tableView.tableFooterView = self.defaultL1;
-        _defaultL1.text = @"登录账号或者购买课程之后才能跟用户互动哦~";
+        _defaultL1.text = @"登录声昔账号之后才能跟用户互动哦~";
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         return;

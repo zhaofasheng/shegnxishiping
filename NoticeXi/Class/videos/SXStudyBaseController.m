@@ -379,7 +379,7 @@
             [CMUUIDManager saveUUID:UUID.UUIDString];
             uuid = UUID.UUIDString;
         }
-        DRLog(@"uuid==%@",uuid);
+  
         
         //设备登录
         NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];

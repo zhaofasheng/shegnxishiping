@@ -46,11 +46,31 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redCirRequest) name:@"outLoginClearDataNOTICATION" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTwoBdge) name:@"SHOWBUDGENOTICE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideTwoBdge) name:@"HIDEBUDGENOTICE" object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lookKc) name:@"NOTICEFORLOOKKC" object:nil];
-    
+    // 检测到当前设备录屏状态发生变化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenCaptureStatusChanged:) name:UIScreenCapturedDidChangeNotification object:nil];
     
 }
+
+- (void)screenCaptureStatusChanged:(NSNotification *)notification {
+  
+    UIScreen *screen = notification.object;
+    if (screen.isCaptured) {
+        // 屏幕正在录制中
+        [self screenshots];
+    }
+}
+
+//用户录屏的时候暂停播放视频和关闭画中画
+- (void)screenshots{
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdel.pipVC.isPictureInPictureActive) {
+        //关闭画中画
+        [appdel.pipVC stopPictureInPicture];
+        appdel.pipVC = [[AVPictureInPictureController alloc] initWithPlayerLayer:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)].layer];
+    }
+}
+
 
 - (void)showTwoBdge{
     [self.tabBar showBadgeOnItemIndex:1];
@@ -148,11 +168,6 @@
     [self.tabBar setBackgroundImage:img];
     [self.tabBar setShadowImage:img];
     
-//    //阴影
-//    self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;
-//    self.tabBar.layer.shadowOffset = CGSizeMake(0, -6);
-//    self.tabBar.layer.shadowOpacity = 0.1;
-
     self.axcTabBar = [AxcAE_TabBar new] ;
     self.axcTabBar.tabBarConfig = tabBarConfs;
     // 7.设置委托

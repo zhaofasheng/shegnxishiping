@@ -82,7 +82,7 @@
     self.searchButton = searchBtn;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(36, 0, searchBtn.frame.size.width-40, 36)];
-    label.text = @"搜索视频";
+    label.text = @"搜索视频标题";
     label.font = FOURTHTEENTEXTFONTSIZE;
     label.textColor = [[UIColor colorWithHexString:@"#8A8F99"] colorWithAlphaComponent:1];
     [searchBtn addSubview:label];
@@ -138,13 +138,10 @@
 }
 
 - (void)lookKcTap{
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoSeries/readNotice" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-      
-    } fail:^(NSError * _Nullable error) {
-    }];
-    
+
     self.newKcL.hidden = YES;
     self.redView.hidden = YES;
+    self.searchButton.frame = CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-30, 36);
     if (self.kcModel.type.intValue > 0) {
         if (self.kcModel.type.intValue == 2) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICEFORLOOKKC" object:nil];
@@ -160,23 +157,21 @@
                     if (!searismodel) {
                         return;
                     }
-          
                     SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
                     ctl.paySearModel = searismodel;
                     [self.navigationController pushViewController:ctl animated:YES];
-                 
                 }
-                
             } fail:^(NSError *error) {
                 [self hideHUD];
             }];
         }
     }
     self.kcModel.type = @"0";
-    [UIView animateWithDuration:0.3 animations:^{
-        self.searchButton.frame = CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-30, 36);
-    }];
     
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoSeries/readNotice" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+      
+    } fail:^(NSError * _Nullable error) {
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated{

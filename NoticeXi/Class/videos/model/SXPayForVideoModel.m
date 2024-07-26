@@ -14,6 +14,11 @@
     return @{@"seriesId":@"id"};
 }
 
+- (void)setSeries_name:(NSString *)series_name{
+    _series_name = series_name;
+    self.bookseries_name = [NSString stringWithFormat:@"《%@》",series_name];
+}
+
 - (void)setVideos:(NSArray *)videos{
     _videos = videos;
     if (videos.count) {

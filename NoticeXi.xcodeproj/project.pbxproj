@@ -1512,6 +1512,7 @@
 		FE979DA12C50EA0400161B7B /* SXPlayRecoderScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979DA02C50EA0400161B7B /* SXPlayRecoderScrollCell.m */; };
 		FE979DA42C51E44B00161B7B /* SXVideoZjModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979DA32C51E44B00161B7B /* SXVideoZjModel.m */; };
 		FE979DA72C5229AC00161B7B /* SXKcCardListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979DA62C5229AC00161B7B /* SXKcCardListModel.m */; };
+		FE979DAA2C53411200161B7B /* SXBandKcToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE979DA92C53411200161B7B /* SXBandKcToastView.m */; };
 		FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */; };
 		FE9C3FAB2B9067F3008C3A22 /* SXSureBuySearisView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAA2B9067F3008C3A22 /* SXSureBuySearisView.m */; };
 		FE9C3FAE2B90700E008C3A22 /* SXBuySearisSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C3FAD2B90700E008C3A22 /* SXBuySearisSuccessController.m */; };
@@ -4498,6 +4499,8 @@
 		FE979DA32C51E44B00161B7B /* SXVideoZjModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoZjModel.m; sourceTree = "<group>"; };
 		FE979DA52C5229AC00161B7B /* SXKcCardListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcCardListModel.h; sourceTree = "<group>"; };
 		FE979DA62C5229AC00161B7B /* SXKcCardListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcCardListModel.m; sourceTree = "<group>"; };
+		FE979DA82C53411200161B7B /* SXBandKcToastView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBandKcToastView.h; sourceTree = "<group>"; };
+		FE979DA92C53411200161B7B /* SXBandKcToastView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBandKcToastView.m; sourceTree = "<group>"; };
 		FE9C3FA62B9066C4008C3A22 /* SXBuySearisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySearisController.h; sourceTree = "<group>"; };
 		FE9C3FA72B9066C4008C3A22 /* SXBuySearisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySearisController.m; sourceTree = "<group>"; };
 		FE9C3FA92B9067F3008C3A22 /* SXSureBuySearisView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXSureBuySearisView.h; sourceTree = "<group>"; };
@@ -9286,6 +9289,8 @@
 				FE979D9D2C50E51D00161B7B /* SXPlayRecoderScrollView.m */,
 				FE979D9F2C50EA0400161B7B /* SXPlayRecoderScrollCell.h */,
 				FE979DA02C50EA0400161B7B /* SXPlayRecoderScrollCell.m */,
+				FE979DA82C53411200161B7B /* SXBandKcToastView.h */,
+				FE979DA92C53411200161B7B /* SXBandKcToastView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -10643,6 +10648,7 @@
 				A4DE7B382B2990DD001D2D92 /* NoticeChoiceIfAutoStopPlayView.m in Sources */,
 				A4E967A72A69142500AE022E /* NoticeConnectPhoneController.m in Sources */,
 				A4E967DB2A69142500AE022E /* NoticeSettingViewController.m in Sources */,
+				FE979DAA2C53411200161B7B /* SXBandKcToastView.m in Sources */,
 				A4E964CF2A69142100AE022E /* JXPagerMainTableView.m in Sources */,
 				A4E968922A69142600AE022E /* NoticeJoinTeamRulView.m in Sources */,
 				A408EF7C2B1EC2480012C996 /* NoticeChenjiuMonthsCell.m in Sources */,
