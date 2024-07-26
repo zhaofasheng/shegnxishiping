@@ -285,7 +285,13 @@
         if (velocity.y > 0 && self.lastTransitionY > 5 && !self.isDragScrollView) {
             [self dissMissTap];
         }else {
-            [self show];
+            UIWindow *rootWindow = [SXTools getKeyWindow];
+            [rootWindow addSubview:self];
+            [UIView animateWithDuration:0.3 animations:^{
+                self->_contentView.frame = CGRectMake(0, DR_SCREEN_HEIGHT-self->_contentView.frame.size.height+20, DR_SCREEN_WIDTH, self->_contentView.frame.size.height);
+                self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+            }];
+            [self.tableView reloadData];
         }
     }
     

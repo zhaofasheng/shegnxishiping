@@ -140,7 +140,7 @@
                 if (model) {
                     [weakSelf.dataArr insertObject:model atIndex:0];
                     [weakSelf.tableView reloadData];
-            
+                    weakSelf.tableView.tableFooterView = nil;
                 }
                 
             }
