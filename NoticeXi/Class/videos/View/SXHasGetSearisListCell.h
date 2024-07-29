@@ -8,10 +8,11 @@
 
 #import "BaseCell.h"
 #import "SXPayForVideoModel.h"
+#import "CBAutoScrollLabel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXHasGetSearisListCell : BaseCell
-@property (nonatomic, strong) UILabel *titleL;
+@property (nonatomic, strong) CBAutoScrollLabel *titleL;
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) UILabel *markL;
 @property (nonatomic, strong) UILabel *numL;

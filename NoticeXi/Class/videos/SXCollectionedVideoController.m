@@ -129,7 +129,6 @@
     addView.addBlock = ^(NSString * _Nonnull name, BOOL isOpen) {
       
         NSMutableDictionary *parm = [NSMutableDictionary new];
-        
         [parm setObject:name forKey:@"ablumName"];
         
         [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoAblum/create" Accept: @"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
@@ -137,15 +136,14 @@
                 SXVideoZjModel *model = [SXVideoZjModel mj_objectWithKeyValues:dict[@"data"]];
                 model.ablum_name = name;
                 model.video_num = @"0";
-                if (model) {
+                if (model){
                     [weakSelf.dataArr insertObject:model atIndex:0];
                     [weakSelf.tableView reloadData];
                     weakSelf.tableView.tableFooterView = nil;
+                    [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
                 }
-                
             }
         } fail:^(NSError * _Nullable error) {
-         
         }];
     };
     [addView show];

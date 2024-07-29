@@ -70,6 +70,7 @@
     }
 }
 
+//没赠送的
 - (void)isNoGiveing{
     if (self.cardModel.give_status.intValue == 1) {//增送中
         self.sendIngView.hidden = YES;
@@ -340,11 +341,14 @@
     if (height > (DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-CGRectGetMaxY(self.coverImageView.frame)-54-30 - 15)) {
         contentHeight = height + 30;
     }
+    
     CGFloat orginY = CGRectGetMaxY(self.coverImageView.frame)+54;
     if (self.cardModel.give_status.intValue == 2) {
+        self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
         orginY = CGRectGetMaxY(self.coverImageView.frame)+54+30;
     }else if (self.cardModel.give_status.intValue == 3){
         orginY = CGRectGetMaxY(self.markL.frame)+15;
+        self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
     }
  
     self.contentView.frame = CGRectMake(20, orginY, DR_SCREEN_WIDTH-40,contentHeight);

@@ -65,6 +65,7 @@
 - (void)lookClick{
     if (self.payStatusModel.pay_status.intValue == 2) {
         SXKcCardDetailController *ctl = [[SXKcCardDetailController alloc] init];
+        ctl.cardModel = self.orderModel.cardModel;
         [self.navigationController pushViewController:ctl animated:YES];
     }else{
         

@@ -174,7 +174,7 @@
 - (void)refreshStatus{
 
     [self.headerView refresUI];
-    self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-50-(self.paySearModel.is_bought.boolValue?0:TAB_BAR_HEIGHT));
+    self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-50-((self.paySearModel.buy_card_times.intValue || self.paySearModel.is_bought.boolValue)?0:TAB_BAR_HEIGHT));
     [self.tableView reloadData];
 }
 

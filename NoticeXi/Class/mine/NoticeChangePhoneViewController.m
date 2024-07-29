@@ -13,7 +13,7 @@
 #import "NoticeSetRegNameController.h"
 #import "NoticeAlreadlyUserView.h"
 #import "NoticeDesTroyView.h"
-
+#import "SXStudyBaseController.h"
 @interface NoticeChangePhoneViewController ()<CQCountDownButtonDataSource, CQCountDownButtonDelegate,UITextFieldDelegate>
 @property (strong, nonatomic) UITextField *codeView;
 @property (strong, nonatomic) UITextField *phoneView;
@@ -351,16 +351,22 @@
                     loginInfo.countryCode = self.areaModel.area_code;
                     [NoticeSaveModel saveLogin:loginInfo];
                     
-                    if (self.type == 2) {
-                        
+             
+                    if (self.backTokc) {
+                        __block UIViewController *pushVC;
+                        __weak typeof(self) weakSelf = self;
+                        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if ([obj isKindOfClass:[SXStudyBaseController class]]) {//返回到指定界面
+                                pushVC = obj;
+                                [weakSelf.navigationController popToViewController:pushVC animated:YES];
+                                return ;
+                            }
+                        }];
                     }else{
-                        NoticeSetRegNameController *ctl = [[NoticeSetRegNameController alloc] init];
-                        [self.navigationController pushViewController:ctl animated:YES];
-                        return;
+                        //执行引导页
+                        [self.navigationController popToRootViewControllerAnimated:NO];
                     }
-                 
-                    //执行引导页
-                    [self.navigationController popToRootViewControllerAnimated:NO];
+                    
                     //上传成功，执行引导页
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
                 }else{

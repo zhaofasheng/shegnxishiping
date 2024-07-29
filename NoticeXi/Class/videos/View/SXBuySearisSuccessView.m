@@ -116,6 +116,7 @@
     self.orderNoL.text = [NSString stringWithFormat:@"订单编号：%@",payStatusModel.sn];
     self.orderCopyBtn.frame = CGRectMake(20+GET_STRWIDTH(self.orderNoL.text, 12, 36), 8, 20, 20);
     
+    _connectView.hidden = YES;
     _payStatusModel = payStatusModel;
     if (payStatusModel.pay_status.intValue == 2) {
         self.statusL.text = @"交易成功";
@@ -123,18 +124,60 @@
         self.statusL.textColor = [UIColor colorWithHexString:@"#14151A"];
         self.reasonL.text = @"";
         
-        self.subBackView.frame = CGRectMake(15, CGRectGetMaxY(self.backView.frame)+20, DR_SCREEN_WIDTH-30, 72);
+        self.subBackView.frame = CGRectMake(15, CGRectGetMaxY(self.backView.frame)+12, DR_SCREEN_WIDTH-30, 72);
         self.payTimeL.text = [NSString stringWithFormat:@"交易时间：%@",payStatusModel.pay_time];
+        
+        self.connectView.hidden = NO;
+        
     }else{
         self.statusL.text = @"交易失败";
         self.statusImageView.image = UIImageNamed(@"sxpayfail_img");
         self.statusL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         self.reasonL.text = @"订单已取消";
         
-        self.subBackView.frame = CGRectMake(15, CGRectGetMaxY(self.backView.frame)+20, DR_SCREEN_WIDTH-30, 36);
+        self.subBackView.frame = CGRectMake(15, CGRectGetMaxY(self.backView.frame)+12, DR_SCREEN_WIDTH-30, 36);
         self.payTimeL.text = @"";
     }
+    
     [self.subBackView setAllCorner:8];
+}
+
+- (UIView *)connectView{
+    if (!_connectView) {
+        _connectView = [[UIView  alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.subBackView.frame)+12, DR_SCREEN_WIDTH-30, 65)];
+        _connectView.backgroundColor = [UIColor whiteColor];
+        [_connectView setAllCorner:8];
+        
+        UILabel *titleL = [[UILabel  alloc] initWithFrame:CGRectMake(12, 12, 80, 20)];
+        titleL.text = @"订单服务";
+        titleL.font = XGFourthBoldFontSize;
+        titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [_connectView addSubview:titleL];
+        
+        UILabel *titleL1 = [[UILabel  alloc] initWithFrame:CGRectMake(12, 36, 240, 17)];
+        titleL1.text = @"订单疑问、申请退款，请联系客服";
+        titleL1.font = TWOTEXTFONTSIZE;
+        titleL1.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        [_connectView addSubview:titleL1];
+        
+        UIButton *connectBtn = [[UIButton  alloc] initWithFrame:CGRectMake(_connectView.frame.size.width-72-12, 16, 72, 32)];
+        connectBtn.layer.cornerRadius = 16;
+        connectBtn.layer.masksToBounds = YES;
+        connectBtn.layer.borderWidth = 1;
+        connectBtn.layer.borderColor = [[UIColor colorWithHexString:@"#14151A"] colorWithAlphaComponent:0.2].CGColor;
+        [connectBtn setTitle:@"联系客服" forState:UIControlStateNormal];
+        [connectBtn setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
+        connectBtn.titleLabel.font = TWOTEXTFONTSIZE;
+        [connectBtn addTarget:self action:@selector(connectClick) forControlEvents:UIControlEventTouchUpInside];
+        [_connectView addSubview:connectBtn];
+        
+        [self addSubview:_connectView];
+    }
+    return _connectView;
+}
+
+- (void)connectClick{
+    [NoticeComTools connectXiaoer];
 }
 
 - (void)copyClick{
@@ -144,16 +187,19 @@
 }
 
 - (void)setPaySearModel:(SXPayForVideoModel *)paySearModel{
+    
     _paySearModel = paySearModel;
+    
     self.titleL.text = paySearModel.series_name;
+    if (self.isCard) {
+        self.titleL.text = [NSString stringWithFormat:@"(礼品卡)%@",paySearModel.series_name];
+    }
     
     self.moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",paySearModel.price] setColor:[UIColor colorWithHexString:@"#FF68A3"] setSize:16 setLengthString:@"¥" beginSize:0];
     
     self.originmoneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",paySearModel.original_price] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
     
     self.reduceL.text = [NSString stringWithFormat:@"- ¥%d",paySearModel.original_price.intValue-paySearModel.price.intValue];
-    
-
     
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:paySearModel.simple_cover_url]];
 }

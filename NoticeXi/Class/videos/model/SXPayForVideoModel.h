@@ -41,6 +41,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *friendShareUrl;//朋友圈分享链接
 @property (nonatomic, strong) NSString *appletId;//小程序Id
 @property (nonatomic, strong) NSString *appletPage;//小程序跳转页面
+@property (nonatomic, strong) NSString *buy_card_times;//购买礼品卡次数
+@property (nonatomic, strong) NSDictionary *from_user_info;//赠送者信息，存在就是别人赠送的课程
+@property (nonatomic, strong) NoticeAbout *fromUser;
+
+@property (nonatomic, strong) NSString *descriptionName;//购买礼品卡说明
 @end
 
 NS_ASSUME_NONNULL_END

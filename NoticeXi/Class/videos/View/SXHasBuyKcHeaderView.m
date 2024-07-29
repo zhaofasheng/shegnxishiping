@@ -8,6 +8,7 @@
 
 #import "SXHasBuyKcHeaderView.h"
 #import "SXKcBuyChoiceView.h"
+#import "SXHasBuyOrderListController.h"
 @implementation SXHasBuyKcHeaderView
 
 
@@ -55,10 +56,17 @@
         _hasBuyTimeL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         [self addSubview:_hasBuyTimeL];
 
-        self.buyImg = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_hasBuyTimeL.frame)+3, 147, 16, 16)];
+        self.buyImg = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_hasBuyTimeL.frame), 147, 16, 16)];
         self.buyImg.userInteractionEnabled = YES;
         self.buyImg.image = UIImageNamed(@"sx_hasbuykctime_img");
         [self addSubview:self.buyImg];
+        
+        _hasBuyTimeL.userInteractionEnabled = YES;
+        self.buyImg.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hasBuyTap)];
+        [self.hasBuyTimeL addGestureRecognizer:tap1];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hasBuyTap)];
+        [self.buyImg addGestureRecognizer:tap];
         
         if ([NoticeTools getuserId]) {
             self.contouinBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-33-105, 138, 105, 32)];
@@ -106,10 +114,16 @@
     self.line.frame = CGRectMake(0, 23/2, _orginMoneyL.frame.size.width, 1);
     _buyNumL.frame = CGRectMake(CGRectGetMaxX(_orginMoneyL.frame)+8, 67, GET_STRWIDTH(_buyNumL.text, 12, 24), 24);
     
-    self.hasBuyTimeL.text = @"已购1次";
+    self.hasBuyTimeL.text = [NSString stringWithFormat:@"已购%d次",paySearModel.buy_card_times.intValue+(paySearModel.is_bought.boolValue?1:0)];
     self.hasBuyTimeL.frame = CGRectMake(145, 145, GET_STRWIDTH(self.hasBuyTimeL.text, 14, 20), 20);
     self.buyImg.frame = CGRectMake(CGRectGetMaxX(_hasBuyTimeL.frame)+3, 147, 16, 16);
     
+}
+
+- (void)hasBuyTap{
+    SXHasBuyOrderListController *ctl = [[SXHasBuyOrderListController alloc] init];
+    ctl.isSuccess = YES;
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 @end

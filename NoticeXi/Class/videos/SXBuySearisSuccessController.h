@@ -8,12 +8,15 @@
 
 #import "NoticeBaseCellController.h"
 #import "SXPayForVideoModel.h"
+#import "SXBuyVideoOrderList.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXBuySearisSuccessController : NoticeBaseCellController
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic, strong) SXOrderStatusModel *payStatusModel;
 @property (nonatomic, assign) BOOL isFromList;
+
+@property (nonatomic, strong) SXBuyVideoOrderList *orderModel;
 @end
 
 NS_ASSUME_NONNULL_END

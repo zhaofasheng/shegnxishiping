@@ -144,6 +144,10 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             
             for (NSDictionary *dic in dict[@"data"]) {
                 SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
+                if (self.videoModel) {
+                    videoM.schedule = self.videoModel.schedule;
+                    self.videoModel = nil;
+                }
                 videoM.textContent = [NSString stringWithFormat:@"%@\n%@",videoM.title,videoM.introduce];
                 [self.dataArr addObject:videoM];
             }
@@ -152,6 +156,10 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             [self.collectionView reloadData];
             if (!self.dataArr.count) {
                 [_defaultL removeFromSuperview];
+                SXAlbumReusableView *headerView = [[SXAlbumReusableView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 95)];
+                headerView.albumL.text = self.zjModel.ablum_name;
+                headerView.numL.text = [NSString stringWithFormat:@"%d个视频",self.zjModel.video_num.intValue];
+                [self.defaultL addSubview:headerView];
                 [self.collectionView addSubview:self.defaultL];
             }else{
                 [_defaultL removeFromSuperview];
@@ -257,7 +265,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         [addView show];
     }else if (buttonIndex == 2){
         
-         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确认删除吗？" message:@"删除后，专辑下的视频将取消收藏" sureBtn:@"取消" cancleBtn:@"删除" right:YES];
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确认删除吗？" message:@"删除后，专辑下的视频将取消收藏" sureBtn:@"取消" cancleBtn:@"删除" right:YES];
         alerView.resultIndex = ^(NSInteger index) {
             if (index == 2) {
                 [[DRNetWorking shareInstance] requestWithDeletePath:[NSString stringWithFormat:@"videoAblum/%@",self.zjModel.albumId] Accept:@"application/vnd.shengxi.v5.8.5+json" parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
@@ -275,8 +283,8 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         };
         [alerView showXLAlertView];
     }
-
- 
+    
+    
 
 }
 

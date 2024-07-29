@@ -20,4 +20,9 @@
     return @{@"orderId":@"id"};
 }
 
+
+- (void)setSeries_card_info:(NSDictionary *)series_card_info{
+    _series_card_info = series_card_info;
+    self.cardModel = [SXKcCardListModel mj_objectWithKeyValues:series_card_info];
+}
 @end

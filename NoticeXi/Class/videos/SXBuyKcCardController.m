@@ -28,7 +28,21 @@
     self.headerView = [[SXBuyKcCardHeaderView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 0)];
     
     self.tableView.tableHeaderView = self.headerView;
-    self.headerView.paySearModel = self.paySearModel;
+    
+    if (!self.paySearModel.descriptionName) {
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"series/card/giveDescription" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if (success) {
+                SXPayForVideoModel *demodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
+                self.paySearModel.descriptionName = demodel.descriptionName;
+                self.headerView.paySearModel = self.paySearModel;
+                [self.tableView reloadData];
+            }
+        } fail:^(NSError * _Nullable error) {
+            
+        }];
+    }else{
+        self.headerView.paySearModel = self.paySearModel;
+    }
     
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
     
@@ -112,11 +126,12 @@
                      self.buySuccessBlock(self.paySearModel.seriesId);
                  }
              }
-        
+             SXBuyVideoOrderList *orderM = [SXBuyVideoOrderList mj_objectWithKeyValues:dict[@"data"]];
+             orderM.cardModel.searModel = orderM.paySearModel;
              SXBuyCardSuccessController *ctl = [[SXBuyCardSuccessController alloc] init];
              ctl.paySearModel = self.paySearModel;
              ctl.payStatusModel = payStatus;
-             
+             ctl.orderModel = orderM;
              ctl.reBuyBlock = ^(BOOL buy) {
                  [weakSelf sureApplePay];
              };

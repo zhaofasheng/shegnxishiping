@@ -11,7 +11,7 @@
 @implementation SXPayForVideoModel
 + (NSDictionary *)mj_replacedKeyFromPropertyName
 {
-    return @{@"seriesId":@"id"};
+    return @{@"seriesId":@"id",@"descriptionName":@"description"};
 }
 
 - (void)setSeries_name:(NSString *)series_name{
@@ -38,5 +38,10 @@
 - (void)setUpdate_video:(NSDictionary *)update_video{
     _update_video = update_video;
     self.updateM = [SXSearisVideoListModel mj_objectWithKeyValues:update_video];
+}
+
+- (void)setFrom_user_info:(NSDictionary *)from_user_info{
+    _from_user_info = from_user_info;
+    self.fromUser = [NoticeAbout mj_objectWithKeyValues:from_user_info];
 }
 @end

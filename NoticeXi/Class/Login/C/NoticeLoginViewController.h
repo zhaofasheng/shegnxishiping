@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeLoginViewController : NoticeBaseController
-
+@property (nonatomic, assign) BOOL backTokc;
 @end
 
 NS_ASSUME_NONNULL_END

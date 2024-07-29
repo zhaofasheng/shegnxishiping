@@ -8,7 +8,6 @@
 
 #import "NoticeVideosController.h"
 #import "NoticeVideoCollectionViewCell.h"
-
 #import "NoticeLoginViewController.h"
 #import "SXPlayFullListController.h"
 #import "SXPlayDetailController.h"
@@ -199,7 +198,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 
 //每个section的item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
     return self.dataArr.count;
 }
 

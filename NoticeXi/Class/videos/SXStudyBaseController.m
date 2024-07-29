@@ -129,6 +129,7 @@
         [self categoryCurentIndex:2];
         self.shoCom = NO;
     }
+    self.paySearModel.buy_card_times = [NSString stringWithFormat:@"%d",self.paySearModel.buy_card_times.intValue+1];
     self.zeroView.paySearModel = self.paySearModel;
     self.comVC.paySearModel = self.paySearModel;
     [self.comVC.tableView reloadData];
@@ -137,6 +138,10 @@
     [self.categoryView reloadData];
     [self.pagerView reloadData];
     [self refreshStatus];
+    
+    if (self.buySuccessBlock) {
+        self.buySuccessBlock(self.paySearModel.seriesId,self.paySearModel.buy_card_times,self.paySearModel.is_bought);
+    }
 }
 
 - (void)shareClick{
@@ -187,11 +192,11 @@
 #pragma mark - JXPagerViewDelegate
 
 - (UIView *)tableHeaderViewInPagerView:(JXPagerView *)pagerView {
-    return self.paySearModel.hasBuy?self.zeroView: self.imgListView;
+    return (self.paySearModel.hasBuy || self.paySearModel.buy_card_times.intValue) ? self.zeroView : self.imgListView;
 }
 
 - (NSUInteger)tableHeaderViewHeightInPagerView:(JXPagerView *)pagerView {
-    return self.paySearModel.hasBuy ? self.zeroView.frame.size.height: (self.imgListView.frame.size.height+1);
+    return (self.paySearModel.hasBuy || self.paySearModel.buy_card_times.intValue) ? self.zeroView.frame.size.height: (self.imgListView.frame.size.height+1);
 }
 
 - (NSUInteger)heightForPinSectionHeaderInPagerView:(JXPagerView *)pagerView {
@@ -223,11 +228,6 @@
         _videoVC = [[SXPayVideoListController alloc] init];
         _videoVC.paySearModel = self.paySearModel;
         __weak typeof(self) weakSelf = self;
-        _videoVC.buySuccessBlock = ^(NSString * _Nonnull searisID) {
-            if (weakSelf.buySuccessBlock) {
-                weakSelf.buySuccessBlock(searisID);
-            }
-        };
         _videoVC.deleteClickBlock = ^(SXVideoCommentModel * _Nonnull commentM) {
             [weakSelf.comVC deleteCommentWith:commentM.commentId];
         };
@@ -271,7 +271,7 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    self.pagerView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-(self.paySearModel.is_bought.boolValue?0:TAB_BAR_HEIGHT));
+    self.pagerView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-((self.paySearModel.is_bought.boolValue || self.paySearModel.buy_card_times.intValue) ?0:TAB_BAR_HEIGHT));
     self.pagerView.backgroundColor = [[UIColor colorWithHexString:@"#14151A"] colorWithAlphaComponent:0];
 
     // 在定义JXPagerView的时候
@@ -296,12 +296,13 @@
 }
 
 - (void)refreshStatus{
-    if (!self.paySearModel.hasBuy) {
-        [self noBuyView];
+    if (self.paySearModel.hasBuy || self.paySearModel.buy_card_times.intValue) {
+        [self.backView removeFromSuperview];
     }else{
-        self.backView.hidden = YES;
+        [self noBuyView];
+        
     }
-    self.pagerView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-(self.paySearModel.is_bought.boolValue?0:TAB_BAR_HEIGHT));
+    self.pagerView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-((self.paySearModel.is_bought.boolValue || self.paySearModel.buy_card_times.intValue) ?0:TAB_BAR_HEIGHT));
 }
 
 //没有购买时候的底部UI
@@ -312,7 +313,7 @@
     [self.view addSubview:backView];
     self.backView = backView;
     
-    if ([NoticeTools getuserId]) {
+    if ([NoticeTools getuserId] && ![[NoticeTools getuserId] isEqualToString:@"2"]) {
         UIButton *sendBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-144-80,5, 80, 40)];
         [sendBtn setBackgroundImage:UIImageNamed(@"sxpricebak_img") forState:UIControlStateNormal];
         [sendBtn setTitle:@"赠送" forState:UIControlStateNormal];
@@ -322,15 +323,12 @@
         [sendBtn addTarget:self action:@selector(sendVideoClick) forControlEvents:UIControlEventTouchUpInside];
     }
 
-    
     NSString *price = [NSString stringWithFormat:@"¥%@",self.paySearModel.price];
     NSString *oriprice = [NSString stringWithFormat:@"¥%@",self.paySearModel.original_price];
     
- 
     CGFloat realPriceWidth = GET_STRWIDTH(price, 20, 40);
     CGFloat oriPriceWidth = GET_STRWIDTH(oriprice, 14, 40);
     
-
     UILabel *realPriceL = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, realPriceWidth, 35)];
     realPriceL.font = SXNUMBERFONT(20);
     realPriceL.textColor = [UIColor colorWithHexString:@"#FF4B98"];
@@ -424,7 +422,7 @@
             weakSelf.kcVC.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-(weakSelf.paySearModel.is_bought.boolValue?0:TAB_BAR_HEIGHT));
         }
         if (weakSelf.buySuccessBlock) {
-            weakSelf.buySuccessBlock(searisID);
+            weakSelf.buySuccessBlock(searisID,weakSelf.paySearModel.buy_card_times,weakSelf.paySearModel.is_bought);
         }
         
     };
@@ -447,6 +445,7 @@
 
 - (void)login{
     NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+    ctl.backTokc = YES;
     [self.navigationController pushViewController:ctl animated:YES];
 }
 

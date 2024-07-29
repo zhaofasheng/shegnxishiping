@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navBarView.titleL.text = @"课程订单";
+    self.navBarView.titleL.text = self.isSuccess?@"已购记录": @"课程订单";
     
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);
     [self.tableView registerClass:[SXHasBuyVideoOrderListCell class] forCellReuseIdentifier:@"cell"];
@@ -38,6 +38,8 @@
     SXBuySearisSuccessController *ctl = [[SXBuySearisSuccessController alloc] init];
     ctl.paySearModel = model.paySearModel;
     ctl.payStatusModel = payStatusM;
+    model.cardModel.searModel = model.paySearModel;
+    ctl.orderModel = model;
     ctl.isFromList = YES;
     [self.navigationController pushViewController:ctl animated:YES];
 }
@@ -68,8 +70,8 @@
     
     NSString *url = @"";
     
-    url = [NSString stringWithFormat:@"series/order/list?pageNo=%ld",self.pageNo];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    url = [NSString stringWithFormat:@"series/order/list?pageNo=%ld&payStatus=%@",self.pageNo,self.isSuccess?@"2":@"0"];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         if (success) {

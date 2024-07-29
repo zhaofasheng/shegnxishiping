@@ -33,6 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIView *subBackView;
 @property (nonatomic, strong) SXOrderStatusModel *payStatusModel;
+
+@property (nonatomic, strong) UIView *connectView;
+
+@property (nonatomic, assign) BOOL isCard;
 @end
 
 NS_ASSUME_NONNULL_END

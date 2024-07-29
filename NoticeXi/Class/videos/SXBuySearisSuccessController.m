@@ -10,6 +10,7 @@
 #import "SXBuySearisSuccessView.h"
 #import "SXStudyBaseController.h"
 #import "NoticeLoginViewController.h"
+#import "SXKcCardDetailController.h"
 @interface SXBuySearisSuccessController ()
 @property (nonatomic, strong) SXBuySearisSuccessView *headerView;
 @end
@@ -21,6 +22,7 @@
     
     self.headerView = [[SXBuySearisSuccessView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT)];
     self.tableView.tableHeaderView = self.headerView;
+    self.headerView.isCard = self.orderModel.product_type.intValue == 3?YES:NO;
     self.headerView.paySearModel = self.paySearModel;
     self.headerView.payStatusModel = self.payStatusModel;
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
@@ -33,7 +35,7 @@
         UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(20,5,DR_SCREEN_WIDTH-40, 40)];
         [button setAllCorner:20];
         button.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
-        [button setTitle:@"查看课程" forState:UIControlStateNormal];
+        [button setTitle:self.orderModel.product_type.intValue == 3 ? @"查看礼品卡" : @"查看课程" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button.titleLabel.font = SIXTEENTEXTFONTSIZE;
         [backView addSubview:button];
@@ -58,6 +60,14 @@
 }
 
 - (void)lookClick{
+    
+    if (self.orderModel.product_type.intValue == 3) {
+        SXKcCardDetailController *ctl = [[SXKcCardDetailController alloc] init];
+        ctl.cardModel = self.orderModel.cardModel;
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
+    
     if (self.isFromList) {
         SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
         ctl.paySearModel = self.paySearModel;

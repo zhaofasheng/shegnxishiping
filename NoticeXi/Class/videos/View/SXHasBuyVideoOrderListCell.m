@@ -69,7 +69,7 @@
     }
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:orderListM.paySearModel.simple_cover_url]];
     self.titleL.text = orderListM.paySearModel.series_name;
-    _numL.text = [NSString stringWithFormat:@"共%@课时",orderListM.paySearModel.episodes];
+    _numL.text = orderListM.product_type.intValue == 3? @"礼品卡" : [NSString stringWithFormat:@"共%@课时",orderListM.paySearModel.episodes];
     _moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",orderListM.paySearModel.price] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
 }
 

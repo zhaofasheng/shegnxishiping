@@ -220,7 +220,7 @@
                     loginInfo.countryCode = self.areaModel.area_code;
                     [NoticeSaveModel saveLogin:loginInfo];
                     
-                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    [self.navigationController popViewControllerAnimated:YES];
                     //上传成功，执行引导页
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
                 }else{
@@ -329,6 +329,7 @@ API_AVAILABLE(ios(13.0)){
 - (void)gotoInput{
     NoticeChangePhoneViewController *ctl = [[NoticeChangePhoneViewController alloc] init];
     ctl.type = 2;
+    ctl.backTokc = self.backTokc;
     [self.navigationController pushViewController:ctl animated:YES];
 }
 
@@ -525,6 +526,7 @@ API_AVAILABLE(ios(13.0)){
                     if ([checkM.is_exist isEqualToString:@"0"]) {//不存在则执行注册
                         NoticeChangePhoneViewController *ctl = [[NoticeChangePhoneViewController alloc] init];
                         ctl.type = 2;
+                        ctl.backTokc = self.backTokc;
                         ctl.phone = phoneM.phone;
                         [self.navigationController pushViewController:ctl animated:YES];
                         return;
@@ -720,6 +722,7 @@ API_AVAILABLE(ios(13.0)){
                         }
                         NoticeChangePhoneViewController *ctl = [[NoticeChangePhoneViewController alloc] init];
                         ctl.regModel = regM;
+                        ctl.backTokc = self.backTokc;
                         ctl.isThird = YES;
                         ctl.navtitle = @"手机号登录";
                         [weakSelf.navigationController pushViewController:ctl animated:YES];
@@ -790,7 +793,9 @@ API_AVAILABLE(ios(13.0)){
                     loginInfo.type = type;
                     loginInfo.unionId = user.credential.uid?user.credential.uid:@"ghjkl";
                     [NoticeSaveModel saveLogin:loginInfo];
-                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
                     
                     //上传成功，执行引导页
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];

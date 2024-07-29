@@ -330,14 +330,16 @@
     SXPayForVideoModel *model = self.dataArr[indexPath.row];
     ctl.paySearModel = model;
     __weak typeof(self) weakSelf = self;
-    ctl.buySuccessBlock = ^(NSString * _Nonnull searisID) {
+    ctl.buySuccessBlock = ^(NSString * _Nonnull searisID, NSString * _Nonnull buyNum, NSString * _Nonnull is_Bount) {
         for (SXPayForVideoModel *searM in weakSelf.dataArr) {
             if ([searM.seriesId isEqualToString:searisID]) {
-                searM.is_bought = @"1";
+                searM.is_bought = is_Bount;
+                searM.buy_card_times = buyNum;
                 break;
             }
         }
     };
+    
     [self.navigationController pushViewController:ctl animated:YES];
 }
 

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) SXVideoZjModel *zjModel;
 @property (nonatomic,copy) void(^nameChangeBlock)(BOOL change);
 @property (nonatomic,copy) void(^deletezjBlock)(SXVideoZjModel *model);
+@property (nonatomic, strong) SXVideosModel * __nullable videoModel;
 @end
 
 NS_ASSUME_NONNULL_END

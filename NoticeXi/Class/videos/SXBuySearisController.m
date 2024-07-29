@@ -81,9 +81,12 @@
                      self.buySuccessBlock(self.paySearModel.seriesId);
                  }
              }
+             SXBuyVideoOrderList *orderM = [SXBuyVideoOrderList mj_objectWithKeyValues:dict[@"data"]];
+             orderM.cardModel.searModel = orderM.paySearModel;
              SXBuySearisSuccessController *ctl = [[SXBuySearisSuccessController alloc] init];
              ctl.paySearModel = self.paySearModel;
              ctl.payStatusModel = payStatus;
+             ctl.orderModel = orderM;
              [self.navigationController pushViewController:ctl animated:YES];
          }
      } fail:^(NSError * _Nullable error) {

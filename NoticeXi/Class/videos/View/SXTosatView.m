@@ -15,7 +15,8 @@
         
         self.userInteractionEnabled = YES;
         self.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.6];
-        [self setAllCorner:10];
+        self.layer.cornerRadius = 10;
+        self.layer.masksToBounds = YES;
         
         FSCustomButton *btn = [[FSCustomButton alloc] initWithFrame:CGRectMake(0, 0, 217, 54)];
         [btn setTitle:@"已添加到缓存队列  查看" forState:UIControlStateNormal];

@@ -80,13 +80,10 @@
         self.buyExplainL.font = FOURTHTEENTEXTFONTSIZE;
         self.buyExplainL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         [self.backView2 addSubview:self.buyExplainL];
+        
+  
     }
     return self;
-}
-
-//继续购课
-- (void)buyClick{
-    
 }
 
 - (void)setPaySearModel:(SXPayForVideoModel *)paySearModel{
@@ -115,11 +112,13 @@
 
     self.backView1.frame = CGRectMake(15, 20, DR_SCREEN_WIDTH-30, CGRectGetMaxY(self.markL.frame)+15);
     
-    NSString *explain = @"1.【课程礼品卡】仅可用于赠送，购买者无法观看该课程内容，请谨慎购买。\n2.【课程礼品卡】购买后，不支持退订、退换。\n3.【课程礼品卡】可通过链接赠送给好友，需要好友手动操作领取，领取时间无限制。\n4.同一张礼品卡，可多次分享链接，但只有1人能成功领取，先到先得，一旦被领取，不可反悔。\n5.获赠人需通过“手机号”领取礼品卡，领取后使用该手机号登录【声昔】，即可查看课程内容和祝福。";
+    
+    NSString *explain = paySearModel.descriptionName;
     self.buyExplainL.attributedText = [SXTools getStringWithLineHight:3 string:explain];
     self.buyExplainL.frame = CGRectMake(15, 40, DR_SCREEN_WIDTH-60, [SXTools getHeightWithLineHight:3 font:14 width:DR_SCREEN_WIDTH-60 string:explain isJiacu:NO]);
     self.backView2.frame = CGRectMake(15, CGRectGetMaxY(self.backView1.frame)+10, DR_SCREEN_WIDTH-30,CGRectGetMaxY(self.buyExplainL.frame)+15);
     
     self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, CGRectGetMaxY(self.backView2.frame)+20);
+
 }
 @end

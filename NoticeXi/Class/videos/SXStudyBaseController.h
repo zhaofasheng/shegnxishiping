@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SXStudyBaseController : NoticeBaseController
 
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
-@property (nonatomic,copy) void(^buySuccessBlock)(NSString *searisID);
+@property (nonatomic,copy) void(^buySuccessBlock)(NSString *searisID,NSString *buyNum,NSString *is_Bount);
 
 @end
 

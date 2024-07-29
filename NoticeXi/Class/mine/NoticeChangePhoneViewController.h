@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL hasThird;
 @property (nonatomic, assign) BOOL isThird;
 @property (nonatomic, assign) BOOL hasPhone;
+@property (nonatomic, assign) BOOL backTokc;
 @property (nonatomic, strong) NSString *navtitle;
 @property (nonatomic, assign) NSInteger type;//1注册 2登录
 @property (nonatomic, strong) NoticeUserInfoModel *regModel;

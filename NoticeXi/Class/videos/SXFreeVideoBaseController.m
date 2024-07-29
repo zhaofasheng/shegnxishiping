@@ -229,22 +229,29 @@
 }
 
 - (void)refreshIfHasNew{
-
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoSeries/getNotice" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-        if (success) {
-            self.kcModel = [SXHasUpdateKcModel mj_objectWithKeyValues:dict[@"data"]];
-            if (self.kcModel.type.intValue > 0) {
-                [UIView animateWithDuration:0.2 animations:^{
+    if ([NoticeTools getuserId]) {
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoSeries/getNotice" Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if (success) {
+                self.kcModel = [SXHasUpdateKcModel mj_objectWithKeyValues:dict[@"data"]];
+                if (self.kcModel.type.intValue > 0) {
                     self.searchButton.frame = CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-96-45, 36);
-                } completion:^(BOOL finished) {
                     self.newKcL.hidden = NO;
                     self.redView.hidden = NO;
-                }];
+                }else{
+                    _newKcL.hidden = YES;
+                    _redView.hidden = YES;
+                    self.searchButton.frame = CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-30, 36);
+                }
             }
-        }
-    } fail:^(NSError * _Nullable error) {
-        
-    }];
+        } fail:^(NSError * _Nullable error) {
+            
+        }];
+    }else{
+        _newKcL.hidden = YES;
+        _redView.hidden = YES;
+        self.searchButton.frame = CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-30, 36);
+    }
+
 }
 
 - (void)tagsClick{

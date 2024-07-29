@@ -160,12 +160,16 @@
             }
             
             SXTosatView *tosatView = [[SXTosatView  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-315)/2,(DR_SCREEN_HEIGHT-54)/2-100, 315, 54)];
-            tosatView.button.frame = tosatView.bounds;
+            
             NSString *name = zjModel.ablum_name.length > 10 ? [NSString stringWithFormat:@"%@...",[zjModel.ablum_name substringToIndex:9]] : zjModel.ablum_name;
             name = [NSString stringWithFormat:@"已收藏到”%@“  查看",name];
+            CGFloat width = GET_STRWIDTH(name, 14, 54);
+            tosatView.frame = CGRectMake((DR_SCREEN_WIDTH-width-16-40)/2,(DR_SCREEN_HEIGHT-54)/2-100, width+16+40, 54);
+            tosatView.button.frame = tosatView.bounds;
             [tosatView.button setTitle:name forState:UIControlStateNormal];
             tosatView.lookSaveListBlock = ^(BOOL look) {
                 SXVideosForAlbumController *ctl = [[SXVideosForAlbumController alloc] init];
+                ctl.videoModel = self.videoModel;
                 ctl.zjModel = zjModel;
                 [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
             };
@@ -245,7 +249,7 @@
 }
 
 - (void)refreshZanUI{
-    self.likeImageView.image = self.videoModel.is_zan.boolValue?UIImageNamed(@"sx_like_img"):UIImageNamed(@"sx_videolikefull_img");
+    self.likeImageView.image = self.videoModel.is_zan.boolValue?UIImageNamed(@"sx_likeyes_img"):UIImageNamed(@"sx_videolikefull_img");
     self.likeL.text = self.videoModel.zan_num.intValue?self.videoModel.zan_num:@"点赞";
 }
 

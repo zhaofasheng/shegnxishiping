@@ -24,7 +24,7 @@
         self.coverImageView.clipsToBounds = YES;
         [self.backView addSubview:self.coverImageView];
         
-        _titleL = [[UILabel alloc] initWithFrame:CGRectMake(100,12,self.backView.frame.size.width-10-100, 22)];
+        _titleL = [[CBAutoScrollLabel alloc] initWithFrame:CGRectMake(100,12,self.backView.frame.size.width-10-100, 22)];
         _titleL.font = XGSIXBoldFontSize;
         _titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self.backView addSubview:_titleL];
@@ -51,6 +51,9 @@
     _model = model;
     self.numL.text = [NSString stringWithFormat:@"共%@课时  |  已更新%@课时",model.episodes,model.published_episodes];
     self.titleL.text = model.series_name;
+    if (model.fromUser) {
+        self.titleL.text = [NSString stringWithFormat:@"(%@赠送)%@",model.fromUser.nick_name,model.series_name];
+    }
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:model.simple_cover_url]];
     if (model.updateM && model.updateM.title) {
         self.markL.text = [NSString stringWithFormat:@"更新：%@",model.updateM.title];
