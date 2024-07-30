@@ -155,7 +155,6 @@
         }
     }
     
-
     if (!self.orderM.isNoFinish) {
         
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(backImageV.frame.size.width-10-20, 120, 20, 20)];
@@ -178,15 +177,12 @@
                 }else{
                     priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实付款：%@",@"审核中"] setSize:12 setLengthString:@"实付款：" beginSize:0];
                 }
-                
-               
             }else{
                 if([self.orderM.shop_user_id isEqualToString:[NoticeTools getuserId]]){//自己是店主
                     priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实收款：%@鲸币",self.orderM.income] setSize:12 setLengthString:@"实收款：" beginSize:0];
                 }else{
                     priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"实付款：%@鲸币",self.orderM.price] setSize:12 setLengthString:@"实付款：" beginSize:0];
                 }
-          
             }
         }
 

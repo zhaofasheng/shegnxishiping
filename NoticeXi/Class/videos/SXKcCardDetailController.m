@@ -253,6 +253,8 @@
     [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"series/gift/card/%@",self.cardModel.cardId] Accept:@"application/vnd.shengxi.v5.8.5+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             
+            SXKcCardListModel *model = [SXKcCardListModel mj_objectWithKeyValues:dict[@"data"]];
+            self.cardModel.share_url = model.share_url;
             if (btn.tag == 0) {
                 [NoticeShareView shareWithurl:self.cardModel.share_url type:SSDKPlatformSubTypeWechatSession title:@"Hey！亲爱的朋友这是我的心意" name:self.cardModel.searModel.series_name imageUrl:self.cardModel.searModel.simple_cover_url];
             }else{

@@ -26,6 +26,7 @@
     
     self.headeimageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,(DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-DR_SCREEN_WIDTH)/2-30, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH)];
     [self.view addSubview:self.headeimageView];
+    
     if (self.url) {
         [self.headeimageView sd_setImageWithURL:[NSURL URLWithString:self.url]];
     }else{
@@ -33,7 +34,6 @@
     }
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
-    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(64,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50-40-NAVIGATION_BAR_HEIGHT,DR_SCREEN_WIDTH-128, 50);
     [btn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
@@ -113,7 +113,6 @@
 
     
             [[NoticeTools getTopViewController] showHUD];
-            
             [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shop/%@",self.shopId] Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success1) {
                 [[NoticeTools getTopViewController] hideHUD];
                 if (success1) {
