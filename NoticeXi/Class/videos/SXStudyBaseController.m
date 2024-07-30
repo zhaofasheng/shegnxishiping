@@ -107,6 +107,7 @@
 - (void)buySuccess{
     [self.backView removeFromSuperview];
     self.paySearModel.is_bought = @"1";
+    self.paySearModel.buy_card_times = [NSString stringWithFormat:@"%d",self.paySearModel.buy_card_times.intValue+1];
     if (self.shoCom) {
         self.categoryView.defaultSelectedIndex = 2;
         [self categoryCurentIndex:2];
@@ -313,7 +314,7 @@
     [self.view addSubview:backView];
     self.backView = backView;
     
-    if ([NoticeTools getuserId] && ![[NoticeTools getuserId] isEqualToString:@"2"]) {
+    if ([NoticeTools getuserId]) {
         UIButton *sendBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-144-80,5, 80, 40)];
         [sendBtn setBackgroundImage:UIImageNamed(@"sxpricebak_img") forState:UIControlStateNormal];
         [sendBtn setTitle:@"赠送" forState:UIControlStateNormal];

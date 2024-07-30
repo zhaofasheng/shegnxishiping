@@ -402,7 +402,7 @@
         [self.view addSubview:_noLoginView];
         
         UILabel *connectL = [[UILabel  alloc] initWithFrame:CGRectMake(15, STATUS_BAR_HEIGHT+20, DR_SCREEN_WIDTH-30, 44)];
-        connectL.text = @"有问题请联系：邮箱1299741779@qq.com";
+        connectL.text = @"有问题请联系：邮箱664983715@qq.com";
         connectL.font = FIFTHTEENTEXTFONTSIZE;
         connectL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         connectL.textAlignment = NSTextAlignmentCenter;

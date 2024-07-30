@@ -343,14 +343,16 @@
     }
     
     CGFloat orginY = CGRectGetMaxY(self.coverImageView.frame)+54;
-    if (self.cardModel.give_status.intValue == 2) {
-        self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
-        orginY = CGRectGetMaxY(self.coverImageView.frame)+54+30;
-    }else if (self.cardModel.give_status.intValue == 3){
-        orginY = CGRectGetMaxY(self.markL.frame)+15;
-        self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+    if (!self.isGet) {
+        if (self.cardModel.give_status.intValue == 2) {
+            self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+            orginY = CGRectGetMaxY(self.coverImageView.frame)+54+30;
+        }else if (self.cardModel.give_status.intValue == 3){
+            orginY = CGRectGetMaxY(self.markL.frame)+15;
+            self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+        }
     }
- 
+
     self.contentView.frame = CGRectMake(20, orginY, DR_SCREEN_WIDTH-40,contentHeight);
     self.headerView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, CGRectGetMaxY(self.contentView.frame)+15);
     [self.tableView reloadData];

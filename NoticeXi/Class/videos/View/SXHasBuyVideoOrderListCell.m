@@ -56,7 +56,6 @@
 }
 
 
-
 - (void)setOrderListM:(SXBuyVideoOrderList *)orderListM{
     _orderListM = orderListM;
     self.orderNumL.text = [NSString stringWithFormat:@"订单编号：%@",orderListM.sn];
@@ -69,7 +68,12 @@
     }
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:orderListM.paySearModel.simple_cover_url]];
     self.titleL.text = orderListM.paySearModel.series_name;
-    _numL.text = orderListM.product_type.intValue == 3? @"礼品卡" : [NSString stringWithFormat:@"共%@课时",orderListM.paySearModel.episodes];
+    if (orderListM.cardModel.card_number.length > 6) {
+        _numL.text = orderListM.product_type.intValue == 3? [NSString stringWithFormat:@"礼品卡(编号%@)",[orderListM.cardModel.card_number substringFromIndex:orderListM.cardModel.card_number.length-6]] : [NSString stringWithFormat:@"共%@课时",orderListM.paySearModel.episodes];
+    }else{
+        _numL.text = orderListM.product_type.intValue == 3? @"礼品卡" : [NSString stringWithFormat:@"共%@课时",orderListM.paySearModel.episodes];
+    }
+
     _moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",orderListM.paySearModel.price] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
 }
 

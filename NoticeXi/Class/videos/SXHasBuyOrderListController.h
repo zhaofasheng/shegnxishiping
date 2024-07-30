@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SXHasBuyOrderListController : NoticeBaseCellController
 @property (nonatomic, assign) BOOL isSuccess;
+@property (nonatomic, strong) NSString *seriesId;
 @end
 
 NS_ASSUME_NONNULL_END

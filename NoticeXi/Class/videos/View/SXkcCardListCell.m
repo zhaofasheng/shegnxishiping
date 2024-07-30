@@ -89,7 +89,7 @@
         }
     }else{
         self.sendButton.hidden = YES;
-        self.markL.text = [NSString stringWithFormat:@"赠送者：%@",cardModel.getUserInfoM.nick_name];
+        self.markL.text = [NSString stringWithFormat:@"赠送者：%@",cardModel.userM.nick_name];
     }
     self.markL.frame = CGRectMake(10,77,GET_STRWIDTH(self.markL.text, 12, 17), 17);
 }

@@ -100,7 +100,7 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     }];
-    
+     
 }
 
 
@@ -146,5 +146,9 @@
     return cell;
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
+}
 
 @end

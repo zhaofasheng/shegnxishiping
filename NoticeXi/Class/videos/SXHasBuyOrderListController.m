@@ -70,7 +70,12 @@
     
     NSString *url = @"";
     
-    url = [NSString stringWithFormat:@"series/order/list?pageNo=%ld&payStatus=%@",self.pageNo,self.isSuccess?@"2":@"0"];
+    
+    if (self.isSuccess) {
+        url = [NSString stringWithFormat:@"series/order/list?pageNo=%ld&payStatus=%@&seriesId=%@",self.pageNo,self.isSuccess?@"2":@"0",self.seriesId];
+    }else{
+        url = [NSString stringWithFormat:@"series/order/list?pageNo=%ld&payStatus=%@",self.pageNo,self.isSuccess?@"2":@"0"];
+    }
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];

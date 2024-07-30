@@ -114,7 +114,7 @@
     self.line.frame = CGRectMake(0, 23/2, _orginMoneyL.frame.size.width, 1);
     _buyNumL.frame = CGRectMake(CGRectGetMaxX(_orginMoneyL.frame)+8, 67, GET_STRWIDTH(_buyNumL.text, 12, 24), 24);
     
-    self.hasBuyTimeL.text = [NSString stringWithFormat:@"已购%d次",paySearModel.buy_card_times.intValue+(paySearModel.is_bought.boolValue?1:0)];
+    self.hasBuyTimeL.text = [NSString stringWithFormat:@"已购%d次",paySearModel.buy_card_times.intValue];
     self.hasBuyTimeL.frame = CGRectMake(145, 145, GET_STRWIDTH(self.hasBuyTimeL.text, 14, 20), 20);
     self.buyImg.frame = CGRectMake(CGRectGetMaxX(_hasBuyTimeL.frame)+3, 147, 16, 16);
     
@@ -123,6 +123,7 @@
 - (void)hasBuyTap{
     SXHasBuyOrderListController *ctl = [[SXHasBuyOrderListController alloc] init];
     ctl.isSuccess = YES;
+    ctl.seriesId = self.paySearModel.seriesId;
     [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 

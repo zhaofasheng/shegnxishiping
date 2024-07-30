@@ -22,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *pay_type;
 @property (nonatomic, strong) NSString *pay_status;
 @property (nonatomic, strong) NSString *pay_time;
-
 @property (nonatomic, strong) NSDictionary *series_card_info;
 @property (nonatomic, strong) SXKcCardListModel *cardModel;
 @end
