@@ -234,7 +234,6 @@
             SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
             ctl.paySearModel = searismodel;
             [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-         
         }
         
     } fail:^(NSError *error) {

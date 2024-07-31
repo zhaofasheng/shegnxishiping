@@ -112,6 +112,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCataName) name:@"NOTICEREFRESHCATANAME" object:nil];
     [self refreshCataName];
+    
+    // 网路改变通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkingReachabilityDidChange) name:HWNetworkingReachabilityDidChangeNotification object:nil];
 }
 
 - (UILabel *)newKcL{
@@ -251,7 +254,6 @@
         _redView.hidden = YES;
         self.searchButton.frame = CGRectMake(15, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-36-STATUS_BAR_HEIGHT)/2, DR_SCREEN_WIDTH-30, 36);
     }
-
 }
 
 - (void)tagsClick{
@@ -270,6 +272,14 @@
     self.tagsView.choiceTagBlock = ^(int tag) {
         weakSelf.selectIndex = (int)tag;
     };
+}
+
+- (void)networkingReachabilityDidChange{
+    if ([[HWNetworkReachabilityManager shareManager] networkReachabilityStatus] != AFNetworkReachabilityStatusNotReachable) {//有网络的时候自动刷新
+        if (!self.titleArr.count) {
+            [self refreshCataName];
+        }
+    }
 }
 
 
@@ -310,6 +320,9 @@
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index{
+    if (index >= self.titleArr.count) {
+        return 30;
+    }
     return GET_STRWIDTH(self.titles[index], 16, 16)+4;
 }
 
@@ -325,6 +338,9 @@
 }
 
 - (__kindof UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index{
+    if (index >= self.controllArr.count) {
+        return [[UIViewController alloc] init];
+    }
     return self.controllArr[index];
 }
 

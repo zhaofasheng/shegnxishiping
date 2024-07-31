@@ -18,7 +18,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 @property (nonatomic, strong) UILabel *defaultL;
 @property (nonatomic, strong) UILabel *numL;
 @property (nonatomic, strong) UILabel *albumL;
-
+@property (nonatomic, strong) SXAlbumReusableView *headerView;
 @property (nonatomic, assign) NSInteger originIndex;
 @property (nonatomic, assign) NSInteger currentPlayTime;
 @property (nonatomic, assign) BOOL isRequesting;
@@ -70,6 +70,12 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoZanNotice:) name:@"SXZANvideoNotification" object:nil];
     //获取收藏通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoscNotice:) name:@"SXCOLLECTvideoNotification" object:nil];
+    
+    SXAlbumReusableView *headerView = [[SXAlbumReusableView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 95)];
+    headerView.albumL.text = self.zjModel.ablum_name;
+    headerView.numL.text = [NSString stringWithFormat:@"%d个视频",self.zjModel.video_num.intValue];
+    self.headerView = headerView;
+    [self.defaultL addSubview:headerView];
 }
 
 - (void)getvideoZanNotice:(NSNotification*)notification{
@@ -156,10 +162,8 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             [self.collectionView reloadData];
             if (!self.dataArr.count) {
                 [_defaultL removeFromSuperview];
-                SXAlbumReusableView *headerView = [[SXAlbumReusableView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 95)];
-                headerView.albumL.text = self.zjModel.ablum_name;
-                headerView.numL.text = [NSString stringWithFormat:@"%d个视频",self.zjModel.video_num.intValue];
-                [self.defaultL addSubview:headerView];
+                self.headerView.albumL.text = self.zjModel.ablum_name;
+                self.headerView.numL.text = [NSString stringWithFormat:@"%d个视频",self.zjModel.video_num.intValue];
                 [self.collectionView addSubview:self.defaultL];
             }else{
                 [_defaultL removeFromSuperview];
@@ -253,6 +257,8 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"videoAblum/%@",self.zjModel.albumId] Accept:@"application/vnd.shengxi.v5.8.5+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
                 if (success) {
                     weakSelf.zjModel.ablum_name = name;
+                    weakSelf.headerView.albumL.text = weakSelf.zjModel.ablum_name;
+                    weakSelf.headerView.numL.text = [NSString stringWithFormat:@"%d个视频",weakSelf.zjModel.video_num.intValue];
                     [weakSelf.collectionView reloadData];
                     if (weakSelf.nameChangeBlock) {
                         weakSelf.nameChangeBlock(YES);
