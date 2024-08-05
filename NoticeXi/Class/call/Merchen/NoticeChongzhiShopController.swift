@@ -35,7 +35,6 @@ class NoticeChongzhiShopController: NoticeBaseCellController {
             self.navigationController?.pushViewController(ctl, animated: true)
         }
       
-        
     }
     
     @objc func getMyWallect(){

@@ -526,6 +526,11 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 // 已经开启画中画
 - (void)pictureInPictureControllerDidStartPictureInPicture:(AVPictureInPictureController *)pictureInPictureController{
     DRLog(@"已经开启画中画");
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdel.playKcTools.isOpenPip = YES;
+    if (self.backPopBlock) {
+        self.backPopBlock(YES);
+    }
 }
 // 开启画中画失败
 - (void)pictureInPictureController:(AVPictureInPictureController *)pictureInPictureController failedToStartPictureInPictureWithError:(NSError *)error{
@@ -534,15 +539,42 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 // 即将关闭画中画
 - (void)pictureInPictureControllerWillStopPictureInPicture:(AVPictureInPictureController *)pictureInPictureController{
     DRLog(@"即将关闭画中画");
+    
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdel.playKcTools.isOpenPip = NO;
+ 
+    [self refreshModelTime:self.playbackControls.choiceView.currentModel];
 }
 // 已经关闭画中画
 - (void)pictureInPictureControllerDidStopPictureInPicture:(AVPictureInPictureController *)pictureInPictureController{
     DRLog(@"已经关闭画中画");
-    [self _playVideo];
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdel.playKcTools.isOpenPip = NO;
+    if (!appdel.playKcTools.isLeave) {//关闭画中画的时候可以恢复播放界面
+        [self _playVideo];
+    }else{
+        [self _pauseVideo];
+    }
 }
+
 // 关闭画中画且恢复播放界面
 - (void)pictureInPictureController:(AVPictureInPictureController *)pictureInPictureController restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL restored))completionHandler{
     DRLog(@"关闭画中画且恢复播放界面");
+}
+
+- (void)refreshModelTime:(SXSearisVideoListModel *)model{
+    
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:model.schedule?model.schedule:@"0" forKey:@"schedule"];
+    [parm setObject:model.is_finished?model.is_finished:@"0" forKey:@"isFinished"];
+    
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"video/play/%@",model.videoId] Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        
+    } fail:^(NSError * _Nullable error) {
+        
+    }];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"SXKCVIDEOREFRESHPLAYTIME" object:self userInfo:@{@"videoId":model.videoId,@"is_finished":model.is_finished?model.is_finished:@"0",@"schedule":model.schedule?model.schedule:@"0"}];
 }
 
 /** 添加播放器控制面板 */

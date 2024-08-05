@@ -1542,6 +1542,7 @@
 		FE9DF2032BD8D48100EB9CB2 /* UIWindow+TUICalling.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9DF2012BD8D47F00EB9CB2 /* UIWindow+TUICalling.m */; };
 		FE9DF2062BD8D5E200EB9CB2 /* UIView+TUIToast.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9DF2052BD8D5E200EB9CB2 /* UIView+TUIToast.m */; };
 		FE9DF2092BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9DF2082BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m */; };
+		FEA1AA532C60A4990059B05B /* SXDanLiPlayKcTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA522C60A4990059B05B /* SXDanLiPlayKcTools.m */; };
 		FEA753552C23D8C800DC6807 /* AFServiceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */; };
 		FEB130222BEB56F7005E7FC7 /* sx.byebyetext.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */; };
 		FEB61BEB2B4CE0CF00B128FA /* NoticeShopDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61BEA2B4CE0CF00B128FA /* NoticeShopDetailHeader.m */; };
@@ -4559,6 +4560,8 @@
 		FE9DF2052BD8D5E200EB9CB2 /* UIView+TUIToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TUIToast.m"; sourceTree = "<group>"; };
 		FE9DF2072BD8D7A400EB9CB2 /* TUICallKitGCDTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUICallKitGCDTimer.h; sourceTree = "<group>"; };
 		FE9DF2082BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUICallKitGCDTimer.m; sourceTree = "<group>"; };
+		FEA1AA512C60A4990059B05B /* SXDanLiPlayKcTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXDanLiPlayKcTools.h; sourceTree = "<group>"; };
+		FEA1AA522C60A4990059B05B /* SXDanLiPlayKcTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXDanLiPlayKcTools.m; sourceTree = "<group>"; };
 		FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFServiceSDK.framework; sourceTree = "<group>"; };
 		FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sx.byebyetext.com.cer; sourceTree = "<group>"; };
 		FEB61BE92B4CE0CF00B128FA /* NoticeShopDetailHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeShopDetailHeader.h; sourceTree = "<group>"; };
@@ -9291,6 +9294,8 @@
 				FE979DA02C50EA0400161B7B /* SXPlayRecoderScrollCell.m */,
 				FE979DA82C53411200161B7B /* SXBandKcToastView.h */,
 				FE979DA92C53411200161B7B /* SXBandKcToastView.m */,
+				FEA1AA512C60A4990059B05B /* SXDanLiPlayKcTools.h */,
+				FEA1AA522C60A4990059B05B /* SXDanLiPlayKcTools.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -10555,6 +10560,7 @@
 				A4E9691A2A69142700AE022E /* NoticeClickMoreBBSCell.m in Sources */,
 				FE44F1DA2BB29FAB004ECF11 /* KTVHCDataStorage.m in Sources */,
 				A4E967F02A69142500AE022E /* MySwitch.m in Sources */,
+				FEA1AA532C60A4990059B05B /* SXDanLiPlayKcTools.m in Sources */,
 				A4E966E72A69142400AE022E /* NoticeCalendarView.m in Sources */,
 				A4E966AA2A69142300AE022E /* NoticeClockBdCell.m in Sources */,
 				A4E966FB2A69142400AE022E /* NoticeLeaderUserView.m in Sources */,

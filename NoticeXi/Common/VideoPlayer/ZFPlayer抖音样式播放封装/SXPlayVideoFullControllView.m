@@ -3,9 +3,9 @@
 #import "SXDragChangeValueView.h"
 #import <MediaPlayer/MPVolumeView.h>
 // 枚举值，包含水平移动方向和垂直移动方向
-typedef NS_ENUM(NSInteger, PanDirection){
-    PanDirectionHorizontalMoved, // 横向移动
-    PanDirectionVerticalMoved    // 纵向移动
+typedef NS_ENUM(NSInteger, PanDirectionFull){
+    PanDirectionHorizontalMovedfull, // 横向移动
+    PanDirectionVerticalMovedfull    // 纵向移动
 };
 
 
@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 @property (nonatomic, strong) UIView *blackView;
 @property (nonatomic, strong) SXDragChangeValueView *volumeProress;
 /** 定义一个实例变量，保存枚举值 */
-@property (nonatomic, assign) PanDirection panDirection;
+@property (nonatomic, assign) PanDirectionFull panDirection;
 /** 是否在调节音量 */
 @property (nonatomic, assign) BOOL isVolume;
 /** 声音滑杆 */
@@ -135,11 +135,11 @@ typedef NS_ENUM(NSInteger, PanDirection){
             CGFloat x = fabs(veloctyPoint.x);
             CGFloat y = fabs(veloctyPoint.y);
             if (x > y) { // 水平移动
-                self.panDirection = PanDirectionHorizontalMoved;
+                self.panDirection = PanDirectionHorizontalMovedfull;
                 [self sliderTouchBegan:self.slider.value];
             }
             else if (x < y){ // 垂直移动
-                self.panDirection = PanDirectionVerticalMoved;
+                self.panDirection = PanDirectionVerticalMovedfull;
                 // 开始滑动的时候,状态改为正在控制音量
                 if (locationPoint.x > self.bounds.size.width / 2) {
                     self.isVolume = YES;
@@ -154,11 +154,11 @@ typedef NS_ENUM(NSInteger, PanDirection){
         }
         case UIGestureRecognizerStateChanged:{ // 正在移动
             switch (self.panDirection) {
-                case PanDirectionHorizontalMoved:{
+                case PanDirectionHorizontalMovedfull:{
                     [self panHorizontalMoving:veloctyPoint.x];
                     break;
                 }
-                case PanDirectionVerticalMoved:{
+                case PanDirectionVerticalMovedfull:{
                     [self verticalMoved:veloctyPoint.y]; // 垂直移动方法只要y方向的值
                     break;
                 }
@@ -171,11 +171,11 @@ typedef NS_ENUM(NSInteger, PanDirection){
             // 移动结束也需要判断垂直或者平移
             // 比如水平移动结束时，要快进到指定位置，如果这里没有判断，当我们调节音量完之后，会出现屏幕跳动的bug
             switch (self.panDirection) {
-                case PanDirectionHorizontalMoved:{
+                case PanDirectionHorizontalMovedfull:{
                     [self sliderTouchEnded:self.slider.value];
                     break;
                 }
-                case PanDirectionVerticalMoved:{
+                case PanDirectionVerticalMovedfull:{
                     _volumeProress.hidden = YES;
                     // 垂直移动结束后，把状态改为不再控制音量
                     self.isVolume = NO;

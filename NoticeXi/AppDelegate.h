@@ -14,9 +14,11 @@
 #import "STRIAPManager.h"
 #import "NoticeAudioChatTools.h" 
 #import <AVKit/AVKit.h>
+#import "SXDanLiPlayKcTools.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (nonatomic, strong) NoticeSocketManger *socketManager;
 @property (nonatomic, strong) NoticeAudioChatTools *audioChatTools;
+@property (nonatomic, strong) SXDanLiPlayKcTools *playKcTools;
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) LGAudioPlayer *audioPlayer;
 @property (nonatomic, strong) NoiticePlayerView *currentPlayer;

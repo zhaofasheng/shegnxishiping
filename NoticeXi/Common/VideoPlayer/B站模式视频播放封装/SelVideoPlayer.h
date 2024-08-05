@@ -69,5 +69,8 @@
 - (void)deallocAll;
 /** 是否自动全屏 */
 @property (nonatomic, assign) BOOL isAutoFull;
+
+@property (nonatomic, assign) NSString *currentPlayTime;
+
 - (void)refreshUI;
 @end

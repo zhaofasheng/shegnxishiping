@@ -367,4 +367,11 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     }];
 }
 
+- (SXDanLiPlayKcTools *)playKcTools{
+    if (!_playKcTools) {
+        _playKcTools = [[SXDanLiPlayKcTools  alloc] initWithFrame:CGRectZero];
+
+    }
+    return _playKcTools;
+}
 @end

@@ -89,6 +89,10 @@
     
     self.rate = 1;
     
+    //销毁之前的播放
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appdel.playKcTools destroyOldplay];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.zeroView = [[UIView  alloc] initWithFrame:CGRectZero];
     
@@ -220,7 +224,7 @@
 }
 
 - (void)setPlayView{
-    
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     __weak typeof(self) weakSelf = self;
     SelPlayerConfiguration *configuration = [[SelPlayerConfiguration alloc]init];
     configuration.isAutoFull = self.isFullPlay;
@@ -237,6 +241,7 @@
     configuration.defalutPlayTime = self.currentPlayModel.schedule.intValue;
     self.currentPlayModel.screen = @"1";
     _player = [[SelVideoPlayer alloc]initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT, DR_SCREEN_WIDTH, (self.currentPlayModel.screen.intValue==2? DR_SCREEN_WIDTH*4/3 : DR_SCREEN_WIDTH*9/16)) configuration:configuration];
+    appdel.playKcTools.player = _player;
     _player.playbackControls.rate = self.rate;
     _player.playbackControls.choiceView.currentModel = self.currentPlayModel;
     _player.playbackControls.choiceView.searisArr = self.searisArr;
@@ -244,9 +249,17 @@
   
         if (currentTime >= 5) {
             weakSelf.currentPlayModel.schedule = [NSString stringWithFormat:@"%ld",currentTime];
+            if (appdel.playKcTools.isOpenPip && appdel.playKcTools.isLeave) {
+                appdel.playKcTools.player.playbackControls.choiceView.currentModel.schedule = [NSString stringWithFormat:@"%ld",currentTime];
+            }
+            
         }else{
             weakSelf.currentPlayModel.schedule = @"0";
+            if (appdel.playKcTools.isOpenPip && appdel.playKcTools.isLeave) {
+                appdel.playKcTools.player.playbackControls.choiceView.currentModel.schedule = @"0";
+            }
         }
+       
     };
     
     _player.playbackControls.choiceView.choiceVideoBlock = ^(SXSearisVideoListModel * _Nonnull choiceModel) {
@@ -271,10 +284,17 @@
     
     _player.playDidEndBlock = ^(BOOL playDidEnd) {
         if (playDidEnd) {
+            if (appdel.playKcTools.isOpenPip && appdel.playKcTools.isLeave) {
+                appdel.playKcTools.player.playbackControls.choiceView.currentModel.schedule = @"0";
+                appdel.playKcTools.player.playbackControls.choiceView.currentModel.is_finished = @"1";
+            }
             weakSelf.currentPlayModel.schedule = @"0";
             weakSelf.currentPlayModel.is_finished = @"1";
             DRLog(@"播放完成");
-            [weakSelf.listVC playNext];
+            if (!appdel.playKcTools.isLeave) {
+                [weakSelf.listVC playNext];
+            }
+            
         }
     };
     
@@ -429,24 +449,32 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    [_player _pauseVideo];
-    self.isPause = YES;
-    
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (!appdel.playKcTools.isOpenPip) {//没开启画中画就暂停播放
+        [_player _pauseVideo];
+        self.isPause = YES;
+    }
+    appdel.playKcTools.isLeave = YES;
     if (@available(iOS 13.0, *)) {
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDarkContent;
     } else {
         // Fallback on earlier versions
     }
-    
 }
 
 - (void)dealloc{
+    
     [self.balckView removeFromSuperview];
-    [self destroyOldplay];
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (!appdel.playKcTools.isOpenPip) {//没开启画中画就销毁播放视图
+        [self destroyOldplay];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdel.playKcTools.isLeave = NO;
     if (self.isPause) {
         DRLog(@"进入视频调用播放");
         [self.player _playVideo];
@@ -458,7 +486,6 @@
         // Fallback on earlier versions
     }
 }
-
 
 - (SXPayVideoPlayDetailListController *)listVC{
     if(!_listVC){

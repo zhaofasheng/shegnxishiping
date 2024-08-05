@@ -162,12 +162,12 @@
         [backImageV addSubview:btn];
         [btn addTarget:self action:@selector(copyClick) forControlEvents:UIControlEventTouchUpInside];
         
-        
         UILabel *priclabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 240, DR_SCREEN_WIDTH-40-40, 28)];
         priclabel.font = [UIFont systemFontOfSize:20];
         priclabel.textAlignment = NSTextAlignmentRight;
         priclabel.textColor = [UIColor colorWithHexString:@"#25262E"];
         [backImageV addSubview:priclabel];
+        
         if (_orderM.after_sales_time.intValue > 0 && [self.orderM.shop_user_id isEqualToString:[NoticeTools getuserId]]) {
             priclabel.attributedText = [DDHAttributedMode setString:[NSString stringWithFormat:@"待收款：%@鲸币",self.orderM.income] setSize:12 setLengthString:@"待收款：" beginSize:0];
         }else{
@@ -185,14 +185,13 @@
                 }
             }
         }
-
     }
     
     [self.view bringSubviewToFront:self.navBarView];
-
 }
 
 - (void)comClick{
+    
     if (self.orderM.after_sales_time.intValue <= 0) {
         return;
     }

@@ -53,11 +53,14 @@
     
     [self.tableView registerClass:[SXNoBuySearisListCell class] forCellReuseIdentifier:@"noCell"];
     [self.tableView registerClass:[SXHasBuySearisListCell class] forCellReuseIdentifier:@"cell"];
+   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshModelTimeNotice:) name:@"SXKCVIDEOREFRESHPLAYTIME" object:nil];
 
     [self refreshStatus];
     
     [self request];
 }
+
 
 - (void)request{
     
@@ -147,9 +150,23 @@
     [self.navigationController pushViewController:ctl animated:NO];
 }
 
-- (void)refreshModelTime:(SXSearisVideoListModel *)model{
-    
 
+- (void)refreshModelTimeNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *videoid = nameDictionary[@"videoId"];
+    NSString *isFinished = nameDictionary[@"is_finished"];
+    NSString *schedule = nameDictionary[@"schedule"];
+    for (SXSearisVideoListModel *videoM in self.dataArr) {
+        if ([videoM.videoId isEqualToString:videoid]) {
+            videoM.schedule = schedule;
+            videoM.is_finished = isFinished;
+            [self.tableView reloadData];
+            break;
+        }
+    }
+}
+
+- (void)upTime:(SXSearisVideoListModel *)model{
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:model.schedule?model.schedule:@"0" forKey:@"schedule"];
     [parm setObject:model.is_finished?model.is_finished:@"0" forKey:@"isFinished"];
@@ -159,6 +176,12 @@
     } fail:^(NSError * _Nullable error) {
         
     }];
+}
+
+- (void)refreshModelTime:(SXSearisVideoListModel *)model{
+    
+
+    [self upTime:model];
     
     for (SXSearisVideoListModel *videoM in self.dataArr) {
         if ([videoM.videoId isEqualToString:model.videoId]) {
