@@ -10,6 +10,7 @@
 #import <MediaPlayer/MPVolumeView.h>
 #import "KTVHCDataUnitPool.h"
 #import "KTVHTTPCache.h"
+#import "SXPayVideoPlayDetailBaseController.h"
 /** 播放器的播放状态 */
 typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     SelVideoPlayerStateFailed,     // 播放失败
@@ -286,13 +287,20 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     [self _playVideo];
 }
 
+//播放完成
 - (void)setPlayDidEnd:(BOOL)playDidEnd{
     _playDidEnd = playDidEnd;
     self.playbackControls.playDidEnd = playDidEnd;
-    if (self.playDidEndBlock) {
-        self.playDidEndBlock(_playDidEnd);
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdel.pipVC.isPictureInPictureActive && appdel.playKcTools.isOpenPip) {//自动播放下一个视频
+        [appdel.playKcTools playNext];
+    }else{
+        if (self.playDidEndBlock) {
+            self.playDidEndBlock(_playDidEnd);
+        }
     }
 }
+
 
 /** 监听播放器事件 */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
@@ -423,7 +431,9 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         }
     }
     DRLog(@"进入前台调用播放");
-    [self _playVideo];
+    if (!appdel.playKcTools.isLeave) {//如果没有离开播放详情界面
+        [self _playVideo];
+    }
     [self.playbackControls _playerShowOrHidePlaybackControls];
 }
 
@@ -464,6 +474,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     AVURLAsset *urlAeest = [AVURLAsset assetWithURL:proxyURL];
     
     self.playerItem = [AVPlayerItem playerItemWithAsset:urlAeest];
+ 
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     [self _setVideoGravity:_playerConfiguration.videoGravity];
@@ -528,6 +539,9 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     DRLog(@"已经开启画中画");
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appdel.playKcTools.isOpenPip = YES;
+    if (_isFullScreen) {
+        [self fullScreenButtonAction];
+    }
     if (self.backPopBlock) {
         self.backPopBlock(YES);
     }
@@ -550,6 +564,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     DRLog(@"已经关闭画中画");
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appdel.playKcTools.isOpenPip = NO;
+    
     if (!appdel.playKcTools.isLeave) {//关闭画中画的时候可以恢复播放界面
         [self _playVideo];
     }else{
@@ -560,6 +575,30 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 // 关闭画中画且恢复播放界面
 - (void)pictureInPictureController:(AVPictureInPictureController *)pictureInPictureController restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL restored))completionHandler{
     DRLog(@"关闭画中画且恢复播放界面");
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdel.playKcTools.isOpenPip = NO;
+    [appdel.pipVC stopPictureInPicture];
+    [self goBackPlayView];
+}
+
+- (void)goBackPlayView{
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    SXPayVideoPlayDetailBaseController *ctl = [[SXPayVideoPlayDetailBaseController alloc] init];
+    ctl.rate = appdel.playKcTools.rate;
+    ctl.paySearModel = appdel.playKcTools.paySearModel;
+    ctl.searisArr = appdel.playKcTools.searisArr;
+    ctl.currentPlayModel = appdel.playKcTools.player.playbackControls.choiceView.currentModel;
+    __weak typeof(self) weakSelf = self;
+    ctl.refreshPlayTimeBlock = ^(SXSearisVideoListModel * _Nonnull currentModel) {
+        [weakSelf refreshModelTime:currentModel];
+    };
+    CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
+                                                                    withSubType:kCATransitionFromLeft
+                                                                       duration:0.3f
+                                                                 timingFunction:kCAMediaTimingFunctionLinear
+                                                                           view:[NoticeTools getTopViewController].navigationController.view];
+    [[NoticeTools getTopViewController].navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:NO];
 }
 
 - (void)refreshModelTime:(SXSearisVideoListModel *)model{

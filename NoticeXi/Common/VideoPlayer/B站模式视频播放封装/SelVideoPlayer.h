@@ -71,6 +71,6 @@
 @property (nonatomic, assign) BOOL isAutoFull;
 
 @property (nonatomic, assign) NSString *currentPlayTime;
-
+- (void)_videoZoomOut;//退出全屏
 - (void)refreshUI;
 @end

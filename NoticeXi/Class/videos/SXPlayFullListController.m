@@ -36,7 +36,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    //停止画中画播放
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICESTOPPICINPICPLAY" object:nil];
     self.isFirstAlloc = YES;
     self.pageNo = self.page;
     

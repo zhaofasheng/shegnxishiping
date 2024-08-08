@@ -262,7 +262,6 @@
     }
     
     self.tagsView = [[SXVideoTagsView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
-    
     [self.tagsView showTagsView];
     
     self.tagsView.currentIndex = self.selectIndex;
@@ -300,7 +299,6 @@
     [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
     [self.navigationController pushViewController:ctl animated:NO];
 }
-
 
 - (void)outLogin{
     [self.navigationController popToRootViewControllerAnimated:NO];

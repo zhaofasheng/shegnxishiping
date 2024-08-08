@@ -49,6 +49,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lookKc) name:@"NOTICEFORLOOKKC" object:nil];
     // 检测到当前设备录屏状态发生变化
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenCaptureStatusChanged:) name:UIScreenCapturedDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopPip) name:@"NOTICESTOPPICINPICPLAY" object:nil];
     
 }
 
@@ -61,6 +62,15 @@
     }
 }
 
+- (void)stopPip{
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdel.pipVC.isPictureInPictureActive) {
+        //关闭画中画
+        [appdel.pipVC stopPictureInPicture];
+        [appdel.playKcTools destroyOldplay];
+    }
+}
+
 //用户录屏的时候暂停播放视频和关闭画中画
 - (void)screenshots{
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -68,6 +78,7 @@
         //关闭画中画
         [appdel.pipVC stopPictureInPicture];
         appdel.pipVC = [[AVPictureInPictureController alloc] initWithPlayerLayer:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)].layer];
+        [appdel.playKcTools destroyOldplay];
     }
 }
 

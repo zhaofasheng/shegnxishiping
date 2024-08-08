@@ -40,7 +40,7 @@
 @property (nonatomic, strong) UILabel *infoButton;
 @property (nonatomic, strong) UILabel *comButton;
 @property (nonatomic, strong) UIView *sectionView;
-@property (nonatomic, assign) NSInteger rate;
+
 @property (nonatomic, strong) UIView *zeroView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) UILabel *markL;
@@ -73,7 +73,6 @@
         _pagerView.mainTableView.sectionHeaderTopPadding = 0;
     }
     
-
     [self.view addSubview:self.pagerView];
     
     self.categoryView.listContainer = (id<JXCategoryViewListContainer>)self.pagerView.listContainerView;
@@ -82,15 +81,17 @@
     
 }
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.rate = 1;
+    if (!self.rate) {
+        self.rate = 1;
+    }
+    
     
     //销毁之前的播放
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
     [appdel.playKcTools destroyOldplay];
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -132,7 +133,6 @@
     }else{
         [self getVideoList];
     }
-    
     
     self.markView = [[UIView  alloc] initWithFrame:CGRectMake(15,DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT+5,DR_SCREEN_WIDTH-30, 40)];
     self.markView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
@@ -240,8 +240,13 @@
     configuration.videoGravity = SelVideoGravityResizeAspect;   //拉伸方式
     configuration.defalutPlayTime = self.currentPlayModel.schedule.intValue;
     self.currentPlayModel.screen = @"1";
+    
     _player = [[SelVideoPlayer alloc]initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT, DR_SCREEN_WIDTH, (self.currentPlayModel.screen.intValue==2? DR_SCREEN_WIDTH*4/3 : DR_SCREEN_WIDTH*9/16)) configuration:configuration];
     appdel.playKcTools.player = _player;
+    appdel.playKcTools.searisArr = self.searisArr;
+    appdel.playKcTools.paySearModel = self.paySearModel;
+    appdel.playKcTools.rate = self.rate;
+    
     _player.playbackControls.rate = self.rate;
     _player.playbackControls.choiceView.currentModel = self.currentPlayModel;
     _player.playbackControls.choiceView.searisArr = self.searisArr;
@@ -252,14 +257,13 @@
             if (appdel.playKcTools.isOpenPip && appdel.playKcTools.isLeave) {
                 appdel.playKcTools.player.playbackControls.choiceView.currentModel.schedule = [NSString stringWithFormat:@"%ld",currentTime];
             }
-            
+      
         }else{
             weakSelf.currentPlayModel.schedule = @"0";
             if (appdel.playKcTools.isOpenPip && appdel.playKcTools.isLeave) {
                 appdel.playKcTools.player.playbackControls.choiceView.currentModel.schedule = @"0";
             }
         }
-       
     };
     
     _player.playbackControls.choiceView.choiceVideoBlock = ^(SXSearisVideoListModel * _Nonnull choiceModel) {
@@ -268,6 +272,7 @@
     
     _player.playbackControls.rateClickBlock = ^(NSInteger rate) {
         weakSelf.rate = rate;
+        appdel.playKcTools.rate = rate;
     };
 
     _player.fullBlock = ^(BOOL isFull) {
@@ -294,7 +299,6 @@
             if (!appdel.playKcTools.isLeave) {
                 [weakSelf.listVC playNext];
             }
-            
         }
     };
     
@@ -315,6 +319,7 @@
                     //关闭画中画
                     [appdel.pipVC stopPictureInPicture];
                 } else {
+            
                     //开始画中画
                     [appdel.pipVC startPictureInPicture];
                 }
@@ -324,7 +329,6 @@
                 juBaoView.reouceType = @"148";
                 [juBaoView showView];
             }
-           
         };
         [moreView showTost];
     };
@@ -415,7 +419,6 @@
         }
         [self.player refreshUI];
     }
-
 }
 
 - (void)mainTableViewWillBeginDraggingScroll:(UIScrollView *)scrollView{
@@ -423,7 +426,6 @@
 }
 
 - (void)destroyOldplay{
- 
     [_player _pauseVideo];
     [_player _deallocPlayer];
     [_player deallocAll];
@@ -463,7 +465,6 @@
 }
 
 - (void)dealloc{
-    
     [self.balckView removeFromSuperview];
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if (!appdel.playKcTools.isOpenPip) {//没开启画中画就销毁播放视图
@@ -557,12 +558,11 @@
         _infoButton.userInteractionEnabled = YES;
         _infoButton.tag = 0;
         _infoButton.text = @"课程";
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(indexTap:)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action :@selector(indexTap:)];
         [_infoButton addGestureRecognizer:tap];
     }
     return _infoButton;
 }
-
 
 - (UILabel *)comButton{
     if (!_comButton) {

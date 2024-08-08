@@ -11,6 +11,7 @@
 #import "SXPayVideoPlayDetailBaseController.h"
 #import "NoticeLoginViewController.h"
 #import "SXStudyBaseController.h"
+
 @interface SXHasBuyPayVideoController ()
 
 @end
@@ -65,8 +66,8 @@
         [self.tableView.mj_footer endRefreshing];
         return;
     }
-    NSString *url = @"";
     
+    NSString *url = @"";
     url = [NSString stringWithFormat:@"user/video/series?pageNo=%ld",self.pageNo];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
@@ -93,23 +94,19 @@
             }else{
                 self.tableView.tableFooterView = self.defaultL;
             }
-            
             [self.tableView reloadData];
         }
     } fail:^(NSError *error) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     }];
-     
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
     SXPayForVideoModel *model = self.dataArr[indexPath.row];
     ctl.paySearModel = model;
-
     [self.navigationController pushViewController:ctl animated:YES];
 }
 

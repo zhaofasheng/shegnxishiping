@@ -30,6 +30,9 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 @implementation NoticeAudioChatTools
 
 - (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext averageTime:(NSInteger)averageTime{
+    
+    //停止画中画播放
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICESTOPPICINPICPLAY" object:nil];
     //设置屏幕常亮
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 
@@ -653,7 +656,8 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
 //收到通话请求
 - (void)onReceiveInvited:(NEInviteInfo *)info{
-
+    //停止画中画播放
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICESTOPPICINPICPLAY" object:nil];
     NECallInfo *callinfo = [[NECallEngine sharedInstance] getCallInfo];
     self.currentRoomId = callinfo.rtcInfo.channelName;
     DRLog(@"收到%@的通话请求\n房间号%@",info.callerAccId,callinfo.rtcInfo.channelName);
