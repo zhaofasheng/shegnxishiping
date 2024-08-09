@@ -296,8 +296,10 @@
             weakSelf.currentPlayModel.schedule = @"0";
             weakSelf.currentPlayModel.is_finished = @"1";
             DRLog(@"播放完成");
-            if (!appdel.playKcTools.isLeave) {
+            if (!appdel.playKcTools.isLeave && !appdel.playKcTools.isOpenPip) {
                 [weakSelf.listVC playNext];
+            }else if (appdel.playKcTools.isOpenPip){
+                [appdel.playKcTools playNext];
             }
         }
     };

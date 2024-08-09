@@ -21,8 +21,6 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 
 @interface SelVideoPlayer()<SelPlaybackControlsDelegate,AVPictureInPictureControllerDelegate>
 
-
-
 /** 非全屏状态下播放器 superview */
 @property (nonatomic, strong) UIView *originalSuperview;
 /** 非全屏状态下播放器 frame */
@@ -269,8 +267,8 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 /** 暂停播放 */
 - (void)_pauseVideo
 {
+    DRLog(@"暂停播放");
     [_player pause];
-    
     [self.playbackControls _setPlayButtonSelect:NO];
     if (self.playerState == SelVideoPlayerStatePlaying) {
         self.playerState = SelVideoPlayerStatePause;
@@ -291,13 +289,8 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 - (void)setPlayDidEnd:(BOOL)playDidEnd{
     _playDidEnd = playDidEnd;
     self.playbackControls.playDidEnd = playDidEnd;
-    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appdel.pipVC.isPictureInPictureActive && appdel.playKcTools.isOpenPip) {//自动播放下一个视频
-        [appdel.playKcTools playNext];
-    }else{
-        if (self.playDidEndBlock) {
-            self.playDidEndBlock(_playDidEnd);
-        }
+    if (self.playDidEndBlock) {
+        self.playDidEndBlock(_playDidEnd);
     }
 }
 
@@ -379,11 +372,17 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
  *  缓冲较差时候回调这里
  */
 - (void)bufferingSomeSecond {
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdel.playKcTools.isOpenPip) {
+        return;
+    }
     self.playerState = SelVideoPlayerStateBuffering;
     // playbackBufferEmpty会反复进入，因此在bufferingOneSecond延时播放执行完之前再调用bufferingSomeSecond都忽略
     __block BOOL isBuffering = NO;
     if (isBuffering) return;
     isBuffering = YES;
+    
+    
     
     // 需要先暂停一小会之后再播放，否则网络状况不好的时候时间在走，声音播放不出来
     [self _pauseVideo];
@@ -392,7 +391,8 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         [self _playVideo];
         // 如果执行了play还是没有播放则说明还没有缓存好，则再次缓存一段时间
         isBuffering = NO;
-        if (!self.playerItem.isPlaybackLikelyToKeepUp)
+        
+        if (!self.playerItem.isPlaybackLikelyToKeepUp && !appdel.playKcTools.isOpenPip)
         {
             [self bufferingSomeSecond];
         }
@@ -440,13 +440,15 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 /** 视频播放结束事件监听 */
 - (void)videoDidPlayToEnd:(NSNotification *)notify
 {
-    self.playDidEnd = YES;
     if (_playerConfiguration.repeatPlay) {
         [self _replayVideo];
     }else
     {
+        DRLog(@"视频播放结束暂停播放");
         [self _pauseVideo];
     }
+    
+    self.playDidEnd = YES;
 }
 
 - (void)setPlayerSource{
@@ -487,7 +489,6 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         }
     }
     
-    [self configureVolume];
     
     /** 创建进度监听器 */
     [self createTimer];
@@ -508,6 +509,44 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
             appdel.pipVC.delegate = self;
         }
     }
+}
+
+//画中画自动播放设置视频源
+- (void)autoNextForPip{
+    [self startServer];
+    // *后台播放代码
+    AVAudioSession*session=[AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+
+    [self.player cancelPendingPrerolls];
+
+    NSURL * proxyURL = [KTVHTTPCache proxyURLWithOriginalURL:_playerConfiguration.sourceUrl];
+    AVURLAsset *urlAeest = [AVURLAsset assetWithURL:proxyURL];
+    
+    self.playerItem = [AVPlayerItem playerItemWithAsset:urlAeest];
+ 
+    [self.player replaceCurrentItemWithPlayerItem:self.playerItem];
+    self.playerLayer.player = self.player;
+    [self _setVideoGravity:_playerConfiguration.videoGravity];
+    
+    // 增加下面这行可以解决iOS10兼容性问题了
+    if ([self.player respondsToSelector:@selector(automaticallyWaitsToMinimizeStalling)]) {
+        if (@available(iOS 10.0, *)) {
+            self.player.automaticallyWaitsToMinimizeStalling = NO;
+        }
+    }
+    
+    if (self.timeObserve) {
+        [self.player removeTimeObserver:self.timeObserve];
+        self.timeObserve = nil;
+    }
+    /** 创建进度监听器 */
+    [self createTimer];
+    
+    self.needSetRate = YES;
+    DRLog(@"画中画自动播放调用播放");
+    [self _playVideo];
+
 }
 
 //开启本地服务器配置
@@ -866,7 +905,6 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
     
 }
 
-
 /** 播放器控制面板 */
 - (SelPlaybackControls *)playbackControls
 {
@@ -892,8 +930,8 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 /** 释放播放器 */
 - (void)_deallocPlayer
 {
+    DRLog(@"释放播放器暂停播放");
     [self _pauseVideo];
-    
     [self.playerLayer removeFromSuperlayer];
     [self removeFromSuperview];
 }

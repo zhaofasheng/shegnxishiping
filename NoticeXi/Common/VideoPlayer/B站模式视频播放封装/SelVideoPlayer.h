@@ -73,4 +73,5 @@
 @property (nonatomic, assign) NSString *currentPlayTime;
 - (void)_videoZoomOut;//退出全屏
 - (void)refreshUI;
+- (void)autoNextForPip;
 @end
