@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SXPayForVideoModel.h"
+#import "CBAutoScrollLabel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXSearisHeaderView : UIView
@@ -15,10 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIView *hasReviewView;
 
-@property (nonatomic, strong) UILabel *titleL;
-@property (nonatomic, strong) UILabel *numL;
 
-@property (nonatomic, strong) UILabel *hasLookVideoNameL;
+@property (nonatomic, strong) CBAutoScrollLabel *hasLookVideoNameL;
 
 @property (nonatomic,copy) void(^choiceBeforeLookBlock)(NSString *videoName);
 

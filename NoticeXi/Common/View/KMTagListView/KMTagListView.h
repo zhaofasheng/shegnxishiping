@@ -17,6 +17,7 @@
 
 @interface KMTagListView : UIScrollView
 @property (nonatomic, assign) BOOL oneClick;//单点
+@property (nonatomic, assign) BOOL moreClick;//多选
 @property (nonatomic, weak)id<KMTagListViewDelegate> delegate_;
 @property (nonatomic, assign) BOOL hasImge;//带图片的标签
 @property (nonatomic, assign) BOOL isChoiceTap;
@@ -30,4 +31,5 @@
 - (void)setupCustomeColorSubViewsWithTitles:(NSArray *)titles;
 - (void)setupCustomeImgSubViewsWithTitles1:(NSMutableArray *)titles;//固定图片
 - (void)setupCustomeImgSubViewsWithTitles:(NSMutableArray *)titles;//不固定图片
+- (void)setupCustomeMoreSubViewsWithTitles:(NSMutableArray *)titles;//多选
 @end

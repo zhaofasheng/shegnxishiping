@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *beforeL;
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) SXPayForVideoModel *model;
+@property (nonatomic, strong) UIButton *comButton;
 @end
 
 NS_ASSUME_NONNULL_END

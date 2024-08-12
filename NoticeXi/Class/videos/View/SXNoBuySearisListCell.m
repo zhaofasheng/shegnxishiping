@@ -13,9 +13,8 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15, 10, DR_SCREEN_WIDTH-30, 72)];
+        self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15, 0, DR_SCREEN_WIDTH-30, 72)];
         self.backView.backgroundColor = [UIColor whiteColor];
-        [self.backView setAllCorner:8];
         [self.contentView addSubview:self.backView];
         
         self.titleL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 15, self.backView.frame.size.width-15-45, 20)];

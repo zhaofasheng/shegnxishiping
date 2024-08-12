@@ -9,6 +9,7 @@
 #import "SXHasBuyKcHeaderView.h"
 #import "SXKcBuyChoiceView.h"
 #import "SXHasBuyOrderListController.h"
+#import "SXKcScoreBaseController.h"
 @implementation SXHasBuyKcHeaderView
 
 
@@ -22,7 +23,7 @@
         self.coverImageView.clipsToBounds = YES;
         [self addSubview:self.coverImageView];
         
-        _titleL = [[UILabel alloc] initWithFrame:CGRectMake(145,10,DR_SCREEN_WIDTH-150, 24)];
+        _titleL = [[CBAutoScrollLabel alloc] initWithFrame:CGRectMake(145,10,DR_SCREEN_WIDTH-150, 24)];
         _titleL.font = XGEightBoldFontSize;
         _titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self addSubview:_titleL];
@@ -78,9 +79,47 @@
             [self.contouinBtn setAllCorner:16];
             [self.contouinBtn addTarget:self action:@selector(buyClick) forControlEvents:UIControlEventTouchUpInside];
         }
-       
+        
+        self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15,CGRectGetMaxY(_coverImageView.frame)+20, DR_SCREEN_WIDTH-30, 60+127)];
+        self.backView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:self.backView];
+        
+        UIView *colorView = [[UIView  alloc] initWithFrame:CGRectMake(13, 23,46, 14)];
+        colorView.backgroundColor = [UIColor colorWithHexString:@"#FFD140"];
+        [colorView setAllCorner:7];
+        [self.backView addSubview:colorView];
+        
+        self.scoreL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 4, 80, 38)];
+        self.scoreL.font = THIRTTYBoldFontSize;
+        self.scoreL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [self.backView addSubview:self.scoreL];
+        self.scoreL.text = @"5.0";
+        
+        UIView *numView = [[UIView  alloc] initWithFrame:CGRectMake(15+94, 20, self.backView.frame.size.width-15-94, 20)];
+        [self.backView addSubview:numView];
+        numView.userInteractionEnabled = YES;
+    
+        self.intoImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(numView.frame.size.width-15-16, 2, 16, 16)];
+        self.intoImageView.userInteractionEnabled = YES;
+        self.intoImageView.image = UIImageNamed(@"kcscore_img");
+        [numView addSubview:self.intoImageView];
+        
+        self.comL = [[UILabel  alloc] initWithFrame:CGRectMake(0, 0, self.backView.frame.size.width-15-94-4-16-15, 20)];
+        self.comL.font = FOURTHTEENTEXTFONTSIZE;
+        self.comL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        self.comL.textAlignment = NSTextAlignmentRight;
+        [numView addSubview:self.comL];
+        
+        UITapGestureRecognizer *tapcom = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(comTap)];
+        [numView addGestureRecognizer:tapcom];
     }
     return self;
+}
+
+//查看评分
+- (void)comTap{
+    SXKcScoreBaseController *ctl = [[SXKcScoreBaseController alloc] init];
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 //继续购课
@@ -117,6 +156,69 @@
     self.hasBuyTimeL.text = [NSString stringWithFormat:@"已购%d次",paySearModel.buy_card_times.intValue];
     self.hasBuyTimeL.frame = CGRectMake(145, 145, GET_STRWIDTH(self.hasBuyTimeL.text, 14, 20), 20);
     self.buyImg.frame = CGRectMake(CGRectGetMaxX(_hasBuyTimeL.frame)+3, 147, 16, 16);
+    
+    self.comL.text = @"学员评价(133条)";
+    
+    self.giveScoreView.hidden = NO;
+    
+    self.backView.frame = CGRectMake(15,CGRectGetMaxY(_coverImageView.frame)+20, DR_SCREEN_WIDTH-30, 60+127);
+    [self.backView setAllCorner:10];
+}
+
+- (UIView *)giveScoreView{
+    if (!_giveScoreView) {
+        _giveScoreView = [[UIView  alloc] initWithFrame:CGRectMake(0, 60, DR_SCREEN_WIDTH-30, 127)];
+        [self.backView addSubview:_giveScoreView];
+        
+        CAGradientLayer *gradientLayer = [[CAGradientLayer alloc] init];
+        gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FFFFFF"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#FFFFED"].CGColor];//#FF3C92
+        gradientLayer.startPoint = CGPointMake(1, 1);
+        gradientLayer.endPoint = CGPointMake(1, 0);
+        gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(_giveScoreView.frame), CGRectGetHeight(_giveScoreView.frame));
+        [_giveScoreView.layer addSublayer:gradientLayer];
+        
+        UILabel *label = [[UILabel  alloc] initWithFrame:CGRectMake(15, 12, DR_SCREEN_WIDTH-60, 18)];
+        label.font = THRETEENTEXTFONTSIZE;
+        label.textColor = [UIColor colorWithHexString:@"#14151A"];
+        label.text = @"课程已观看一段时间了，你有什么感受呢";
+        [_giveScoreView addSubview:label];
+        
+        UIButton *closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(_giveScoreView.frame.size.width-15-20, 11, 20, 20)];
+        [closeBtn setBackgroundImage:UIImageNamed(@"sxclosecomkc_img") forState:UIControlStateNormal];
+        [closeBtn addTarget:self action:@selector(closeComClick) forControlEvents:UIControlEventTouchUpInside];
+        [_giveScoreView addSubview:closeBtn];
+        
+        _giveScoreView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goComTap)];
+        [_giveScoreView addGestureRecognizer:tap];
+        _giveScoreView.userInteractionEnabled = YES;
+                
+        NSArray *titleArr = @[@"挺难评",@"不太行",@"一般吧",@"挺不错",@"超满意"];
+        NSArray *imgArr = @[@"sxkcscore0_img",@"sxkcscore1_img",@"sxkcscore2_img",@"sxkcscore3_img",@"sxkcscore4_img"];
+        CGFloat space = (DR_SCREEN_WIDTH-30-48*5)/6;
+        for (int i = 0; i < 5; i++) {
+            UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(space+(48+space)*i, 40, 48, 48)];
+            imageV.image = UIImageNamed(imgArr[i]);
+            [_giveScoreView addSubview:imageV];
+            
+            UILabel *markL = [[UILabel  alloc] initWithFrame:CGRectMake(imageV.frame.origin.x-1, CGRectGetMaxY(imageV.frame)+4, 50, 20)];
+            markL.text = titleArr[i];
+            markL.font = THRETEENTEXTFONTSIZE;
+            markL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+            markL.textAlignment = NSTextAlignmentCenter;
+            [_giveScoreView addSubview:markL];
+        }
+    }
+    return _giveScoreView;
+}
+
+//关闭评分提示
+- (void)closeComClick{
+    
+}
+
+//去评分
+- (void)goComTap{
     
 }
 

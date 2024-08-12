@@ -185,6 +185,29 @@
     [self setupAllSubViews];
 }
 
+//多选
+- (void)setupCustomeMoreSubViewsWithTitles:(NSMutableArray *)titles{
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.tags removeAllObjects];
+    self.moreClick = YES;
+    self.labelItems = titles;
+    
+    for (NSInteger i = 0; i < titles.count; i++) {
+        KMTag *tag = [[KMTag alloc] initWithFrame:CGRectZero];
+        NoticeComLabelModel *model = self.labelItems[i];
+        [tag setupMoreClickWithText:model.title];
+        [self addSubview:tag];
+        [self.tags addObject:tag];
+        // 添加手势
+        tag.tag = i;
+        UITapGestureRecognizer *pan = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectTagClick:)];
+        [tag addGestureRecognizer:pan];
+        tag.userInteractionEnabled = YES;
+    }
+    
+    [self setupAllSubViews];
+}
+
 - (void)layoutSubviews {
     
     [super layoutSubviews];
@@ -194,6 +217,22 @@
 
 
 - (void)selectTagClick:(UIPanGestureRecognizer *)pan {
+    if (self.moreClick) {
+        KMTag *tag = (KMTag *)pan.view;
+        if(tag.tag > self.labelItems.count-1){//防止数组越界
+            return;
+        }
+        NoticeComLabelModel *model = self.labelItems[tag.tag];
+        model.isChoice = !model.isChoice;
+        if(model.isChoice){
+            tag.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+            tag.backgroundColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.1];
+        }else{
+            tag.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+            tag.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        }
+        return;
+    }
     if (self.oneClick) {
         KMImgTag *tag = (KMImgTag *)pan.view;
         if(tag.tag > self.labelItems.count-1){//防止数组越界

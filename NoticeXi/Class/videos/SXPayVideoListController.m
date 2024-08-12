@@ -29,7 +29,7 @@
     
     
     self.headerView = [[SXSearisHeaderView alloc] initWithFrame:CGRectZero];
-    self.headerView.paySearModel = self.paySearModel;
+    
     self.tableView.tableHeaderView = self.headerView;
     
     __weak typeof(self) weakSelf = self;
@@ -195,7 +195,7 @@
 }
 
 - (void)refreshStatus{
-
+    self.headerView.paySearModel = self.paySearModel;
     [self.headerView refresUI];
     self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-50-((self.paySearModel.buy_card_times.intValue || self.paySearModel.is_bought.boolValue)?0:TAB_BAR_HEIGHT));
     [self.tableView reloadData];
@@ -212,17 +212,39 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return self.paySearModel.hasBuy? 85 : 82;
+    return self.paySearModel.hasBuy? 75 : 72;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.paySearModel.hasBuy) {
+        
         SXHasBuySearisListCell *buyedCell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
         buyedCell.videoModel = self.dataArr[indexPath.row];
+        
+        [buyedCell.backView setCornerOnTop:0];
+        [buyedCell.backView setCornerOnBottom:0];
+        
+        if (indexPath.row == (self.dataArr.count -1)) {
+            [buyedCell.backView setCornerOnBottom:8];
+        }
+        if (indexPath.row == 0) {
+            if (![SXTools getPayPlayLastsearisId:self.paySearModel.seriesId]) {
+                [buyedCell.backView setCornerOnTop:8];
+            }
+        }
+        
         return buyedCell;
     }else{
         SXNoBuySearisListCell *noCell = [tableView dequeueReusableCellWithIdentifier:@"noCell"];
         noCell.videoModel = self.dataArr[indexPath.row];
+        [noCell.backView setCornerOnTop:0];
+        [noCell.backView setCornerOnBottom:0];
+        if (indexPath.row == (self.dataArr.count -1)) {
+            [noCell.backView setCornerOnBottom:8];
+        }
+        if (indexPath.row == 0) {
+            [noCell.backView setCornerOnTop:8];
+        }
         return noCell;
     }
 }

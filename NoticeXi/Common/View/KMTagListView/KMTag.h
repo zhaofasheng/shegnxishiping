@@ -14,5 +14,5 @@
 - (void)setupWithText:(NSString*)text;
 - (void)setupVideoWithText:(NSString*)text;
 - (void)setupCousTumeWithText:(NSString*)text;
-
+- (void)setupMoreClickWithText:(NSString*)text;
 @end

@@ -1543,6 +1543,10 @@
 		FE9DF2062BD8D5E200EB9CB2 /* UIView+TUIToast.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9DF2052BD8D5E200EB9CB2 /* UIView+TUIToast.m */; };
 		FE9DF2092BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9DF2082BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m */; };
 		FEA1AA532C60A4990059B05B /* SXDanLiPlayKcTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA522C60A4990059B05B /* SXDanLiPlayKcTools.m */; };
+		FEA1AA562C69AEFB0059B05B /* SXKcNoBuyScoreHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA552C69AEFB0059B05B /* SXKcNoBuyScoreHeaderView.m */; };
+		FEA1AA592C69F1A20059B05B /* SXKcScoreBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA582C69F1A20059B05B /* SXKcScoreBaseController.m */; };
+		FEA1AA5C2C69F1B30059B05B /* SXKcScoreListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA5B2C69F1B30059B05B /* SXKcScoreListController.m */; };
+		FEA1AA5F2C6A01090059B05B /* SXComKcController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA5E2C6A01090059B05B /* SXComKcController.m */; };
 		FEA753552C23D8C800DC6807 /* AFServiceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */; };
 		FEB130222BEB56F7005E7FC7 /* sx.byebyetext.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */; };
 		FEB61BEB2B4CE0CF00B128FA /* NoticeShopDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61BEA2B4CE0CF00B128FA /* NoticeShopDetailHeader.m */; };
@@ -4562,6 +4566,14 @@
 		FE9DF2082BD8D7A600EB9CB2 /* TUICallKitGCDTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUICallKitGCDTimer.m; sourceTree = "<group>"; };
 		FEA1AA512C60A4990059B05B /* SXDanLiPlayKcTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXDanLiPlayKcTools.h; sourceTree = "<group>"; };
 		FEA1AA522C60A4990059B05B /* SXDanLiPlayKcTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXDanLiPlayKcTools.m; sourceTree = "<group>"; };
+		FEA1AA542C69AEFB0059B05B /* SXKcNoBuyScoreHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcNoBuyScoreHeaderView.h; sourceTree = "<group>"; };
+		FEA1AA552C69AEFB0059B05B /* SXKcNoBuyScoreHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcNoBuyScoreHeaderView.m; sourceTree = "<group>"; };
+		FEA1AA572C69F1A20059B05B /* SXKcScoreBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcScoreBaseController.h; sourceTree = "<group>"; };
+		FEA1AA582C69F1A20059B05B /* SXKcScoreBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcScoreBaseController.m; sourceTree = "<group>"; };
+		FEA1AA5A2C69F1B30059B05B /* SXKcScoreListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcScoreListController.h; sourceTree = "<group>"; };
+		FEA1AA5B2C69F1B30059B05B /* SXKcScoreListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcScoreListController.m; sourceTree = "<group>"; };
+		FEA1AA5D2C6A01090059B05B /* SXComKcController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXComKcController.h; sourceTree = "<group>"; };
+		FEA1AA5E2C6A01090059B05B /* SXComKcController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXComKcController.m; sourceTree = "<group>"; };
 		FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFServiceSDK.framework; sourceTree = "<group>"; };
 		FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sx.byebyetext.com.cer; sourceTree = "<group>"; };
 		FEB61BE92B4CE0CF00B128FA /* NoticeShopDetailHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeShopDetailHeader.h; sourceTree = "<group>"; };
@@ -9296,6 +9308,8 @@
 				FE979DA92C53411200161B7B /* SXBandKcToastView.m */,
 				FEA1AA512C60A4990059B05B /* SXDanLiPlayKcTools.h */,
 				FEA1AA522C60A4990059B05B /* SXDanLiPlayKcTools.m */,
+				FEA1AA542C69AEFB0059B05B /* SXKcNoBuyScoreHeaderView.h */,
+				FEA1AA552C69AEFB0059B05B /* SXKcNoBuyScoreHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9498,6 +9512,12 @@
 				FE979D942C50938200161B7B /* SXPlayVideoRecoderListController.m */,
 				FE979D962C5093C200161B7B /* SXPlayVideoRecoderBaseController.h */,
 				FE979D972C5093C200161B7B /* SXPlayVideoRecoderBaseController.m */,
+				FEA1AA572C69F1A20059B05B /* SXKcScoreBaseController.h */,
+				FEA1AA582C69F1A20059B05B /* SXKcScoreBaseController.m */,
+				FEA1AA5A2C69F1B30059B05B /* SXKcScoreListController.h */,
+				FEA1AA5B2C69F1B30059B05B /* SXKcScoreListController.m */,
+				FEA1AA5D2C6A01090059B05B /* SXComKcController.h */,
+				FEA1AA5E2C6A01090059B05B /* SXComKcController.m */,
 			);
 			path = videos;
 			sourceTree = "<group>";
@@ -10048,6 +10068,7 @@
 				A4E965552A69142200AE022E /* NoticeOTOModel.m in Sources */,
 				A4E968CF2A69142600AE022E /* NoticeOpenTbModel.m in Sources */,
 				A4E967B22A69142500AE022E /* NoticeVoiceChatAndDepartController.m in Sources */,
+				FEA1AA5C2C69F1B30059B05B /* SXKcScoreListController.m in Sources */,
 				A4E966502A69142300AE022E /* ZFSPickerModel.m in Sources */,
 				A4E964D82A69142100AE022E /* WMProgressView.m in Sources */,
 				A4E964A12A69142100AE022E /* bannerViewCell.m in Sources */,
@@ -10544,6 +10565,7 @@
 				FE44F2002BB29FAB004ECF11 /* HWToolBox.m in Sources */,
 				A4E968002A69142500AE022E /* NoticeAbout.m in Sources */,
 				A4E9671B2A69142400AE022E /* NoticeNewVoiceListCell.m in Sources */,
+				FEA1AA562C69AEFB0059B05B /* SXKcNoBuyScoreHeaderView.m in Sources */,
 				FE9C3FC02B9094BA008C3A22 /* SXPayVideoPlayDetailListController.m in Sources */,
 				A4E9678F2A69142400AE022E /* NoticeJuBaoShopChatCell.m in Sources */,
 				A4E968B12A69142600AE022E /* NoticeOrderListController.m in Sources */,
@@ -10591,6 +10613,7 @@
 				A4E968DD2A69142600AE022E /* NoticePayRecodCell.m in Sources */,
 				A4E968802A69142600AE022E /* NoticeSuperMangerClickPersongController.m in Sources */,
 				A4E968512A69142600AE022E /* NoticeZjView.m in Sources */,
+				FEA1AA592C69F1A20059B05B /* SXKcScoreBaseController.m in Sources */,
 				A4E964B82A69142100AE022E /* AudioSpectrumPlayer.m in Sources */,
 				A4E966CE2A69142300AE022E /* NoticeHelpDetailController.m in Sources */,
 				FE953C802B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m in Sources */,
@@ -11020,6 +11043,7 @@
 				FE979D802C4F998600161B7B /* SXBuyCardSuccessController.m in Sources */,
 				A4E966042A69142300AE022E /* NoticeAreaCell.m in Sources */,
 				A4E965E02A69142200AE022E /* NoticeJuBaoSwift.swift in Sources */,
+				FEA1AA5F2C6A01090059B05B /* SXComKcController.m in Sources */,
 				A4E964C62A69142100AE022E /* mmx_optimized.cpp in Sources */,
 				A4E967AB2A69142500AE022E /* NoticeVideoViewController.m in Sources */,
 				A4E968C92A69142600AE022E /* NoticeGoodsModel.m in Sources */,

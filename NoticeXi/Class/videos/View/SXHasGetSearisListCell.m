@@ -7,16 +7,16 @@
 //
 
 #import "SXHasGetSearisListCell.h"
-
+#import "SXComKcController.h"
 @implementation SXHasGetSearisListCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15, 10, DR_SCREEN_WIDTH-30, 126)];
+        self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15, 10, DR_SCREEN_WIDTH-30, 168)];
         self.backView.backgroundColor = [UIColor whiteColor];
         [self.backView setAllCorner:8];
-        [self addSubview:self.backView];
+        [self.contentView addSubview:self.backView];
         
         self.coverImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(10, 10, 80, 106)];
         [self.coverImageView setAllCorner:2];
@@ -43,8 +43,24 @@
         _beforeL.font = TWOTEXTFONTSIZE;
         _beforeL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
         [self.backView addSubview:_beforeL];
+        
+        self.comButton = [[UIButton  alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-90, 126, 80, 32)];
+        self.comButton.layer.cornerRadius = 16;
+        self.comButton.layer.masksToBounds = YES;
+        self.comButton.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
+        [self.comButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.comButton.titleLabel.font = TWOTEXTFONTSIZE;
+        [self.comButton setTitle:@"给个评价" forState:UIControlStateNormal];
+        [self.comButton addTarget:self action:@selector(gocomClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.backView addSubview:self.comButton];
     }
     return self;
+}
+
+- (void)gocomClick{
+    SXComKcController *ctl = [[SXComKcController alloc] init];
+    ctl.paySearModel = self.model;
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)setModel:(SXPayForVideoModel *)model{

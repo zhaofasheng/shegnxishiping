@@ -25,7 +25,7 @@
     
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);
     [self.tableView registerClass:[SXHasGetSearisListCell class] forCellReuseIdentifier:@"cell"];
-    self.tableView.rowHeight = 136;
+    self.tableView.rowHeight = 178;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"NOTICEBANGDINGKECHENG" object:nil];
     [self createRefesh];
     [self request];

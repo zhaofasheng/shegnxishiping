@@ -90,6 +90,30 @@
     [self setAllCorner:self.frame.size.height/2];
 }
 
+- (void)setupMoreClickWithText:(NSString *)text{
+    NSString *showText = text;
+    if (text.length > 10) {
+        showText = [NSString stringWithFormat:@"%@...",[text substringToIndex:10]];
+    }
+    
+    
+    self.layer.masksToBounds = YES;
+    self.text = showText;
+
+    self.font = [UIFont systemFontOfSize:14];
+    UIFont* font = self.font;
+    CGSize size = [showText sizeWithAttributes:@{NSFontAttributeName: font}];
+    CGRect frame = self.frame;
+    
+    self.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+    self.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+    
+    frame.size = CGSizeMake((NSInteger)size.width + 20, 32);
+    
+    self.frame = frame;
+    [self setAllCorner:10];
+}
+
 
 - (void)setupCousTumeWithText:(NSString *)text{
     self.text = text;

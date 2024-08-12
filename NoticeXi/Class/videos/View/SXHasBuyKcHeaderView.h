@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CBAutoScrollLabel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXHasBuyKcHeaderView : UIView
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
-@property (nonatomic, strong) UILabel *titleL;
+@property (nonatomic, strong) CBAutoScrollLabel *titleL;
 @property (nonatomic, strong) UILabel *moneyL;
 @property (nonatomic, strong) UILabel *orginMoneyL;
 @property (nonatomic, strong) UILabel *buyNumL;
@@ -23,6 +23,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *buyImg;
 @property (nonatomic, strong) UIView *line;
 @property (nonatomic,copy) void(^buyTypeBolck)(BOOL isSend);
+
+
+@property (nonatomic, strong) UIView *giveScoreView;
+@property (nonatomic, strong) UIImageView *intoImageView;
+@property (nonatomic, strong) UILabel *comL;
+@property (nonatomic, strong) UILabel *scoreL;
+@property (nonatomic, strong) UIView *backView;
 @end
 
 NS_ASSUME_NONNULL_END

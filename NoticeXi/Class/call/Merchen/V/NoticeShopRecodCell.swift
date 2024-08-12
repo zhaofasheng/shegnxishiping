@@ -101,6 +101,10 @@ class NoticeShopRecodCell: BaseCell {
             self.moneyL?.attributedText = DDHAttributedMode.setString(allStr, setSize: 14, setLengthString: "鲸币", beginSize: allStr.count-2)
             self.typeL?.text = "退还成功"
             
+        }else if recoM?.resource_type == "7" {//官网购课赠送
+            self.titleL?.text = "官网购课赠送" + (recoM?.recharge_balance ?? "") + "鲸币"
+            self.moneyL?.text = "+" + (recoM?.recharge_balance ?? "") + "鲸币"
+            self.typeL?.text = "已到账";
         }
         self.orderNoL?.text = "交易单号：" + (recoM?.transaction_no ?? "")
         self.timeL?.text = recoM?.created_at ?? ""
