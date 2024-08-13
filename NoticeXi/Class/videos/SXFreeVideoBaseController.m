@@ -216,7 +216,13 @@
 
 - (void)refreshController{
     NoticeVideosController *ctl1 = [[NoticeVideosController alloc] init];
+    ctl1.type = 1;
     [self.controllArr addObject:ctl1];
+    [self.titleArr addObject:@"最新"];
+    
+    NoticeVideosController *ctl2 = [[NoticeVideosController alloc] init];
+    ctl2.type = 2;
+    [self.controllArr addObject:ctl2];
     [self.titleArr addObject:@"全部"];
     
     for (NSString *category_name in self.cataArr) {
@@ -229,6 +235,8 @@
     self.titles = [NSArray arrayWithArray:self.titleArr];
     [self.menuView reload];
     [self reloadData];
+    
+    self.selectIndex = 1;
 }
 
 - (void)refreshIfHasNew{

@@ -165,7 +165,7 @@
 
 - (SXHasBuyKcHeaderView *)zeroView{
     if (!_zeroView) {
-        _zeroView = [[SXHasBuyKcHeaderView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 178+80+137)];
+        _zeroView = [[SXHasBuyKcHeaderView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 178+80)];
         _zeroView.paySearModel = self.paySearModel;
         __weak typeof(self) weakSelf = self;
         _zeroView.buyTypeBolck = ^(BOOL isSend) {
@@ -174,6 +174,10 @@
             }else{
                 [weakSelf buyClick];
             }
+        };
+        _zeroView.refreshComUIBolck = ^(BOOL refresh) {
+            [weakSelf.categoryView reloadData];
+            [weakSelf.pagerView reloadData];
         };
     }
     return _zeroView;
@@ -297,6 +301,9 @@
     if (self.paySearModel.hasBuy || self.paySearModel.buy_card_times.intValue) {
         [self.backView removeFromSuperview];
         [self.webButton removeFromSuperview];
+        if (self.zeroView.paySearModel.remarkModel) {
+            [self.zeroView refreshComUI:self.zeroView.paySearModel.remarkModel];
+        }
     }else{
         [self noBuyView];
         

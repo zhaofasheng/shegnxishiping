@@ -14,6 +14,11 @@
     return @{@"seriesId":@"id",@"descriptionName":@"description"};
 }
 
+- (void)setRemarkInfo:(NSDictionary *)remarkInfo{
+    _remarkInfo = remarkInfo;
+    self.kcComDetailModel = [SXKcComDetailModel mj_objectWithKeyValues:remarkInfo];
+}
+
 - (void)setSeries_name:(NSString *)series_name{
     _series_name = series_name;
     self.bookseries_name = [NSString stringWithFormat:@"《%@》",series_name];

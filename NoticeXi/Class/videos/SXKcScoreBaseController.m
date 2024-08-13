@@ -8,6 +8,7 @@
 
 #import "SXKcScoreBaseController.h"
 #import "SXKcScoreListController.h"
+#import "SXKcTypeCataModel.h"
 @interface SXKcScoreBaseController ()
 @property (nonatomic, strong) NoticeCustumeNavView *navBarView;//是否需要自定义导航栏
 @property (nonatomic, strong) NSMutableArray *titleArr;
@@ -36,31 +37,64 @@
     return self;
 }
 
+- (void)refreshCom{
+    self.titleArr = [[NSMutableArray alloc] init];
+    self.controllArr = [[NSMutableArray alloc] init];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoSeriesRemark/getSearch/%@",self.paySearModel.seriesId] Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+ 
+            SXKcTypeCataModel *model = [SXKcTypeCataModel mj_objectWithKeyValues:dict[@"data"]];
+            if (self.hasCom) {//自己评论过
+                [self.titleArr addObject:@"全部"];
+                SXKcScoreListController *ctl1 = [[SXKcScoreListController alloc] init];
+                ctl1.type = @"1";
+                ctl1.paySearModel = self.paySearModel;
+                ctl1.labelArr = model.labelArr;
+                [self.controllArr addObject:ctl1];
+                
+                [self.titleArr addObject:@"我的评价 1"];
+                SXKcScoreListController *ctl2 = [[SXKcScoreListController alloc] init];
+                ctl2.type = @"2";
+                ctl2.paySearModel = self.paySearModel;
+                [self.controllArr addObject:ctl2];
+            }else{
+                [self.titleArr addObject:@"全部"];
+                SXKcScoreListController *ctl1 = [[SXKcScoreListController alloc] init];
+                ctl1.type = @"1";
+                ctl1.paySearModel = self.paySearModel;
+                ctl1.labelArr = model.labelArr;
+                [self.controllArr addObject:ctl1];
+            }
+            for (SXKcComDetailModel *scoreM in model.scoreArr) {
+                if (scoreM.num.intValue) {
+                    [self.titleArr addObject:[NSString stringWithFormat:@"%@ %@",scoreM.scoreName,scoreM.num]];
+                }else{
+                    [self.titleArr addObject:scoreM.scoreName];
+                }
+                SXKcScoreListController *ctl1 = [[SXKcScoreListController alloc] init];
+                ctl1.type = @"3";
+                ctl1.score = scoreM.score;
+                ctl1.paySearModel = self.paySearModel;
+                [self.controllArr addObject:ctl1];
+            }
+            self.navBarView.titleL.text = [NSString stringWithFormat:@"评价%@",model.ctNum];
+            self.titles = [NSArray arrayWithArray:self.titleArr];
+            [self.menuView reload];
+            [self reloadData];
+        }
+    
+    } fail:^(NSError * _Nullable error) {
+    }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     [self.view addSubview:self.navBarView];
     
-    NSArray *titleArr = @[@"全部",@"超满意",@"挺不错",@"一般吧",@"挺难评"];
-    self.titleArr = [NSMutableArray arrayWithArray:titleArr];
-    [self refreshController];
-}
+    [self refreshCom];
 
-- (void)refreshController{
-    SXKcScoreListController *ctl1 = [[SXKcScoreListController alloc] init];
-    [self.controllArr addObject:ctl1];
-    
-    for (NSString *category_name in self.titleArr) {
-        SXKcScoreListController *ctl = [[SXKcScoreListController alloc] init];
-        [self.controllArr addObject:ctl];
-    }
-    
-    self.titles = [NSArray arrayWithArray:self.titleArr];
-    [self.menuView reload];
-    [self reloadData];
 }
-
 
 - (NoticeCustumeNavView *)navBarView{
     if (!_navBarView) {
@@ -78,13 +112,12 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForMenuView:(WMMenuView *)menuView{
-    return CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH-43, 43);
+    return CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, 43);
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForContentView:(WMScrollView *)contentView{
-    return CGRectMake(0,43+NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-43-TAB_BAR_HEIGHT);
+    return CGRectMake(0,43+NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-43);
 }
 
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController{

@@ -29,6 +29,26 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList) name:@"NOTICEBANGDINGKECHENG" object:nil];
     [self createRefesh];
     [self request];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getcomZanNotice:) name:@"SXZANKCoNotification" object:nil];
+}
+
+
+- (void)getcomZanNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *comid = nameDictionary[@"comId"];
+    NSString *iszan = nameDictionary[@"is_zan"];
+    NSString *zanNum = nameDictionary[@"zan_num"];
+    
+    for (SXPayForVideoModel *kcModel in self.dataArr) {
+        if (kcModel.remarkModel) {
+            if ([kcModel.remarkModel.comId isEqualToString:comid]) {
+                kcModel.remarkModel.is_zan = iszan;
+                kcModel.remarkModel.zan_num = zanNum;
+            }
+        }
+    }
+    [self.tableView reloadData];
 }
 
 - (void)refreshList{
@@ -140,7 +160,36 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXHasGetSearisListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.model = self.dataArr[indexPath.row];
+    __weak typeof(self) weakSelf = self;
+    cell.refreshComBlock = ^(BOOL isAdd, SXKcComDetailModel * _Nonnull comModel) {
+        [weakSelf refreshKcCom:isAdd com:comModel];
+    };
+    cell.deleteScoreBlock = ^(SXKcComDetailModel * _Nonnull comM) {
+        [weakSelf refreshDelete:comM];
+    };
     return cell;
+}
+
+- (void)refreshDelete:(SXKcComDetailModel *)comModel{
+    for (SXPayForVideoModel *kcModel in self.dataArr) {
+        if ([kcModel.seriesId isEqualToString:comModel.series_id]) {
+            kcModel.kcComDetailModel = comModel;
+        }
+    }
+    [self.tableView reloadData];
+}
+
+- (void)refreshKcCom:(BOOL)isAdd com:(SXKcComDetailModel *)comModel{
+    for (SXPayForVideoModel *kcModel in self.dataArr) {
+        if ([kcModel.seriesId isEqualToString:comModel.series_id]) {
+            if (isAdd) {
+                kcModel.kcComDetailModel = comModel;
+            }else{
+                kcModel.kcComDetailModel = nil;
+            }
+        }
+    }
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated{

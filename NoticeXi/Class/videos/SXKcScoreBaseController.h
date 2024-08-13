@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXKcScoreBaseController : WMPageController
-
+@property (nonatomic, assign) BOOL hasCom;//自己是否评论过
+@property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @end
 
 NS_ASSUME_NONNULL_END

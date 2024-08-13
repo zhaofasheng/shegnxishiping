@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic, strong) XLCycleCollectionView *cyleView;
+@property (nonatomic, assign) BOOL hasRequested;
 @end
 
 NS_ASSUME_NONNULL_END

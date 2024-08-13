@@ -23,13 +23,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *buyImg;
 @property (nonatomic, strong) UIView *line;
 @property (nonatomic,copy) void(^buyTypeBolck)(BOOL isSend);
-
-
+@property (nonatomic,copy) void(^refreshComUIBolck)(BOOL refresh);
+@property (nonatomic, assign) BOOL hasRequested;
 @property (nonatomic, strong) UIView *giveScoreView;
 @property (nonatomic, strong) UIImageView *intoImageView;
 @property (nonatomic, strong) UILabel *comL;
 @property (nonatomic, strong) UILabel *scoreL;
 @property (nonatomic, strong) UIView *backView;
+- (void)refreshComUI:(SXKcComDetailModel *)comM;
 @end
 
 NS_ASSUME_NONNULL_END

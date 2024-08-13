@@ -69,7 +69,15 @@
 }
 
 - (void)comTap{
+    if (![NoticeTools getuserId]) {
+        [[NoticeTools getTopViewController] showToastWithText:@"登录声昔账号才能查看评价内容哦~"];
+        return;
+    }
+    if (!self.paySearModel.remarkModel.ctNum.intValue) {
+        return;
+    }
     SXKcScoreBaseController *ctl = [[SXKcScoreBaseController alloc] init];
+    ctl.paySearModel = self.paySearModel;
     [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
@@ -84,15 +92,54 @@
     self.backView.frame = CGRectMake(15, CGRectGetMaxY(self.cyleView.frame)+10, DR_SCREEN_WIDTH-30, CGRectGetMaxY(self.numL.frame)+68);
     [self.backView setAllCorner:10];
     
-    NSString *scoreDes = @"超满意";
-    NSString *score = @"5.0";
-    NSString *allStr = [NSString stringWithFormat:@"%@  %@",score,scoreDes];
-    self.scoreL.attributedText = [DDHAttributedMode setString:allStr setFont:THIRTTYBoldFontSize setLengthString:score beginSize:0];
+    if (paySearModel.remarkModel) {
+        [self refresh:paySearModel.remarkModel];
+    }
+    [self refreshCom];
     
-    self.comL.text = @"学员评价(133条)";
-
     self.scoreView.frame = CGRectMake(0, CGRectGetMaxY(self.numL.frame)+12, self.backView.frame.size.width, 38);
     self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH/16*9+self.backView.frame.size.height+25);
 }
 
+- (void)refreshCom{
+    if (self.hasRequested) {
+        return;
+    }
+    self.hasRequested = YES;
+    NSString *useriD = [NoticeTools getuserId];
+    if (!useriD) {
+        useriD = @"0";
+    }
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoSeriesRemark/getScore/%@/%@",self.paySearModel.seriesId,useriD] Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            
+            SXKcComDetailModel *comM = [SXKcComDetailModel mj_objectWithKeyValues:dict[@"data"]];
+            self.paySearModel.remarkModel = comM;
+   
+            [self refresh:comM];
+            
+        }
+    
+    } fail:^(NSError * _Nullable error) {
+    }];
+}
+
+- (void)refresh:(SXKcComDetailModel *)comM{
+    NSString *scoreDes = @"超满意";
+    NSString *score = @"5.0";
+    if (comM.ctNum.intValue) {
+        scoreDes = comM.averageScoreName;
+        score = comM.averageScore;
+        self.comL.text = [NSString stringWithFormat:@"学员评价(%@条)",comM.ctNum];
+        self.intoImageView.hidden = NO;
+        self.comL.frame = CGRectMake(0, 0, self.scoreView.frame.size.width-15-94-4-16-15, 20);
+    }else{
+        self.intoImageView.hidden = YES;
+        self.comL.text = @"还没有学员评价，暂无评分";
+        self.comL.frame = CGRectMake(0, 0, self.scoreView.frame.size.width-15-94-4-15, 20);
+    }
+  
+    NSString *allStr = [NSString stringWithFormat:@"%@  %@",score,scoreDes];
+    self.scoreL.attributedText = [DDHAttributedMode setString:allStr setFont:THIRTTYBoldFontSize setLengthString:score beginSize:0];
+}
 @end

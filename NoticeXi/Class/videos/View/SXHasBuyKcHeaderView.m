@@ -10,6 +10,7 @@
 #import "SXKcBuyChoiceView.h"
 #import "SXHasBuyOrderListController.h"
 #import "SXKcScoreBaseController.h"
+#import "SXComKcController.h"
 @implementation SXHasBuyKcHeaderView
 
 
@@ -80,7 +81,7 @@
             [self.contouinBtn addTarget:self action:@selector(buyClick) forControlEvents:UIControlEventTouchUpInside];
         }
         
-        self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15,CGRectGetMaxY(_coverImageView.frame)+20, DR_SCREEN_WIDTH-30, 60+127)];
+        self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15,CGRectGetMaxY(_coverImageView.frame)+20, DR_SCREEN_WIDTH-30, 60)];
         self.backView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.backView];
         
@@ -89,8 +90,8 @@
         [colorView setAllCorner:7];
         [self.backView addSubview:colorView];
         
-        self.scoreL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 4, 80, 38)];
-        self.scoreL.font = THIRTTYBoldFontSize;
+        self.scoreL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 4, 94, 38)];
+        self.scoreL.font = XGTWOBoldFontSize;
         self.scoreL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self.backView addSubview:self.scoreL];
         self.scoreL.text = @"5.0";
@@ -112,13 +113,87 @@
         
         UITapGestureRecognizer *tapcom = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(comTap)];
         [numView addGestureRecognizer:tapcom];
+        
     }
     return self;
 }
 
+- (void)refreshCom{
+    if (self.hasRequested) {
+        return;
+    }
+    self.hasRequested = YES;
+    NSString *useriD = [NoticeTools getuserId];
+    if (!useriD) {
+        useriD = @"0";
+    }
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoSeriesRemark/getScore/%@/%@",self.paySearModel.seriesId,useriD] Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            
+            SXKcComDetailModel *comM = [SXKcComDetailModel mj_objectWithKeyValues:dict[@"data"]];
+            self.paySearModel.remarkModel = comM;
+            [self refreshComUI:comM];
+        }
+    
+    } fail:^(NSError * _Nullable error) {
+    }];
+}
+
+- (void)refreshComUI:(SXKcComDetailModel *)comM{
+    self.giveScoreView.hidden = YES;
+    NSString *scoreDes = @"超满意";
+    NSString *score = @"5.0";
+    if (comM.ctNum.intValue) {//有评价数量
+        self.comL.text = [NSString stringWithFormat:@"学员评价(%@条)",comM.ctNum];
+        self.intoImageView.hidden = NO;
+        self.comL.frame = CGRectMake(0, 0, self.backView.frame.size.width-15-94-4-16-15, 20);
+        scoreDes = comM.averageScoreName;
+        score = comM.averageScore;
+    }else{
+        self.comL.text = @"还没有学员评价，暂无评分";
+        self.intoImageView.hidden = YES;
+        self.comL.frame = CGRectMake(0, 0, self.backView.frame.size.width-15-94-4-15, 20);
+      
+    }
+    NSString *allStr = [NSString stringWithFormat:@"%@ %@",score,scoreDes];
+    self.scoreL.attributedText = [DDHAttributedMode setString:allStr setFont:THIRTTYBoldFontSize setLengthString:score beginSize:0];
+    
+    if (comM.is_remark.intValue == 1) {//评价过
+        self.giveScoreView.hidden = YES;
+    }else{
+        if ([SXTools getPayPlayLastsearisId:self.paySearModel.seriesId] && [SXTools isCanShow:[NSString stringWithFormat:@"comshow%@%@",[NoticeTools getuserId],self.paySearModel.seriesId]]){
+            self.giveScoreView.hidden = NO;
+        }
+    }
+    
+    if (self.giveScoreView.hidden) {
+        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 178+80);
+        self.backView.frame = CGRectMake(15,CGRectGetMaxY(_coverImageView.frame)+20, DR_SCREEN_WIDTH-30, 60);
+    }else{
+        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 178+80+137);
+        self.backView.frame = CGRectMake(15,CGRectGetMaxY(_coverImageView.frame)+20, DR_SCREEN_WIDTH-30, 60+127);
+    }
+    
+    [self.backView setAllCorner:10];
+    
+    if (self.refreshComUIBolck) {
+        self.refreshComUIBolck(YES);
+    }
+}
+
+
 //查看评分
 - (void)comTap{
+    if (![NoticeTools getuserId]) {
+        [[NoticeTools getTopViewController] showToastWithText:@"登录声昔账号才能查看评价内容哦~"];
+        return;
+    }
+    if (!self.paySearModel.remarkModel.ctNum.intValue) {
+        return;
+    }
     SXKcScoreBaseController *ctl = [[SXKcScoreBaseController alloc] init];
+    ctl.hasCom = self.paySearModel.remarkModel.is_remark.boolValue;
+    ctl.paySearModel = self.paySearModel;
     [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
@@ -157,12 +232,11 @@
     self.hasBuyTimeL.frame = CGRectMake(145, 145, GET_STRWIDTH(self.hasBuyTimeL.text, 14, 20), 20);
     self.buyImg.frame = CGRectMake(CGRectGetMaxX(_hasBuyTimeL.frame)+3, 147, 16, 16);
     
-    self.comL.text = @"学员评价(133条)";
+    [self refreshCom];
     
-    self.giveScoreView.hidden = NO;
-    
-    self.backView.frame = CGRectMake(15,CGRectGetMaxY(_coverImageView.frame)+20, DR_SCREEN_WIDTH-30, 60+127);
-    [self.backView setAllCorner:10];
+    if (paySearModel.remarkModel) {
+        [self refreshComUI:paySearModel.remarkModel];
+    }
 }
 
 - (UIView *)giveScoreView{
@@ -214,11 +288,23 @@
 
 //关闭评分提示
 - (void)closeComClick{
-    
+
+    [SXTools setCanNotShow:[NSString stringWithFormat:@"comshow%@%@",[NoticeTools getuserId],self.paySearModel.seriesId]];
+    [self refreshComUI:self.paySearModel.remarkModel];
 }
 
 //去评分
 - (void)goComTap{
+    SXComKcController *ctl = [[SXComKcController alloc] init];
+    ctl.paySearModel = self.paySearModel;
+    __weak typeof(self) weakSelf = self;
+    ctl.refreshComBlock = ^(BOOL isAdd, SXKcComDetailModel * _Nonnull comModel) {
+        if (isAdd) {
+            weakSelf.hasRequested = NO;
+            [weakSelf refreshCom];
+        }
+    };
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
     
 }
 

@@ -1547,6 +1547,10 @@
 		FEA1AA592C69F1A20059B05B /* SXKcScoreBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA582C69F1A20059B05B /* SXKcScoreBaseController.m */; };
 		FEA1AA5C2C69F1B30059B05B /* SXKcScoreListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA5B2C69F1B30059B05B /* SXKcScoreListController.m */; };
 		FEA1AA5F2C6A01090059B05B /* SXComKcController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA5E2C6A01090059B05B /* SXComKcController.m */; };
+		FEA1AA622C6AF6AD0059B05B /* SXKcComDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA612C6AF6AC0059B05B /* SXKcComDetailModel.m */; };
+		FEA1AA652C6AF9620059B05B /* SXMyKcComController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA642C6AF9620059B05B /* SXMyKcComController.m */; };
+		FEA1AA682C6B29790059B05B /* SXKcComScoreListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA672C6B29790059B05B /* SXKcComScoreListCell.m */; };
+		FEA1AA6B2C6B47700059B05B /* SXKcTypeCataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA6A2C6B47700059B05B /* SXKcTypeCataModel.m */; };
 		FEA753552C23D8C800DC6807 /* AFServiceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */; };
 		FEB130222BEB56F7005E7FC7 /* sx.byebyetext.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */; };
 		FEB61BEB2B4CE0CF00B128FA /* NoticeShopDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61BEA2B4CE0CF00B128FA /* NoticeShopDetailHeader.m */; };
@@ -4574,6 +4578,14 @@
 		FEA1AA5B2C69F1B30059B05B /* SXKcScoreListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcScoreListController.m; sourceTree = "<group>"; };
 		FEA1AA5D2C6A01090059B05B /* SXComKcController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXComKcController.h; sourceTree = "<group>"; };
 		FEA1AA5E2C6A01090059B05B /* SXComKcController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXComKcController.m; sourceTree = "<group>"; };
+		FEA1AA602C6AF6AC0059B05B /* SXKcComDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcComDetailModel.h; sourceTree = "<group>"; };
+		FEA1AA612C6AF6AC0059B05B /* SXKcComDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcComDetailModel.m; sourceTree = "<group>"; };
+		FEA1AA632C6AF9620059B05B /* SXMyKcComController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXMyKcComController.h; sourceTree = "<group>"; };
+		FEA1AA642C6AF9620059B05B /* SXMyKcComController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXMyKcComController.m; sourceTree = "<group>"; };
+		FEA1AA662C6B29790059B05B /* SXKcComScoreListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcComScoreListCell.h; sourceTree = "<group>"; };
+		FEA1AA672C6B29790059B05B /* SXKcComScoreListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcComScoreListCell.m; sourceTree = "<group>"; };
+		FEA1AA692C6B47700059B05B /* SXKcTypeCataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcTypeCataModel.h; sourceTree = "<group>"; };
+		FEA1AA6A2C6B47700059B05B /* SXKcTypeCataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcTypeCataModel.m; sourceTree = "<group>"; };
 		FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFServiceSDK.framework; sourceTree = "<group>"; };
 		FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sx.byebyetext.com.cer; sourceTree = "<group>"; };
 		FEB61BE92B4CE0CF00B128FA /* NoticeShopDetailHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeShopDetailHeader.h; sourceTree = "<group>"; };
@@ -9153,6 +9165,10 @@
 				FE979DA32C51E44B00161B7B /* SXVideoZjModel.m */,
 				FE979DA52C5229AC00161B7B /* SXKcCardListModel.h */,
 				FE979DA62C5229AC00161B7B /* SXKcCardListModel.m */,
+				FEA1AA602C6AF6AC0059B05B /* SXKcComDetailModel.h */,
+				FEA1AA612C6AF6AC0059B05B /* SXKcComDetailModel.m */,
+				FEA1AA692C6B47700059B05B /* SXKcTypeCataModel.h */,
+				FEA1AA6A2C6B47700059B05B /* SXKcTypeCataModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -9310,6 +9326,8 @@
 				FEA1AA522C60A4990059B05B /* SXDanLiPlayKcTools.m */,
 				FEA1AA542C69AEFB0059B05B /* SXKcNoBuyScoreHeaderView.h */,
 				FEA1AA552C69AEFB0059B05B /* SXKcNoBuyScoreHeaderView.m */,
+				FEA1AA662C6B29790059B05B /* SXKcComScoreListCell.h */,
+				FEA1AA672C6B29790059B05B /* SXKcComScoreListCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9518,6 +9536,8 @@
 				FEA1AA5B2C69F1B30059B05B /* SXKcScoreListController.m */,
 				FEA1AA5D2C6A01090059B05B /* SXComKcController.h */,
 				FEA1AA5E2C6A01090059B05B /* SXComKcController.m */,
+				FEA1AA632C6AF9620059B05B /* SXMyKcComController.h */,
+				FEA1AA642C6AF9620059B05B /* SXMyKcComController.m */,
 			);
 			path = videos;
 			sourceTree = "<group>";
@@ -10300,6 +10320,7 @@
 				FEBCADDC2B8361C80048F5A1 /* NoticeBaseListController.m in Sources */,
 				A4E967162A69142400AE022E /* NoticeVoiceComModel.m in Sources */,
 				A44FBFBE2AFB57FE00D49DB5 /* NoticeVoiceDefaultImgModel.m in Sources */,
+				FEA1AA682C6B29790059B05B /* SXKcComScoreListCell.m in Sources */,
 				A4E968832A69142600AE022E /* NoticeTeamChatModel.m in Sources */,
 				A4E965C32A69142200AE022E /* CQCountdownButton.m in Sources */,
 				A4E965FD2A69142300AE022E /* NoticeFriendNum.m in Sources */,
@@ -10810,6 +10831,7 @@
 				A44FBFB22AF4C70500D49DB5 /* XLCycleCollectionView.m in Sources */,
 				A4E967102A69142400AE022E /* NoticeVoiceDetailController.m in Sources */,
 				A4E965F02A69142300AE022E /* NoticeShareLinkCell.m in Sources */,
+				FEA1AA6B2C6B47700059B05B /* SXKcTypeCataModel.m in Sources */,
 				A4E967632A69142400AE022E /* NoticeGroupChatModel.m in Sources */,
 				A4E9699D2A69142800AE022E /* BaseTableViewController.m in Sources */,
 				A4E9694F2A69142700AE022E /* NoticeSendViewController.m in Sources */,
@@ -10954,6 +10976,7 @@
 				A4E966352A69142300AE022E /* NoticeFindSongFriendController.m in Sources */,
 				A4E967D52A69142500AE022E /* NoticeListenPriSetController.m in Sources */,
 				A4E968052A69142500AE022E /* NoticeCarePeopleController.m in Sources */,
+				FEA1AA652C6AF9620059B05B /* SXMyKcComController.m in Sources */,
 				FE9C409C2B9AE455008C3A22 /* SXEducationController.m in Sources */,
 				FE979D862C4FA3FE00161B7B /* SXKcCardListController.m in Sources */,
 				FE07BE0E2BF4BA8800E6812A /* SXShopOpenTypeView.m in Sources */,
@@ -11150,6 +11173,7 @@
 				FE07BDED2BF2F3BE00E6812A /* SXStudyListCell.m in Sources */,
 				FE9C3FBD2B9093AA008C3A22 /* SXplayPayVideoDetailSection.m in Sources */,
 				A4E9655E2A69142200AE022E /* NoticeChoiceRecoderView.m in Sources */,
+				FEA1AA622C6AF6AD0059B05B /* SXKcComDetailModel.m in Sources */,
 				A4E9671A2A69142400AE022E /* NoticeChatsCell.m in Sources */,
 				A4E968822A69142600AE022E /* NoticeTeamChatController.m in Sources */,
 				A4E969972A69142800AE022E /* UINavigationController+CLPlayerRotation.m in Sources */,

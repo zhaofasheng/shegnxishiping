@@ -14,6 +14,8 @@ typedef void(^MyImageBlock)(UIImage * _Nullable image);
 typedef void (^downSuccessBlock)(BOOL success);
 
 @interface SXTools : NSObject
++ (void)setCanNotShow:(NSString *)showKey;
++ (BOOL)isCanShow:(NSString *)showKey;
 + (NSString *)updateTimeForRowWithNoHourAndMin:(NSString *)createTimeString;
 +(void)getScreenshotWithUrlAsyn:(NSURL *)url completion:(MyImageBlock)handler;
 + (CGFloat)getSXvideoListHeight:(SXVideosModel *)videoModel;

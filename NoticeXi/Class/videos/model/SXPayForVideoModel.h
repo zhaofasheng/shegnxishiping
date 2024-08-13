@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SXSearisVideoListModel.h"
+#import "SXKcComDetailModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXPayForVideoModel : NSObject
@@ -46,6 +47,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NoticeAbout *fromUser;
 
 @property (nonatomic, strong) NSString *descriptionName;//购买礼品卡说明
+
+@property (nonatomic, strong) NSDictionary *remarkInfo;//课程评价
+@property (nonatomic, strong) SXKcComDetailModel * __nullable kcComDetailModel;
+
+@property (nonatomic, strong) SXKcComDetailModel *remarkModel;//平均分
+
 @end
 
 NS_ASSUME_NONNULL_END

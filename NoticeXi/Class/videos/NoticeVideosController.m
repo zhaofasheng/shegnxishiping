@@ -55,6 +55,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoZanNotice:) name:@"SXZANvideoNotification" object:nil];
     //获取收藏通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoscNotice:) name:@"SXCOLLECTvideoNotification" object:nil];
+
 }
 
 - (void)refreshList{
@@ -119,14 +120,23 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
     }
     self.isRequesting = YES;
     NSString *url = @"";
-    if (!self.categoryName) {
+    if (self.type == 1) {//最新
         url = [NSString stringWithFormat:@"videoCategory/getVideo?pageNo=%ld&userId=%@",self.pageNo,[NoticeTools getuserId]?[NoticeTools getuserId]:@"0"];
-    }else{
+    }else if (self.type == 2){
+        
+        if ([NoticeTools getuserId]) {
+            url = [NSString stringWithFormat:@"video/list?pageNo=%ld",self.pageNo];
+        }else{
+            url = [NSString stringWithFormat:@"video/list?pageNo=%ld&userDevice=%ld",self.pageNo,arc4random() % 999999956789];
+        }
+        
+    }
+    else{
         url = [NSString stringWithFormat:@"videoCategory/getVideo?pageNo=%ld&categoryName=%@&userId=%@",self.pageNo,[self.categoryName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<>"]],[NoticeTools getuserId]?[NoticeTools getuserId]:@"0"];
     }
     
     
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:self.type==2?@"application/vnd.shengxi.v5.8.6+json": @"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];

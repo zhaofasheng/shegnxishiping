@@ -8,6 +8,7 @@
 
 #import "SXHasGetSearisListCell.h"
 #import "SXComKcController.h"
+#import "SXMyKcComController.h"
 @implementation SXHasGetSearisListCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -47,9 +48,9 @@
         self.comButton = [[UIButton  alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-90, 126, 80, 32)];
         self.comButton.layer.cornerRadius = 16;
         self.comButton.layer.masksToBounds = YES;
-        self.comButton.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
         [self.comButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         self.comButton.titleLabel.font = TWOTEXTFONTSIZE;
+        self.comButton.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
         [self.comButton setTitle:@"给个评价" forState:UIControlStateNormal];
         [self.comButton addTarget:self action:@selector(gocomClick) forControlEvents:UIControlEventTouchUpInside];
         [self.backView addSubview:self.comButton];
@@ -58,8 +59,43 @@
 }
 
 - (void)gocomClick{
+    if (![NoticeTools getuserId]) {
+        [[NoticeTools getTopViewController] showToastWithText:@"登录声昔账号才能查看评价和评价哦~"];
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    if (self.model.kcComDetailModel.series_id) {
+        SXMyKcComController *ctl = [[SXMyKcComController alloc] init];
+        ctl.paySearModel = self.model;
+        ctl.comModel = self.model.kcComDetailModel;
+        ctl.refreshComBlock = ^(BOOL isAdd, SXKcComDetailModel * _Nonnull comModel) {
+            if (weakSelf.refreshComBlock) {
+                weakSelf.refreshComBlock(isAdd, comModel);
+            }
+        };
+        ctl.deleteScoreBlock = ^(SXKcComDetailModel * _Nonnull comM) {
+            if (weakSelf.deleteScoreBlock) {
+                weakSelf.deleteScoreBlock(comM);
+            }
+        };
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+      
+        return;
+    }
     SXComKcController *ctl = [[SXComKcController alloc] init];
     ctl.paySearModel = self.model;
+    
+    ctl.refreshComBlock = ^(BOOL isAdd, SXKcComDetailModel * _Nonnull comModel) {
+        if (weakSelf.refreshComBlock) {
+            weakSelf.refreshComBlock(isAdd, comModel);
+        }
+    };
+    ctl.deleteScoreBlock = ^(SXKcComDetailModel * _Nonnull comM) {
+        if (weakSelf.deleteScoreBlock) {
+            weakSelf.deleteScoreBlock(comM);
+        }
+    };
     [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
@@ -82,6 +118,20 @@
         _beforeL.text = [NSString stringWithFormat:@"上次看到：%@",str];
     }else{
         _beforeL.text = @"";
+    }
+    
+    if (model.kcComDetailModel.series_id) {
+        self.comButton.backgroundColor = [UIColor whiteColor];
+        [self.comButton setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
+        self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#A1A7B3"].CGColor;
+        self.comButton.layer.borderWidth = 1;
+        [self.comButton setTitle:@"我的评价" forState:UIControlStateNormal];
+    }else{
+        self.comButton.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
+        [self.comButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.comButton.layer.borderColor = [UIColor colorWithHexString:@"#A1A7B3"].CGColor;
+        self.comButton.layer.borderWidth = 1;
+        [self.comButton setTitle:@"给个评价" forState:UIControlStateNormal];
     }
 }
 

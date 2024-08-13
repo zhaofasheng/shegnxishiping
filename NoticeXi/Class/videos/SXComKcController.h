@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SXComKcController : NoticeBaseCellController
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
+@property (nonatomic,copy) void(^refreshComBlock)(BOOL isAdd,SXKcComDetailModel *comModel);
+@property (nonatomic,copy) void(^deleteScoreBlock)(SXKcComDetailModel *comM);
 @end
 
 NS_ASSUME_NONNULL_END

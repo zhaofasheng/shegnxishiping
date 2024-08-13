@@ -368,6 +368,24 @@
     [cache synchronize];
 }
 
++ (BOOL)isCanShow:(NSString *)showKey{
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+    if (![[NoticeSaveModel getUserInfo] user_id]) {
+        return NO;
+    }
+    if ([[cache objectForKey:showKey] isEqualToString:@"1"]) {
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
++ (void)setCanNotShow:(NSString *)showKey{
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+    [cache setObject:@"1" forKey:showKey];
+    [cache synchronize];
+}
+
 + (BOOL)isHowTouseOnThisDeveice{
     
     NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];

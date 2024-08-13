@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) SXPayForVideoModel *model;
 @property (nonatomic, strong) UIButton *comButton;
+@property (nonatomic,copy) void(^deleteScoreBlock)(SXKcComDetailModel *comM);
+@property (nonatomic,copy) void(^refreshComBlock)(BOOL isAdd,SXKcComDetailModel *comModel);
 @end
 
 NS_ASSUME_NONNULL_END

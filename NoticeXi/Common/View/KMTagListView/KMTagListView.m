@@ -13,7 +13,7 @@
 @interface KMTagListView ()
 
 @property (nonatomic,strong)NSMutableArray *tags;
-
+@property (nonatomic, strong) NoticeComLabelModel *oldmodel;
 
 @end
 
@@ -189,13 +189,12 @@
 - (void)setupCustomeMoreSubViewsWithTitles:(NSMutableArray *)titles{
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.tags removeAllObjects];
-    self.moreClick = YES;
     self.labelItems = titles;
     
     for (NSInteger i = 0; i < titles.count; i++) {
         KMTag *tag = [[KMTag alloc] initWithFrame:CGRectZero];
         NoticeComLabelModel *model = self.labelItems[i];
-        [tag setupMoreClickWithText:model.title];
+        [tag setupMoreClickWithText:model.content];
         [self addSubview:tag];
         [self.tags addObject:tag];
         // 添加手势
@@ -230,6 +229,40 @@
         }else{
             tag.textColor = [UIColor colorWithHexString:@"#5C5F66"];
             tag.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        }
+        if ([self.delegate_ respondsToSelector:@selector(ptl_TagListView:didSelectTagViewAtIndex:selectContent:)]) {
+            [self.delegate_ ptl_TagListView:self didSelectTagViewAtIndex:tag.tag selectContent:@""];
+        }
+        return;
+    }
+    if (self.labelOneClick) {
+        
+        KMTag *tag = (KMTag *)pan.view;
+        if(tag.tag > self.labelItems.count-1){//防止数组越界
+            return;
+        }
+        
+        NoticeComLabelModel *model = self.labelItems[tag.tag];
+        if ([model.labelId isEqualToString:self.oldmodel.labelId]) {//如果是重复点击
+            model.isChoice = !model.isChoice;
+        }else{//点击的是新的，旧的设置为不选中
+            for (KMTag *oldT in self.tags) {
+                oldT.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+                oldT.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+            }
+            model.isChoice = YES;
+        }
+        
+        self.oldmodel = model;
+        if(model.isChoice){
+            tag.textColor = [UIColor colorWithHexString:@"#1FC7FF"];
+            tag.backgroundColor = [[UIColor colorWithHexString:@"#1FC7FF"] colorWithAlphaComponent:0.1];
+        }else{
+            tag.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+            tag.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        }
+        if ([self.delegate_ respondsToSelector:@selector(ptl_TagListView:didSelectTagViewAtIndex:selectContent:)]) {
+            [self.delegate_ ptl_TagListView:self didSelectTagViewAtIndex:tag.tag selectContent:@""];
         }
         return;
     }
@@ -277,8 +310,6 @@
         [self.delegate_ ptl_TagListView:self didSelectTagViewAtIndex:tag.tag selectContent:tag.text];
     }
 }
-
-
 
 - (void)setupAllSubViews {
     

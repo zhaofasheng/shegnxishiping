@@ -10,7 +10,8 @@
 #import "CBAutoScrollLabel.h"
 #import "KMTagListView.h"
 #import "NoticeComLabelModel.h"
-@interface SXComKcController ()<UITextViewDelegate>
+#import "SXMyKcComController.h"
+@interface SXComKcController ()<UITextViewDelegate,KMTagListViewDelegate>
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIButton *upButton;
 @property (nonatomic, strong) UIView *kcView;
@@ -41,50 +42,58 @@
     [self.headerView addSubview:self.kcView];
     [self.headerView addSubview:self.scoreView];
     
-    NSArray *arr = @[@"直戳心坎",@"超强情绪价值",@"解决方法实际",@"思路清晰细致",@"物超所值",@"醍醐灌顶"];
+    [self showHUD];
     self.tagsArr = [[NSMutableArray alloc] init];
-    for (NSString *title in arr) {
-        NoticeComLabelModel *tagM = [[NoticeComLabelModel alloc] init];
-        tagM.title = title;
-        [self.tagsArr addObject:tagM];
-    }
-  
-    KMTagListView *tagV = [[KMTagListView alloc]initWithFrame:CGRectMake(10,CGRectGetMaxY(self.scoreView.frame), DR_SCREEN_WIDTH-20, 0)];
-    tagV.moreClick = YES;
-    tagV.ySpace = 10;
-    [tagV setupCustomeMoreSubViewsWithTitles:self.tagsArr];
-    self.labeView = tagV;
-    [self.headerView addSubview:tagV];
-    
-    CGRect rect = tagV.frame;
-    rect.size.height = tagV.contentSize.height;
-    tagV.frame = rect;
-     
-    
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(15,CGRectGetMaxY(self.labeView.frame)+30, DR_SCREEN_WIDTH-30, 150)];
-    backView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-    backView.layer.cornerRadius = 5;
-    backView.layer.masksToBounds = YES;
-    [self.headerView addSubview:backView];
-    self.inputBackView = backView;
-    
-    self.nameField = [[UITextView alloc] initWithFrame:CGRectMake(5, 10, DR_SCREEN_WIDTH-40, 30)];
-    self.nameField.backgroundColor = backView.backgroundColor;
-    self.nameField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
-    self.nameField.delegate = self;
-    self.nameField.font = FOURTHTEENTEXTFONTSIZE;
-    self.nameField.textColor = [UIColor colorWithHexString:@"#25262E"];
-    [backView addSubview:self.nameField];
-    
-    _plaL = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, 200, 14)];
-    _plaL.text = @"内容符合你的预期吗？有什么想分享的吗？";
-    _plaL.font = FOURTHTEENTEXTFONTSIZE;
-    _plaL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
-    [backView addSubview:_plaL];
-    
-    backView.userInteractionEnabled = YES;
-    UITapGestureRecognizer *inputT = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inputBecom)];
-    [backView addGestureRecognizer:inputT];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoSeriesRemark/getLabel" Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            for (NSDictionary *dic in dict[@"data"]) {
+                NoticeComLabelModel *lableM = [NoticeComLabelModel mj_objectWithKeyValues:dic];
+                [self.tagsArr addObject:lableM];
+            }
+            
+            KMTagListView *tagV = [[KMTagListView alloc]initWithFrame:CGRectMake(10,CGRectGetMaxY(self.scoreView.frame), DR_SCREEN_WIDTH-20, 0)];
+            tagV.moreClick = YES;
+            tagV.ySpace = 10;
+            tagV.delegate = self;
+            [tagV setupCustomeMoreSubViewsWithTitles:self.tagsArr];
+            self.labeView = tagV;
+            [self.headerView addSubview:tagV];
+            
+            CGRect rect = tagV.frame;
+            rect.size.height = tagV.contentSize.height;
+            tagV.frame = rect;
+            
+            UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(15,CGRectGetMaxY(self.labeView.frame)+30, DR_SCREEN_WIDTH-30, 150)];
+            backView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+            backView.layer.cornerRadius = 5;
+            backView.layer.masksToBounds = YES;
+            [self.headerView addSubview:backView];
+            self.inputBackView = backView;
+            
+            self.headerView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, CGRectGetMaxY(self.inputBackView.frame)+10);
+            
+            self.nameField = [[UITextView alloc] initWithFrame:CGRectMake(5, 10, DR_SCREEN_WIDTH-40, 30)];
+            self.nameField.backgroundColor = backView.backgroundColor;
+            self.nameField.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
+            self.nameField.delegate = self;
+            self.nameField.font = FOURTHTEENTEXTFONTSIZE;
+            self.nameField.textColor = [UIColor colorWithHexString:@"#25262E"];
+            [backView addSubview:self.nameField];
+            
+            _plaL = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, 200, 14)];
+            _plaL.text = @"内容符合你的预期吗？有什么想分享的吗？";
+            _plaL.font = FOURTHTEENTEXTFONTSIZE;
+            _plaL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
+            [backView addSubview:_plaL];
+            
+            backView.userInteractionEnabled = YES;
+            UITapGestureRecognizer *inputT = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inputBecom)];
+            [backView addGestureRecognizer:inputT];
+        }
+        [self hideHUD];
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
     
     self.tableView.tableHeaderView = self.headerView;
     
@@ -104,6 +113,133 @@
 - (void)inputBecom{
     [self.nameField becomeFirstResponder];
 }
+
+
+- (void)scoreTap:(UITapGestureRecognizer *)tap{
+    UIView *tapView = (UIView *)tap.view;
+    for (UILabel * label in self.labelArr) {
+        label.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+    }
+    
+    int i = 0 ;
+    for (UIImageView *imgV in self.imgViewArr) {
+        
+        imgV.image = UIImageNamed(self.imgNomArr[i]);
+        i++;
+    }
+    
+    UILabel *selL = self.labelArr[tapView.tag];
+    selL.textColor = [UIColor colorWithHexString:@"#14151A"];
+    
+    UIImageView *selImageV = self.imgViewArr[tapView.tag];
+    selImageV.image = UIImageNamed(self.imgSelArr[tapView.tag]);
+    
+    self.score = [NSString stringWithFormat:@"%ld",tapView.tag+1];
+    [self refreshButton];
+}
+
+- (void)upClick{
+    
+    if (self.paySearModel.kcComDetailModel) {
+        [self showToastWithText:@"已经评价过，不能重复评价"];
+        return;
+    }
+    if (!self.score.intValue) {
+        return;
+    }
+    if (self.nameField.text.length > 500) {
+        [self showToastWithText:@"最多只能评价500个字哦~"];
+        return;
+    }
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
+    [parm setObject:self.score forKey:@"score"];
+    if (self.nameField.text.length) {
+        [parm setObject:self.nameField.text forKey:@"content"];
+    }
+    
+    NSString *lableStr = @"";
+    BOOL hasLabel = NO;
+    for (NoticeComLabelModel *model in self.tagsArr) {
+        if (model.isChoice) {
+            hasLabel = YES;
+            if(lableStr.length){
+                lableStr = [NSString stringWithFormat:@"%@,%@",lableStr,model.labelId];
+            }else{
+                lableStr = model.labelId;
+            }
+        }
+    }
+    if (hasLabel) {
+        [parm setObject:lableStr forKey:@"labelId"];
+    }
+    
+    
+    [self showHUD];
+
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoSeriesRemark/create" Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            [self showToastWithText:@"评价成功"];
+            SXKcComDetailModel *comModel = [SXKcComDetailModel mj_objectWithKeyValues:dict[@"data"]];
+            SXMyKcComController *ctl = [[SXMyKcComController alloc] init];
+            ctl.paySearModel = self.paySearModel;
+            ctl.comModel = comModel;
+            ctl.isFromCom = YES;
+            self.paySearModel.kcComDetailModel = comModel;
+            __weak typeof(self) weakSelf = self;
+            ctl.refreshComBlock = ^(BOOL isAdd, SXKcComDetailModel * _Nonnull comModel) {
+                if (weakSelf.refreshComBlock) {
+                    weakSelf.refreshComBlock(isAdd, comModel);
+                }
+            };
+            ctl.deleteScoreBlock = ^(SXKcComDetailModel * _Nonnull comM) {
+                if (weakSelf.deleteScoreBlock) {
+                    weakSelf.deleteScoreBlock(comM);
+                }
+            };
+            if (self.refreshComBlock) {
+                self.refreshComBlock(YES, comModel);
+            }
+            [self.navigationController pushViewController:ctl animated:YES];
+        }
+        [self hideHUD];
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
+}
+
+- (void)refreshButton{
+    
+    if (self.score.intValue) {
+        self.upButton.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+        [self.upButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    }else{
+        self.upButton.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];
+        [self.upButton setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
+    }
+}
+
+- (void)backClick{
+    BOOL hasLabel = NO;
+    for (NoticeComLabelModel *model in self.tagsArr) {
+        if (model.isChoice) {
+            hasLabel = YES;
+            break;
+        }
+    }
+    if (self.score.intValue || hasLabel || self.nameField.text.length) {
+        __weak typeof(self) weakSelf = self;
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定放弃评价吗？" message:nil sureBtn:@"再想想" cancleBtn:@"放弃" right:NO];
+        alerView.resultIndex = ^(NSInteger index) {
+            if (index == 2) {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }
+        };
+        [alerView showXLAlertView];
+        return;
+    }
+}
+
 
 - (UIView *)kcView{
     if (!_kcView) {
@@ -134,6 +270,84 @@
     }
     return _kcView;
 }
+
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+    }
+    
+    CGRect frame = textView.frame;
+    float height;
+    if ([text isEqual:@""]) {
+        
+        if (![textView.text isEqualToString:@""]) {
+            
+            height = [self heightForTextView:textView WithText:[textView.text substringToIndex:[textView.text length] - 1]];
+            
+        }else{
+            
+            height = [self heightForTextView:textView WithText:textView.text];
+        }
+    }else{
+        
+        height = [self heightForTextView:textView WithText:[NSString stringWithFormat:@"%@%@",textView.text,text]];
+    }
+    if (height > 130) {
+        height = 130;
+    }
+    
+    frame.size.height = height;
+    [UIView animateWithDuration:0.5 animations:^{
+        textView.frame = frame;
+    } completion:nil];
+    
+    return YES;
+}
+
+- (void)textViewDidChangeSelection:(UITextView *)textView{
+    if (textView.text.length) {
+        _plaL.text = @"";
+    }else{
+        _plaL.text = @"内容符合你的预期吗？有什么想分享的吗？";
+    }
+ 
+}
+
+- (float) heightForTextView: (UITextView *)textView WithText: (NSString *) strText{
+    CGSize constraint = CGSizeMake(textView.contentSize.width , CGFLOAT_MAX);
+    CGRect size = [strText boundingRectWithSize:constraint
+                                        options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                     attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]}
+                                        context:nil];
+    float textHeight = size.size.height + 22.0;
+    return textHeight;
+}
+
+
+-(void)keyboardWillChangeFrame:(NSNotification *)notification{
+ 
+    NSDictionary *userInfo = notification.userInfo;
+    // 键盘的frame
+    CGRect keyboardF = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    if(CGRectGetMaxY(self.inputBackView.frame)+30+NAVIGATION_BAR_HEIGHT > DR_SCREEN_HEIGHT-keyboardF.size.height){
+        self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT-(CGRectGetMaxY(self.inputBackView.frame)+30 + NAVIGATION_BAR_HEIGHT - (DR_SCREEN_HEIGHT-keyboardF.size.height)), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-10);
+    }
+}
+
+- (void)keyboardDiddisss{
+    
+    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-10);
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+
+    if(scrollView == self.tableView){
+        [self.nameField resignFirstResponder];
+    }
+}
+
 
 - (UIView *)scoreView{
     if (!_scoreView) {
@@ -183,109 +397,4 @@
     }
     return _scoreView;
 }
-
-- (void)scoreTap:(UITapGestureRecognizer *)tap{
-    UIView *tapView = (UIView *)tap.view;
-    for (UILabel * label in self.labelArr) {
-        label.textColor = [UIColor colorWithHexString:@"#5C5F66"];
-    }
-    
-    int i = 0 ;
-    for (UIImageView *imgV in self.imgViewArr) {
-        
-        imgV.image = UIImageNamed(self.imgNomArr[i]);
-        i++;
-    }
-    
-    UILabel *selL = self.labelArr[tapView.tag];
-    selL.textColor = [UIColor colorWithHexString:@"#14151A"];
-    
-    UIImageView *selImageV = self.imgViewArr[tapView.tag];
-    selImageV.image = UIImageNamed(self.imgSelArr[tapView.tag]);
-    
-}
-
-- (void)upClick{
-    
-}
-
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-    }
-    
-    CGRect frame = textView.frame;
-    float height;
-    if ([text isEqual:@""]) {
-        
-        if (![textView.text isEqualToString:@""]) {
-            
-            height = [self heightForTextView:textView WithText:[textView.text substringToIndex:[textView.text length] - 1]];
-            
-        }else{
-            
-            height = [self heightForTextView:textView WithText:textView.text];
-        }
-    }else{
-        
-        height = [self heightForTextView:textView WithText:[NSString stringWithFormat:@"%@%@",textView.text,text]];
-    }
-    if (height > 150) {
-        height = 150;
-    }
-    
-    frame.size.height = height;
-    [UIView animateWithDuration:0.5 animations:^{
-        textView.frame = frame;
-    } completion:nil];
-    
-    return YES;
-}
-
-- (void)textViewDidChangeSelection:(UITextView *)textView{
-    if (textView.text.length) {
-        _plaL.text = @"";
-    }else{
-        _plaL.text = @"内容符合你的预期吗？有什么想分享的吗？";
-    }
-
-}
-
-- (float) heightForTextView: (UITextView *)textView WithText: (NSString *) strText{
-    CGSize constraint = CGSizeMake(textView.contentSize.width , CGFLOAT_MAX);
-    CGRect size = [strText boundingRectWithSize:constraint
-                                        options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
-                                     attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]}
-                                        context:nil];
-    float textHeight = size.size.height + 22.0;
-    return textHeight;
-}
-
-
--(void)keyboardWillChangeFrame:(NSNotification *)notification{
- 
-
-    NSDictionary *userInfo = notification.userInfo;
-    // 键盘的frame
-    CGRect keyboardF = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    if(CGRectGetMaxY(self.inputBackView.frame)+30+NAVIGATION_BAR_HEIGHT > DR_SCREEN_HEIGHT-keyboardF.size.height){
-        self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT-(CGRectGetMaxY(self.inputBackView.frame)+30 + NAVIGATION_BAR_HEIGHT - (DR_SCREEN_HEIGHT-keyboardF.size.height)), DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-10);
-    }
-}
-
-- (void)keyboardDiddisss{
-    
-    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-10);
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-
-    if(scrollView == self.tableView){
-        [self.nameField resignFirstResponder];
-    }
-}
-
-
 @end

@@ -17,6 +17,7 @@
 
 @interface KMTagListView : UIScrollView
 @property (nonatomic, assign) BOOL oneClick;//单点
+@property (nonatomic, assign) BOOL labelOneClick;//单点
 @property (nonatomic, assign) BOOL moreClick;//多选
 @property (nonatomic, weak)id<KMTagListViewDelegate> delegate_;
 @property (nonatomic, assign) BOOL hasImge;//带图片的标签
