@@ -484,7 +484,15 @@
         item.text = [self.dataSource menuView:self titleAtIndex:i];
         item.textAlignment = NSTextAlignmentCenter;
         item.userInteractionEnabled = YES;
-        item.backgroundColor = [UIColor clearColor];
+        item.needItemBackColor = self.needItemBackColor;
+        if (self.needItemBackColor) {
+            item.layer.cornerRadius = 16;
+            item.layer.masksToBounds = YES;
+            item.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        }else{
+            item.backgroundColor = [UIColor clearColor];
+        }
+   
         item.normalSize    = [self sizeForState:WMMenuItemStateNormal atIndex:i];
         item.selectedSize  = [self sizeForState:WMMenuItemStateSelected atIndex:i];
         item.normalColor   = [self colorForState:WMMenuItemStateNormal atIndex:i];

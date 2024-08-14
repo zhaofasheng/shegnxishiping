@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *num;
 @property (nonatomic, strong) NSString *showStr;
 @property (nonatomic, assign) CGFloat showStrWidth;
-
+@property (nonatomic, strong) NSString *use_num;
 @property (nonatomic, strong) NSString *content;
 @end
 

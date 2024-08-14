@@ -33,6 +33,7 @@
         self.progressColor = [UIColor colorWithHexString:@"#1FC7FF"];
         self.titleColorNormal = [UIColor colorWithHexString:@"#14151A"];
         self.titleColorSelected = [UIColor whiteColor];
+        
     }
     return self;
 }
@@ -77,6 +78,7 @@
                 ctl1.paySearModel = self.paySearModel;
                 [self.controllArr addObject:ctl1];
             }
+        
             self.navBarView.titleL.text = [NSString stringWithFormat:@"评价%@",model.ctNum];
             self.titles = [NSArray arrayWithArray:self.titleArr];
             [self.menuView reload];
@@ -113,7 +115,7 @@
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForMenuView:(WMMenuView *)menuView{
-    return CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, 43);
+    return CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, 32);
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForContentView:(WMScrollView *)contentView{
@@ -128,7 +130,7 @@
     if (index >= self.titleArr.count) {
         return 30;
     }
-    return GET_STRWIDTH(self.titles[index], 16, 16)+10;
+    return (NSInteger)GET_STRWIDTH(self.titles[index], 16, 16)+10;
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu itemMarginAtIndex:(NSInteger)index{

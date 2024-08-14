@@ -93,7 +93,8 @@ typedef NS_ENUM(NSUInteger, WMMenuViewLayoutMode) {
 @property (nonatomic, assign) CGFloat progressViewCornerRadius;
 @property (nonatomic, assign) BOOL progressViewIsNaughty;
 @property (nonatomic, assign) BOOL showOnNavigationBar;
-
+@property (nonatomic, assign) BOOL needItemBackColor;
+@property (nonatomic, strong) UIColor *itemBackColor;
 - (void)slideMenuAtProgress:(CGFloat)progress;
 - (void)selectItemAtIndex:(NSInteger)index;
 - (void)resetFrames;

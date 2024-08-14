@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface WMMenuItem : UILabel
-
+@property (nonatomic, assign) BOOL needItemBackColor;
 @property (nonatomic, assign) CGFloat rate;           ///> 设置 rate, 并刷新标题状态 (0~1)
 @property (nonatomic, assign) CGFloat normalSize;     ///> Normal状态的字体大小，默认大小为15
 @property (nonatomic, assign) CGFloat selectedSize;   ///> Selected状态的字体大小，默认大小为18

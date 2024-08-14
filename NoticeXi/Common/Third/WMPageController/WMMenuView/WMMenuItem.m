@@ -89,7 +89,15 @@
     self.transform = CGAffineTransformMakeScale(trueScale, trueScale);
     if (self.selected) {
         self.font = [UIFont fontWithName:@"PingFangSC-Medium" size:self.selectedSize];
+        if (self.needItemBackColor) {
+            self.backgroundColor = [UIColor clearColor];
+        }
+        
     }else{
+        
+        if (self.needItemBackColor) {
+            self.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        }
         self.font = [UIFont systemFontOfSize:self.normalSize];
     }
 }

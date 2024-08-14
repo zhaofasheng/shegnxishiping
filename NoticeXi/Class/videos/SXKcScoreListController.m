@@ -122,7 +122,7 @@
                 }
                 
             }
-         
+            
             if (self.dataArr.count) {
                 self.tableView.tableFooterView = nil;
             }else{

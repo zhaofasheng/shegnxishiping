@@ -42,7 +42,7 @@
         self.scoreNameL.font = XGTWOBoldFontSize;
         [self.backView addSubview:self.scoreNameL];
         
-        self.timeL = [[UILabel  alloc] initWithFrame:CGRectMake(66, 33, 120, 16)];
+        self.timeL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame)+8, 33, 120, 16)];
         self.timeL.font = ELEVENTEXTFONTSIZE;
         self.timeL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
         [self.backView addSubview:self.timeL];

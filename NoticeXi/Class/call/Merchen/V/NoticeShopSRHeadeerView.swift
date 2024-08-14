@@ -15,9 +15,7 @@ class NoticeShopSRHeadeerView: UIView {
     @objc public var textFild :UITextField?
     @objc public var markL :UILabel?
 
-    @objc public var weChatButton :UIButton?
     @objc public var aliButton :UIButton?
-    @objc public var weChatChangeButton :UIButton?
     @objc public var ailChangeButton :UIButton?
     @objc public var payId = ""//绑定提现id
     @objc public var tixianId = "" //提现id
@@ -86,42 +84,9 @@ class NoticeShopSRHeadeerView: UIView {
         subTitleL1.textColor = UIColor.init(hexString: "#14151A")
         subTitleL1.text = "提现到"
         self.addSubview(subTitleL1)
+
         
-        let webackView = UIView.init(frame: CGRect(x: 20, y: CGRectGetMaxY(subTitleL1.frame)+12, width: NoticeSwiftFile.screenWidth-40, height: 100))
-        webackView.backgroundColor = UIColor.white
-        webackView.layer.cornerRadius = 8
-        webackView.layer.masksToBounds = true
-        self.addSubview(webackView)
-        
-        let wechatImge = UIImageView.init(frame: CGRect(x: 12, y: 12, width: 32, height: 32))
-        wechatImge.image = UIImage.init(named: "wechat")
-        webackView.addSubview(wechatImge)
-        
-        let subTitleL2 = UILabel.init(frame: CGRect(x: 52, y: 0, width:100, height: 50))
-        subTitleL2.font = UIFont.systemFont(ofSize: 16)
-        subTitleL2.textColor = UIColor.init(hexString: "#25262E")
-        subTitleL2.text = "微信"
-        webackView.addSubview(subTitleL2)
-        
-        self.weChatButton = UIButton.init(frame: CGRect(x: webackView.frame.size.width-50, y: 0, width: 50, height: 50))
-        self.weChatButton?.setImage(UIImage.init(named: "Image_nochoicesh"), for: .normal)
-        self.weChatButton?.addTarget(self, action: #selector(choiceWeChat), for: .touchUpInside)
-        webackView.addSubview(self.weChatButton!)
-        
-        self.weChatL = UILabel.init(frame: CGRect(x: 20, y: 50, width: NoticeSwiftFile.screenWidth-50-20, height: 50))
-        self.weChatL?.textColor = UIColor.init(hexString: "#25262E")
-        self.weChatL?.font = UIFont.systemFont(ofSize: 14)
-        self.weChatL?.text = "还未绑定账号"
-        webackView.addSubview(self.weChatL!)
-        
-        self.weChatChangeButton = UIButton.init(frame: CGRect(x: webackView.frame.size.width-50, y: 50, width: 50, height: 50))
-        self.weChatChangeButton?.addTarget(self, action: #selector(bangdingWeChat), for: .touchUpInside)
-        webackView.addSubview(self.weChatChangeButton!)
-        self.weChatChangeButton?.setTitle("绑定", for: .normal)
-        self.weChatChangeButton?.setTitleColor(UIColor.init(hexString: "#1FC7FF"), for: .normal)
-        self.weChatChangeButton?.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        
-        let ailbackView = UIView.init(frame: CGRect(x: 20, y: CGRectGetMaxY(webackView.frame)+10, width: NoticeSwiftFile.screenWidth-40, height: 100))
+        let ailbackView = UIView.init(frame: CGRect(x: 20, y: CGRectGetMaxY(subTitleL1.frame)+12, width: NoticeSwiftFile.screenWidth-40, height: 100))
         ailbackView.backgroundColor = UIColor.white
         ailbackView.layer.cornerRadius = 8
         ailbackView.layer.masksToBounds = true
@@ -137,18 +102,14 @@ class NoticeShopSRHeadeerView: UIView {
         subTitleL3.text = "支付宝"
         ailbackView.addSubview(subTitleL3)
         
-        self.aliButton = UIButton.init(frame: CGRect(x: webackView.frame.size.width-50, y: 0, width: 50, height: 50))
-        self.aliButton?.setImage(UIImage.init(named: "Image_nochoicesh"), for: .normal)
-        self.aliButton?.addTarget(self, action: #selector(choiceali), for: .touchUpInside)
-        ailbackView.addSubview(self.aliButton!)
-        
+    
         self.aliL = UILabel.init(frame: CGRect(x: 20, y: 50, width: NoticeSwiftFile.screenWidth-50-20, height: 50))
         self.aliL?.textColor = UIColor.init(hexString: "#25262E")
         self.aliL?.font = UIFont.systemFont(ofSize: 14)
         self.aliL?.text = "还未绑定账号"
         ailbackView.addSubview(self.aliL!)
         
-        self.ailChangeButton = UIButton.init(frame: CGRect(x: webackView.frame.size.width-50, y: 50, width: 50, height: 50))
+        self.ailChangeButton = UIButton.init(frame: CGRect(x: ailbackView.frame.size.width-50, y: 50, width: 50, height: 50))
         self.ailChangeButton?.addTarget(self, action: #selector(bangdingali), for: .touchUpInside)
         ailbackView.addSubview(self.ailChangeButton!)
         self.ailChangeButton?.setTitle("绑定", for: .normal)
@@ -179,20 +140,17 @@ class NoticeShopSRHeadeerView: UIView {
                 self?.myShouRuModel = NoticeMyWallectModel.mj_object(withKeyValues: nsDict["data"])
                 self?.moneyL?.text = self?.myShouRuModel?.income_balance
      
-                var allMoney = ((Float)(self?.myShouRuModel?.income_balance ?? "0") ?? 0) * ((Float)(self?.myShouRuModel?.rate ?? "0.5") ?? 0.5 )//当前总金额
+                let allMoney = ((Float)(self?.myShouRuModel?.income_balance ?? "0") ?? 0) * ((Float)(self?.myShouRuModel?.rate ?? "0.5") ?? 0.5 )//当前总金额
                 self?.moneyL?.text = String(format: "%.2f", allMoney)
 
                 for i in 0..<(self?.myShouRuModel?.payModelArr.count ?? 0){
                     
                     let typeM = self?.myShouRuModel?.payModelArr[i] as! NoticeMyWallectModel
-                    if typeM.pay_type == "1" {
-                        self?.wechatPayModel = typeM
-                        self?.weChatL?.text = "微信昵称:" + typeM.identity_name
-                        self?.weChatChangeButton?.setTitle("修改", for: .normal)
-                    }else if typeM.pay_type == "2"{
+                    if typeM.pay_type == "2"{
                         self?.ailPayModel = typeM
                         self?.aliL?.text = "支付宝昵称:" + typeM.identity_name
                         self?.ailChangeButton?.setTitle("修改", for: .normal)
+                        self?.choiceali()
                     }
                 }
                 
@@ -267,34 +225,6 @@ class NoticeShopSRHeadeerView: UIView {
         sureView.show()
     }
     
-    //更换或者绑定微信
-    @objc func bangdingWeChat(){
-        NoticeTools.getWeChatsuccess {[weak self] (payId, type ,name,icon)in
-            self?.bangding(bangdId: payId, bangType: "1", bangName: name, bangIcon: icon)
-        }
-    }
-    
-    //选择微信，未有绑定则先绑定
-    @objc func choiceWeChat(){
-        if self.wechatPayModel?.pay_type == "1" {
-            self.tixianId = self.wechatPayModel?.tixianId ?? ""
-            if !self.tixianId.isEmpty {
-                self.tixianType = 1
-                self.tixianIcon = self.wechatPayModel?.identity_img_url
-                self.tixianName = self.wechatPayModel?.identity_name
-                self.weChatButton?.setImage(UIImage.init(named: "Image_choicesh"), for: .normal)
-                self.aliButton?.setImage(UIImage.init(named: "Image_nochoicesh"), for: .normal)
-                if self.canTixian {
-                    self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#1FC7FF")
-                    self.tixianBtn?.setTitleColor(UIColor.init(hexString: "#FFFFFF"), for: .normal)
-                }else{
-                    self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#A1A7B3")
-                    self.tixianBtn?.setTitleColor(UIColor.init(hexString: "#E1E4F0"), for: .normal)
-                }
-            }
-        }
-    }
-    
     //选择支付宝，未有绑定则先绑定
     @objc func choiceali(){
         if self.ailPayModel?.pay_type == "2" {
@@ -304,8 +234,7 @@ class NoticeShopSRHeadeerView: UIView {
                 self.tixianType = 2
                 self.tixianIcon = self.ailPayModel?.identity_img_url
                 self.tixianName = self.ailPayModel?.identity_name
-                self.aliButton?.setImage(UIImage.init(named: "Image_choicesh"), for: .normal)
-                self.weChatButton?.setImage(UIImage.init(named: "Image_nochoicesh"), for: .normal)
+            
                 if self.canTixian {
                     self.tixianBtn?.backgroundColor = UIColor.init(hexString: "#1FC7FF")
                     self.tixianBtn?.setTitleColor(UIColor.init(hexString: "#FFFFFF"), for: .normal)

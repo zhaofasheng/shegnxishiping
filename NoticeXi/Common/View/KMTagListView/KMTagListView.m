@@ -194,7 +194,17 @@
     for (NSInteger i = 0; i < titles.count; i++) {
         KMTag *tag = [[KMTag alloc] initWithFrame:CGRectZero];
         NoticeComLabelModel *model = self.labelItems[i];
-        [tag setupMoreClickWithText:model.content];
+        if (self.labelOneClick) {
+            if (model.use_num.intValue) {
+                [tag setupMoreClickWithText:[NSString stringWithFormat:@"%@ %@",model.content,model.use_num]];
+            }else{
+                [tag setupMoreClickWithText:model.content];
+            }
+            [tag setAllCorner:tag.frame.size.height];
+        }else{
+            [tag setupMoreClickWithText:model.content];
+        }
+        
         [self addSubview:tag];
         [self.tags addObject:tag];
         // 添加手势

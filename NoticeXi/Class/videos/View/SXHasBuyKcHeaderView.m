@@ -158,7 +158,7 @@
     NSString *allStr = [NSString stringWithFormat:@"%@ %@",score,scoreDes];
     self.scoreL.attributedText = [DDHAttributedMode setString:allStr setFont:THIRTTYBoldFontSize setLengthString:score beginSize:0];
     
-    if (comM.is_remark.intValue == 1) {//评价过
+    if (comM.is_remark.intValue == 1 || comM.is_remark.intValue == 2) {//评价过
         self.giveScoreView.hidden = YES;
     }else{
         if ([SXTools getPayPlayLastsearisId:self.paySearModel.seriesId] && [SXTools isCanShow:[NSString stringWithFormat:@"comshow%@%@",[NoticeTools getuserId],self.paySearModel.seriesId]]){
@@ -181,18 +181,19 @@
     }
 }
 
-
 //查看评分
 - (void)comTap{
     if (![NoticeTools getuserId]) {
         [[NoticeTools getTopViewController] showToastWithText:@"登录声昔账号才能查看评价内容哦~"];
         return;
     }
+    
     if (!self.paySearModel.remarkModel.ctNum.intValue) {
         return;
     }
+    
     SXKcScoreBaseController *ctl = [[SXKcScoreBaseController alloc] init];
-    ctl.hasCom = self.paySearModel.remarkModel.is_remark.boolValue;
+    ctl.hasCom = self.paySearModel.remarkModel.is_remark.intValue == 1?YES:NO;
     ctl.paySearModel = self.paySearModel;
     [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }

@@ -12,7 +12,7 @@
 #import "NoticeLoginViewController.h"
 #import "SXStudyBaseController.h"
 
-@interface SXHasBuyPayVideoController ()
+@interface SXHasBuyPayVideoController ()<UIGestureRecognizerDelegate>
 
 @end
 
@@ -33,6 +33,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getcomZanNotice:) name:@"SXZANKCoNotification" object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    return YES;
+}
 
 - (void)getcomZanNotice:(NSNotification*)notification{
     NSDictionary *nameDictionary = [notification userInfo];
@@ -192,9 +201,6 @@
     [self.tableView reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [self.tableView reloadData];
-}
+
 
 @end

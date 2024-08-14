@@ -10,7 +10,7 @@
 #import "CBAutoScrollLabel.h"
 #import "SXKcComScoreListCell.h"
 #import "SXHasBuyPayVideoController.h"
-@interface SXMyKcComController ()
+@interface SXMyKcComController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *kcView;
 @property (nonatomic, strong) UIView *deleteView;
 @property (nonatomic, strong) UIView *headerView;
@@ -151,5 +151,18 @@
     }else{
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    //YES：允许右滑返回  NO：禁止右滑返回
+    if (self.isFromCom) {
+        return NO;
+    }
+    return YES;
 }
 @end

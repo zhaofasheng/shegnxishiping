@@ -78,6 +78,7 @@
             titleL.text = @"微信";
             titleImageV.image = UIImageNamed(@"wechat");
             self.choiceImage1 = subImageV;
+            backView.hidden = YES;
         }else{
   
             titleL.text = @"支付宝";
@@ -119,7 +120,6 @@
   
         [NoticeTools getAlisuccess:^(NoticeMJIDModel *aliModel) {
             
-            weakSelf.payId = aliModel.user_id;
             weakSelf.authCode = aliModel.auth_code;
             weakSelf.type = 2;
             
@@ -130,6 +130,7 @@
                     weakSelf.choiceImage2.image = UIImageNamed(@"Image_choicesh");
                     weakSelf.choiceImage1.image = UIImageNamed(@"Image_nochoicesh");
                     NoticeMJIDModel *model = [NoticeMJIDModel mj_objectWithKeyValues:dict[@"data"]];
+                    weakSelf.payId = model.identity_id;
                     weakSelf.nickname = model.identity_name;
                     weakSelf.avatAvurl = model.identity_img_url;
                     

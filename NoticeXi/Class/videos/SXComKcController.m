@@ -11,7 +11,9 @@
 #import "KMTagListView.h"
 #import "NoticeComLabelModel.h"
 #import "SXMyKcComController.h"
+
 @interface SXComKcController ()<UITextViewDelegate,KMTagListViewDelegate>
+
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIButton *upButton;
 @property (nonatomic, strong) UIView *kcView;
@@ -25,6 +27,7 @@
 @property (nonatomic, strong) NSMutableArray *tagsArr;
 @property (nonatomic, strong) UIView *inputBackView;
 @property (nonatomic, strong) UITextView *nameField;
+
 @end
 
 @implementation SXComKcController
@@ -71,6 +74,7 @@
             self.inputBackView = backView;
             
             self.headerView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, CGRectGetMaxY(self.inputBackView.frame)+10);
+            [self.tableView reloadData];
             
             self.nameField = [[UITextView alloc] initWithFrame:CGRectMake(5, 10, DR_SCREEN_WIDTH-40, 30)];
             self.nameField.backgroundColor = backView.backgroundColor;
@@ -80,7 +84,7 @@
             self.nameField.textColor = [UIColor colorWithHexString:@"#25262E"];
             [backView addSubview:self.nameField];
             
-            _plaL = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, 200, 14)];
+            _plaL = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, DR_SCREEN_WIDTH-40, 14)];
             _plaL.text = @"内容符合你的预期吗？有什么想分享的吗？";
             _plaL.font = FOURTHTEENTEXTFONTSIZE;
             _plaL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
@@ -96,6 +100,7 @@
     }];
     
     self.tableView.tableHeaderView = self.headerView;
+    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-10);
     
     self.upButton = [[UIButton  alloc] initWithFrame:CGRectMake(68, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-10, DR_SCREEN_WIDTH-68*2, 50)];
     self.upButton.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];
@@ -180,12 +185,18 @@
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"videoSeriesRemark/create" Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             [self showToastWithText:@"评价成功"];
+            
             SXKcComDetailModel *comModel = [SXKcComDetailModel mj_objectWithKeyValues:dict[@"data"]];
+            self.paySearModel.kcComDetailModel = comModel;
+            if (self.refreshComBlock) {
+                self.refreshComBlock(YES, comModel);
+            }
+            
+
             SXMyKcComController *ctl = [[SXMyKcComController alloc] init];
             ctl.paySearModel = self.paySearModel;
             ctl.comModel = comModel;
             ctl.isFromCom = YES;
-            self.paySearModel.kcComDetailModel = comModel;
             __weak typeof(self) weakSelf = self;
             ctl.refreshComBlock = ^(BOOL isAdd, SXKcComDetailModel * _Nonnull comModel) {
                 if (weakSelf.refreshComBlock) {
@@ -197,9 +208,7 @@
                     weakSelf.deleteScoreBlock(comM);
                 }
             };
-            if (self.refreshComBlock) {
-                self.refreshComBlock(YES, comModel);
-            }
+            
             [self.navigationController pushViewController:ctl animated:YES];
         }
         [self hideHUD];

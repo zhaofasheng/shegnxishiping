@@ -19,7 +19,7 @@ static NSString *const KFToken = @"KFToken";
 @implementation NoticeSaveModel
 
 + (void)otherLoginClearData{
-   
+    DRLog(@"删除用户信息");
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObjectForKey:kXGUserInfo];
     [userDefaults removeObjectForKey:KFToken];
@@ -36,11 +36,13 @@ static NSString *const KFToken = @"KFToken";
     if ([NoticeSaveModel getUserInfo]){
         [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"logout" Accept:@"application/vnd.shengxi.v5.5.2+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            DRLog(@"删除用户信息");
             [userDefaults removeObjectForKey:kXGUserInfo];
             [userDefaults removeObjectForKey:KFToken];
             [userDefaults removeObjectForKey:[NSString stringWithFormat:@"payinfo%@",[NoticeTools getuserId]]];
             [userDefaults synchronize];
         } fail:^(NSError * _Nullable error) {
+            DRLog(@"删除用户信息");
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults removeObjectForKey:kXGUserInfo];
             [userDefaults removeObjectForKey:KFToken];
@@ -48,7 +50,7 @@ static NSString *const KFToken = @"KFToken";
             [userDefaults synchronize];
         }];
     }
-
+    DRLog(@"删除用户信息");
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObjectForKey:kXGUserInfo];
     [userDefaults removeObjectForKey:KFToken];
@@ -86,6 +88,7 @@ static NSString *const KFToken = @"KFToken";
 }
 
 + (void)saveUserInfo:(NoticeUserInfoModel *)userInfo{
+    DRLog(@"保存用户信息");
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:[userInfo mj_keyValues] forKey:kXGUserInfo];
     [userDefaults synchronize];
@@ -122,6 +125,7 @@ static NSString *const KFToken = @"KFToken";
 }
 
 + (NoticeUserInfoModel *)getUserInfo{
+    DRLog(@"获取用户信息");
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *userInfoDic  = [userDefaults objectForKey:kXGUserInfo];
     return [NoticeUserInfoModel mj_objectWithKeyValues:userInfoDic];

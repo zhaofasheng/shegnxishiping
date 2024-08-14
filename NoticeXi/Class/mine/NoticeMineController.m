@@ -122,6 +122,7 @@
             self.navView.allNumL.frame = CGRectMake(DR_SCREEN_WIDTH-20-24+17, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-24)/2-4, strWidth, 14);
         }
     } fail:^(NSError *error) {
+        
     }];
 }
 
@@ -148,7 +149,9 @@
             
             [self.tableView reloadData];
         }
+        [self.headerView refresh];
     } fail:^(NSError * _Nullable error) {
+        [self.headerView refresh];
     }];
     
     [self getShopRequest];
@@ -207,7 +210,7 @@
         [self myShopTap];
     }
     [self redCirRequest];
-    [self.headerView refresh];
+   
     
     if (self.applyModel.status != 6) {
         [self getStatusRequest];

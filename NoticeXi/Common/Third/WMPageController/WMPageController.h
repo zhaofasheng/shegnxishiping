@@ -172,6 +172,8 @@ extern NSString *const WMControllerDidFullyDisplayedNotification;
 /** 是否自动通过字符串计算 MenuItem 的宽度，默认为 NO. */
 @property (nonatomic, assign) BOOL automaticallyCalculatesItemWidths;
 
+@property (nonatomic, assign) BOOL needItemBackColor;
+@property (nonatomic, strong) UIColor *itemBackColor;
 
 /** Whether the controller can scroll. Default is YES. */
 @property (nonatomic, assign) BOOL scrollEnable;

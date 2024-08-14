@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *labelName;
 @property (nonatomic, assign) CGFloat labelHeight;
 
-@property (nonatomic, strong) NSString *is_remark;//1=已评价
+@property (nonatomic, strong) NSString *is_remark;//1=已评价 2删除了自己的评价
 @property (nonatomic, strong) NSString *averageScore;//平均分
 @property (nonatomic, strong) NSString *averageScoreName;
 @property (nonatomic, strong) NSString *ctNum;//评价数量
