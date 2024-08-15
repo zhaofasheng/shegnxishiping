@@ -196,7 +196,7 @@
             SXMyKcComController *ctl = [[SXMyKcComController alloc] init];
             ctl.paySearModel = self.paySearModel;
             ctl.comModel = comModel;
-            ctl.isFromCom = YES;
+            ctl.isFromCom = self.isFromCom;
             __weak typeof(self) weakSelf = self;
             ctl.refreshComBlock = ^(BOOL isAdd, SXKcComDetailModel * _Nonnull comModel) {
                 if (weakSelf.refreshComBlock) {

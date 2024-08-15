@@ -85,7 +85,7 @@
     }
     SXComKcController *ctl = [[SXComKcController alloc] init];
     ctl.paySearModel = self.model;
-    
+    ctl.isFromCom = YES;
     ctl.refreshComBlock = ^(BOOL isAdd, SXKcComDetailModel * _Nonnull comModel) {
         if (weakSelf.refreshComBlock) {
             weakSelf.refreshComBlock(isAdd, comModel);

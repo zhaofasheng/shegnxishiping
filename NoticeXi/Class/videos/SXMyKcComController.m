@@ -146,6 +146,8 @@
                 pushVC = obj;
                 [weakSelf.navigationController popToViewController:pushVC animated:YES];
                 return ;
+            }else{
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }];
     }else{

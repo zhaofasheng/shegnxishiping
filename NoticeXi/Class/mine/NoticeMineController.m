@@ -215,7 +215,7 @@
     if (self.applyModel.status != 6) {
         [self getStatusRequest];
     }
-    
+   
     [self refreshIfhasPlay];
 }
 

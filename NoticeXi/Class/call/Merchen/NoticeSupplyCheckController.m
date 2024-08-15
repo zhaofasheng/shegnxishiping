@@ -78,7 +78,7 @@
             titleL.text = @"微信";
             titleImageV.image = UIImageNamed(@"wechat");
             self.choiceImage1 = subImageV;
-            backView.hidden = YES;
+        
         }else{
   
             titleL.text = @"支付宝";

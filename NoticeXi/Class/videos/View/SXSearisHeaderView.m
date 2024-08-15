@@ -9,6 +9,9 @@
 #import "SXSearisHeaderView.h"
 
 @implementation SXSearisHeaderView
+{
+    NSString *lastPlayVideoName;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
@@ -28,7 +31,8 @@
         if ([SXTools getPayPlayLastsearisId:self.paySearModel.seriesId]) {
             self.hasReviewView.hidden = NO;
             self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 48+15+15);
-            self.hasLookVideoNameL.text = [NSString stringWithFormat:@"上次看到：%@",[SXTools getPayPlayLastsearisId:self.paySearModel.seriesId]];
+            lastPlayVideoName = [SXTools getPayPlayLastsearisId:self.paySearModel.seriesId];
+            self.hasLookVideoNameL.text = [NSString stringWithFormat:@"上次看到：%@",lastPlayVideoName];
             
         }else{
             _hasReviewView.hidden = YES;
@@ -39,7 +43,7 @@
 
 - (void)befreTap{
     if (self.choiceBeforeLookBlock) {
-        self.choiceBeforeLookBlock(self.hasLookVideoNameL.text);
+        self.choiceBeforeLookBlock(lastPlayVideoName);
     }
 }
 

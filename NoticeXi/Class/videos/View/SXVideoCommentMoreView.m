@@ -10,20 +10,17 @@
 
 @implementation SXVideoCommentMoreView
 
-
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithReuseIdentifier:reuseIdentifier]) {
         
         self.contentView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
        
-
     }
     return self;
 }
 
 - (void)setCommentM:(SXVideoCommentModel *)commentM{
     _commentM = commentM;
-    
     _closeL.hidden = YES;
     _moreButton.hidden = YES;
     if (commentM.reply_ctnum.intValue) {
@@ -31,7 +28,6 @@
             self.closeL.hidden = NO;
         }else{
             self.moreButton.hidden = NO;
-
             NSString *str = [NSString stringWithFormat:@"展开%@条回复", commentM.reply_ctnum];
             CGFloat width = GET_STRWIDTH(str, 12, 24);
             [self.moreButton setTitle:str forState:UIControlStateNormal];
