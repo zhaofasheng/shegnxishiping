@@ -37,7 +37,6 @@
 
     if (self.isOther) {
         self.tableView.frame = CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
-        
         UIButton *chatBtn = [[UIButton alloc] initWithFrame:CGRectMake(68, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT+(TAB_BAR_HEIGHT-50)/2, DR_SCREEN_WIDTH-68*2, 50)];
         chatBtn.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
         [chatBtn setAllCorner:25];

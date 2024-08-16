@@ -247,6 +247,7 @@
         [alerView showXLAlertView];
         return;
     }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

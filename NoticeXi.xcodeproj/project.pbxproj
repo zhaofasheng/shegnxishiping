@@ -1568,6 +1568,7 @@
 		FEB61C0F2B4D31E900B128FA /* NoticeEditCard4Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61C0E2B4D31E900B128FA /* NoticeEditCard4Cell.m */; };
 		FEB61C122B4D4C8A00B128FA /* NoticeWallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61C112B4D4C8A00B128FA /* NoticeWallCollectionViewCell.m */; };
 		FEB61C152B4E337000B128FA /* NoticeOtherShopCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61C142B4E337000B128FA /* NoticeOtherShopCardController.m */; };
+		FEB61F712C6F27AF001BF13C /* SXConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61F702C6F27AF001BF13C /* SXConfigModel.m */; };
 		FEBCADD52B8361600048F5A1 /* NoticeVideosController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBCADC92B8361580048F5A1 /* NoticeVideosController.m */; };
 		FEBCADD62B8361600048F5A1 /* NoticeMineController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBCADCD2B83615C0048F5A1 /* NoticeMineController.m */; };
 		FEBCADD72B8361600048F5A1 /* NoticeShopGetOrderTostView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBCADD02B83615F0048F5A1 /* NoticeShopGetOrderTostView.m */; };
@@ -4618,6 +4619,8 @@
 		FEB61C112B4D4C8A00B128FA /* NoticeWallCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeWallCollectionViewCell.m; sourceTree = "<group>"; };
 		FEB61C132B4E337000B128FA /* NoticeOtherShopCardController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeOtherShopCardController.h; sourceTree = "<group>"; };
 		FEB61C142B4E337000B128FA /* NoticeOtherShopCardController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeOtherShopCardController.m; sourceTree = "<group>"; };
+		FEB61F6F2C6F27AF001BF13C /* SXConfigModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXConfigModel.h; sourceTree = "<group>"; };
+		FEB61F702C6F27AF001BF13C /* SXConfigModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXConfigModel.m; sourceTree = "<group>"; };
 		FEBCADC92B8361580048F5A1 /* NoticeVideosController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeVideosController.m; sourceTree = "<group>"; };
 		FEBCADCA2B8361580048F5A1 /* NoticeVideosController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeVideosController.h; sourceTree = "<group>"; };
 		FEBCADCC2B83615C0048F5A1 /* NoticeMineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeMineController.h; sourceTree = "<group>"; };
@@ -9169,6 +9172,8 @@
 				FEA1AA612C6AF6AC0059B05B /* SXKcComDetailModel.m */,
 				FEA1AA692C6B47700059B05B /* SXKcTypeCataModel.h */,
 				FEA1AA6A2C6B47700059B05B /* SXKcTypeCataModel.m */,
+				FEB61F6F2C6F27AF001BF13C /* SXConfigModel.h */,
+				FEB61F702C6F27AF001BF13C /* SXConfigModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -10561,6 +10566,7 @@
 				FEB61BEB2B4CE0CF00B128FA /* NoticeShopDetailHeader.m in Sources */,
 				A4E964C52A69142100AE022E /* BPMDetect.cpp in Sources */,
 				FE44F1F12BB29FAB004ECF11 /* HTTPMessage.m in Sources */,
+				FEB61F712C6F27AF001BF13C /* SXConfigModel.m in Sources */,
 				A4E9688E2A69142600AE022E /* NoticeTeamManageButtonArrCell.m in Sources */,
 				A4E965102A69142200AE022E /* JXCategoryBaseCellModel.m in Sources */,
 				A4E9651F2A69142200AE022E /* LCActionSheetViewController.m in Sources */,
@@ -11718,7 +11724,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 106;
+				CURRENT_PROJECT_VERSION = 108;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
@@ -11757,7 +11763,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.9.4;
+				MARKETING_VERSION = 5.9.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -11898,7 +11904,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 106;
+				CURRENT_PROJECT_VERSION = 108;
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = XD7545Y7QW;
@@ -11936,7 +11942,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.9.4;
+				MARKETING_VERSION = 5.9.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

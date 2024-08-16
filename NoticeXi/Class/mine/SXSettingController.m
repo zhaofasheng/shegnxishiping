@@ -116,7 +116,6 @@
     [appdel.socketManager.timer invalidate];
     [appdel.socketManager.webSocket close];
     appdel.socketManager = nil;
-    
     [self.navigationController popViewControllerAnimated:YES];
     [NoticeSaveModel outLoginClearData];
     

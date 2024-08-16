@@ -10,7 +10,7 @@
 #import "SXPayKCDetailComController.h"
 #import "SXPayVideoListController.h"
 #import "SXKchengIntroController.h"
-
+#import "SXConfigModel.h"
 #import "JXCategoryView.h"
 #import "JXPagerView.h"
 #import "JXPagerListRefreshView.h"
@@ -21,6 +21,7 @@
 #import "NoticeLoginViewController.h"
 #import "CMUUIDManager.h"
 #import "SXBuyKcCardController.h"
+#import "NoticeWebViewController.h"
 #import "SXKcNoBuyScoreHeaderView.h"
 @interface SXStudyBaseController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
@@ -32,7 +33,7 @@
 @property (nonatomic, strong) SXPayVideoListController *videoVC;
 @property (nonatomic, strong) SXKchengIntroController *kcVC;
 @property (nonatomic, strong) UIView *line;
-
+@property (nonatomic, strong) NSString *webBuyUrl;
 @property (nonatomic, strong) SXKcNoBuyScoreHeaderView *imgListView;
 @property (nonatomic, strong) UIButton *buyBtn;
 @property (nonatomic, strong) UIView *backView;
@@ -314,6 +315,34 @@
 //跳转购买
 - (void)webBuyClick{
     
+    NSURL *taobaoUrl = [NSURL URLWithString:self.webBuyUrl];
+
+    UIApplication *application = [UIApplication sharedApplication];
+    if ([application canOpenURL:taobaoUrl]) {
+        if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+            if (@available(iOS 10.0, *)) {
+         
+                [application openURL:taobaoUrl options:@{} completionHandler:^(BOOL success) {
+                    if (success) {
+                        DRLog(@"跳转成功");
+                    }
+                }];
+            }
+        } else {
+            [application openURL:taobaoUrl options:@{} completionHandler:^(BOOL success) {
+                if (success) {
+                    DRLog(@"跳转成功");
+                }
+            }];
+        }
+    }else{
+
+        NoticeWebViewController *ctl = [[NoticeWebViewController alloc] init];
+        ctl.url = self.webBuyUrl;
+        ctl.isFromShare = YES;
+        ctl.isMerechant = YES;
+        [self.navigationController pushViewController:ctl animated:YES];
+    }
 }
 
 //没有购买时候的底部UI
@@ -333,20 +362,44 @@
         [backView addSubview:sendBtn];
         [sendBtn addTarget:self action:@selector(sendVideoClick) forControlEvents:UIControlEventTouchUpInside];
         
-        if (![[NoticeTools getuserId] isEqualToString:@"2"]) {
-            UIButton *webButton = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-5-96, self.backView.frame.origin.y-56-18, 96, 56)];
-            [webButton setBackgroundImage:UIImageNamed(@"webBuy_img") forState:UIControlStateNormal];
-            [webButton addTarget:self action:@selector(webBuyClick) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:webButton];
-            self.webButton = webButton;
-            
-            // 先缩小
-            self.webButton.transform = CGAffineTransformMakeScale(0.5, 0.5);
-            // 弹簧动画，参数分别为：时长，延时，弹性（越小弹性越大），初始速度
-            [UIView animateWithDuration: 0.7 delay:0 usingSpringWithDamping:0.3 initialSpringVelocity:0.3 options:0 animations:^{
-                // 放大
-                self.webButton.transform = CGAffineTransformMakeScale(1, 1);
-            } completion:nil];
+        if (![[NoticeTools getuserId] isEqualToString:@"2"] && [NoticeTools getuserId]) {
+            [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"config?key=websiteBuySeriesUrl" Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+                if (success) {
+                    SXConfigModel *configM = [SXConfigModel mj_objectWithKeyValues:dict[@"data"]];
+                    if (configM.webBuyModel.values && configM.webBuyModel.values.length) {
+                        
+                        UIView *webBuyeV = [[UIView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-96, self.backView.frame.origin.y-56-23-18, 96, 56+23)];
+                        [self.view addSubview:webBuyeV];
+                        webBuyeV.userInteractionEnabled = YES;
+                        UITapGestureRecognizer *webTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(webBuyClick)];
+                        [webBuyeV addGestureRecognizer:webTap];
+                        
+                        UIImageView *webImagV1 = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 23, 96, 56)];
+                        webImagV1.image = UIImageNamed(@"webBuy_img");
+                        webImagV1.userInteractionEnabled = YES;
+                        [webBuyeV addSubview:webImagV1];
+                        
+                        UIImageView *webImagV2 = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 0, 96, 50)];
+                        webImagV2.image = UIImageNamed(@"webBuy_img1");
+                        webImagV2.userInteractionEnabled = YES;
+                        [webBuyeV addSubview:webImagV2];
+                  
+                        self.webBuyUrl = [NSString stringWithFormat:@"%@?seriesId=%@",configM.webBuyModel.values,self.paySearModel.seriesId];
+                        // 先缩小
+                        webBuyeV.transform = CGAffineTransformMakeScale(0.5, 0.5);
+                        // 弹簧动画，参数分别为：时长，延时，弹性（越小弹性越大），初始速度
+                        [UIView animateWithDuration: 0.7 delay:0 usingSpringWithDamping:0.3 initialSpringVelocity:0.3 options:0 animations:^{
+                            // 放大
+                            webBuyeV.transform = CGAffineTransformMakeScale(1, 1);
+                        } completion:nil];
+                    }
+                    
+                  
+                }
+            } fail:^(NSError * _Nullable error) {
+                
+            }];
+          
         }
       
     }

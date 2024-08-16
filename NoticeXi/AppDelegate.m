@@ -37,7 +37,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 @property (nonatomic, strong) UILabel *dismissLabel;
 @property (nonatomic, strong,nullable) LGAudioPlayer *noVoicePlayer;
 
-
 @end
 
 @implementation AppDelegate

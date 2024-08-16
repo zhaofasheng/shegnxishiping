@@ -31,7 +31,10 @@
     [self refreshDeleteUI];
     
     [self.tableView registerClass:[SXKcComScoreListCell class] forCellReuseIdentifier:@"cell"];
-    [self.dataArr addObject:self.comModel];
+    if (self.comModel) {
+        [self.dataArr addObject:self.comModel];
+    }
+    
 }
 
 
