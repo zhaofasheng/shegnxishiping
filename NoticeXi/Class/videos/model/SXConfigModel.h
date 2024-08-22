@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *values;//values有值代表需要显示活动  否则不显示在后面拼接相应的课程id，拼接方式：?seriesId=2
 @property (nonatomic, strong) NSString *directions;
 
+@property (nonatomic, strong) NSArray *list;
+@property (nonatomic, strong) NSString *countNum;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -41,7 +41,8 @@
 @property (nonatomic, strong) UIView *sectionView;
 @property (nonatomic, strong) UIButton *likeBtn;
 @property (nonatomic, strong) UIView *noWorkingView;
-
+@property (nonatomic, assign) BOOL isExperince;
+@property (nonatomic, assign) BOOL cancelAndAutoNext;
 @end
 
 @implementation NoticdShopDetailForUserController
@@ -288,9 +289,21 @@
         [parm setObject:self.orderM.room_id forKey:@"roomId"];
         [[DRNetWorking shareInstance] requestWithPatchPath:@"shopGoodsOrder" Accept:@"application/vnd.shengxi.v5.5.0+json" parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
             if (success) {
-                self.isBuying = NO;
+                if (!self.cancelAndAutoNext) {
+                    self.isBuying = NO;
+                }
+                
             }
+            if (self.cancelAndAutoNext) {
+                self.cancelAndAutoNext = NO;
+                [self autoNext];
+            }
+            
         } fail:^(NSError * _Nullable error) {
+            if (self.cancelAndAutoNext) {
+                self.cancelAndAutoNext = NO;
+                [self autoNext];
+            }
         }];
     }
     
@@ -370,10 +383,11 @@
         }];
         return;
     }
-    
+    self.isExperince = NO;
     NSString *titleStr = [NSString stringWithFormat:@"本次咨询可通话%@分钟，提前结束费用不退回，确定下单？",goodM.duration];
     NSString *markStr = [NSString stringWithFormat:@"·聊天最多%@分钟\n·聊天双方都是匿名的\n·聊天记录不会保留",goodM.duration];
     if (goodM.is_experience.boolValue) {
+        self.isExperince = YES;
         titleStr = [NSString stringWithFormat:@"当前店铺还有%@次“免费\n试聊%d分钟”的机会，确定下单？",goodM.experience_times,goodM.experience_time.intValue/60];
         markStr =  [NSString stringWithFormat:@"·免费试聊%d分钟\n·聊天双方都是匿名的\n·聊天记录不会保留",goodM.experience_time.intValue/60];
     }
@@ -423,9 +437,10 @@
                 appdel.audioChatTools.autoCallNext = YES;
             }
             
-            [appdel.audioChatTools callToUserId:[NSString stringWithFormat:@"%@%@",socketADD,autoNext?weakSelf.choiceGoods.shop_user_id: weakSelf.shopDetailM.myShopM.user_id] roomId:weakSelf.orderM.room_id.intValue getOrderTime:autoNext?weakSelf.choiceGoods.match_time : weakSelf.orderM.get_order_time nickName:weakSelf.orderM.user_nick_name autoNext:autoNext averageTime:weakSelf.orderM.average_waiting_time.intValue>0?weakSelf.orderM.average_waiting_time.intValue:120];
+            [appdel.audioChatTools callToUserId:[NSString stringWithFormat:@"%@%@",socketADD,autoNext?weakSelf.choiceGoods.shop_user_id: weakSelf.shopDetailM.myShopM.user_id] roomId:weakSelf.orderM.room_id.intValue getOrderTime:autoNext?weakSelf.choiceGoods.match_time : weakSelf.orderM.get_order_time nickName:weakSelf.orderM.user_nick_name autoNext:autoNext averageTime:weakSelf.orderM.average_waiting_time.intValue>0?weakSelf.orderM.average_waiting_time.intValue:120 isExperince:self.isExperince];
             
             appdel.audioChatTools.cancelBlcok = ^(BOOL cancel) {
+                weakSelf.cancelAndAutoNext = NO;
                 [weakSelf cancelOrder];
             };
             
@@ -442,6 +457,11 @@
                 weakSelf.isBuying = NO;
                 [weakSelf.showView show];
                 [weakSelf getNextVoiceShop];
+            };
+            
+            appdel.audioChatTools.cancelAndAutoNextBlcok = ^(BOOL cancelAndNext) {
+                weakSelf.cancelAndAutoNext = YES;
+                [weakSelf cancelOrder];
             };
         }else{
             NoticeOneToOne *allM = [NoticeOneToOne mj_objectWithKeyValues:dict];

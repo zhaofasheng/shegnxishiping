@@ -330,7 +330,7 @@
       
             AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
             [weakSelf refreshCanfind:YES];
-            [appdel.audioChatTools callToUserId:weakSelf.choiceGoods.shop_user_id roomId:weakSelf.orderM.room_id.intValue getOrderTime:autoNext?weakSelf.choiceGoods.match_time : weakSelf.orderM.get_order_time nickName:weakSelf.orderM.user_nick_name autoNext:autoNext averageTime:110];
+            [appdel.audioChatTools callToUserId:weakSelf.choiceGoods.shop_user_id roomId:weakSelf.orderM.room_id.intValue getOrderTime:autoNext?weakSelf.choiceGoods.match_time : weakSelf.orderM.get_order_time nickName:weakSelf.orderM.user_nick_name autoNext:autoNext averageTime:110 isExperince:NO];
             
             appdel.audioChatTools.cancelBlcok = ^(BOOL cancel) {
                 [weakSelf cancelOrder];

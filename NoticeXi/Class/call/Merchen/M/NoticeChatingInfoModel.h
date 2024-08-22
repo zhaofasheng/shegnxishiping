@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *user_balance;//用户实时鲸币余额(单位鲸币)
 @property (nonatomic, strong) NSString *user_price;//付费语音通话价格(单位鲸币/分钟)
 @property (nonatomic, strong) NSString *is_experience;//是否为体验版(1是 0否)
-
+@property (nonatomic, strong) NSString *shop_name;
+@property (nonatomic, strong) NSString *goods_name;
 @property (nonatomic, strong) NSString *goods_duration;//订单时长
 @end
 

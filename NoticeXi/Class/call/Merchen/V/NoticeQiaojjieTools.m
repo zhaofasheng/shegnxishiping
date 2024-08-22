@@ -25,7 +25,7 @@
 }
 
 + (void)showWithJieDanTitle:(NSString *)title orderId:(NSString *)orderId time:(NSString *)time creatTime:(NSString *)creatTime autoNext:(BOOL)autonext clickBlcok:(clikSureBlock)clickBlock{
-    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:nil name:title time:time creatTime:creatTime.integerValue autoNext:autonext avageTime:120];
+    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:nil name:title time:time creatTime:creatTime.integerValue autoNext:autonext avageTime:120 isExperince:NO];
     alerView.orderId = orderId;
     alerView.resultIndex = ^(NSInteger index) {
         clickBlock(index);
@@ -33,8 +33,8 @@
     [alerView showXLAlertView];
 }
 
-+ (void)showWithJieDanTitle:(NSString *)title roomId:(NSString *)roomId time:(NSString *)time creatTime:(NSString *)creatTime autoNext:(BOOL)autonext avageTime:(NSInteger)avageTime clickBlcok:(clikSureBlock)clickBlock{
-    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:nil name:title time:time creatTime:creatTime.integerValue autoNext:autonext avageTime:avageTime];
++ (void)showWithJieDanTitle:(NSString *)title roomId:(NSString *)roomId time:(NSString *)time creatTime:(NSString *)creatTime autoNext:(BOOL)autonext avageTime:(NSInteger)avageTime isExperince:(BOOL)isExperince clickBlcok:(clikSureBlock)clickBlock{
+    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:nil name:title time:time creatTime:creatTime.integerValue autoNext:autonext avageTime:avageTime isExperince:isExperince];
     alerView.roomId = roomId;
     alerView.resultIndex = ^(NSInteger index) {
         clickBlock(index);

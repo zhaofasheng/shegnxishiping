@@ -54,6 +54,11 @@
     self.infoView.videoModel = videoModel;
     [self.contentView bringSubviewToFront:self.infoView];
     
+    _compilationView.hidden = YES;
+    if (videoModel.compilation_id.intValue > 0) {
+        self.compilationView.videoModel = videoModel;
+        self.compilationView.hidden = NO;
+    }
 }
 
 - (void)setNeedPopCom:(BOOL)needPopCom{
@@ -63,9 +68,17 @@
     }
 }
 
+- (SXVideoCompilationView *)compilationView{
+    if (!_compilationView) {
+        _compilationView = [[SXVideoCompilationView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-16-32, DR_SCREEN_WIDTH, 32)];
+        [self.contentView addSubview:_compilationView];
+    }
+    return _compilationView;
+}
+
 - (SXFullPlayInfoView *)infoView{
     if (!_infoView) {
-        _infoView = [[SXFullPlayInfoView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-30-107, DR_SCREEN_WIDTH, 107)];
+        _infoView = [[SXFullPlayInfoView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-(self.videoModel.compilation_id.intValue?48: 30-107), DR_SCREEN_WIDTH, 107)];
         __weak typeof(self) weakSelf = self;
         _infoView.openMoreBlock = ^(BOOL open) {
             if (weakSelf.openMoreBlock) {

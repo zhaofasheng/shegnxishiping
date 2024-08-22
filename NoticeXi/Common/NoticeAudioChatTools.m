@@ -29,7 +29,7 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 
 @implementation NoticeAudioChatTools
 
-- (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext averageTime:(NSInteger)averageTime{
+- (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext averageTime:(NSInteger)averageTime isExperince:(BOOL)isExperince{
     
     //停止画中画播放
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICESTOPPICINPICPLAY" object:nil];
@@ -75,8 +75,8 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
             [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
             
             [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@给%@拨打电话成功房间号%@时间%@",[NoticeTools getuserId],userId,self.roomId,[SXTools getCurrentTime]]];
-            
-            [NoticeQiaojjieTools showWithJieDanTitle:nickName roomId:self.roomId time:getOrderTime?getOrderTime: @"120" creatTime:@"0" autoNext:autonext avageTime:averageTime clickBlcok:^(NSInteger tag) {
+        
+            [NoticeQiaojjieTools showWithJieDanTitle:nickName roomId:self.roomId time:getOrderTime?getOrderTime: @"120" creatTime:@"0" autoNext:autonext avageTime:averageTime isExperince:isExperince  clickBlcok:^(NSInteger tag) {
                 [weakSelf hanupyunxin];
                 if(tag == 1){//自己直接取消
                     weakSelf.autoCallNext = NO;
@@ -85,10 +85,10 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
                         weakSelf.cancelBlcok(YES);
                     }
                 }else if (tag == 2){//对方超时未接
-                    if (self.autoNextBlcok && self.autoCallNext) {//自动匹配的话，就执行自动拨打下一单
-                        self.autoCallNext = NO;
-                        if (self.autoNextBlcok) {
-                            self.autoNextBlcok(YES);
+                    if (weakSelf.autoNextBlcok && weakSelf.autoCallNext) {//自动匹配的话，就执行自动拨打下一单
+                        weakSelf.autoCallNext = NO;
+                        if (weakSelf.autoNextBlcok) {
+                            weakSelf.autoNextBlcok(YES);
                         }
                     }else{
                         weakSelf.autoCallNext = NO;
@@ -98,6 +98,11 @@ static NSString *const yunxinAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
                         }
                         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"订单已超时失效，请尝试其它店铺" message:nil cancleBtn:@"知道了"];
                         [alerView showXLAlertView];
+                    }
+                }else if (tag == 3){//主动取消，同时自动拨打下一通
+                    weakSelf.autoCallNext = NO;
+                    if (weakSelf.cancelAndAutoNextBlcok) {
+                        weakSelf.cancelAndAutoNextBlcok(YES);
                     }
                 }
             }];

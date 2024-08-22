@@ -15,7 +15,7 @@ typedef void (^clikSureBlock)(NSInteger tag);
 + (void)showWithJieDanTitle:(NSString *)title orderId:(NSString *)orderId time:(NSString *)time creatTime:(NSString *)creatTime autoNext:(BOOL)autonext clickBlcok:(clikSureBlock)clickBlock;
 + (void)showWithTitle:(NSString *)title msg:(NSString *)msg button1:(NSString *)button1 button2:(NSString *)button2 clickBlcok:(clikSureBlock _Nullable)clickBlock;
 + (void)showWithTitle:(NSString *)title;
-+ (void)showWithJieDanTitle:(NSString *)title roomId:(NSString *)roomId time:(NSString *)time creatTime:(NSString *)creatTime autoNext:(BOOL)autonext avageTime:(NSInteger)avageTime clickBlcok:(clikSureBlock)clickBlock;
++ (void)showWithJieDanTitle:(NSString *)title roomId:(NSString *)roomId time:(NSString *)time creatTime:(NSString *)creatTime autoNext:(BOOL)autonext avageTime:(NSInteger)avageTime  isExperince:(BOOL)isExperince clickBlcok:(clikSureBlock)clickBlock;
 @end
 
 NS_ASSUME_NONNULL_END

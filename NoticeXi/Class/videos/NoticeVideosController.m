@@ -149,6 +149,8 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             
             for (NSDictionary *dic in dict[@"data"]) {
                 SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
+                videoM.compilation_id = videoM.vid;
+                videoM.compilation_name = videoM.title;
                 videoM.textContent = [NSString stringWithFormat:@"%@\n%@",videoM.title,videoM.introduce];
                 [self.dataArr addObject:videoM];
             }

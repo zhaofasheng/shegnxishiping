@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSMutableDictionary *parm;
 @property (nonatomic, strong) UILabel *jubaoL;
 @property (nonatomic, strong) UILabel *markLabel;
-
+@property (nonatomic, strong) UILabel *goodNameL;
 @end
 
 @implementation NoticeCallView
@@ -58,28 +58,16 @@
         [self addSubview:self.endButton];
         [self.endButton addTarget:self action:@selector(endCall) forControlEvents:UIControlEventTouchUpInside];
         
-        self.muteButton = [[FSCustomButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-212)/2, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-30-82, 56, 82)];
-        [self.muteButton setImage:UIImageNamed(@"tencent_openmuteimg") forState:UIControlStateNormal];//tencent_closemuteimg
-        [self.muteButton setTitle:@"关麦" forState:UIControlStateNormal];
-        self.muteButton.buttonImagePosition = FSCustomButtonImagePositionTop;
-        [self.muteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.muteButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
-        [self.muteButton addTarget:self action:@selector(mutClick) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.muteButton];
-        
-        self.mirButton = [[FSCustomButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.muteButton.frame)+100, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-30-82, 56, 82)];
-        [self.mirButton setImage:UIImageNamed(@"tencent_openmirimg") forState:UIControlStateNormal];//tencent_closemirimg
-        [self.mirButton setTitle:@"扩音" forState:UIControlStateNormal];
-        self.mirButton.buttonImagePosition = FSCustomButtonImagePositionTop;
-        [self.mirButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.mirButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
-        [self.mirButton addTarget:self action:@selector(mirClick) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.mirButton];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dissMiseeShow) name:@"SHOPOVERCHATORDER" object:nil];
         //
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errroOver) name:@"NEEDOVERVOICECHAT" object:nil];
         //SHOPFINISHEDHOUTAI
+        
+        self.goodNameL = [[UILabel  alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT+19, DR_SCREEN_WIDTH, 21)];
+        self.goodNameL.textColor = [UIColor colorWithHexString:@"#CECCE1"];
+        self.goodNameL.font = FIFTHTEENTEXTFONTSIZE;
+        self.goodNameL.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:self.goodNameL];
         
         self.shopIconImageView = [[UIImageView alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-88*2-8)/2, NAVIGATION_BAR_HEIGHT+66, 88, 88)];
         self.shopIconImageView.layer.cornerRadius = 44;
@@ -116,7 +104,7 @@
         self.timeL.text = @"00:00:00";
         [self addSubview:self.timeL];
         
-        UIView *markView = [[UIView  alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.timeL.frame)+32, DR_SCREEN_WIDTH-60, 56)];
+        UIView *markView = [[UIView  alloc] initWithFrame:CGRectMake(30, DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-20-56, DR_SCREEN_WIDTH-60, 56)];
         markView.backgroundColor = [UIColor whiteColor];
         [markView setAllCorner:16];
         [self addSubview:markView];
@@ -137,7 +125,7 @@
         self.timeOutL.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.timeOutL];
         
-        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(30, self.mirButton.frame.origin.y-156, DR_SCREEN_WIDTH-60, 106)];
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.timeL.frame)+(ISIPHONEXORLATER? 60 : 45), DR_SCREEN_WIDTH-60, 106)];
         contentView.backgroundColor = [[UIColor colorWithHexString:@"#373451"] colorWithAlphaComponent:0.8];
         contentView.layer.cornerRadius = 10;
         contentView.layer.masksToBounds = YES;
@@ -151,6 +139,24 @@
         label.text = @"·通话期间请勿离开此页面，通话可能会中断\n\n·禁止政治敏感、色情暴力等内容，违规将封号处理";
         [contentView addSubview:label];
         self.noticeL = label;
+        
+        self.muteButton = [[FSCustomButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-212)/2, CGRectGetMaxY(contentView.frame)+(ISIPHONEXORLATER? 45 : 35), 56, 82)];
+        [self.muteButton setImage:UIImageNamed(@"tencent_openmuteimg") forState:UIControlStateNormal];//tencent_closemuteimg
+        [self.muteButton setTitle:@"关麦" forState:UIControlStateNormal];
+        self.muteButton.buttonImagePosition = FSCustomButtonImagePositionTop;
+        [self.muteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.muteButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
+        [self.muteButton addTarget:self action:@selector(mutClick) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.muteButton];
+        
+        self.mirButton = [[FSCustomButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.muteButton.frame)+100, CGRectGetMaxY(contentView.frame)+(ISIPHONEXORLATER? 45 : 35), 56, 82)];
+        [self.mirButton setImage:UIImageNamed(@"tencent_openmirimg") forState:UIControlStateNormal];//tencent_closemirimg
+        [self.mirButton setTitle:@"扩音" forState:UIControlStateNormal];
+        self.mirButton.buttonImagePosition = FSCustomButtonImagePositionTop;
+        [self.mirButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.mirButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
+        [self.mirButton addTarget:self action:@selector(mirClick) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.mirButton];
         
         UILabel *jubaoL = [[UILabel alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-60, STATUS_BAR_HEIGHT, 60, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
         jubaoL.text = @"举报";
@@ -267,6 +273,7 @@
             self.chatInfoModel.secondOrign = self.chatInfoModel.second;
             [self.shopIconImageView sd_setImageWithURL:[NSURL URLWithString:self.chatInfoModel.seller_img_url]];
             self.markL.text = [NSString stringWithFormat:@"可通话%@分钟 已通话",self.chatInfoModel.goods_duration];
+            self.goodNameL.text = self.chatInfoModel.goods_name;
             if (self.fromUserId){//有来电者，说明自己是店主
                 self.markLabel.attributedText = [SXTools getStringWithLineHight:3 string:@"订单结束后，如还有想对买家说的话\n可在【服务过的】找到订单「联系买家」"];
                 if (self.chatInfoModel.is_experience.boolValue) {

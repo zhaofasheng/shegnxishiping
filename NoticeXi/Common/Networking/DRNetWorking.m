@@ -54,7 +54,9 @@
 }
 
 - (void)showMssage:(NSString *)message{
-    
+    if ([message containsString:@"不能对该订单进行"]) {
+        return;
+    }
     if ([message containsString:@"您当前仍处于限制沟通状态"] || [message containsString:@"由于您近期多次"] || [message containsString:@"账号"]) {
         NoticePinBiView *pinV = [[NoticePinBiView alloc] initWithWarnTostViewContent:message];
         [pinV showTostView];

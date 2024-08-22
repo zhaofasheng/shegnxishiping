@@ -360,11 +360,10 @@
     return self;
 }
 
-- (instancetype)initWithTitle:(NSString *)title name:(NSString *)name time:(NSString *)time creatTime:(NSInteger)creatTime autoNext:(BOOL)autonext avageTime:(NSInteger)avageTime{
+- (instancetype)initWithTitle:(NSString *)title name:(NSString *)name time:(NSString *)time creatTime:(NSInteger)creatTime autoNext:(BOOL)autonext avageTime:(NSInteger)avageTime isExperince:(BOOL)isExperince{
     if (self == [super init]) {
         
-  
-        
+
         self.autoNext = autonext;
         self.frame = [UIScreen mainScreen].bounds;
         
@@ -395,18 +394,31 @@
         NSString *cancleTitle = @"取消呼叫";
         
         self.cancleBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        self.cancleBtn.frame = CGRectMake((self.alertView.frame.size.width-160)/2, self.alertView.frame.size.height-78, 160, 48);
+        self.cancleBtn.frame = CGRectMake((self.alertView.frame.size.width-160)/2, self.alertView.frame.size.height-70, 160, 40);
         [self.cancleBtn setTitle:cancleTitle forState:UIControlStateNormal];
         [self.cancleBtn setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
         self.cancleBtn.tag = 1;
         self.cancleBtn.titleLabel.font = XGEightBoldFontSize;
-        self.cancleBtn.layer.cornerRadius = 24;
+        self.cancleBtn.layer.cornerRadius = 20;
         self.cancleBtn.layer.masksToBounds = YES;
-        self.cancleBtn.layer.borderWidth = 1;
-        self.cancleBtn.layer.borderColor = [UIColor colorWithHexString:@"#E1E2E6"].CGColor;
-        self.cancleBtn.backgroundColor = self.alertView.backgroundColor;
+        self.cancleBtn.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
         [self.cancleBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
         [self.alertView addSubview:self.cancleBtn];
+        
+        //如果不是体验版本，用户可以提前进入自动匹配
+        if (!isExperince) {
+            self.cancleBtn.frame = CGRectMake(20, self.alertView.frame.size.height-70, 104, 40);
+            self.cancleBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
+            
+            UIButton *nextCallBtn = [[UIButton  alloc] initWithFrame:CGRectMake(136, self.alertView.frame.size.height-70, 124, 40)];
+            nextCallBtn.backgroundColor = [UIColor colorWithHexString:@"#14151A"];
+            [nextCallBtn setAllCorner:20];
+            [nextCallBtn setTitle:@"呼叫新店主" forState:UIControlStateNormal];
+            nextCallBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
+            [nextCallBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [nextCallBtn addTarget:self action:@selector(nextCallClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.alertView addSubview:nextCallBtn];
+        }
         
         [self addSubview:self.alertView];
     
@@ -499,6 +511,18 @@
     }
     if (self.resultIndex) {
         self.resultIndex(2);//超时未接通
+    }
+    [self removeFromSuperview];
+}
+
+//手动进行自动匹配新电话
+- (void)nextCallClick{
+    [SXGetOrderTimer deleteTimer:self.timerName];
+    self.timerName = nil;
+    [self.timer invalidate];
+    self.timer = nil;
+    if (self.resultIndex) {
+        self.resultIndex(3);
     }
     [self removeFromSuperview];
 }

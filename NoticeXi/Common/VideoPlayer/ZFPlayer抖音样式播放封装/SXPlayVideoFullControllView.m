@@ -264,7 +264,7 @@ typedef NS_ENUM(NSInteger, PanDirectionFull){
         _nomerLabel = [[UILabel  alloc] initWithFrame:CGRectMake(15, self.frame.size.height-8-21, 160, 14)];
         _nomerLabel.textColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:0.8];
         _nomerLabel.font = ELEVENTEXTFONTSIZE;
-        [self addSubview:_nomerLabel];
+        //[self addSubview:_nomerLabel];
     }
     return _nomerLabel;
 }

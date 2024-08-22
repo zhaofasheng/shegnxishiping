@@ -15,7 +15,7 @@
 #import "NoticeXi-Swift.h"
 #import "SXTosatView.h"
 #import "NoticeVoiceDownLoadController.h"
-
+#import "SXConfigModel.h"
 @interface SXPlayFullListController ()<ZFManagerPlayerDelegate>
 
 @property (nonatomic, strong) UIView *fatherView;
@@ -30,6 +30,7 @@
 @property (nonatomic, strong) UIButton *downloadBtn;
 @property (nonatomic, assign) NSInteger oldIndex;
 @property (nonatomic, assign) NSInteger curentVideoPlayTime;
+@property (nonatomic, strong) NSString *webBuyUrl;
 @end
 
 @implementation SXPlayFullListController
@@ -63,8 +64,29 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoZanNotice:) name:@"SXZANvideoNotification" object:nil];
     //获取收藏通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoscNotice:) name:@"SXCOLLECTvideoNotification" object:nil];
+    
+    [self ifCanWebBuy];
 }
 
+//是否可以网页购买
+- (void)ifCanWebBuy{
+    if (![[NoticeTools getuserId] isEqualToString:@"2"] && [NoticeTools getuserId]) {
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"config?key=websiteBuySeriesUrl" Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+            if (success) {
+                SXConfigModel *configM = [SXConfigModel mj_objectWithKeyValues:dict[@"data"]];
+                if (configM.webBuyModel.values && configM.webBuyModel.values.length) {
+                    
+                    self.webBuyUrl = configM.values;
+                }
+                
+                [self.tableView reloadData];
+            }
+        } fail:^(NSError * _Nullable error) {
+            
+        }];
+      
+    }
+}
 
 - (void)getvideoZanNotice:(NSNotification*)notification{
     NSDictionary *nameDictionary = [notification userInfo];
@@ -166,7 +188,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SXFullPlayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.videoModel = self.modelArray[indexPath.row];
+    SXVideosModel *videoM = self.modelArray[indexPath.row];
+    videoM.webBuyUrl = self.webBuyUrl;
+    cell.videoModel = videoM;
     cell.commentId = self.commentId;
     cell.replyId = self.replyId;
     __weak typeof(self) weakSelf = self;

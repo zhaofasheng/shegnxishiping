@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *selfUserId;
 @property (nonatomic, strong) NSString *roomId;
 @property (nonatomic, copy) void(^cancelBlcok)(BOOL cancel);
+@property (nonatomic, copy) void(^cancelAndAutoNextBlcok)(BOOL cancelAndNext);
 @property (nonatomic, copy) void(^autoNextBlcok)(BOOL next);
 @property (nonatomic, copy) void(^repjectautoNextBlcok)(BOOL next);
 @property (nonatomic, copy) void(^repjectBlcok)(BOOL cancel);
@@ -35,7 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) BOOL noReClick;//防止重复点击
 @property (nonatomic,assign) BOOL hasGet;
 
-- (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext averageTime:(NSInteger)averageTime;
+- (void)callToUserId:(NSString *)userId roomId:(NSInteger)roomIdNum getOrderTime:(NSString *)getOrderTime nickName:(NSString *)nickName autoNext:(BOOL)autonext averageTime:(NSInteger)averageTime isExperince:(BOOL)isExperince;
+
 @property (nonatomic, strong) NoticeCallView * __nullable callingView;
 @end
 

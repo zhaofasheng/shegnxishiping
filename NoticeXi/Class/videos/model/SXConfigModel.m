@@ -15,4 +15,8 @@
     self.webBuyModel = [SXConfigModel mj_objectWithKeyValues:websiteBuySeriesUrl];
 }
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName
+{
+    return @{@"countNum":@"count"};
+}
 @end

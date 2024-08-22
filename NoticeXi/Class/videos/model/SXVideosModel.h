@@ -71,6 +71,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *schedule;//播放进度
 @property (nonatomic, strong) NSString *is_finished;//播放完成
 
+@property (nonatomic, strong) NSString *webBuyUrl;
+
+@property (nonatomic, strong) NSString *compilation_id;//合集id
+@property (nonatomic, strong) NSString *compilation_name;//合集名称
 @end
 
 NS_ASSUME_NONNULL_END

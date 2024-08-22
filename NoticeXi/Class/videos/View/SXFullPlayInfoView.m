@@ -9,7 +9,7 @@
 #import "SXFullPlayInfoView.h"
 #import "SXVideoUserCenterController.h"
 #import "SXStudyBaseController.h"
-
+#import "NoticeWebViewController.h"
 @implementation SXFullPlayInfoView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -42,39 +42,37 @@
     [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         if (self.isOpen) {
             
-            self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-2);
+            self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-(self.videoModel.compilation_id.intValue?48:0));
             
-            if (self.videoModel.textHeight > (DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-60-TAB_BAR_HEIGHT-42)) {
-                self.contentView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+60, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-60-TAB_BAR_HEIGHT);
+            if (self.videoModel.textHeight > (DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-60-TAB_BAR_HEIGHT-(self.videoModel.compilation_id.intValue?48:0))) {
+                self.contentView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT+60, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-60-TAB_BAR_HEIGHT-(self.videoModel.compilation_id.intValue?48:0));
                 self.scrollView.frame = CGRectMake(15, 56+(self.isHasStudy?46:0), DR_SCREEN_WIDTH-30, self.frame.size.height-40-56);
             }else{
-                self.contentView.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-56-self.videoModel.textHeight-40-(self.isHasStudy?46:0), DR_SCREEN_WIDTH, 56+self.videoModel.textHeight+40+(self.isHasStudy?46:0));
+                self.contentView.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-56-self.videoModel.textHeight-40-(self.isHasStudy?46:0)-(self.videoModel.compilation_id.intValue?48:0), DR_SCREEN_WIDTH, 56+self.videoModel.textHeight+40+(self.isHasStudy?46:0));
                 self.scrollView.frame = CGRectMake(15, 56+(self.isHasStudy?46:0), DR_SCREEN_WIDTH-30, self.videoModel.textHeight);
             }
             
             self.contentL.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH-30, self.videoModel.textHeight);
             self.scrollView.contentSize = CGSizeMake(DR_SCREEN_WIDTH-30, self.videoModel.textHeight);
             
-            
         }else{
             self.contentL.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH-30, 42);
             self.scrollView.frame = CGRectMake(15, 56+(self.isHasStudy?46:0), DR_SCREEN_WIDTH-30, 42);
             self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
-            self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-30-107-(self.isHasStudy?46:0), DR_SCREEN_WIDTH, 107+(self.isHasStudy?46:0));
+            self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-(self.videoModel.compilation_id.intValue?48: 30)-107-(self.isHasStudy?46:0), DR_SCREEN_WIDTH, 107+(self.isHasStudy?46:0));
             self.contentView.frame = self.bounds;
             self.colseButton.hidden = YES;
             
             self.scrollView.contentSize = CGSizeMake(DR_SCREEN_WIDTH-30, 0);
         }
-        
+      
         self.colseButton.frame = CGRectMake(DR_SCREEN_WIDTH-15-70, self.contentView.frame.size.height-40, 70, 40);
     } completion:^(BOOL finished) {
         if (self.isOpen) {
-            self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+            self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
             self.colseButton.hidden = NO;
         }
     }];
-    
 }
 
 - (void)setVideoModel:(SXVideosModel *)videoModel{
@@ -111,9 +109,9 @@
     self.contentL.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH-30, 42);
     self.scrollView.frame = CGRectMake(15, 56+(self.isHasStudy?46:0), DR_SCREEN_WIDTH-30, 42);
     self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
-    self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-30-107-(self.isHasStudy?46:0), DR_SCREEN_WIDTH, 107+(self.isHasStudy?46:0));
+    
+    self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-(self.videoModel.compilation_id.intValue?48: 30)-107-(self.isHasStudy?46:0), DR_SCREEN_WIDTH, 107+(self.isHasStudy?46:0));
     self.contentView.frame = self.bounds;
-    self.colseButton.hidden = YES;
 }
 
 - (UIView *)studyView{
@@ -156,6 +154,10 @@
 }
 
 - (void)searisTap{
+    if (self.videoModel.webBuyUrl && ![[NoticeTools getuserId] isEqualToString:@"2"]) {
+        [self webBuyClick];
+        return;
+    }
     if (self.videoModel.tuijianStudyModel) {
         SXStudyBaseController *ctl = [[SXStudyBaseController alloc] init];
         ctl.paySearModel = self.videoModel.tuijianStudyModel;
@@ -182,6 +184,39 @@
     } fail:^(NSError *error) {
         [[NoticeTools getTopViewController] hideHUD];
     }];
+}
+
+//跳转购买
+- (void)webBuyClick{
+    
+    NSURL *taobaoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@?seriesId=%@",self.videoModel.webBuyUrl,self.videoModel.sell_series_id]];
+
+    UIApplication *application = [UIApplication sharedApplication];
+    if ([application canOpenURL:taobaoUrl]) {
+        if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+            if (@available(iOS 10.0, *)) {
+         
+                [application openURL:taobaoUrl options:@{} completionHandler:^(BOOL success) {
+                    if (success) {
+                        DRLog(@"跳转成功");
+                    }
+                }];
+            }
+        } else {
+            [application openURL:taobaoUrl options:@{} completionHandler:^(BOOL success) {
+                if (success) {
+                    DRLog(@"跳转成功");
+                }
+            }];
+        }
+    }else{
+
+        NoticeWebViewController *ctl = [[NoticeWebViewController alloc] init];
+        ctl.url = [NSString stringWithFormat:@"%@?seriesId=%@",self.videoModel.webBuyUrl,self.videoModel.sell_series_id];
+        ctl.isFromShare = YES;
+        ctl.isMerechant = YES;
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }
 }
 
 - (UIImageView *)iconImageView{

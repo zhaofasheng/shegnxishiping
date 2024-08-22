@@ -9,6 +9,7 @@
 #import "BaseCell.h"
 #import "SXFullPlayInfoView.h"
 #import "SXVideosComClickView.h"
+#import "SXVideoCompilationView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXFullPlayCell : BaseCell
@@ -26,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *replyId;
 @property (nonatomic, assign) BOOL needPopCom;
 @property (nonatomic, strong) SXVideosComClickView *clickView;
+@property (nonatomic, strong) SXVideoCompilationView *compilationView;
 @end
 
 NS_ASSUME_NONNULL_END
