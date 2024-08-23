@@ -104,12 +104,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-  
+    if (self.choiceHeJiVideoBlock) {
+        self.choiceHeJiVideoBlock(self.dataArr[indexPath.row], self.dataArr);
+    }
     [self dissMissTap];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXCompilationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    cell.currentVideoId = self.currentVideoId;
     cell.videoModel = self.dataArr[indexPath.row];
     return cell;
 }
@@ -117,6 +120,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArr.count;
 }
+
 
 
 - (void)show{

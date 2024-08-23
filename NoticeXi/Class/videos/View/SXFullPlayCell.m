@@ -71,6 +71,12 @@
 - (SXVideoCompilationView *)compilationView{
     if (!_compilationView) {
         _compilationView = [[SXVideoCompilationView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-16-32, DR_SCREEN_WIDTH, 32)];
+        __weak typeof(self) weakSelf = self;
+        _compilationView.choiceHeJiVideoBlock = ^(SXVideosModel * _Nonnull currentModel, NSMutableArray * _Nonnull heVideoArr) {
+            if (weakSelf.choiceHeJiVideoBlock) {
+                weakSelf.choiceHeJiVideoBlock(currentModel, heVideoArr);
+            }
+        };
         [self.contentView addSubview:_compilationView];
     }
     return _compilationView;

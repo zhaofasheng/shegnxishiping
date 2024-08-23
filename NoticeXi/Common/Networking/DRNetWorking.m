@@ -20,10 +20,8 @@
 }
 
 - (instancetype)init{
-    
     self = [super init];
     if (self) {
-    
         _manager = [AFHTTPSessionManager manager];
         //超时时间
         _manager.requestSerializer.timeoutInterval = kTimeOutInterval;
@@ -34,7 +32,6 @@
         AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModePublicKey withPinnedCertificates:[AFSecurityPolicy certificatesInBundle:[NSBundle mainBundle]]];
         _manager.securityPolicy = securityPolicy;
     }
-    
     return self;
 }
 
@@ -49,7 +46,6 @@
 }
 
 - (NSString *)urlWithPath:(NSString *)path portTag:(NSInteger)portTag{
-
 	return [NSString stringWithFormat:@"%@%@",BASE_URL,path];
 }
 
@@ -102,7 +98,6 @@
                 DRLog(@"刷新token失败");
                 [NoticeSaveModel outLoginClearData];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
-                
             }
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESKINATTABBAR" object:nil];
@@ -206,13 +201,11 @@
         //DRLog(@"无登录");
     }
     
-    
     if (Accept && ![Accept isEqualToString:@"application/vnd.shengxi.v2.2+json"]) {
         [_manager.requestSerializer setValue:Accept forHTTPHeaderField:@"Accept"];
     }
     
     [_manager GET:[self urlWithPath:path portTag:0] parameters:parmaer progress:^(NSProgress * _Nonnull downloadProgress) {
-        
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         //请求成功
         if (responseObject) {

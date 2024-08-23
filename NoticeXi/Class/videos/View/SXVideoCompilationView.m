@@ -50,7 +50,14 @@
 
 - (void)listTap{
     SXVideoCompilationListView *listView = [[SXVideoCompilationListView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    listView.currentVideoId = self.videoModel.vid;
     listView.videoModel = self.videoModel;
+    __weak typeof(self) weakSelf = self;
+    listView.choiceHeJiVideoBlock = ^(SXVideosModel * _Nonnull currentModel, NSMutableArray * _Nonnull heVideoArr) {
+        if (weakSelf.choiceHeJiVideoBlock) {
+            weakSelf.choiceHeJiVideoBlock(currentModel, heVideoArr);
+        }
+    };
     [listView show];
 }
 

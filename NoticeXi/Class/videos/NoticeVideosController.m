@@ -135,7 +135,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
         url = [NSString stringWithFormat:@"videoCategory/getVideo?pageNo=%ld&categoryName=%@&userId=%@",self.pageNo,[self.categoryName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<>"]],[NoticeTools getuserId]?[NoticeTools getuserId]:@"0"];
     }
     
-    
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:self.type==2?@"application/vnd.shengxi.v5.8.6+json": @"application/vnd.shengxi.v5.8.5+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         
         [self.collectionView.mj_header endRefreshing];
@@ -149,8 +148,6 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
             
             for (NSDictionary *dic in dict[@"data"]) {
                 SXVideosModel *videoM = [SXVideosModel mj_objectWithKeyValues:dic];
-                videoM.compilation_id = videoM.vid;
-                videoM.compilation_name = videoM.title;
                 videoM.textContent = [NSString stringWithFormat:@"%@\n%@",videoM.title,videoM.introduce];
                 [self.dataArr addObject:videoM];
             }

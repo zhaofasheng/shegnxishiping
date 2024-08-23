@@ -16,6 +16,7 @@
 #import "SXTosatView.h"
 #import "NoticeVoiceDownLoadController.h"
 #import "SXConfigModel.h"
+
 @interface SXPlayFullListController ()<ZFManagerPlayerDelegate>
 
 @property (nonatomic, strong) UIView *fatherView;
@@ -31,6 +32,7 @@
 @property (nonatomic, assign) NSInteger oldIndex;
 @property (nonatomic, assign) NSInteger curentVideoPlayTime;
 @property (nonatomic, strong) NSString *webBuyUrl;
+
 @end
 
 @implementation SXPlayFullListController
@@ -39,6 +41,7 @@
     [super viewDidLoad];
     //停止画中画播放
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICESTOPPICINPICPLAY" object:nil];
+    
     self.isFirstAlloc = YES;
     self.pageNo = self.page;
     
@@ -82,9 +85,7 @@
                 [self.tableView reloadData];
             }
         } fail:^(NSError * _Nullable error) {
-            
         }];
-      
     }
 }
 
@@ -121,7 +122,6 @@
 - (void)hasNetWork{
     if (self.isPlayFail) {
         self.isPlayFail = NO;
-        
         [self playIndex:self.currentPlayIndex];
         if(self.modelArray.count > (self.currentPlayIndex + 1)) {
             [self preLoadIndex:self.currentPlayIndex + 1];
@@ -221,7 +221,47 @@
         weakSelf.videoPlayerManager.playerView.playerLayer.frame = bounds;
     };
     
+    cell.choiceHeJiVideoBlock = ^(SXVideosModel * _Nonnull currentModel, NSMutableArray * _Nonnull heVideoArr) {
+        [weakSelf playNewArr:heVideoArr newModel:currentModel];
+    };
+    
     return cell;
+}
+
+
+//合集播放的时候定位重新刷新列表
+- (void)playNewArr:(NSMutableArray *)videoArr newModel:(SXVideosModel *)videoM{
+    if (!videoArr.count) {
+        return;
+    }
+    
+    if (self.oldIndex < self.modelArray.count) {
+        if (self.curentVideoPlayTime > 6) {//记录进度
+            [self savePlayTime:self.modelArray[self.oldIndex]];
+        }
+    }
+    
+    NSInteger currentIndex = 0;
+    for (int i = 0; i < videoArr.count; i++) {
+        SXVideosModel *model = videoArr[i];
+        if ([model.vid isEqualToString:videoM.vid]) {
+            currentIndex = i;
+            break;
+        }
+    }
+    
+    [self.modelArray removeAllObjects];
+    [self.tableView reloadData];
+    self.noRequest = YES;
+    self.modelArray = videoArr;
+    self.currentPlayIndex = currentIndex;
+    [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    
+    [self playIndex:self.currentPlayIndex];
+    if(self.modelArray.count > (self.currentPlayIndex + 1)) {
+        [self preLoadIndex:self.currentPlayIndex + 1];
+    }
 }
 
 - (void)request{
@@ -316,9 +356,7 @@
     [parm setObject:model.is_finished?model.is_finished:@"0" forKey:@"isFinished"];
     
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"video/play/%@",model.vid] Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-        
     } fail:^(NSError * _Nullable error) {
-        
     }];
     if (self.seekTimeBlock) {
         self.seekTimeBlock(model.seekTime?[NSString stringWithFormat:@"%ld",model.seekTime]:@"0", model.is_finished?model.is_finished:@"0");

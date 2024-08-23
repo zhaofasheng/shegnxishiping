@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL needPopCom;
 @property (nonatomic, strong) SXVideosComClickView *clickView;
 @property (nonatomic, strong) SXVideoCompilationView *compilationView;
+@property (nonatomic,copy) void(^choiceHeJiVideoBlock)(SXVideosModel *currentModel,NSMutableArray *heVideoArr);
 @end
 
 NS_ASSUME_NONNULL_END
