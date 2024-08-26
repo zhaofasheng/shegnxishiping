@@ -78,6 +78,8 @@
 @property (nonatomic, assign) BOOL isPasue;
 @property (nonatomic, strong,nullable) LGAudioPlayer *audioPlayer;
 
+@property (nonatomic, strong) UIView *videoFkView;
+
 @end
 
 @implementation NoticeSCViewController
@@ -287,6 +289,10 @@
         self.deveceinfoL = deveceinfoL;
         self.tableView.tableHeaderView = deveceinfoL;
         [self requestDevoice];
+    }
+    
+    if (self.paySearModel && self.payStatusModel) {//订单反馈
+        self.videoFkView.hidden = NO;
     }
 }
 
@@ -1276,4 +1282,48 @@
     }
 }
 
+- (UIView *)videoFkView{
+    if (!_videoFkView) {
+        _videoFkView = [[UIView  alloc] initWithFrame:CGRectMake(15, DR_SCREEN_HEIGHT-91-25-79, DR_SCREEN_WIDTH-30, 79)];
+        _videoFkView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        [_videoFkView setAllCorner:12];
+        [self.view addSubview:_videoFkView];
+        
+        UIImageView *coverImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(12, 13, 42, 52)];
+        coverImageV.contentMode = UIViewContentModeScaleAspectFill;
+        coverImageV.clipsToBounds = YES;
+        [coverImageV sd_setImageWithURL:[NSURL URLWithString:self.paySearModel.simple_cover_url]];
+        [_videoFkView addSubview:coverImageV];
+        
+        UILabel *label = [[UILabel  alloc] initWithFrame:CGRectMake(58, 29, DR_SCREEN_WIDTH-58-145, 20)];
+        label.font = FOURTHTEENTEXTFONTSIZE;
+        label.textColor = [UIColor colorWithHexString:@"#14151A"];
+        label.text = self.paySearModel.series_name;
+        [_videoFkView addSubview:label];
+        
+        UIButton *closeBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-30-20-10, 29, 20, 20)];
+        [closeBtn setBackgroundImage:UIImageNamed(@"sxclossefank_img") forState:UIControlStateNormal];
+        [closeBtn addTarget:self action:@selector(closefkClick) forControlEvents:UIControlEventTouchUpInside];
+        [_videoFkView addSubview:closeBtn];
+        
+        UIButton *fkBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-50-71-30, 27, 71, 24)];
+        fkBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+        [fkBtn setAllCorner:12];
+        [fkBtn setTitle:@"反馈" forState:UIControlStateNormal];
+        fkBtn.titleLabel.font = TWOTEXTFONTSIZE;
+        [fkBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_videoFkView addSubview:fkBtn];
+        [fkBtn addTarget:self action:@selector(fkClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _videoFkView;
+}
+
+- (void)closefkClick{
+    [self.videoFkView removeFromSuperview];
+}
+
+- (void)fkClick{
+    [self.sendTools sendTextWith:[NSString stringWithFormat:@"【%@】订单编号：%@",self.paySearModel.series_name,self.payStatusModel.sn]];
+    [self closefkClick];
+}
 @end

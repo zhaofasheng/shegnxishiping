@@ -88,6 +88,12 @@
     self.allTextAttStr = [self setLabelSpacewithValue:content withFont:TWOTEXTFONTSIZE];
 }
 
+- (void)setTitle:(NSString *)title{
+    _title = title;
+    self.titleHeight = [SXTools getHeightWithLineHight:3 font:18 width:DR_SCREEN_WIDTH-70 string:title isJiacu:YES];
+    self.titleAtt = [SXTools getStringWithLineHight:3 string:title];
+}
+
 //返回文案
 -(NSAttributedString *)setLabelSpacewithValue:(NSString*)str withFont:(UIFont*)font {
     NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
@@ -123,6 +129,7 @@
     CGSize size = [str boundingRectWithSize:CGSizeMake(width,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:dic context:nil].size;
     return size.height;
 }
+
 
 
 - (void)setOpen_at:(NSString *)open_at{

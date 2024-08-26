@@ -46,7 +46,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NoticeMessage *model = self.dataArr[indexPath.row];
-    return 44*2+20+45+model.contentHeight+15;
+    return 44*2+20+(model.titleHeight>45?model.titleHeight:45)+model.contentHeight+15+5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

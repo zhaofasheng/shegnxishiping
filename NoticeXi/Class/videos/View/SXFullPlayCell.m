@@ -59,6 +59,8 @@
         self.compilationView.videoModel = videoModel;
         self.compilationView.hidden = NO;
     }
+    
+    [self.contentView bringSubviewToFront:self.fullButton];
 }
 
 - (void)setNeedPopCom:(BOOL)needPopCom{
@@ -89,6 +91,11 @@
         _infoView.openMoreBlock = ^(BOOL open) {
             if (weakSelf.openMoreBlock) {
                 weakSelf.openMoreBlock(open);
+            }
+            if (open) {
+                [weakSelf.contentView bringSubviewToFront:weakSelf.infoView];
+            }else{
+                [weakSelf.contentView bringSubviewToFront:weakSelf.fullButton];
             }
         };
         [self.contentView addSubview:_infoView];

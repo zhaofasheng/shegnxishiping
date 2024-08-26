@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *chatDetailId;
 @property (nonatomic, strong) NSString *managerCode;
+
+@property (nonatomic, strong) SXPayForVideoModel *paySearModel;
+@property (nonatomic, strong) SXOrderStatusModel *payStatusModel;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -48,6 +48,7 @@
         //昵称
         _nickNameL = [[UILabel alloc] initWithFrame:CGRectMake(15,44,DR_SCREEN_WIDTH-30-40, 45)];
         _nickNameL.font = XGEightBoldFontSize;
+        _nickNameL.numberOfLines = 0;
         _nickNameL.textColor = [UIColor colorWithHexString:@"#25262E"];
         [self.backView addSubview:_nickNameL];
 
@@ -111,7 +112,9 @@
     _message = message;
     
     _titleL.text = (message.category_name.length && message.category_name)?message.category_name:@"声昔君说";
-    _nickNameL.text = message.title;
+    _nickNameL.attributedText = message.titleAtt;
+    
+    
     self.buttonL.text = [NoticeTools getLocalStrWith:@"system.detail"];
     //1 图书，2播客,3话题，4活动，5声昔君说，6反馈，7版本更新
     if (message.category_id.intValue == 1) {
@@ -143,9 +146,11 @@
     
     _infoL.attributedText = message.allTextAttStr;
     
-    self.backView.frame = CGRectMake(20, 0, DR_SCREEN_WIDTH-40, 44*2+20+45+message.contentHeight);
+    _nickNameL.frame = CGRectMake(15, 44, DR_SCREEN_WIDTH-70, message.titleHeight > 45?message.titleHeight:45);
     
-    _infoL.frame = CGRectMake(15, CGRectGetMaxY(_nickNameL.frame), DR_SCREEN_WIDTH-30-40, message.contentHeight);
+    self.backView.frame = CGRectMake(20, 0, DR_SCREEN_WIDTH-40, 44*2+20+_nickNameL.frame.size.height+message.contentHeight);
+    
+    _infoL.frame = CGRectMake(15, CGRectGetMaxY(_nickNameL.frame)+5, DR_SCREEN_WIDTH-30-40, message.contentHeight);
     
     _line.frame = CGRectMake(15, self.backView.frame.size.height-44,self.backView.frame.size.width-30, 1);
     

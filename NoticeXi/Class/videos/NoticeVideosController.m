@@ -177,7 +177,7 @@ static NSString *const DRMerchantCollectionViewCellID = @"DRTILICollectionViewCe
 //    ctl.currentPlayModel = self.dataArr[indexPath.row];
     
     SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
-    ctl.modelArray = self.dataArr;
+    ctl.modelArray = [NSMutableArray arrayWithArray:self.dataArr];
     ctl.currentPlayIndex = indexPath.row;
     ctl.page = self.pageNo;
     __weak typeof(self) weakSelf = self;

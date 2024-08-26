@@ -7,7 +7,7 @@
 //
 
 #import "SXBuySearisSuccessView.h"
-
+#import "NoticeSCViewController.h"
 @implementation SXBuySearisSuccessView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -177,7 +177,14 @@
 }
 
 - (void)connectClick{
-    [NoticeComTools connectXiaoer];
+
+    NoticeSCViewController *ctl = [[NoticeSCViewController alloc] init];
+    ctl.navigationItem.title = @"声昔小二";
+    ctl.toUser = [NSString stringWithFormat:@"%@1",socketADD];
+    ctl.toUserId = @"1";
+    ctl.paySearModel = self.paySearModel;
+    ctl.payStatusModel = self.payStatusModel;
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)copyClick{
