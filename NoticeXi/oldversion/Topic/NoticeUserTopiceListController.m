@@ -74,10 +74,7 @@
     UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)sender;
     UIGestureRecognizerState longPressState = longPress.state;
     if (longPressState == UIGestureRecognizerStateBegan) {
-        NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
-        ctl.topicName = self.topicName;
-        ctl.topicId = self.topicId;
-        [self.navigationController pushViewController:ctl animated:YES];
+
     }
 }
 
@@ -86,10 +83,7 @@
     NoticeChoiceRecoderView *choiceView = [[NoticeChoiceRecoderView alloc] initWithShowChoiceSendType];
     choiceView.choiceTag = ^(NSInteger tag) {
         if (tag == 2) {
-            NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
-            ctl.topicName = self.topicName;
-            ctl.topicId = self.topicId;
-            [weakSelf.navigationController pushViewController:ctl animated:YES];
+
         }else{
             NoticeSendViewController *ctl = [[NoticeSendViewController alloc] init];
             ctl.isLongTime = tag == 1? YES:NO;

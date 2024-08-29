@@ -1555,6 +1555,7 @@
 		FEA1AA682C6B29790059B05B /* SXKcComScoreListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA672C6B29790059B05B /* SXKcComScoreListCell.m */; };
 		FEA1AA6B2C6B47700059B05B /* SXKcTypeCataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA6A2C6B47700059B05B /* SXKcTypeCataModel.m */; };
 		FEA753552C23D8C800DC6807 /* AFServiceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */; };
+		FEAD70DE2C8066530042C5B6 /* SXShopSayListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAD70DD2C8066530042C5B6 /* SXShopSayListController.m */; };
 		FEB130222BEB56F7005E7FC7 /* sx.byebyetext.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */; };
 		FEB61BEB2B4CE0CF00B128FA /* NoticeShopDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61BEA2B4CE0CF00B128FA /* NoticeShopDetailHeader.m */; };
 		FEB61BEE2B4CE43F00B128FA /* NoticeShopDetailSection.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB61BED2B4CE43F00B128FA /* NoticeShopDetailSection.m */; };
@@ -4597,6 +4598,8 @@
 		FEA1AA692C6B47700059B05B /* SXKcTypeCataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcTypeCataModel.h; sourceTree = "<group>"; };
 		FEA1AA6A2C6B47700059B05B /* SXKcTypeCataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcTypeCataModel.m; sourceTree = "<group>"; };
 		FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFServiceSDK.framework; sourceTree = "<group>"; };
+		FEAD70DC2C8066530042C5B6 /* SXShopSayListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopSayListController.h; sourceTree = "<group>"; };
+		FEAD70DD2C8066530042C5B6 /* SXShopSayListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopSayListController.m; sourceTree = "<group>"; };
 		FEB130212BEB56F7005E7FC7 /* sx.byebyetext.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sx.byebyetext.com.cer; sourceTree = "<group>"; };
 		FEB61BE92B4CE0CF00B128FA /* NoticeShopDetailHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeShopDetailHeader.h; sourceTree = "<group>"; };
 		FEB61BEA2B4CE0CF00B128FA /* NoticeShopDetailHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeShopDetailHeader.m; sourceTree = "<group>"; };
@@ -8494,8 +8497,6 @@
 				A4E963D72A69141E00AE022E /* NoticeSendTextStatusController.m */,
 				A4E963C82A69141E00AE022E /* NoticeSendViewController.h */,
 				A4E963D32A69141E00AE022E /* NoticeSendViewController.m */,
-				A4E963CF2A69141E00AE022E /* NoticeTextVoiceController.h */,
-				A4E963E52A69141F00AE022E /* NoticeTextVoiceController.m */,
 				A4E963D62A69141E00AE022E /* NoticeVoiceReadController.h */,
 				A4E963CA2A69141E00AE022E /* NoticeVoiceReadController.m */,
 				A4E963EB2A69141F00AE022E /* V */,
@@ -9663,10 +9664,14 @@
 				FEBCADD22B83615F0048F5A1 /* NoticeTelController.m */,
 				FE6CF9732B873233005EE663 /* SXTelBaseController.h */,
 				FE6CF9742B873233005EE663 /* SXTelBaseController.m */,
+				FEAD70DC2C8066530042C5B6 /* SXShopSayListController.h */,
+				FEAD70DD2C8066530042C5B6 /* SXShopSayListController.m */,
 				FE07BE062BF44E1500E6812A /* SXTeleListBaseController.h */,
 				FE07BE072BF44E1500E6812A /* SXTeleListBaseController.m */,
 				FE96C49D2C0F10F7005AB5FE /* SXLeaderViewController.h */,
 				FE96C49E2C0F10F7005AB5FE /* SXLeaderViewController.m */,
+				A4E963CF2A69141E00AE022E /* NoticeTextVoiceController.h */,
+				A4E963E52A69141F00AE022E /* NoticeTextVoiceController.m */,
 			);
 			path = call;
 			sourceTree = "<group>";
@@ -10911,6 +10916,7 @@
 				A4E969142A69142700AE022E /* NoticeUseOrDeleteBBSController.m in Sources */,
 				A4E9651B2A69142200AE022E /* NSDate+GFCalendar.m in Sources */,
 				A4E967B82A69142500AE022E /* NoticeStayMesssage.m in Sources */,
+				FEAD70DE2C8066530042C5B6 /* SXShopSayListController.m in Sources */,
 				A4E964B62A69142100AE022E /* NoticeFile.m in Sources */,
 				A4E965FB2A69142300AE022E /* NoticeMyFriendViewController.m in Sources */,
 				FE6CF97B2B88A450005EE663 /* SXPlayChcahVideoController.m in Sources */,

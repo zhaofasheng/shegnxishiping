@@ -330,12 +330,7 @@
 }
 
 - (void)longTapToSendText{
-    NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
-    ctl.song = self.song;
-    ctl.movice = self.movice;
-    ctl.book = self.book;
-    ctl.type = self.type;
-    [self.navigationController pushViewController:ctl animated:YES];
+
 }
 
 - (void)deleteVoice{

@@ -146,11 +146,7 @@
             [weakSelf.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
             [weakSelf.navigationController pushViewController:ctl animated:NO];
         }else{
-            NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
-            ctl.isFromActivity = YES;
-            ctl.topicId = self.activityM.topic_id;
-            ctl.topicName = [self.activityM.title stringByReplacingOccurrencesOfString:@"#" withString:@""];
-            [weakSelf.navigationController pushViewController:ctl animated:YES];
+
         }
     };
     [sendView showShareView];

@@ -35,7 +35,6 @@
         return;
     }
     if (self.webSocket.readyState == SR_OPEN) {//判断是否链接和打开了服务器
-
         NSData *sendData = [NSJSONSerialization dataWithJSONObject:messageDic options:NSJSONWritingPrettyPrinted error:nil];
         NSString *message1 = [[NSString alloc] initWithData:sendData encoding:NSUTF8StringEncoding];
         NSData *data1 = [message1 dataUsingEncoding:NSUTF8StringEncoding];
@@ -77,7 +76,7 @@
     NSDictionary *dic = [NoticeTools dictionaryWithJsonString:message];
     
     DRLog(@"收到消息%@",dic);
-  //orderComment
+    //orderComment
     NoticeOneToOne *model = [NoticeOneToOne mj_objectWithKeyValues:dic];
     if (model.code.intValue == 77) {
         [NoticeComTools beCheckWithReason:model.msg];

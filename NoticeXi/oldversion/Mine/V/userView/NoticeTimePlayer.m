@@ -163,14 +163,7 @@
     NoticeChoiceRecoderView *choiceView = [[NoticeChoiceRecoderView alloc] initWithShowChoiceSendType];
     choiceView.choiceTag = ^(NSInteger tag) {
         if (tag == 2) {
-            AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            NoticeTabbarController *tabBar = (NoticeTabbarController *)appdel.window.rootViewController;//获取window的跟视图,并进行强制转换
-            BaseNavigationController *nav = nil;
-            if ([tabBar isKindOfClass:[UITabBarController class]]) {//判断是否是当前根视图
-                nav = tabBar.selectedViewController;//获取到当前视图的导航视图
-            }
-            NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
-            [nav.topViewController.navigationController pushViewController:ctl animated:YES];
+      
         }else{
                 
             NoticeRecoderMain *recoderView = [[NoticeRecoderMain alloc] initWithImageView:[NoticeTools isWhiteTheme]?@"sendMain_img":@"sendMain_imgy" type:NoticeRecoderTime];

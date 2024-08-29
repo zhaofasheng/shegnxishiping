@@ -133,19 +133,7 @@
      
         [self.navigationController pushViewController:ctl animated:YES];
     }else{
-        NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
-        ctl.isSave = YES;
-        ctl.saveModel = model;
-        ctl.index = indexPath.row;
-        __weak typeof(self) weakSelf = self;
-        ctl.deleteSaveModelBlock = ^(NSInteger index, BOOL noSend) {
-            if (!noSend) {
-                [weakSelf showToastWithText:@"已保存到草稿箱"];
-            }
-            [weakSelf sureDeleWith:index];
-        };
-     
-        [self.navigationController pushViewController:ctl animated:YES];
+
     }
 
 }

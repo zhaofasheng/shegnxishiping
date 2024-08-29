@@ -260,17 +260,7 @@
         nav = tabBar.selectedViewController;//获取到当前视图的导航视图
     }
     if (self.priModel.content_type.intValue == 2) {
-        NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
-        ctl.isReEdit = YES;
-        ctl.voiceM = self.priModel;
-        __weak typeof(self) weakSelf = self;
-        ctl.reEditBlock = ^(NoticeVoiceListModel * _Nonnull voiceM) {
-            weakSelf.priModel = voiceM;
-            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(moreClickEditSusscee:)]) {
-                [weakSelf.delegate moreClickEditSusscee:voiceM];
-            }
-        };
-        [nav.topViewController.navigationController pushViewController:ctl animated:NO];
+
         return;
     }
     NoticeSendViewController *ctl = [[NoticeSendViewController alloc] init];

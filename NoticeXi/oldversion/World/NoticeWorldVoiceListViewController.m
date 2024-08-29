@@ -441,9 +441,7 @@
 }
 
 - (void)sendAction{
-    NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
-    ctl.isFromGround = YES;
-    [self.navigationController pushViewController:ctl animated:YES];
+
 }
 
 

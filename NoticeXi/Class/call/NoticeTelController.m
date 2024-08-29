@@ -11,6 +11,7 @@
 #import "NoticdShopDetailForUserController.h"
 #import "NoticeLoginViewController.h"
 #import "SXShopListBaseModel.h"
+#import "SXsearchShopController.h"
 @interface NoticeTelController ()
 @property (nonatomic, assign) BOOL canLoad;
 @property (nonatomic, assign) BOOL isUpScro;
@@ -33,7 +34,6 @@
     self.layout.minimumInteritemSpacing = 10;
     self.layout.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
     
-    self.collectionView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-(self.isFree?0:43)-44);
     [self.collectionView registerClass:[SXAskQuestionShopCell class] forCellWithReuseIdentifier:@"askCell"];
     
     self.pageNo = 1;
@@ -55,6 +55,44 @@
     }];
     
     [self request];
+    
+    if (self.isFree) {
+        self.collectionView.frame = CGRectMake(0, 44, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-44);
+        UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(15,4, DR_SCREEN_WIDTH-30, 36)];
+        [searchBtn setAllCorner:18];
+        searchBtn.backgroundColor = [[UIColor colorWithHexString:@"#F0F1F5"] colorWithAlphaComponent:1];
+        UIImageView *searImg = [[UIImageView alloc] initWithFrame:CGRectMake(15, 8, 20, 20)];
+        searImg.image = UIImageNamed(@"Image_newsearchss");
+        [searchBtn addSubview:searImg];
+        [self.view addSubview:searchBtn];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(36, 0, searchBtn.frame.size.width-40, 36)];
+        label.text = @"搜索店铺";
+        label.font = FOURTHTEENTEXTFONTSIZE;
+        label.textColor = [[UIColor colorWithHexString:@"#8A8F99"] colorWithAlphaComponent:1];
+        [searchBtn addSubview:label];
+        [searchBtn addTarget:self action:@selector(searchClick) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        self.collectionView.frame = CGRectMake(0, 43, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-44-43);
+    }
+}
+
+- (void)searchClick{
+
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
+    SXsearchShopController *ctl = [[SXsearchShopController alloc] init];
+ 
+    CATransition *test = (CATransition *)[CoreAnimationEffect showAnimationType:@"fade"
+                                                                    withSubType:kCATransitionFromLeft
+                                                                       duration:0.3f
+                                                                 timingFunction:kCAMediaTimingFunctionLinear
+                                                                           view:self.navigationController.view];
+    [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
+    [self.navigationController pushViewController:ctl animated:NO];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
