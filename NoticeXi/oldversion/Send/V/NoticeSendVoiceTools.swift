@@ -18,44 +18,17 @@ class NoticeSendVoiceTools: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let line = UIView(frame: CGRect(x: 0, y: 0, width: NoticeSwiftFile.screenWidth, height: 1))
-        line.backgroundColor = UIColor(hexString: "#F0F1F5")
-        self.addSubview(line)
-        
-        self.imgButton.frame = CGRect(x: 20, y: 2, width: 30, height: 46)
+
+        self.imgButton.frame = CGRect(x: 15, y: 13, width: 24, height: 24)
         self.imgButton.setImage(UIImage(named: "senimgv_img"), for: .normal)
-        self.imgButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        self.imgButton.setTitle(NoticeTools.getLocalStr(with: "group.imgs"), for: .normal)
-        self.imgButton.setTitleColor(UIColor(hexString: "#5C5F66"), for: .normal)
-        self.imgButton.buttonImagePosition = FSCustomButtonImagePositionTop
         self.addSubview(self.imgButton)
         
-        self.topicButton.frame = CGRect(x: 84, y: 2, width: 30, height: 46)
-        self.topicButton.setImage(UIImage(named: "senTopicv_img"), for: .normal)
-        self.topicButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        self.topicButton.setTitle(NoticeTools.getLocalStr(with: "search.topic"), for: .normal)
-        self.topicButton.setTitleColor(UIColor(hexString: "#5C5F66"), for: .normal)
-        self.topicButton.buttonImagePosition = FSCustomButtonImagePositionTop
-        self.addSubview(self.topicButton)
-        
-        self.bgmButton.frame = CGRect(x: 148, y: 2, width: 30, height: 46)
-        self.bgmButton.setImage(UIImage(named: "senbgmv_img"), for: .normal)
-        self.bgmButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        self.bgmButton.setTitle("BGM", for: .normal)
-        self.bgmButton.setTitleColor(UIColor(hexString: "#5C5F66"), for: .normal)
-        self.bgmButton.buttonImagePosition = FSCustomButtonImagePositionTop
-        self.addSubview(self.bgmButton)
-        
-        //CGRectMake(DR_SCREEN_WIDTH-20-66,10, 66, 25);
-        self.shareButton.frame = CGRect(x: NoticeSwiftFile.screenWidth-20-66, y: 11, width: 66, height: 24)
-        self.shareButton.setTitle(NoticeTools.getLocalStr(with: "zj.gk") + ">", for:.normal)
-        self.shareButton.setTitleColor(UIColor(hexString: "#25262E"), for: .normal)
-        self.shareButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        self.shareButton.layer.cornerRadius = 12
-        self.shareButton.layer.masksToBounds = true
-        self.shareButton.layer.borderWidth = 1
-        self.shareButton.layer.borderColor = UIColor(hexString: "#25262E")?.cgColor
-        self.addSubview(self.shareButton)
+        let label = UILabel(frame: CGRect(x: 40, y: 0, width: NoticeSwiftFile.screenWidth-40-15, height: frame.size.height))
+        label.text = "*以店主身份匿名发布"
+        label.textAlignment = NSTextAlignment.right
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = UIColor(hexString: "#5C5F66")
+        self.addSubview(label)
     }
     
     required init?(coder: NSCoder) {

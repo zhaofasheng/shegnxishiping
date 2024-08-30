@@ -19,9 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void(^editShopModelBlock)(BOOL edit);
 @property (nonatomic, copy) void(^buyGoodsBlock)(NoticeGoodsModel *buyGood);
 @property (nonatomic, copy) void(^refreshGoodsBlock)(NSMutableArray *goodsArr);
-@property (nonatomic, strong) NoticerUserShopDetailHeaderView *headerView;
-- (void)stopPlay;
-- (void)scrolllToGoods;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

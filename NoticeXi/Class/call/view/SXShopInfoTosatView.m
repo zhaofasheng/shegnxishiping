@@ -13,7 +13,7 @@
 #import "NoticeBuyOrderListController.h"
 #import "SXLikeShopListController.h"
 #import "SXShopLyStoryController.h"
-
+#import "SXShopSayListController.h"
 @implementation SXShopInfoTosatView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -24,7 +24,7 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelClick)];
         [self addGestureRecognizer:tap];
         
-        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-255-15, NAVIGATION_BAR_HEIGHT, 255, 250+88+15)];
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-255-15, NAVIGATION_BAR_HEIGHT, 255, 300+88+15)];
         [contentView setAllCorner:10];
         contentView.backgroundColor = [UIColor whiteColor];
         self.contentView = contentView;
@@ -57,9 +57,9 @@
         [self.intoView addSubview:self.jiantouImgv];
         
    
-        NSArray *imgArr = @[@"sxshopcheck_img",@"sxhasfuwurec_img",@"sxhasbuyrec_img",@"sx_shop_like_img",@"sx_shop_ly_img"];
-        NSArray *titleArr = @[@"店铺认证",@"服务过的",@"买过的",@"收藏的店铺",@"留言记录"];
-        for (int i = 0; i < 5; i++) {
+        NSArray *imgArr = @[@"sxshopsay_img",@"sxshopcheck_img",@"sxhasfuwurec_img",@"sxhasbuyrec_img",@"sx_shop_like_img",@"sx_shop_ly_img"];
+        NSArray *titleArr = @[@"店铺动态",@"店铺认证",@"服务过的",@"买过的",@"收藏的店铺",@"留言记录"];
+        for (int i = 0; i < imgArr.count; i++) {
             
             UIView *tapV = [[UIView  alloc] initWithFrame:CGRectMake(0, 88+50*i, self.contentView.frame.size.width, 50)];
             tapV.userInteractionEnabled = YES;
@@ -107,6 +107,11 @@
 - (void)pushTap:(UITapGestureRecognizer *)tap{
     UIView *tapv = (UIView *)tap.view;
     if (tapv.tag == 0) {
+        SXShopSayListController *ctl = [[SXShopSayListController alloc] init];
+        ctl.isSelfSay = YES;
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }
+    else if (tapv.tag == 1) {
         if (self.noShop) {
             if (self.clickIconBlock) {
                 self.clickIconBlock(YES);
@@ -119,7 +124,7 @@
             ctl.shopModel = self.shopModel.myShopM;
             [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
         }
-    }else if (tapv.tag == 1){
+    }else if (tapv.tag == 2){
         if (self.noShop) {
             if (self.clickIconBlock) {
                 self.clickIconBlock(YES);
@@ -133,14 +138,14 @@
         NoticeHasServeredController *ctl = [[NoticeHasServeredController alloc] init];
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
     }
-    else if (tapv.tag == 2){
+    else if (tapv.tag == 3){
         NoticeBuyOrderListController *ctl = [[NoticeBuyOrderListController alloc] init];
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-    }else if (tapv.tag == 3){
+    }else if (tapv.tag == 4){
         SXLikeShopListController *ctl = [[SXLikeShopListController alloc] init];
         ctl.shopModel = self.shopModel;
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-    }else if (tapv.tag == 4){
+    }else if (tapv.tag == 5){
         SXShopLyStoryController *ctl = [[SXShopLyStoryController alloc] init];
         ctl.shopModel = self.shopModel;
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];

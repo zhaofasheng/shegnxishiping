@@ -403,7 +403,7 @@
                 SXConfigModel *configM = [SXConfigModel mj_objectWithKeyValues:dict[@"data"]];
                 if (configM.webBuyModel.values && configM.webBuyModel.values.length) {
                     
-                    UIView *webBuyeV = [[UIView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-96, self.backView.frame.origin.y-56-23-18, 96, 56+23)];
+                    UIView *webBuyeV = [[UIView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-96, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-56-23-18, 96, 56+23)];
                     [self.view addSubview:webBuyeV];
                     webBuyeV.userInteractionEnabled = YES;
                     UITapGestureRecognizer *webTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(webBuyClick)];

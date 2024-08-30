@@ -27,7 +27,10 @@
         self.tableView.showsVerticalScrollIndicator = NO;
         self.tableView.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.tableView];
-        self.tableView.frame = CGRectMake(0,self.frame.size.height-(28+15), DR_SCREEN_WIDTH/2,(28+15));
+        self.tableView.frame = CGRectMake(0,self.frame.size.height-(28+15)-156, DR_SCREEN_WIDTH/2,(28+15));
+        
+        self.headerView = [[NoticerUserShopDetailHeaderView alloc] initWithFrame:CGRectMake(0,self.frame.size.height-156, DR_SCREEN_WIDTH, 156)];
+        [self addSubview:self.headerView];
     }
     return self;
 }
@@ -51,7 +54,7 @@
             }
       
         }
-        self.tableView.frame = CGRectMake(0,self.frame.size.height-(28+15)*heightCount, DR_SCREEN_WIDTH/2,(28+15)*heightCount);
+        self.tableView.frame = CGRectMake(0,self.frame.size.height-(28+15)*heightCount-156, DR_SCREEN_WIDTH/2,(28+15)*heightCount);
     }else{
         self.tableView.hidden = YES;
     }
@@ -80,6 +83,7 @@
     _shopModel = shopModel;
     self.photosWall.hidden = shopModel.myShopM.photowallArr.count?NO:YES;
     self.photosWall.photos = shopModel.myShopM.photowallArr;
+    self.headerView.shopModel = _shopModel.myShopM;
 }
 
 - (NoticeShopDetailHeader *)detailHeader{
@@ -93,7 +97,7 @@
 
 - (NoticeShopPhotosWall *)photosWall{
     if (!_photosWall) {
-        _photosWall = [[NoticeShopPhotosWall  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH/2, self.frame.size.height-15-40-2, DR_SCREEN_WIDTH/2, 40+2)];
+        _photosWall = [[NoticeShopPhotosWall  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH/2, self.frame.size.height-15-40-2-156, DR_SCREEN_WIDTH/2, 40+2)];
         _photosWall.canChoice = YES;
         __weak typeof(self) weakSelf = self;
         _photosWall.choiceUrlBlock = ^(NSString * _Nonnull choiceUrl) {

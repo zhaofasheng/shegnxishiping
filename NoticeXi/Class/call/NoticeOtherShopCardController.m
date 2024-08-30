@@ -51,10 +51,7 @@
         [_tableView registerClass:[NoticeShopDetailSection class] forHeaderFooterViewReuseIdentifier:@"headerView"];
         _tableView.rowHeight = 123;
 
-        
-        self.headerView = [[NoticerUserShopDetailHeaderView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 156)];
-        self.tableView.tableHeaderView = self.headerView;
-        
+            
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestGoods) name:@"SHOPHASJUBAOEDSELFJUBAO" object:nil];//买家结束
     }
     return _tableView;
@@ -83,7 +80,7 @@
     };
     if (section == 0) {
         if (self.shopModel.myShopM.operate_status.intValue > 1) {
-            headV.mainTitleLabel.text = @"咨询服务";
+            headV.mainTitleLabel.text = @"服务";
         }else{
             headV.mainTitleLabel.text = @"";
         }
@@ -146,7 +143,7 @@
                    self.refreshGoodsBlock(self.goodssellArr);
                 }
             }
-            self.headerView.goodsNum = self.goodssellArr.count;
+           // self.headerView.goodsNum = self.goodssellArr.count;
             [self.tableView reloadData];
         }
     } fail:^(NSError * _Nullable error) {
@@ -191,25 +188,14 @@
     }];
 }
 
-- (void)stopPlay{
-    [self.headerView stopPlay];
-}
-
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    [self stopPlay];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor =  [UIColor whiteColor];
 
     [self.view addSubview:self.tableView];
-    self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-BOTTOM_HEIGHT-50-40);
+    self.tableView.frame = CGRectMake(0,0, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-40-40);
 
     self.tableView.backgroundColor = self.view.backgroundColor;
-    [self.view setCornerOnTopRight:20];
-
 
     [self.tableView reloadData];
 }
@@ -219,7 +205,7 @@
     _shopModel = shopModel;
  
     self.tableView.hidden = NO;
-    self.headerView.shopModel = _shopModel.myShopM;
+    
     if (!self.goodssellArr.count) {
         [self requestGoods];
     }
@@ -253,9 +239,9 @@
 }
 
 - (void)scrolllToGoods{
-    if (self.goodssellArr.count) {
-        [self.tableView setContentOffset:CGPointMake(0, self.headerView.frame.size.height)];
-    }
+//    if (self.goodssellArr.count) {
+//        [self.tableView setContentOffset:CGPointMake(0, self.headerView.frame.size.height)];
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

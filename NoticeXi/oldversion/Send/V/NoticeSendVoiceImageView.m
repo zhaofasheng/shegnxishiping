@@ -22,17 +22,16 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor whiteColor];
-        [self setAllCorner:12];
 
         _photosArr = [NSMutableArray new];
         
         _mbArr = [NSMutableArray new];
 
-        CGFloat width = (DR_SCREEN_WIDTH-40-15)/4;
+        CGFloat width = (DR_SCREEN_WIDTH-40-10)/3;
         
         for (int i = 0; i < 3; i++) {
-            UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10+(width+5)*i, 15, width, width)];
-            imageV.contentMode = UIViewContentModeScaleAspectFit;
+            UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((width+5)*i,0, width, width)];
+            imageV.contentMode = UIViewContentModeScaleAspectFill;
             imageV.clipsToBounds = YES;
             imageV.tag = i;
             imageV.userInteractionEnabled = YES;
@@ -61,15 +60,7 @@
         }
 
         _photosItemArr = [NSMutableArray new];
-        
-        self.choiceButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 15, self.frame.size.width-20, self.frame.size.height-30)];
-        self.choiceButton.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
-        [self.choiceButton setTitleColor:[UIColor colorWithHexString:@"#8A8F99"] forState:UIControlStateNormal];
-        self.choiceButton.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
-        [self.choiceButton setAllCorner:5];
-        [self addSubview:self.choiceButton];
-        [self.choiceButton setTitle:@"+ 添加图片" forState:UIControlStateNormal];
-        [self.choiceButton addTarget:self action:@selector(choiceImage) forControlEvents:UIControlEventTouchUpInside];
+
     }
     
     return self;

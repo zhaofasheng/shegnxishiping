@@ -10,6 +10,7 @@
 #import "NoticeMyShopModel.h"
 #import "NoticeShopPhotosWall.h"
 #import "NoticeShopDetailHeader.h"
+#import "NoticerUserShopDetailHeaderView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeJieYouShopHeaderView : UIView<NoticeRecordDelegate,UITableViewDelegate,UITableViewDataSource>
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isUserLookShop;//是否是用户视角看店铺
 @property (nonatomic, strong) NSTimer * _Nullable timer;
 @property (nonatomic,copy) void(^choiceUrlBlock)(NSString *choiceUrl);
+@property (nonatomic, strong) NoticerUserShopDetailHeaderView *headerView;
 @end
 
 NS_ASSUME_NONNULL_END

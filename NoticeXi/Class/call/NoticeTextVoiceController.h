@@ -7,11 +7,11 @@
 //
 
 #import "NoticeBaseCellController.h"
-
+#import "NoticeVoiceSaveModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeTextVoiceController : NoticeBaseCellController
-
+@property (nonatomic, strong) NoticeVoiceSaveModel *saveModel;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXShopSayListController : NoticeBaseCellController
-
+@property (nonatomic, assign) BOOL isSelfSay;
 @end
 
 NS_ASSUME_NONNULL_END

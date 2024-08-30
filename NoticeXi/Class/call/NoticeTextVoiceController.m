@@ -11,13 +11,9 @@
 #import "UIImage+Color.h"
 #import <SDWebImage/UIImage+GIF.h>
 #import <Photos/Photos.h>
-#import "NoticeChoicePhotoCell.h"
-#import "NoticeTextChoicePutView.h"
-#import "NoticeSendTextStatusController.h"
 #import <Speech/Speech.h>
-#import <AVFoundation/AVFoundation.h>
-#import "NoticeChoiceVoiceStatusController.h"
-#import "NoticeSendVoiceImageView.h"//
+#import "NoticeSendVoiceImageView.h"
+#import "NoticeSaveVoiceTools.h"
 #define Locapaths  @"locapath"
 #define ImageDatas  @"ImageDatas"
 #import "NoticeXi-Swift.h"
@@ -34,25 +30,16 @@
 @property (nonatomic, strong) NSMutableArray *phassetArr;
 @property (nonatomic, strong) NSString *imageJsonString;
 @property (nonatomic, assign) CGFloat keyBordHeight;
-
+@property (nonatomic, assign) BOOL keyBordisUp;
 @property (nonatomic, strong) NSString *plaStr;
-@property (nonatomic, assign) BOOL isHasTostsave;
-@property (nonatomic, assign) BOOL hasChange;
 @property (nonatomic, strong) NSString *bucketId;
 @property (nonatomic, strong) UIView *imageViewBack;
-@property (nonatomic, assign) NSInteger timePercent;
-@property (nonatomic, assign) NSInteger timeOutNum;
-@property (nonatomic, weak) NSTimer *timer;
-@property (nonatomic, assign) BOOL isHasTostProgross;
 @property (nonatomic, assign) BOOL needContSet;//是否需要设置偏移量
-@property (nonatomic, strong) NSMutableArray *buttonArr;
 @property (nonatomic, assign) CGFloat hasTitleHeight;
 @property (nonatomic, strong) UILabel *plaL;
 @property (nonatomic, strong) NSString *bucket_id;
-@property (nonatomic, assign) NSInteger statysType;
 @property (nonatomic, strong) NoticeSendVoiceImageView *imageViewS;
-@property (nonatomic, assign) BOOL hasChangeImg;
-@property (nonatomic, assign) NSInteger oldImgNum;
+
 @end
 
 @implementation NoticeTextVoiceController
@@ -64,7 +51,7 @@
 
     UILabel *btn = [[UILabel alloc] init];
     btn.frame = CGRectMake(DR_SCREEN_WIDTH-66-20, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-28)/2,66,28);
-    btn.text = [NoticeTools getLocalStrWith:@"py.send"];
+    btn.text = @"发布";
     btn.font = TWOTEXTFONTSIZE;
     btn.textColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];
     btn.userInteractionEnabled = YES;
@@ -80,26 +67,28 @@
     [self.navBarView.backButton setImage:UIImageNamed(@"sxshopsayclose_img") forState:UIControlStateNormal];
     
 
-    self.tableView.frame = CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-50-BOTTOM_HEIGHT-50);
+    self.tableView.frame = CGRectMake(10,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH-20,DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-50-BOTTOM_HEIGHT-10);
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.layer.cornerRadius = 10;
+    self.tableView.layer.masksToBounds = YES;
     
     self.tableView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(becomFirstTap)];
     [self.tableView addGestureRecognizer:tap];
     self.imageViewS.hidden = NO;
     
-    self.plaStr = [NoticeTools getLocalStrWith:@"sendTextt.input"];
-    _plaL = [[UILabel alloc] initWithFrame:CGRectMake(19, 15, DR_SCREEN_WIDTH-19-5, 14)];
+    self.plaStr = @"请输入文字";
+    _plaL = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, DR_SCREEN_WIDTH-19-5, 14)];
     _plaL.text = self.plaStr;
     _plaL.font = FOURTHTEENTEXTFONTSIZE;
     _plaL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
     
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(15,5, DR_SCREEN_WIDTH-30,35)];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10,5, DR_SCREEN_WIDTH-40,35)];
     _textView.font = SIXTEENTEXTFONTSIZE;
     _textView.clearsOnInsertion = YES;
     _textView.scrollEnabled = NO;
     _textView.bounces = NO;
-    _textView.backgroundColor = self.view.backgroundColor;
-    
+    _textView.backgroundColor = self.tableView.backgroundColor;
     _textView.delegate = self;
     _textView.textColor = [UIColor colorWithHexString:@"#25262E"];
     _textView.tintColor = [UIColor colorWithHexString:@"#1FC7FF"];
@@ -110,12 +99,14 @@
     
     self.toolsView = [[NoticeSendVoiceTools alloc] initWithFrame:CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50, DR_SCREEN_WIDTH, 50)];
     self.toolsView.backgroundColor = self.view.backgroundColor;
+    [self.toolsView.imgButton addTarget:self action:@selector(openPhotoClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.toolsView];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide) name:UIKeyboardWillHideNotification object:nil];
     [self keyboardHide];
 
+    [self comeFromSave];
 }
 
 - (void)becomFirstTap{
@@ -124,20 +115,21 @@
 
 - (NoticeSendVoiceImageView *)imageViewS{
     if (!_imageViewS) {
-        CGFloat width = (DR_SCREEN_WIDTH-40-15)/4;
-        _imageViewS = [[NoticeSendVoiceImageView alloc] initWithFrame:CGRectMake(10, 10, DR_SCREEN_WIDTH-20, width+30)];
-        _imageViewS.isLocaImage = YES;
+        CGFloat width = (DR_SCREEN_WIDTH-40-10)/3;
+        _imageViewS = [[NoticeSendVoiceImageView alloc] initWithFrame:CGRectMake(10,CGRectGetMaxY(self.textView.frame)+10, DR_SCREEN_WIDTH-40, width)];
         _imageViewS.isVoice = NO;
-        _imageViewS.backgroundColor = self.view.backgroundColor;
-       // [self.tableView addSubview:_imageViewS];
+        _imageViewS.isLocaImage = YES;
+        [self.tableView addSubview:_imageViewS];
 
         __weak typeof(self) weakSelf = self;
         _imageViewS.imgBlock = ^(NSInteger tag) {
             if (tag <= weakSelf.moveArr.count-1) {
                 [weakSelf.moveArr removeObjectAtIndex:tag];
                 weakSelf.imageViewS.imgArr = [NSArray arrayWithArray:weakSelf.moveArr];
-                [weakSelf keyboardHide];
                 [weakSelf.toolsView.imgButton setImage:UIImageNamed(weakSelf.moveArr.count==3? @"senimgv_imgn":@"senimgv_img") forState:UIControlStateNormal];
+                if (!weakSelf.moveArr.count) {
+                    [weakSelf refreshHeight];
+                }
             }
             
         };
@@ -151,6 +143,7 @@
 //打开相册
 - (void)openPhotoClick{
 
+    [self.textView resignFirstResponder];
     if (self.moveArr.count >= 3) {
         [self showToastWithText:@"最多只能选择三张图片哦~"];
         return;
@@ -162,10 +155,6 @@
     imagePicker.allowPickingVideo = false;
     imagePicker.allowPickingGif = YES;
     imagePicker.showPhotoCannotSelectLayer = YES;
-    if ([NoticeTools isManager]) {
-        imagePicker.allowPickingVideo = YES;
-        imagePicker.allowPickingMultipleVideo = NO;
-    }
     imagePicker.allowCrop = NO;
     imagePicker.showSelectBtn = YES;
     imagePicker.cropRect = CGRectMake(0, DR_SCREEN_HEIGHT/2-DR_SCREEN_WIDTH/2, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH);
@@ -174,28 +163,50 @@
 }
 
 -(void)keyboardDidChangeFrame:(NSNotification *)notification{
-
+    self.keyBordisUp = YES;
 
     NSDictionary *userInfo = notification.userInfo;
     CGRect keyboardF = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    self.toolsView.frame = CGRectMake(0, DR_SCREEN_HEIGHT-keyboardF.size.height-self.toolsView.frame.size.height-10, DR_SCREEN_HEIGHT, 60);
+    self.toolsView.frame = CGRectMake(0, DR_SCREEN_HEIGHT-keyboardF.size.height-self.toolsView.frame.size.height, DR_SCREEN_HEIGHT, 50);
     self.keyBordHeight = keyboardF.size.height;
     _plaL.frame = CGRectMake(19, 15, DR_SCREEN_WIDTH-19-5, 14);
-    self.imageViewS.frame = CGRectMake(10, -self.imageViewS.frame.size.height-50-10, self.imageViewS.frame.size.width, self.imageViewS.frame.size.height);
+
     self.tableView.contentSize = CGSizeMake(0, self.tableView.frame.size.height);
     [self setTextViewHeight:self.textView text:@""];
+    
+    if (self.moveArr.count) {
+        self.imageViewS.hidden = NO;
+        self.imageViewS.frame = CGRectMake(10, DR_SCREEN_HEIGHT-50-self.keyBordHeight-NAVIGATION_BAR_HEIGHT-self.imageViewS.frame.size.height, self.imageViewS.frame.size.width, self.imageViewS.frame.size.height);
+    }else{
+        self.imageViewS.hidden = YES;
+    }
+    
 }
 
+
 - (void)keyboardHide{
- 
-    CGFloat width = (DR_SCREEN_WIDTH-40-15)/4;
-    self.imageViewS.frame = CGRectMake(10, 10, DR_SCREEN_WIDTH-20, width+30);
-    _plaL.frame = CGRectMake(19, 15, DR_SCREEN_WIDTH-19-5, 14);
-    self.textView.frame = CGRectMake(15,5, DR_SCREEN_WIDTH-30,(self.textHeight>35?self.textHeight:35));
+    self.keyBordisUp = NO;
+    _plaL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-19-5, 14);
+    self.textView.frame = CGRectMake(10,5, DR_SCREEN_WIDTH-40,(self.textHeight>35?self.textHeight:35));
+    
+    if (self.moveArr.count) {
+        self.imageViewS.hidden = NO;
+        if (self.textView.text.length) {
+            self.imageViewS.frame = CGRectMake(10, CGRectGetMaxY(self.textView.frame)+4, self.imageViewS.frame.size.width, self.imageViewS.frame.size.height);
+        }else{
+            self.imageViewS.frame = CGRectMake(10, self.tableView.frame.size.height-self.imageViewS.frame.size.height-10, self.imageViewS.frame.size.width, self.imageViewS.frame.size.height);
+        }
+        
+    }else{
+        self.imageViewS.hidden = YES;
+    }
+    
     self.toolsView.frame = CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50, DR_SCREEN_WIDTH, 50);
-    self.tableView.contentSize = CGSizeMake(0, self.textView.frame.size.height+(self.imageViewS.hidden?0:DR_SCREEN_WIDTH-30+15));
+    self.tableView.contentSize = CGSizeMake(0, [SXTools getHeightWithLineHight:0 font:16 width:DR_SCREEN_WIDTH-40 string:self.textView.text isJiacu:NO]+100+(self.imageViewS.hidden?0:self.imageViewS.frame.size.height));
 
     [self.toolsView.imgButton setImage:UIImageNamed(self.moveArr.count==3? @"senimgv_imgn":@"senimgv_img") forState:UIControlStateNormal];
+    
+
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -220,19 +231,19 @@
 - (void)refreshHeight{
     
     NSString *currentSelectStr = [self.textView.text substringToIndex:self.textView.selectedRange.location];
-    CGFloat curSelectHeight = [self heightForTextView:_textView WithText:currentSelectStr]+20;//当前光标位置高度
+    CGFloat curSelectHeight = [self heightForTextView:_textView WithText:currentSelectStr];//当前光标位置高度
     
    // CGFloat allHeight = self.textHeight;//总高度
-    CGFloat canLookHeight = self.tableView.frame.size.height-50-self.keyBordHeight-20+100+BOTTOM_HEIGHT-50;//文本输入可视区域
+    CGFloat canLookHeight = DR_SCREEN_HEIGHT-50-self.keyBordHeight-NAVIGATION_BAR_HEIGHT-(self.imageViewS.hidden?0:self.imageViewS.frame.size.height);//文本输入可视区域
     
     if (curSelectHeight >= canLookHeight) {//如果光标位置的高度超过了可视高度
-        self.textView.frame = CGRectMake(15,self.tableView.frame.size.height-curSelectHeight-canLookHeight, DR_SCREEN_WIDTH-30,self.textHeight);
+        self.textView.frame = CGRectMake(10,-(curSelectHeight-canLookHeight), DR_SCREEN_WIDTH-40,self.textHeight);
         self.tableView.contentSize = CGSizeMake(0, self.tableView.frame.size.height);
     }else{
         self.tableView.contentSize = CGSizeMake(0, self.tableView.frame.size.height);
-        self.textView.frame = CGRectMake(15,5, DR_SCREEN_WIDTH-30,(self.textHeight>35?self.textHeight:35));
+        self.textView.frame = CGRectMake(10,5, DR_SCREEN_WIDTH-40,(self.textHeight>35?self.textHeight:35));
     }
-    
+    [self.tableView bringSubviewToFront:self.imageViewS];
 }
 
 - (void)textViewDidChangeSelection:(UITextView *)textView{
@@ -251,30 +262,13 @@
 
 - (float)heightForTextView:(UITextView *)textView WithText:(NSString *) strText{
 
-    return [self getSpaceLabelHeight:strText withFont:SIXTEENTEXTFONTSIZE withWidth:DR_SCREEN_WIDTH-30]+50;
+    return [SXTools getHeightWithLineHight:0 font:16 width:DR_SCREEN_WIDTH-40 string:strText isJiacu:NO]+50;
 
 }
 
-//获取指定文字间距和行间距的文案高度
--(CGFloat)getSpaceLabelHeight:(NSString*)str withFont:(UIFont*)font withWidth:(CGFloat)width {
-    NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-    paraStyle.lineBreakMode = NSLineBreakByCharWrapping;
-    paraStyle.alignment = NSTextAlignmentLeft;
-    paraStyle.lineSpacing = 0;
-    paraStyle.hyphenationFactor = 1.0;
-    paraStyle.firstLineHeadIndent = 0.0;
-    paraStyle.paragraphSpacingBefore = 0.0;
-    paraStyle.headIndent = 0;
-    paraStyle.tailIndent = 0;
-    NSDictionary *dic = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paraStyle, NSKernAttributeName:@0.0f
-                          
-    };
-    CGSize size = [str boundingRectWithSize:CGSizeMake(width,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:dic context:nil].size;
-    return size.height;
-}
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto{
-    self.hasChangeImg = YES;
+
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setLocale:[NSLocale currentLocale]];
     [outputFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -303,7 +297,18 @@
                 [self.moveArr addObject:imagerDic];
                 self.imageViewS.imgArr = [NSArray arrayWithArray:self.moveArr];
                 self.imageViewS.hidden = NO;
-                [self keyboardHide];
+                [self.toolsView.imgButton setImage:UIImageNamed(self.moveArr.count==3? @"senimgv_imgn":@"senimgv_img") forState:UIControlStateNormal];
+                if (self.moveArr.count) {
+                    self.imageViewS.hidden = NO;
+                    if (self.textView.text.length) {
+                        self.imageViewS.frame = CGRectMake(10, CGRectGetMaxY(self.textView.frame)+4, self.imageViewS.frame.size.width, self.imageViewS.frame.size.height);
+                    }else{
+                        self.imageViewS.frame = CGRectMake(10, self.tableView.frame.size.height-self.imageViewS.frame.size.height-10, self.imageViewS.frame.size.width, self.imageViewS.frame.size.height);
+                    }
+                    
+                }else{
+                    self.imageViewS.hidden = YES;
+                }
             }];
         });
     }
@@ -311,7 +316,7 @@
 
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingGifImage:(UIImage *)animatedImage sourceAssets:(PHAsset *)asset{
-    self.hasChangeImg = YES;
+
     [[PHImageManager defaultManager] requestImageDataForAsset:asset options:nil resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
         if (!imageData) {
             [self showToastWithText:@"图片选择失败"];
@@ -325,20 +330,22 @@
         [imagerDic setObject:@"1" forKey:@"type"];
 
         [self.moveArr addObject:imagerDic];
-        
+        [self.toolsView.imgButton setImage:UIImageNamed(self.moveArr.count==3? @"senimgv_imgn":@"senimgv_img") forState:UIControlStateNormal];
         self.imageViewS.imgArr = [NSArray arrayWithArray:self.moveArr];
         self.imageViewS.hidden = NO;
-        [self keyboardHide];
+        if (self.moveArr.count) {
+            self.imageViewS.hidden = NO;
+            if (self.textView.text.length) {
+                self.imageViewS.frame = CGRectMake(10, CGRectGetMaxY(self.textView.frame)+4, self.imageViewS.frame.size.width, self.imageViewS.frame.size.height);
+            }else{
+                self.imageViewS.frame = CGRectMake(10, self.tableView.frame.size.height-self.imageViewS.frame.size.height-10, self.imageViewS.frame.size.width, self.imageViewS.frame.size.height);
+            }
+            
+        }else{
+            self.imageViewS.hidden = YES;
+        }
     }];
 }
-
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-
-    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    appdel.floatView.hidden = [NoticeTools isHidePlayThisDeveiceThirdVC]?YES: NO;
-}
-
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -346,12 +353,6 @@
 
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     
-    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appdel.floatView.isPlaying) {
-        appdel.floatView.noRePlay = YES;
-        [appdel.floatView.audioPlayer stopPlaying];
-    }
-    appdel.floatView.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -371,51 +372,191 @@
     [_textView resignFirstResponder];
 
     if (_textView.text.length || self.moveArr.count) {
-        
+        __weak typeof(self) weakSelf = self;
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"保留此次编辑吗？" message:nil sureBtn:@"不保留" cancleBtn:@"保留" right:YES];
+       alerView.resultIndex = ^(NSInteger index) {
+           if (index == 2) {
+               [weakSelf saveTocaogao];
+           }else{
+               [weakSelf clearCache];
+           }
+           [weakSelf.navigationController popViewControllerAnimated:YES];
+       };
+       [alerView showXLAlertView];
+        return;
     }
     [self.navigationController popViewControllerAnimated:YES];
 
 }
 
-- (BOOL)isEmpty:(NSString *) str {
-    if (!str) {
-        return true;
-    } else {
-        NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-        NSString *trimedString = [str stringByTrimmingCharactersInSet:set];
-        if ([trimedString length] == 0) {
-            return true;
-        } else {
-            return false;
+- (void)sendClick{
+    if (self.textView.text.length > 3000) {
+        [self showToastWithText:@"文案内容不能超过三千字哦~"];
+        return;
+    }
+
+    if (!self.textView.text.length && !self.moveArr.count) {
+        [self showToastWithText:@"请输入文案或者选择图片"];
+        return;
+    }
+
+    [self clearCache];
+}
+
+
+- (void)updateImage{
+    [self showHUD];
+
+    _sendBtn.userInteractionEnabled = NO;
+    NSMutableArray *arr = [NSMutableArray new];
+    NSMutableArray *arr1 = [NSMutableArray new];
+    for (NSMutableDictionary *dic in self.moveArr) {
+        [arr addObject:[dic objectForKey:Locapaths]];
+        [arr1 addObject:[dic objectForKey:ImageDatas]];
+    }
+    
+    NSString *pathMd5 = [NoticeTools arrayToJSONString:arr];//多个文件用数组,单个用字符串
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    [parm setObject:@"5" forKey:@"resourceType"];
+    [parm setObject:pathMd5 forKey:@"resourceContent"];
+ 
+    [[XGUploadDateManager sharedManager] uploadMoreWithImageArr:arr1 noNeedToast:YES parm:parm progressHandler:^(CGFloat progress) {
+    } complectionHandler:^(NSError *error, NSString *Message,NSString *bucketId, BOOL sussess) {
+        if (!sussess) {
+            [self hideHUD];
+           
+            return ;
+        }else{
+            self.bucket_id = bucketId;
+            self.imageJsonString = Message;
+        }
+    }];
+}
+
+
+
+- (void)clearCache{
+    NSMutableArray *alreadyArr = [[NSMutableArray alloc] init];
+    [NoticeSaveVoiceTools saveVoiceArr:alreadyArr];
+}
+
+- (void)saveTocaogao{
+    NSMutableArray *alreadyArr = [[NSMutableArray alloc] init];
+    NoticeVoiceSaveModel *saveM = [[NoticeVoiceSaveModel alloc] init];
+    saveM.sendTime = [NoticeSaveVoiceTools getTimeString];
+    saveM.textContent = self.textView.text;
+
+    if (self.moveArr.count) {
+        for (int i = 0; i < self.moveArr.count; i++) {
+            UIImage * imgsave = [UIImage imageWithData:[self.moveArr[i] objectForKey:ImageDatas]];
+            NSString *pathName = [NSString stringWithFormat:@"/%@",[self.moveArr[i] objectForKey:Locapaths]];
+            NSString * Pathimg = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingString:pathName];
+            [UIImagePNGRepresentation(imgsave) writeToFile:Pathimg atomically:YES];
+            if (i == 0) {
+                saveM.img1Path = [self.moveArr[i] objectForKey:Locapaths];
+            }else if (i == 1){
+                saveM.img2Path = [self.moveArr[i] objectForKey:Locapaths];
+            }else if (i == 2){
+                saveM.img3Path = [self.moveArr[i] objectForKey:Locapaths];
+            }
+        }
+    }
+    [alreadyArr insertObject:saveM atIndex:0];
+    [NoticeSaveVoiceTools saveVoiceArr:alreadyArr];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [self.textView resignFirstResponder];
+}
+
+
+
+- (void)comeFromSave{
+    //缓存进来的
+    if (self.saveModel) {
+
+        self.textView.text = self.saveModel.textContent;
+
+        self.moveArr = [[NSMutableArray alloc] init];
+        if (self.saveModel.img1Path || self.saveModel.img2Path || self.saveModel.img3Path) {
+       
+            if (self.saveModel.img1Path) {
+                [self getsaveimg1];
+            }
+        }else{
+            [self setTextViewHeight:self.textView text:@""];
+            [self.textView becomeFirstResponder];
         }
     }
 }
 
-- (void)sendClick{
-    if (self.textView.text.length > 10000) {
-        [self showToastWithText:[NoticeTools getLocalStrWith:@"sendTextt.fali1"]];
-        return;
-    }
-
-    if (!self.textView.text.length) {
-        [self showToastWithText:[NoticeTools getLocalStrWith:@"sendTextt.fali2"]];
-        return;
+- (void)getsaveimg1{
+    NSString *string = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    UIImage *image = [UIImage imageWithContentsOfFile:[string stringByAppendingString:[NSString stringWithFormat:@"/%@",self.saveModel.img1Path]]];
+    if (image) {
+        NSString *filePath = [NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],(long)arc4random()%999999999678999];
+        NSMutableDictionary *imagerDic = [NSMutableDictionary new];
+        [imagerDic setObject:[NSString stringWithFormat:@"%@_%@.jpeg",[NoticeTools timeDataAppointFormatterWithTime:[NoticeTools getNowTimeTimestamp].integerValue appointStr:@"yyyyMMdd_HHmmss"],[DDHAttributedMode md5:filePath]] forKey:Locapaths];
+        UIImage *ciImage = image;
+        [imagerDic setObject:UIImageJPEGRepresentation(ciImage, 0.8) forKey:ImageDatas];
+        [self.moveArr addObject:imagerDic];
+        if (self.saveModel.img2Path) {
+            [self getsaveimg2];
+        }else{
+            self.imageViewS.imgArr = self.moveArr;
+            self.imageViewS.hidden = NO;
+            [self setTextViewHeight:self.textView text:@""];
+            [self keyboardHide];
+            [self.textView becomeFirstResponder];
+            [self hideHUD];
+        }
     }
     
-    if ([self isEmpty:self.textView.text]) {
-        [self showToastWithText:[NoticeTools getLocalStrWith:@"sendTextt.fali3"]];
-        return;
-    }
-
 }
 
-- (void)backSucdess{
+- (void)getsaveimg2{
+    NSString *string = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
+    UIImage *image = [UIImage imageWithContentsOfFile:[string stringByAppendingString:[NSString stringWithFormat:@"/%@",self.saveModel.img2Path]]];
+    if (image) {
+        NSString *filePath = [NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],(long)arc4random()%999999999678999];
+        NSMutableDictionary *imagerDic = [NSMutableDictionary new];
+        [imagerDic setObject:[NSString stringWithFormat:@"%@_%@.jpeg",[NoticeTools timeDataAppointFormatterWithTime:[NoticeTools getNowTimeTimestamp].integerValue appointStr:@"yyyyMMdd_HHmmss"],[DDHAttributedMode md5:filePath]] forKey:Locapaths];
+        UIImage *ciImage = image;
+        [imagerDic setObject:UIImageJPEGRepresentation(ciImage, 0.8) forKey:ImageDatas];
+        [self.moveArr addObject:imagerDic];
+        if (self.saveModel.img3Path) {
+            [self getsaveimg3];
+        }else{
+            self.imageViewS.imgArr = self.moveArr;
+            self.imageViewS.hidden = NO;
+            [self setTextViewHeight:self.textView text:@""];
+            [self keyboardHide];
+            [self.textView becomeFirstResponder];
+            [self hideHUD];
+        }
+    }
 }
 
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    [self.textView resignFirstResponder];
+- (void)getsaveimg3{
+    NSString *string = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    UIImage *image = [UIImage imageWithContentsOfFile:[string stringByAppendingString:[NSString stringWithFormat:@"/%@",self.saveModel.img3Path]]];
+    if (image) {
+        NSString *filePath = [NSString stringWithFormat:@"%@-%ld",[[NoticeSaveModel getUserInfo] user_id],(long)arc4random()%999999999678999];
+        NSMutableDictionary *imagerDic = [NSMutableDictionary new];
+        [imagerDic setObject:[NSString stringWithFormat:@"%@_%@.jpeg",[NoticeTools timeDataAppointFormatterWithTime:[NoticeTools getNowTimeTimestamp].integerValue appointStr:@"yyyyMMdd_HHmmss"],[DDHAttributedMode md5:filePath]] forKey:Locapaths];
+        UIImage *ciImage = image;
+        [imagerDic setObject:UIImageJPEGRepresentation(ciImage, 0.8) forKey:ImageDatas];
+        [self.moveArr addObject:imagerDic];
+        self.imageViewS.imgArr = self.moveArr;
+        self.imageViewS.hidden = NO;
+        [self setTextViewHeight:self.textView text:@""];
+        [self keyboardHide];
+        [self.textView becomeFirstResponder];
+        [self hideHUD];
+    }
 }
 
 

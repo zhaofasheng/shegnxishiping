@@ -23,11 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *contentL;
 @property (nonatomic, strong) UIView *videView;
 @property (nonatomic, strong) UILabel *viedoNameL;
-@property (nonatomic, strong) UILabel *comNumL;
-@property (nonatomic, strong) UIImageView *comImageView;
+
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UILabel *authorHasReplyL;
 @property (nonatomic, strong) UILabel *replyL;
+@property (nonatomic, strong) UILabel *comNumL;
+@property (nonatomic, strong) UIImageView *comImageView;
 @property (nonatomic, strong) UIImageView *likeImageView;
 @property (nonatomic, strong) UILabel *likeL;
 @property (nonatomic, strong) UILabel *authorL;

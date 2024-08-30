@@ -26,17 +26,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *searvNumL;
 @property (nonatomic, strong) UILabel *comNumL;
 
-@property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, strong) UIView *lineView;
-@property (nonatomic, strong) UILabel *tagsL;
-@property (nonatomic, strong) UILabel *stroryL;
+
 @property (nonatomic, assign) NSInteger allTime;
 @property (nonatomic, strong) UIView *workIngView;
 
 @property (nonatomic, strong) UIImageView *markImageView;
 @property (nonatomic, copy) NSString * __nullable timerName;
 @property (nonatomic, strong) UIImageView *yhImageView;
-
+@property (nonatomic, strong) UIView *contentView;
+@property (nonatomic, strong) UIView *lineView;
+@property (nonatomic, strong) UILabel *tagsL;
+@property (nonatomic, strong) UILabel *stroryL;
 @property (nonatomic, strong) UIView *severceView;
 @property (nonatomic, strong) UILabel *severTimeL;
 

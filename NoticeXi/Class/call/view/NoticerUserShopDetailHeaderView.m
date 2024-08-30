@@ -82,6 +82,8 @@
         self.sexImageView.image = UIImageNamed(@"sx_shop_male");//sx_shop_fale女
         [self.backcontentView addSubview:self.sexImageView];
         //UIImageNamed(@"sx_shop_male");//sx_shop_fale女
+        
+        [self setCornerOnTopRight:20];
     }
     return self;
 }
@@ -93,39 +95,6 @@
     [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
 
-- (UIView *)contentView{
-    if (!_contentView) {
-        _contentView = [[UIView  alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.searvNumL.frame)+40, DR_SCREEN_WIDTH-30, 0)];
-        _contentView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-        _contentView.layer.cornerRadius = 10;
-        _contentView.layer.masksToBounds = YES;
-        
-        self.tagsL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 15, DR_SCREEN_WIDTH-60, 0)];
-        self.tagsL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        self.tagsL.font = FIFTHTEENTEXTFONTSIZE;
-        self.tagsL.numberOfLines = 0;
-        [_contentView addSubview:self.tagsL];
-        
-        self.stroryL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 15, DR_SCREEN_WIDTH-60, 0)];
-        self.stroryL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        self.stroryL.font = FIFTHTEENTEXTFONTSIZE;
-        self.stroryL.numberOfLines = 0;
-        [_contentView addSubview:self.stroryL];
-        
-        self.lineView = [[UIView  alloc] initWithFrame:CGRectZero];
-        self.lineView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
-        [_contentView addSubview:self.lineView];
-        
-        [self addSubview:self.contentView];
-        
-        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake(30,_contentView.frame.origin.y-9, 24, 18)];
-        imageV.image = UIImageNamed(@"introYinhao_img");
-        self.yhImageView = imageV;
-        self.yhImageView.hidden = YES;
-        [self.backcontentView addSubview:self.yhImageView];
-    }
-    return _contentView;
-}
 
 - (void)commentTap{
     NoticeJieYouGoodsComController *ctl = [[NoticeJieYouGoodsComController alloc] init];
@@ -215,59 +184,9 @@
     NSString *allStr1 = [NSString stringWithFormat:@"%@%@",str4,str3];
     self.comNumL.attributedText = [DDHAttributedMode setSizeAndColorString:allStr1 setColor:[UIColor colorWithHexString:@"#5C5F66"] setSize:16 setLengthString:str3 beginSize:allStr1.length-str3.length];
     
-    if (shopModel.tale && shopModel.tale.length && shopModel.tagsTextArr.count) {//故事和标签都存在
-      
-        CGFloat tagHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tagString isJiacu:NO];
-        CGFloat taleHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tale isJiacu:NO];
-        
-        self.contentView.hidden = NO;
-        self.contentView.frame = CGRectMake(15, 156+15 + (shopModel.operate_status.intValue == 3 ? 30 : 0), DR_SCREEN_WIDTH-30, tagHeight+taleHeight+60);
-        
-        self.tagsL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, tagHeight);
-        self.tagsL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tagString];
-        
-        self.lineView.hidden = NO;
-        self.lineView.frame = CGRectMake(15, CGRectGetMaxY(self.tagsL.frame)+15, DR_SCREEN_WIDTH-60, 1);
-        
-        self.stroryL.frame = CGRectMake(15, CGRectGetMaxY(self.lineView.frame)+15, DR_SCREEN_WIDTH-60, taleHeight);
-        self.stroryL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tale];
-        
-    }else{
-        if (shopModel.tagsTextArr.count) {//有标签
-            CGFloat tagHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tagString isJiacu:NO];
-            
-            self.contentView.hidden = NO;
-            self.contentView.frame = CGRectMake(15, 156+15 + (shopModel.operate_status.intValue == 3 ? 30 : 0), DR_SCREEN_WIDTH-30, tagHeight+30);
-            
-            self.tagsL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, tagHeight);
-            self.tagsL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tagString];
-            self.lineView.hidden = YES;
-            
-        }else if (shopModel.tale && shopModel.tale.length){
-            CGFloat taleHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tale isJiacu:NO];
-            self.contentView.hidden = NO;
-            self.contentView.frame = CGRectMake(15, 156+15+ (shopModel.operate_status.intValue == 3 ? 30 : 0), DR_SCREEN_WIDTH-30, taleHeight+30);
-            self.lineView.hidden = YES;
-            self.stroryL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, taleHeight);
-            self.stroryL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tale];
-        }
-    }
-    
-    if (_contentView.hidden) {
-        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+15+ (shopModel.operate_status.intValue == 3 ? 30 : 0));
-    }else{
-        self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 156+self.contentView.frame.size.height+15+15+ (shopModel.operate_status.intValue == 3 ? 30 : 0));
-    }
-    
     self.backcontentView.frame = CGRectMake(0, 20+ (shopModel.operate_status.intValue == 3 ? 30 : 0), DR_SCREEN_WIDTH, self.frame.size.height-20 - (shopModel.operate_status.intValue == 3 ? 30 : 0));
 
-    if ((shopModel.tale && shopModel.tale.length) || shopModel.tagsTextArr.count){
-        self.yhImageView.hidden = NO;
-        self.yhImageView.frame = CGRectMake(30,_contentView.frame.origin.y-9, 24, 18);
-    }else{
-        self.yhImageView.hidden = YES;
-    }
-    
+
     if (!_workIngView.hidden && shopModel.surplusTime.intValue > 0) {
         self.allTime = shopModel.surplusTime.intValue;
         [self timerAction];

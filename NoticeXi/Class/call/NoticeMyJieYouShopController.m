@@ -19,7 +19,7 @@
 #import "NoticeJieYouGoodsController.h"
 #import "SXShopOpenTypeView.h"
 #import "NoticeMoreClickView.h"
-@interface NoticeMyJieYouShopController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
+@interface NoticeMyJieYouShopController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate,LCActionSheetDelegate>
 
 @property (nonatomic, strong) NoticeShopCardController *cardVC;
 @property (nonatomic, strong) NoticeJieYouGoodsComController *comVC;
@@ -95,6 +95,7 @@
     self.titles = @[@"",@"",@""];
     self.shopHeaderView = [[NoticeJieYouShopHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, imgHeight-NAVIGATION_BAR_HEIGHT-40-41-20)];
     self.shopHeaderView.detailHeader.hidden = NO;
+    self.shopHeaderView.headerView.hidden = YES;
     
     __weak typeof(self) weakSelf = self;
     self.shopHeaderView.choiceUrlBlock = ^(NSString * _Nonnull choiceUrl) {
@@ -178,15 +179,31 @@
     [self.view addSubview:ruleBtn];
     
     UIButton *shareBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-32-20-32, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2,32, 32)];
-    [shareBtn setImage:UIImageNamed(@"sx_shareshop_img") forState:UIControlStateNormal];
-    [shareBtn addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
+    [shareBtn setImage:UIImageNamed(@"sx_funshop_img") forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(funClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:shareBtn];
     
 
-    
     [self.sectionView addSubview:self.infoButton];
     [self.sectionView addSubview:self.orderButton];
     [self.sectionView addSubview:self.comButton];
+}
+
+- (void)funClick{
+  
+    LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
+      
+    } otherButtonTitleArray:@[@"分享给好友",@"推荐该店铺"]];
+    sheet.delegate = self;
+    [sheet show];
+}
+
+- (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [self shareClick];
+    }else if (buttonIndex == 2){
+        DRLog(@"推荐该店铺");
+    }
 }
 
 - (void)shareClick{

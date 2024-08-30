@@ -189,7 +189,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SXFullPlayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     SXVideosModel *videoM = self.modelArray[indexPath.row];
-    videoM.webBuyUrl = self.webBuyUrl;
+    videoM.webBuyUrl = @"https://www.byebyetext.com";
     cell.videoModel = videoM;
     cell.commentId = self.commentId;
     cell.replyId = self.replyId;

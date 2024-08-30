@@ -69,7 +69,7 @@
         _comNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.bottomView addSubview:_comNumL];
         _comNumL.userInteractionEnabled = YES;
-
+        
         
         self.comImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(self.bottomView.frame.size.width-20, 0, 20, 20)];
         self.comImageView.userInteractionEnabled = YES;
