@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) SXVideosModel *videoModel;
 
-
+@property (nonatomic, copy) void(^comClickBlock)(BOOL click);
 @property (nonatomic, strong) UILabel *markL;
 @property (nonatomic, strong) UIView *markView;
 
@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *collectL;
 
 @property (nonatomic, copy) void(^upInputcomClickBlock)(BOOL click);
-@property (nonatomic, copy) void(^comClickBlock)(BOOL click);
+
 
 @end
 

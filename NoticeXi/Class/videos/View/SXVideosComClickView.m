@@ -77,6 +77,12 @@
     return self;
 }
 
+- (void)comClick{
+    if (self.comClickBlock) {
+        self.comClickBlock(YES);
+    }
+}
+
 - (void)funTaps:(UITapGestureRecognizer *)tap{
     UIView *tapV = (UIView *)tap.view;
     if (tapV.tag == 0) {
@@ -226,12 +232,6 @@
     moreView.imgUrl = self.videoModel.video_cover_url;
     moreView.title = self.videoModel.title;
     [moreView showTost];
-}
-
-- (void)comClick{
-    if (self.comClickBlock) {
-        self.comClickBlock(YES);
-    }
 }
 
 - (void)sendComClick{

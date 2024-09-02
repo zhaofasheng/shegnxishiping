@@ -28,4 +28,8 @@
     }
 }
 
+
++ (void)tuijiandinapu:(NSString *)shopId{
+    //推荐店铺后发通知告诉动态列表和店铺详情
+}
 @end

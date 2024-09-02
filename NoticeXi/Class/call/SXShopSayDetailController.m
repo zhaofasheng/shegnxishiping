@@ -10,9 +10,11 @@
 #import "SXShopSayDetailCell.h"
 #import "SXShopSayDetailSection.h"
 #import "SXShopSayNavView.h"
-@interface SXShopSayDetailController ()
+#import "SXShopSendCommentView.h"
+@interface SXShopSayDetailController ()<LCActionSheetDelegate>
 @property (nonatomic, strong) SXShopSayNavView *shopInfoView;
 @property (nonatomic, assign) CGFloat imageViewHeight;
+@property (nonatomic, strong) SXShopSendCommentView *commentSendView;
 @end
 
 @implementation SXShopSayDetailController
@@ -38,11 +40,31 @@
     [moreBtn setImage: [UIImage imageNamed:@"img_scb_b"]  forState:UIControlStateNormal];
     [moreBtn addTarget:self action:@selector(actionClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navBarView addSubview:moreBtn];
+    
+    self.commentSendView = [[SXShopSendCommentView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, 50)];
+    self.commentSendView.model = self.model;
+    [self.view addSubview:self.commentSendView];
 }
 
 - (void)actionClick{
-    
+    LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
+    } otherButtonTitleArray:@[@"举报此内容",@"推荐此店铺"]];
+    sheet.delegate = self;
+    [sheet show];
 }
+
+- (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+      
+    }else if (buttonIndex == 2){
+        [self tuijiandinapu];
+    }
+}
+
+- (void)tuijiandinapu{
+    [SXShopSayListModel tuijiandinapu:@"shopid"];
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {

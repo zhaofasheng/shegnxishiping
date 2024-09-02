@@ -37,6 +37,10 @@
         self.funView = [[UIView  alloc] initWithFrame:CGRectMake(0, self.backcontentView.frame.size.height-60, self.backcontentView.frame.size.width, 60)];
         [self.backcontentView addSubview:self.funView];
         
+        UIView *line = [[UIView  alloc] initWithFrame:CGRectMake(0, 59, DR_SCREEN_WIDTH, 1)];
+        line.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+        [self.funView addSubview:line];
+        
         self.timeL = [[UILabel  alloc] initWithFrame:CGRectMake(self.backcontentView.frame.size.width-100, 0, 100, 60)];
         self.timeL.font = TWOTEXTFONTSIZE;
         self.timeL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];

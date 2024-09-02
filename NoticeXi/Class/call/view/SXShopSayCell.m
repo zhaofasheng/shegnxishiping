@@ -70,9 +70,16 @@
         [self.funView addSubview:self.likeImageView];
         UITapGestureRecognizer *likeTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeClick)];
         [self.likeImageView addGestureRecognizer:likeTap1];
+        
+        self.backcontentView.userInteractionEnabled = YES;
+        UILongPressGestureRecognizer *longPressDeleT = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(deleTapT:)];
+        longPressDeleT.minimumPressDuration = 0.5;
+        [self.contentView addGestureRecognizer:longPressDeleT];
     }
     return self;
 }
+
+
 
 - (void)setModel:(SXShopSayListModel *)model{
     _model = model;
@@ -125,6 +132,30 @@
     ctl.needUpCom = YES;
     [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
 }
+
+- (void)deleTapT:(UILongPressGestureRecognizer *)tap{
+   
+    if (tap.state == UIGestureRecognizerStateBegan) {
+        LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
+        } otherButtonTitleArray:@[@"举报此内容",@"推荐此店铺"]];
+        sheet.delegate = self;
+        [sheet show];
+    }
+}
+
+- (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+      
+    }else if (buttonIndex == 2){
+        [self tuijiandinapu];
+    }
+}
+
+- (void)tuijiandinapu{
+    [SXShopSayListModel tuijiandinapu:@"shopid"];
+}
+
+
 
 - (UIImageView *)tuijianImageV{
     if (!_tuijianImageV) {

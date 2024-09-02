@@ -20,6 +20,8 @@
         self.backcontentView.layer.masksToBounds = YES;
         [self addSubview:self.backcontentView];
         self.backcontentView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        
+        
     }
     return self;
 }

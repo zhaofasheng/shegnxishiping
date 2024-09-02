@@ -19,6 +19,7 @@
 #import "NoticeJieYouShopHeaderView.h"
 #import "SXAboutShoperController.h"
 #import "SXShoperSayController.h"
+#import "SXShopSayListModel.h"
 @interface NoticdShopDetailForUserController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate,NoticeReceveMessageSendMessageDelegate,LCActionSheetDelegate>
 
 @property (nonatomic, strong) NoticeMyShopModel *timeModel;
@@ -212,7 +213,7 @@
         };
         [alerView showXLAlertView];
     }else if (buttonIndex == 3){
-        DRLog(@"推荐该店铺");
+        [SXShopSayListModel tuijiandinapu:self.shopModel.shopId];
     }
 }
 

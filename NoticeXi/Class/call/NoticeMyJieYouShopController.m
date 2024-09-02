@@ -19,6 +19,7 @@
 #import "NoticeJieYouGoodsController.h"
 #import "SXShopOpenTypeView.h"
 #import "NoticeMoreClickView.h"
+#import "SXShopSayListModel.h"
 @interface NoticeMyJieYouShopController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate,LCActionSheetDelegate>
 
 @property (nonatomic, strong) NoticeShopCardController *cardVC;
@@ -202,7 +203,7 @@
     if (buttonIndex == 1) {
         [self shareClick];
     }else if (buttonIndex == 2){
-        DRLog(@"推荐该店铺");
+        [SXShopSayListModel tuijiandinapu:self.shopModel.myShopM.shopId];
     }
 }
 
