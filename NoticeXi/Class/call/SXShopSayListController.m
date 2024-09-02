@@ -10,6 +10,7 @@
 #import "NoticeTextVoiceController.h"
 #import "NoticeSaveVoiceTools.h"
 #import "SXShopSayCell.h"
+#import "SXShopSayDetailController.h"
 @interface SXShopSayListController ()
 @property (nonatomic, strong) UIView *noListView;
 @property (nonatomic, assign) CGFloat imageViewHeight;
@@ -80,8 +81,8 @@
     
     NSString *url = @"";
     
-    url = [NSString stringWithFormat:@"shopCollection?pageNo=%ld",self.pageNo];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.3+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    url = [NSString stringWithFormat:@"video/list?pageNo=%ld",self.pageNo];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         if (success) {
@@ -95,7 +96,7 @@
          
             for (NSDictionary *dic in dict[@"data"]) {
                 SXShopSayListModel *sayM = [SXShopSayListModel mj_objectWithKeyValues:dic];
-                sayM.content = @"dlfjdslfs lfjslfjsalfjslafjlskafj;laskj fl;ksjflsakjflsk jfaksjfl;ksajfldsajfl kjsalkfjdsa lkfjldsak fjads;lkfj ;sakljf ;kj ";
+                sayM.content = @"dlfjdslfs lfjslfjsalfjslafjlskafj;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnskj fl;ksjflsakjflsk jfaksjfl;ksajfldsajfl kjsalkfjdsa lkfjldsak fjads;lkfj ;sakljf ;kj ";
                 sayM.cellHeight = 66 + 70 + sayM.contentHeight + (sayM.hasImageV?(self.imageViewHeight+10):0);
                 [self.dataArr addObject:sayM];
             }
@@ -122,6 +123,11 @@
     }];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    SXShopSayDetailController *ctl = [[SXShopSayDetailController alloc] init];
+    ctl.model = self.dataArr[indexPath.row];
+    [self.navigationController pushViewController:ctl animated:YES];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXShopSayListModel *model = self.dataArr[indexPath.row];

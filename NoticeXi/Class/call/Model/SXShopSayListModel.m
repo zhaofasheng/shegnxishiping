@@ -14,9 +14,16 @@
     _content = content;
     self.attStr = [SXTools getStringWithLineHight:3 string:content];
     self.contentHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-50 string:content isJiacu:NO];
+    self.longcontentHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-30 string:content isJiacu:NO];
     if (content && content.length) {
         if (self.contentHeight < 36) {
             self.contentHeight = 36;
+        }
+        if (self.contentHeight > 110) {
+            self.contentHeight = 110;
+        }
+        if (self.longcontentHeight < 36) {
+            self.longcontentHeight = 36;
         }
     }
 }

@@ -1630,6 +1630,11 @@
 		FEE563162B8ED08A0004CC11 /* SXUserCenterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE563152B8ED08A0004CC11 /* SXUserCenterCell.m */; };
 		FEEC4A422C81D3110015D674 /* SXAboutShoperController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEC4A412C81D3110015D674 /* SXAboutShoperController.m */; };
 		FEEC4A452C81D3B10015D674 /* SXShoperSayController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEC4A442C81D3B10015D674 /* SXShoperSayController.m */; };
+		FEEC4A482C854DDF0015D674 /* SXShopSayHeaderSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEC4A472C854DDF0015D674 /* SXShopSayHeaderSectionView.m */; };
+		FEEC4A4B2C854F560015D674 /* SXShopSayDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEC4A4A2C854F560015D674 /* SXShopSayDayCell.m */; };
+		FEEC4A4E2C8557E30015D674 /* SXShopSayDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEC4A4D2C8557E30015D674 /* SXShopSayDetailCell.m */; };
+		FEEC4A512C8558BE0015D674 /* SXShopSayDetailSection.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEC4A502C8558BE0015D674 /* SXShopSayDetailSection.m */; };
+		FEEC4A542C855E3F0015D674 /* SXShopSayNavView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEC4A532C855E3F0015D674 /* SXShopSayNavView.m */; };
 		FEF0A2832C2A61A10085AD65 /* AppDelegate+Share.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E95D0F2A69141B00AE022E /* AppDelegate+Share.m */; };
 		FEFAB1B42B8C265A009EE42C /* SXPlayDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFAB1B32B8C265A009EE42C /* SXPlayDetailController.m */; };
 		FEFAB1B72B8C266C009EE42C /* SXPlayDetailListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFAB1B62B8C266C009EE42C /* SXPlayDetailListController.m */; };
@@ -4751,6 +4756,16 @@
 		FEEC4A412C81D3110015D674 /* SXAboutShoperController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXAboutShoperController.m; sourceTree = "<group>"; };
 		FEEC4A432C81D3B10015D674 /* SXShoperSayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShoperSayController.h; sourceTree = "<group>"; };
 		FEEC4A442C81D3B10015D674 /* SXShoperSayController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShoperSayController.m; sourceTree = "<group>"; };
+		FEEC4A462C854DDF0015D674 /* SXShopSayHeaderSectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopSayHeaderSectionView.h; sourceTree = "<group>"; };
+		FEEC4A472C854DDF0015D674 /* SXShopSayHeaderSectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopSayHeaderSectionView.m; sourceTree = "<group>"; };
+		FEEC4A492C854F560015D674 /* SXShopSayDayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopSayDayCell.h; sourceTree = "<group>"; };
+		FEEC4A4A2C854F560015D674 /* SXShopSayDayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopSayDayCell.m; sourceTree = "<group>"; };
+		FEEC4A4C2C8557E30015D674 /* SXShopSayDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopSayDetailCell.h; sourceTree = "<group>"; };
+		FEEC4A4D2C8557E30015D674 /* SXShopSayDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopSayDetailCell.m; sourceTree = "<group>"; };
+		FEEC4A4F2C8558BE0015D674 /* SXShopSayDetailSection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopSayDetailSection.h; sourceTree = "<group>"; };
+		FEEC4A502C8558BE0015D674 /* SXShopSayDetailSection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopSayDetailSection.m; sourceTree = "<group>"; };
+		FEEC4A522C855E3F0015D674 /* SXShopSayNavView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopSayNavView.h; sourceTree = "<group>"; };
+		FEEC4A532C855E3F0015D674 /* SXShopSayNavView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopSayNavView.m; sourceTree = "<group>"; };
 		FEFAB1B22B8C265A009EE42C /* SXPlayDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayDetailController.h; sourceTree = "<group>"; };
 		FEFAB1B32B8C265A009EE42C /* SXPlayDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlayDetailController.m; sourceTree = "<group>"; };
 		FEFAB1B52B8C266C009EE42C /* SXPlayDetailListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayDetailListController.h; sourceTree = "<group>"; };
@@ -9442,6 +9457,16 @@
 				FE07BE102BF4C14300E6812A /* SXChoiceShopOpenTimeView.m */,
 				FEAD70E22C8199930042C5B6 /* SXShopSayCell.h */,
 				FEAD70E32C8199930042C5B6 /* SXShopSayCell.m */,
+				FEEC4A462C854DDF0015D674 /* SXShopSayHeaderSectionView.h */,
+				FEEC4A472C854DDF0015D674 /* SXShopSayHeaderSectionView.m */,
+				FEEC4A4F2C8558BE0015D674 /* SXShopSayDetailSection.h */,
+				FEEC4A502C8558BE0015D674 /* SXShopSayDetailSection.m */,
+				FEEC4A492C854F560015D674 /* SXShopSayDayCell.h */,
+				FEEC4A4A2C854F560015D674 /* SXShopSayDayCell.m */,
+				FEEC4A4C2C8557E30015D674 /* SXShopSayDetailCell.h */,
+				FEEC4A4D2C8557E30015D674 /* SXShopSayDetailCell.m */,
+				FEEC4A522C855E3F0015D674 /* SXShopSayNavView.h */,
+				FEEC4A532C855E3F0015D674 /* SXShopSayNavView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -10255,6 +10280,7 @@
 				FE44F1EB2BB29FAB004ECF11 /* HTTPErrorResponse.m in Sources */,
 				A4E969A12A69142800AE022E /* NoticeCustumBackImageView.m in Sources */,
 				A4E965612A69142200AE022E /* NoticeLookImageCell.m in Sources */,
+				FEEC4A512C8558BE0015D674 /* SXShopSayDetailSection.m in Sources */,
 				FEB61BEE2B4CE43F00B128FA /* NoticeShopDetailSection.m in Sources */,
 				FEE562F02B8CA1FD0004CC11 /* TZAssetModel.m in Sources */,
 				A4E967942A69142400AE022E /* NoticeQuestionDetailCell.m in Sources */,
@@ -10279,6 +10305,7 @@
 				A4E966482A69142300AE022E /* NoticeFindSameViewController.m in Sources */,
 				A4E965DF2A69142200AE022E /* NoticeTestShow.swift in Sources */,
 				A4E968902A69142600AE022E /* NoticeTeamMemberView.m in Sources */,
+				FEEC4A542C855E3F0015D674 /* SXShopSayNavView.m in Sources */,
 				A4E9687A2A69142600AE022E /* NoticeBigZjCell.m in Sources */,
 				A4E968242A69142500AE022E /* CalenderCollectionCell.m in Sources */,
 				A4E9683B2A69142500AE022E /* NoticeSonglikeCell.m in Sources */,
@@ -10771,6 +10798,7 @@
 				A43BC4E12B3179E4003BF9EF /* NoticeCollectionBoKeController.m in Sources */,
 				A4E9668D2A69142300AE022E /* NoticeTopTenController.m in Sources */,
 				A4E9676E2A69142400AE022E /* NoticeBannerController.m in Sources */,
+				FEEC4A482C854DDF0015D674 /* SXShopSayHeaderSectionView.m in Sources */,
 				A4E966022A69142300AE022E /* NoticeAreaViewController.m in Sources */,
 				A4E968EC2A69142700AE022E /* NoticeLelveImageView.m in Sources */,
 				A4E969052A69142700AE022E /* NoticeSupplyNicknameController.m in Sources */,
@@ -11059,6 +11087,7 @@
 				A46F540C2AA7122F00A22D48 /* NoticeSendVipCardView.m in Sources */,
 				A4E9695E2A69142700AE022E /* NoticeSendStatusView.m in Sources */,
 				A4E969762A69142700AE022E /* NoticeVoiceReadMoreCell.m in Sources */,
+				FEEC4A4B2C854F560015D674 /* SXShopSayDayCell.m in Sources */,
 				FE9C3FA82B9066C4008C3A22 /* SXBuySearisController.m in Sources */,
 				A4E966032A69142300AE022E /* NoticeHeaderView.m in Sources */,
 				A4E965F52A69142300AE022E /* NoticeWhiteCardChatView.m in Sources */,
@@ -11412,6 +11441,7 @@
 				A4E966BC2A69142300AE022E /* NoticeTestLy.m in Sources */,
 				FEFAB1C32B8C82F0009EE42C /* SXSendChatTools.m in Sources */,
 				A4E968072A69142500AE022E /* NoticeMyOwnMusicListController.m in Sources */,
+				FEEC4A4E2C8557E30015D674 /* SXShopSayDetailCell.m in Sources */,
 				A4E966D12A69142300AE022E /* NoticeSupportedHelpController.m in Sources */,
 				FEFAB1B72B8C266C009EE42C /* SXPlayDetailListController.m in Sources */,
 				FE35EAA62B62518D00524991 /* NoticeVideoCollectionViewCell.m in Sources */,
@@ -11817,7 +11847,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.9.6;
+				MARKETING_VERSION = 5.9.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -11996,7 +12026,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.9.6;
+				MARKETING_VERSION = 5.9.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

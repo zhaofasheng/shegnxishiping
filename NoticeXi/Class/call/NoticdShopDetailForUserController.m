@@ -19,7 +19,7 @@
 #import "NoticeJieYouShopHeaderView.h"
 #import "SXAboutShoperController.h"
 #import "SXShoperSayController.h"
-@interface NoticdShopDetailForUserController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate,NoticeReceveMessageSendMessageDelegate>
+@interface NoticdShopDetailForUserController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate,NoticeReceveMessageSendMessageDelegate,LCActionSheetDelegate>
 
 @property (nonatomic, strong) NoticeMyShopModel *timeModel;
 @property (nonatomic, strong) NoticeMyShopModel *shopDetailM;
@@ -152,8 +152,8 @@
     [self.view addSubview:backBtn];
     
     UIButton *shareBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-32, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2,32, 32)];
-    [shareBtn setImage:UIImageNamed(@"sx_shareshop_img") forState:UIControlStateNormal];
-    [shareBtn addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
+    [shareBtn setImage:UIImageNamed(@"sx_funshop_img") forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(funClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:shareBtn];
     
     self.likeBtn = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-32-20-32, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-32)/2,32, 32)];
@@ -188,6 +188,37 @@
         [_noWorkingView addSubview:label];
     }
     return _noWorkingView;
+}
+
+- (void)funClick{
+  
+    LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
+      
+    } otherButtonTitleArray:@[@"分享给好友",@"拉黑该店铺",@"推荐该店铺"]];
+    sheet.delegate = self;
+    [sheet show];
+}
+
+- (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [self shareClick];
+    }else if (buttonIndex == 2){
+        __weak typeof(self) weakSelf = self;
+         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定拉黑该店铺？" message:@"拉黑后，你们将互相看不到对方店铺相关内容。" sureBtn:@"取消" cancleBtn:@"拉黑" right:YES];
+        alerView.resultIndex = ^(NSInteger index) {
+            if (index == 2) {
+                [weakSelf laheishop];
+            }
+        };
+        [alerView showXLAlertView];
+    }else if (buttonIndex == 3){
+        DRLog(@"推荐该店铺");
+    }
+}
+
+//拉黑店铺
+- (void)laheishop{
+
 }
 
 //分享店铺
@@ -623,6 +654,7 @@
 }
 
 - (NSInteger)numberOfListsInPagerView:(JXPagerView *)pagerView {
+
     return self.titles.count;
     
     

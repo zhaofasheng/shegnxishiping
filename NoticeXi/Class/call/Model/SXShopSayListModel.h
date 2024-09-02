@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, strong) NSAttributedString *attStr;
+@property (nonatomic, assign) CGFloat longcontentHeight;
 @property (nonatomic, assign) CGFloat contentHeight;
 @property (nonatomic, assign) BOOL hasImageV;
 

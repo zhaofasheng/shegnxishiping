@@ -87,6 +87,7 @@
         self.contentL.hidden = NO;
         self.contentL.attributedText = model.attStr;
         self.contentL.frame = CGRectMake(15, 66, DR_SCREEN_WIDTH-50, model.contentHeight);
+        self.contentL.lineBreakMode = NSLineBreakByTruncatingTail;
     }
     
     //是否存在图片
@@ -106,7 +107,7 @@
     self.comNumL.frame = CGRectMake(self.likeImageView.frame.origin.x-22-GET_STRWIDTH(self.comNumL.text, 12, 60), 0, GET_STRWIDTH(self.comNumL.text, 12, 60), 60);
     self.comImageView.frame = CGRectMake(self.comNumL.frame.origin.x-22, 20, 20, 20);
     
-    self.backcontentView.frame = CGRectMake(10, 10, DR_SCREEN_WIDTH-20, 66+60+(model.hasImageV?(self.imageHeight-10):0)+model.contentHeight);
+    self.backcontentView.frame = CGRectMake(10, 10, DR_SCREEN_WIDTH-20, 66+60+(model.hasImageV?(self.imageHeight+10):0)+model.contentHeight);
     self.funView.frame = CGRectMake(0, self.backcontentView.frame.size.height-60, self.backcontentView.frame.size.width, 60);
 }
 

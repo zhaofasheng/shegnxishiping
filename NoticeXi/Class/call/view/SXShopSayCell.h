@@ -14,13 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) SXShopSayListModel *model;
 
-@property (nonatomic, strong) UIView *backcontentView;
+
 @property (nonatomic, strong) UIImageView *sexImageView;
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *shopNameL;
 @property (nonatomic, strong) UIImageView *markImageView;
 @property (nonatomic, strong) UILabel *contentL;
-
+@property (nonatomic, strong) UIView *backcontentView;
 @property (nonatomic, strong) UIImageView *sayImageView1;
 @property (nonatomic, strong) UIImageView *sayImageView2;
 @property (nonatomic, strong) UIImageView *sayImageView3;

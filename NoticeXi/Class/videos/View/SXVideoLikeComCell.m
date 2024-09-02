@@ -74,8 +74,6 @@
         self.contentL.text = @"该内容已删除";
     }
     
-    self.contentL.lineBreakMode = NSLineBreakByTruncatingTail;
-    
     if (likeComM.videoModel.screen.intValue == 1) {
         self.videoImageView.frame = CGRectMake(DR_SCREEN_WIDTH-15-48, 15, 48, 36);
     }else{
@@ -89,6 +87,8 @@
         self.authorL.hidden = NO;
         self.authorL.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame), 15, 30, 15);
     }
+    
+    self.contentL.lineBreakMode = NSLineBreakByTruncatingTail;
 }
 
 - (void)userInfoTap{
