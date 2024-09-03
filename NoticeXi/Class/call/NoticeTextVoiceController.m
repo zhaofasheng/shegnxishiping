@@ -18,7 +18,7 @@
 #define ImageDatas  @"ImageDatas"
 #import "NoticeXi-Swift.h"
 @interface NoticeTextVoiceController ()<UITextFieldDelegate,UITextViewDelegate,TZImagePickerControllerDelegate>
-
+@property (nonatomic, strong) NoticeMyShopModel *shopModel;
 @property (nonatomic, strong) UILabel *sendBtn;
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIView *dataView;
@@ -39,7 +39,8 @@
 @property (nonatomic, strong) UILabel *plaL;
 @property (nonatomic, strong) NSString *bucket_id;
 @property (nonatomic, strong) NoticeSendVoiceImageView *imageViewS;
-
+@property (nonatomic, assign) BOOL canSend;
+@property (nonatomic, strong) NSString *cannotSendMsg;
 @end
 
 @implementation NoticeTextVoiceController
@@ -107,7 +108,46 @@
     [self keyboardHide];
 
     [self comeFromSave];
+    self.canSend = YES;
 }
+
+
+//获取店铺信息和状态
+- (void)getShopRequest{
+ 
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shop/ByUser" Accept:@"application/vnd.shengxi.v5.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if(success){
+            self.shopModel = [NoticeMyShopModel mj_objectWithKeyValues:dict[@"data"]];
+            [self refresButton];
+        }
+    } fail:^(NSError * _Nullable error) {
+
+  
+    }];
+}
+
+
+- (void)refresButton{
+    NSString *str = @"";
+    __weak typeof(self) weakSelf = self;
+    if(self.shopModel.myShopM.is_stop.integerValue > 0){
+        if(self.shopModel.myShopM.is_stop.integerValue == 1){//店铺被永久关停
+            str = @"店铺已被永久关闭，不能使用此功能";
+        }else{
+            str = @"店铺被处罚中，请结束后再使用";
+        }
+        self.canSend = NO;
+    }
+    if (!self.canSend) {
+        self.cannotSendMsg = str;
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:str message:nil cancleBtn:@"知道了"];
+        alerView.resultIndex = ^(NSInteger index) {
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        };
+        [alerView showXLAlertView];
+    }
+}
+
 
 - (void)becomFirstTap{
     [self.textView becomeFirstResponder];
@@ -266,6 +306,16 @@
 
 }
 
+- (void)refreshSnedUI{
+    if (self.textView.text.length || self.moveArr.count) {
+  
+        _sendBtn.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+    }else{
+        _sendBtn.textColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];
+        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];
+    }
+}
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto{
 
@@ -309,6 +359,7 @@
                 }else{
                     self.imageViewS.hidden = YES;
                 }
+                [self refreshSnedUI];
             }];
         });
     }
@@ -344,6 +395,7 @@
         }else{
             self.imageViewS.hidden = YES;
         }
+        [self refreshSnedUI];
     }];
 }
 
@@ -390,6 +442,10 @@
 }
 
 - (void)sendClick{
+    if (!self.canSend) {
+        [self showToastWithText:self.cannotSendMsg];
+        return;
+    }
     if (self.textView.text.length > 3000) {
         [self showToastWithText:@"文案内容不能超过三千字哦~"];
         return;
@@ -398,6 +454,12 @@
     if (!self.textView.text.length && !self.moveArr.count) {
         [self showToastWithText:@"请输入文案或者选择图片"];
         return;
+    }
+    
+    if (self.moveArr.count) {
+        [self updateImage];
+    }else{
+        [self upDontai];
     }
 
     [self clearCache];
@@ -417,7 +479,7 @@
     
     NSString *pathMd5 = [NoticeTools arrayToJSONString:arr];//多个文件用数组,单个用字符串
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-    [parm setObject:@"5" forKey:@"resourceType"];
+    [parm setObject:@"92" forKey:@"resourceType"];
     [parm setObject:pathMd5 forKey:@"resourceContent"];
  
     [[XGUploadDateManager sharedManager] uploadMoreWithImageArr:arr1 noNeedToast:YES parm:parm progressHandler:^(CGFloat progress) {
@@ -425,15 +487,50 @@
         if (!sussess) {
             [self hideHUD];
            
+            [self showToastWithText:Message];
             return ;
         }else{
+            [self hideHUD];
             self.bucket_id = bucketId;
             self.imageJsonString = Message;
+            [self upDontai];
         }
     }];
 }
 
+- (void)upDontai{
+    [self showHUD];
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+    if (self.textView.text.length && self.textView.text) {
+        [parm setObject:self.textView.text forKey:@"content"];
+    }
+    if (self.moveArr.count && self.imageJsonString) {
+        [parm setObject:self.imageJsonString forKey:@"dynamicImg"];
+    }
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopDynamic" Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [self hideHUD];
+        if (success) {
+            [self sendSuccess:YES];
+        }else{
+            [self sendSuccess:NO];
+        }
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+        [self sendSuccess:NO];
+    }];
+}
 
+- (void)sendSuccess:(BOOL)success{
+    [self showToastWithText:success?@"发布成功":@"发布失败，已保存至发布页"];
+    __weak typeof(self) weakSelf = self;
+    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+    dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+        if (success) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICESHOPSAYSEND" object:nil];
+        }
+    });
+}
 
 - (void)clearCache{
     NSMutableArray *alreadyArr = [[NSMutableArray alloc] init];
@@ -468,8 +565,6 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     [self.textView resignFirstResponder];
 }
-
-
 
 - (void)comeFromSave{
     //缓存进来的

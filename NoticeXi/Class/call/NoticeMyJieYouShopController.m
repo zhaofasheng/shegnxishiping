@@ -183,18 +183,30 @@
     [shareBtn setImage:UIImageNamed(@"sx_funshop_img") forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(funClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:shareBtn];
-    
+    //推荐通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getsaytuijianNotice:) name:@"SXtuijianshopsayNotification" object:nil];
 
     [self.sectionView addSubview:self.infoButton];
     [self.sectionView addSubview:self.orderButton];
     [self.sectionView addSubview:self.comButton];
 }
 
+- (void)getsaytuijianNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *shopid = nameDictionary[@"shopId"];
+    NSString *isTuiJian = nameDictionary[@"is_tuijian"];
+    
+    if ([self.shopModel.myShopM.shopId isEqualToString:shopid]) {
+        self.shopModel.myShopM.is_recommend = isTuiJian;
+    }
+ 
+}
+
 - (void)funClick{
   
     LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
       
-    } otherButtonTitleArray:@[@"分享给好友",@"推荐该店铺"]];
+    } otherButtonTitleArray:@[@"分享给好友",self.shopModel.myShopM.is_recommend.boolValue?@"取消推荐该店铺" :@"推荐该店铺"]];
     sheet.delegate = self;
     [sheet show];
 }
@@ -203,7 +215,7 @@
     if (buttonIndex == 1) {
         [self shareClick];
     }else if (buttonIndex == 2){
-        [SXShopSayListModel tuijiandinapu:self.shopModel.myShopM.shopId];
+        [SXShopSayListModel tuijiandinapu:self.shopModel.myShopM.shopId tuijian:self.shopModel.myShopM.is_recommend.boolValue?NO:YES];
     }
 }
 

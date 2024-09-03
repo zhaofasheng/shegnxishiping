@@ -8,6 +8,8 @@
 
 #import "SXShopSayCell.h"
 #import "SXShopSayDetailController.h"
+#import "NoticdShopDetailForUserController.h"
+#import "NoticeMyJieYouShopController.h"
 @implementation SXShopSayCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -74,7 +76,7 @@
         self.backcontentView.userInteractionEnabled = YES;
         UILongPressGestureRecognizer *longPressDeleT = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(deleTapT:)];
         longPressDeleT.minimumPressDuration = 0.5;
-        [self.contentView addGestureRecognizer:longPressDeleT];
+        [self.backcontentView addGestureRecognizer:longPressDeleT];
     }
     return self;
 }
@@ -85,9 +87,25 @@
     _model = model;
     [self refreshRemove];
     
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.shopModel.shop_avatar_url]];
+    self.shopNameL.text = model.shopModel.shop_name;
+    self.shopNameL.frame = CGRectMake(59, 22, GET_STRWIDTH(model.shopModel.shop_name, 17, 22), 22);
+    
     //是否有认证
+    if (model.shopModel.is_certified.boolValue) {//认证过
+        self.markImageView.hidden = NO;
+    }
     
     //是否有性别
+    if (model.shopModel.sex.intValue) {
+        self.sexImageView.hidden = NO;
+        if (model.shopModel.is_certified.boolValue) {
+            self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.markImageView.frame), 25, 16, 16);
+        }else{
+            self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.shopNameL.frame), 25, 16, 16);
+        }
+        self.sexImageView.image = model.shopModel.sex.intValue == 1? UIImageNamed(@"sx_shop_male") : UIImageNamed(@"sx_shop_fale");//sx_shop_fale女
+    }
     
     //是否有文案
     if (model.contentHeight > 0 && model.content) {
@@ -99,31 +117,89 @@
     
     //是否存在图片
     if (model.hasImageV) {
-        
+        if (model.img_list.count) {
+            self.sayImageView1.hidden = NO;
+            self.sayImageView1.frame = CGRectMake(15, 66+self.model.contentHeight+10, self.imageHeight, self.imageHeight);
+            [self.sayImageView1 sd_setImageWithURL:[NSURL URLWithString:model.img_list[0]]];
+        }
+        if (model.img_list.count >= 2) {
+            self.sayImageView2.hidden = NO;
+            self.sayImageView2.frame = CGRectMake(CGRectGetMaxX(self.sayImageView1.frame)+5, 66+self.model.contentHeight+10, self.imageHeight, self.imageHeight);
+            [self.sayImageView2 sd_setImageWithURL:[NSURL URLWithString:model.img_list[1]]];
+        }
+        if (model.img_list.count >= 3) {
+            self.sayImageView3.hidden = NO;
+            self.sayImageView3.frame = CGRectMake(CGRectGetMaxX(self.sayImageView2.frame)+5, 66+self.model.contentHeight+10, self.imageHeight, self.imageHeight);
+            [self.sayImageView3 sd_setImageWithURL:[NSURL URLWithString:model.img_list[2]]];
+        }
     }
     
     //是否有人推荐
-    self.tuijianImageV.hidden = NO;
-    self.tuijianL.hidden = NO;
+    if (model.shopModel.recommend_num.intValue) {
+        self.tuijianImageV.hidden = NO;
+        self.tuijianL.hidden = NO;
+        if (model.shopModel.is_recommend.boolValue) {//自己推荐过
+            if ((model.shopModel.recommend_num.intValue - 1) > 0) {
+                self.tuijianL.text = [NSString stringWithFormat:@"我和%d人推荐此店铺",model.shopModel.recommend_num.intValue-1];
+            }else{
+                self.tuijianL.text = @"我推荐此店铺";
+            }
+        }else{
+            self.tuijianL.text = [NSString stringWithFormat:@"%d人推荐此店铺",model.shopModel.recommend_num.intValue];
+        }
+    }
+    
     
     //点赞评论数量
-    //UIImageNamed(@"sx_like_imgs");UIImageNamed(@"sx_like_noimgs");
-    self.likeL.frame = CGRectMake(self.backcontentView.frame.size.width-15-GET_STRWIDTH(self.likeL.text, 12, 60), 0, GET_STRWIDTH(self.likeL.text, 12, 60), 60);
-    self.likeImageView.frame = CGRectMake(self.likeL.frame.origin.x-22, 20, 20, 20);
+    [self refreshLikeAndComUI];
     
-    self.comNumL.frame = CGRectMake(self.likeImageView.frame.origin.x-22-GET_STRWIDTH(self.comNumL.text, 12, 60), 0, GET_STRWIDTH(self.comNumL.text, 12, 60), 60);
-    self.comImageView.frame = CGRectMake(self.comNumL.frame.origin.x-22, 20, 20, 20);
-    
-    self.backcontentView.frame = CGRectMake(10, 10, DR_SCREEN_WIDTH-20, 66+60+(model.hasImageV?(self.imageHeight+10):0)+model.contentHeight);
+    self.backcontentView.frame = CGRectMake(10, 10, DR_SCREEN_WIDTH-20, 66+60+(self.model.hasImageV?(self.imageHeight+10):0)+self.model.contentHeight);
     self.funView.frame = CGRectMake(0, self.backcontentView.frame.size.height-60, self.backcontentView.frame.size.width, 60);
 }
 
-- (void)iconTap{
+- (void)refreshLikeAndComUI{
+   
+    self.likeL.text = self.model.zan_num.intValue?self.model.zan_num:@"点赞";
+    self.likeImageView.image = self.model.is_zan.boolValue?UIImageNamed(@"sx_like_imgs"):UIImageNamed(@"sx_like_noimgs");
+    self.likeL.frame = CGRectMake(self.backcontentView.frame.size.width-15-GET_STRWIDTH(self.likeL.text, 12, 60), 0, GET_STRWIDTH(self.likeL.text, 12, 60), 60);
+    self.likeImageView.frame = CGRectMake(self.likeL.frame.origin.x-22, 20, 20, 20);
+    
+    self.comNumL.text = self.model.comment_num.intValue?self.model.comment_num:@"评论";
+    self.comNumL.frame = CGRectMake(self.likeImageView.frame.origin.x-22-GET_STRWIDTH(self.comNumL.text, 12, 60), 0, GET_STRWIDTH(self.comNumL.text, 12, 60), 60);
+    self.comImageView.frame = CGRectMake(self.comNumL.frame.origin.x-22, 20, 20, 20);
     
 }
 
+- (void)iconTap{
+    if (![self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]]) {
+        NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+        ctl.shopModel = self.model.shopModel;
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }else{
+        NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }
+}
+
 - (void)likeClick{
-    
+    [[NoticeTools getTopViewController] showHUD];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopDynamicZan/%@/%@",self.model.dongtaiId,self.model.is_zan.boolValue ? @"2":@"1"] Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [[NoticeTools getTopViewController] hideHUD];
+        if (success) {
+            
+            self.model.is_zan = self.model.is_zan.boolValue?@"0":@"1";
+            self.model.zan_num = [NSString stringWithFormat:@"%d",self.model.is_zan.boolValue?(self.model.zan_num.intValue+1):(self.model.zan_num.intValue-1)];
+            if (self.model.zan_num.intValue < 0) {
+                self.model.zan_num = @"0";
+            }
+            
+            [self refreshLikeAndComUI];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"SXZANshopsayNotification" object:self userInfo:@{@"dongtaiId":self.model.dongtaiId,@"is_zan":self.model.is_zan,@"zan_num":self.model.zan_num}];
+        }
+    } fail:^(NSError * _Nullable error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
 }
 
 - (void)comClick{
@@ -136,8 +212,9 @@
 - (void)deleTapT:(UILongPressGestureRecognizer *)tap{
    
     if (tap.state == UIGestureRecognizerStateBegan) {
+        BOOL isSelf = [self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]];
         LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
-        } otherButtonTitleArray:@[@"举报此内容",@"推荐此店铺"]];
+        } otherButtonTitleArray:@[isSelf?@"删除": @"举报此内容",@"推荐此店铺"]];
         sheet.delegate = self;
         [sheet show];
     }
@@ -145,17 +222,28 @@
 
 - (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
-      
+        BOOL isSelf = [self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]];
+        if (isSelf) {
+            [self deleteDt];
+        }else{
+            [self jubao];
+        }
     }else if (buttonIndex == 2){
         [self tuijiandinapu];
     }
 }
 
-- (void)tuijiandinapu{
-    [SXShopSayListModel tuijiandinapu:@"shopid"];
+- (void)jubao{
+    
 }
 
+- (void)deleteDt{
+    [SXShopSayListModel deleteDongtai:self.model.dongtaiId];
+}
 
+- (void)tuijiandinapu{
+    [SXShopSayListModel tuijiandinapu:self.model.shopModel.shopId tuijian:self.model.shopModel.is_recommend.boolValue?NO:YES];
+}
 
 - (UIImageView *)tuijianImageV{
     if (!_tuijianImageV) {
@@ -268,7 +356,26 @@
 
 - (void)imgTap:(UITapGestureRecognizer *)tap{
     UIImageView *imageV = (UIImageView *)tap.view;
-    
+    NSMutableArray *photos = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.model.img_list.count; i++) {
+        NSArray *array = [self.model.img_list[i] componentsSeparatedByString:@"?"];
+        YYPhotoGroupItem *item = [YYPhotoGroupItem new];
+        if (i == 0) {
+            item.thumbView = self.sayImageView1;
+        }else if (i == 1){
+            item.thumbView = self.sayImageView2;
+        }else{
+            item.thumbView = self.sayImageView3;
+        }
+        item.largeImageURL     = [NSURL URLWithString:array[0]];
+        [photos addObject:item];
+    }
+ 
+    YYPhotoGroupView *view = [[YYPhotoGroupView alloc] initWithGroupItems:photos];
+    UIView *toView         = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+    [view presentFromImageView:imageV
+                   toContainer:toView
+                      animated:YES completion:nil];
 }
 
 - (void)awakeFromNib {

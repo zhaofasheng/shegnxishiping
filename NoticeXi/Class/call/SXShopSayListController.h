@@ -7,11 +7,13 @@
 //
 
 #import "NoticeBaseCellController.h"
+#import "NoticeCureentShopStatusModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXShopSayListController : NoticeBaseCellController
 @property (nonatomic, assign) BOOL isSelfSay;
+@property (nonatomic, strong) NoticeCureentShopStatusModel *applyModel;//申请状态
 @end
 
 NS_ASSUME_NONNULL_END

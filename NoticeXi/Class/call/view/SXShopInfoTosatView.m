@@ -107,8 +107,16 @@
 - (void)pushTap:(UITapGestureRecognizer *)tap{
     UIView *tapv = (UIView *)tap.view;
     if (tapv.tag == 0) {
+        if (self.noShop) {
+            if (self.clickIconBlock) {
+                self.clickIconBlock(YES);
+            }
+            [self cancelClick];
+            return;
+        }
         SXShopSayListController *ctl = [[SXShopSayListController alloc] init];
         ctl.isSelfSay = YES;
+        ctl.applyModel = self.applyModel;
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
     }
     else if (tapv.tag == 1) {

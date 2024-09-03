@@ -44,7 +44,7 @@
 @property (nonatomic, strong) UIView *noWorkingView;
 @property (nonatomic, assign) BOOL isExperince;
 @property (nonatomic, assign) BOOL cancelAndAutoNext;
-
+@property (nonatomic, strong) UILabel *markL;
 @property (nonatomic, strong) UILabel *infoButton;
 @property (nonatomic, strong) UILabel *orderButton;
 @property (nonatomic, strong) UILabel *comButton;
@@ -145,6 +145,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(overFinish) name:@"SHOPHASJUBAOED" object:nil];//举报结束
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(overFinish) name:@"SHOPFINISHED" object:nil];//买家结束
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequest) name:@"REFRESHMYWALLECT" object:nil];
+    //推荐通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getsaytuijianNotice:) name:@"SXtuijianshopsayNotification" object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequest) name:@"REFRESHSHOPDETAIL" object:nil];
     UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT,50, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT)];
@@ -169,6 +171,17 @@
     [self categoryCurentIndex:1];
 }
 
+- (void)getsaytuijianNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *shopid = nameDictionary[@"shopId"];
+    NSString *isTuiJian = nameDictionary[@"is_tuijian"];
+    
+    if ([self.shopModel.shopId isEqualToString:shopid]) {
+        self.shopModel.is_recommend = isTuiJian;
+    }
+ 
+}
+
 - (void)didReceiveShopOrderStatus:(NSString *)shopId{
     if ([shopId isEqualToString:self.shopModel.shopId]) {
         [self getShopRequest];
@@ -184,6 +197,7 @@
         UILabel *label = [[UILabel  alloc] initWithFrame:CGRectMake(0, 10, DR_SCREEN_WIDTH, 25)];
         label.text = @"店铺休息中，可先收藏店铺噢";
         label.font = EIGHTEENTEXTFONTSIZE;
+        self.markL = label;
         label.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
         label.textAlignment = NSTextAlignmentCenter;
         [_noWorkingView addSubview:label];
@@ -192,10 +206,8 @@
 }
 
 - (void)funClick{
-  
     LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
-      
-    } otherButtonTitleArray:@[@"分享给好友",@"拉黑该店铺",@"推荐该店铺"]];
+    } otherButtonTitleArray:@[@"分享给好友",self.shopModel.is_black.boolValue?@"取消拉黑该店铺" : @"拉黑该店铺",self.shopModel.is_recommend.boolValue?@"取消推荐该店铺": @"推荐该店铺"]];
     sheet.delegate = self;
     [sheet show];
 }
@@ -204,23 +216,69 @@
     if (buttonIndex == 1) {
         [self shareClick];
     }else if (buttonIndex == 2){
-        __weak typeof(self) weakSelf = self;
-         XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定拉黑该店铺？" message:@"拉黑后，你们将互相看不到对方店铺相关内容。" sureBtn:@"取消" cancleBtn:@"拉黑" right:YES];
-        alerView.resultIndex = ^(NSInteger index) {
-            if (index == 2) {
-                [weakSelf laheishop];
-            }
-        };
-        [alerView showXLAlertView];
+        if (self.shopModel.is_black.boolValue) {
+            [self laheishop];
+        }else{
+            __weak typeof(self) weakSelf = self;
+            XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定拉黑该店铺？" message:@"拉黑后，你们将互相看不到对方店铺相关内容。" sureBtn:@"取消" cancleBtn:@"拉黑" right:YES];
+            alerView.resultIndex = ^(NSInteger index) {
+                if (index == 2) {
+                    [weakSelf laheishop];
+                }
+            };
+            [alerView showXLAlertView];
+        }
+
     }else if (buttonIndex == 3){
-        [SXShopSayListModel tuijiandinapu:self.shopModel.shopId];
+        [SXShopSayListModel tuijiandinapu:self.shopModel.shopId tuijian:self.shopModel.is_recommend.boolValue?NO:YES];
     }
 }
 
 //拉黑店铺
 - (void)laheishop{
-
+    [self showHUD];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopBlack/%@/%@",self.shopModel.shopId,self.shopModel.is_black.boolValue?@"0":@"1"] Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            if (self.shopModel.is_black.boolValue) {
+                [[NoticeTools getTopViewController] showToastWithText:@"已取消拉黑"];
+            }else{
+                [[NoticeTools getTopViewController] showToastWithText:@"已拉黑"];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"SXlaheishopNotification" object:self userInfo:@{@"shopId":self.shopModel.shopId}];
+            }
+            self.shopModel.is_black = self.shopModel.is_black.boolValue?@"0":@"1";
+            self.aboutVC.shopModel = self.shopModel;
+            [self refreshLhaeiUI];
+        }
+        [self hideHUD];
+    } fail:^(NSError * _Nullable error) {
+        [self hideHUD];
+    }];
 }
+
+- (void)refreshLhaeiUI{
+    if (self.shopModel.operate_status.intValue > 1) {
+        _noWorkingView.hidden = YES;
+    }else{
+        self.noWorkingView.hidden = NO;
+        self.markL.text = @"店铺休息中，可先收藏店铺噢";
+    }
+    if (self.shopModel.is_black.boolValue) {
+        self.noWorkingView.hidden = NO;
+        [self.categoryView setDefaultSelectedIndex:0];
+        self.comButton.hidden = YES;
+        self.infoButton.hidden = YES;
+        self.orderButton.hidden = YES;
+        [self.categoryView reloadData];
+        self.markL.text = @"存在拉黑关系，无法查看店铺内容";
+    }else{
+        [self.categoryView setDefaultSelectedIndex:1];
+        self.comButton.hidden = NO;
+        self.infoButton.hidden = NO;
+        self.orderButton.hidden = NO;
+        [self.categoryView reloadData];
+    }
+}
+
 
 //分享店铺
 - (void)shareClick{
@@ -340,7 +398,9 @@
                 _noWorkingView.hidden = YES;
             }else{
                 self.noWorkingView.hidden = NO;
+                self.markL.text = @"店铺休息中，可先收藏店铺噢";
             }
+            [self refreshLhaeiUI];
         }
         [self hideHUD];
     } fail:^(NSError * _Nullable error) {
@@ -655,7 +715,9 @@
 }
 
 - (NSInteger)numberOfListsInPagerView:(JXPagerView *)pagerView {
-
+    if (self.shopModel.is_black.boolValue) {
+        return 1;
+    }
     return self.titles.count;
     
     

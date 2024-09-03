@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "NoticeMyShopModel.h"
+#import "NoticeCureentShopStatusModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXShopInfoTosatView : UIView
+@property (nonatomic, strong) NoticeCureentShopStatusModel *applyModel;//申请状态
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) NoticeMyShopModel *shopModel;
 @property (nonatomic, assign) BOOL noShop;

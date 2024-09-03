@@ -75,7 +75,22 @@
     }else{
         self.collectionView.frame = CGRectMake(0, 43, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-44-43);
     }
+    
+    //拉黑通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getshoplaheiNotice:) name:@"SXlaheishopNotification" object:nil];
 }
+
+- (void)getshoplaheiNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *shopid = nameDictionary[@"shopId"];
+    for (NoticeMyShopModel *shopM in self.dataArr) {
+        if ([shopM.shopId isEqualToString:shopid]) {
+            [self.dataArr removeObject:shopM];
+        }
+    }
+    [self.collectionView reloadData];
+}
+
 
 - (void)searchClick{
 

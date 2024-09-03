@@ -213,6 +213,7 @@
     if (!self.comArr.count) {
         [self request];
     }
+ 
     [self.tableView reloadData];
 }
 

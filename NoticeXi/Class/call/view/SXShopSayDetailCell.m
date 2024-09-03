@@ -45,7 +45,7 @@
         self.timeL.font = TWOTEXTFONTSIZE;
         self.timeL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
         self.timeL.textAlignment = NSTextAlignmentRight;
-        self.timeL.text = @"1分钟前";
+     
         [self.funView addSubview:self.timeL];
     }
     return self;
@@ -55,9 +55,26 @@
     _model = model;
     [self refreshRemove];
     
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.shopModel.shop_avatar_url]];
+    self.shopNameL.text = model.shopModel.shop_name;
+    self.shopNameL.frame = CGRectMake(44, 22, GET_STRWIDTH(model.shopModel.shop_name, 17, 22), 22);
+    self.timeL.text = model.created_atTime;
     //是否有认证
+    if (model.shopModel.is_certified.boolValue) {//认证过
+        self.markImageView.hidden = NO;
+    }
     
     //是否有性别
+    if (model.shopModel.sex.intValue) {
+        self.sexImageView.hidden = NO;
+        if (model.shopModel.is_certified.boolValue) {
+            self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.markImageView.frame), 25, 16, 16);
+        }else{
+            self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.shopNameL.frame), 25, 16, 16);
+        }
+        self.sexImageView.image = model.shopModel.sex.intValue == 1? UIImageNamed(@"sx_shop_male") : UIImageNamed(@"sx_shop_fale");//sx_shop_fale女
+    }
+    
     
     //是否有文案
     if (model.contentHeight > 0 && model.content) {
@@ -68,12 +85,36 @@
     
     //是否存在图片
     if (model.hasImageV) {
-        
+        if (model.img_list.count) {
+            self.sayImageView1.hidden = NO;
+            self.sayImageView1.frame = CGRectMake(0, 66+self.model.longcontentHeight+10, self.imageHeight, self.imageHeight);
+            [self.sayImageView1 sd_setImageWithURL:[NSURL URLWithString:model.img_list[0]]];
+        }
+        if (model.img_list.count >= 2) {
+            self.sayImageView2.hidden = NO;
+            self.sayImageView2.frame = CGRectMake(CGRectGetMaxX(self.sayImageView1.frame)+5, 66+self.model.longcontentHeight+10, self.imageHeight, self.imageHeight);
+            [self.sayImageView2 sd_setImageWithURL:[NSURL URLWithString:model.img_list[1]]];
+        }
+        if (model.img_list.count >= 3) {
+            self.sayImageView3.hidden = NO;
+            self.sayImageView3.frame = CGRectMake(CGRectGetMaxX(self.sayImageView2.frame)+5, 66+self.model.longcontentHeight+10, self.imageHeight, self.imageHeight);
+            [self.sayImageView3 sd_setImageWithURL:[NSURL URLWithString:model.img_list[2]]];
+        }
     }
     
-    //是否有人推荐
-    self.tuijianImageV.hidden = NO;
-    self.tuijianL.hidden = NO;
+    if (model.shopModel.recommend_num.intValue) {
+        self.tuijianImageV.hidden = NO;
+        self.tuijianL.hidden = NO;
+        if (model.shopModel.is_recommend.boolValue) {//自己推荐过
+            if ((model.shopModel.recommend_num.intValue - 1) > 0) {
+                self.tuijianL.text = [NSString stringWithFormat:@"我和%d人推荐此店铺",model.shopModel.recommend_num.intValue-1];
+            }else{
+                self.tuijianL.text = @"我推荐此店铺";
+            }
+        }else{
+            self.tuijianL.text = [NSString stringWithFormat:@"%d人推荐此店铺",model.shopModel.recommend_num.intValue];
+        }
+    }
     
 
     self.backcontentView.frame = CGRectMake(15, 10, DR_SCREEN_WIDTH-30, 66+60+(model.hasImageV?(self.imageHeight+10):0)+model.longcontentHeight);
@@ -189,7 +230,26 @@
 
 - (void)imgTap:(UITapGestureRecognizer *)tap{
     UIImageView *imageV = (UIImageView *)tap.view;
-    
+    NSMutableArray *photos = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.model.img_list.count; i++) {
+        NSArray *array = [self.model.img_list[i] componentsSeparatedByString:@"?"];
+        YYPhotoGroupItem *item = [YYPhotoGroupItem new];
+        if (i == 0) {
+            item.thumbView = self.sayImageView1;
+        }else if (i == 1){
+            item.thumbView = self.sayImageView2;
+        }else{
+            item.thumbView = self.sayImageView3;
+        }
+        item.largeImageURL     = [NSURL URLWithString:array[0]];
+        [photos addObject:item];
+    }
+ 
+    YYPhotoGroupView *view = [[YYPhotoGroupView alloc] initWithGroupItems:photos];
+    UIView *toView         = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+    [view presentFromImageView:imageV
+                   toContainer:toView
+                      animated:YES completion:nil];
 }
 
 - (void)awakeFromNib {

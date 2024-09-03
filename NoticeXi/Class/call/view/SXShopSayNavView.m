@@ -30,18 +30,30 @@
 
 - (void)setModel:(SXShopSayListModel *)model{
     _model = model;
-    
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.shopModel.shop_avatar_url]];
+    self.shopNameL.text = model.shopModel.shop_name;
+    self.shopNameL.frame = CGRectMake(44, 0, GET_STRWIDTH(model.shopModel.shop_name, 17, 22), self.frame.size.height);
     //是否有认证
+    if (model.shopModel.is_certified.boolValue) {//认证过
+        self.markImageView.hidden = NO;
+    }
     
     //是否有性别
-    
-
+    if (model.shopModel.sex.intValue) {
+        self.sexImageView.hidden = NO;
+        if (model.shopModel.is_certified.boolValue) {
+            self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.markImageView.frame), (self.frame.size.height-16)/2, 16, 16);
+        }else{
+            self.sexImageView.frame = CGRectMake(CGRectGetMaxX(self.shopNameL.frame), (self.frame.size.height-16)/2, 16, 16);
+        }
+        self.sexImageView.image = model.shopModel.sex.intValue == 1? UIImageNamed(@"sx_shop_male") : UIImageNamed(@"sx_shop_fale");//sx_shop_fale女
+    }
 }
 
 
 - (UIImageView *)markImageView{
     if (!_markImageView) {
-        _markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxY(self.shopNameL.frame), 25, 16, 16)];
+        _markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxY(self.shopNameL.frame), (self.frame.size.height-16)/2, 16, 16)];
         _markImageView.image = UIImageNamed(@"sxrenztub_img");
         [self addSubview:_markImageView];
     }
@@ -49,7 +61,7 @@
 }
 - (UIImageView *)sexImageView{
     if (!_sexImageView) {
-        _sexImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.shopNameL.frame)+2, 25,16, 16)];
+        _sexImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxY(self.shopNameL.frame), (self.frame.size.height-16)/2, 16, 16)];
         _sexImageView.image = UIImageNamed(@"sx_shop_male");//sx_shop_fale女
         [self addSubview:_sexImageView];
     }

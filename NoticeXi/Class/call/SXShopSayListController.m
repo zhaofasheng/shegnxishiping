@@ -53,6 +53,77 @@
         self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT);
         self.navBarView.titleL.text = @"店铺动态";
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:@"NOTICESHOPSAYSEND" object:nil];
+    //获取点赞通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getsayNotice:) name:@"SXZANshopsayNotification" object:nil];
+    //删除动态
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getsaydeleteNotice:) name:@"SXDeleteshopsayNotification" object:nil];
+    //推荐通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getsaytuijianNotice:) name:@"SXtuijianshopsayNotification" object:nil];
+    //拉黑通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getshoplaheiNotice:) name:@"SXlaheishopNotification" object:nil];
+}
+
+- (void)getshoplaheiNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *shopid = nameDictionary[@"shopId"];
+    for (SXShopSayListModel *sayM in self.dataArr) {
+        if ([sayM.shopModel.shopId isEqualToString:shopid]) {
+            [self.dataArr removeObject:sayM];
+        }
+    }
+    [self.tableView reloadData];
+}
+
+- (void)getsaytuijianNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *shopid = nameDictionary[@"shopId"];
+    NSString *isTuiJian = nameDictionary[@"is_tuijian"];
+    for (SXShopSayListModel *sayM in self.dataArr) {
+        if ([sayM.shopModel.shopId isEqualToString:shopid]) {
+            sayM.shopModel.is_recommend = isTuiJian;
+            if (isTuiJian.boolValue) {
+                sayM.shopModel.recommend_num = [NSString stringWithFormat:@"%d",sayM.shopModel.recommend_num.intValue+1];
+            }else{
+                sayM.shopModel.recommend_num = [NSString stringWithFormat:@"%d",sayM.shopModel.recommend_num.intValue-1];
+            }
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
+- (void)getsaydeleteNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *dtid = nameDictionary[@"dongtaiId"];
+    for (SXShopSayListModel *sayM in self.dataArr) {
+        if ([sayM.dongtaiId isEqualToString:dtid]) {
+            [self.dataArr removeObject:sayM];
+            [self.tableView reloadData];
+            break;
+        }
+    }
+}
+
+- (void)getsayNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *dtid = nameDictionary[@"dongtaiId"];
+    NSString *iszan = nameDictionary[@"is_zan"];
+    NSString *zanNum = nameDictionary[@"zan_num"];
+    for (SXShopSayListModel *sayM in self.dataArr) {
+        if ([sayM.dongtaiId isEqualToString:dtid]) {
+            sayM.is_zan = iszan;
+            sayM.zan_num = zanNum;
+            [self.tableView reloadData];
+            break;
+        }
+    }
+}
+
+- (void)refresh{
+    self.isDown = YES;
+    self.pageNo = 1;
+    [self request];
 }
 
 - (void)createRefesh{
@@ -81,8 +152,8 @@
     
     NSString *url = @"";
     
-    url = [NSString stringWithFormat:@"video/list?pageNo=%ld",self.pageNo];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    url = [NSString stringWithFormat:@"shop/dynamic?pageNo=%ld",self.pageNo];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         if (success) {
@@ -96,7 +167,6 @@
          
             for (NSDictionary *dic in dict[@"data"]) {
                 SXShopSayListModel *sayM = [SXShopSayListModel mj_objectWithKeyValues:dic];
-                sayM.content = @"dlfjdslfs lfjslfjsalfjslafjlskafj;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnskj fl;ksjflsakjflsk jfaksjfl;ksajfldsajfl kjsalkfjdsa lkfjldsak fjads;lkfj ;sakljf ;kj ";
                 sayM.cellHeight = 66 + 70 + sayM.contentHeight + (sayM.hasImageV?(self.imageViewHeight+10):0);
                 [self.dataArr addObject:sayM];
             }
@@ -171,6 +241,14 @@
 }
 
 - (void)sendClick{
+    if (!self.applyModel) {
+        [self showToastWithText:@"正在获取店铺信息，请稍后"];
+        return;
+    }
+    if (self.applyModel.status != 6) {//审核通过
+        [self showToastWithText:@"店主才能使用此功能"];
+        return;
+    }
     NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
     NSMutableArray *alreadyArr = [NoticeSaveVoiceTools getVoiceArrary];
     if (alreadyArr.count) {

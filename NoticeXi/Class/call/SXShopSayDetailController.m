@@ -11,10 +11,13 @@
 #import "SXShopSayDetailSection.h"
 #import "SXShopSayNavView.h"
 #import "SXShopSendCommentView.h"
+
 @interface SXShopSayDetailController ()<LCActionSheetDelegate>
+
 @property (nonatomic, strong) SXShopSayNavView *shopInfoView;
 @property (nonatomic, assign) CGFloat imageViewHeight;
 @property (nonatomic, strong) SXShopSendCommentView *commentSendView;
+
 @end
 
 @implementation SXShopSayDetailController
@@ -44,27 +47,65 @@
     self.commentSendView = [[SXShopSendCommentView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, 50)];
     self.commentSendView.model = self.model;
     [self.view addSubview:self.commentSendView];
+    //删除动态
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getsaydeleteNotice:) name:@"SXDeleteshopsayNotification" object:nil];
+    //推荐通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getsaytuijianNotice:) name:@"SXtuijianshopsayNotification" object:nil];
+    
+}
+
+- (void)getsaytuijianNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *shopid = nameDictionary[@"shopId"];
+    NSString *isTuiJian = nameDictionary[@"is_tuijian"];
+    if ([self.model.shopModel.shopId isEqualToString:shopid]) {
+        self.model.shopModel.is_recommend = isTuiJian;
+        if (isTuiJian.boolValue) {
+            self.model.shopModel.recommend_num = [NSString stringWithFormat:@"%d",self.model.shopModel.recommend_num.intValue+1];
+        }else{
+            self.model.shopModel.recommend_num = [NSString stringWithFormat:@"%d",self.model.shopModel.recommend_num.intValue-1];
+        }
+        
+        [self.tableView reloadData];
+    }
+ 
+}
+
+- (void)getsaydeleteNotice:(NSNotification*)notification{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)actionClick{
+    BOOL isSelf = [self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]];
     LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
-    } otherButtonTitleArray:@[@"举报此内容",@"推荐此店铺"]];
+    } otherButtonTitleArray:@[isSelf?@"删除": @"举报此内容",self.model.shopModel.is_recommend.boolValue?@"取消推荐此店铺":@"推荐此店铺"]];
     sheet.delegate = self;
     [sheet show];
 }
-
 - (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
-      
+        BOOL isSelf = [self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]];
+        if (isSelf) {
+            [self deleteDt];
+        }else{
+            [self jubao];
+        }
     }else if (buttonIndex == 2){
         [self tuijiandinapu];
     }
 }
 
-- (void)tuijiandinapu{
-    [SXShopSayListModel tuijiandinapu:@"shopid"];
+- (void)jubao{
+    
 }
 
+- (void)deleteDt{
+    [SXShopSayListModel deleteDongtai:self.model.dongtaiId];
+}
+
+- (void)tuijiandinapu{
+    [SXShopSayListModel tuijiandinapu:self.model.shopModel.shopId tuijian:self.model.shopModel.is_recommend.boolValue?NO:YES];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
@@ -78,7 +119,6 @@
     }
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         SXShopSayListModel *sayM = self.model;
@@ -86,9 +126,7 @@
     }else{
         return 0;
     }
-
 }
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return section == 0?0:40;
@@ -112,11 +150,11 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-
     if (scrollView.contentOffset.y > 56) {
         self.shopInfoView.hidden = NO;
     }else{
         self.shopInfoView.hidden = YES;
     }
 }
+
 @end

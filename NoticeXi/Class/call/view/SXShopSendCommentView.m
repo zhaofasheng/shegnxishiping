@@ -85,30 +85,36 @@
 }
 
 - (void)likeClick{
-//    [[NoticeTools getTopViewController] showHUD];
-//    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-//    [parm setObject:self.videoModel.is_zan.boolValue ? @"2":@"1" forKey:@"type"];
-//    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"videoZan/%@",self.videoModel.vid] Accept:@"application/vnd.shengxi.v5.8.5+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-//        [[NoticeTools getTopViewController] hideHUD];
-//        if (success) {
-//            
-//            self.videoModel.is_zan = self.videoModel.is_zan.boolValue?@"0":@"1";
-//            self.videoModel.zan_num = [NSString stringWithFormat:@"%d",self.videoModel.is_zan.boolValue?(self.videoModel.zan_num.intValue+1):(self.videoModel.zan_num.intValue-1)];
-//            if (self.videoModel.zan_num.intValue < 0) {
-//                self.videoModel.zan_num = @"0";
-//            }
-//            
-//            [self refreshZanUI];
-//            
-//            [[NSNotificationCenter defaultCenter]postNotificationName:@"SXZANvideoNotification" object:self userInfo:@{@"videoId":self.videoModel.vid,@"is_zan":self.videoModel.is_zan,@"zan_num":self.videoModel.zan_num}];
-//        }
-//    } fail:^(NSError * _Nullable error) {
-//        [[NoticeTools getTopViewController] hideHUD];
-//    }];
+    [[NoticeTools getTopViewController] showHUD];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopDynamicZan/%@/%@",self.model.dongtaiId,self.model.is_zan.boolValue ? @"2":@"1"] Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        [[NoticeTools getTopViewController] hideHUD];
+        if (success) {
+            
+            self.model.is_zan = self.model.is_zan.boolValue?@"0":@"1";
+            self.model.zan_num = [NSString stringWithFormat:@"%d",self.model.is_zan.boolValue?(self.model.zan_num.intValue+1):(self.model.zan_num.intValue-1)];
+            if (self.model.zan_num.intValue < 0) {
+                self.model.zan_num = @"0";
+            }
+            
+            [self refreshLikeAndComUI];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"SXZANshopsayNotification" object:self userInfo:@{@"dongtaiId":self.model.dongtaiId,@"is_zan":self.model.is_zan,@"zan_num":self.model.zan_num}];
+        }
+    } fail:^(NSError * _Nullable error) {
+        [[NoticeTools getTopViewController] hideHUD];
+    }];
 }
 
 
 - (void)setModel:(SXShopSayListModel *)model{
     _model = model;
+    [self refreshLikeAndComUI];
+}
+
+- (void)refreshLikeAndComUI{
+    self.likeL.text = self.model.zan_num.intValue?self.model.zan_num:@"点赞";
+    self.likeImageView.image = self.model.is_zan.boolValue?UIImageNamed(@"sx_like_imgs"):UIImageNamed(@"sx_shopsaylikefull_img");
+
+    self.comNumL.text = self.model.comment_num.intValue?self.model.comment_num:@"评论";
 }
 @end

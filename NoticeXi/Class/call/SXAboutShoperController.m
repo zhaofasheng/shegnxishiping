@@ -74,8 +74,8 @@
         }
     }
     
-    if (_contentView.hidden) {
-        self.tableView.tableHeaderView = self.nodataL;
+    if (_contentView.hidden || self.shopModel.is_black.boolValue) {
+        self.tableView.tableHeaderView =self.shopModel.is_black.boolValue?nil: self.nodataL;
     }else{
         self.headerView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, self.contentView.frame.size.height+10);
         self.tableView.tableHeaderView = self.headerView;
@@ -85,6 +85,7 @@
 
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
+    
     if (shopModel.tale && shopModel.tale.length && shopModel.tagsTextArr.count) {//故事和标签都存在
         
         CGFloat tagHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tagString isJiacu:NO];
@@ -123,13 +124,14 @@
         }
     }
     
-    if (_contentView.hidden) {
-
+    if (_contentView.hidden || shopModel.is_black.boolValue) {
+        self.tableView.tableHeaderView = nil;
     }else{
         self.headerView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, self.contentView.frame.size.height+10);
         self.tableView.tableHeaderView = self.headerView;
     }
     [self.tableView reloadData];
+   
 }
 
 - (UIView *)contentView{

@@ -248,7 +248,8 @@
                 self.infoView.noShop = NO;
                 [self getShopRequest];
             }
-            
+            self.sayListVC.applyModel = self.applyModel;
+            self.infoView.applyModel = self.applyModel;
         }
     } fail:^(NSError * _Nullable error) {
         [[NoticeTools getTopViewController] showToastWithText:error.debugDescription];
