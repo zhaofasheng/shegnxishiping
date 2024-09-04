@@ -20,7 +20,6 @@
         [self.contentView addSubview:label];
         _mainTitleLabel = label;
         
-        
     }
     return self;
 }

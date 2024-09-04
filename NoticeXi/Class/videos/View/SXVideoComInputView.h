@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIButton *sendButton;
 @property (nonatomic, assign) BOOL isresiger;
 @property (nonatomic, assign) BOOL hasClick;
+@property (nonatomic, assign) BOOL noNeedkC;
 @property (nonatomic, strong) NSString * __nullable commentId;//存在就是给留言留言，不存在就是留言
 @property (nonatomic, assign) BOOL needBack;
 @property (nonatomic, strong) NSMutableArray *studyArr;

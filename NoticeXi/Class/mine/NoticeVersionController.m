@@ -59,26 +59,28 @@
             contentL.numberOfLines = 0;
             contentL.frame = CGRectMake(20, 20, contentView.frame.size.width-40, [NoticeTools getSpaceLabelHeight:newMessage withFont:TWOTEXTFONTSIZE withWidth:contentL.frame.size.width]);
             contentView.contentSize = CGSizeMake(contentView.frame.size.width, contentL.frame.size.height);
+            
+            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-243)/2,DR_SCREEN_HEIGHT-74-56, 243, 56)];
+            [btn setAllCorner:28];
+            [self.view addSubview:btn];
+            NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];// 软件的当前版本
+            if ([lastestVersion compare:currentVersion] == NSOrderedDescending) {
+                [btn setTitle:@"去更新" forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
+                btn.titleLabel.font = XGEightBoldFontSize;
+                btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+                [btn addTarget:self action:@selector(reInstall) forControlEvents:UIControlEventTouchUpInside];
+                
+            }else{
+                [btn setTitle:@"你已是最新版本" forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
+                btn.titleLabel.font = XGEightBoldFontSize;
+                btn.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];
+            }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
     }];
-    
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-243)/2,DR_SCREEN_HEIGHT-74-56, 243, 56)];
-    if (self.hasNewVersion) {
-        [btn setTitle:@"去更新" forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor colorWithHexString:@"#FFFFFF"] forState:UIControlStateNormal];
-        btn.titleLabel.font = XGEightBoldFontSize;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
-        [btn addTarget:self action:@selector(reInstall) forControlEvents:UIControlEventTouchUpInside];
-    }else{
-        [btn setTitle:@"你已是最新版本" forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor colorWithHexString:@"#E1E4F0"] forState:UIControlStateNormal];
-        btn.titleLabel.font = XGEightBoldFontSize;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];
-        
-    }
-    [btn setAllCorner:28];
-    [self.view addSubview:btn];
+
 }
 
 - (void)reInstall{

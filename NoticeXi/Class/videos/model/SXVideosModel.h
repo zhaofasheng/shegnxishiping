@@ -75,6 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *compilation_id;//合集id
 @property (nonatomic, strong) NSString *compilation_name;//合集名称
+
 @end
 
 NS_ASSUME_NONNULL_END

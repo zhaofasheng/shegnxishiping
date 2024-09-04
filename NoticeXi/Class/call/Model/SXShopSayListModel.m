@@ -7,7 +7,7 @@
 //
 
 #import "SXShopSayListModel.h"
-
+#import "NSDate+GFCalendar.h"
 @implementation SXShopSayListModel
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName
@@ -86,5 +86,29 @@
     };
     [alerView showXLAlertView];
 
+}
+
+- (void)setList:(NSArray *)list{
+    _list = list;
+    self.dtArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in list) {
+        SXShopSayListModel *model = [SXShopSayListModel mj_objectWithKeyValues:dic];
+        [self.dtArr addObject:model];
+    }
+}
+
+- (void)setTimestamp:(NSString *)timestamp{
+    _timestamp = timestamp;
+    NSString *year = [NoticeTools timeDataAppointFormatterWithTime:timestamp.integerValue appointStr:@"YYYY"];
+    NSString *month = [NoticeTools timeDataAppointFormatterWithTime:timestamp.integerValue appointStr:@"MM"];
+    NSString *day = [NoticeTools timeDataAppointFormatterWithTime:timestamp.integerValue appointStr:@"dd"];
+    
+    NSString *allStr = @"";
+    if (year.intValue < [[NSDate date] dateYear]) {//小于今年
+        allStr = [NSString stringWithFormat:@"%@ / %@ / %@",day,month,year];
+    }else{
+        allStr = [NSString stringWithFormat:@"%@ / %@",day,month];
+    }
+    self.timeString = [DDHAttributedMode setJiaCuString:allStr setSize:18 setLengthString:day beginSize:0];
 }
 @end

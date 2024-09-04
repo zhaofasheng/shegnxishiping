@@ -11,6 +11,7 @@
 #import "NoticeSaveVoiceTools.h"
 #import "SXShopSayCell.h"
 #import "SXShopSayDetailController.h"
+#import "NoticeLoginViewController.h"
 @interface SXShopSayListController ()
 @property (nonatomic, strong) UIView *noListView;
 @property (nonatomic, assign) CGFloat imageViewHeight;
@@ -62,6 +63,22 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getsaytuijianNotice:) name:@"SXtuijianshopsayNotification" object:nil];
     //拉黑通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getshoplaheiNotice:) name:@"SXlaheishopNotification" object:nil];
+    //动态评论数量通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getshopComNumNotice:) name:@"shopSayCOMNumberNotification" object:nil];
+
+}
+
+- (void)getshopComNumNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *dtid = nameDictionary[@"dontaiId"];
+    NSString *num = nameDictionary[@"commentNum"];
+    for (SXShopSayListModel *sayM in self.dataArr) {
+        if ([sayM.dongtaiId isEqualToString:dtid]) {
+            sayM.comment_num = num;
+            [self.tableView reloadData];
+            break;
+        }
+    }
 }
 
 - (void)getshoplaheiNotice:(NSNotification*)notification{
@@ -83,6 +100,7 @@
         if ([sayM.shopModel.shopId isEqualToString:shopid]) {
             sayM.shopModel.is_recommend = isTuiJian;
             if (isTuiJian.boolValue) {
+                
                 sayM.shopModel.recommend_num = [NSString stringWithFormat:@"%d",sayM.shopModel.recommend_num.intValue+1];
             }else{
                 sayM.shopModel.recommend_num = [NSString stringWithFormat:@"%d",sayM.shopModel.recommend_num.intValue-1];
@@ -152,7 +170,7 @@
     
     NSString *url = @"";
     
-    url = [NSString stringWithFormat:@"shop/dynamic?pageNo=%ld",self.pageNo];
+    url = self.isSelfSay? [NSString stringWithFormat:@"shop/dynamic/byUser?pageNo=%ld",self.pageNo]: [NSString stringWithFormat:@"shop/dynamic?pageNo=%ld",self.pageNo];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
@@ -175,7 +193,7 @@
             if (self.dataArr.count) {
                 self.tableView.tableFooterView = nil;
                 if (!self.isSelfSay) {
-                    self.sendView.frame = CGRectMake(DR_SCREEN_WIDTH-80-10,CGRectGetMaxY(self.tableView.frame)-20-36, 80, 36);
+                    self.sendView.frame = CGRectMake(DR_SCREEN_WIDTH-80-10,CGRectGetMaxY(self.tableView.frame)-20-36-15, 80, 36);
                     [self.view addSubview:self.sendView];
                 }
              
@@ -194,6 +212,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
     SXShopSayDetailController *ctl = [[SXShopSayDetailController alloc] init];
     ctl.model = self.dataArr[indexPath.row];
     [self.navigationController pushViewController:ctl animated:YES];
@@ -241,6 +264,11 @@
 }
 
 - (void)sendClick{
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
     if (!self.applyModel) {
         [self showToastWithText:@"正在获取店铺信息，请稍后"];
         return;

@@ -211,7 +211,7 @@
     self.isresiger = NO;
     
     kebordHeight = keyboardF.size.height;
-    self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-44,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
+    self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-(self.noNeedkC?0: 44),DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
     self.addStudyView.frame = CGRectMake(15, self.frame.size.height-44, 160, 44);
     UIWindow *rootWindow = [UIApplication sharedApplication].keyWindow;
 
@@ -225,9 +225,16 @@
     self.backView.hidden = YES;
     self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-self.frame.size.height-BOTTOM_HEIGHT, DR_SCREEN_WIDTH, self.frame.size.height);
     kebordHeight = 0;
-    self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-44,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
+    self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5- (self.noNeedkC?0: 44),DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
     self.addStudyView.frame = CGRectMake(15, self.frame.size.height-44, 160, 44);
 
+}
+
+- (void)setNoNeedkC:(BOOL)noNeedkC{
+    _noNeedkC = noNeedkC;
+    if (noNeedkC) {
+        [self.addStudyView removeFromSuperview];
+    }
 }
 
 - (void)clearView{
@@ -304,13 +311,13 @@
         return;
     }
     [UIView animateWithDuration:0.1 animations:^{
-        self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-(14+height+44)-self->kebordHeight-(self->kebordHeight>0?0:(50+44)), DR_SCREEN_WIDTH,14+height+44);
+        self.frame = CGRectMake(0, DR_SCREEN_HEIGHT-(14+height+(self.noNeedkC?0: 44))-self->kebordHeight-(self->kebordHeight>0?0:(50+(self.noNeedkC?0: 44))), DR_SCREEN_WIDTH,14+height+(self.noNeedkC?0: 44));
 
         if (self.commentId) {
             //self.replyToView.frame = CGRectMake(0, self.frame.origin.y-30, DR_SCREEN_WIDTH, 30);
         }
         textView.frame = frame;
-        self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-44,DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
+        self.sendButton.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame),self.frame.size.height-49.5-(self.noNeedkC?0: 44),DR_SCREEN_WIDTH-CGRectGetMaxX(self.contentView.frame),49.5);
         self.addStudyView.frame = CGRectMake(15, self.frame.size.height-44, 160, 44);
     } completion:nil];
 }

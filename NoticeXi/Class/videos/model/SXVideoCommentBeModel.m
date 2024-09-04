@@ -10,6 +10,11 @@
 
 @implementation SXVideoCommentBeModel
 
+- (void)setDynamic:(NSDictionary *)dynamic{
+    _dynamic = dynamic;
+    self.dynamicModel = [SXShopSayListModel mj_objectWithKeyValues:dynamic];
+}
+
 - (void)setCreated_at:(NSString *)created_at{
     _created_at = [SXTools updateTimeForRowWithNoHourAndMin:created_at];
 }

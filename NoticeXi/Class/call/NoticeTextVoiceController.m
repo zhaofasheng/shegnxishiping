@@ -109,6 +109,7 @@
 
     [self comeFromSave];
     self.canSend = YES;
+    [self getShopRequest];
 }
 
 
@@ -137,6 +138,7 @@
             str = @"店铺被处罚中，请结束后再使用";
         }
         self.canSend = NO;
+        [self.textView resignFirstResponder];
     }
     if (!self.canSend) {
         self.cannotSendMsg = str;
@@ -170,6 +172,7 @@
                 if (!weakSelf.moveArr.count) {
                     [weakSelf refreshHeight];
                 }
+                [weakSelf.textView resignFirstResponder];
             }
             
         };
@@ -242,11 +245,10 @@
     }
     
     self.toolsView.frame = CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50, DR_SCREEN_WIDTH, 50);
-    self.tableView.contentSize = CGSizeMake(0, [SXTools getHeightWithLineHight:0 font:16 width:DR_SCREEN_WIDTH-40 string:self.textView.text isJiacu:NO]+100+(self.imageViewS.hidden?0:self.imageViewS.frame.size.height));
+    self.tableView.contentSize = CGSizeMake(0, self.textView.frame.size.height+100+(self.moveArr.count?0:self.imageViewS.frame.size.height)+50);
 
     [self.toolsView.imgButton setImage:UIImageNamed(self.moveArr.count==3? @"senimgv_imgn":@"senimgv_img") forState:UIControlStateNormal];
     
-
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -521,15 +523,20 @@
 }
 
 - (void)sendSuccess:(BOOL)success{
-    [self showToastWithText:success?@"发布成功":@"发布失败，已保存至发布页"];
-    __weak typeof(self) weakSelf = self;
-    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
-    dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-        [weakSelf.navigationController popViewControllerAnimated:YES];
-        if (success) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICESHOPSAYSEND" object:nil];
-        }
-    });
+    if (success) {
+        [self showToastWithText:@"发布成功"];
+        __weak typeof(self) weakSelf = self;
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+            if (success) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICESHOPSAYSEND" object:nil];
+            }
+        });
+    }else{
+        [self saveTocaogao];
+    }
+
 }
 
 - (void)clearCache{

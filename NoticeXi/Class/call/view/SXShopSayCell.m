@@ -10,6 +10,7 @@
 #import "SXShopSayDetailController.h"
 #import "NoticdShopDetailForUserController.h"
 #import "NoticeMyJieYouShopController.h"
+#import "NoticeLoginViewController.h"
 @implementation SXShopSayCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -120,17 +121,20 @@
         if (model.img_list.count) {
             self.sayImageView1.hidden = NO;
             self.sayImageView1.frame = CGRectMake(15, 66+self.model.contentHeight+10, self.imageHeight, self.imageHeight);
-            [self.sayImageView1 sd_setImageWithURL:[NSURL URLWithString:model.img_list[0]]];
+            SDWebImageOptions newOptions = SDWebImageAvoidDecodeImage | SDWebImageScaleDownLargeImages | SDWebImageDecodeFirstFrameOnly;
+            [self.sayImageView1  sd_setImageWithURL:[NSURL URLWithString:model.img_list[0]] placeholderImage:GETUIImageNamed(@"img_empty") options:newOptions completed:nil];
         }
         if (model.img_list.count >= 2) {
             self.sayImageView2.hidden = NO;
             self.sayImageView2.frame = CGRectMake(CGRectGetMaxX(self.sayImageView1.frame)+5, 66+self.model.contentHeight+10, self.imageHeight, self.imageHeight);
-            [self.sayImageView2 sd_setImageWithURL:[NSURL URLWithString:model.img_list[1]]];
+            SDWebImageOptions newOptions = SDWebImageAvoidDecodeImage | SDWebImageScaleDownLargeImages | SDWebImageDecodeFirstFrameOnly;
+            [self.sayImageView2  sd_setImageWithURL:[NSURL URLWithString:model.img_list[1]] placeholderImage:GETUIImageNamed(@"img_empty") options:newOptions completed:nil];
         }
         if (model.img_list.count >= 3) {
             self.sayImageView3.hidden = NO;
             self.sayImageView3.frame = CGRectMake(CGRectGetMaxX(self.sayImageView2.frame)+5, 66+self.model.contentHeight+10, self.imageHeight, self.imageHeight);
-            [self.sayImageView3 sd_setImageWithURL:[NSURL URLWithString:model.img_list[2]]];
+            SDWebImageOptions newOptions = SDWebImageAvoidDecodeImage | SDWebImageScaleDownLargeImages | SDWebImageDecodeFirstFrameOnly;
+            [self.sayImageView3  sd_setImageWithURL:[NSURL URLWithString:model.img_list[2]] placeholderImage:GETUIImageNamed(@"img_empty") options:newOptions completed:nil];
         }
     }
     
@@ -171,6 +175,11 @@
 }
 
 - (void)iconTap{
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+        return;
+    }
     if (![self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]]) {
         NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
         ctl.shopModel = self.model.shopModel;
@@ -182,6 +191,11 @@
 }
 
 - (void)likeClick{
+    if (![NoticeTools getuserId]) {
+
+        [[NoticeTools getTopViewController] showToastWithText:@"登录才能点赞哦"];
+        return;
+    }
     [[NoticeTools getTopViewController] showHUD];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopDynamicZan/%@/%@",self.model.dongtaiId,self.model.is_zan.boolValue ? @"2":@"1"] Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         [[NoticeTools getTopViewController] hideHUD];
@@ -203,6 +217,11 @@
 }
 
 - (void)comClick{
+    if (![NoticeTools getuserId]) {
+
+        [[NoticeTools getTopViewController] showToastWithText:@"登录才能评论哦"];
+        return;
+    }
     SXShopSayDetailController *ctl = [[SXShopSayDetailController alloc] init];
     ctl.model = self.model;
     ctl.needUpCom = YES;
@@ -210,11 +229,14 @@
 }
 
 - (void)deleTapT:(UILongPressGestureRecognizer *)tap{
-   
+    if (![NoticeTools getuserId]) {
+
+        return;
+    }
     if (tap.state == UIGestureRecognizerStateBegan) {
         BOOL isSelf = [self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]];
         LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
-        } otherButtonTitleArray:@[isSelf?@"删除": @"举报此内容",@"推荐此店铺"]];
+        } otherButtonTitleArray:@[isSelf?@"删除": @"举报此内容",self.model.shopModel.is_recommend.boolValue?@"取消推荐该店铺": @"推荐此店铺"]];
         sheet.delegate = self;
         [sheet show];
     }

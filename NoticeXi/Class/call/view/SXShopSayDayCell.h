@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *backcontentView;
 @property (nonatomic, strong) UIImageView *sayImageView1;
 @property (nonatomic, strong) UILabel *numL;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

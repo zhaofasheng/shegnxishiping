@@ -52,7 +52,6 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-   
     [NoticeTools changeThemeWith:@"whiteColor"];
     
     if(@available(iOS 13.0, *)) {

@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SXShopSayDetailSection : UITableViewHeaderFooterView
+@interface SXShopSayDetailSection : UIView
 @property (nonatomic, strong) UILabel *mainTitleLabel;
 @end
 

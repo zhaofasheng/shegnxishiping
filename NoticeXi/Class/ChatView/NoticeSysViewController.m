@@ -46,7 +46,7 @@
     NoticeMessage *message = self.dataArr[indexPath.row];
     self.messageId = message.msgId;
     ////1 图书，2播客,3话题，4活动，5声昔君说，6反馈，7版本更新
-   if (message.category_id.intValue == 4){
+   if (message.category_id.intValue == 4 && ![[NoticeTools getuserId] isEqualToString:@"2"]){
         NoticeWebViewController *ctl = [[NoticeWebViewController alloc] init];
         ctl.url = message.supply;
         ctl.isFromShare = YES;
@@ -57,7 +57,7 @@
                                                                                view:self.navigationController.view];
         [self.navigationController.view.layer addAnimation:test forKey:@"pushanimation"];
         [self.navigationController pushViewController:ctl animated:NO];
-    }else if (message.category_id.intValue == 5){
+    }else if (message.category_id.intValue == 5 || [[NoticeTools getuserId] isEqualToString:@"2"]){
         self.tostView.message = message;
         [self.tostView showActiveView];
     }else if (message.category_id.intValue == 7){

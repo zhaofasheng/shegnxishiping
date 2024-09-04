@@ -10,12 +10,9 @@
 
 @implementation SXShopSayDetailCell
 
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        
+- (instancetype)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-        self.contentView.backgroundColor = self.backgroundColor;
         
         self.backcontentView = [[UIView  alloc] initWithFrame:CGRectMake(15, 10, DR_SCREEN_WIDTH-30, 0)];
      
@@ -50,6 +47,7 @@
     }
     return self;
 }
+
 
 - (void)setModel:(SXShopSayListModel *)model{
     _model = model;
@@ -250,17 +248,6 @@
     [view presentFromImageView:imageV
                    toContainer:toView
                       animated:YES completion:nil];
-}
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

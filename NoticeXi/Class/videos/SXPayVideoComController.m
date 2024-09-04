@@ -553,7 +553,6 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     }
     url = [NSString stringWithFormat:@"videoCommont/%@/%@?commentId=%@&replyId=%@&pageNo=1",self.currentPlayModel.videoId,@"1",@"0",@"0"];
   
-    
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
     
         if (success) {

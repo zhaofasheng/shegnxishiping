@@ -10,7 +10,7 @@
 #import "SXShopSayListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SXShopSayDetailCell : BaseCell
+@interface SXShopSayDetailCell : UIView
 @property (nonatomic, strong) SXShopSayListModel *model;
 @property (nonatomic, strong) UIImageView *sexImageView;
 @property (nonatomic, strong) UIImageView *iconImageView;

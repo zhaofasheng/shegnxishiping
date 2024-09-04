@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "SXShopSayListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXVideoCommentBeModel : NSObject
@@ -33,6 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *is_like;
 @property (nonatomic, strong) NSDictionary *video;
 @property (nonatomic, strong) SXVideosModel *videoModel;
+
+@property (nonatomic, strong) NSDictionary *dynamic;
+@property (nonatomic, strong) SXShopSayListModel *dynamicModel;
 @end
 
 NS_ASSUME_NONNULL_END

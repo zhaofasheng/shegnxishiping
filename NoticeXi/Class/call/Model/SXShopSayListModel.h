@@ -31,6 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *img_list;
 @property (nonatomic, assign) CGFloat cellHeight;
 
+@property (nonatomic, strong) NSString *timestamp;
+@property (nonatomic, strong) NSAttributedString *timeString;
+@property (nonatomic, strong) NSArray *list;
+@property (nonatomic, strong) NSMutableArray *dtArr;
+
 + (void)tuijiandinapu:(NSString *)shopId  tuijian:(BOOL)tuijian;
 + (void)deleteDongtai:(NSString *)dontaiId;
 @end

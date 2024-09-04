@@ -9,6 +9,7 @@
 #import "SXVideoLikeComCell.h"
 #import "NoticeUserInfoCenterController.h"
 #import "SXVideoUserCenterController.h"
+#import "NoticdShopDetailForUserController.h"
 @implementation SXVideoLikeComCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -59,9 +60,16 @@
 
 - (void)setLikeComM:(SXVideoCommentBeModel *)likeComM{
     _likeComM = likeComM;
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:likeComM.fromUserInfo.avatar_url]];
+    
+    if (likeComM.dynamicModel.dongtaiId.intValue && [likeComM.dynamicModel.shopModel.user_id isEqualToString:likeComM.fromUserInfo.userId]) {//如果是动态并且是店主点赞
+        [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:likeComM.dynamicModel.shopModel.shop_avatar_url]];
+        self.nickNameL.text = likeComM.dynamicModel.shopModel.shop_name;
+    }else{
+        [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:likeComM.fromUserInfo.avatar_url]];
+        self.nickNameL.text = likeComM.fromUserInfo.nick_name;
+    }
 
-    self.nickNameL.text = likeComM.fromUserInfo.nick_name;
+    
     self.markL.text = likeComM.tips;
     self.timeL.text = likeComM.created_at;
     if (likeComM.sysStatus.intValue == 1) {
@@ -74,24 +82,53 @@
         self.contentL.text = @"该内容已删除";
     }
     
-    if (likeComM.videoModel.screen.intValue == 1) {
-        self.videoImageView.frame = CGRectMake(DR_SCREEN_WIDTH-15-48, 15, 48, 36);
-    }else{
-        self.videoImageView.frame = CGRectMake(DR_SCREEN_WIDTH-15-48, 15, 48, 64);
-    }
-    [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:likeComM.videoModel.video_cover_url]];
     
     self.nickNameL.frame = CGRectMake(56, 12, GET_STRWIDTH(self.nickNameL.text, 16, 21), 21);
+    
     _authorL.hidden = YES;
     if (likeComM.is_author.boolValue) {
         self.authorL.hidden = NO;
         self.authorL.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame), 15, 30, 15);
     }
     
+    self.videoImageView.hidden = YES;
+    _shopL.hidden = YES;
+    if (likeComM.dynamicModel.dongtaiId.intValue && [likeComM.dynamicModel.shopModel.user_id isEqualToString:likeComM.fromUserInfo.userId]) {
+        self.shopL.hidden = NO;
+        self.shopL.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame)+2, 15, 30, 15);
+    }
+    
+    _beRelyL.hidden = YES;
+    if (likeComM.dynamicModel.dongtaiId.intValue) {
+        if (likeComM.dynamicModel.img_list.count) {
+            self.videoImageView.hidden = NO;
+            self.videoImageView.frame = CGRectMake(DR_SCREEN_WIDTH-15-48, 15, 48, 48);
+            [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:likeComM.dynamicModel.img_list[0]]];
+        }else{
+            self.beRelyL.hidden = NO;
+            self.beRelyL.text = likeComM.dynamicModel.content;
+        }
+    }else{
+        self.videoImageView.hidden = NO;
+        if (likeComM.videoModel.screen.intValue == 1) {
+            self.videoImageView.frame = CGRectMake(DR_SCREEN_WIDTH-15-48, 15, 48, 36);
+        }else{
+            self.videoImageView.frame = CGRectMake(DR_SCREEN_WIDTH-15-48, 15, 48, 64);
+        }
+        [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:likeComM.videoModel.video_cover_url]];
+    }
+    
     self.contentL.lineBreakMode = NSLineBreakByTruncatingTail;
 }
 
 - (void)userInfoTap{
+    if (self.likeComM.dynamicModel.dongtaiId.intValue && [self.likeComM.dynamicModel.shopModel.user_id isEqualToString:self.likeComM.fromUserInfo.userId]) {
+        NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+        ctl.shopModel = self.likeComM.dynamicModel.shopModel;
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+        return;
+    }
+    
     if (self.likeComM.is_author.boolValue) {
         SXVideoUserCenterController *ctl = [[SXVideoUserCenterController alloc] init];
         ctl.userModel = self.likeComM.fromUserInfo;
@@ -124,6 +161,34 @@
         [self.contentView addSubview:_authorL];
     }
     return _authorL;
+}
+
+- (UILabel *)shopL{
+    if (!_shopL) {
+        _shopL = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.nickNameL.frame), 11, 30, 15)];
+        _shopL.backgroundColor = [[UIColor colorWithHexString:@"#F0F1F5"] colorWithAlphaComponent:1];
+        [_shopL setAllCorner:15/2];
+        _shopL.text = @"店主";
+        _shopL.font = [UIFont systemFontOfSize:10];
+        _shopL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        _shopL.textAlignment = NSTextAlignmentCenter;
+        [self.contentView addSubview:_shopL];
+    }
+    return _shopL;
+}
+
+- (UILabel *)beRelyL{
+    if (!_beRelyL) {
+        _beRelyL = [[UILabel  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-48, 15, 48, 48)];
+        _beRelyL.backgroundColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];
+        [_beRelyL setAllCorner:2];
+        _beRelyL.font = [UIFont systemFontOfSize:11];
+        _beRelyL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+        _beRelyL.numberOfLines = 0;
+        _beRelyL.textAlignment = NSTextAlignmentCenter;
+        [self.contentView addSubview:_beRelyL];
+    }
+    return _beRelyL;
 }
 
 - (void)awakeFromNib {

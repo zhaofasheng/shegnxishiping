@@ -116,5 +116,7 @@
     self.likeImageView.image = self.model.is_zan.boolValue?UIImageNamed(@"sx_like_imgs"):UIImageNamed(@"sx_shopsaylikefull_img");
 
     self.comNumL.text = self.model.comment_num.intValue?self.model.comment_num:@"评论";
+    
+    self.markL.text = self.model.comment_num.intValue?@"说说我的想法...":@"成为第一条评论...";
 }
 @end

@@ -32,9 +32,16 @@
     _contentL.hidden = YES;
     _sayImageView1.hidden = YES;
     
+    _numL.hidden = YES;
     if (model.hasImageV) {//有图片
         self.sayImageView1.hidden = NO;
+        SDWebImageOptions newOptions = SDWebImageAvoidDecodeImage | SDWebImageScaleDownLargeImages | SDWebImageDecodeFirstFrameOnly;
+        [self.sayImageView1  sd_setImageWithURL:[NSURL URLWithString:model.img_list[0]] placeholderImage:GETUIImageNamed(@"img_empty") options:newOptions completed:nil];
         self.backcontentView.frame = CGRectMake(15, 0, DR_SCREEN_WIDTH-30, 84);
+        if (model.img_list.count > 1) {
+            self.numL.hidden = NO;
+            self.numL.text = [NSString stringWithFormat:@"+%ld",model.img_list.count];
+        }
     }else{
         self.backcontentView.frame = CGRectMake(15, 0, DR_SCREEN_WIDTH-30, 40);
     }
@@ -48,6 +55,18 @@
         }
         self.contentL.text = model.content;
     }
+}
+
+- (UILabel *)numL{
+    if (!_numL) {
+        _numL = [[UILabel  alloc] initWithFrame:self.sayImageView1.bounds];
+        _numL.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3];
+        _numL.font = TWOTEXTFONTSIZE;
+        _numL.textAlignment = NSTextAlignmentCenter;
+        _numL.textColor = [UIColor whiteColor];
+        [self.sayImageView1 addSubview:_numL];
+    }
+    return _numL;
 }
 
 - (UILabel *)contentL{

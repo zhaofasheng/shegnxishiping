@@ -89,7 +89,6 @@
     
     self.timeL.text = likeComM.created_at;
     
-    
     if (likeComM.sysStatus.intValue == 1) {
         self.replyL.hidden = NO;
         self.likeImageView.hidden = NO;
@@ -166,7 +165,6 @@
         self.likeImageView.image = self.likeComM.is_like.boolValue?UIImageNamed(@"sx_like_img"): UIImageNamed(@"sx_like_noimg");
     }
 }
-
 
 - (void)sendWithComment:(NSString *)comment commentId:(NSString *)commentId linkArr:(nonnull NSMutableArray *)linkArr{
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];

@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *nickNameL;
 @property (nonatomic, strong) GZLabel *contentL;
 @property (nonatomic, strong) UILabel *markL;
+@property (nonatomic, strong) UILabel *shopL;
+@property (nonatomic, strong) UILabel *beRelyL;
 @end
 
 NS_ASSUME_NONNULL_END
