@@ -69,6 +69,11 @@
         self.nickNameL.text = likeComM.fromUserInfo.nick_name;
     }
 
+    if ([likeComM.tips containsString:@"你的动态"]) {
+        self.contentL.hidden = YES;
+    }else{
+        self.contentL.hidden = NO;
+    }
     
     self.markL.text = likeComM.tips;
     self.timeL.text = likeComM.created_at;
@@ -82,6 +87,7 @@
         self.contentL.text = @"该内容已删除";
     }
     
+  
     
     self.nickNameL.frame = CGRectMake(56, 12, GET_STRWIDTH(self.nickNameL.text, 16, 21), 21);
     
@@ -98,6 +104,7 @@
         self.shopL.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame)+2, 15, 30, 15);
     }
     
+    _grayView.hidden = YES;
     _beRelyL.hidden = YES;
     if (likeComM.dynamicModel.dongtaiId.intValue) {
         if (likeComM.dynamicModel.img_list.count) {
@@ -107,6 +114,9 @@
         }else{
             self.beRelyL.hidden = NO;
             self.beRelyL.text = likeComM.dynamicModel.content;
+        }
+        if (likeComM.sysStatus.intValue != 1) {
+            self.grayView.hidden = NO;
         }
     }else{
         self.videoImageView.hidden = NO;
@@ -175,6 +185,16 @@
         [self.contentView addSubview:_shopL];
     }
     return _shopL;
+}
+
+- (UIView *)grayView{
+    if (!_grayView) {
+        _grayView = [[UIView  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-48, 15, 48, 48)];
+        [_grayView setAllCorner:4];
+        _grayView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
+        [self.contentView addSubview:_grayView];
+    }
+    return _grayView;
 }
 
 - (UILabel *)beRelyL{

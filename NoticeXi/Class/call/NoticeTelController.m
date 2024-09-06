@@ -86,6 +86,7 @@
     for (NoticeMyShopModel *shopM in self.dataArr) {
         if ([shopM.shopId isEqualToString:shopid]) {
             [self.dataArr removeObject:shopM];
+            break;
         }
     }
     [self.collectionView reloadData];

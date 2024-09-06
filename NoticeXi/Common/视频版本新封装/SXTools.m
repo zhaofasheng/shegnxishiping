@@ -403,6 +403,18 @@
     [cache synchronize];
 }
 
+
++ (void)setCanNotShowHuodong:(NSString *)huoodngid{
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+    [cache setObject:huoodngid forKey:@"huodongid"];
+    [cache synchronize];
+}
+
++ (NSString *)isCanShowHuodong{
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+    return [cache objectForKey:@"huodongid"];
+}
+
 + (void)saveLocalToken:(NSString *)token{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:token forKey:@"localtoken"];

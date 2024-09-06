@@ -36,13 +36,14 @@
 }
 
 - (void)refreshUI{
+    self.contentView.hidden = YES;
     if (self.shopModel.tale && self.shopModel.tale.length && self.shopModel.tagsTextArr.count) {//故事和标签都存在
         
         CGFloat tagHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:self.shopModel.tagString isJiacu:NO];
         CGFloat taleHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:self.shopModel.tale isJiacu:NO];
         
         self.contentView.frame = CGRectMake(15, 10, DR_SCREEN_WIDTH-30, tagHeight+taleHeight+60);
-        
+        self.contentView.hidden = NO;
         
         self.tagsL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, tagHeight);
         self.tagsL.attributedText = [SXTools getStringWithLineHight:3 string:self.shopModel.tagString];
@@ -85,7 +86,7 @@
 
 - (void)setShopModel:(NoticeMyShopModel *)shopModel{
     _shopModel = shopModel;
-    
+    self.contentView.hidden = YES;
     if (shopModel.tale && shopModel.tale.length && shopModel.tagsTextArr.count) {//故事和标签都存在
         
         CGFloat tagHeight = [SXTools getHeightWithLineHight:3 font:15 width:DR_SCREEN_WIDTH-60 string:shopModel.tagString isJiacu:NO];
@@ -93,7 +94,7 @@
         
         self.contentView.frame = CGRectMake(15, 10, DR_SCREEN_WIDTH-30, tagHeight+taleHeight+60);
         
-        
+        self.contentView.hidden = NO;
         self.tagsL.frame = CGRectMake(15, 15, DR_SCREEN_WIDTH-60, tagHeight);
         self.tagsL.attributedText = [SXTools getStringWithLineHight:3 string:shopModel.tagString];
         
@@ -125,7 +126,7 @@
     }
     
     if (_contentView.hidden || shopModel.is_black.boolValue) {
-        self.tableView.tableHeaderView = nil;
+        self.tableView.tableHeaderView =self.shopModel.is_black.boolValue?nil: self.nodataL;
     }else{
         self.headerView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, self.contentView.frame.size.height+10);
         self.tableView.tableHeaderView = self.headerView;

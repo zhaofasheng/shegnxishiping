@@ -101,7 +101,7 @@
     
     self.titles = @[@"",@"",@""];
     self.shopHeaderView = [[NoticeJieYouShopHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, imgHeight-NAVIGATION_BAR_HEIGHT-40-41-20+156)];
-    
+    self.shopHeaderView.islookSelf = NO;
     __weak typeof(self) weakSelf = self;
     self.shopHeaderView.choiceUrlBlock = ^(NSString * _Nonnull choiceUrl) {
         [weakSelf.backImageView sd_setImageWithURL:[NSURL URLWithString:choiceUrl]];
@@ -207,7 +207,7 @@
 
 - (void)funClick{
     LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
-    } otherButtonTitleArray:@[@"分享给好友",self.shopModel.is_black.boolValue?@"取消拉黑该店铺" : @"拉黑该店铺",self.shopModel.is_recommend.boolValue?@"取消推荐该店铺": @"推荐该店铺"]];
+    } otherButtonTitleArray:@[@"分享给好友",self.shopModel.is_black.intValue==1?@"取消拉黑该店铺" : @"拉黑该店铺",self.shopModel.is_recommend.boolValue?@"取消推荐该店铺": @"推荐该店铺"]];
     sheet.delegate = self;
     [sheet show];
 }
@@ -239,15 +239,14 @@
     [self showHUD];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopBlack/%@/%@",self.shopModel.shopId,self.shopModel.is_black.boolValue?@"0":@"1"] Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
-            if (self.shopModel.is_black.boolValue) {
+            if (self.shopModel.is_black.intValue == 1) {
                 [[NoticeTools getTopViewController] showToastWithText:@"已取消拉黑"];
             }else{
                 [[NoticeTools getTopViewController] showToastWithText:@"已拉黑"];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"SXlaheishopNotification" object:self userInfo:@{@"shopId":self.shopModel.shopId}];
             }
-            self.shopModel.is_black = self.shopModel.is_black.boolValue?@"0":@"1";
-            self.aboutVC.shopModel = self.shopModel;
-            [self refreshLhaeiUI];
+            [self getShopRequest];
+           
         }
         [self hideHUD];
     } fail:^(NSError * _Nullable error) {
@@ -269,7 +268,12 @@
         self.infoButton.hidden = YES;
         self.orderButton.hidden = YES;
         [self.categoryView reloadData];
-        self.markL.text = @"存在拉黑关系，无法查看店铺内容";
+        if (self.shopModel.is_black.intValue == 1) {
+            self.markL.text = @"已拉黑对方，无法查看店铺内容";
+        }else if (self.shopModel.is_black.intValue == 2){
+            self.markL.text = @"对方已拉黑你，无法查看店铺内容";
+        }
+        
     }else{
         [self.categoryView setDefaultSelectedIndex:1];
         self.comButton.hidden = NO;

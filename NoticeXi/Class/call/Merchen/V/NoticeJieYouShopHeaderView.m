@@ -31,6 +31,8 @@
         
         self.headerView = [[NoticerUserShopDetailHeaderView alloc] initWithFrame:CGRectMake(0,self.frame.size.height-156, DR_SCREEN_WIDTH, 156)];
         [self addSubview:self.headerView];
+        
+        
     }
     return self;
 }
@@ -84,6 +86,33 @@
     self.photosWall.hidden = shopModel.myShopM.photowallArr.count?NO:YES;
     self.photosWall.photos = shopModel.myShopM.photowallArr;
     self.headerView.shopModel = _shopModel.myShopM;
+    
+    _tuijianL.hidden = YES;
+    if (self.islookSelf) {
+        if (shopModel.myShopM.recommend_num.intValue) {
+            self.tuijianL.hidden = NO;
+            if (shopModel.myShopM.is_recommend.boolValue) {//自己推荐过
+                if ((shopModel.myShopM.recommend_num.intValue - 1) > 0) {
+                    self.tuijianL.text = [NSString stringWithFormat:@"我和%d人推荐此店铺",shopModel.myShopM.recommend_num.intValue-1];
+                }else{
+                    self.tuijianL.text = @"我推荐此店铺";
+                }
+            }else{
+                self.tuijianL.text = [NSString stringWithFormat:@"%d人推荐此店铺",shopModel.myShopM.recommend_num.intValue];
+            }
+        }
+    
+    }
+}
+
+- (UILabel *)tuijianL{
+    if (!_tuijianL) {
+        _tuijianL = [[UILabel  alloc] initWithFrame:CGRectMake(15, self.frame.size.height-15-40-2, 120, 40+2)];
+        _tuijianL.font = THRETEENTEXTFONTSIZE;
+        _tuijianL.textColor = [UIColor whiteColor];
+        [self addSubview:_tuijianL];
+    }
+    return _tuijianL;
 }
 
 - (NoticeShopDetailHeader *)detailHeader{
@@ -97,7 +126,7 @@
 
 - (NoticeShopPhotosWall *)photosWall{
     if (!_photosWall) {
-        _photosWall = [[NoticeShopPhotosWall  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH/2, self.frame.size.height-15-40-2-156, DR_SCREEN_WIDTH/2, 40+2)];
+        _photosWall = [[NoticeShopPhotosWall  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH/2, self.frame.size.height-15-40-2-(self.islookSelf?0: 156), DR_SCREEN_WIDTH/2, 40+2)];
         _photosWall.canChoice = YES;
         __weak typeof(self) weakSelf = self;
         _photosWall.choiceUrlBlock = ^(NSString * _Nonnull choiceUrl) {

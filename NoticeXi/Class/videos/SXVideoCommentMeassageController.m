@@ -9,6 +9,7 @@
 #import "SXVideoCommentMeassageController.h"
 #import "SXVideoBeReplyComCell.h"
 #import "SXPlayFullListController.h"
+#import "SXShopSayDetailController.h"
 @interface SXVideoCommentMeassageController ()
 
 @end
@@ -31,8 +32,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     SXVideoCommentBeModel *model = self.dataArr[indexPath.row];
-    if (model.sysStatus.intValue == 3) {
+    if (model.sysStatus.intValue != 1) {
         [self showToastWithText:@"该内容已删除"];
+        return;
+    }
+    
+    if (model.dynamicModel.dongtaiId.intValue) {
+        SXShopSayDetailController *ctl = [[SXShopSayDetailController alloc] init];
+        ctl.type = @"2";
+        ctl.commentId = model.commentId;
+        ctl.replyId = model.replyId;
+        SXShopSayListModel *sayM = model.dynamicModel;
+        ctl.model = sayM;
+        [self.navigationController pushViewController:ctl animated:YES];
         return;
     }
     SXPlayFullListController *ctl = [[SXPlayFullListController alloc] init];
@@ -102,7 +114,7 @@
     NSString *url = @"";
     
     url = [NSString stringWithFormat:@"messages/%@/2?pageNo=%ld",[NoticeTools getuserId],self.pageNo];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         if (success) {

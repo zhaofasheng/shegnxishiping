@@ -1554,6 +1554,7 @@
 		FEA1AA652C6AF9620059B05B /* SXMyKcComController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA642C6AF9620059B05B /* SXMyKcComController.m */; };
 		FEA1AA682C6B29790059B05B /* SXKcComScoreListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA672C6B29790059B05B /* SXKcComScoreListCell.m */; };
 		FEA1AA6B2C6B47700059B05B /* SXKcTypeCataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AA6A2C6B47700059B05B /* SXKcTypeCataModel.m */; };
+		FEA4D9BA2C89A55B00302BCC /* SXHuodonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA4D9B92C89A55B00302BCC /* SXHuodonModel.m */; };
 		FEA753552C23D8C800DC6807 /* AFServiceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */; };
 		FEAD70DE2C8066530042C5B6 /* SXShopSayListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAD70DD2C8066530042C5B6 /* SXShopSayListController.m */; };
 		FEAD70E12C81996E0042C5B6 /* SXShopSayListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAD70E02C81996E0042C5B6 /* SXShopSayListModel.m */; };
@@ -4612,6 +4613,8 @@
 		FEA1AA672C6B29790059B05B /* SXKcComScoreListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcComScoreListCell.m; sourceTree = "<group>"; };
 		FEA1AA692C6B47700059B05B /* SXKcTypeCataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXKcTypeCataModel.h; sourceTree = "<group>"; };
 		FEA1AA6A2C6B47700059B05B /* SXKcTypeCataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXKcTypeCataModel.m; sourceTree = "<group>"; };
+		FEA4D9B82C89A55B00302BCC /* SXHuodonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXHuodonModel.h; sourceTree = "<group>"; };
+		FEA4D9B92C89A55B00302BCC /* SXHuodonModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXHuodonModel.m; sourceTree = "<group>"; };
 		FEA753542C23D8C800DC6807 /* AFServiceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFServiceSDK.framework; sourceTree = "<group>"; };
 		FEAD70DC2C8066530042C5B6 /* SXShopSayListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXShopSayListController.h; sourceTree = "<group>"; };
 		FEAD70DD2C8066530042C5B6 /* SXShopSayListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXShopSayListController.m; sourceTree = "<group>"; };
@@ -7018,6 +7021,8 @@
 				FE6686762BA082FE006DBDF2 /* AxcAE_TabBar */,
 				A4E95F762A69141C00AE022E /* NoticeYunXin.h */,
 				A4E95F752A69141C00AE022E /* NoticeYunXin.m */,
+				FEA4D9B82C89A55B00302BCC /* SXHuodonModel.h */,
+				FEA4D9B92C89A55B00302BCC /* SXHuodonModel.m */,
 			);
 			path = m;
 			sourceTree = "<group>";
@@ -10856,6 +10861,7 @@
 				A4E966E42A69142400AE022E /* NoticeIconFgView.m in Sources */,
 				A4E9676F2A69142400AE022E /* NoticeManagerWaitWorkController.swift in Sources */,
 				FE6CF96B2B86EA59005EE663 /* SXUserModel.m in Sources */,
+				FEA4D9BA2C89A55B00302BCC /* SXHuodonModel.m in Sources */,
 				A4E968FE2A69142700AE022E /* NoticeChangeRoleIconView.m in Sources */,
 				A4E969042A69142700AE022E /* NoticeMerchantController.m in Sources */,
 				A4E968AB2A69142600AE022E /* NoticeBuyOrderListController.m in Sources */,

@@ -291,13 +291,12 @@
 - (void)textViewDidChangeSelection:(UITextView *)textView{
     if (textView.text.length) {
         _plaL.text = @"";
-        _sendBtn.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
-        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+       
     }else{
         _plaL.text = self.plaStr;
-        _sendBtn.textColor = [[UIColor colorWithHexString:@"#FFFFFF"] colorWithAlphaComponent:1];
-        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"#A1A7B3"];
+       
     }
+    [self refreshSnedUI];
     _plaL.text = textView.text.length?@"":self.plaStr;
     [self setTextViewHeight:textView text:@""];
 }
@@ -528,7 +527,7 @@
         __weak typeof(self) weakSelf = self;
         dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
         dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
             if (success) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICESHOPSAYSEND" object:nil];
             }

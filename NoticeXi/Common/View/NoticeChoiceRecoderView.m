@@ -98,6 +98,7 @@
 
     [self creatShowAnimation];
 }
+
 - (void)creatShowAnimation
 {
     self.contentView.transform = CGAffineTransformMakeScale(0.50, 0.50);

@@ -11,6 +11,7 @@
 #import "NoticdShopDetailForUserController.h"
 #import "NoticeMyJieYouShopController.h"
 #import "NoticeLoginViewController.h"
+#import "NoticeXi-Swift.h"
 @implementation SXShopSayCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -94,6 +95,7 @@
     
     //是否有认证
     if (model.shopModel.is_certified.boolValue) {//认证过
+        self.markImageView.frame = CGRectMake(CGRectGetMaxX(self.shopNameL.frame)+2, 25, 16, 16);
         self.markImageView.hidden = NO;
     }
     
@@ -256,7 +258,10 @@
 }
 
 - (void)jubao{
-    
+    NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
+    juBaoView.reouceId = self.model.dongtaiId;
+    juBaoView.reouceType = @"152";
+    [juBaoView showView];
 }
 
 - (void)deleteDt{
@@ -289,7 +294,7 @@
 
 - (UIImageView *)markImageView{
     if (!_markImageView) {
-        _markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxY(self.shopNameL.frame), 25, 16, 16)];
+        _markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.shopNameL.frame), 25, 16, 16)];
         _markImageView.image = UIImageNamed(@"sxrenztub_img");
         [self.backcontentView addSubview:_markImageView];
     }
@@ -301,7 +306,6 @@
         _tuijianL = [[UILabel  alloc] initWithFrame:CGRectMake(39, 21, 120, 18)];
         _tuijianL.font = THRETEENTEXTFONTSIZE;
         _tuijianL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
-        _tuijianL.text = @"120人推荐此店铺";
         [self.funView addSubview:_tuijianL];
     }
     return _tuijianL;

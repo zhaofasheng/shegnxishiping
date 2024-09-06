@@ -19,10 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NoticeShopDetailHeader *detailHeader;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *labelArr;
+@property (nonatomic, assign) BOOL islookSelf;//自己的店铺
 @property (nonatomic, assign) BOOL isUserLookShop;//是否是用户视角看店铺
 @property (nonatomic, strong) NSTimer * _Nullable timer;
 @property (nonatomic,copy) void(^choiceUrlBlock)(NSString *choiceUrl);
 @property (nonatomic, strong) NoticerUserShopDetailHeaderView *headerView;
+@property (nonatomic, strong) UILabel *tuijianL;
 @end
 
 NS_ASSUME_NONNULL_END

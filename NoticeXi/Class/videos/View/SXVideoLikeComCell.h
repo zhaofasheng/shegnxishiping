@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *markL;
 @property (nonatomic, strong) UILabel *shopL;
 @property (nonatomic, strong) UILabel *beRelyL;
+@property (nonatomic, strong) UIView *grayView;
 @end
 
 NS_ASSUME_NONNULL_END

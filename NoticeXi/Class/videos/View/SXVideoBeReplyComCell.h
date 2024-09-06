@@ -22,8 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) GZLabel *contentL;
 @property (nonatomic, strong) UILabel *markL;
 @property (nonatomic, strong) UILabel *replyL;
+@property (nonatomic, strong) UILabel *shopL;
+@property (nonatomic, strong) UILabel *beRelyL;
 @property (nonatomic, strong) SXVideoComInputView *inputView;
 @property (nonatomic, strong) UIImageView *likeImageView;
+@property (nonatomic, strong) UIView *grayView;
 @end
 
 NS_ASSUME_NONNULL_END

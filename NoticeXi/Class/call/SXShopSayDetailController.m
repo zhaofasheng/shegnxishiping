@@ -16,6 +16,7 @@
 #import "SXShopSayComCell.h"
 #import "SXShopSayComMoreView.h"
 #import "SXVideoComInputView.h"
+#import "NoticeXi-Swift.h"
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 @interface SXShopSayDetailController ()<LCActionSheetDelegate,NoticeVideoComentInputDelegate>
 
@@ -166,8 +167,9 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                 
                 [self.tableView reloadData];
                 
-                [self upView];
-                
+                if (!comment.intValue) {
+                    [self upView];
+                }
                 [[NoticeTools getTopViewController] showToastWithText:@"发送成功"];
             }
         }
@@ -289,18 +291,14 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                                 break;
                             }
                         }
-                        
                         if (!hasSave) {
                             [self.dataArr addObject:commentM];
                         }
                     }else{
                         [self.dataArr addObject:commentM];
                     }
-                    
-               
                 }
                 if (self.pageNo == 1) {
-                 
                     self.model.comment_num = jsonModel.commentCt;
                     self.currentComCount = jsonModel.commentCt;
                     self.commentSendView.model = self.model;
@@ -597,7 +595,10 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 }
 
 - (void)jubao{
-    
+    NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
+    juBaoView.reouceId = self.model.dongtaiId;
+    juBaoView.reouceType = @"152";
+    [juBaoView showView];
 }
 
 - (void)deleteDt{

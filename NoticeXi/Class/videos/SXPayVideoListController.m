@@ -73,7 +73,7 @@
             if ([dict[@"data"] isEqual:[NSNull null]]) {
                 return ;
             }
-     
+            
             for (NSDictionary *dic in dict[@"data"]) {
                 SXSearisVideoListModel *model = [SXSearisVideoListModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:model];

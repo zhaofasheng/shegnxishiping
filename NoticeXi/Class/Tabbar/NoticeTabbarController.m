@@ -14,12 +14,13 @@
 #import "NoticeYunXin.h"
 #import "SXPayForVideosController.h"
 #import "NoticeStaySys.h"
-
+#import "NoticeKnowSendTextView.h"
 //获取全局并发队列和主队列的宏定义
 #define globalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define mainQueue dispatch_get_main_queue()
 
 @interface NoticeTabbarController ()<AxcAE_TabBarDelegate>
+
 @property (nonatomic, assign) NSInteger oldIndex;
 @property (nonatomic,strong)UIButton *button;
 
@@ -51,6 +52,27 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenCaptureStatusChanged:) name:UIScreenCapturedDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopPip) name:@"NOTICESTOPPICINPICPLAY" object:nil];
     
+    [self getHuodong];
+}
+
+- (void)getHuodong{
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"systemMsg/popup/2" Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        if (success) {
+            SXHuodonModel *huodongM = [SXHuodonModel mj_objectWithKeyValues:dict[@"data"]];
+            if (!huodongM.huodongid) {
+                return;
+            }
+            if ([[SXTools isCanShowHuodong] isEqualToString:huodongM.huodongid]) {//活动id相同
+                return;
+            }
+            //弹出活动弹框
+            NoticeKnowSendTextView *huoDView = [[NoticeKnowSendTextView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+            huoDView.huodongModel = huodongM;
+            [huoDView showGetView];
+        }
+    } fail:^(NSError * _Nullable error) {
+        
+    }];
 }
 
 - (void)screenCaptureStatusChanged:(NSNotification *)notification {
@@ -196,7 +218,7 @@
         [self.tabBar hideBadgeOnItemIndex:1];
         return;
     }
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict1, BOOL success1) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"messages/%@",[[NoticeSaveModel getUserInfo] user_id]] Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict1, BOOL success1) {
         if (success1) {
             if ([dict1[@"data"] isEqual:[NSNull null]]) {
                 return ;

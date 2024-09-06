@@ -7,7 +7,9 @@
 //
 
 #import "SXShopSayDetailCell.h"
-
+#import "NoticdShopDetailForUserController.h"
+#import "NoticeMyJieYouShopController.h"
+#import "NoticeLoginViewController.h"
 @implementation SXShopSayDetailCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -23,7 +25,8 @@
         [self.iconImageView setAllCorner:18];
         self.iconImageView.userInteractionEnabled = YES;
         [self.backcontentView addSubview:self.iconImageView];
-
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(iconTap)];
+        [self.iconImageView addGestureRecognizer:tap];
         
         self.shopNameL = [[UILabel alloc] initWithFrame:CGRectMake(44, 22, DR_SCREEN_WIDTH-150, 22)];
         self.shopNameL.font = XGSIXBoldFontSize;
@@ -59,6 +62,7 @@
     self.timeL.text = model.created_atTime;
     //是否有认证
     if (model.shopModel.is_certified.boolValue) {//认证过
+        self.markImageView.frame = CGRectMake(CGRectGetMaxX(self.shopNameL.frame)+2, 25, 16, 16);
         self.markImageView.hidden = NO;
     }
     
@@ -119,6 +123,22 @@
     self.funView.frame = CGRectMake(0, self.backcontentView.frame.size.height-60, self.backcontentView.frame.size.width, 60);
 }
 
+- (void)iconTap{
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+        return;
+    }
+    if (![self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]]) {
+        NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
+        ctl.shopModel = self.model.shopModel;
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }else{
+        NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }
+}
+
 - (UIImageView *)tuijianImageV{
     if (!_tuijianImageV) {
         _tuijianImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 18, 24, 24)];
@@ -151,7 +171,7 @@
 
 - (UIImageView *)markImageView{
     if (!_markImageView) {
-        _markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxY(self.shopNameL.frame), 25, 16, 16)];
+        _markImageView = [[UIImageView  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.shopNameL.frame), 25, 16, 16)];
         _markImageView.image = UIImageNamed(@"sxrenztub_img");
         [self.backcontentView addSubview:_markImageView];
     }

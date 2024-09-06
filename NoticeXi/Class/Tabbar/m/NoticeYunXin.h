@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *token;
 @property (nonatomic, strong) NSString *yunxin_id;
+
 @end
 
 NS_ASSUME_NONNULL_END

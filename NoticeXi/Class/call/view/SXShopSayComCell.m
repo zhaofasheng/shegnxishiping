@@ -93,8 +93,7 @@
     
     self.nickNameL.frame = CGRectMake(88, 10, GET_STRWIDTH(self.nickNameL.text, 12, 17), 17);
     
-    _authorL.hidden = YES;
-    
+    self.authorL.hidden = YES;
     if ([commentM.fromUserInfo.userId isEqualToString:self.shopModel.user_id]) {
         self.authorL.hidden = NO;
         self.authorL.frame = CGRectMake(CGRectGetMaxX(self.nickNameL.frame)+2, 11, 30, 15);
@@ -205,6 +204,7 @@
                     self.commentM.zan_num = [NSString stringWithFormat:@"%d",self.commentM.zan_num.intValue-1];
                 }
             }
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"SHOPSAYCOMMENTLIKENotification" object:self userInfo:@{@"commentId":self.commentM.commentId,@"is_like":self.commentM.is_like,@"zan_num":self.commentM.zan_num}];
             [self refreshLikeUI:self.commentM];
         }
         [[NoticeTools getTopViewController] hideHUD];
@@ -321,7 +321,7 @@
 - (void)jubaoComment{
     NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
     juBaoView.reouceId = self.commentM.commentId;
-    juBaoView.reouceType = @"149";
+    juBaoView.reouceType = @"151";
     [juBaoView showView];
 }
 

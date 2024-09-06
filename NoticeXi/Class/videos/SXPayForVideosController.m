@@ -306,6 +306,7 @@
             NSInteger num = 0;
             for (NSDictionary *dic in dict[@"data"]) {
                 SXPayForVideoModel *model = [SXPayForVideoModel mj_objectWithKeyValues:dic];
+            
                 [self.dataArr addObject:model];
                 num++;
             }

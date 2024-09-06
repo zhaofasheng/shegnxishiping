@@ -68,6 +68,9 @@ typedef void (^downSuccessBlock)(BOOL success);
 //设备登录token
 + (NSString *)getLocalToken;
 + (void)removeLocalToken;
+
++ (void)setCanNotShowHuodong:(NSString *)huoodngid;
++ (NSString *)isCanShowHuodong;
 @end
 
 NS_ASSUME_NONNULL_END

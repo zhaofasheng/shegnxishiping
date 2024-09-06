@@ -95,6 +95,8 @@
     
     self.titles = @[@"",@"",@""];
     self.shopHeaderView = [[NoticeJieYouShopHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, imgHeight-NAVIGATION_BAR_HEIGHT-40-41-20)];
+    self.shopHeaderView.photosWall.frame = CGRectMake(DR_SCREEN_WIDTH/2, self.shopHeaderView.frame.size.height-15-40-2, DR_SCREEN_WIDTH/2, 40+2);
+    self.shopHeaderView.islookSelf = YES;
     self.shopHeaderView.detailHeader.hidden = NO;
     self.shopHeaderView.headerView.hidden = YES;
     
@@ -198,8 +200,15 @@
     
     if ([self.shopModel.myShopM.shopId isEqualToString:shopid]) {
         self.shopModel.myShopM.is_recommend = isTuiJian;
+        if (isTuiJian.boolValue) {
+            
+            self.shopModel.myShopM.recommend_num = [NSString stringWithFormat:@"%d",self.shopModel.myShopM.recommend_num.intValue+1];
+        }else{
+            self.shopModel.myShopM.recommend_num = [NSString stringWithFormat:@"%d",self.shopModel.myShopM.recommend_num.intValue-1];
+        }
+        
     }
- 
+    self.shopHeaderView.shopModel = self.shopModel;
 }
 
 - (void)funClick{
