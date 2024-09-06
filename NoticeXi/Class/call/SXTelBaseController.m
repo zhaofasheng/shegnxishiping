@@ -62,11 +62,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"HASSUPPLYSHOPNOTICE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStatusRequest) name:@"outLoginClearDataNOTICATION" object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:@"NOTICESHOPSAYSEND" object:nil];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
     self.menuView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-    
+}
 
+- (void)refresh{
+
+    [self setSelectIndex:2];
 }
 
 - (void)viewWillAppear:(BOOL)animated{

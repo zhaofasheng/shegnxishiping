@@ -419,7 +419,7 @@
                     webImagV2.userInteractionEnabled = YES;
                     [webBuyeV addSubview:webImagV2];  
               
-                    self.webBuyUrl = [NSString stringWithFormat:@"%@?seriesId=%@",configM.webBuyModel.values,self.paySearModel.seriesId];
+                    self.webBuyUrl = [NSString stringWithFormat:@"%@?seriesId=%@&token=%@",configM.webBuyModel.values,self.paySearModel.seriesId,[NoticeSaveModel getToken]];
                     // 先缩小
                     webBuyeV.transform = CGAffineTransformMakeScale(0.5, 0.5);
                     // 弹簧动画，参数分别为：时长，延时，弹性（越小弹性越大），初始速度

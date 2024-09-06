@@ -320,6 +320,21 @@ class NoticeManagerWaitWorkController: UIViewController,UITableViewDelegate,UITa
             ctl.managerCode = self.mangagerCode!
             ctl.jubaoId = model.jubaoId
             self.navigationController?.pushViewController(ctl, animated: true)
+        }else if model.resource_type == "151"{
+            let ctl = SXVideoCommentJubaoController()
+            ctl.jubArr = model.jubaArr
+            ctl.reoceArr = model.resoceArr
+            ctl.managerCode = self.mangagerCode!
+            ctl.dynamicM = model.dynamicModel;
+            ctl.jubaoId = model.jubaoId;
+            self.navigationController?.pushViewController(ctl, animated: true)
+        }else if model.resource_type == "152"{
+            let ctl = SXShopSayDetailController()
+            ctl.managerCode = self.mangagerCode!
+            ctl.model = model.dynamicModel;
+            ctl.jubaoId = model.jubaoId;
+            ctl.isReport = true
+            self.navigationController?.pushViewController(ctl, animated: true)
         }
         //
     }

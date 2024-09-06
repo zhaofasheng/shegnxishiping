@@ -189,7 +189,7 @@
 //跳转购买
 - (void)webBuyClick{
     
-    NSURL *taobaoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@?seriesId=%@",self.videoModel.webBuyUrl,self.videoModel.sell_series_id]];
+    NSURL *taobaoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@?seriesId=%@&token=%@",self.videoModel.webBuyUrl,self.videoModel.sell_series_id,[NoticeSaveModel getToken]]];
 
     UIApplication *application = [UIApplication sharedApplication];
     if ([application canOpenURL:taobaoUrl]) {

@@ -169,9 +169,7 @@
                 [weakSelf.moveArr removeObjectAtIndex:tag];
                 weakSelf.imageViewS.imgArr = [NSArray arrayWithArray:weakSelf.moveArr];
                 [weakSelf.toolsView.imgButton setImage:UIImageNamed(weakSelf.moveArr.count==3? @"senimgv_imgn":@"senimgv_img") forState:UIControlStateNormal];
-                if (!weakSelf.moveArr.count) {
-                    [weakSelf refreshHeight];
-                }
+                
                 [weakSelf.textView resignFirstResponder];
             }
             
@@ -438,6 +436,7 @@
        [alerView showXLAlertView];
         return;
     }
+    [self clearCache];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
@@ -487,7 +486,6 @@
     } complectionHandler:^(NSError *error, NSString *Message,NSString *bucketId, BOOL sussess) {
         if (!sussess) {
             [self hideHUD];
-           
             [self showToastWithText:Message];
             return ;
         }else{
@@ -575,12 +573,9 @@
 - (void)comeFromSave{
     //缓存进来的
     if (self.saveModel) {
-
         self.textView.text = self.saveModel.textContent;
-
         self.moveArr = [[NSMutableArray alloc] init];
         if (self.saveModel.img1Path || self.saveModel.img2Path || self.saveModel.img3Path) {
-       
             if (self.saveModel.img1Path) {
                 [self getsaveimg1];
             }
@@ -613,7 +608,6 @@
             [self hideHUD];
         }
     }
-    
 }
 
 - (void)getsaveimg2{

@@ -100,10 +100,19 @@
         self.resourceTypeName = @"视频评论";
     }else if ([resource_type isEqualToString:@"150"]){
         self.resourceTypeName = @"店主留言";
+    }else if ([resource_type isEqualToString:@"151"]){
+        self.resourceTypeName = @"动态评论";
+    }else if ([resource_type isEqualToString:@"152"]){
+        self.resourceTypeName = @"举报动态";
     }
     else{
         DRLog(@"举报类型%@",resource_type);
     }
+}
+
+- (void)setDynamic:(NSDictionary *)dynamic{
+    _dynamic = dynamic;
+    self.dynamicModel = [SXShopSayListModel mj_objectWithKeyValues:dynamic];
 }
 
 - (void)setVideo:(NSDictionary *)video{

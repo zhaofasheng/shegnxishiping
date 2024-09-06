@@ -75,7 +75,7 @@ class NoticeChongzhiJbView: UIView {
     
     @objc func webTap(){
         // 需要打开的网页链接
-        let urlString = "https://www.byebyetext.com/#/coin/list"
+        let urlString = "https://www.byebyetext.com/#/coin/list?token=" + NoticeSaveModel.getToken()
         guard let url = URL(string: urlString) else { return }
         if UIApplication.shared.canOpenURL(url) {
             // 可以打开URL

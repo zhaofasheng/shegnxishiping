@@ -7,7 +7,7 @@
 //
 
 #import "NoticeBaseCellController.h"
-
+#import "SXShopSayListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXVideoCommentJubaoController : NoticeBaseCellController
@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) SXVideosModel *videoM;
 @property (nonatomic, strong) NSString *jubaoId;
 @property (nonatomic, strong) NSString *managerCode;
+@property (nonatomic, strong) SXShopSayListModel *dynamicM;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -70,3 +70,4 @@
 #import "UIView+CLSetRect.h"
 #import "SXVideoCommentJubaoController.h"
 #import "SXShoperChatToUseController.h"
+#import "SXShopSayDetailController.h"

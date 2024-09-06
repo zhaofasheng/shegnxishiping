@@ -90,9 +90,9 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
         if (self.screen) {//是否是竖屏
             self.playTimeLabel.frame = CGRectMake(15, 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
             self.totalTimeLabel.frame = CGRectMake(_bottomControlsBar.frame.size.width-15-GET_STRWIDTH(self.totalTimeLabel.text, 11, 44), 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
-            
+            self.rateBtn.hidden = YES;
         }else{
-            
+            self.rateBtn.hidden = NO;
             CGFloat rateWidth = GET_STRWIDTH(@"1.25x", 14, 44);
             self.choiceBtn.frame = CGRectMake(_bottomControlsBar.frame.size.width-TAB_BAR_HEIGHT-15-rateWidth, 0,rateWidth, 44);
             self.rateBtn.frame = CGRectMake(_bottomControlsBar.frame.size.width-TAB_BAR_HEIGHT-15-rateWidth-15-rateWidth, 0, rateWidth, 44);
@@ -101,7 +101,7 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
             self.totalTimeLabel.frame = CGRectMake(_bottomControlsBar.frame.size.width-TAB_BAR_HEIGHT-15-rateWidth-15-rateWidth-15-GET_STRWIDTH(self.totalTimeLabel.text, 11, 44), 0,GET_STRWIDTH(self.playTimeLabel.text, 11, 44), 44);
         }
     }else{
-        
+        self.rateBtn.hidden = NO;
         CGFloat rateWidth = GET_STRWIDTH(@"1.25x", 14, 44);
         
         self.rateBtn.frame = CGRectMake(_bottomControlsBar.frame.size.width-rateWidth-50, 0, rateWidth, 44);

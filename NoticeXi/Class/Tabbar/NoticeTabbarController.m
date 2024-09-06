@@ -22,7 +22,7 @@
 @interface NoticeTabbarController ()<AxcAE_TabBarDelegate>
 
 @property (nonatomic, assign) NSInteger oldIndex;
-@property (nonatomic,strong)UIButton *button;
+@property (nonatomic,strong) UIButton *button;
 
 @end
 
@@ -118,7 +118,6 @@
 }
 
 - (void)changeSelectForOutLogin{
- 
     [self axcAE_TabBar:self.axcTabBar selectIndex:0];
 }
 

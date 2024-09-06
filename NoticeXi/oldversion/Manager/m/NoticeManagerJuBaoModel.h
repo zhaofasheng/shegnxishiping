@@ -21,7 +21,7 @@
 #import "SXVideosModel.h"
 #import "SXVideoCommentModel.h"
 #import "NoticeOrderListModel.h"
-
+#import "SXShopSayListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeManagerJuBaoModel : NSObject
@@ -120,6 +120,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NoticeOrderListModel *orderModel;
 @property (nonatomic, strong) NSDictionary *order;
+
+@property (nonatomic, strong) NSDictionary *dynamic;
+@property (nonatomic, strong) SXShopSayListModel *dynamicModel;
 
 @property (nonatomic, strong) NSDictionary *orderCommentInfo;
 

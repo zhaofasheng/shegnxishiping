@@ -148,7 +148,7 @@
             self.grayView.hidden = NO;
         }
     }else{
-        
+        self.videoImageView.hidden = NO;
         if (likeComM.videoModel.screen.intValue == 1) {
             self.videoImageView.frame = CGRectMake(DR_SCREEN_WIDTH-15-48, 15, 48, 36);
         }else{

@@ -145,7 +145,7 @@
     if ([model.flag isEqualToString:@"systemMsg"]) {//系统消息
         NoticeUserInfoModel *userHd = [NoticeUserInfoModel mj_objectWithKeyValues:dic[@"data"]];
         NoticeOneToOne *pushTypeModel = [NoticeOneToOne mj_objectWithKeyValues:model.data];
-        if (pushTypeModel.push_type.intValue >= 20004 && pushTypeModel.push_type.intValue <= 20006) {
+        if (pushTypeModel.push_type.intValue >= 20004 && pushTypeModel.push_type.intValue <= 20026) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTICENOREADNUMMESSAGE" object:nil];
             return;
         }

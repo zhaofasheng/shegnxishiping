@@ -12,6 +12,7 @@
 #import "SXVideoCommentMoreView.h"
 #import "SXPlayFullListController.h"
 #import "SXPayVideoPlayDetailBaseController.h"
+#import "SXShopSayDetailController.h"
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 @interface SXVideoCommentJubaoController ()
 @property (nonatomic, strong) UIButton *deleteBtn;
@@ -23,7 +24,9 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     [super viewDidLoad];
 
     self.navBarView.titleL.text = self.videoM.series_id.intValue?@"被举报的课程评论": @"被举报的视频评论";
-    
+    if (self.dynamicM) {
+        self.navBarView.titleL.text = @"被举报的动态评论";
+    }
     [self.tableView registerClass:[MyCommentCell class] forCellReuseIdentifier:commentCellIdentifier];
     [self.tableView registerClass:[SXVideoCmmentFirstCell class] forHeaderFooterViewReuseIdentifier:@"headerView"];
     
@@ -40,7 +43,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     button.layer.masksToBounds = YES;
     button.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button setTitle:@"查看视频" forState:UIControlStateNormal];
+    [button setTitle:self.dynamicM?@"查看动态": @"查看视频" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(clickFun) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
@@ -81,6 +84,12 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 }
 
 - (void)clickFun{
+    if (self.dynamicM) {
+        SXShopSayDetailController *ctl = [[SXShopSayDetailController alloc] init];
+        ctl.model = self.dynamicM;
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
     if (self.videoM.series_id.intValue) {
         [[NoticeTools getTopViewController] showHUD];
         [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",self.videoM.series_id] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {

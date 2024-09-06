@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat longcontentHeight;
 @property (nonatomic, assign) CGFloat contentHeight;
 @property (nonatomic, assign) BOOL hasImageV;
-
+@property (nonatomic, strong) NSString *status;//1=正常 2=删除 3=系统删除
 @property (nonatomic, strong) NSArray *img_list;
 @property (nonatomic, assign) CGFloat cellHeight;
 

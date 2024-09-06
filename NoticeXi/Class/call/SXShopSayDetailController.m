@@ -17,6 +17,7 @@
 #import "SXShopSayComMoreView.h"
 #import "SXVideoComInputView.h"
 #import "NoticeXi-Swift.h"
+#import "NoticeSCViewController.h"
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 @interface SXShopSayDetailController ()<LCActionSheetDelegate,NoticeVideoComentInputDelegate>
 
@@ -31,6 +32,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 @property (nonatomic, strong) NSString *currentComCount;
 @property (nonatomic, strong) SXShopSayComModel *currentTopModel;//当前置顶的评论
 @property (nonatomic, strong) UILabel *numL;
+@property (nonatomic, strong) UIButton *deleteBtn;
 @end
 
 @implementation SXShopSayDetailController
@@ -55,19 +57,21 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     [moreBtn setImage: [UIImage imageNamed:@"img_scb_b"]  forState:UIControlStateNormal];
     [moreBtn addTarget:self action:@selector(actionClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navBarView addSubview:moreBtn];
-    
-    __weak typeof(self) weakSelf = self;
-    self.commentSendView = [[SXShopSendCommentView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, 50)];
-    self.commentSendView.model = self.model;
-    [self.view addSubview:self.commentSendView];
-    self.commentSendView.comClickBlock = ^(BOOL click) {
-        [weakSelf sendComClick];
-    };
-    
-    self.commentSendView.upcomClickBlock = ^(BOOL click) {
-        [weakSelf upView];
+
+    if (!self.isReport) {
+        __weak typeof(self) weakSelf = self;
+        self.commentSendView = [[SXShopSendCommentView  alloc] initWithFrame:CGRectMake(0, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT, DR_SCREEN_WIDTH, 50)];
+        self.commentSendView.model = self.model;
+        [self.view addSubview:self.commentSendView];
+        self.commentSendView.comClickBlock = ^(BOOL click) {
+            [weakSelf sendComClick];
+        };
         
-    };
+        self.commentSendView.upcomClickBlock = ^(BOOL click) {
+            [weakSelf upView];
+        };
+    }
+
     
     //删除动态
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getsaydeleteNotice:) name:@"SXDeleteshopsayNotification" object:nil];
@@ -91,15 +95,18 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     [self.tableView registerClass:[SXShopSayComMoreView class] forHeaderFooterViewReuseIdentifier:@"footView"];
     [self createRefesh];
     
-    self.inputView = [[SXVideoComInputView alloc] initWithFrame:CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50-44, DR_SCREEN_WIDTH, 50)];
-    self.inputView.noNeedkC = YES;
-    self.inputView.delegate = self;
-    self.inputView.limitNum = 500;
-    self.inputView.plaStr = @"成为第一条评论…";
-    self.inputView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
-    self.inputView.contentView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-    self.inputView.contentView.textColor = [UIColor colorWithHexString:@"#25262E"];
-    self.inputView.plaL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
+    if (!self.isReport) {
+        self.inputView = [[SXVideoComInputView alloc] initWithFrame:CGRectMake(0,DR_SCREEN_HEIGHT-BOTTOM_HEIGHT-50-44, DR_SCREEN_WIDTH, 50)];
+        self.inputView.noNeedkC = YES;
+        self.inputView.delegate = self;
+        self.inputView.limitNum = 500;
+        self.inputView.plaStr = @"成为第一条评论…";
+        self.inputView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+        self.inputView.contentView.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+        self.inputView.contentView.textColor = [UIColor colorWithHexString:@"#25262E"];
+        self.inputView.plaL.textColor = [UIColor colorWithHexString:@"#A1A7B3"];
+    }
+
     
     self.isDown = YES;
     self.pageNo = 1;
@@ -108,6 +115,66 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     if (self.needUpCom && !self.model.comment_num.intValue) {
         [self sendComClick];
     }
+    
+    if (self.isReport) {
+        self.navBarView.titleL.text = @"被举报的店铺动态";
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.tableView.frame), 120, 40)];
+        button.layer.cornerRadius = 20;
+        button.layer.masksToBounds = YES;
+        button.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitle:@"联系店主" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(clickFun) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:button];
+        
+        UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-135, CGRectGetMaxY(self.tableView.frame), 120, 40)];
+        button1.titleLabel.font = FOURTHTEENTEXTFONTSIZE;
+        [button1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button1 setTitle:@"删除" forState:UIControlStateNormal];
+        [button1 addTarget:self action:@selector(deleteFun) forControlEvents:UIControlEventTouchUpInside];
+        if (self.model.status.intValue > 1) {
+            [button1 setTitle:@"已删除" forState:UIControlStateNormal];
+        }
+        self.deleteBtn = button1;
+        [self.view addSubview:button1];
+    }
+    
+    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
+    
+  
+}
+
+- (void)deleteFun{
+    if (self.model.status.intValue > 1) {
+        return;
+    }
+    __weak typeof(self) weakSelf = self;
+    XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定删除吗？" message:@"该动态下的评论回复内容也会被删除" sureBtn:@"取消" cancleBtn:@"删除" right:YES];
+    alerView.resultIndex = ^(NSInteger index) {
+        if (index == 2) {
+            NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
+            [parm setObject:self.managerCode forKey:@"confirmPasswd"];
+            [parm setObject:@"5" forKey:@"reportStatus"];
+            [[DRNetWorking shareInstance] requestWithPatchPath:[NSString stringWithFormat:@"admin/reports/%@",self.jubaoId] Accept:nil parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+                if (success) {
+                    weakSelf.model.status = @"3";
+                    [weakSelf.deleteBtn setTitle:@"已删除" forState:UIControlStateNormal];
+                }
+            } fail:^(NSError * _Nullable error) {
+                
+            }];
+    
+        }
+    };
+    [alerView showXLAlertView];
+}
+
+- (void)clickFun{
+    NoticeSCViewController *vc = [[NoticeSCViewController alloc] init];
+    vc.toUser = [NSString stringWithFormat:@"%@%@",socketADD,self.model.shopModel.user_id];
+    vc.toUserId = self.model.shopModel.user_id;
+    vc.navigationItem.title = self.model.shopModel.shop_name;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -167,7 +234,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                 
                 [self.tableView reloadData];
                 
-                if (!comment.intValue) {
+                if (!commentId.intValue) {
                     [self upView];
                 }
                 [[NoticeTools getTopViewController] showToastWithText:@"发送成功"];
