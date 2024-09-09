@@ -36,7 +36,7 @@
         self.chatTouseBtn = [[UIButton alloc] initWithFrame:CGRectMake(backView.frame.size.width-10-80, 51, 80, 32)];
         self.chatTouseBtn.titleLabel.font = TWOTEXTFONTSIZE;
         [self.chatTouseBtn setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
-        [self.chatTouseBtn setTitle:@"联系买家" forState:UIControlStateNormal];
+        [self.chatTouseBtn setTitle:@"给买家留言" forState:UIControlStateNormal];
         [self.chatTouseBtn setAllCorner:16];
         self.chatTouseBtn.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
         [backView addSubview:self.chatTouseBtn];

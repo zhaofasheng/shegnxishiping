@@ -14,6 +14,7 @@
 #import "YYPersonItem.h"
 #import "SXStudyBaseController.h"
 #import "Masonry.h"
+#import "NoticeWebViewController.h"
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 
 @interface MyCommentView ()<UITableViewDataSource,UITableViewDelegate>
@@ -493,7 +494,10 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 }
 
 - (void)pushSearis:(NSString *)searId{
- 
+    if (self.videoModel.webBuyUrl && ![[NoticeTools getuserId] isEqualToString:@"2"]) {
+        [self webBuyClick];
+        return;
+    }
     [[NoticeTools getTopViewController] showHUD];
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",searId] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [[NoticeTools getTopViewController] hideHUD];
@@ -513,6 +517,41 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
         [[NoticeTools getTopViewController] hideHUD];
     }];
 }
+
+
+//跳转购买
+- (void)webBuyClick{
+    
+    NSURL *taobaoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@?seriesId=%@&token=%@",self.videoModel.webBuyUrl,self.videoModel.sell_series_id,[NoticeSaveModel getToken]]];
+
+    UIApplication *application = [UIApplication sharedApplication];
+    if ([application canOpenURL:taobaoUrl]) {
+        if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+            if (@available(iOS 10.0, *)) {
+         
+                [application openURL:taobaoUrl options:@{} completionHandler:^(BOOL success) {
+                    if (success) {
+                        DRLog(@"跳转成功");
+                    }
+                }];
+            }
+        } else {
+            [application openURL:taobaoUrl options:@{} completionHandler:^(BOOL success) {
+                if (success) {
+                    DRLog(@"跳转成功");
+                }
+            }];
+        }
+    }else{
+
+        NoticeWebViewController *ctl = [[NoticeWebViewController alloc] init];
+        ctl.url = [NSString stringWithFormat:@"%@?seriesId=%@",self.videoModel.webBuyUrl,self.videoModel.sell_series_id];
+        ctl.isFromShare = YES;
+        ctl.isMerechant = YES;
+        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+    }
+}
+
 
 //删除回复的时候，请求接口替换一级评论
 - (void)replaceForDelete:(SXVideoCommentModel *)commentM{

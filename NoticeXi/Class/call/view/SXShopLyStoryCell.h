@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *orderL;
 @property (nonatomic, strong) UIButton *chatTouseBtn;
 @property (nonatomic, strong) UILabel *timeL;
+@property (nonatomic, assign) BOOL is_black;//被对方拉黑了不准留言
 @end
 
 NS_ASSUME_NONNULL_END

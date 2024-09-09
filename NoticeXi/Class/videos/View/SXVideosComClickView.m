@@ -72,7 +72,10 @@
             
             [self addSubview:tapView];
         }
-
+        //获取点赞通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoZanNotice:) name:@"SXZANvideoNotification" object:nil];
+        //获取收藏通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoscNotice:) name:@"SXCOLLECTvideoNotification" object:nil];
     }
     return self;
 }
@@ -189,6 +192,32 @@
         [[NoticeTools getTopViewController] hideHUD];
     }];
 }
+
+
+- (void)getvideoscNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *videoid = nameDictionary[@"videoId"];
+    NSString *is_collection = nameDictionary[@"is_collection"];
+    NSString *collection_num = nameDictionary[@"collection_num"];
+    if ([self.videoModel.vid isEqualToString:videoid]) {
+        self.videoModel.is_collection = is_collection;
+        self.videoModel.collection_num = collection_num;
+    }
+    [self refreshCollectUI];
+}
+
+- (void)getvideoZanNotice:(NSNotification*)notification{
+    NSDictionary *nameDictionary = [notification userInfo];
+    NSString *videoid = nameDictionary[@"videoId"];
+    NSString *iszan = nameDictionary[@"is_zan"];
+    NSString *zanNum = nameDictionary[@"zan_num"];
+    if ([self.videoModel.vid isEqualToString:videoid]) {
+        self.videoModel.is_zan = iszan;
+        self.videoModel.zan_num = zanNum;
+    }
+    [self refreshZanUI];
+}
+
 
 - (SXScVideoToAlbumView *)albumView{
     if (!_albumView) {

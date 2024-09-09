@@ -79,9 +79,14 @@
 }
 
 - (void)requestList{
+    if (self.videoModel.hejiArr.count) {
+        self.dataArr = self.videoModel.hejiArr;
+        [self.tableView reloadData];
+        [self scroToVideo];
+        return;
+    }
     NSString *url = [NSString stringWithFormat:@"video/compilation/%@/%@",[NoticeTools getuserId],self.videoModel.compilation_id];
 
-    
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept: @"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         
         if (success) {
@@ -95,12 +100,28 @@
                 SXVideosModel *model = [SXVideosModel mj_objectWithKeyValues:dic];
                 [self.dataArr addObject:model];
             }
-         
+            if (self.videoModel.compilation_id && self.dataArr.count) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"SXHeJIvideoNotification" object:self userInfo:@{@"hejiId":self.videoModel.compilation_id,@"hejiarr":self.dataArr}];
+            }
+
             [self.tableView reloadData];
-         
+            [self scroToVideo];
+    
         }
     } fail:^(NSError *error) {
+        
     }];
+}
+
+- (void)scroToVideo{
+    for (int i = 0; i < self.dataArr.count; i++) {
+        SXVideosModel *model = self.dataArr[i];
+        if ([model.vid isEqualToString:self.currentVideoId]) {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            break;
+        }
+    }
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -28,6 +28,7 @@
 @property (nonatomic, assign) BOOL nodata;
 @property (nonatomic, assign) BOOL isPlayFail;
 @property (nonatomic, assign) BOOL isFirstAlloc;
+@property (nonatomic, strong) NSMutableArray *hejiArr;
 @property (nonatomic, strong) UIButton *downloadBtn;
 @property (nonatomic, assign) NSInteger oldIndex;
 @property (nonatomic, assign) NSInteger curentVideoPlayTime;
@@ -63,13 +64,10 @@
     [self.navBarView.backButton setImage:UIImageNamed(@"backwhties") forState:UIControlStateNormal];
     [self.navBarView addSubview:self.downloadBtn];
     
-    //获取点赞通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoZanNotice:) name:@"SXZANvideoNotification" object:nil];
-    //获取收藏通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getvideoscNotice:) name:@"SXCOLLECTvideoNotification" object:nil];
-    
     [self ifCanWebBuy];
 }
+
+
 
 //是否可以网页购买
 - (void)ifCanWebBuy{
@@ -79,43 +77,15 @@
                 SXConfigModel *configM = [SXConfigModel mj_objectWithKeyValues:dict[@"data"]];
                 if (configM.webBuyModel.values && configM.webBuyModel.values.length) {
                     
-                    self.webBuyUrl = configM.values;
+                    self.webBuyUrl = configM.webBuyModel.values;
+                    SXVideosModel *videoM = self.modelArray[self.currentPlayIndex];
+                    videoM.webBuyUrl = self.webBuyUrl;
                 }
                 
                 [self.tableView reloadData];
             }
         } fail:^(NSError * _Nullable error) {
         }];
-    }
-}
-
-- (void)getvideoZanNotice:(NSNotification*)notification{
-    NSDictionary *nameDictionary = [notification userInfo];
-    NSString *videoid = nameDictionary[@"videoId"];
-    NSString *iszan = nameDictionary[@"is_zan"];
-    NSString *zanNum = nameDictionary[@"zan_num"];
-    for (SXVideosModel *videoM in self.modelArray) {
-        if ([videoM.vid isEqualToString:videoid]) {
-            videoM.is_zan = iszan;
-            videoM.zan_num = zanNum;
-            [self.tableView reloadData];
-            break;
-        }
-    }
-}
-
-- (void)getvideoscNotice:(NSNotification*)notification{
-    NSDictionary *nameDictionary = [notification userInfo];
-    NSString *videoid = nameDictionary[@"videoId"];
-    NSString *is_collection = nameDictionary[@"is_collection"];
-    NSString *collection_num = nameDictionary[@"collection_num"];
-    for (SXVideosModel *videoM in self.modelArray) {
-        if ([videoM.vid isEqualToString:videoid]) {
-            videoM.is_collection = is_collection;
-            videoM.collection_num = collection_num;
-            [self.tableView reloadData];
-            break;
-        }
     }
 }
 
@@ -189,9 +159,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SXFullPlayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     SXVideosModel *videoM = self.modelArray[indexPath.row];
-    videoM.webBuyUrl = @"https://www.byebyetext.com";
+    videoM.webBuyUrl = self.webBuyUrl;
     cell.videoModel = videoM;
     cell.commentId = self.commentId;
+    if (self.hejiArr) {
+        videoM.hejiArr = self.hejiArr;
+    }
     cell.replyId = self.replyId;
     __weak typeof(self) weakSelf = self;
     
@@ -222,6 +195,9 @@
     };
     
     cell.choiceHeJiVideoBlock = ^(SXVideosModel * _Nonnull currentModel, NSMutableArray * _Nonnull heVideoArr) {
+        weakSelf.hejiArr = [NSMutableArray arrayWithArray:heVideoArr];
+
+        currentModel.hejiArr = heVideoArr;
         [weakSelf playNewArr:heVideoArr newModel:currentModel];
     };
     
@@ -256,7 +232,10 @@
     self.modelArray = videoArr;
     self.currentPlayIndex = currentIndex;
     [self.tableView reloadData];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    if (self.modelArray.count > self.currentPlayIndex) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentPlayIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    }
+   
     
     [self playIndex:self.currentPlayIndex];
     if(self.modelArray.count > (self.currentPlayIndex + 1)) {
@@ -386,7 +365,7 @@
     
 
     SXVideosModel *currentPlaySmallVideoModel = self.modelArray[currentIndex];
-
+    
     title = currentPlaySmallVideoModel.title;
     cover_url = currentPlaySmallVideoModel.first_frame_url;
     videoURL = [NSURL URLWithString:currentPlaySmallVideoModel.video_url];

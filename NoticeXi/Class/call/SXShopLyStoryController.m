@@ -88,6 +88,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NoticeOrderListModel *model = self.dataArr[indexPath.row];
+    if (model.is_black.boolValue) {
+        [self showToastWithText:@"已被对方拉黑，无法留言"];
+        return;
+    }
     SXShoperChatToUseController *ctl = [[SXShoperChatToUseController alloc] init];
     ctl.orderModel = self.dataArr[indexPath.row];
     [self.navigationController pushViewController:ctl animated:YES];

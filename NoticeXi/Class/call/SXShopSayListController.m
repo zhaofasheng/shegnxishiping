@@ -12,11 +12,14 @@
 #import "SXShopSayCell.h"
 #import "SXShopSayDetailController.h"
 #import "NoticeLoginViewController.h"
+
 @interface SXShopSayListController ()
+
 @property (nonatomic, strong) UIView *noListView;
 @property (nonatomic, assign) CGFloat imageViewHeight;
 @property (nonatomic, strong) UIView *sendView;
 @property (nonatomic, strong) UIImageView *chchaImageView;
+
 @end
 
 @implementation SXShopSayListController
@@ -84,7 +87,8 @@
 - (void)getshoplaheiNotice:(NSNotification*)notification{
     NSDictionary *nameDictionary = [notification userInfo];
     NSString *shopid = nameDictionary[@"shopId"];
-    for (SXShopSayListModel *sayM in self.dataArr) {
+    NSArray *arr = [NSArray arrayWithArray:self.dataArr];//复制一个数组出来，避免遍历的同事进行增删操作，会闪退
+    for (SXShopSayListModel *sayM in arr) {
         if ([sayM.shopModel.shopId isEqualToString:shopid]) {
             [self.dataArr removeObject:sayM];
         }

@@ -81,7 +81,6 @@
                 if (!self.isFinished && self.userType.intValue == 1) {//卖家失效订单
                     model.isNoFinish = YES;
                 }
-        
                 if(model.order_type.intValue == 8 && model.is_fault.intValue == 2){//被举报后卖家过错，交易失败
                     model.isNoFinish = YES;
                 }

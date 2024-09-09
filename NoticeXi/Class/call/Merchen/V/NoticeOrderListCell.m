@@ -89,7 +89,7 @@
         self.chatTouseBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.backV.frame.size.width-10-80, 110, 80, 32)];
         self.chatTouseBtn.titleLabel.font = TWOTEXTFONTSIZE;
         [self.chatTouseBtn setTitleColor:[UIColor colorWithHexString:@"#14151A"] forState:UIControlStateNormal];
-        [self.chatTouseBtn setTitle:@"联系买家" forState:UIControlStateNormal];
+        [self.chatTouseBtn setTitle:@"给买家留言" forState:UIControlStateNormal];
         self.chatTouseBtn.layer.cornerRadius = 16;
         self.chatTouseBtn.layer.masksToBounds = YES;
         self.chatTouseBtn.layer.borderWidth = 1;
@@ -101,6 +101,10 @@
 }
 
 - (void)chatClick{
+    if (self.orderM.is_black.boolValue) {
+        [[NoticeTools getTopViewController] showToastWithText:@"已被对方拉黑，无法留言"];
+        return;
+    }
     SXShoperChatToUseController *ctl = [[SXShoperChatToUseController alloc] init];
     ctl.orderModel = self.orderM;
     ctl.isFromOver = YES;

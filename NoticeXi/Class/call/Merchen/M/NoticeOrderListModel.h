@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *shop_name;
 @property (nonatomic, strong) NSString *is_experience;
 @property (nonatomic, strong) NSString *experience_time;
-
+@property (nonatomic, strong) NSString *is_black;//被对方拉黑了不准留言
 @property (nonatomic, strong) NSString *is_certified;//1是认证 0未认证
 
 @property (nonatomic, strong) NSString *after_sales_time;//服务保障有效期(大于0表示还在有效期)
