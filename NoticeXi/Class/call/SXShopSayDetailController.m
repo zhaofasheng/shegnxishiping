@@ -18,7 +18,9 @@
 #import "SXVideoComInputView.h"
 #import "NoticeXi-Swift.h"
 #import "NoticeSCViewController.h"
+
 static NSString *const commentCellIdentifier = @"commentCellIdentifier";
+
 @interface SXShopSayDetailController ()<LCActionSheetDelegate,NoticeVideoComentInputDelegate>
 
 @property (nonatomic, strong) SXShopSayNavView *shopInfoView;
@@ -33,6 +35,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 @property (nonatomic, strong) SXShopSayComModel *currentTopModel;//当前置顶的评论
 @property (nonatomic, strong) UILabel *numL;
 @property (nonatomic, strong) UIButton *deleteBtn;
+
 @end
 
 @implementation SXShopSayDetailController
@@ -66,7 +69,6 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
         self.commentSendView.comClickBlock = ^(BOOL click) {
             [weakSelf sendComClick];
         };
-        
         self.commentSendView.upcomClickBlock = ^(BOOL click) {
             [weakSelf upView];
         };
@@ -138,10 +140,8 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
         self.deleteBtn = button1;
         [self.view addSubview:button1];
     }
-    
+
     self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT);
-    
-  
 }
 
 - (void)deleteFun{
@@ -161,9 +161,7 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     [weakSelf.deleteBtn setTitle:@"已删除" forState:UIControlStateNormal];
                 }
             } fail:^(NSError * _Nullable error) {
-                
             }];
-    
         }
     };
     [alerView showXLAlertView];

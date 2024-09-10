@@ -175,11 +175,9 @@
     NSDictionary *nameDictionary = [notification userInfo];
     NSString *shopid = nameDictionary[@"shopId"];
     NSString *isTuiJian = nameDictionary[@"is_tuijian"];
-    
     if ([self.shopModel.shopId isEqualToString:shopid]) {
         self.shopModel.is_recommend = isTuiJian;
     }
- 
 }
 
 - (void)didReceiveShopOrderStatus:(NSString *)shopId{
@@ -220,7 +218,7 @@
             [self laheishop];
         }else{
             __weak typeof(self) weakSelf = self;
-            XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定拉黑该店铺？" message:@"拉黑后，你们将互相看不到对方店铺相关内容。" sureBtn:@"取消" cancleBtn:@"拉黑" right:YES];
+            XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"确定拉黑该店铺？" message:@"拉黑后，你们将互相看不到对方店铺相关内容，与对方的互动内容也会被清除，解除拉黑后不会恢复。。" sureBtn:@"取消" cancleBtn:@"拉黑" right:YES];
             alerView.resultIndex = ^(NSInteger index) {
                 if (index == 2) {
                     [weakSelf laheishop];
