@@ -43,6 +43,11 @@
         self.fgView1.backgroundColor = self.backView.backgroundColor;
         [self.contentView addSubview:self.fgView1];
         self.fgView1.hidden = YES;
+        
+        UIImageView *lockImageV = [[UIImageView  alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-15-20, 45/2, 20, 20)];
+        lockImageV.image = UIImageNamed(@"sxlock_img");
+        [self.backView addSubview:lockImageV];
+        self.lookImageView = lockImageV;
     }
     return self;
 }
@@ -51,12 +56,26 @@
     _videoModel = videoModel;
     self.titleL.text = videoModel.title;
     self.totalTimeL.text = [self getMMSSFromSS:videoModel.video_len];
+    
+    _tryL.hidden = YES;
+    if (self.paySearModel.hasBuy || videoModel.unLock) {
+        self.totalTimeL.frame = CGRectMake(15, 36, GET_STRWIDTH(self.totalTimeL.text, 12, 17), 17);
+        self.lookImageView.hidden = YES;
+    }else if (videoModel.tryPlayTime > 0){
+        self.tryL.hidden = NO;
+        self.lookImageView.hidden = YES;
+        self.totalTimeL.frame = CGRectMake(CGRectGetMaxX(self.tryL.frame)+4, 36, GET_STRWIDTH(self.totalTimeL.text, 12, 17), 17);
+    }else{
+        self.lookImageView.hidden = NO;
+        self.totalTimeL.frame = CGRectMake(15, 36, GET_STRWIDTH(self.totalTimeL.text, 12, 17), 17);
+    }
+    self.comimageV.frame = CGRectMake(CGRectGetMaxX(self.totalTimeL.frame)+32, 38.5, 12, 12);
 
     if ([videoModel.videoId isEqualToString:self.currentVideo.videoId]) {
         self.titleL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
         self.totalTimeL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
         self.statusL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
-        self.statusL.frame = CGRectMake(95, 36, 100, 17);
+        self.statusL.frame = CGRectMake(CGRectGetMaxX(self.totalTimeL.frame)+32, 36, 100, 17);
         _comimageV.hidden = YES;
         _comL.hidden = YES;
         self.backView.backgroundColor = [UIColor colorWithHexString:@"#F0F1F5"];
@@ -98,13 +117,27 @@
         self.statusL.text = [NSString stringWithFormat:@"已观看%.f%%",((CGFloat)(videoModel.schedule.floatValue/videoModel.video_len.floatValue))*100];
     }
     else if (videoModel.is_finished.boolValue) {
-        
         self.statusL.text = @"已看完";
     }else{
         self.statusL.text = @"待观看";
     }
         
 }
+
+- (UILabel *)tryL{
+    if (!_tryL) {
+        _tryL = [[UILabel  alloc] initWithFrame:CGRectMake(15, 36, 30, 17)];
+        _tryL.font = [UIFont systemFontOfSize:10];
+        _tryL.text = @"试看";
+        _tryL.textColor = [UIColor whiteColor];
+        _tryL.textAlignment = NSTextAlignmentCenter;
+        [_tryL setAllCorner:2];
+        _tryL.backgroundColor = [UIColor colorWithHexString:@"#1FC7FF"];
+        [self.backView addSubview:_tryL];
+    }
+    return _tryL;
+}
+
 
 - (UIImageView *)comimageV{
     if (!_comimageV) {

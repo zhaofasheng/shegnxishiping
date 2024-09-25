@@ -19,6 +19,16 @@
     self.kcComDetailModel = [SXKcComDetailModel mj_objectWithKeyValues:remarkInfo];
 }
 
+- (void)setOpen_episode_way:(NSString *)open_episode_way{
+    _open_episode_way = open_episode_way;
+    self.canBuySingle = open_episode_way.boolValue;
+}
+
+- (void)setEpisode_price:(NSString *)episode_price{
+    _episode_price = episode_price;
+    self.singlePrice = episode_price;
+}
+
 - (void)setSeries_name:(NSString *)series_name{
     _series_name = series_name;
     self.bookseries_name = [NSString stringWithFormat:@"《%@》",series_name];

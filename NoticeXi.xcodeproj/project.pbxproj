@@ -1465,6 +1465,8 @@
 		FE7BB7B22C773661003F0E9A /* SXVideoCompilationView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7BB7B12C773661003F0E9A /* SXVideoCompilationView.m */; };
 		FE7BB7B52C773671003F0E9A /* SXVideoCompilationListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7BB7B42C773671003F0E9A /* SXVideoCompilationListView.m */; };
 		FE7BB7B82C773BDF003F0E9A /* SXCompilationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7BB7B72C773BDF003F0E9A /* SXCompilationCell.m */; };
+		FE8B0A192C9D454200173113 /* SXPlayBuyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B0A182C9D454200173113 /* SXPlayBuyView.m */; };
+		FE8B0A1C2CA1004900173113 /* SXBuyVideoTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B0A1B2CA1004900173113 /* SXBuyVideoTools.m */; };
 		FE8B48772B8EDEAC004C3965 /* SXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */; };
 		FE8D89F42C23BB13006EFEB6 /* SXOrderStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8D89F22C23BB13006EFEB6 /* SXOrderStatusModel.m */; };
 		FE953C802B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE953C7F2B68CCF50098F0A2 /* NoticeVoiceDownLoadController.m */; };
@@ -1586,6 +1588,10 @@
 		FEBCADE22B8437130048F5A1 /* NoticeBaseCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBCADE12B8437130048F5A1 /* NoticeBaseCellController.m */; };
 		FEBF80C62B50CD9E0086A94B /* NoticeShopDataIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBF80C52B50CD9E0086A94B /* NoticeShopDataIdModel.m */; };
 		FEBF80C92B5123ED0086A94B /* NoticeShopRuleController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBF80C82B5123ED0086A94B /* NoticeShopRuleController.m */; };
+		FED023932C9AC38E00728544 /* SXBuySeriesTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FED023922C9AC38E00728544 /* SXBuySeriesTools.m */; };
+		FED023962C9ACC8E00728544 /* SXBuySeriesTypeTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FED023952C9ACC8E00728544 /* SXBuySeriesTypeTools.m */; };
+		FED023992C9BC24700728544 /* SXBuyKcMarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED023982C9BC24700728544 /* SXBuyKcMarkView.m */; };
+		FED0239C2C9C1E8100728544 /* SXCanBuyAllView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0239B2C9C1E8100728544 /* SXCanBuyAllView.m */; };
 		FED9A37C2C2EBA11003C81AD /* SXPayVideoComController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED9A37B2C2EBA11003C81AD /* SXPayVideoComController.m */; };
 		FED9A37F2C325499003C81AD /* SXPlayRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED9A37E2C325499003C81AD /* SXPlayRateView.m */; };
 		FED9A3822C327815003C81AD /* SXChoiceVideoToPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED9A3812C327815003C81AD /* SXChoiceVideoToPlayView.m */; };
@@ -4435,6 +4441,10 @@
 		FE7BB7B42C773671003F0E9A /* SXVideoCompilationListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXVideoCompilationListView.m; sourceTree = "<group>"; };
 		FE7BB7B62C773BDF003F0E9A /* SXCompilationCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXCompilationCell.h; sourceTree = "<group>"; };
 		FE7BB7B72C773BDF003F0E9A /* SXCompilationCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXCompilationCell.m; sourceTree = "<group>"; };
+		FE8B0A172C9D454200173113 /* SXPlayBuyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayBuyView.h; sourceTree = "<group>"; };
+		FE8B0A182C9D454200173113 /* SXPlayBuyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPlayBuyView.m; sourceTree = "<group>"; };
+		FE8B0A1A2CA1004900173113 /* SXBuyVideoTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuyVideoTools.h; sourceTree = "<group>"; };
+		FE8B0A1B2CA1004900173113 /* SXBuyVideoTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuyVideoTools.m; sourceTree = "<group>"; };
 		FE8B48752B8EDEAC004C3965 /* SXWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXWebViewController.h; sourceTree = "<group>"; };
 		FE8B48762B8EDEAC004C3965 /* SXWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXWebViewController.m; sourceTree = "<group>"; };
 		FE8D89F22C23BB13006EFEB6 /* SXOrderStatusModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXOrderStatusModel.m; sourceTree = "<group>"; };
@@ -4675,6 +4685,14 @@
 		FEBF80C52B50CD9E0086A94B /* NoticeShopDataIdModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeShopDataIdModel.m; sourceTree = "<group>"; };
 		FEBF80C72B5123ED0086A94B /* NoticeShopRuleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeShopRuleController.h; sourceTree = "<group>"; };
 		FEBF80C82B5123ED0086A94B /* NoticeShopRuleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeShopRuleController.m; sourceTree = "<group>"; };
+		FED023912C9AC38E00728544 /* SXBuySeriesTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySeriesTools.h; sourceTree = "<group>"; };
+		FED023922C9AC38E00728544 /* SXBuySeriesTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySeriesTools.m; sourceTree = "<group>"; };
+		FED023942C9ACC8E00728544 /* SXBuySeriesTypeTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuySeriesTypeTools.h; sourceTree = "<group>"; };
+		FED023952C9ACC8E00728544 /* SXBuySeriesTypeTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuySeriesTypeTools.m; sourceTree = "<group>"; };
+		FED023972C9BC24700728544 /* SXBuyKcMarkView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXBuyKcMarkView.h; sourceTree = "<group>"; };
+		FED023982C9BC24700728544 /* SXBuyKcMarkView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXBuyKcMarkView.m; sourceTree = "<group>"; };
+		FED0239A2C9C1E8100728544 /* SXCanBuyAllView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXCanBuyAllView.h; sourceTree = "<group>"; };
+		FED0239B2C9C1E8100728544 /* SXCanBuyAllView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXCanBuyAllView.m; sourceTree = "<group>"; };
 		FED9A37A2C2EBA11003C81AD /* SXPayVideoComController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPayVideoComController.h; sourceTree = "<group>"; };
 		FED9A37B2C2EBA11003C81AD /* SXPayVideoComController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SXPayVideoComController.m; sourceTree = "<group>"; };
 		FED9A37D2C325499003C81AD /* SXPlayRateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SXPlayRateView.h; sourceTree = "<group>"; };
@@ -9208,6 +9226,8 @@
 			children = (
 				FE6CF93C2B84553A005EE663 /* SXVideosModel.h */,
 				FE6CF93D2B84553A005EE663 /* SXVideosModel.m */,
+				FE8B0A1A2CA1004900173113 /* SXBuyVideoTools.h */,
+				FE8B0A1B2CA1004900173113 /* SXBuyVideoTools.m */,
 				FE6CF9652B86DE49005EE663 /* SXPayForVideoModel.h */,
 				FE6CF9662B86DE49005EE663 /* SXPayForVideoModel.m */,
 				FEE563022B8DC4560004CC11 /* SXSearchModel.h */,
@@ -9361,12 +9381,22 @@
 				FE7988B52C475D3B000DA69C /* SXKCBuyTypeView.m */,
 				FEFE54392C4E2F8B0007FA30 /* SXHasBuyKcHeaderView.h */,
 				FEFE543A2C4E2F8B0007FA30 /* SXHasBuyKcHeaderView.m */,
+				FE8B0A172C9D454200173113 /* SXPlayBuyView.h */,
+				FE8B0A182C9D454200173113 /* SXPlayBuyView.m */,
 				FEFE543F2C4E414C0007FA30 /* SXVideoTagsView.h */,
 				FEFE54402C4E414C0007FA30 /* SXVideoTagsView.m */,
 				FE979D5A2C4E55CF00161B7B /* SXBandKcToAccountView.h */,
 				FE979D5B2C4E55CF00161B7B /* SXBandKcToAccountView.m */,
 				FE979D5D2C4F451600161B7B /* SXScVideoToAlbumView.h */,
 				FE979D5E2C4F451600161B7B /* SXScVideoToAlbumView.m */,
+				FED023912C9AC38E00728544 /* SXBuySeriesTools.h */,
+				FED023922C9AC38E00728544 /* SXBuySeriesTools.m */,
+				FED023972C9BC24700728544 /* SXBuyKcMarkView.h */,
+				FED023982C9BC24700728544 /* SXBuyKcMarkView.m */,
+				FED023942C9ACC8E00728544 /* SXBuySeriesTypeTools.h */,
+				FED023952C9ACC8E00728544 /* SXBuySeriesTypeTools.m */,
+				FED0239A2C9C1E8100728544 /* SXCanBuyAllView.h */,
+				FED0239B2C9C1E8100728544 /* SXCanBuyAllView.m */,
 				FE979D602C4F460200161B7B /* SXVideoZjToastListCell.h */,
 				FE979D612C4F460200161B7B /* SXVideoZjToastListCell.m */,
 				FE979D632C4F4B2700161B7B /* SXAddVideoZjView.h */,
@@ -10177,6 +10207,7 @@
 				A4E9664D2A69142300AE022E /* NoticeMovieTopViewController.m in Sources */,
 				A4E968012A69142500AE022E /* NoticeBgmModel.m in Sources */,
 				A4E968862A69142600AE022E /* UIImage+Tools.m in Sources */,
+				FED0239C2C9C1E8100728544 /* SXCanBuyAllView.m in Sources */,
 				FE07BDFC2BF35EC700E6812A /* SXAddNewsGoods4Cell.m in Sources */,
 				FEAD70E72C81B4EE0042C5B6 /* SXShopSayDetailController.m in Sources */,
 				A4E968AE2A69142600AE022E /* NoticeSupplyOpenShopController.m in Sources */,
@@ -10192,6 +10223,7 @@
 				A4E967D12A69142500AE022E /* NoticeMoveBookSonPrivayController.m in Sources */,
 				FE44F29F2BB43392004ECF11 /* SXPlayFullListController.m in Sources */,
 				A4E965552A69142200AE022E /* NoticeOTOModel.m in Sources */,
+				FE8B0A192C9D454200173113 /* SXPlayBuyView.m in Sources */,
 				A4E968CF2A69142600AE022E /* NoticeOpenTbModel.m in Sources */,
 				A4E967B22A69142500AE022E /* NoticeVoiceChatAndDepartController.m in Sources */,
 				FEA1AA5C2C69F1B30059B05B /* SXKcScoreListController.m in Sources */,
@@ -10262,6 +10294,7 @@
 				FE44F2242BB29FAB004ECF11 /* ZFPlayerControlView.m in Sources */,
 				A4E966622A69142300AE022E /* NoticeMyBookController.m in Sources */,
 				FEB61C0F2B4D31E900B128FA /* NoticeEditCard4Cell.m in Sources */,
+				FED023962C9ACC8E00728544 /* SXBuySeriesTypeTools.m in Sources */,
 				A4E965232A69142200AE022E /* LCActionSheet.m in Sources */,
 				A4E968C02A69142600AE022E /* NoticePayAndSendRecoderController.m in Sources */,
 				A4E966EF2A69142400AE022E /* NoticeAdMainCell.m in Sources */,
@@ -10419,6 +10452,7 @@
 				A42CBE0A2B187E5600C45415 /* XLCardModel.m in Sources */,
 				A4E967862A69142400AE022E /* NoticeTeamWorkShowController.m in Sources */,
 				A4E9689A2A69142600AE022E /* SCIndexView.m in Sources */,
+				FED023992C9BC24700728544 /* SXBuyKcMarkView.m in Sources */,
 				A46F54152AA979CA00A22D48 /* NoticeVipGetStoryCell.m in Sources */,
 				A4E9671C2A69142400AE022E /* NoticeVoiceComDetailCell.m in Sources */,
 				A4E9696D2A69142700AE022E /* NoticeTextTopicView.m in Sources */,
@@ -10523,6 +10557,7 @@
 				A4E967DD2A69142500AE022E /* NoticeCountSafeViewController.m in Sources */,
 				A4E966B72A69142300AE022E /* NoticeAllPersonlity.m in Sources */,
 				A4E964AA2A69142100AE022E /* NoticeSaveModel.m in Sources */,
+				FE8B0A1C2CA1004900173113 /* SXBuyVideoTools.m in Sources */,
 				A4E964EB2A69142200AE022E /* JXCategoryTitleVerticalZoomCellModel.m in Sources */,
 				A4E9660E2A69142300AE022E /* NoticeDanMuModel.m in Sources */,
 				A4E9690B2A69142700AE022E /* NoticeUserBBSManagerController.m in Sources */,
@@ -10552,6 +10587,7 @@
 				A4E968CD2A69142600AE022E /* NoticeShopCommentModel.m in Sources */,
 				A4E9671D2A69142400AE022E /* NoticeVoiceComDetailView.m in Sources */,
 				A4E965532A69142200AE022E /* NoticeAudioJoinToAudioModel.m in Sources */,
+				FED023932C9AC38E00728544 /* SXBuySeriesTools.m in Sources */,
 				A4E966282A69142300AE022E /* NoticeBook.m in Sources */,
 				A4354C372A9EDB3800454D23 /* NoticeVipCenterController.m in Sources */,
 				A4E966C22A69142300AE022E /* NoticeListenCell.m in Sources */,
@@ -11883,7 +11919,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.9.8;
+				MARKETING_VERSION = 5.9.9;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -12062,7 +12098,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.9.8;
+				MARKETING_VERSION = 5.9.9;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

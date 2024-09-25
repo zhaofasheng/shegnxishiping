@@ -25,4 +25,8 @@
     _series_card_info = series_card_info;
     self.cardModel = [SXKcCardListModel mj_objectWithKeyValues:series_card_info];
 }
+
+- (void)setFee:(NSString *)fee{
+    _fee = [NSString stringWithFormat:@"%d",fee.intValue/100];
+}
 @end

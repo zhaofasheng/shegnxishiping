@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *pay_tip;//支付提示
 @property (nonatomic, strong) NSString *is_bought;
 @property (nonatomic, assign) BOOL hasBuy;//是否已经购买
+@property (nonatomic, assign) BOOL canBuySingle;//是否可以单集购买
+@property (nonatomic, assign) NSInteger hasbuyVideoNum;//已购视频数量
 @property (nonatomic, strong) NSString *buy_users_num;//购买用户数
 @property (nonatomic, strong) NSString *introduce_img_url;//课程详情
 @property (nonatomic, strong) NSArray *carousel_images;//轮播图
@@ -45,9 +47,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *buy_card_times;//购买礼品卡次数
 @property (nonatomic, strong) NSDictionary *from_user_info;//赠送者信息，存在就是别人赠送的课程
 @property (nonatomic, strong) NoticeAbout *fromUser;
-
+@property (nonatomic, strong) NSString *singlePrice;//单集价格
+@property (nonatomic, strong) NSString *upfront_at;//早鸟价活动截止时间 0代表无限制
+@property (nonatomic, strong) NSString *open_episode_way;//是否开启单集购买 0否 1是
 @property (nonatomic, strong) NSString *descriptionName;//购买礼品卡说明
-
+@property (nonatomic, strong) NSString *open_upfront_activity;//是否开启早鸟价活动 0否 1是
+@property (nonatomic, strong) NSString *episode_price;//单集购买价格
 @property (nonatomic, strong) NSDictionary *remarkInfo;//课程评价
 @property (nonatomic, strong) SXKcComDetailModel * __nullable kcComDetailModel;
 

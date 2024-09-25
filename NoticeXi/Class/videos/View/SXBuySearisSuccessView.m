@@ -33,7 +33,7 @@
         self.reasonL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [statusView addSubview:self.reasonL];
         
-        self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(statusView.frame)+20, DR_SCREEN_WIDTH-30, 216)];
+        self.backView = [[UIView  alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(statusView.frame)+20, DR_SCREEN_WIDTH-30, 262)];
         self.backView.backgroundColor = [UIColor whiteColor];
         [self.backView setAllCorner:8];
         [self addSubview:self.backView];
@@ -49,7 +49,12 @@
         _titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self.backView addSubview:_titleL];
         
-        _markL = [[UILabel alloc] initWithFrame:CGRectMake(100,38,self.backView.frame.size.width-15-100, 17)];
+        _videoNumL = [[UILabel alloc] initWithFrame:CGRectMake(100,38,self.backView.frame.size.width-15-100, 17)];
+        _videoNumL.font = TWOTEXTFONTSIZE;
+        _videoNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        [self.backView addSubview:_videoNumL];
+        
+        _markL = [[UILabel alloc] initWithFrame:CGRectMake(100,59,self.backView.frame.size.width-15-100, 17)];
         _markL.font = TWOTEXTFONTSIZE;
         _markL.text = @"不支持无理由退款";
         _markL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
@@ -61,27 +66,38 @@
         _originmoneyL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self.backView addSubview:_originmoneyL];
         
+        UILabel *numL = [[UILabel alloc] initWithFrame:CGRectMake(10,128,(DR_SCREEN_WIDTH-50)/2, 44)];
+        numL.font = FOURTHTEENTEXTFONTSIZE;
+        numL.text = @"课时";
+        numL.textColor = [UIColor colorWithHexString:@"#14151A"];
+        [self.backView addSubview:numL];
         
-        UILabel *redML = [[UILabel alloc] initWithFrame:CGRectMake(10,136,(DR_SCREEN_WIDTH-50)/2, 24)];
+        self.videoNumL1 = [[UILabel alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-10-100,128,100, 44)];
+        self.videoNumL1.font = SXNUMBERFONT(16);
+        self.videoNumL1.textAlignment = NSTextAlignmentRight;
+        self.videoNumL1.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        [self.backView addSubview:self.videoNumL1];
+        
+        UILabel *redML = [[UILabel alloc] initWithFrame:CGRectMake(10,172,(DR_SCREEN_WIDTH-50)/2, 44)];
         redML.font = FOURTHTEENTEXTFONTSIZE;
         redML.text = @"专属优惠";
         redML.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.backView addSubview:redML];
         
-        self.reduceL = [[UILabel alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-10-100,136,100, 24)];
+        self.reduceL = [[UILabel alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-10-100,172,100, 44)];
         self.reduceL.font = SXNUMBERFONT(16);
         self.reduceL.textAlignment = NSTextAlignmentRight;
         self.reduceL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
         [self.backView addSubview:self.reduceL];
         
-        UILabel *redPayL = [[UILabel alloc] initWithFrame:CGRectMake(10,180,(DR_SCREEN_WIDTH-50)/2, 24)];
+        UILabel *redPayL = [[UILabel alloc] initWithFrame:CGRectMake(10,216,(DR_SCREEN_WIDTH-50)/2, 44)];
         redPayL.font = FOURTHTEENTEXTFONTSIZE;
         redPayL.text = @"实付款";
         redPayL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self.backView addSubview:redPayL];
         
         
-        _moneyL = [[UILabel alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-10-100,180,100, 24)];
+        _moneyL = [[UILabel alloc] initWithFrame:CGRectMake(self.backView.frame.size.width-10-100,216,100, 44)];
         _moneyL.font = SXNUMBERFONT(22);
         _moneyL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
         _moneyL.textAlignment = NSTextAlignmentRight;
@@ -202,12 +218,31 @@
         self.titleL.text = [NSString stringWithFormat:@"(礼品卡)%@",paySearModel.series_name];
     }
     
-    self.moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",paySearModel.price] setColor:[UIColor colorWithHexString:@"#FF68A3"] setSize:16 setLengthString:@"¥" beginSize:0];
+    self.moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",self.orderModel.fee] setColor:[UIColor colorWithHexString:@"#FF68A3"] setSize:16 setLengthString:@"¥" beginSize:0];
     
     self.originmoneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",paySearModel.original_price] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
     
-    self.reduceL.text = [NSString stringWithFormat:@"- ¥%d",paySearModel.original_price.intValue-paySearModel.price.intValue];
+    if (self.orderModel.product_type.intValue == 4) {
+        self.reduceL.text = @"- ¥0";
+    }else{
+        self.reduceL.text = [NSString stringWithFormat:@"- ¥%d",paySearModel.original_price.intValue-self.orderModel.fee.intValue];
+    }
+    
     
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:paySearModel.simple_cover_url]];
+    
+    if (self.orderModel.product_type.intValue == 4) {
+        if (self.orderModel.quantity.intValue == 0) {
+            self.videoNumL.text = @"购买单节";
+            self.videoNumL1.text = @"1节";
+        }else{
+            self.videoNumL.text = [NSString stringWithFormat:@"共%@课时",self.orderModel.quantity];
+            self.videoNumL1.text = [NSString stringWithFormat:@"%@节",self.orderModel.quantity];
+        }
+        
+    }else{
+        self.videoNumL.text = [NSString stringWithFormat:@"共%@课时",self.paySearModel.episodes];
+        self.videoNumL1.text = [NSString stringWithFormat:@"%@节",self.paySearModel.episodes];
+    }
 }
 @end

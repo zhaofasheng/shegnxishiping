@@ -14,7 +14,7 @@
 
 @implementation STRIAPManager
  
-#pragma mark - ♻️life cycle
+#pragma mark - life cycle
 + (instancetype)shareSIAPManager{
      
     static STRIAPManager *IAPManager = nil;
@@ -185,7 +185,12 @@
                 if (appdel.isBuyCard) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYCARDSEARISSUCCESS" object:nil];
                 }else{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
+                    if (appdel.buyVideoId) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSINGLESEARISSUCCESS" object:nil];
+                    }else{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSEARISSUCCESS" object:nil];
+                    }
+                    
                 }
                 
             }else{
@@ -223,11 +228,13 @@
     [self.showView disMiss];
     [self.showView show];
 
+    //有订单号直接校验
     if (self.sn && self.sn.length > 6 && self.noteType.intValue) {
         [self checkOrderWithOrderSn:self.sn data:receipt noteType:self.noteType transaction:transaction];
         return;
     }
     
+    //没订单号可能是付款后杀了app，进来重新获取没有校验的订单号进行校验
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             NoticeOpenTbModel *snModel = [NoticeOpenTbModel mj_objectWithKeyValues:dict[@"data"]];

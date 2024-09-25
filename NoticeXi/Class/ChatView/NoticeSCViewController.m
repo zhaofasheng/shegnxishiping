@@ -545,7 +545,7 @@
     NSString *url = nil;
     
     if (self.chatDetailId) {
-        if (!self.isDown) {
+        if (!self.isDown || !self.lastId) {
             url = [NSString stringWithFormat:@"admin/chats/%@?confirmPasswd=%@",self.chatDetailId,self.managerCode];
         }else{
             url = [NSString stringWithFormat:@"admin/chats/%@?confirmPasswd=%@&lastId=%@",self.chatDetailId,self.managerCode,self.lastId];
@@ -1241,7 +1241,9 @@
 
 //获取设备信息
 - (void)requestDevoice{
-    
+    if (!self.toUserId) {
+        return;
+    }
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"users/%@/statistics",self.toUserId] Accept:@"application/vnd.shengxi.v4.6.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             if ([dict[@"data"] isEqual:[NSNull null]]) {

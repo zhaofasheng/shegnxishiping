@@ -119,9 +119,13 @@
         self.contentL.frame = CGRectMake(56, 37, DR_SCREEN_WIDTH-56-15, comModel.firstContentHeight);
     }
 
-    
     self.viedoNameL.text = comModel.video_title;
-    self.viedoNameL.frame = CGRectMake(28, 0, GET_STRWIDTH(self.viedoNameL.text, 13, 28), 28);
+    CGFloat width = GET_STRWIDTH(self.viedoNameL.text, 13, 28);
+    if (width >= (DR_SCREEN_WIDTH-56-28-10-15)) {
+        width = DR_SCREEN_WIDTH-56-28-10-15;
+    }
+    
+    self.viedoNameL.frame = CGRectMake(28, 0, width, 28);
     self.videView.frame = CGRectMake(0, 4, 28+self.viedoNameL.frame.size.width+10, 28);
     
     [self refreshLikeUI:comModel];

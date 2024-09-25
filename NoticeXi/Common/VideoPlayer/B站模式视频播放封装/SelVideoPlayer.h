@@ -70,6 +70,9 @@
 /** 是否自动全屏 */
 @property (nonatomic, assign) BOOL isAutoFull;
 
+@property (nonatomic, assign) BOOL isTryPlay;
+@property (nonatomic, assign) BOOL noLock;
+
 @property (nonatomic, assign) NSString *currentPlayTime;
 - (void)_videoZoomOut;//退出全屏
 - (void)refreshUI;

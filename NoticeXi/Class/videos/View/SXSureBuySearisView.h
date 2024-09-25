@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *reduceL;
 @property (nonatomic, strong) UILabel *introL;
 @property (nonatomic, strong) UIView *backView;
-
+@property (nonatomic, strong) UILabel *videoNumL;
 
 @end
 

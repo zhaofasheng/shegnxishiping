@@ -103,7 +103,7 @@
         [self.tableView.mj_footer endRefreshing];
         if (success) {
             if ([dict[@"data"] isEqual:[NSNull null]]) {
-                return ;
+                return;
             }
             if (self.isDown == YES) {
                 [self.dataArr removeAllObjects];
@@ -113,7 +113,6 @@
             NSInteger num = 0;
             for (NSDictionary *dic in dict[@"data"]) {
                 SXPayForVideoModel *model = [SXPayForVideoModel mj_objectWithKeyValues:dic];
-                model.is_bought = @"1";
                 [self.dataArr addObject:model];
                 num++;
             }

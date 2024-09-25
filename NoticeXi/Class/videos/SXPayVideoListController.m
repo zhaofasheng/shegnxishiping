@@ -51,7 +51,7 @@
         self.tableView.tableFooterView = nil;
     }
     
-    [self.tableView registerClass:[SXNoBuySearisListCell class] forCellReuseIdentifier:@"noCell"];
+    self.tableView.rowHeight = 75;
     [self.tableView registerClass:[SXHasBuySearisListCell class] forCellReuseIdentifier:@"cell"];
    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshModelTimeNotice:) name:@"SXKCVIDEOREFRESHPLAYTIME" object:nil];
@@ -76,9 +76,17 @@
             
             for (NSDictionary *dic in dict[@"data"]) {
                 SXSearisVideoListModel *model = [SXSearisVideoListModel mj_objectWithKeyValues:dic];
+                model.screen = @"1";
+                if (model.unLock) {
+                    self.paySearModel.hasbuyVideoNum++;
+                }
                 [self.dataArr addObject:model];
             }
-            [self.tableView reloadData];
+            [self refreshStatus];
+            
+            if (self.getvideoBlock) {
+                self.getvideoBlock(self.dataArr);
+            }
         }
     } fail:^(NSError *error) {
         [self.tableView.mj_header endRefreshing];
@@ -99,14 +107,22 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
+    SXSearisVideoListModel *videoM = self.dataArr[indexPath.row];
     if (self.paySearModel.hasBuy) {
         if (![NoticeTools getuserId]) {
             [self bandingWith:nil];
             return;
         }
-        SXSearisVideoListModel *videoM = self.dataArr[indexPath.row];
+        
         videoM.is_new = @"0";
         [self.tableView reloadData];
+        [self gotoPlayView:videoM commentId:nil];
+    }else {
         [self gotoPlayView:videoM commentId:nil];
     }
 }
@@ -180,7 +196,6 @@
 
 - (void)refreshModelTime:(SXSearisVideoListModel *)model{
     
-
     [self upTime:model];
     
     for (SXSearisVideoListModel *videoM in self.dataArr) {
@@ -201,6 +216,11 @@
     [self.tableView reloadData];
 }
 
+- (void)setPaySearModel:(SXPayForVideoModel *)paySearModel{
+    _paySearModel = paySearModel;
+    [self refreshStatus];
+}
+
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self refreshStatus];
@@ -211,42 +231,25 @@
     return self.dataArr.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return self.paySearModel.hasBuy? 75 : 72;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.paySearModel.hasBuy) {
-        
-        SXHasBuySearisListCell *buyedCell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        buyedCell.videoModel = self.dataArr[indexPath.row];
-        
-        [buyedCell.backView setCornerOnTop:0];
-        [buyedCell.backView setCornerOnBottom:0];
-        
-        if (indexPath.row == (self.dataArr.count -1)) {
-            [buyedCell.backView setCornerOnBottom:8];
-        }
-        if (indexPath.row == 0) {
-            if (![SXTools getPayPlayLastsearisId:self.paySearModel.seriesId]) {
-                [buyedCell.backView setCornerOnTop:8];
-            }
-        }
-        
-        return buyedCell;
-    }else{
-        SXNoBuySearisListCell *noCell = [tableView dequeueReusableCellWithIdentifier:@"noCell"];
-        noCell.videoModel = self.dataArr[indexPath.row];
-        [noCell.backView setCornerOnTop:0];
-        [noCell.backView setCornerOnBottom:0];
-        if (indexPath.row == (self.dataArr.count -1)) {
-            [noCell.backView setCornerOnBottom:8];
-        }
-        if (indexPath.row == 0) {
-            [noCell.backView setCornerOnTop:8];
-        }
-        return noCell;
+    SXHasBuySearisListCell *buyedCell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    buyedCell.paySearModel = self.paySearModel;
+    buyedCell.videoModel = self.dataArr[indexPath.row];
+    
+    [buyedCell.backView setCornerOnTop:0];
+    [buyedCell.backView setCornerOnBottom:0];
+    
+    if (indexPath.row == (self.dataArr.count -1)) {
+        [buyedCell.backView setCornerOnBottom:8];
     }
+    if (indexPath.row == 0) {
+        if (![SXTools getPayPlayLastsearisId:self.paySearModel.seriesId]) {
+            [buyedCell.backView setCornerOnTop:8];
+        }
+    }
+    
+    return buyedCell;
+
 }
 
 - (UIView *)footView{

@@ -8,6 +8,7 @@
 
 #import "SXPayVideoPlayDetailListController.h"
 #import "SXPlayPayVideoDetailListCell.h"
+#import "NoticeLoginViewController.h"
 @interface SXPayVideoPlayDetailListController ()
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
 @property (nonatomic, assign) NSInteger isfirstin;
@@ -31,8 +32,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (![NoticeTools getuserId]) {
+        NoticeLoginViewController *ctl = [[NoticeLoginViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+        return;
+    }
     SXSearisVideoListModel *model = self.searisArr[indexPath.row];
+ 
     if ([model.videoId isEqualToString:self.currentPlayModel.videoId]){
         return;
     }
@@ -79,6 +85,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SXPlayPayVideoDetailListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    cell.paySearModel = self.paySearModel;
     cell.currentVideo = self.currentPlayModel;
     cell.videoModel = self.searisArr[indexPath.row];
     cell.fgView.hidden = NO;

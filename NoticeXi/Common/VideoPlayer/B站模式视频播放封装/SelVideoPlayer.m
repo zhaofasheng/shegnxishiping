@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 
 @property (nonatomic, assign) BOOL hasShowActivity;
 @property (nonatomic, assign) BOOL needSetRate;
+
 @end
 
 @implementation SelVideoPlayer
@@ -55,6 +56,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         self.hasShowActivity = YES;
         self.isAutoFull = configuration.isAutoFull;
         _playerConfiguration = configuration;
+        self.noLock = configuration.noLock;
         self.isPay = configuration.isPay;
         self.screen = configuration.screen;
         self.isPlayLocalVideo = configuration.isPlayLocalVideo;
@@ -489,7 +491,6 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         }
     }
     
-    
     /** 创建进度监听器 */
     [self createTimer];
     
@@ -498,6 +499,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
         DRLog(@"创建资源调用播放");
         [self _playVideo];
     }
+    
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if (appdel.pipVC) {
         appdel.pipVC = nil;
@@ -509,6 +511,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
             appdel.pipVC.delegate = self;
         }
     }
+    
 }
 
 //画中画自动播放设置视频源
@@ -661,7 +664,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 
     self.playbackControls.rate = self.playerConfiguration.rate;
     [self addSubview:self.playbackControls];
- 
+
     if(self.isSetDefaultPlaytime){
         self.playbackControls.lastPlayLocationLabel.text = [NSString stringWithFormat:@"已为你定位至%@",[self getMMSSFromSS:self.playerConfiguration.defalutPlayTime]];
     }
@@ -910,12 +913,14 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
 {
     if (!_playbackControls) {
         _playbackControls = [[SelPlaybackControls alloc]init];
+        _playbackControls.noLock = self.noLock;
         _playbackControls.delegate = self;
         _playbackControls.screen = self.screen;
         _playbackControls.isPay = self.isPay;
         _playbackControls.isPlayLocalVideo = self.isPlayLocalVideo;
         _playbackControls.hideInterval = _playerConfiguration.hideControlsInterval;
         _playbackControls.statusBarHideState = _playerConfiguration.statusBarHideState;
+      
     }
     return _playbackControls;
 }

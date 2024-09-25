@@ -69,11 +69,10 @@
         ctl.cardModel = self.orderModel.cardModel;
         [self.navigationController pushViewController:ctl animated:YES];
     }else{
-        
+        [self.navigationController popViewControllerAnimated:NO];
         if (self.reBuyBlock) {
             self.reBuyBlock(YES);
         }
-        [self.navigationController popViewControllerAnimated:NO];
     }
 }
 
@@ -88,7 +87,8 @@
                 return ;
             }
         }];
-        return;
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

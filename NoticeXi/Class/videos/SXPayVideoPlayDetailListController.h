@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SXPayVideoPlayDetailListController : NoticeBaseCellController<JXPagerViewListViewDelegate>
 @property (nonatomic, strong) SXSearisVideoListModel *currentPlayModel;
+@property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic, strong) NSMutableArray *searisArr;
 @property (nonatomic, copy) void(^choiceVideoBlock)(SXSearisVideoListModel *videoModel);
 - (void)refreshCurrentModel:(SXSearisVideoListModel *)currentM needScro:(BOOL)needScrolle;

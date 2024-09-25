@@ -84,7 +84,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopRequestForCheck) name:@"REFRESHMYSHOP" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getwallect) name:@"REFRESHMYWALLECT" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginEd) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
-    
+    //用户退出登录通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin) name:@"outLoginClearDataNOTICATION" object:nil];
     
     [self getStatusRequest];
 }
@@ -204,6 +205,7 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+
     [self getwallect];
     if (self.needAutoShowSupply) {
         self.needAutoShowSupply = NO;
@@ -217,6 +219,16 @@
     }
    
     [self refreshIfhasPlay];
+}
+
+- (void)outLogin{
+    if (![NoticeTools getuserId]) {
+        self.noLoginView.hidden = NO;
+        self.tableView.hidden = YES;
+    }else{
+        _noLoginView.hidden = YES;
+        self.tableView.hidden = NO;
+    }
 }
 
 - (void)refreshIfhasPlay{

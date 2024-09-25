@@ -41,6 +41,7 @@ static NSString *const KFToken = @"KFToken";
             [userDefaults removeObjectForKey:KFToken];
             [userDefaults removeObjectForKey:[NSString stringWithFormat:@"payinfo%@",[NoticeTools getuserId]]];
             [userDefaults synchronize];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"outLoginClearDataNOTICATION" object:nil];
         } fail:^(NSError * _Nullable error) {
    
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -48,15 +49,10 @@ static NSString *const KFToken = @"KFToken";
             [userDefaults removeObjectForKey:KFToken];
             [userDefaults removeObjectForKey:[NSString stringWithFormat:@"payinfo%@",[NoticeTools getuserId]]];
             [userDefaults synchronize];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"outLoginClearDataNOTICATION" object:nil];
         }];
     }
 
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults removeObjectForKey:kXGUserInfo];
-    [userDefaults removeObjectForKey:KFToken];
-    [userDefaults removeObjectForKey:[NSString stringWithFormat:@"payinfo%@",[NoticeTools getuserId]]];
-    [userDefaults synchronize];
-    
     //云信登录
     [NIMSDK.sharedSDK.loginManager logout:^(NSError * _Nullable error) {
         if (!error) {
@@ -66,7 +62,7 @@ static NSString *const KFToken = @"KFToken";
         }
     }];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"outLoginClearDataNOTICATION" object:nil];
+  
 }
 
 

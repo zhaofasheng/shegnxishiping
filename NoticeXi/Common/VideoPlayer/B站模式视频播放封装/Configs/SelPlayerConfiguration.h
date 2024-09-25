@@ -54,4 +54,8 @@ typedef NS_ENUM(NSInteger, SelStatusBarHideState)
 @property (nonatomic, assign) BOOL isAutoFull;
 //从什么位置开始播放
 @property (nonatomic, assign) CGFloat defalutPlayTime;
+
+@property (nonatomic, assign) BOOL isTryPlay;
+@property (nonatomic, assign) BOOL noLock;
+
 @end

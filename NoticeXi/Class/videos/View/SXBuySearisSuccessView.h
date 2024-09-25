@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "SXPayForVideoModel.h"
+#import "SXBuyVideoOrderList.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXBuySearisSuccessView : UIView
+@property (nonatomic, strong) SXBuyVideoOrderList *orderModel;
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic, strong) UIView *backView;
+
+@property (nonatomic, strong) UILabel *videoNumL;
+@property (nonatomic, strong) UILabel *videoNumL1;
 
 @property (nonatomic, strong) UIImageView *statusImageView;
 @property (nonatomic, strong) UILabel *statusL;

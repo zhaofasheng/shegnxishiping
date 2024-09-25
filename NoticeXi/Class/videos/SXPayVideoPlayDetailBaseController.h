@@ -15,10 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SXPayVideoPlayDetailBaseController : NoticeBaseController
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
+@property (nonatomic, strong) SXSearisVideoListModel *currentPlayModel;
 @property (nonatomic, strong) NSMutableArray *searisArr;
 @property (nonatomic, strong) NSString *commentId;
 @property (nonatomic, strong) NSString *replyId;
-@property (nonatomic, strong) SXSearisVideoListModel *currentPlayModel;
+
 @property (nonatomic,copy) void(^refreshPlayTimeBlock)(SXSearisVideoListModel *currentModel);
 @property (nonatomic,copy) void(^refreshBuyPlayTimeBlock)(SXSearisVideoListModel *currentModel,SXPayForVideoModel *searModel);
 @property (nonatomic,copy) void(^getVideoListBlock)(NSMutableArray *videoList,NSString *searID);

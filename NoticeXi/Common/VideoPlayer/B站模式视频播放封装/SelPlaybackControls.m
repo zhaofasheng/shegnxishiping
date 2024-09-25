@@ -47,7 +47,12 @@ static const CGFloat PlaybackControlsAutoHideTimeInterval = 0.3f;
     self.bottomControlsBar.alpha = 0;
     self.topControlsBar.alpha = 0;
     self.isShowing = NO;
-    [self _activityIndicatorViewShow:YES];
+    [self _activityIndicatorViewShow:self.noLock?NO: YES];
+}
+
+- (void)setNoLock:(BOOL)noLock{
+    _noLock = noLock;
+    [self _activityIndicatorViewShow:NO];
 }
 
 /**

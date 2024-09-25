@@ -23,29 +23,38 @@
 #import "SXBuyKcCardController.h"
 #import "NoticeWebViewController.h"
 #import "SXKcNoBuyScoreHeaderView.h"
+#import "SXBuySearisSuccessController.h"
+#import "SXBuySeriesTools.h"
+#import "SXBuyVideoTools.h"
 @interface SXStudyBaseController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
-
+@property (nonatomic, strong) NSString *ordersn;
 @property (nonatomic, strong) NSArray <NSString *> *titles;
+
 @property (nonatomic, strong) JXCategoryTitleView *categoryView;
 @property (nonatomic, strong) JXPagerListRefreshView *pagerView;
 @property (nonatomic, strong) SXPayKCDetailComController *comVC;
 @property (nonatomic, strong) SXPayVideoListController *videoVC;
 @property (nonatomic, strong) SXKchengIntroController *kcVC;
+@property (nonatomic, strong) SXSearisVideoListModel *buyVideoModel;
 @property (nonatomic, strong) UIView *line;
 @property (nonatomic, strong) NSString *webBuyUrl;
+
 @property (nonatomic, strong) SXKcNoBuyScoreHeaderView *imgListView;
+@property (nonatomic, strong) UILabel *realPriceL;
 @property (nonatomic, strong) UIButton *buyBtn;
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UIButton *webButton;
+
 @property (nonatomic, strong) SXHasBuyKcHeaderView *zeroView;
+
 @property (nonatomic, assign) BOOL shoCom;
 @property (nonatomic, strong) UILabel *infoButton;
 @property (nonatomic, strong) UILabel *orderButton;
 @property (nonatomic, strong) UILabel *comButton;
 @property (nonatomic, strong) UIView *sectionView;
 
-
+@property (nonatomic, strong) NSMutableArray *videoArr;
 @end
 
 @implementation SXStudyBaseController
@@ -78,15 +87,14 @@
     if (self.paySearModel.carousel_images.count) {
         self.imgListView.hidden = NO;
         self.imgListView.paySearModel = self.paySearModel;
-
         [self.categoryView reloadData];
         [self.pagerView reloadData];
     }
 
-    UIButton *shanreBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-24, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-24)/2, 24, 24)];
-    [shanreBtn setBackgroundImage:UIImageNamed(@"sx_shanrestudyvideo_img") forState:UIControlStateNormal];
-    [self.navBarView addSubview:shanreBtn];
-    [shanreBtn addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *shareBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-15-24, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT-24)/2, 24, 24)];
+    [shareBtn setBackgroundImage:UIImageNamed(@"sx_shanrestudyvideo_img") forState:UIControlStateNormal];
+    [self.navBarView addSubview:shareBtn];
+    [shareBtn addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
     
     [self.sectionView addSubview:self.infoButton];
     [self.sectionView addSubview:self.orderButton];
@@ -101,56 +109,40 @@
     
     self.comVC.paySearModel = self.paySearModel;
     
+    //@"BUYSINGLESEARISSUCCESS"
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buySingleSuccess) name:@"BUYSINGLESEARISSUCCESS" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buySuccess) name:@"BUYSEARISSUCCESS" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buyFaild) name:@"BUYSEARISFAILD" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buyCardSuccess) name:@"BUYCARDSEARISSUCCESS" object:nil];
     
     [self goGuanwBuy];
+    [self requestSeriesDetail];
 }
 
-//购买课程成功
-- (void)buySuccess{
-    [self.webButton removeFromSuperview];
-    [self.backView removeFromSuperview];
-    self.paySearModel.is_bought = @"1";
-    self.paySearModel.buy_card_times = [NSString stringWithFormat:@"%d",self.paySearModel.buy_card_times.intValue+1];
-    if (self.shoCom) {
-        self.categoryView.defaultSelectedIndex = 2;
-        [self categoryCurentIndex:2];
-        self.shoCom = NO;
-    }
-    self.zeroView.paySearModel = self.paySearModel;
-    self.comVC.paySearModel = self.paySearModel;
-    [self.comVC.tableView reloadData];
-    self.videoVC.paySearModel = self.paySearModel;
-    [self.videoVC.tableView reloadData];
-    [self.categoryView reloadData];
-    [self.pagerView reloadData];
-    [self refreshStatus];
-}
-
-//卡片购买成功
-- (void)buyCardSuccess{
-    if (self.shoCom) {
-        self.categoryView.defaultSelectedIndex = 2;
-        [self categoryCurentIndex:2];
-        self.shoCom = NO;
-    }
-    self.paySearModel.buy_card_times = [NSString stringWithFormat:@"%d",self.paySearModel.buy_card_times.intValue+1];
-    self.zeroView.paySearModel = self.paySearModel;
-    self.comVC.paySearModel = self.paySearModel;
-    [self.comVC.tableView reloadData];
-    self.videoVC.paySearModel = self.paySearModel;
-    [self.videoVC.tableView reloadData];
-    [self.categoryView reloadData];
-    [self.pagerView reloadData];
-    [self refreshStatus];
-    
-    if (self.buySuccessBlock) {
-        self.buySuccessBlock(self.paySearModel.seriesId,self.paySearModel.buy_card_times,self.paySearModel.is_bought);
-    }
+- (void)requestSeriesDetail{
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",self.paySearModel.seriesId] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+        if (success) {
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return;
+            }
+            SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
+            if (!searismodel) {
+                return;
+            }
+            self.paySearModel.price = searismodel.price;
+            self.paySearModel.open_upfront_activity = searismodel.open_upfront_activity;
+            _zeroView.paySearModel = self.paySearModel;
+            
+            NSString *price = [NSString stringWithFormat:@"¥%@",_paySearModel.price];
+            self.realPriceL.text = price;
+        }
+    } fail:^(NSError *error) {
+        
+    }];
 }
 
 - (void)shareClick{
+    
     NoticeMoreClickView *moreView = [[NoticeMoreClickView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
     moreView.isShare = YES;
     moreView.isShareSerise = YES;
@@ -171,12 +163,8 @@
         _zeroView = [[SXHasBuyKcHeaderView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 178+80)];
         _zeroView.paySearModel = self.paySearModel;
         __weak typeof(self) weakSelf = self;
-        _zeroView.buyTypeBolck = ^(BOOL isSend) {
-            if (isSend) {
-                [weakSelf sendVideoClick];
-            }else{
-                [weakSelf buyClick];
-            }
+        _zeroView.buyTypeBolck = ^(BOOL isSend) {//点击继续购课
+            [weakSelf sureApplePay:YES];
         };
         _zeroView.refreshComUIBolck = ^(BOOL refresh) {
             [weakSelf.categoryView reloadData];
@@ -189,7 +177,6 @@
 - (SXKcNoBuyScoreHeaderView *)imgListView{
     if (!_imgListView) {
         _imgListView = [[SXKcNoBuyScoreHeaderView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_WIDTH/16*9+157)];
-
     }
     return _imgListView;
 }
@@ -213,7 +200,6 @@
 }
 
 - (NSInteger)numberOfListsInPagerView:(JXPagerView *)pagerView {
-  
     return self.titles.count;
 }
 
@@ -236,6 +222,9 @@
         _videoVC.deleteClickBlock = ^(SXVideoCommentModel * _Nonnull commentM) {
             [weakSelf.comVC deleteCommentWith:commentM.commentId];
         };
+        _videoVC.getvideoBlock = ^(NSMutableArray * _Nonnull videoArr) {
+            weakSelf.videoArr = videoArr;
+        };
     }
     return _videoVC;
 }
@@ -253,7 +242,7 @@
         };
         _comVC.buyBlock = ^(BOOL buy) {
             weakSelf.shoCom = YES;
-            [weakSelf buyClick];
+            [weakSelf jiesuokec];
         };
     
     }
@@ -309,14 +298,13 @@
         }
     }else{
         [self noBuyView];
-        
     }
     self.pagerView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-((self.paySearModel.is_bought.boolValue || self.paySearModel.buy_card_times.intValue) ?0:TAB_BAR_HEIGHT));
 }
 
 //跳转购买
 - (void)webBuyClick{
-    
+   
     NSURL *taobaoUrl = [NSURL URLWithString:self.webBuyUrl];
 
     UIApplication *application = [UIApplication sharedApplication];
@@ -338,7 +326,6 @@
             }];
         }
     }else{
-
         NoticeWebViewController *ctl = [[NoticeWebViewController alloc] init];
         ctl.url = self.webBuyUrl;
         ctl.isFromShare = YES;
@@ -354,18 +341,8 @@
     backView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:backView];
     self.backView = backView;
-    
-    if ([NoticeTools getuserId]) {
-        UIButton *sendBtn = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-144-80,5, 80, 40)];
-        [sendBtn setBackgroundImage:UIImageNamed(@"sxpricebak_img") forState:UIControlStateNormal];
-        [sendBtn setTitle:@"赠送" forState:UIControlStateNormal];
-        sendBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
-        [sendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [backView addSubview:sendBtn];
-        [sendBtn addTarget:self action:@selector(sendVideoClick) forControlEvents:UIControlEventTouchUpInside];
-    }
 
-    NSString *price = [NSString stringWithFormat:@"¥%@",self.paySearModel.price];
+    NSString *price = [NSString stringWithFormat:@"¥%@",_paySearModel.price];
     NSString *oriprice = [NSString stringWithFormat:@"¥%@",self.paySearModel.original_price];
     
     CGFloat realPriceWidth = GET_STRWIDTH(price, 20, 40);
@@ -375,6 +352,7 @@
     realPriceL.font = SXNUMBERFONT(20);
     realPriceL.textColor = [UIColor colorWithHexString:@"#FF4B98"];
     realPriceL.text = price;
+    self.realPriceL = realPriceL;
     [self.backView addSubview:realPriceL];
     
     UILabel *oripriceL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(realPriceL.frame), 5, oriPriceWidth, 35)];
@@ -391,13 +369,13 @@
     [self.buyBtn setBackgroundImage:UIImageNamed(@"sxbuyBtn_img") forState:UIControlStateNormal];
     self.buyBtn.titleLabel.font = SIXTEENTEXTFONTSIZE;
     [self.buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.buyBtn setTitle:@"立即报名" forState:UIControlStateNormal];
+    [self.buyBtn setTitle:@"立即购买" forState:UIControlStateNormal];
     [backView addSubview:self.buyBtn];
     [self.buyBtn addTarget:self action:@selector(buyClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)goGuanwBuy{
-    if (![[NoticeTools getuserId] isEqualToString:@"2"] && [NoticeTools getuserId]) {
+    if (![[NoticeTools getuserId] isEqualToString:@"2"] && [NoticeTools getuserId] && !self.paySearModel.is_bought.boolValue) {
         [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"config?key=websiteBuySeriesUrl" Accept:@"application/vnd.shengxi.v5.8.6+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
             if (success) {
                 SXConfigModel *configM = [SXConfigModel mj_objectWithKeyValues:dict[@"data"]];
@@ -446,7 +424,7 @@
 - (void)buyClick{
     
     if ([NoticeTools getuserId]) {
-        [self sureApplePay];
+        [self sureApplePay:NO];
     }else{
         [self showHUD];
         //获得UUID存入keyChain中
@@ -485,8 +463,196 @@
 
 }
 
-- (void)sureApplePay{
+
+
+//购买课程失败
+- (void)buyFaild{
+    [self getOrderStatus];
+}
+
+- (void)getOrderStatus{
+    if (!self.ordersn) {
+        return;
+    }
+    NSString *url = [NSString stringWithFormat:@"series/order/info?sn=%@",self.ordersn];
+     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.0+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+         if (success) {
+             AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+             if (!appdel.pushBuySuccess) {
+                 return;
+             }
+             SXOrderStatusModel *payStatus = [SXOrderStatusModel mj_objectWithKeyValues:dict[@"data"]];
+
+             SXBuyVideoOrderList *orderM = [SXBuyVideoOrderList mj_objectWithKeyValues:dict[@"data"]];
+             orderM.cardModel.searModel = orderM.paySearModel;
+             SXBuySearisSuccessController *ctl = [[SXBuySearisSuccessController alloc] init];
+             ctl.paySearModel = self.paySearModel;
+             ctl.payStatusModel = payStatus;
+             ctl.orderModel = orderM;
+             [self.navigationController pushViewController:ctl animated:YES];
+         }
+     } fail:^(NSError * _Nullable error) {
+
+     }];
+}
+
+
+//购买课程成功
+- (void)buySuccess{
+    [self getOrderStatus];
+    [self.webButton removeFromSuperview];
+    [self.backView removeFromSuperview];
+    self.paySearModel.is_bought = @"1";
+    self.paySearModel.buy_card_times = [NSString stringWithFormat:@"%d",self.paySearModel.buy_card_times.intValue+1];
+    if (self.shoCom) {
+        self.categoryView.defaultSelectedIndex = 2;
+        [self categoryCurentIndex:2];
+        self.shoCom = NO;
+    }
+    self.zeroView.paySearModel = self.paySearModel;
+    self.comVC.paySearModel = self.paySearModel;
+    [self.comVC.tableView reloadData];
+    self.videoVC.paySearModel = self.paySearModel;
+    [self.videoVC.tableView reloadData];
+    self.categoryView.defaultSelectedIndex = 0;
+    [self categoryCurentIndex:0];
+    [self.categoryView reloadData];
+    [self.pagerView reloadData];
+    [self refreshStatus];
     
+
+}
+
+//购买单集成功
+- (void)buySingleSuccess{
+    [self getOrderStatus];
+    [self.backView removeFromSuperview];
+    self.paySearModel.hasbuyVideoNum = 1;
+    DRLog(@"购买单集成功");
+    self.buyVideoModel.is_bought = @"1";
+    self.paySearModel.buy_card_times = [NSString stringWithFormat:@"%d",self.paySearModel.buy_card_times.intValue+1];
+    self.zeroView.paySearModel = self.paySearModel;
+    self.comVC.paySearModel = self.paySearModel;
+    [self.comVC.tableView reloadData];
+    self.videoVC.paySearModel = self.paySearModel;
+    self.categoryView.defaultSelectedIndex = 0;
+    [self categoryCurentIndex:0];
+    [self.videoVC.tableView reloadData];
+    [self.categoryView reloadData];
+    [self.pagerView reloadData];
+    [self refreshStatus];
+
+}
+
+//卡片购买成功
+- (void)buyCardSuccess{
+    DRLog(@"购买礼品卡成功");
+    if (self.shoCom) {
+        self.categoryView.defaultSelectedIndex = 2;
+        [self categoryCurentIndex:2];
+        self.shoCom = NO;
+    }
+    [self.webButton removeFromSuperview];
+    [self.backView removeFromSuperview];
+    self.paySearModel.buy_card_times = [NSString stringWithFormat:@"%d",self.paySearModel.buy_card_times.intValue+1];
+    self.zeroView.paySearModel = self.paySearModel;
+    self.comVC.paySearModel = self.paySearModel;
+    [self.comVC.tableView reloadData];
+    self.videoVC.paySearModel = self.paySearModel;
+    [self.videoVC.tableView reloadData];
+    self.categoryView.defaultSelectedIndex = 0;
+    [self categoryCurentIndex:0];
+    [self.categoryView reloadData];
+    [self.pagerView reloadData];
+    [self refreshStatus];
+    
+    if (self.buySuccessBlock) {
+        self.buySuccessBlock(self.paySearModel.seriesId,self.paySearModel.buy_card_times,self.paySearModel.is_bought);
+    }
+
+}
+
+//弹出购买弹框
+- (void)sureApplePay:(BOOL)contioun{
+    if (!self.videoArr.count) {
+        [self showToastWithText:@"正在获取视频列表"];
+        return;
+    }
+    __weak typeof(self) weakSelf = self;
+    SXBuySeriesTools *toolsView = [[SXBuySeriesTools alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
+    toolsView.jisugouke = contioun;
+    toolsView.paySearModel = self.paySearModel;
+    toolsView.dataArr = self.videoArr;
+    toolsView.buytypeBlock = ^(NSInteger type, NSString * _Nonnull currentId) {
+        if (type == 2) {
+            [weakSelf jiesuokec];
+        }else if (type == 1){
+            [weakSelf sureBuySingle:currentId];
+        }else if (type == 3){
+            [weakSelf sendVideoClick];
+        }else if (type == 4){
+            [weakSelf sureBuyThree];
+        }else if (type == 5){
+            [weakSelf sureBuysy];
+        }
+    };
+    [toolsView show];
+}
+
+//下单购买课程
+- (void)sureOrderBuy{
+    __weak typeof(self) weakSelf = self;
+    [SXBuyVideoTools buyKcseriesId:self.paySearModel.seriesId isSeriesCard:@"0" product_id:self.paySearModel.product_id getOrderBlock:^(SXOrderStatusModel * _Nonnull payModel) {
+        weakSelf.ordersn = payModel.sn;
+    }];
+}
+
+//下单解锁单集
+- (void)sureBuySingle:(NSString *)currentId{
+    __weak typeof(self) weakSelf = self;
+
+    NSInteger index = 0;
+    for (int i = 0; i < self.videoArr.count;i++) {
+        SXSearisVideoListModel *videoM = self.videoArr[i];
+        if (!videoM.unLock && (videoM.tryPlayTime < videoM.video_len.intValue)) {
+            index = i;
+            self.buyVideoModel = videoM;
+            break;
+        }
+    }
+    [SXBuyVideoTools buyKSinglecvideoId:currentId product_id:[NSString stringWithFormat:@"%@_%ld",self.paySearModel.product_id,index+1] getOrderBlock:^(SXOrderStatusModel * _Nonnull payModel) {
+        weakSelf.ordersn = payModel.sn;
+    }];
+
+}
+
+//下单解锁3集
+- (void)sureBuyThree{
+    
+}
+
+//解锁剩余内容
+- (void)sureBuysy{
+    //判断是否存在单集购买过的产品
+    NSInteger hasBuyVideo = 0;
+    for (SXSearisVideoListModel *videoM in self.videoArr) {
+
+        if (videoM.unLock) {
+            hasBuyVideo ++;
+        }
+    }
+    //需要买的数量，总价减去已经购买的价钱，除单价
+    NSInteger needBuy = (self.paySearModel.price.intValue-(self.paySearModel.singlePrice.intValue*hasBuyVideo))/self.paySearModel.singlePrice.intValue;
+    
+    __weak typeof(self) weakSelf = self;
+    [SXBuyVideoTools buyKSyvideoseriesId:self.paySearModel.seriesId product_id:[NSString stringWithFormat:@"%@x%ld",self.paySearModel.product_id,needBuy] money:[NSString stringWithFormat:@"%ld",(long)(needBuy*self.paySearModel.singlePrice.intValue)] getOrderBlock:^(SXOrderStatusModel * _Nonnull payModel) {
+        weakSelf.ordersn = payModel.sn;
+    }];
+
+}
+
+//解锁课程
+- (void)jiesuokec{
     SXBuySearisController *ctl = [[SXBuySearisController alloc] init];
     ctl.paySearModel = self.paySearModel;
     __weak typeof(self) weakSelf = self;
@@ -518,7 +684,7 @@
             [weakSelf login];
         }else{
             [SXTools saveLocalToken:token];
-            [self sureApplePay];
+            [self sureOrderBuy];
         }
     };
     [buyTypeView showTost];

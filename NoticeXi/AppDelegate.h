@@ -41,7 +41,9 @@
 @property (nonatomic, assign) BOOL canRefresh;
 @property (nonatomic, assign) BOOL canRfreshUserCenter;
 @property (nonatomic, assign) BOOL noPop;
+@property (nonatomic, assign) BOOL pushBuySuccess;
 @property (nonatomic, assign) BOOL isBuyCard;
+@property (nonatomic, strong) NSString *buyVideoId;
 @property (nonatomic) CGPoint floatPoint;
 @property (nonatomic, strong) NSTimer *waitTimer;
 @property (nonatomic, assign) UInt64 currentCallId;

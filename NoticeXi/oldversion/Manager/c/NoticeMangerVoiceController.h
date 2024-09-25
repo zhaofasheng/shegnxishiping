@@ -6,14 +6,14 @@
 //  Copyright © 2019年 zhaoxiaoer. All rights reserved.
 //
 
-#import "BaseTableViewController.h"
+#import "NoticeBaseCellController.h"
 #import "NoticeManagerModel.h"
 #import "NoticeGroupChatModel.h"
 #import "NoticeManagerJuBaoModel.h"
 #import "NoticeDanMuListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NoticeMangerVoiceController : BaseTableViewController
+@interface NoticeMangerVoiceController : NoticeBaseCellController
 @property (nonatomic, assign) BOOL isNoChat;
 @property (nonatomic, assign) BOOL isFull;
 @property (nonatomic, strong) NSString *mangagerCode;

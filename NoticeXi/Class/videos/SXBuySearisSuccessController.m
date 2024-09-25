@@ -20,8 +20,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdel.pushBuySuccess = NO;
+    
     self.headerView = [[SXBuySearisSuccessView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT)];
     self.tableView.tableHeaderView = self.headerView;
+    self.headerView.orderModel = self.orderModel;
     self.headerView.isCard = self.orderModel.product_type.intValue == 3?YES:NO;
     self.headerView.paySearModel = self.paySearModel;
     self.headerView.payStatusModel = self.payStatusModel;
@@ -51,12 +55,15 @@
             if ([obj isKindOfClass:[SXStudyBaseController class]]) {//返回到指定界面
                 pushVC = obj;
                 [weakSelf.navigationController popToViewController:pushVC animated:YES];
-                return ;
+              
+            }else{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
             }
         }];
-        return;
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)lookClick{

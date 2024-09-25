@@ -56,12 +56,17 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
     [self refreshData];
 }
 
 - (void)refreshData{
-    self.tableView.tableFooterView = self.currentPlayModel.commentCt.intValue?nil:self.defaultL1;
+    if (!self.paySearModel.hasBuy && !self.currentPlayModel.unLock && !(self.currentPlayModel.tryPlayTime >= self.currentPlayModel.video_len.intValue)) {
+        self.tableView.tableFooterView = self.defaultL1;
+        self.defaultL1.text = @"解锁即可参与评论";
+    }else{
+        self.tableView.tableFooterView = self.currentPlayModel.commentCt.intValue?nil:self.defaultL1;
+    }
+   
     if (!self.dataArr.count || self.refresh) {
         [self.dataArr removeAllObjects];
         [self.tableView reloadData];
@@ -82,6 +87,11 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     }
     self.inputView.saveKey = [NSString stringWithFormat:@"videoLy%@%@",[NoticeTools getuserId],currentPlayModel.videoId];
     self.inputView.plaStr = currentPlayModel.commentCt.intValue?@"说说我的想法...":@"成为第一条评论…";
+    
+    if (!self.paySearModel.hasBuy && !self.currentPlayModel.unLock) {
+        self.tableView.tableFooterView = self.defaultL1;
+        self.defaultL1.text = @"解锁即可参与评论";
+    }
 }
 
 //发送评论或者回复
@@ -289,7 +299,12 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
                     self.refreshCommentCountBlock(@"0");
                 }
             }
-            self.tableView.tableFooterView = self.dataArr.count?nil:self.defaultL1;
+            
+            if (self.paySearModel.hasBuy || self.currentPlayModel.unLock) {
+                self.tableView.tableFooterView = self.dataArr.count?nil:self.defaultL1;
+                self.defaultL1.text = @"还没有评论，发条评论抢占第一";
+            }
+            
             [self.tableView reloadData];
         }
     } fail:^(NSError *error) {
@@ -436,6 +451,9 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (!self.currentPlayModel.unLock && !self.paySearModel.hasBuy) {
+        return 0;
+    }
     return self.dataArr.count;
 }
 

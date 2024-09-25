@@ -97,14 +97,14 @@
             else{
                 DRLog(@"刷新token失败");
                 [NoticeSaveModel outLoginClearData];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             }
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESKINATTABBAR" object:nil];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         DRLog(@"刷新token失败fail");
         [NoticeSaveModel outLoginClearData];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
     }];
 }
 
@@ -160,7 +160,7 @@
         NSHTTPURLResponse * responses = (NSHTTPURLResponse *)task.response;
         if (responses.statusCode == 425) {//被别的设备登录
             [NoticeSaveModel otherLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"下线通知" message:@"你的账号在另一台设备登录，当前设备已下线。" cancleBtn:@"知道了"];
             [alerView showXLAlertView];
             return;
@@ -168,8 +168,8 @@
         if (responses.statusCode == 412) {
          
             [NoticeSaveModel outLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
-            //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
+            //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
         }else{
 //            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
 //            [Bugly reportException:exception];
@@ -226,14 +226,14 @@
         NSHTTPURLResponse * responses = (NSHTTPURLResponse *)task.response;
         if (responses.statusCode == 425) {//被别的设备登录
             [NoticeSaveModel otherLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"下线通知" message:@"你的账号在另一台设备登录，当前设备已下线。" cancleBtn:@"知道了"];
             [alerView showXLAlertView];
             return;
         }
         if (responses.statusCode == 412) {
             [NoticeSaveModel outLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
         }else{
 //            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
 //            [Bugly reportException:exception];
@@ -395,12 +395,12 @@
                 [NoticeSaveModel saveLastRefresh:[NoticeTools getNowTimeTimestamp]];
                 DRLog(@"刷新token失败");
                 [NoticeSaveModel outLoginClearData];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                 return;
             }
             if (responses.statusCode == 425) {//被别的设备登录
                 [NoticeSaveModel otherLoginClearData];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"下线通知" message:@"你的账号在另一台设备登录，当前设备已下线。" cancleBtn:@"知道了"];
                 [alerView showXLAlertView];
                 return;
@@ -408,8 +408,8 @@
             if (responses.statusCode == 412) {
         
                 [NoticeSaveModel outLoginClearData];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
-                //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
+                //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             }else{
 //                NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
 //                [Bugly reportException:exception];
@@ -460,20 +460,20 @@
                  [NoticeSaveModel saveLastRefresh:[NoticeTools getNowTimeTimestamp]];
                  DRLog(@"刷新token失败");
                  [NoticeSaveModel outLoginClearData];
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                  return;
              }
              if (responses.statusCode == 425) {//被别的设备登录
                  [NoticeSaveModel otherLoginClearData];
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                  XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"下线通知" message:@"你的账号在另一台设备登录，当前设备已下线。" cancleBtn:@"知道了"];
                  [alerView showXLAlertView];
                  return;
              }
              if (responses.statusCode == 412) {
                  [NoticeSaveModel outLoginClearData];
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
-                 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
+                 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
              }else{
                  [self pareseError:error];
 //                 NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
@@ -562,19 +562,19 @@
                 [NoticeSaveModel saveLastRefresh:[NoticeTools getNowTimeTimestamp]];
                 DRLog(@"刷新token失败");
                 [NoticeSaveModel outLoginClearData];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                 return;
             }
             if (responses.statusCode == 425) {//被别的设备登录
                 [NoticeSaveModel otherLoginClearData];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                 XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"下线通知" message:@"你的账号在另一台设备登录，当前设备已下线。" cancleBtn:@"知道了"];
                 [alerView showXLAlertView];
                 return;
             }
             if (responses.statusCode == 412) {
                 [NoticeSaveModel outLoginClearData];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             }else{
 //                NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
 //                [Bugly reportException:exception];
@@ -614,20 +614,20 @@
                  [NoticeSaveModel saveLastRefresh:[NoticeTools getNowTimeTimestamp]];
                  DRLog(@"刷新token失败");
                  [NoticeSaveModel outLoginClearData];
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                  return;
              }
              if (responses.statusCode == 425) {//被别的设备登录
                  [NoticeSaveModel otherLoginClearData];
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                  XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"下线通知" message:@"你的账号在另一台设备登录，当前设备已下线。" cancleBtn:@"知道了"];
                  [alerView showXLAlertView];
                  return;
              }
              if (responses.statusCode == 412) {
                  [NoticeSaveModel outLoginClearData];
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
-                 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
+                 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
              }else{
                  [self pareseError:error];
 //                 NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
@@ -696,20 +696,20 @@
             [NoticeSaveModel saveLastRefresh:[NoticeTools getNowTimeTimestamp]];
             DRLog(@"刷新token失败");
             [NoticeSaveModel outLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             return;
         }
         if (responses.statusCode == 425) {//被别的设备登录
             [NoticeSaveModel otherLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"下线通知" message:@"你的账号在另一台设备登录，当前设备已下线。" cancleBtn:@"知道了"];
             [alerView showXLAlertView];
             return;
         }
         if (responses.statusCode == 412) {
             [NoticeSaveModel outLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
-            // [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
+            // [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
         }else{
             [self pareseError:error];
 //            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报
@@ -775,20 +775,20 @@
             [NoticeSaveModel saveLastRefresh:[NoticeTools getNowTimeTimestamp]];
             DRLog(@"刷新token失败");
             [NoticeSaveModel outLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             return;
         }
         if (responses.statusCode == 425) {//被别的设备登录
             [NoticeSaveModel otherLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"下线通知" message:@"你的账号在另一台设备登录，当前设备已下线。" cancleBtn:@"知道了"];
             [alerView showXLAlertView];
             return;
         }
         if (responses.statusCode == 412) {
             [NoticeSaveModel outLoginClearData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
-            //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
+            //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
         }else{
             [self pareseError:error];
 //            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"接口请求头失败%@错误代码%ld",[self getNowTime],responses.statusCode] reason:[NSString stringWithFormat:@"%@\n%@请求接口%@失败",[self getNowTime],[[NoticeSaveModel getUserInfo] user_id],[self urlWithPath:path portTag:0]] userInfo:nil];//数据上报

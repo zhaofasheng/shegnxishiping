@@ -181,7 +181,6 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
     NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
     [parm setObject:comment forKey:@"content"];
 
-    
     [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopDynamicCommont/%@/%@",self.model.dongtaiId,commentId.intValue?commentId:@"0"] Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
         if (success) {
             self.tableView.tableFooterView = nil;

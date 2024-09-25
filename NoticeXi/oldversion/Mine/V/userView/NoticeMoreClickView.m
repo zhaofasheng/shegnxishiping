@@ -149,23 +149,22 @@
 
             /**
              v4.1.2 为微信小程序分享增加
-              title 标题
-              description 详细说明
-              webpageUrl 网址（6.5.6以下版本微信会自动转化为分享链接 必填）
-              path 跳转到页面路径
-              thumbImage 缩略图 , 旧版微信客户端（6.5.8及以下版本）小程序类型消息卡片使用小图卡片样式 要求图片数据小于32k
-              hdThumbImage 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
-              userName 小程序的userName （必填）
-              withShareTicket 是否使用带 shareTicket 的转发
-              type 分享小程序的版本（0-正式，1-开发，2-体验）
-              platformSubType 分享自平台 微信小程序暂只支持 SSDKPlatformSubTypeWechatSession（微信好友分享)
+             title 标题
+             description 详细说明
+             webpageUrl 网址（6.5.6以下版本微信会自动转化为分享链接 必填）
+             path 跳转到页面路径
+             thumbImage 缩略图 , 旧版微信客户端（6.5.8及以下版本）小程序类型消息卡片使用小图卡片样式 要求图片数据小于32k
+             hdThumbImage 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
+             userName 小程序的userName （必填）
+             withShareTicket 是否使用带 shareTicket 的转发
+             type 分享小程序的版本（0-正式，1-开发，2-体验）
+             platformSubType 分享自平台 微信小程序暂只支持 SSDKPlatformSubTypeWechatSession（微信好友分享)
              */
-       
+            
             NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
             [shareParams SSDKSetupWeChatMiniProgramShareParamsByTitle:self.title description:self.name webpageUrl:[NSURL URLWithString:@"www.baidu.com"] path:self.appletPage thumbImage:nil hdThumbImage:self.share_img_url userName:self.appletId withShareTicket:YES miniProgramType:0 forPlatformSubType:SSDKPlatformSubTypeWechatSession];
 
             [ShareSDK share:SSDKPlatformSubTypeWechatSession parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-              
             }];
             
         }else if(indexPath.row == 1){

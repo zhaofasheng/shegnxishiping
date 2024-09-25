@@ -15,7 +15,9 @@
 #import "SXKcHasGetLikeController.h"
 #import "NoticeStaySys.h"
 #import "CMUUIDManager.h"
+
 @interface SXPayForVideosController ()
+
 @property (nonatomic, strong) UIView *footView;
 
 @property (nonatomic, strong) UIButton *hasBuyBtn;
@@ -24,6 +26,7 @@
 @property (nonatomic, strong) UILabel *zanNumL;
 @property (nonatomic, strong) UILabel *comNumL;
 @property (nonatomic, strong) UILabel *updateL;
+
 @end
 
 @implementation SXPayForVideosController
@@ -306,7 +309,6 @@
             NSInteger num = 0;
             for (NSDictionary *dic in dict[@"data"]) {
                 SXPayForVideoModel *model = [SXPayForVideoModel mj_objectWithKeyValues:dic];
-            
                 [self.dataArr addObject:model];
                 num++;
             }

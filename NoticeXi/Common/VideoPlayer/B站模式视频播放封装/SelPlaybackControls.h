@@ -67,6 +67,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 @property (nonatomic, strong) UIButton *backBtn;
 @property (nonatomic, strong) UIButton *downloadBtn;
 @property (nonatomic, assign) NSInteger rate;
+@property (nonatomic, assign) BOOL noLock;
 //是否是播放本地视频
 @property (nonatomic, assign) BOOL isPlayLocalVideo;
 /** 底部控制栏 */

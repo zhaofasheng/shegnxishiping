@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXHasBuySearisListCell : BaseCell
-
+@property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic, strong) SXSearisVideoListModel *videoModel;
 
 @property (nonatomic, strong) UILabel *titleL;
@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *comL;
 
 @property (nonatomic, strong) UILabel *newVideoMarkL;
+@property (nonatomic, strong) UILabel *tryL;
 @end
 
 NS_ASSUME_NONNULL_END

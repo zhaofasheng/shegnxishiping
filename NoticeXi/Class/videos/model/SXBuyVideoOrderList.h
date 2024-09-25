@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SXBuyVideoOrderList : NSObject
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic, strong) NSDictionary *series_info;
-@property (nonatomic, strong) NSString *product_type;//产品类型(2课程  3课程礼品卡)
 @property (nonatomic, strong) NSString *orderId;
 @property (nonatomic, strong) NSString *sn;
 @property (nonatomic, strong) NSString *fee;
@@ -24,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *pay_time;
 @property (nonatomic, strong) NSDictionary *series_card_info;
 @property (nonatomic, strong) SXKcCardListModel *cardModel;
+@property (nonatomic, strong) NSString *video_title;
+@property (nonatomic, strong) NSString *product_type;//订单产品类型 2 课程相关  3 课程卡 4 课程视频
+@property (nonatomic, strong) NSString *quantity;//数量(product_type=4时此字段采用，0代表购买单节，大于0代表购买剩下集数)
 @end
 
 NS_ASSUME_NONNULL_END

@@ -27,4 +27,14 @@
     _user_info = user_info;
     self.userModel = [SXUserModel mj_objectWithKeyValues:user_info];
 }
+
+- (void)setIs_bought:(NSString *)is_bought{
+    _is_bought = is_bought;
+    self.unLock = is_bought.boolValue;
+}
+
+- (void)setSee_second:(NSString *)see_second{
+    _see_second = see_second;
+    self.tryPlayTime = see_second.integerValue;
+}
 @end

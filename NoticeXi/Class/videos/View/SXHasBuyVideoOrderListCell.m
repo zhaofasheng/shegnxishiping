@@ -59,6 +59,7 @@
 - (void)setOrderListM:(SXBuyVideoOrderList *)orderListM{
     _orderListM = orderListM;
     self.orderNumL.text = [NSString stringWithFormat:@"订单编号：%@",orderListM.sn];
+    
     if (orderListM.pay_status.intValue == 2) {
         self.markL.text = @"交易成功";
         _markL.textColor = [UIColor colorWithHexString:@"#14151A"];
@@ -66,15 +67,26 @@
         self.markL.text = @"交易失败";
         _markL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
     }
+    
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:orderListM.paySearModel.simple_cover_url]];
     self.titleL.text = orderListM.paySearModel.series_name;
+    
     if (orderListM.cardModel.card_number.length > 6) {
         _numL.text = orderListM.product_type.intValue == 3? [NSString stringWithFormat:@"礼品卡(编号%@)",[orderListM.cardModel.card_number substringFromIndex:orderListM.cardModel.card_number.length-6]] : [NSString stringWithFormat:@"共%@课时",orderListM.paySearModel.episodes];
     }else{
-        _numL.text = orderListM.product_type.intValue == 3? @"礼品卡" : [NSString stringWithFormat:@"共%@课时",orderListM.paySearModel.episodes];
+        if (orderListM.product_type.intValue == 4) {
+            if (orderListM.quantity.intValue == 0) {
+                _numL.text = [NSString stringWithFormat:@"购买单节：%@",orderListM.video_title];
+            }else{
+                _numL.text = [NSString stringWithFormat:@"购买%@节(课程剩余所有内容)",orderListM.quantity];
+            }
+        }else{
+            _numL.text = orderListM.product_type.intValue == 3? @"礼品卡" : [NSString stringWithFormat:@"共%@课时",orderListM.paySearModel.episodes];
+        }
+
     }
 
-    _moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",orderListM.paySearModel.price] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
+    _moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",orderListM.fee] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
 }
 
 - (void)awakeFromNib {
@@ -84,7 +96,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 

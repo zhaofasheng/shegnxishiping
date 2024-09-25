@@ -27,7 +27,7 @@
 }
 
 - (void)refresUI{
-    if (self.paySearModel.hasBuy) {
+    if (self.paySearModel.hasBuy || self.paySearModel.hasbuyVideoNum) {
         if ([SXTools getPayPlayLastsearisId:self.paySearModel.seriesId]) {
             self.hasReviewView.hidden = NO;
             self.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, 48+15+15);

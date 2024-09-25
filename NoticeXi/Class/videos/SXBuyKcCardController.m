@@ -9,6 +9,7 @@
 #import "SXBuyKcCardController.h"
 #import "SXBuyKcCardHeaderView.h"
 #import "SXBuyCardSuccessController.h"
+#import "SXBuyVideoTools.h"
 @interface SXBuyKcCardController ()
 @property (nonatomic, strong) SXBuyKcCardHeaderView *headerView;
 @property (nonatomic, strong) NSString *ordersn;
@@ -60,7 +61,7 @@
     UILabel *priceL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(markL.frame), 0, 100, 50)];
     priceL.font = SXNUMBERFONT(22);
     priceL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
-    priceL.text = self.paySearModel.price;
+    priceL.text = _paySearModel.price;
     [backView addSubview:priceL];
     
     UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-20-122, 5, 122, 40)];
@@ -80,27 +81,9 @@
 }
 
 - (void)sureApplePay{
-    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-    [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
-    [parm setObject:@"3" forKey:@"payType"];
-    [parm setObject:@"2" forKey:@"platformId"];
-    [parm setObject:@"1" forKeyedSubscript:@"isSeriesCard"];
-    [self showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-        [self hideHUD];
-        if (success) {
-            
-            AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            appdel.isBuyCard = YES;
-            SXOrderStatusModel *payModel = [SXOrderStatusModel mj_objectWithKeyValues:dict[@"data"]];
-            self.ordersn = payModel.sn;
-            payModel.productId = self.paySearModel.product_id;
-            [appdel.payManager startSearisPay:payModel];
-            
-        }
-    } fail:^(NSError * _Nullable error) {
-        [self hideHUD];
-        [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.creatfail"]];
+    __weak typeof(self) weakSelf = self;
+    [SXBuyVideoTools buyKcseriesId:self.paySearModel.seriesId isSeriesCard:@"1" product_id:self.paySearModel.product_id getOrderBlock:^(SXOrderStatusModel * _Nonnull payModel) {
+        weakSelf.ordersn = payModel.sn;
     }];
 }
 

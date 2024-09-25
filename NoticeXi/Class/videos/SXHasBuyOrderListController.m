@@ -70,7 +70,6 @@
     
     NSString *url = @"";
     
-    
     if (self.isSuccess) {
         url = [NSString stringWithFormat:@"series/order/list?pageNo=%ld&payStatus=%@&seriesId=%@",self.pageNo,self.isSuccess?@"2":@"0",self.seriesId];
     }else{

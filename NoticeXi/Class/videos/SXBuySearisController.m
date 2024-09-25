@@ -10,7 +10,7 @@
 #import "SXSureBuySearisView.h"
 #import "SXBuySearisSuccessController.h"
 #import "NoticeLoginViewController.h"
-
+#import "SXBuyVideoTools.h"
 
 @interface SXBuySearisController ()
 @property (nonatomic, strong) SXSureBuySearisView *headerView;
@@ -100,29 +100,11 @@
 }
 
 - (void)sureApplePay{
-    NSMutableDictionary *parm = [[NSMutableDictionary alloc] init];
-
-    [parm setObject:self.paySearModel.seriesId forKey:@"seriesId"];
-    [parm setObject:@"3" forKey:@"payType"];
-    [parm setObject:@"2" forKey:@"platformId"];
-    [parm setObject:@"0" forKey:@"isSeriesCard"];
-    [self showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:@"shopProductOrder" Accept:@"application/vnd.shengxi.v5.3.8+json" isPost:YES parmaer:parm page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
-        [self hideHUD];
-        if (success) {
-            
-            SXOrderStatusModel *payModel = [SXOrderStatusModel mj_objectWithKeyValues:dict[@"data"]];
-            AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            appdel.isBuyCard = NO;
-            self.ordersn = payModel.sn;
-            payModel.productId = self.paySearModel.product_id;
-            [appdel.payManager startSearisPay:payModel];
-            
-        }
-    } fail:^(NSError * _Nullable error) {
-        [self hideHUD];
-        [YZC_AlertView showViewWithTitleMessage:[NoticeTools getLocalStrWith:@"zb.creatfail"]];
+    __weak typeof(self) weakSelf = self;
+    [SXBuyVideoTools buyKcseriesId:self.paySearModel.seriesId isSeriesCard:@"0" product_id:self.paySearModel.product_id getOrderBlock:^(SXOrderStatusModel * _Nonnull payModel) {
+        weakSelf.ordersn = payModel.sn;
     }];
+    
 }
 
 

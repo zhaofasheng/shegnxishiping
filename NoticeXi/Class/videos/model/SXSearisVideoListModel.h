@@ -24,8 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *user_info;//用户信息
 @property (nonatomic, strong) NSString *commentCt;
 @property (nonatomic, strong) SXUserModel  *userModel;
-
-
+@property (nonatomic, assign) NSInteger tryPlayTime;//试看时长
+@property (nonatomic, strong) NSString *see_second;
+@property (nonatomic, assign) BOOL unLock;//是否已解锁
+@property (nonatomic, strong) NSString *is_bought;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -29,7 +29,12 @@
         _titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
         [self.backView addSubview:_titleL];
         
-        _markL = [[UILabel alloc] initWithFrame:CGRectMake(100,38,self.backView.frame.size.width-15-100, 17)];
+        _videoNumL = [[UILabel alloc] initWithFrame:CGRectMake(100,38,self.backView.frame.size.width-15-100, 17)];
+        _videoNumL.font = TWOTEXTFONTSIZE;
+        _videoNumL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+        [self.backView addSubview:_videoNumL];
+        
+        _markL = [[UILabel alloc] initWithFrame:CGRectMake(100,59,self.backView.frame.size.width-15-100, 17)];
         _markL.font = TWOTEXTFONTSIZE;
         _markL.text = @"不支持无理由退款";
         _markL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
@@ -75,10 +80,10 @@
 
 - (void)setPaySearModel:(SXPayForVideoModel *)paySearModel{
     _paySearModel = paySearModel;
-    
+    _videoNumL.text = [NSString stringWithFormat:@"共%@课时",paySearModel.episodes];
     self.titleL.text = paySearModel.series_name;
     self.moneyL.text = paySearModel.original_price;
-    self.reduceL.text = [NSString stringWithFormat:@"- ¥%d",paySearModel.original_price.intValue-paySearModel.price.intValue];
+    self.reduceL.text = [NSString stringWithFormat:@"- ¥%d",paySearModel.original_price.intValue-_paySearModel.price.intValue];
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:paySearModel.simple_cover_url]];
     
     self.introL.attributedText = [SXTools getStringWithLineHight:3 string:paySearModel.pay_tip];

@@ -41,7 +41,9 @@
     if (!self.dataArr.count) {
         [self request];
     }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getlikeNotice:) name:@"COMMENTLIKENotification" object:nil];
+    
     [self refreshStatus];
 }
 
@@ -95,7 +97,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     SXVideoCommentModel *model = self.dataArr[indexPath.row];
     if (!self.paySearModel.is_bought.boolValue) {
-        NSString *price = [NSString stringWithFormat:@"¥%@",self.paySearModel.price];
+        NSString *price = [NSString stringWithFormat:@"¥%@",_paySearModel.price];
         NSString *title = [NSString stringWithFormat:@"%@ 解锁",price];
         [self.buyView.buyButton setAttributedTitle:[DDHAttributedMode setJiaCuString:title setSize:19 setColor:[UIColor whiteColor] setLengthString:price beginSize:0] forState:UIControlStateNormal];
         [self.buyView showInfoView];

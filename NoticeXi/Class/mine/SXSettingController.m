@@ -97,9 +97,10 @@
     __weak typeof(self) weakSelf = self;
     LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
         if (buttonIndex == 2) {
+       
+            [weakSelf outLogin];
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults removeObjectForKey:@"logininfo"];
-            [weakSelf outLogin];
         }else if(buttonIndex == 1){
             [weakSelf outLogin];
         }

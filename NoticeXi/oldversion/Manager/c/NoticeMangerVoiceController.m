@@ -14,7 +14,7 @@
 #import "NoticeChats.h"
 #import "NoticeTuYaChatWithOtherController.h"
 @interface NoticeMangerVoiceController ()<NoticeManagerVoiceClickDelegate>
-@property (nonatomic, assign) BOOL isDown;  //YES  下拉
+
 @property (nonatomic, strong) NSString *lastId;
 @property (nonatomic, strong) NSString *readId;
 @property (nonatomic, strong) NoticeManagerModel *oldModel;
@@ -29,9 +29,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = GetColorWithName(VBackColor);
+    
     self.dataArr = [NSMutableArray new];
-    self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58-BOTTOM_HEIGHT-300);
+    self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58-BOTTOM_HEIGHT-300);
     [self.tableView registerClass:[NoticeMangerCell class] forCellReuseIdentifier:@"cell"];
     if (self.managerM) {
         [self requestDetail];
@@ -48,7 +48,7 @@
         [button setTitle:@"查看完整对话" forState:UIControlStateNormal];
         self.managerM.resource_content = self.managerM.resource_content.length ? self.managerM.resource_content : @"转文字失败";
         [self.dataArr addObject:self.managerM];
-        self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-BOTTOM_HEIGHT);
+        self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-BOTTOM_HEIGHT);
         [self.tableView reloadData];
         if ([self.managerM.chat_type isEqualToString:@"2"]) {
             self.isNoChat = NO;
@@ -65,29 +65,32 @@
         else{
             self.navigationItem.title = @"被举报的悄悄话";
         }
+        self.navBarView.hidden = NO;
+        self.navBarView.titleL.text = self.navigationItem.title;
         return;
     }
     
     
     if (self.groupM) {
         self.tableView.tableFooterView = self.footBtnView;
-        self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58-BOTTOM_HEIGHT);
+        self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58-BOTTOM_HEIGHT);
         self.navigationItem.title = self.isFRomCenter?@"审核社团聊天" : @"被举报的社团聊天";
     }
     if (self.danmMu) {
         self.tableView.tableFooterView = self.footBtnView;
-        self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58-BOTTOM_HEIGHT);
+        self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58-BOTTOM_HEIGHT);
         self.navigationItem.title = @"被举报的弹幕";
     }
     if (self.isFull) {
-        self.tableView.frame = CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58);
+        self.tableView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-NAVIGATION_BAR_HEIGHT-58);
     }
     if (!self.danmMu && !self.groupM) {
         [self createRefesh];
         self.isDown = YES;
-        [self pointRequest];
     }
 
+    self.navBarView.hidden = NO;
+    self.navBarView.titleL.text = self.navigationItem.title;
 }
 
 - (UIView *)footBtnView{
@@ -224,120 +227,6 @@
         }
     } fail:^(NSError *error) {
         [self hideHUD];
-    }];
-}
-
-- (void)beginDrag:(NSInteger)tag{
-    self.tableView.scrollEnabled = NO;
-    [self.audioPlayer pause:YES];
-}
-
-- (void)endDrag:(NSInteger)tag{
-    self.tableView.scrollEnabled = YES;
-    [self.audioPlayer pause:self.isPasue];
-}
-
-- (void)dragingFloat:(CGFloat)dratNum index:(NSInteger)tag{
-    // 跳转
-    [self.audioPlayer.player seekToTime:CMTimeMake(dratNum, 1) completionHandler:^(BOOL finished) {
-        if (finished) {
-        }
-    }];
-}
-
-- (void)userstartRePlayer:(NSInteger)tag{
-    [self.audioPlayer stopPlaying];
-    //self.audioPlayer = nil;
-    self.isReplay = YES;
-    [self.audioPlayer pause:YES];
-    self.oldSelectIndex = 1000000;//设置个很大 数值以免冲突
-    [self userstartPlayAndStop:tag];
-}
-- (void)userstartPlayAndStop:(NSInteger)tag{
-    if (tag != self.oldSelectIndex) {//判断点击的是否是当前视图
-        if (self.dataArr.count && self.oldModel) {
-            NoticeManagerModel *oldM = self.oldModel;
-            oldM.nowTime = oldM.resource_len;
-            oldM.nowPro = 0;
-            [self.tableView reloadData];
-        }
-        
-        self.oldSelectIndex = tag;
-        self.isReplay = YES;
-        DRLog(@"点击的不是当前视图");
-    }else{
-        DRLog(@"点击的是当前视图");
-    }
-    
-    NoticeManagerModel *model = self.dataArr[tag];
-    self.oldModel = model;
-    if (self.isReplay) {
-        [self.audioPlayer startPlayWithUrl:model.resource_url isLocalFile:NO];
-        self.isReplay = NO;
-        self.isPasue = NO;
-    }else{
-        self.isPasue = !self.isPasue;
-        model.isPlaying = !self.isPasue;
-        [self.tableView reloadData];
-        [self.audioPlayer pause:self.isPasue];
-    }
-    
-    __weak typeof(self) weakSelf = self;
-    self.audioPlayer.startPlaying = ^(AVPlayerItemStatus status, CGFloat duration) {
-        if (status == AVPlayerItemStatusFailed) {
-            [weakSelf showToastWithText:[NoticeTools getLocalStrWith:@"em.voiceLoading"]];
-        }else{
-            model.isPlaying = YES;
-            
-            [weakSelf.tableView reloadData];
-        }
-    };
-    self.audioPlayer.playComplete = ^{
-        weakSelf.isReplay = YES;
-        model.isPlaying = NO;
-        model.nowPro = 0;
-        //weakSelf.oldSelectIndex = 1000000;//设置个很大 数值以免冲突
-        [weakSelf.tableView reloadData];
-    };
-    
-    self.audioPlayer.playingBlock = ^(CGFloat currentTime) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:tag];
-        NoticeMangerCell *cell = [weakSelf.tableView cellForRowAtIndexPath:indexPath];
-        if ([[NSString stringWithFormat:@"%.f",model.resource_len.integerValue-currentTime] isEqualToString:@"-0"] ||  ((model.resource_len.integerValue-currentTime)<1)) {
-            cell.playerView.timeLen = model.resource_len;
-            cell.playerView.slieView.progress = 0;
-            model.nowPro = 0;
-            model.nowTime = model.resource_len;
-            weakSelf.isReplay = YES;
-            model.isPlaying = NO;
-            weakSelf.oldSelectIndex = 1000000;//设置个很大 数值以免冲突
-            if ((model.resource_len.integerValue-currentTime)<-3) {
-                [weakSelf.audioPlayer stopPlaying];
-            }
-            [weakSelf.tableView reloadData];
-        }
-        cell.playerView.timeLen = [NSString stringWithFormat:@"%.f",model.resource_len.integerValue-currentTime];
-        cell.playerView.slieView.progress = currentTime/model.resource_len.floatValue;
-        model.nowTime = [NSString stringWithFormat:@"%.f",model.resource_len.integerValue-currentTime];
-        model.nowPro = currentTime/model.resource_len.floatValue;
-    };
-}
-
-- (void)pointRequest{
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"admin/%@/point/%@",[[NoticeSaveModel getUserInfo] user_id],self.isNoChat?@"chatPoint":@"chatPriPoint"] Accept:nil isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-        if (success) {
-            if ([dict[@"data"] isEqual:[NSNull null]]) {
-                return ;
-            }
-            NoticeManagerModel *model = [NoticeManagerModel mj_objectWithKeyValues:dict[@"data"]];
-            if (model.pointValue.integerValue) {
-                self.readId = model.pointValue;
-            }
-            self.isDown = YES;
-            [self request];
-        }
-    } fail:^(NSError *error) {
-        
     }];
 }
 

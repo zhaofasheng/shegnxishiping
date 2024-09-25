@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SXPayVideoListController : NoticeBaseCellController<JXPagerViewListViewDelegate>
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
+@property (nonatomic,copy) void(^getvideoBlock)(NSMutableArray *videoArr);
+
 @property (nonatomic,copy) void(^buySuccessBlock)(NSString *searisID);
 - (void)gotoPlayViewWith:(NSString *)videoId commentId:(NSString *)commentId;
 @property (nonatomic,copy) void(^deleteClickBlock)(SXVideoCommentModel *commentM);
