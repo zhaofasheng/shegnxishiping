@@ -68,7 +68,6 @@
     
     self.videoHeaderView.model = self.paySearModel;
     self.videoHeaderView.videoModel = self.currentPlayModel;
- 
     self.listVC.tableView.tableHeaderView = self.videoHeaderView;
     
     [self.pagerView removeFromSuperview];
@@ -93,7 +92,6 @@
 - (void)buyFaild{
     [self showToastWithText:@"购买失败"];
 }
-
 
 //购买课程成功
 - (void)buySuccess{
@@ -175,13 +173,57 @@
 }
 
 
+- (void)requestSeriesDetail{
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"series/get/%@",self.paySearModel.seriesId] Accept:@"application/vnd.shengxi.v5.8.1+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+        if (success) {
+            
+            if ([dict[@"data"] isEqual:[NSNull null]]) {
+                return;
+            }
+            
+            SXPayForVideoModel *searismodel = [SXPayForVideoModel mj_objectWithKeyValues:dict[@"data"]];
+            if (!searismodel) {
+                return;
+            }
+            
+            self.paySearModel.price = searismodel.price;
+            self.paySearModel.open_upfront_activity = searismodel.open_upfront_activity;
+            
+            //判断是否存在单集购买过的产品
+            NSInteger hasBuyVideo = 0;
+            for (SXSearisVideoListModel *videoM in self.searisArr) {
+     
+                if (videoM.unLock) {
+                    hasBuyVideo ++;
+                }
+            }
+            
+            self.paySearModel.hasbuyVideoNum = hasBuyVideo;
+            
+            NSString *syPrice = @"";
+            NSString *title = @"";
+            if (self.paySearModel.hasbuyVideoNum > 0) {
+                title = @"解锁剩余内容";
+                syPrice = [NSString stringWithFormat:@"¥%ld %@",(long)(_paySearModel.price.intValue - self.paySearModel.singlePrice.intValue*self.paySearModel.hasbuyVideoNum),title];
+            }else{
+                title = @"解锁课程";
+                syPrice = [NSString stringWithFormat:@"¥%@ %@",_paySearModel.price,title];
+                
+            }
+            [_buyAllButton setAttributedTitle:[DDHAttributedMode setString:syPrice setSize:16 setLengthString:title beginSize:syPrice.length-title.length] forState:UIControlStateNormal];
+
+        }
+    } fail:^(NSError *error) {
+        
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     if (!self.rate) {
         self.rate = 1;
     }
-    
     
     //销毁之前的播放
     AppDelegate *appdel = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -204,10 +246,9 @@
     [self.videoHeaderView addSubview:self.sectionView1];
     
     _categoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0,0,GET_STRWIDTH(@"商品的", 18, 50)*2+40,0)];
-    self.categoryView.titles = @[@"",@"",@""];;
+    self.categoryView.titles = @[@"",@"",@""];
     self.categoryView.delegate = self;
     
-
     self.sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 50)];
     [self.sectionView addSubview:_categoryView];
     [self.sectionView addSubview:self.infoButton];
@@ -256,6 +297,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buyFaild) name:@"BUYSEARISFAILD" object:nil];
     //退到后台记录播放进度
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshPlayTime) name:@"SXAPPHASINTOBACKGROUNDNOTICE" object:nil];
+    
+    if (!self.paySearModel.hasBuy) {
+        [self requestSeriesDetail];
+    }
 }
 
 //发送评论

@@ -26,6 +26,7 @@
 #import "SXBuySearisSuccessController.h"
 #import "SXBuySeriesTools.h"
 #import "SXBuyVideoTools.h"
+
 @interface SXStudyBaseController ()<JXCategoryViewDelegate, JXPagerViewDelegate, JXPagerMainTableViewGestureDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSString *ordersn;
@@ -116,7 +117,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buyCardSuccess) name:@"BUYCARDSEARISSUCCESS" object:nil];
     
     [self goGuanwBuy];
-    [self requestSeriesDetail];
+    if (!self.paySearModel.hasBuy) {
+        [self requestSeriesDetail];
+    }
 }
 
 - (void)requestSeriesDetail{
@@ -137,7 +140,6 @@
             self.realPriceL.text = price;
         }
     } fail:^(NSError *error) {
-        
     }];
 }
 
@@ -771,7 +773,6 @@
         self.comButton.font = XGSIXBoldFontSize;
         self.line.frame = CGRectMake(self.comButton.frame.origin.x, 30, self.comButton.frame.size.width, 4);
     }
-
 }
 
 @end

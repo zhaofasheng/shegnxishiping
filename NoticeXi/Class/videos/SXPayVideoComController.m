@@ -451,10 +451,10 @@ static NSString *const commentCellIdentifier = @"commentCellIdentifier";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (!self.currentPlayModel.unLock && !self.paySearModel.hasBuy) {
-        return 0;
+    if (self.currentPlayModel.unLock || self.paySearModel.hasBuy ||(self.currentPlayModel.tryPlayTime >= self.currentPlayModel.video_len.intValue)) {
+        return self.dataArr.count;
     }
-    return self.dataArr.count;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
