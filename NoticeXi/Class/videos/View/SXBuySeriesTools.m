@@ -131,11 +131,16 @@
 - (void)upClick{
 
     if (self.buyType == 1) {
+        if (!self.currentId) {
+            [[NoticeTools getTopViewController] showToastWithText:@"当前不存在可解锁的单集视频，敬请期待"];
+            return;
+        }
         if ((self.paySearModel.singlePrice.intValue + (self.paySearModel.singlePrice.intValue * self.hasBuyVideoNum)) >= self.paySearModel.price.intValue) {//如果解锁单集的时候可以解锁全部
             __weak typeof(self) weakSelf = self;
             SXCanBuyAllView *allView = [[SXCanBuyAllView  alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT)];
             [allView showView];
             allView.buyBlock = ^(BOOL buy) {
+                
                 if (weakSelf.buytypeBlock) {
                     weakSelf.buytypeBlock(5,weakSelf.currentId);
                 }

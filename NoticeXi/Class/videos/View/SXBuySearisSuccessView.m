@@ -220,14 +220,14 @@
     
     self.moneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",self.orderModel.fee] setColor:[UIColor colorWithHexString:@"#FF68A3"] setSize:16 setLengthString:@"¥" beginSize:0];
     
-    self.originmoneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",paySearModel.original_price] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
+
+
     
     if (self.orderModel.product_type.intValue == 4) {
         self.reduceL.text = @"- ¥0";
     }else{
         self.reduceL.text = [NSString stringWithFormat:@"- ¥%d",paySearModel.original_price.intValue-self.orderModel.fee.intValue];
     }
-    
     
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:paySearModel.simple_cover_url]];
     
@@ -239,8 +239,9 @@
             self.videoNumL.text = [NSString stringWithFormat:@"共%@课时",self.orderModel.quantity];
             self.videoNumL1.text = [NSString stringWithFormat:@"%@节",self.orderModel.quantity];
         }
-        
+        self.originmoneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",self.orderModel.fee] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
     }else{
+        self.originmoneyL.attributedText = [DDHAttributedMode setSizeAndColorString:[NSString stringWithFormat:@"¥%@",paySearModel.original_price] setColor:[UIColor colorWithHexString:@"#14151A"] setSize:16 setLengthString:@"¥" beginSize:0];
         self.videoNumL.text = [NSString stringWithFormat:@"共%@课时",self.paySearModel.episodes];
         self.videoNumL1.text = [NSString stringWithFormat:@"%@节",self.paySearModel.episodes];
     }

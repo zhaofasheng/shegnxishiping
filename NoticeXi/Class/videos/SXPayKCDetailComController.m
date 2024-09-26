@@ -9,11 +9,11 @@
 #import "SXPayKCDetailComController.h"
 #import "SXVideoCommentJson.h"
 #import "SXKCcomCell.h"
-#import "SXBuyToastKcView.h"
+
 @interface SXPayKCDetailComController ()
 @property (nonatomic, copy) void(^scrollCallback)(UIScrollView *scrollView);
 @property (nonatomic, strong) UILabel *defaultL1;
-@property (nonatomic, strong) SXBuyToastKcView *buyView;
+
 @property (nonatomic, strong) NSString *commentCount;
 @end
 
@@ -97,15 +97,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     SXVideoCommentModel *model = self.dataArr[indexPath.row];
     if (!self.paySearModel.is_bought.boolValue) {
-        NSString *price = [NSString stringWithFormat:@"¥%@",_paySearModel.price];
-        NSString *title = [NSString stringWithFormat:@"%@ 解锁",price];
-        [self.buyView.buyButton setAttributedTitle:[DDHAttributedMode setJiaCuString:title setSize:19 setColor:[UIColor whiteColor] setLengthString:price beginSize:0] forState:UIControlStateNormal];
-        [self.buyView showInfoView];
+        if (self.showBlock) {
+            self.showBlock(YES);
+        }
+
         return;
     }
     if (self.clickVideoIdBlock) {
         self.clickVideoIdBlock(model.video_id,model.commentId);
     }
+}
+
+- (void)showBuyView:(NSString *)price{
+    NSString *price1 = [NSString stringWithFormat:@"¥%@",price];
+    NSString *title = [NSString stringWithFormat:@"%@ 解锁",price1];
+    [self.buyView.buyButton setAttributedTitle:[DDHAttributedMode setJiaCuString:title setSize:19 setColor:[UIColor whiteColor] setLengthString:price beginSize:0] forState:UIControlStateNormal];
+    [self.buyView showInfoView];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

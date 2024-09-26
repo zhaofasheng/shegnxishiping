@@ -55,6 +55,7 @@
 @property (nonatomic, strong) UILabel *comButton;
 @property (nonatomic, strong) UIView *sectionView;
 
+@property (nonatomic, strong) UIView *birdPriceView;
 @property (nonatomic, strong) NSMutableArray *videoArr;
 @end
 
@@ -246,9 +247,30 @@
             weakSelf.shoCom = YES;
             [weakSelf jiesuokec];
         };
-    
+        _comVC.showBlock = ^(BOOL buy) {
+            [weakSelf ifneedBuySY];
+        };
     }
     return _comVC;
+}
+
+- (void)ifneedBuySY{
+    if (!self.videoArr.count) {
+        [self showToastWithText:@"正在获取视频列表"];
+        return;
+    }
+    //判断是否存在单集购买过的产品
+    NSInteger hasBuyVideo = 0;
+    for (SXSearisVideoListModel *videoM in self.videoArr) {
+
+        if (videoM.unLock) {
+            hasBuyVideo ++;
+        }
+    }
+    //需要买的数量，总价减去已经购买的价钱，除单价
+    NSString *needBuyMoney = [NSString stringWithFormat:@"%ld",(self.paySearModel.price.intValue-(self.paySearModel.singlePrice.intValue*hasBuyVideo))];
+    [self.comVC showBuyView:hasBuyVideo?needBuyMoney:self.paySearModel.price];
+   
 }
 
 - (void)refreshTitle:(NSString *)commentCoount{
@@ -374,6 +396,31 @@
     [self.buyBtn setTitle:@"立即购买" forState:UIControlStateNormal];
     [backView addSubview:self.buyBtn];
     [self.buyBtn addTarget:self action:@selector(buyClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (self.paySearModel.open_upfront_activity.boolValue) {
+        self.birdPriceView.hidden = NO;
+    }
+}
+
+- (UIView *)birdPriceView{
+    if (!_birdPriceView) {
+        _birdPriceView = [[UIView  alloc] initWithFrame:CGRectMake(0, -24, 88, 24)];
+        [_birdPriceView setCornerOnRight:12];
+        [self.backView addSubview:_birdPriceView];
+        
+        CAGradientLayer *gradientLayer = [[CAGradientLayer alloc] init];
+        gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#FF6C2D"].CGColor,(__bridge id)[UIColor colorWithHexString:@"#FF421F"].CGColor];
+        gradientLayer.startPoint = CGPointMake(0, 1);
+        gradientLayer.endPoint = CGPointMake(1, 1);
+        gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(_birdPriceView.frame), CGRectGetHeight(_birdPriceView.frame));
+       
+        [_birdPriceView.layer addSublayer:gradientLayer];
+        
+        UIImageView *imageV = [[UIImageView  alloc] initWithFrame:CGRectMake((_birdPriceView.frame.size.width-72)/2, 5, 72, 14)];
+        imageV.image = UIImageNamed(@"sxbirdprice_img");
+        [_birdPriceView addSubview:imageV];
+    }
+    return _birdPriceView;
 }
 
 - (void)goGuanwBuy{
@@ -657,6 +704,7 @@
 - (void)jiesuokec{
     SXBuySearisController *ctl = [[SXBuySearisController alloc] init];
     ctl.paySearModel = self.paySearModel;
+    ctl.videoArr = self.videoArr;
     __weak typeof(self) weakSelf = self;
     ctl.buySuccessBlock = ^(NSString * _Nonnull searisID) {
         if ([searisID isEqualToString:weakSelf.paySearModel.seriesId]) {

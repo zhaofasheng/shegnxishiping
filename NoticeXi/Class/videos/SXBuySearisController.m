@@ -15,6 +15,7 @@
 @interface SXBuySearisController ()
 @property (nonatomic, strong) SXSureBuySearisView *headerView;
 @property (nonatomic, strong) NSString *ordersn;
+@property (nonatomic, assign) NSInteger hasBuyNum;
 @end
 
 @implementation SXBuySearisController
@@ -41,10 +42,36 @@
     markL.attributedText = [DDHAttributedMode setColorString:str setColor:[UIColor colorWithHexString:@"#FF68A3"] setLengthString:@"¥" beginSize:str.length-1];
     [backView addSubview:markL];
     
+
     UILabel *priceL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(markL.frame), 0, 100, 50)];
     priceL.font = SXNUMBERFONT(22);
     priceL.textColor = [UIColor colorWithHexString:@"#FF68A3"];
-    priceL.text = self.paySearModel.price;
+    
+    
+    if (self.videoArr.count) {
+        //判断是否存在单集购买过的产品
+        NSInteger hasBuyVideo = 0;
+        for (SXSearisVideoListModel *videoM in self.videoArr) {
+
+            if (videoM.unLock) {
+                hasBuyVideo ++;
+            }
+        }
+        self.hasBuyNum = hasBuyVideo;
+        
+        if (self.hasBuyNum > 0) {
+            //需要买的数量，总价减去已经购买的价钱，除单价
+            NSInteger needBuy = (self.paySearModel.price.intValue-(self.paySearModel.singlePrice.intValue*self.hasBuyNum))/self.paySearModel.singlePrice.intValue;
+            
+            priceL.text = [NSString stringWithFormat:@"%ld",needBuy*self.paySearModel.singlePrice.integerValue];
+        }else{
+            priceL.text = self.paySearModel.price;
+        }
+      
+    }else{
+        priceL.text = self.paySearModel.price;
+    }
+
     [backView addSubview:priceL];
     
     UIButton *button = [[UIButton  alloc] initWithFrame:CGRectMake(DR_SCREEN_WIDTH-20-122, 5, 122, 40)];
@@ -101,6 +128,25 @@
 
 - (void)sureApplePay{
     __weak typeof(self) weakSelf = self;
+    
+    if (self.videoArr.count) {
+ 
+        if (self.hasBuyNum > 0) {
+            //需要买的数量，总价减去已经购买的价钱，除单价
+            NSInteger needBuy = (self.paySearModel.price.intValue-(self.paySearModel.singlePrice.intValue*self.hasBuyNum))/self.paySearModel.singlePrice.intValue;
+            
+            [SXBuyVideoTools buyKSyvideoseriesId:self.paySearModel.seriesId product_id:[NSString stringWithFormat:@"%@x%ld",self.paySearModel.product_id,needBuy] money:[NSString stringWithFormat:@"%ld",(long)(needBuy*self.paySearModel.singlePrice.intValue)] getOrderBlock:^(SXOrderStatusModel * _Nonnull payModel) {
+                weakSelf.ordersn = payModel.sn;
+            }];
+        }else{
+            [SXBuyVideoTools buyKcseriesId:self.paySearModel.seriesId isSeriesCard:@"0" product_id:self.paySearModel.product_id getOrderBlock:^(SXOrderStatusModel * _Nonnull payModel) {
+                weakSelf.ordersn = payModel.sn;
+            }];
+            
+        }
+        return;
+    }
+    
     [SXBuyVideoTools buyKcseriesId:self.paySearModel.seriesId isSeriesCard:@"0" product_id:self.paySearModel.product_id getOrderBlock:^(SXOrderStatusModel * _Nonnull payModel) {
         weakSelf.ordersn = payModel.sn;
     }];

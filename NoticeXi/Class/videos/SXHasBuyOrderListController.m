@@ -91,7 +91,6 @@
                 [self.dataArr addObject:model];
             }
     
-         
             if (self.dataArr.count) {
                 self.tableView.tableFooterView = nil;
             }else{

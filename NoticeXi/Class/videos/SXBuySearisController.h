@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SXBuySearisController : NoticeBaseCellController
 @property (nonatomic, strong) SXPayForVideoModel *paySearModel;
 @property (nonatomic,copy) void(^buySuccessBlock)(NSString *searisID);
-
+@property (nonatomic, strong) NSMutableArray *videoArr;
 @end
 
 NS_ASSUME_NONNULL_END

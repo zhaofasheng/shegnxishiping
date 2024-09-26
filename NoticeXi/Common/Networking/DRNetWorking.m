@@ -166,7 +166,9 @@
             return;
         }
         if (responses.statusCode == 412) {
-         
+            if (![NoticeTools getuserId]) {
+                [SXTools removeLocalToken];
+            }
             [NoticeSaveModel outLoginClearData];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
@@ -232,6 +234,9 @@
             return;
         }
         if (responses.statusCode == 412) {
+            if (![NoticeTools getuserId]) {
+                [SXTools removeLocalToken];
+            }
             [NoticeSaveModel outLoginClearData];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
         }else{
@@ -406,7 +411,9 @@
                 return;
             }
             if (responses.statusCode == 412) {
-        
+                if (![NoticeTools getuserId]) {
+                    [SXTools removeLocalToken];
+                }
                 [NoticeSaveModel outLoginClearData];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                 //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
@@ -471,6 +478,9 @@
                  return;
              }
              if (responses.statusCode == 412) {
+                 if (![NoticeTools getuserId]) {
+                     [SXTools removeLocalToken];
+                 }
                  [NoticeSaveModel outLoginClearData];
                  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                  //    [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
@@ -573,6 +583,9 @@
                 return;
             }
             if (responses.statusCode == 412) {
+                if (![NoticeTools getuserId]) {
+                    [SXTools removeLocalToken];
+                }
                 [NoticeSaveModel outLoginClearData];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             }else{
@@ -625,6 +638,9 @@
                  return;
              }
              if (responses.statusCode == 412) {
+                 if (![NoticeTools getuserId]) {
+                     [SXTools removeLocalToken];
+                 }
                  [NoticeSaveModel outLoginClearData];
                  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
                  //    [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
@@ -707,6 +723,9 @@
             return;
         }
         if (responses.statusCode == 412) {
+            if (![NoticeTools getuserId]) {
+                [SXTools removeLocalToken];
+            }
             [NoticeSaveModel outLoginClearData];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             // [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
@@ -786,6 +805,9 @@
             return;
         }
         if (responses.statusCode == 412) {
+            if (![NoticeTools getuserId]) {
+                [SXTools removeLocalToken];
+            }
             [NoticeSaveModel outLoginClearData];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];
             //  [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGEROOTCONTROLLERNOTICATION1" object:nil];

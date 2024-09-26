@@ -9,6 +9,7 @@
 #import "NoticeBaseCellController.h"
 #import "SXPayForVideoModel.h"
 #import "JXPagerView.h"
+#import "SXBuyToastKcView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SXPayKCDetailComController : NoticeBaseCellController<JXPagerViewListViewDelegate>
@@ -17,7 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)refreshStatus;
 @property (nonatomic,copy) void(^clickVideoIdBlock)(NSString *videoId,NSString *commentId);
 @property (nonatomic,copy) void(^buyBlock)(BOOL buy);
+
+@property (nonatomic,copy) void(^showBlock)(BOOL buy);
 - (void)deleteCommentWith:(NSString *)commentModel;
+@property (nonatomic, strong) SXBuyToastKcView *buyView;
+- (void)showBuyView:(NSString *)price;
 @end
 
 NS_ASSUME_NONNULL_END
