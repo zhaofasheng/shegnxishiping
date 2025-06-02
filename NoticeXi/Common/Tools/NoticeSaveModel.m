@@ -8,7 +8,7 @@
 
 #import "NoticeSaveModel.h"
 #import "UNNotificationsManager.h"
-#import <NIMSDK/NIMSDK.h>
+
 
 #import "NoticeCallView.h"
 static NSString *const kXGUserInfo = @"XGUserInfo";
@@ -53,14 +53,7 @@ static NSString *const KFToken = @"KFToken";
         }];
     }
 
-    //云信登录
-    [NIMSDK.sharedSDK.loginManager logout:^(NSError * _Nullable error) {
-        if (!error) {
-            DRLog(@"云信退出登录成功");
-        }else{
-            DRLog(@"云信退出登录失败%@",error.description);
-        }
-    }];
+
     
   
 }

@@ -41,8 +41,8 @@
     _video_len = [NSString stringWithFormat:@"%@", [resultSet objectForColumn:@"video_len"]];
     _screen = [NSString stringWithFormat:@"%@", [resultSet objectForColumn:@"screen"]];
     _nickName = [NSString stringWithFormat:@"%@", [resultSet objectForColumn:@"nickName"]];
+    
     return self;
 }
-
 
 @end

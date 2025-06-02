@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NoticeVideosController : SXBaseCollectionController
 @property (nonatomic, strong) NSString *categoryName;
 @property (nonatomic, assign) NSInteger type;//1最新,2全部
+
+
 @end
 
 NS_ASSUME_NONNULL_END

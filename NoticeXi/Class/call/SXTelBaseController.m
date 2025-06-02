@@ -39,15 +39,15 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.titles = @[@"体验",@"咨询",@"店主说"];
+        self.titles = @[@"店主说"];
         self.menuViewStyle = WMMenuViewStyleDefault;
         self.menuViewLayoutMode = WMMenuViewLayoutModeLeft;
         self.progressViewIsNaughty = true;
         self.dataSource = self;
         self.delegate = self;
         self.menuView.delegate = self;
-        self.titleSizeNormal = 20;
-        self.titleSizeSelected = 20;
+        self.titleSizeNormal = 18;
+        self.titleSizeSelected = 18;
         self.titleColorNormal = [[UIColor colorWithHexString:@"#8A8F99"] colorWithAlphaComponent:1];
         self.titleColorSelected = [UIColor colorWithHexString:@"#14151A"];
   
@@ -108,7 +108,7 @@
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index{
-    return  GET_STRWIDTH(self.titles[index], 20, 50);
+    return  GET_STRWIDTH(self.titles[index], 20, 50)+5;
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu itemMarginAtIndex:(NSInteger)index{
@@ -132,7 +132,7 @@
 
 - (__kindof UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index{
     if (index == 0) {
-        return self.freeVC;
+        return self.sayListVC;
     }
     else if(index == 1){
         return self.payVC;
@@ -261,28 +261,28 @@
 
 - (void)refreshShopStatus{
     
-    self.shopStatusView.hidden = NO;
-    self.redCirView.hidden = YES;
-    if (self.applyModel.status == 6) {//店铺审核通过了，有店铺
-        [self.shopIconImageView sd_setImageWithURL:[NSURL URLWithString:self.shopModel.myShopM.shop_avatar_url] placeholderImage:UIImageNamed(@"sxshopdefaulticon_img")];
-        
-        if (self.shopModel.myShopM.is_stop.intValue || self.shopModel.myShopM.operate_status.integerValue == 1) {//被官方叫停或者自己处于休息状态
-            self.shopStatusL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
-            self.shopStatusL.text = @"休息中";
-        }else if (self.shopModel.myShopM.operate_status.intValue == 2 || self.shopModel.myShopM.operate_status.intValue == 3){//营业中
-            self.shopStatusL.textColor = [UIColor colorWithHexString:@"#E64424"];
-            self.shopStatusL.text = @"营业中";
-            self.redCirView.hidden = NO;
-        }
-    }else{//没有店铺
-        self.shopIconImageView.image = UIImageNamed(@"sxshopdefaulticon_img");
-        self.shopStatusL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        self.shopStatusL.text = @"我的店铺";
-    }
-    
-    self.shopStatusL.frame = CGRectMake(28, 0, GET_STRWIDTH(self.shopStatusL.text, 14, 30), NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
-    CGFloat width = self.shopStatusL.frame.size.width+28;
-    self.shopStatusView.frame = CGRectMake(DR_SCREEN_WIDTH-width-15, STATUS_BAR_HEIGHT, width, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
+//    self.shopStatusView.hidden = NO;
+//    self.redCirView.hidden = YES;
+//    if (self.applyModel.status == 6) {//店铺审核通过了，有店铺
+//        [self.shopIconImageView sd_setImageWithURL:[NSURL URLWithString:self.shopModel.myShopM.shop_avatar_url] placeholderImage:UIImageNamed(@"sxshopdefaulticon_img")];
+//        
+//        if (self.shopModel.myShopM.is_stop.intValue || self.shopModel.myShopM.operate_status.integerValue == 1) {//被官方叫停或者自己处于休息状态
+//            self.shopStatusL.textColor = [UIColor colorWithHexString:@"#8A8F99"];
+//            self.shopStatusL.text = @"休息中";
+//        }else if (self.shopModel.myShopM.operate_status.intValue == 2 || self.shopModel.myShopM.operate_status.intValue == 3){//营业中
+//            self.shopStatusL.textColor = [UIColor colorWithHexString:@"#E64424"];
+//            self.shopStatusL.text = @"营业中";
+//            self.redCirView.hidden = NO;
+//        }
+//    }else{//没有店铺
+//        self.shopIconImageView.image = UIImageNamed(@"sxshopdefaulticon_img");
+//        self.shopStatusL.textColor = [UIColor colorWithHexString:@"#14151A"];
+//        self.shopStatusL.text = @"我的店铺";
+//    }
+//    
+//    self.shopStatusL.frame = CGRectMake(28, 0, GET_STRWIDTH(self.shopStatusL.text, 14, 30), NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
+//    CGFloat width = self.shopStatusL.frame.size.width+28;
+//    self.shopStatusView.frame = CGRectMake(DR_SCREEN_WIDTH-width-15, STATUS_BAR_HEIGHT, width, NAVIGATION_BAR_HEIGHT-STATUS_BAR_HEIGHT);
 }
 
 //获取店铺信息

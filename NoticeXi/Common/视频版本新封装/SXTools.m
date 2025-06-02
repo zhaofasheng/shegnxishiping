@@ -431,4 +431,25 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObjectForKey:@"localtoken"];
 }
+
++ (BOOL)isToatBackOnThisDeveice{
+    
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+ 
+    if ([[cache objectForKey:@"welcomeback"] isEqualToString:@"1"]) {
+        DRLog(@"弹框过");
+        return NO;
+    }else{
+        DRLog(@"没弹框过");
+        return YES;
+    }
+}
+
++ (void)setComeback{
+    NSUserDefaults * cache = [NSUserDefaults standardUserDefaults];
+    [cache setObject:@"1" forKey:@"welcomeback"];
+    [cache synchronize];
+    DRLog(@"设置弹框");
+}
+
 @end

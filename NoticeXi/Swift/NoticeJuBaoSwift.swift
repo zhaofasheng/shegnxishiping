@@ -12,6 +12,9 @@ import UIKit
     func successDelegate()
     
 }
+
+typealias sendBlock = (String) ->()
+
 @objc class NoticeJuBaoSwift: UIView {
     @objc public var contentView = UIView()
     @objc public var titleL = UILabel()
@@ -24,6 +27,9 @@ import UIKit
     @objc public weak var delegate : FirstViewControllerDelegate?
     var canTap = true
     @objc public var outBlock :((_ typeIndex :Int) ->Void)?
+    @objc public var sureBlock :sendBlock?
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -110,6 +116,7 @@ import UIKit
         }else if self.type > 0{
             
             if self.isOutPerson{
+                self.sureBlock?("方式来得及")
                 self.outBlock?(self.type)
                 self.removeFromSuperview()
                 return

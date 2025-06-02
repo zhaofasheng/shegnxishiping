@@ -182,14 +182,11 @@
         [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
         return;
     }
-    if (![self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]]) {
-        NoticdShopDetailForUserController *ctl = [[NoticdShopDetailForUserController alloc] init];
-        ctl.shopModel = self.model.shopModel;
-        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-    }else{
-        NoticeMyJieYouShopController *ctl = [[NoticeMyJieYouShopController alloc] init];
-        [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
-    }
+    NoticeUserInfoCenterController *ctl = [[NoticeUserInfoCenterController alloc] init];
+    ctl.userId = self.model.shopModel.user_id;
+    ctl.isOther = YES;
+    [[NoticeTools getTopViewController].navigationController pushViewController:ctl animated:YES];
+
 }
 
 - (void)likeClick{

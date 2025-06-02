@@ -31,6 +31,7 @@
     
     self.imageViewHeight = (DR_SCREEN_WIDTH-60)/3;
     
+    
     self.sendView = [[UIView  alloc] initWithFrame:CGRectMake((DR_SCREEN_WIDTH-80)/2, (_noListView.frame.size.height-80)/2+24+20, 80, 36)];
     FSCustomButton *button = [[FSCustomButton  alloc] initWithFrame:CGRectMake(0, 0, 80, 36)];
     [button setAllCorner:18];
@@ -273,14 +274,14 @@
         [self.navigationController pushViewController:ctl animated:YES];
         return;
     }
-    if (!self.applyModel) {
-        [self showToastWithText:@"正在获取店铺信息，请稍后"];
-        return;
-    }
-    if (self.applyModel.status != 6) {//审核通过
-        [self showToastWithText:@"店主才能使用此功能"];
-        return;
-    }
+ //   if (!self.applyModel) {
+//        [self showToastWithText:@"正在获取店铺信息，请稍后"];
+//        return;
+//    }
+//    if (self.applyModel.status != 6) {//审核通过
+//        [self showToastWithText:@"店主才能使用此功能"];
+//        return;
+//    }
     NoticeTextVoiceController *ctl = [[NoticeTextVoiceController alloc] init];
     NSMutableArray *alreadyArr = [NoticeSaveVoiceTools getVoiceArrary];
     if (alreadyArr.count) {

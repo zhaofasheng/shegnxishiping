@@ -87,7 +87,7 @@
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index{
-    return  GET_STRWIDTH(@"GroundBack", 20, 18);
+    return  GET_STRWIDTH(@"GroundBack", 20, 18)+5;
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu itemMarginAtIndex:(NSInteger)index{

@@ -42,70 +42,70 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestUserInfo) name:@"CHANGEROOTCONTROLLERNOTICATION" object:nil];
         
-        self.jinbiView = [[UIView  alloc] initWithFrame:CGRectMake(20, 135, DR_SCREEN_WIDTH-40, 106)];
-        self.jinbiView.backgroundColor = [UIColor whiteColor];
-        [self.jinbiView setAllCorner:8];
-        [self addSubview:self.jinbiView];
-        
-        UIView *jbView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, self.jinbiView.frame.size.width/2, 106)];
-        [self.jinbiView addSubview:jbView];
-        jbView.userInteractionEnabled = YES;
-        [jbView setAllCorner:8];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jingbiTap)];
-        [jbView addGestureRecognizer:tap];
-        CGFloat width = 24+GET_STRWIDTH(@"我的鲸币", 14, 20);
-        
-        self.titleImageView = [[UIImageView  alloc] initWithFrame:CGRectMake((jbView.frame.size.width-width)/2, 24, 20, 20)];
-        self.titleImageView.image = UIImageNamed(@"sxwallect_img1");
-        [jbView addSubview:self.titleImageView];
-        self.titleImageView.userInteractionEnabled = YES;
-        
-        _titleL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.titleImageView.frame)+4,24,GET_STRWIDTH(@"我的鲸币", 14, 20), 20)];
-        _titleL.font = FOURTHTEENTEXTFONTSIZE;
-        _titleL.text = @"我的鲸币";
-        _titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        [jbView addSubview:_titleL];
-        
-        _moneyL = [[UILabel alloc] initWithFrame:CGRectMake(0,56,jbView.frame.size.width, 26)];
-        _moneyL.font = SXNUMBERFONT(24);
-        _moneyL.textAlignment = NSTextAlignmentCenter;
-        _moneyL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        [jbView addSubview:_moneyL];
-        
-    
-        UIView *inView = [[UIView  alloc] initWithFrame:CGRectMake(self.jinbiView.frame.size.width/2, 0, self.jinbiView.frame.size.width/2, 106)];
-        [self.jinbiView addSubview:inView];
-        inView.userInteractionEnabled = YES;
-        [inView setAllCorner:8];
-        UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(incomeTap)];
-        [inView addGestureRecognizer:tap1];
-        CGFloat width1 = 24+GET_STRWIDTH(@"收入", 14, 20);
-        
-        self.titleImageView1 = [[UIImageView  alloc] initWithFrame:CGRectMake((inView.frame.size.width-width1)/2, 24, 20, 20)];
-        self.titleImageView1.image = UIImageNamed(@"sxwallect_img2");
-        [inView addSubview:self.titleImageView1];
-        self.titleImageView1.userInteractionEnabled = YES;
-        
-        _titleL1 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.titleImageView1.frame)+4,24,GET_STRWIDTH(@"收入", 14, 20), 20)];
-        _titleL1.font = FOURTHTEENTEXTFONTSIZE;
-        _titleL1.text = @"收入";
-        _titleL1.textColor = [UIColor colorWithHexString:@"#14151A"];
-        [inView addSubview:_titleL1];
-        
-        _incomeL = [[UILabel alloc] initWithFrame:CGRectMake(0,56,inView.frame.size.width, 26)];
-        _incomeL.font = SXNUMBERFONT(24);
-        _incomeL.textAlignment = NSTextAlignmentCenter;
-        _incomeL.textColor = [UIColor colorWithHexString:@"#14151A"];
-        [inView addSubview:_incomeL];
-        
-        UIView *line = [[UIView  alloc] initWithFrame:CGRectMake((self.jinbiView.frame.size.width-1)/2, 43, 1, 25)];
-        line.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
-        [self.jinbiView addSubview:line];
-        
-        self.checkL = [[UILabel  alloc] initWithFrame:CGRectMake(_nickNameL.frame.origin.x, 81, DR_SCREEN_WIDTH-102-10, 17)];
-        self.checkL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
-        self.checkL.font = TWOTEXTFONTSIZE;
-        [self addSubview:self.checkL];
+//        self.jinbiView = [[UIView  alloc] initWithFrame:CGRectMake(20, 135, DR_SCREEN_WIDTH-40, 106)];
+//        self.jinbiView.backgroundColor = [UIColor whiteColor];
+//        [self.jinbiView setAllCorner:8];
+//        [self addSubview:self.jinbiView];
+//        
+//        UIView *jbView = [[UIView  alloc] initWithFrame:CGRectMake(0, 0, self.jinbiView.frame.size.width/2, 106)];
+//        [self.jinbiView addSubview:jbView];
+//        jbView.userInteractionEnabled = YES;
+//        [jbView setAllCorner:8];
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jingbiTap)];
+//        [jbView addGestureRecognizer:tap];
+//        CGFloat width = 24+GET_STRWIDTH(@"我的鲸币", 14, 20);
+//        
+//        self.titleImageView = [[UIImageView  alloc] initWithFrame:CGRectMake((jbView.frame.size.width-width)/2, 24, 20, 20)];
+//        self.titleImageView.image = UIImageNamed(@"sxwallect_img1");
+//        [jbView addSubview:self.titleImageView];
+//        self.titleImageView.userInteractionEnabled = YES;
+//        
+//        _titleL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.titleImageView.frame)+4,24,GET_STRWIDTH(@"我的鲸币", 14, 20), 20)];
+//        _titleL.font = FOURTHTEENTEXTFONTSIZE;
+//        _titleL.text = @"我的鲸币";
+//        _titleL.textColor = [UIColor colorWithHexString:@"#14151A"];
+//        [jbView addSubview:_titleL];
+//        
+//        _moneyL = [[UILabel alloc] initWithFrame:CGRectMake(0,56,jbView.frame.size.width, 26)];
+//        _moneyL.font = SXNUMBERFONT(24);
+//        _moneyL.textAlignment = NSTextAlignmentCenter;
+//        _moneyL.textColor = [UIColor colorWithHexString:@"#14151A"];
+//        [jbView addSubview:_moneyL];
+//        
+//    
+//        UIView *inView = [[UIView  alloc] initWithFrame:CGRectMake(self.jinbiView.frame.size.width/2, 0, self.jinbiView.frame.size.width/2, 106)];
+//        [self.jinbiView addSubview:inView];
+//        inView.userInteractionEnabled = YES;
+//        [inView setAllCorner:8];
+//        UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(incomeTap)];
+//        [inView addGestureRecognizer:tap1];
+//        CGFloat width1 = 24+GET_STRWIDTH(@"收入", 14, 20);
+//        
+//        self.titleImageView1 = [[UIImageView  alloc] initWithFrame:CGRectMake((inView.frame.size.width-width1)/2, 24, 20, 20)];
+//        self.titleImageView1.image = UIImageNamed(@"sxwallect_img2");
+//        [inView addSubview:self.titleImageView1];
+//        self.titleImageView1.userInteractionEnabled = YES;
+//        
+//        _titleL1 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.titleImageView1.frame)+4,24,GET_STRWIDTH(@"收入", 14, 20), 20)];
+//        _titleL1.font = FOURTHTEENTEXTFONTSIZE;
+//        _titleL1.text = @"收入";
+//        _titleL1.textColor = [UIColor colorWithHexString:@"#14151A"];
+//        [inView addSubview:_titleL1];
+//        
+//        _incomeL = [[UILabel alloc] initWithFrame:CGRectMake(0,56,inView.frame.size.width, 26)];
+//        _incomeL.font = SXNUMBERFONT(24);
+//        _incomeL.textAlignment = NSTextAlignmentCenter;
+//        _incomeL.textColor = [UIColor colorWithHexString:@"#14151A"];
+//        [inView addSubview:_incomeL];
+//        
+//        UIView *line = [[UIView  alloc] initWithFrame:CGRectMake((self.jinbiView.frame.size.width-1)/2, 43, 1, 25)];
+//        line.backgroundColor = [UIColor colorWithHexString:@"#F7F8FC"];
+//        [self.jinbiView addSubview:line];
+//        
+//        self.checkL = [[UILabel  alloc] initWithFrame:CGRectMake(_nickNameL.frame.origin.x, 81, DR_SCREEN_WIDTH-102-10, 17)];
+//        self.checkL.textColor = [UIColor colorWithHexString:@"#5C5F66"];
+//        self.checkL.font = TWOTEXTFONTSIZE;
+//        [self addSubview:self.checkL];
     }
     return self;
 }

@@ -66,6 +66,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
             self.isSetDefaultPlaytime = NO;
         }
         if (!configuration.justShow) {
+            [self configureVolume];
             self.rate = configuration.rate;
             [self _setupPlayer];
             [self _setupPlayControls];
@@ -1142,6 +1143,7 @@ typedef NS_ENUM(NSInteger, SelVideoPlayerState) {
  *  改变音量
  */
 - (void)volumeValueChange:(CGFloat)value{
+    
     self.volumeViewSlider.value -= value / 10000;
     self.playbackControls.volumeProress.progress.progress -= value / 10000;
     

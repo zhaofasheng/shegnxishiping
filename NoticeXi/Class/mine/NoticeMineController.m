@@ -26,6 +26,7 @@
 #import "SXKcCardlistBaseController.h"
 #import "SXPlayVideoRecoderBaseController.h"
 #import "SXPlayRecoderScrollView.h"
+
 @interface NoticeMineController ()
 @property (nonatomic, strong) NoticeNewCenterNavView *navView;
 @property (nonatomic, strong) SXUserCenterHeader *headerView;
@@ -72,7 +73,7 @@
     [self.view addSubview:navView];
     
     self.tableView.frame = CGRectMake(0,NAVIGATION_BAR_HEIGHT, DR_SCREEN_WIDTH, DR_SCREEN_HEIGHT-TAB_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT);
-    self.headerView = [[SXUserCenterHeader alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 231-15+28)];
+    self.headerView = [[SXUserCenterHeader alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, 231-15+28-106)];
     self.tableView.tableHeaderView = self.headerView;
     self.tableView.rowHeight = 64;
     [self.tableView registerClass:[SXMineSetCell class] forCellReuseIdentifier:@"cell"];
@@ -88,6 +89,30 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin) name:@"outLoginClearDataNOTICATION" object:nil];
     
     [self getStatusRequest];
+    
+    NSArray *arr = @[@"1",@"43",@"5",@"443",@"898",@"4",@"234",@"5",@"9",@"34",@"90",@"54"];
+    //冒泡排序
+    NSMutableArray *mutaArr = [NSMutableArray arrayWithArray:arr];
+//    for (int i = 0; i < mutaArr.count-1; i++) {
+//        DRLog(@"一层遍历%d",i);
+//        for (int j = 0; j < mutaArr.count-1-i; j++) {
+//            DRLog(@"二层遍历i=%d-----j=%d",i,j);
+//            if ([mutaArr[j] intValue] > [mutaArr[j+1] intValue]) {
+//                [mutaArr exchangeObjectAtIndex:j withObjectAtIndex:j+1];
+//            }
+//        }
+//    }
+
+    
+    //选择排序
+    for (int i = 0; i < mutaArr.count; i++) {
+        for (int j = i+1; j < mutaArr.count; j++) {
+            if ([mutaArr[i] intValue] > [mutaArr[j] intValue]) {
+                [mutaArr exchangeObjectAtIndex:i withObjectAtIndex:j];
+            }
+        }
+    }
+    DRLog(@"\n数组结果%@",mutaArr);
 }
 
 - (SXPlayRecoderScrollView *)recderView{

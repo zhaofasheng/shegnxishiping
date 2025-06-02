@@ -131,7 +131,7 @@
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index{
-    return GET_STRWIDTH(@"会员中心", 20, 50);
+    return GET_STRWIDTH(@"会员中心", 20, 50)+5;
 }
 
 - (UIColor *)menuView:(WMMenuView *)menu titleColorForState:(WMMenuItemState)state atIndex:(NSInteger)index{

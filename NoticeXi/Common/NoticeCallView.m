@@ -7,13 +7,10 @@
 //
 
 #import "NoticeCallView.h"
-#import <NIMSDK/NIMSDK.h>
-#import <NERtcCallKit/NERtcCallKit.h>
 #import "NoticeXi-Swift.h"
 #import "NoticeShopJubaoView.h"
 #import "NoticeShopjuBuView.h"
 #import "SXTcallTimer.h"
-#import <NERtcSDK/NERtcSDK.h>
 #import <Bugly/Bugly.h>
 
 @interface NoticeCallView()
@@ -171,7 +168,6 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hasKillApp) name:@"APPWASKILLED" object:nil];
         self.jubaoL = jubaoL;
         
-        [[NERtcEngine sharedEngine] setLoudspeakerMode:false];
     }
     return self;
 }
@@ -320,50 +316,17 @@
 
 //是否开扬声器
 - (void)mirClick{
-    self.isSpeaker = !self.isSpeaker;
-    if(self.isSpeaker){
-        [self.mirButton setImage:UIImageNamed(@"tencent_closemirimg") forState:UIControlStateNormal];//
-        [self.mirButton setTitle:@"已扩音" forState:UIControlStateNormal];
-        [[NERtcEngine sharedEngine] setLoudspeakerMode:true];
-        [[LogManager sharedInstance] logInfo:@"扬声器相关" logStr:[NSString stringWithFormat:@"%@扩音操作",[NoticeTools getuserId]]];
-    }else{
-        [self.mirButton setImage:UIImageNamed(@"tencent_openmirimg") forState:UIControlStateNormal];//tencent_closemirimg
-        [self.mirButton setTitle:@"扩音" forState:UIControlStateNormal];
-        [[NERtcEngine sharedEngine] setLoudspeakerMode:false];
-        [[LogManager sharedInstance] logInfo:@"扬声器相关" logStr:[NSString stringWithFormat:@"%@关扩音操作",[NoticeTools getuserId]]];
-    }
+
     
 }
 
 //是否关麦
 - (void)mutClick{
-    self.closeMicrophone = !self.closeMicrophone;
-    if (self.closeMicrophone){
-        [self.muteButton setImage:UIImageNamed(@"tencent_closemuteimg") forState:UIControlStateNormal];
-        [self.muteButton setTitle:@"已关麦" forState:UIControlStateNormal];
-   
-        [[NECallEngine sharedInstance] muteLocalAudio:YES];
-    }else{
-        [self.muteButton setImage:UIImageNamed(@"tencent_openmuteimg") forState:UIControlStateNormal];
-        [self.muteButton setTitle:@"关麦" forState:UIControlStateNormal];
-        [[NECallEngine sharedInstance] muteLocalAudio:NO];
-    }
-    [[LogManager sharedInstance] logInfo:@"麦克风相关" logStr:[NSString stringWithFormat:@"%@%@",[NoticeTools getuserId],self.closeMicrophone?@"关麦了":@"开麦了"]];
+
 }
 
 - (void)hanUp{
-    NEHangupParam *hangupParam = [[NEHangupParam alloc] init];
-    [[NECallEngine sharedInstance] hangup:hangupParam completion:^(NSError * _Nullable error) {
-        if (!error) {
-            NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] reason:[NSString stringWithFormat:@"%@挂断成功\n房间号%@\n时间%@\n",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]] userInfo:nil];//数据上报
-            [Bugly reportExceptionWithCategory:3 name:exception.name reason:exception.reason callStack:@[[NoticeTools getNowTimeStamp]] extraInfo:@{@"d":@"1"} terminateApp:NO];
-            
-            [[LogManager sharedInstance] logInfo:[NSString stringWithFormat:@"用户id%@-通话-%@",[NoticeTools getuserId],[NoticeTools getNowTime]] logStr:[NSString stringWithFormat:@"%@挂断成功房间号%@时间%@",[NoticeTools getuserId],self.roomId,[SXTools getCurrentTime]]];
-            DRLog(@"挂断云信电话");
-        }else{
-            DRLog(@"挂断云信失败%@",error.description);
-        }
-    }];
+
 }
 
 //结束通话

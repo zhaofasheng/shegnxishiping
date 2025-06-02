@@ -158,6 +158,9 @@
     juBaoView.outBlock = ^(NSInteger type) {
         [weakSelf outPersonNojoin:noJoin type:[NSString stringWithFormat:@"%ld",type] userId:userid];
     };
+    juBaoView.sureBlock = ^(NSString * name) {
+        
+    };
     [juBaoView showView];
 }
 

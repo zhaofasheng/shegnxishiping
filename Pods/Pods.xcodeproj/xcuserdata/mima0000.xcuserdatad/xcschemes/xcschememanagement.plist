@@ -69,31 +69,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>NECommonKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>NECoreKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>NERtcCallKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>NERtcSDK.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>NIMSDK_LITE.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-NoticeXi.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -135,16 +110,6 @@
 			<false/>
 		</dict>
 		<key>Toast.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>YXAlog.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>YXArtemis.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

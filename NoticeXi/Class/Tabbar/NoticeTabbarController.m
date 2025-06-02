@@ -73,6 +73,8 @@
     } fail:^(NSError * _Nullable error) {
         
     }];
+
+ 
 }
 
 - (void)screenCaptureStatusChanged:(NSNotification *)notification {

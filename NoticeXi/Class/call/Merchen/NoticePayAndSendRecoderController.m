@@ -76,7 +76,7 @@
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index{
-    return  GET_STRWIDTH([NoticeTools getLocalStrWith:@"send.buyre"], 18, 18);
+    return  GET_STRWIDTH([NoticeTools getLocalStrWith:@"send.buyre"], 18, 18)+5;
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu itemMarginAtIndex:(NSInteger)index{

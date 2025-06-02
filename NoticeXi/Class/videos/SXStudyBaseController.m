@@ -335,7 +335,6 @@
     if ([application canOpenURL:taobaoUrl]) {
         if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
             if (@available(iOS 10.0, *)) {
-         
                 [application openURL:taobaoUrl options:@{} completionHandler:^(BOOL success) {
                     if (success) {
                         DRLog(@"跳转成功");
@@ -757,7 +756,7 @@
 
 - (UILabel *)infoButton{
     if (!_infoButton) {
-        _infoButton = [[UILabel  alloc] initWithFrame:CGRectMake(15, 0, GET_STRWIDTH(@"课程", 16, 50), 40)];
+        _infoButton = [[UILabel  alloc] initWithFrame:CGRectMake(15, 0, GET_STRWIDTH(@"课程的", 16, 50), 40)];
         _infoButton.font = SIXTEENTEXTFONTSIZE;
         _infoButton.textColor = [UIColor colorWithHexString:@"#14151A"];
         _infoButton.userInteractionEnabled = YES;
@@ -771,7 +770,7 @@
 
 - (UILabel *)orderButton{
     if (!_orderButton) {
-        _orderButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.infoButton.frame)+40, 0, GET_STRWIDTH(@"简介", 16, 40), 40)];
+        _orderButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.infoButton.frame)+40, 0, GET_STRWIDTH(@"简介的", 16, 40), 40)];
         _orderButton.font = SIXTEENTEXTFONTSIZE;
         _orderButton.textColor = [UIColor colorWithHexString:@"#14151A"];
         _orderButton.userInteractionEnabled = YES;
@@ -785,7 +784,7 @@
 
 - (UILabel *)comButton{
     if (!_comButton) {
-        _comButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.orderButton.frame)+40, 0, GET_STRWIDTH(@"评价", 16, 40),40)];
+        _comButton = [[UILabel  alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.orderButton.frame)+40, 0, GET_STRWIDTH(@"评价的", 16, 40),40)];
         _comButton.font = SIXTEENTEXTFONTSIZE;
         _comButton.textColor = [UIColor colorWithHexString:@"#14151A"];
         _comButton.userInteractionEnabled = YES;

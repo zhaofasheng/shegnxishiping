@@ -22,7 +22,6 @@ static NSString* ZipFileName = @"OTKLog.zip";
 @property (nonatomic,retain) NSDateFormatter* dateFormatter;
 // 时间格式化
 @property (nonatomic,retain) NSDateFormatter* timeFormatter;
- 
 // 日志的目录路径
 @property (nonatomic,copy) NSString* basePath;
  

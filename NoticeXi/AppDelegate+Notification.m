@@ -21,7 +21,6 @@
 #import "NoticeTabbarController.h"
 #import "BaseNavigationController.h"
 #import "NoticePushModel.h"
-#import <NIMSDK/NIMSDK.h>
 #import "SXShopLyListController.h"
 #import "NoticeSCViewController.h"
 #import "SXKcHasGetLikeController.h"
@@ -140,8 +139,7 @@
     
     [JPUSHService registerDeviceToken:deviceToken];
     self.deviceToken = deviceToken;
-    // 上传devicetoken至云信服务端。
-    [[NIMSDK sharedSDK] updateApnsToken:deviceToken];
+
 }
 
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
@@ -285,6 +283,7 @@
             [self autoToNewest:results];
         }];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+    
     }];
 }
 

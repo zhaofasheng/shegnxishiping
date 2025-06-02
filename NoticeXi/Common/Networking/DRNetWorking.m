@@ -29,11 +29,28 @@
         _manager.responseSerializer = [AFHTTPResponseSerializer serializer];//afn不会自动解析,数据是data类型,需要自己解析
         //声明上传的是json格式的参数,需要和后台约定,不然会造成后台无法获取参数的情况
         _manager.requestSerializer = [AFHTTPRequestSerializer serializer];//上传普通格式
-        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModePublicKey withPinnedCertificates:[AFSecurityPolicy certificatesInBundle:[NSBundle mainBundle]]];
-        _manager.securityPolicy = securityPolicy;
+//        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModePublicKey withPinnedCertificates:[AFSecurityPolicy certificatesInBundle:[NSBundle mainBundle]]];
+//        _manager.securityPolicy = securityPolicy;
     }
     return self;
 }
+
+- (void)reManager{
+    if (!_manager) {
+        _manager = [AFHTTPSessionManager manager];
+        //超时时间
+        _manager.requestSerializer.timeoutInterval = kTimeOutInterval;
+        //生命获取到的数据格式
+        _manager.responseSerializer = [AFHTTPResponseSerializer serializer];//afn不会自动解析,数据是data类型,需要自己解析
+        //生命上传的是json格式的参数,需要和后台约定,不然会造成后台无法获取参数的情况
+        _manager.requestSerializer = [AFHTTPRequestSerializer serializer];//上传普通格式
+    }
+    [_manager.requestSerializer setValue:nil forHTTPHeaderField:@"Lang"];
+    [_manager.requestSerializer setValue:nil forHTTPHeaderField:@"Content-Type"];
+    [_manager.requestSerializer setValue:nil forHTTPHeaderField:@"Authorization"];
+    [_manager.requestSerializer setValue:nil forHTTPHeaderField:@"Accept"];
+}
+
 
 + (instancetype)shareInstance
 {
@@ -822,21 +839,6 @@
     }];
 }
 
-- (void)reManager{
-    if (!_manager) {
-        _manager = [AFHTTPSessionManager manager];
-        //超时时间
-        _manager.requestSerializer.timeoutInterval = kTimeOutInterval;
-        //生命获取到的数据格式
-        _manager.responseSerializer = [AFHTTPResponseSerializer serializer];//afn不会自动解析,数据是data类型,需要自己解析
-        //生命上传的是json格式的参数,需要和后台约定,不然会造成后台无法获取参数的情况
-        _manager.requestSerializer = [AFHTTPRequestSerializer serializer];//上传普通格式
-    }
-    [_manager.requestSerializer setValue:nil forHTTPHeaderField:@"Lang"];
-    [_manager.requestSerializer setValue:nil forHTTPHeaderField:@"Content-Type"];
-    [_manager.requestSerializer setValue:nil forHTTPHeaderField:@"Authorization"];
-    [_manager.requestSerializer setValue:nil forHTTPHeaderField:@"Accept"];
-}
 
 //未登录状态或者登陆无效状态发送通知到APPDelegate进行跟视图更改 在请求之前判断用户ID是否存在,请求成功后判断用户id是否有效
 - (void)sendAuthenticationFailureRequest

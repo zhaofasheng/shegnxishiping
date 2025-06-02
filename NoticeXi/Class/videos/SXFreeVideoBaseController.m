@@ -115,6 +115,12 @@
     
     // 网路改变通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkingReachabilityDidChange) name:HWNetworkingReachabilityDidChangeNotification object:nil];
+    
+    if ([SXTools isToatBackOnThisDeveice]) {
+        XLAlertView *alerView = [[XLAlertView alloc] initWithTitle:@"昔友们好久不见，声昔咨询服务目前暂停中，视频和课程业务正常，欢迎常回来看看" message:nil cancleBtn:@"知道了"];
+        [alerView showXLAlertView];
+        [SXTools setComeback];
+    }
 }
 
 - (UILabel *)newKcL{

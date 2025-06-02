@@ -57,7 +57,7 @@
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index{
-    return  GET_STRWIDTH(@"收的", 16, 18);
+    return  GET_STRWIDTH(@"收的", 16, 18)+10;
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu itemMarginAtIndex:(NSInteger)index{

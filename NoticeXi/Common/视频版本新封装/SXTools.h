@@ -71,6 +71,10 @@ typedef void (^downSuccessBlock)(BOOL success);
 
 + (void)setCanNotShowHuodong:(NSString *)huoodngid;
 + (NSString *)isCanShowHuodong;
+
++ (BOOL)isToatBackOnThisDeveice;
+
++ (void)setComeback;
 @end
 
 NS_ASSUME_NONNULL_END

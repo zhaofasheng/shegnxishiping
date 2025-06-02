@@ -277,56 +277,6 @@ THE SOFTWARE.</string>
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2022 Netease </string>
-			<key>License</key>
-			<string>Copyright</string>
-			<key>Title</key>
-			<string>NECommonKit</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>Copyright 2022 Netease </string>
-			<key>License</key>
-			<string>Copyright</string>
-			<key>Title</key>
-			<string>NECoreKit</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>Copyright 2022 Netease </string>
-			<key>License</key>
-			<string>Copyright</string>
-			<key>Title</key>
-			<string>NERtcCallKit</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>Copyright 2022 Netease </string>
-			<key>License</key>
-			<string>Copyright</string>
-			<key>Title</key>
-			<string>NERtcSDK</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>Copyright 2024 Netease </string>
-			<key>License</key>
-			<string>Copyright</string>
-			<key>Title</key>
-			<string>NIMSDK_LITE</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>Copyright 2008 Google Inc.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -749,16 +699,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			<string>MIT</string>
 			<key>Title</key>
 			<string>Toast</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>Copyright 2023 Netease </string>
-			<key>License</key>
-			<string>Copyright</string>
-			<key>Title</key>
-			<string>YXArtemis</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
