@@ -23,22 +23,24 @@
 #import "WeiboSDK.h"
 #import <AFServiceSDK/AFServiceSDK.h>
 
-@interface AppDelegate ()<WXApiDelegate>
+@interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate (Share)
 
 - (void)regreiteShare{
-    
+
     [ShareSDK registPlatforms:^(SSDKRegister *platformsRegister) {
-        //QQ
-        [platformsRegister setupQQWithAppId:@"101461065" appkey:@"459701b937fc61ac1bbad1a0be2c46ce"];
-        //微信
-        [platformsRegister setupWeChatWithAppId:@"wx1c7709f7121a6877" appSecret:@"ad861fb8d0c1d534b488b18b1057945d"];//登录用的
-        //新浪
-        [platformsRegister setupSinaWeiboWithAppkey:@"3779229073" appSecret:@"578f92af2e698698cab1cf03ffcb009e" redirectUrl:@"http://www.sharesd.cn"];
-    }];
+            // QQ
+            [platformsRegister setupQQWithAppId:@"101461065" appkey:@"459701b937fc61ac1bbad1a0be2c46ce" enableUniversalLink:YES universalLink:@"https://link.mob.com/wx1c7709f7121a6877/callback/"];
+
+            // 更新到4.3.3或者以上版本，微信初始化需要使用以下初始化
+            [platformsRegister setupWeChatWithAppId:@"wx1c7709f7121a6877" appSecret:@"3bdea157a17f81ed265dba6b1b490591" universalLink:@"https://link.mob.com/wx1c7709f7121a6877/callback/"];
+
+            // 新浪
+            [platformsRegister setupSinaWeiboWithAppkey:@"3779229073" appSecret:@"578f92af2e698698cab1cf03ffcb009e" redirectUrl: @"http://www.sharesd.cn" universalLink:@"https://link.mob.com/wx1c7709f7121a6877/callback/"];
+        }];
 }
 
 //相关相关
@@ -87,8 +89,7 @@
     // 打印查询参数
     DRLog(@"Query parameters: %@", components.queryItems);
     
-    //这里判断是否发起的请求为微信相关，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
-    return  [WXApi handleOpenURL:url delegate:self];
+    return  YES;
 }
 
 

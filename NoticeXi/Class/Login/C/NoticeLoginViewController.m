@@ -22,7 +22,7 @@
 #import "JVERIFICATIONService.h"
 #import "SXWebViewController.h"
 #import "SXHistoryLoginView.h"
-
+#import "WXApi.h"
 @interface NoticeLoginViewController ()<ASAuthorizationControllerDelegate,ASAuthorizationControllerPresentationContextProviding>
 @property (nonatomic, strong) NoticeCustumeNavView *timeLnavBarViews;//是否需要自定义导航栏
 
@@ -650,6 +650,14 @@ API_AVAILABLE(ios(13.0)){
         [self hideHUD];
 
     }
+    
+//    SendAuthReq *req = [[SendAuthReq alloc] init];
+//    req.scope = @"snsapi_userinfo";
+//    req.state = @"wx_login";
+//    [WXApi sendReq:req completion:^(BOOL success) {
+//        NSLog(@"发送微信登录请求: %@", success ? @"成功" : @"失败");
+//    }];
+   
     [ShareSDK getUserInfo:SSDKPlatformTypeWechat
            onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
      {
@@ -661,16 +669,16 @@ API_AVAILABLE(ios(13.0)){
              }
              user.uid = [NSString stringWithFormat:@"%@",user.rawData[@"openid"]];
              [self checkIsExit:user type:@"1"];
-             [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat result:^(NSError *error) {
-                 
-             }];
+           
          }
      }];
+
 }
 
 //检测第三方账号是否已经注册过
 - (void)checkIsExit:(SSDKUser *)user type:(NSString *)type{
 
+    DRLog(@"发撒净空法师肯定");
     [self showHUD];
     NSString *url = nil;
     if (user.credential.uid) {

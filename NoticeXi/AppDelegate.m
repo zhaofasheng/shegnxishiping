@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import "WXApi.h"
 #import <Bugly/Bugly.h>
 #import "NoticeTabbarController.h"
 #import "BaseNavigationController.h"
@@ -31,7 +30,7 @@ NSString* const yunAppKey = @"dd8114c96a13f86d8bf0f7de477d9cd9";
 //  在APPDelegate.m中声明一个通知事件的key
 NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiveRemoteEventsNotification";
 
-@interface AppDelegate ()<WXApiDelegate>
+@interface AppDelegate ()
 
 @property (nonatomic, assign) NSInteger outTime;
 @property (nonatomic, strong) UILabel *dismissLabel;
@@ -44,6 +43,8 @@ NSString *const AppDelegateReceiveRemoteEventsNotification = @"AppDelegateReceiv
 {
     UIBackgroundTaskIdentifier _backIden;
 }
+
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
