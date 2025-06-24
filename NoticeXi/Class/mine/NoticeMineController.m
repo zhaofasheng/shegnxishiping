@@ -68,6 +68,8 @@
     self.section2imgArr = @[@"sxdownvideo_img",@"sxconnectkf_img",@"sx_sxuseteace_img",@"sxset_img"];
     
     
+    
+    
     NoticeNewCenterNavView *navView = [[NoticeNewCenterNavView alloc] initWithFrame:CGRectMake(0, 0, DR_SCREEN_WIDTH, NAVIGATION_BAR_HEIGHT)];
     self.navView = navView;
     [self.view addSubview:navView];
