@@ -14,6 +14,7 @@ import UIKit
 }
 
 typealias sendBlock = (String) ->()
+typealias successBlock = (Bool) ->()
 
 @objc class NoticeJuBaoSwift: UIView {
     @objc public var contentView = UIView()
@@ -28,6 +29,7 @@ typealias sendBlock = (String) ->()
     var canTap = true
     @objc public var outBlock :((_ typeIndex :Int) ->Void)?
     @objc public var sureBlock :sendBlock?
+    @objc public var successBlock :successBlock?
     
     
     override init(frame: CGRect) {
@@ -137,6 +139,7 @@ typealias sendBlock = (String) ->()
                     self? .removeFromSuperview()
                     let pinbiView = NoticePinBiView.init(tostViewType: 4)
                     pinbiView.showTostView()
+                    self?.successBlock?(true)
                 }
                 
             }, fail: { (error) in
