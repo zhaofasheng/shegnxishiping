@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) SXShopSayListModel *model;
 
-
+@property (nonatomic,copy) void(^deleteDontai)(NSString *dongtaiId);
 @property (nonatomic, strong) UIImageView *sexImageView;
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *shopNameL;

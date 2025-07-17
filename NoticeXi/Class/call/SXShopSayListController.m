@@ -237,9 +237,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    __weak typeof(self) weakSelf = self;
     SXShopSayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.imageHeight = self.imageViewHeight;
     cell.model = self.dataArr[indexPath.row];
+    cell.deleteDontai = ^(NSString * _Nonnull dongtaiId) {
+        for (SXShopSayListModel *sayM in weakSelf.dataArr) {
+            if ([sayM.dongtaiId isEqualToString:dongtaiId]) {
+                [weakSelf.dataArr removeObject:sayM];
+                [weakSelf.tableView reloadData];
+                break;
+            }
+        }
+    };
     return cell;
 }
 

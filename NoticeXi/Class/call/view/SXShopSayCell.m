@@ -79,6 +79,11 @@
         UILongPressGestureRecognizer *longPressDeleT = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(deleTapT:)];
         longPressDeleT.minimumPressDuration = 0.5;
         [self.backcontentView addGestureRecognizer:longPressDeleT];
+        
+        UIButton *jubaoBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.backcontentView.frame.size.width-40, 5, 40, 40)];
+        [jubaoBtn setImage:UIImageNamed(@"img_scb_b") forState:UIControlStateNormal];
+        [jubaoBtn addTarget:self action:@selector(jubaoClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.backcontentView addSubview:jubaoBtn];
     }
     return self;
 }
@@ -235,10 +240,18 @@
     if (tap.state == UIGestureRecognizerStateBegan) {
         BOOL isSelf = [self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]];
         LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
-        } otherButtonTitleArray:@[isSelf?@"删除": @"举报此内容",self.model.shopModel.is_recommend.boolValue?@"取消推荐该店铺": @"推荐此店铺"]];
+        } otherButtonTitleArray:@[isSelf?@"删除": @"举报此内容",self.model.shopModel.is_recommend.boolValue?@"取消推荐该店铺": @"推荐此店铺",@"屏蔽该内容"]];
         sheet.delegate = self;
         [sheet show];
     }
+}
+
+- (void)jubaoClick{
+    BOOL isSelf = [self.model.shopModel.user_id isEqualToString:[NoticeTools getuserId]];
+    LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:nil cancelButtonTitle:[NoticeTools getLocalStrWith:@"main.cancel"] clicked:^(LCActionSheet * _Nonnull actionSheet, NSInteger buttonIndex) {
+    } otherButtonTitleArray:@[isSelf?@"删除": @"举报此内容",self.model.shopModel.is_recommend.boolValue?@"取消推荐该店铺": @"推荐此店铺",@"屏蔽该内容"]];
+    sheet.delegate = self;
+    [sheet show];
 }
 
 - (void)actionSheet:(LCActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
@@ -251,6 +264,14 @@
         }
     }else if (buttonIndex == 2){
         [self tuijiandinapu];
+    }else if (buttonIndex == 3){
+        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:[NSString stringWithFormat:@"shopDynamic/shield/%@",self.model.dongtaiId] Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:YES parmaer:nil page:0 success:^(NSDictionary * _Nullable dict, BOOL success) {
+        
+        } fail:^(NSError * _Nullable error) {
+        }];
+        if (self.deleteDontai) {
+            self.deleteDontai(self.model.dongtaiId);
+        }
     }
 }
 
@@ -258,6 +279,12 @@
     NoticeJuBaoSwift *juBaoView = [[NoticeJuBaoSwift alloc] init];
     juBaoView.reouceId = self.model.dongtaiId;
     juBaoView.reouceType = @"152";
+    __weak typeof(self) weakSelf = self;
+    juBaoView.successBlock = ^(BOOL success) {
+        if (weakSelf.deleteDontai) {
+            weakSelf.deleteDontai(weakSelf.model.dongtaiId);
+        }
+    };
     [juBaoView showView];
 }
 
