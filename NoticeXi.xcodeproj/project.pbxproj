@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8481A3812E364108005EC4E5 /* captcha.html in Resources */ = {isa = PBXBuildFile; fileRef = 8481A3802E364108005EC4E5 /* captcha.html */; };
+		8481A3822E364108005EC4E5 /* captcha.html in Resources */ = {isa = PBXBuildFile; fileRef = 8481A3802E364108005EC4E5 /* captcha.html */; };
 		A408EF7C2B1EC2480012C996 /* NoticeChenjiuMonthsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A408EF7B2B1EC2470012C996 /* NoticeChenjiuMonthsCell.m */; };
 		A408EF7F2B1EC4110012C996 /* NoticeChengjiuYearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A408EF7E2B1EC4110012C996 /* NoticeChengjiuYearCell.m */; };
 		A408EF822B20594F0012C996 /* NoticeDownLoadBokeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A408EF812B20594F0012C996 /* NoticeDownLoadBokeModel.m */; };
@@ -1680,6 +1682,7 @@
 /* Begin PBXFileReference section */
 		0825C7A307206BC0F78C701F /* libPods-NoticeXi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NoticeXi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		836B9571D4CCA612366DA6DA /* Pods-NoticeXi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoticeXi.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoticeXi/Pods-NoticeXi.release.xcconfig"; sourceTree = "<group>"; };
+		8481A3802E364108005EC4E5 /* captcha.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = captcha.html; sourceTree = "<group>"; };
 		A408EF7A2B1EC2470012C996 /* NoticeChenjiuMonthsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeChenjiuMonthsCell.h; sourceTree = "<group>"; };
 		A408EF7B2B1EC2470012C996 /* NoticeChenjiuMonthsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeChenjiuMonthsCell.m; sourceTree = "<group>"; };
 		A408EF7D2B1EC4110012C996 /* NoticeChengjiuYearCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeChengjiuYearCell.h; sourceTree = "<group>"; };
@@ -5018,6 +5021,7 @@
 				A4E95D102A69141B00AE022E /* Swift */,
 				A4E95A5F2A69141A00AE022E /* AppDelegate.h */,
 				A4E964802A69141F00AE022E /* AppDelegate.m */,
+				8481A3802E364108005EC4E5 /* captcha.html */,
 				A4E95A822A69141A00AE022E /* AppDelegate+Notification.h */,
 				A4E95A5E2A69141A00AE022E /* AppDelegate+Notification.m */,
 				A4E95A7E2A69141A00AE022E /* AppDelegate+Share.h */,
@@ -10040,6 +10044,7 @@
 				A4E968622A69142600AE022E /* taozhizj.jpg in Resources */,
 				A4E966892A69142300AE022E /* Image_kongleader11.png in Resources */,
 				A4E965512A69142200AE022E /* yinxiao3.svga in Resources */,
+				8481A3812E364108005EC4E5 /* captcha.html in Resources */,
 				A4E968732A69142600AE022E /* shengximusic.jpg in Resources */,
 				A4E965872A69142200AE022E /* ele_sunnyBirdInvertedImage6.png in Resources */,
 				A4E965A62A69142200AE022E /* ele_white_cloud_10.png in Resources */,
@@ -10110,6 +10115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8481A3822E364108005EC4E5 /* captcha.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11905,7 +11911,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.0.4;
+				MARKETING_VERSION = 6.0.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -12084,7 +12090,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.0.4;
+				MARKETING_VERSION = 6.0.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

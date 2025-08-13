@@ -5,7 +5,7 @@
 //  Created by li lei on 2018/10/24.
 //  Copyright © 2018年 zhaoxiaoer. All rights reserved.
 //
-
+#import <WebKit/WebKit.h>
 #import "NoticeChangePhoneViewController.h"
 #import "NoticeAreaViewController.h"
 #import "CQCountdownButton.h"
@@ -14,7 +14,7 @@
 #import "NoticeAlreadlyUserView.h"
 #import "NoticeDesTroyView.h"
 #import "SXStudyBaseController.h"
-@interface NoticeChangePhoneViewController ()<CQCountDownButtonDataSource, CQCountDownButtonDelegate,UITextFieldDelegate>
+@interface NoticeChangePhoneViewController ()<CQCountDownButtonDataSource, CQCountDownButtonDelegate,UITextFieldDelegate,WKScriptMessageHandler>
 @property (strong, nonatomic) UITextField *codeView;
 @property (strong, nonatomic) UITextField *phoneView;
 @property (nonatomic, strong) NoticeAreaModel *areaModel;
@@ -25,12 +25,19 @@
 @property (nonatomic, strong) UILabel *markL;
 @property (nonatomic, strong) NoticeCheckModel *checkM;
 @property (nonatomic, strong) UIButton *sureButton;
+@property (nonatomic,strong) NSString *ticket;
+@property (nonatomic,strong) NSString *randstr;
+@property (nonatomic,strong) CQCountdownButton *countdownButton;
+@property (nonatomic,strong) WKWebView *webView;
+
 @end
 
 @implementation NoticeChangePhoneViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     self.navBarView.titleL.text =[[[NoticeSaveModel getUserInfo] mobile] length] > 5? [NoticeTools getLocalStrWith:@"bdphone.changephon"] : [NoticeTools getLocalStrWith:@"bdphone.title"];
     
     if (self.navtitle) {
@@ -418,50 +425,26 @@
     if (!self.phoneView.text.length) {
         return;
     }
+    self.countdownButton = countdownButton;
+    [self createAndShowWebView];
 
-    if (self.type ||  self.isThird) {//先验证手机号是否已经注册过，注册过，执行登录验证码，没注册，执行登录验证码
-        if([self.areaModel.area_code isEqualToString:@"CN"]){
-            [self checkIsAlready:countdownButton smscode:nil key:nil];
-        }else{
-            __weak typeof(self) weakSelf = self;
-            NoticeDesTroyView *view = [[NoticeDesTroyView alloc] initWithShowSendSMS];
-            view.sureCodeBlock = ^(NSString * _Nonnull code, NSString * _Nonnull key) {
-                [weakSelf checkIsAlready:countdownButton smscode:code key:key];
-            };
-            [view showDestroyView];
-        }
-        
-        return;
-    }
-
-    if([self.areaModel.area_code isEqualToString:@"CN"]){
-        // 按钮点击后将enabled设置为NO
-        countdownButton.enabled = NO;
-        // 请求短信验证码
-        [countdownButton startCountDown];
-        [self sendSMS:nil key:nil];
-    }else{
-        __weak typeof(self) weakSelf = self;
-        NoticeDesTroyView *view = [[NoticeDesTroyView alloc] initWithShowSendSMS];
-        view.sureCodeBlock = ^(NSString * _Nonnull code, NSString * _Nonnull key) {
-            // 按钮点击后将enabled设置为NO
-            countdownButton.enabled = NO;
-            // 请求短信验证码
-            [countdownButton startCountDown];
-            [weakSelf sendSMS:code key:key];
-        };
-    }
 }
 
+
 - (void)sendSMS:(NSString *)code key:(NSString *)key{
-    NSString *url = [NSString stringWithFormat:@"code/%@/%@/1",self.areaModel.area_code,self.phoneView.text];
-    NSString *accept = nil;
-    if(![self.areaModel.area_code isEqualToString:@"CN"]){
-        url = [NSString stringWithFormat:@"code/%@/%@/1?captchaCode=%@&captchaKey=%@",self.areaModel.area_code,self.phoneView.text,code,key];
-        accept = @"application/vnd.shengxi.v5.5.1+json";
+    // 按钮点击后将enabled设置为NO
+    self.countdownButton.enabled = NO;
+    // 请求短信验证码
+    [self.countdownButton startCountDown];
+
+    if (!self.ticket || !self.randstr) {
+        return;
     }
+    
+    NSString *url = [NSString stringWithFormat:@"code/%@/%@/%@?randstr=%@&ticket=%@",self.areaModel.area_code,self.phoneView.text,[NoticeTools getIDFA],self.randstr,self.ticket];
+
     [self showHUD];
-    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:accept isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
         [self hideHUD];
         if (success) {
       
@@ -471,9 +454,42 @@
             self.markL.text = [NSString stringWithFormat:@"%@",dict[@"msg"]];
             [self hideHUD];
         }
+        self.ticket = nil;
+        self.randstr = nil;
     } fail:^(NSError *error) {
         [self hideHUD];
+        self.ticket = nil;
+        self.randstr = nil;
     }];
+}
+
+- (void)sendSMSlogin{
+
+    if (!self.ticket || !self.randstr) {
+        return;
+    }
+    
+    NSString *url = [NSString stringWithFormat:@"users/code/%@/%@/%@?randstr=%@&ticket=%@",self.areaModel.area_code,self.phoneView.text,[NoticeTools getIDFA],self.randstr,self.ticket];
+
+    [self showHUD];
+    [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:@"application/vnd.shengxi.v5.8.7+json" isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
+        [self hideHUD];
+        if (success) {
+      
+        }else{
+            self.markL.hidden = NO;
+            self.markImageView.hidden = NO;
+            self.markL.text = [NSString stringWithFormat:@"%@",dict[@"msg"]];
+            [self hideHUD];
+        }
+        self.ticket = nil;
+        self.randstr = nil;
+    } fail:^(NSError *error) {
+        [self hideHUD];
+        self.ticket = nil;
+        self.randstr = nil;
+    }];
+
 }
 
 - (void)checkIsAlready:(CQCountdownButton *)countdownButton smscode:(NSString *)code key:(NSString *)key{
@@ -503,28 +519,7 @@
             }else{
                 self.type = 1;
             }
-            
-            [self showHUD];
-            [self.codeView becomeFirstResponder];
-            NSString *url = [NSString stringWithFormat:@"users/code/%@/%@/%@",self.areaModel.area_code,self.phoneView.text,[NoticeSaveModel getUUID]];
-            NSString *accept = nil;
-            if(![self.areaModel.area_code isEqualToString:@"CN"]){
-                url = [NSString stringWithFormat:@"users/code/%@/%@/%@?captchaCode=%@&captchaKey=%@",self.areaModel.area_code,self.phoneView.text,[NoticeSaveModel getUUID],code,key];
-                accept = @"application/vnd.shengxi.v5.5.1+json";
-            }
-            [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:accept isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-                [self hideHUD];
-                if (success) {
-     
-                }else{
-                    self.markL.hidden = NO;
-                    self.markImageView.hidden = NO;
-                    self.markL.text = [NSString stringWithFormat:@"%@",dict[@"msg"]];
-                    [self hideHUD];
-                }
-            } fail:^(NSError *error) {
-                [self hideHUD];
-            }];
+            [self sendSMSlogin];
             
         }else{
             [self hideHUD];
@@ -532,27 +527,7 @@
         }
     } fail:^(NSError *error) {
         [self hideHUD];
-        [self showHUD];
-        [self.codeView becomeFirstResponder];
-        NSString *url = [NSString stringWithFormat:@"users/code/%@/%@/%@",self.areaModel.area_code,self.phoneView.text,[NoticeSaveModel getUUID]];
-        NSString *accept = nil;
-        if(![self.areaModel.area_code isEqualToString:@"CN"]){
-            url = [NSString stringWithFormat:@"users/code/%@/%@/%@?captchaCode=%@&captchaKey=%@",self.areaModel.area_code,self.phoneView.text,[NoticeSaveModel getUUID],code,key];
-            accept = @"application/vnd.shengxi.v5.5.1+json";
-        }
-        [[DRNetWorking shareInstance] requestNoNeedLoginWithPath:url Accept:accept isPost:NO parmaer:nil page:0 success:^(NSDictionary *dict, BOOL success) {
-            [self hideHUD];
-            if (success) {
-           
-            }else{
-                self.markL.hidden = NO;
-                self.markImageView.hidden = NO;
-                self.markL.text = [NSString stringWithFormat:@"%@",dict[@"msg"]];
-                [self hideHUD];
-            }
-        } fail:^(NSError *error) {
-            [self hideHUD];
-        }];
+        [self sendSMSlogin];
     }];
 }
 
@@ -579,6 +554,61 @@
     [self.getCodeBtn releaseTimer];
 }
 
+- (void)createAndShowWebView{
+    [self.codeView resignFirstResponder];
+    [self.phoneView resignFirstResponder];
+    // 创建 WebView 配置对象
+    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+    
+    [configuration.userContentController addScriptMessageHandler:self name:@"isoJSBridge"];
+    
+    // 创建和配置 WebView
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
+    webView.backgroundColor = [UIColor clearColor];
+    webView.opaque = NO;
+    webView.scrollView.backgroundColor = [UIColor clearColor];
+    webView.clipsToBounds = YES;
+    webView.translatesAutoresizingMaskIntoConstraints = NO;
+    // 加载本地 HTML
+    NSURL *htmlURL = [[NSBundle mainBundle] URLForResource:@"captcha" withExtension:@"html"];
+    [webView loadFileURL:htmlURL allowingReadAccessToURL:htmlURL];
+    
+    // 将 WebView 添加到视图中，并设置布局约束
+    [self.view addSubview:webView];
+    [NSLayoutConstraint activateConstraints:@[
+        [webView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [webView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+        [webView.widthAnchor constraintEqualToConstant:360],
+        [webView.heightAnchor constraintEqualToConstant:360]
+    ]];
+    webView.userInteractionEnabled = YES;
+    self.webView = webView;
+    [self.view bringSubviewToFront:self.sureButton];
+
+}
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    if ([message.name isEqualToString:@"isoJSBridge"]) {
+        NSDictionary *data = message.body;
+        NSString *ticket = data[@"ticket"];
+        NSString *randstr = data[@"randstr"];
+        self.ticket = ticket;
+        self.randstr = randstr;
+
+        if (self.type ||  self.isThird) {//先验证手机号是否已经注册过，注册过，执行登录验证码，没注册，执行登录验证码
+            [self checkIsAlready:self.countdownButton smscode:nil key:nil];
+            return;
+        }
+
+        [self sendSMS:nil key:nil];
+
+        // 关闭 WebView 或进一步操作
+        [message.webView removeFromSuperview];
+
+    }
+    [self.webView removeFromSuperview];
+
+}
 
 
 @end

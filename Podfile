@@ -31,5 +31,4 @@ pod 'mob_sharesdk/ShareSDKPlatforms/WeChat'
   pod 'SDWebImage','~> 5.15.5',:inhibit_warnings => true
   #pod 'WechatOpenSDK-XCFramework'
 
-
 end
